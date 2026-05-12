@@ -1,0 +1,31 @@
+export type FleetUnitStatus = "active" | "unlocking" | "locked" | "staging";
+
+export type FleetAuraMode = "idle" | "listening" | "talking";
+
+export type FleetAircraftType =
+  | "sr71"
+  | "f22"
+  | "f35"
+  | "b2"
+  | "b52"
+  | "c130"
+  | "globalHawk"
+  | "v22"
+  | "cessna"
+  | "bizjet";
+
+export type FleetUnit = {
+  id: string;
+  slot: number;
+  name: string;
+  callsign: string;
+  domain: string;
+  href: string;
+  status: FleetUnitStatus;
+  aura: FleetAuraMode;
+  aircraftType: FleetAircraftType;
+};
+
+export const HANGAR_COLUMNS = 6;
+export const HANGAR_ROWS = 5;
+export const FLEET_UNIT_COUNT = HANGAR_COLUMNS * HANGAR_ROWS;

@@ -2,6 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .page-atmosphere {
+    background: transparent !important;
+  }
+
+  .moving-clouds {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    animation: cloud-drift 120s linear infinite;
+    background-color: transparent;
+    background-image:
+      radial-gradient(circle at 12% 22%, rgba(239, 246, 255, 0.55) 0%, rgba(239, 246, 255, 0) 24%),
+      radial-gradient(circle at 74% 38%, rgba(191, 219, 254, 0.42) 0%, rgba(191, 219, 254, 0) 28%),
+      radial-gradient(circle at 44% 78%, rgba(224, 242, 254, 0.34) 0%, rgba(224, 242, 254, 0) 30%),
+      radial-gradient(circle at 88% 70%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 22%),
+      radial-gradient(circle at 28% 62%, rgba(125, 211, 252, 0.28) 0%, rgba(125, 211, 252, 0) 26%),
+      radial-gradient(circle at 60% 12%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 20%);
+    background-repeat: repeat;
+    background-size: 640px 420px;
+  }
+}
+
+@keyframes cloud-drift {
+  0% {
+    background-position:
+      0% 0%,
+      10% 12%,
+      25% 35%,
+      60% 10%,
+      80% 60%,
+      40% 80%;
+  }
+
+  100% {
+    background-position:
+      100% 0%,
+      110% 12%,
+      125% 35%,
+      160% 10%,
+      180% 60%,
+      140% 80%;
+  }
+}
+
 @layer base {
   html {
     @apply scroll-smooth;
@@ -554,7 +601,342 @@
   }
 }
 
+/* Fleet cards: liquid glass bays + takeoff hover */
+.fleet-card {
+  position: relative;
+  border-radius: 1.75rem;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.fleet-card:focus-visible {
+  outline: 2px solid rgba(56, 189, 248, 0.75);
+  outline-offset: 4px;
+}
+
+.fleet-card__glass {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 42%, rgba(8, 20, 40, 0.42) 100%);
+  box-shadow:
+    0 24px 60px -36px rgba(37, 99, 235, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -24px 48px -36px rgba(2, 8, 23, 0.75);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.fleet-card__glass::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.04) 36%,
+    rgba(56, 189, 248, 0.08) 100%
+  );
+  opacity: 0.9;
+}
+
+.fleet-card__glass::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: -40%;
+  left: -70%;
+  width: 56%;
+  height: 180%;
+  background: linear-gradient(
+    112deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.42) 48%,
+    rgba(255, 255, 255, 0.08) 62%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0.55;
+  transform: translate3d(0, 0, 0) rotate(8deg);
+  transition: transform 0.8s ease, opacity 0.35s ease;
+}
+
+.fleet-card__aircraft-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* Intel mini-monitors */
+.intel-monitor {
+  display: flex;
+  min-height: 9.5rem;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(2, 8, 23, 0.04);
+  padding: 0.75rem;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.intel-monitor__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.intel-monitor__callsign {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.92);
+}
+
+.intel-monitor__status {
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.intel-monitor__screen {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid rgba(52, 211, 153, 0.18);
+  background: rgba(2, 8, 23, 0.06);
+  min-height: 6rem;
+}
+
+.intel-monitor__feed {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 0.35rem;
+  min-height: 6rem;
+  padding: 0.35rem;
+}
+
+.intel-monitor__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(52, 211, 153, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 211, 153, 0.08) 1px, transparent 1px);
+  background-size: 12px 12px;
+  opacity: 0.45;
+}
+
+.intel-monitor__scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(74, 222, 128, 0.2) 20%,
+    rgba(74, 222, 128, 0.95) 50%,
+    rgba(74, 222, 128, 0.2) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 14px rgba(74, 222, 128, 0.55);
+  animation: intel-scan 2.8s linear infinite;
+}
+
+.intel-monitor__graph {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.intel-monitor__graph-line {
+  fill: none;
+  stroke: rgba(74, 222, 128, 0.9);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.45));
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: intel-line 3.6s ease-in-out infinite;
+}
+
+@keyframes intel-scan {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    top: calc(100% - 2px);
+    opacity: 0;
+  }
+}
+
+@keyframes intel-line {
+  0% {
+    stroke-dashoffset: 180;
+    opacity: 0.35;
+  }
+
+  45% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  100% {
+    stroke-dashoffset: -180;
+    opacity: 0.35;
+  }
+}
+
+.ticker-display {
+  display: flex;
+  min-width: 4.75rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem;
+  border-left: 1px solid rgba(52, 211, 153, 0.18);
+  padding-left: 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  background: transparent;
+}
+
+.ticker-display__symbol {
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.72);
+}
+
+.ticker-display__price {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.ticker-display__change {
+  font-size: 0.58rem;
+  font-weight: 700;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.ticker-display__change--positive {
+  color: rgba(134, 239, 172, 0.88);
+}
+
+.ticker-display__change--negative {
+  color: rgba(252, 165, 165, 0.88);
+}
+
+.ticker-display--up {
+  color: rgba(74, 222, 128, 1);
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.75);
+}
+
+.ticker-display--down {
+  color: rgba(248, 113, 113, 1);
+  text-shadow: 0 0 10px rgba(248, 113, 113, 0.75);
+}
+
+.aircraft-icon {
+  display: block;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+.aircraft-icon__vector {
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fleet-card:hover .aircraft-icon__vector,
+.fleet-card:focus-visible .aircraft-icon__vector {
+  transform: translate3d(0, -4px, 0) scale(1.03);
+}
+
+.fleet-card__aircraft {
+  transform-origin: center center;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.45s ease;
+}
+
+.fleet-card:hover .fleet-card__glass,
+.fleet-card:focus-visible .fleet-card__glass {
+  border-color: rgba(96, 165, 250, 0.55);
+  box-shadow:
+    0 28px 70px -34px rgba(37, 99, 235, 0.72),
+    0 0 0 1px rgba(56, 189, 248, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -24px 48px -36px rgba(2, 8, 23, 0.82);
+  transform: translate3d(0, -3px, 0);
+}
+
+.fleet-card:hover .fleet-card__glass::after,
+.fleet-card:focus-visible .fleet-card__glass::after {
+  transform: translate3d(220%, 0, 0) rotate(8deg);
+  opacity: 0.78;
+}
+
+.fleet-card:hover .fleet-card__aircraft,
+.fleet-card:focus-visible .fleet-card__aircraft {
+  transform: translate3d(0, -4px, 0) scale(1.03);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .fleet-card,
+  .fleet-card__glass,
+  .fleet-card__aircraft,
+  .fleet-card__glass::after {
+    transition: none !important;
+  }
+
+  .fleet-card:hover .fleet-card__glass,
+  .fleet-card:focus-visible .fleet-card__glass,
+  .fleet-card:hover .fleet-card__aircraft,
+  .fleet-card:focus-visible .fleet-card__aircraft {
+    transform: none !important;
+  }
+
+  .moving-clouds {
+    animation: none !important;
+  }
+
+  .intel-monitor__scan,
+  .intel-monitor__graph-line {
+    animation: none !important;
+  }
+
   .liquid-mesh__orb,
   .liquid-mesh__sheen,
   .liquid-mesh__noise {

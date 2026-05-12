@@ -1,0 +1,44 @@
+export interface FleetUnit {
+  id: string;
+  slot: number;
+  name: string;
+  callsign: string;
+  domain: string;
+  href: string;
+  status: 'active' | 'unlocking' | 'staging' | 'locked';
+  aura: 'idle' | 'listening';
+  aircraftType: string;
+}
+
+export const fleetManifest: FleetUnit[] = [
+  { id: '0', slot: 0, name: 'Gemini 3.1', callsign: 'BLACKBIRD-01', domain: 'gemini.google.com', href: 'https://gemini.google.com', status: 'active', aura: 'idle', aircraftType: 'SR-71' },
+  { id: '1', slot: 1, name: 'ChatGPT-5', callsign: 'RAPTOR-01', domain: 'chatgpt.com', href: 'https://chatgpt.com', status: 'active', aura: 'idle', aircraftType: 'F-22' },
+  { id: '2', slot: 2, name: 'Claude 3.5', callsign: 'LIGHTNING-01', domain: 'claude.ai', href: 'https://claude.ai', status: 'active', aura: 'idle', aircraftType: 'F-35' },
+  { id: '3', slot: 3, name: 'Perplexity', callsign: 'GROWLER-01', domain: 'perplexity.ai', href: 'https://perplexity.ai', status: 'active', aura: 'idle', aircraftType: 'EA-18G' },
+  { id: '4', slot: 4, name: 'Grok 4.1', callsign: 'FELON-01', domain: 'x.ai', href: 'https://x.ai', status: 'active', aura: 'idle', aircraftType: 'F-22' },
+  { id: '5', slot: 5, name: 'Cursor', callsign: 'NIGHTHAWK-01', domain: 'cursor.com', href: 'https://cursor.com', status: 'active', aura: 'idle', aircraftType: 'F-117' },
+  { id: '6', slot: 6, name: 'Midjourney', callsign: 'SPIRIT-01', domain: 'midjourney.com', href: 'https://midjourney.com', status: 'active', aura: 'idle', aircraftType: 'B-2' },
+  { id: '7', slot: 7, name: 'Luma Dream', callsign: 'X15-ALPHA', domain: 'lumalabs.ai', href: 'https://lumalabs.ai', status: 'active', aura: 'idle', aircraftType: 'X-15' },
+  { id: '8', slot: 8, name: 'Sora 2', callsign: 'VEO-PRO', domain: 'openai.com/sora', href: 'https://openai.com/sora', status: 'active', aura: 'idle', aircraftType: 'X-15' },
+  { id: '9', slot: 9, name: 'Higgsfield', callsign: 'DIRECTOR-01', domain: 'higgsfield.ai', href: 'https://higgsfield.ai', status: 'staging', aura: 'idle', aircraftType: 'B-52' },
+  { id: '10', slot: 10, name: 'Leonardo.ai', callsign: 'MIRAGE-01', domain: 'leonardo.ai', href: 'https://leonardo.ai', status: 'active', aura: 'idle', aircraftType: 'F-35' },
+  { id: '11', slot: 11, name: 'Runway', callsign: 'STRATO-01', domain: 'runwayml.com', href: 'https://runwayml.com', status: 'active', aura: 'idle', aircraftType: 'B-52' },
+  { id: '12', slot: 12, name: 'Firefly', callsign: 'JUMPJET-01', domain: 'firefly.adobe.com', href: 'https://firefly.adobe.com', status: 'active', aura: 'idle', aircraftType: 'Harrier' },
+  { id: '13', slot: 13, name: 'Canva Magic', callsign: 'PHENOM-01', domain: 'canva.com', href: 'https://canva.com', status: 'active', aura: 'idle', aircraftType: 'Bizjet' },
+  { id: '14', slot: 14, name: 'Flux.1 Pro', callsign: 'HUSTLER-01', domain: 'fal.ai', href: 'https://fal.ai/models/flux', status: 'staging', aura: 'idle', aircraftType: 'B-2' },
+  { id: '15', slot: 15, name: 'Suno v4', callsign: 'CONCORDE-01', domain: 'suno.com', href: 'https://suno.com', status: 'active', aura: 'idle', aircraftType: 'Concorde' },
+  { id: '16', slot: 16, name: 'ElevenLabs', callsign: 'G650-VOICE', domain: 'elevenlabs.io', href: 'https://elevenlabs.io', status: 'active', aura: 'idle', aircraftType: 'Bizjet' },
+  { id: '17', slot: 17, name: 'Play.ht', callsign: 'VOCAL-01', domain: 'play.ht', href: 'https://play.ht', status: 'staging', aura: 'idle', aircraftType: 'Bizjet' },
+  { id: '18', slot: 18, name: 'Synthesia', callsign: 'AVATAR-01', domain: 'synthesia.io', href: 'https://synthesia.io', status: 'staging', aura: 'idle', aircraftType: 'Regional' },
+  { id: '19', slot: 19, name: 'HeyGen', callsign: 'HAWK-01', domain: 'heygen.com', href: 'https://heygen.com', status: 'active', aura: 'idle', aircraftType: 'Global Hawk' },
+  { id: '20', slot: 20, name: 'v0.dev', callsign: 'OSPREY-01', domain: 'v0.dev', href: 'https://v0.dev', status: 'active', aura: 'idle', aircraftType: 'V-22' },
+  { id: '21', slot: 21, name: 'Replit Agent', callsign: 'TALON-01', domain: 'replit.com', href: 'https://replit.com', status: 'staging', aura: 'idle', aircraftType: 'T-38' },
+  { id: '22', slot: 22, name: 'GitHub Copilot', callsign: 'WARTHOG-01', domain: 'github.com', href: 'https://github.com', status: 'active', aura: 'idle', aircraftType: 'A-10' },
+  { id: '23', slot: 23, name: 'Consensus', callsign: 'DRAGON-01', domain: 'consensus.app', href: 'https://consensus.app', status: 'active', aura: 'idle', aircraftType: 'U-2' },
+  { id: '24', slot: 24, name: 'Gamma', callsign: 'GALAXY-01', domain: 'gamma.app', href: 'https://gamma.app', status: 'active', aura: 'idle', aircraftType: 'C-5' },
+  { id: '25', slot: 25, name: 'Notion AI', callsign: 'PILATUS-01', domain: 'notion.so', href: 'https://notion.so', status: 'active', aura: 'idle', aircraftType: 'Turboprop' },
+  { id: '26', slot: 26, name: 'Jasper', callsign: 'HERCULES-01', domain: 'jasper.ai', href: 'https://jasper.ai', status: 'active', aura: 'idle', aircraftType: 'C-130' },
+  { id: '27', slot: 27, name: 'Otter.ai', callsign: 'SENTRY-01', domain: 'otter.ai', href: 'https://otter.ai', status: 'active', aura: 'idle', aircraftType: 'E-3 Sentry' },
+  { id: '28', slot: 28, name: 'DeepSeek', callsign: 'DRAGON-02', domain: 'deepseek.com', href: 'https://deepseek.com', status: 'staging', aura: 'idle', aircraftType: 'F-22' },
+  { id: '29', slot: 29, name: 'USJet Origin', callsign: 'COMMAND-01', domain: 'usjet.ai', href: '/origin', status: 'active', aura: 'listening', aircraftType: 'F-22' }
+];

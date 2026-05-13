@@ -1,24 +1,39 @@
+import type { CSSProperties } from "react";
 import TickerDisplay from "./TickerDisplay";
-import type { FleetUnit } from "../../types/fleet";
+import SignalPulse from "./SignalPulse";
+import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
 
 type IntelMonitorProps = {
   unit: FleetUnit;
   index: number;
+  style?: CSSProperties;
+  onExpandRequest?: () => void;
 };
 
-const GRAPH_VARIANTS = [
-  "0,28 12,24 24,26 36,18 48,22 60,14 72,20 84,10 100,16",
-  "0,22 14,26 28,20 42,24 56,16 70,22 84,14 100,18",
-  "0,26 10,18 22,24 34,16 46,22 58,12 70,20 82,14 100,24",
-];
-
-export default function IntelMonitor({ unit, index }: IntelMonitorProps) {
-  const graphPoints = GRAPH_VARIANTS[index % GRAPH_VARIANTS.length];
+export default function IntelMonitor({ unit, index, style, onExpandRequest }: IntelMonitorProps) {
+  const interactive = Boolean(onExpandRequest);
 
   return (
     <article
-      className="intel-monitor"
-      style={{ animationDelay: `${(index % 6) * 0.15}s` }}
+      className={["intel-monitor", interactive ? "intel-monitor--expandable" : ""].filter(Boolean).join(" ")}
+      style={{
+        animationDelay: `${(index % HANGAR_COLUMNS) * 0.15}s`,
+        ...style,
+      }}
+      onClick={interactive ? onExpandRequest : undefined}
+      onKeyDown={
+        interactive
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onExpandRequest?.();
+              }
+            }
+          : undefined
+      }
+      tabIndex={interactive ? 0 : undefined}
+      role={interactive ? "button" : undefined}
+      aria-label={interactive ? `Expand ${unit.callsign} workstation` : undefined}
     >
       <header className="intel-monitor__header">
         <p className="intel-monitor__callsign">{unit.callsign}</p>
@@ -26,17 +41,12 @@ export default function IntelMonitor({ unit, index }: IntelMonitorProps) {
       </header>
 
       <div className="intel-monitor__screen">
+        <div className="intel-monitor__pulse-back" aria-hidden>
+          <SignalPulse slot={unit.slot} />
+        </div>
         <div className="intel-monitor__grid" aria-hidden />
         <div className="intel-monitor__scan" aria-hidden />
         <div className="intel-monitor__feed">
-          <svg
-            className="intel-monitor__graph"
-            viewBox="0 0 100 40"
-            preserveAspectRatio="none"
-            aria-hidden
-          >
-            <polyline className="intel-monitor__graph-line" points={graphPoints} />
-          </svg>
           <TickerDisplay slot={unit.slot} />
         </div>
       </div>

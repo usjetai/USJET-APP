@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Facebook, Instagram } from "lucide-react";
 import AircraftIcon from "../components/icons/AircraftIcons";
+import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import type { FleetAircraftType } from "../types/fleet";
 
 const USJET_SOCIAL = {
@@ -58,9 +59,9 @@ const FOUNDERS_STORY: StorySection[] = [
   },
   {
     heading: "The Fleet",
-    kicker: "The Digital Hive Mind",
+    kicker: "Wrenches, Not Slides",
     paragraph:
-      "Scalability is nothing without synchronization. Our fleet isn't just a collection of 30 AI units; it is a single, breathing digital hive. Each unit is purpose-built to handle complex architecture and logistics with the precision of a master mechanic. By connecting these units into one cohesive network, we've created a powerhouse capable of managing industrial-grade intelligence at a speed that matches the modern world.",
+      "This isn't an 'enterprise solution' built in a boardroom—this is a digital hive built by someone who's turned wrenches, not just turned slides. Every unit in this fleet is synchronized to solve real-world problems at a scale the industry hasn't seen yet.",
     imageSrc: "/founder/IMG_0515-fleet.jpeg",
     imageAlt: "The Fleet — thirty AI units in synchronized formation",
     imageLabel: "IMG_0515 — The Fleet",
@@ -116,14 +117,16 @@ const Founder = () => {
       <div className="founder-page__grid">
         <div className="founder-page__main">
           <article className="founder-story">
-            <header className="founder-story__intro">
+            <GlassEffectContainer
+              className="founder-story__intro glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan flex flex-col gap-0 p-6 sm:p-8"
+            >
               <p className="founder-story__eyebrow">Founder Field Brief</p>
               <h1 className="founder-story__title">Three Paragraphs of Grit</h1>
               <p className="founder-story__lede">
                 Ameer Karim on Queens hustle, the digital hive, and the first AI platform built for
                 blue-collar America.
               </p>
-            </header>
+            </GlassEffectContainer>
 
             {FOUNDERS_STORY.map((section) => {
               const showPhoto = section.imageSrc && !brokenImages[section.heading];
@@ -137,8 +140,8 @@ const Founder = () => {
                   <figure className="founder-story__visual">
                     <div
                       className={[
-                        "founder-story__visual-frame",
-                        showPhoto ? "founder-story__visual-frame--photo" : "founder-story__visual-frame--vector",
+                        "founder-story__visual-frame glass-effect glass-effect--rounded-rect",
+                        showPhoto ? "founder-story__visual-frame--photo" : "founder-story__visual-frame--vector liquid-glass-background",
                       ].join(" ")}
                     >
                       {showPhoto ? (
@@ -189,7 +192,7 @@ const Founder = () => {
                   href={USJET_SOCIAL.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="founder-social__link"
+                  className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
                   aria-label="USJet on Instagram (usjet)"
                 >
                   <Instagram size={26} strokeWidth={1.35} className="founder-social__icon" />
@@ -198,7 +201,7 @@ const Founder = () => {
                   href={USJET_SOCIAL.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="founder-social__link"
+                  className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
                   aria-label="USJet on Facebook (usjets)"
                 >
                   <Facebook size={26} strokeWidth={1.35} className="founder-social__icon" />
@@ -207,7 +210,7 @@ const Founder = () => {
                   href={USJET_SOCIAL.x}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="founder-social__link"
+                  className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
                   aria-label="USJet on X (usajet)"
                 >
                   <XComIcon className="founder-social__x-icon founder-social__icon" />

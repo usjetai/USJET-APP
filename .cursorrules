@@ -23,4 +23,12 @@ Background motion: global `.aviation-pulse` in `App.tsx` (z-index: -1). Keep Han
 
 Hangar workbench: `.hangar-tool-workbench` uses opaque glass for iframe clarity; do not make the whole page opaque.
 
+## Founder page (web Liquid Glass — not SwiftUI)
+
+- Page shell: keep `founder-page--warp` + `page-atmosphere` **transparent** so `.aviation-pulse` reads through.
+- Intro hero: `<GlassEffectContainer>` + `.liquid-glass-background` + `.glass-effect` + `.glass-effect--rounded-rect` + `.glass-tint-cyan`.
+- Story panels (vector fallback): same rounded glass on `.founder-story__visual-frame`; photo panels use `--photo` variant without extra blur over the image.
+- Social links: `.btn-glass` + `.glass-effect-interactive` (interactive only on `<a>` targets).
+- **Founder images:** place JPEGs in `public/founder/` as `IMG_0515-origin.jpeg`, `IMG_0515-fleet.jpeg`, `IMG_0515-industry-first.jpeg`.
+
 Do not reference SwiftUI APIs in this codebase unless adding a separate native Xcode target.

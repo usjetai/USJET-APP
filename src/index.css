@@ -677,8 +677,209 @@
   z-index: 1;
 }
 
+/* Intel route: fixed three-jet escort on viewport edges (lg+) */
+.intel-page {
+  position: relative;
+}
+
+.intel-hangar-toast {
+  pointer-events: none;
+  position: fixed;
+  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  z-index: 95;
+  max-width: min(22rem, calc(100vw - 2rem));
+  transform: translateX(-50%);
+  border-radius: 0.65rem;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: linear-gradient(160deg, rgba(2, 12, 28, 0.82) 0%, rgba(2, 8, 20, 0.72) 100%);
+  padding: 0.55rem 1rem 0.6rem;
+  box-shadow:
+    0 0 24px rgba(34, 211, 238, 0.12),
+    0 12px 32px -16px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: intel-hangar-toast-in 0.45s ease-out both;
+}
+
+.intel-hangar-toast__title {
+  margin: 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.58rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.88);
+}
+
+.intel-hangar-toast__body {
+  margin: 0.35rem 0 0;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.82);
+}
+
+@keyframes intel-hangar-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intel-hangar-toast {
+    animation: none;
+  }
+}
+
+.intel-page__escort {
+  position: fixed;
+  top: 50%;
+  z-index: 5;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  pointer-events: none;
+  opacity: 0.52;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 1280px) {
+  .intel-page__escort {
+    display: flex;
+  }
+}
+
+.intel-page__escort--left {
+  left: 0.5rem;
+}
+
+.intel-page__escort--right {
+  right: 0.5rem;
+}
+
+.intel-page__escort-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intel-page__escort-slot--lead {
+  transform: translateX(5px);
+}
+
+.intel-page__escort-slot--wing:first-child {
+  transform: translate(3px, -3px) rotate(-14deg);
+}
+
+.intel-page__escort-slot--wing:last-child {
+  transform: translate(3px, 3px) rotate(14deg);
+}
+
+.intel-page__escort--right .intel-page__escort-slot--lead {
+  transform: translateX(-5px);
+}
+
+.intel-page__escort--right .intel-page__escort-slot--wing:first-child {
+  transform: translate(-3px, -3px) rotate(14deg);
+}
+
+.intel-page__escort--right .intel-page__escort-slot--wing:last-child {
+  transform: translate(-3px, 3px) rotate(-14deg);
+}
+
+.intel-page__border-jet {
+  width: 1.55rem;
+  height: 1.55rem;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.32));
+  transform: rotate(-90deg);
+}
+
+.intel-page__escort--right .intel-page__border-jet {
+  transform: rotate(90deg);
+}
+
+.intel-page__border-jet .aircraft-icon__vector path,
+.intel-page__border-jet .aircraft-icon__vector ellipse,
+.intel-page__border-jet .aircraft-icon__vector circle {
+  stroke: rgba(34, 211, 238, 0.78);
+}
+
+.intel-page__shell {
+  position: relative;
+  z-index: 10;
+}
+
+/* Intel grid expansion (6×5 explicit placement) */
+.intel-grid-wrap {
+  min-height: 0;
+}
+
+.intel-grid {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: 100%;
+  min-width: 52rem;
+  align-items: stretch;
+  gap: 0.875rem;
+  grid-template-columns: repeat(6, minmax(8.25rem, 1fr));
+  grid-template-rows: repeat(5, minmax(10rem, auto));
+}
+
+.intel-grid .intel-monitor {
+  height: 100%;
+  min-height: 0;
+}
+
+.intel-grid .intel-expanded {
+  height: 100%;
+  min-height: 0;
+}
+
+.intel-grid__void {
+  min-height: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intel-monitor--expandable {
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.intel-monitor--expandable:hover {
+  border-color: color-mix(in srgb, var(--intel-signal, #60a5fa) 62%, rgba(255, 255, 255, 0.22));
+  box-shadow:
+    0 0 32px color-mix(in srgb, var(--intel-signal, #60a5fa) 38%, transparent),
+    0 12px 40px -28px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transform: translateY(-1px);
+}
+
+.intel-monitor--expandable:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.65);
+  outline-offset: 2px;
+}
+
 /* Intel mini-monitors */
 .intel-monitor {
+  position: relative;
+  z-index: 1;
   display: flex;
   min-height: 9.5rem;
   flex-direction: column;
@@ -694,6 +895,8 @@
 }
 
 .intel-monitor__header {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -701,6 +904,7 @@
   margin-bottom: 0.65rem;
 }
 
+.intel-monitor__callsign,
 .intel-monitor__unit {
   min-width: 0;
   overflow: hidden;
@@ -713,6 +917,10 @@
   letter-spacing: 0.06em;
   text-transform: none;
   color: var(--intel-signal-bright, rgba(167, 243, 208, 0.92));
+  text-shadow:
+    0 0.05em 0.1em rgba(0, 0, 0, 0.88),
+    0 0 0.4rem rgba(2, 8, 23, 0.55),
+    0 0 10px rgba(34, 211, 238, 0.07);
 }
 
 .intel-monitor__status {
@@ -721,6 +929,10 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.35);
+  text-shadow:
+    0 0.05em 0.08em rgba(0, 0, 0, 0.82),
+    0 0 0.35rem rgba(2, 8, 23, 0.45),
+    0 0 8px rgba(255, 255, 255, 0.04);
 }
 
 .intel-monitor__status--legacy,
@@ -747,6 +959,7 @@
 
 .intel-monitor__screen {
   position: relative;
+  isolation: isolate;
   flex: 1;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--intel-signal, #34d399) 45%, transparent);
@@ -760,55 +973,65 @@
 
 .intel-monitor__feed {
   position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: stretch;
-  min-height: 6rem;
-}
-
-.intel-monitor__pulse,
-.intel-monitor__feed .ticker-display {
-  min-width: 0;
-  min-height: 6rem;
-}
-
-.intel-monitor__pulse {
-  position: relative;
+  z-index: 10;
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  border-right: 1px solid color-mix(in srgb, var(--intel-signal, #34d399) 28%, transparent);
-  padding: 0.3rem;
+  justify-content: center;
+  min-height: 6rem;
+  padding: 0.35rem 0.55rem;
 }
 
-.intel-monitor__pulse .intel-monitor__graph {
+.intel-monitor__feed .ticker-display {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 5.25rem;
   flex: 1;
   width: 100%;
-  min-height: 4.75rem;
-  height: 100%;
+  justify-content: center;
+  border-left: none;
+  padding: 0.35rem 0.35rem 0.35rem 0.2rem;
 }
 
-.intel-monitor__feed .ticker-display {
+.intel-monitor__pulse-back {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: stretch;
   justify-content: center;
-  border-left: 1px solid color-mix(in srgb, var(--intel-signal, #34d399) 22%, transparent);
-  padding: 0.35rem 0.45rem;
+  padding: 0.3rem 0.45rem;
+  pointer-events: none;
+}
+
+.intel-monitor__pulse-back .intel-monitor__graph--ghost {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 4.5rem;
+  height: 100%;
 }
 
 .intel-monitor__grid {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background-image:
     linear-gradient(color-mix(in srgb, var(--intel-signal, #34d399) 10%, transparent) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in srgb, var(--intel-signal, #34d399) 10%, transparent) 1px, transparent 1px);
   background-size: 12px 12px;
-  opacity: 0.32;
+  opacity: 0.28;
+  pointer-events: none;
 }
 
 .intel-monitor__scan {
   position: absolute;
   left: 0;
   right: 0;
+  z-index: 2;
   height: 2px;
+  pointer-events: none;
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -828,29 +1051,28 @@
   height: 100%;
 }
 
-.intel-monitor__graph-line--echo {
+.intel-monitor__graph-line--ghost-echo {
   fill: none;
-  stroke: var(--intel-signal, #4ade80);
-  stroke-width: 1.1;
+  stroke: rgb(99, 102, 241);
+  stroke-width: 1.05;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.32;
-  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--intel-signal) 40%, transparent));
   stroke-dasharray: 200;
   stroke-dashoffset: 200;
-  animation: intel-line 3.4s ease-in-out infinite reverse;
+  filter: none;
+  animation: intel-line-ghost 3.6s ease-in-out infinite reverse;
 }
 
-.intel-monitor__graph-line--main {
+.intel-monitor__graph-line--ghost-main {
   fill: none;
-  stroke: var(--intel-signal-bright, rgba(74, 222, 128, 0.95));
-  stroke-width: 1.65;
+  stroke: rgb(34, 211, 238);
+  stroke-width: 1.15;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--intel-signal, #4ade80) 55%, transparent));
   stroke-dasharray: 200;
   stroke-dashoffset: 200;
-  animation: intel-line 2.9s ease-in-out infinite;
+  filter: none;
+  animation: intel-line-ghost 3s ease-in-out infinite;
 }
 
 @keyframes intel-scan {
@@ -873,20 +1095,20 @@
   }
 }
 
-@keyframes intel-line {
+@keyframes intel-line-ghost {
   0% {
     stroke-dashoffset: 200;
-    opacity: 0.4;
+    stroke-opacity: 0.06;
   }
 
   45% {
     stroke-dashoffset: 0;
-    opacity: 1;
+    stroke-opacity: 0.16;
   }
 
   100% {
     stroke-dashoffset: -200;
-    opacity: 0.4;
+    stroke-opacity: 0.06;
   }
 }
 
@@ -942,9 +1164,31 @@
   text-shadow: 0 0 10px color-mix(in srgb, var(--intel-signal-dim, #f87171) 75%, transparent);
 }
 
-.intel-monitor .ticker-display--down {
-  color: var(--intel-signal-dim, rgba(248, 113, 113, 1));
-  text-shadow: 0 0 12px color-mix(in srgb, var(--intel-signal, #f87171) 55%, transparent);
+.intel-monitor .ticker-display__symbol,
+.intel-monitor .ticker-display__price,
+.intel-monitor .ticker-display__change {
+  text-shadow:
+    0 0.05em 0.1em rgba(0, 0, 0, 0.88),
+    0 0 0.38rem rgba(2, 8, 23, 0.62),
+    0 0 8px rgba(34, 211, 238, 0.09);
+}
+
+.intel-monitor .ticker-display__price.ticker-display--up,
+.intel-monitor .ticker-display__change.ticker-display--up {
+  text-shadow:
+    0 0.05em 0.1em rgba(0, 0, 0, 0.86),
+    0 0 0.4rem rgba(2, 8, 23, 0.65),
+    0 0 6px rgba(34, 211, 238, 0.08),
+    0 0 12px color-mix(in srgb, var(--intel-signal, #4ade80) 65%, transparent);
+}
+
+.intel-monitor .ticker-display__price.ticker-display--down,
+.intel-monitor .ticker-display__change.ticker-display--down {
+  text-shadow:
+    0 0.05em 0.1em rgba(0, 0, 0, 0.86),
+    0 0 0.4rem rgba(2, 8, 23, 0.65),
+    0 0 6px rgba(255, 255, 255, 0.05),
+    0 0 12px color-mix(in srgb, var(--intel-signal-dim, #f87171) 62%, transparent);
 }
 
 .intel-monitor .ticker-display__symbol {
@@ -957,6 +1201,151 @@
 
 .intel-monitor .ticker-display__change--negative {
   color: color-mix(in srgb, var(--intel-signal-dim, #fca5a5) 88%, white);
+}
+
+/* Intel expanded 2×2 workstation (iframe) */
+.intel-expanded {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 38%, rgba(2, 8, 23, 0.55) 100%);
+  box-shadow:
+    0 0 36px color-mix(in srgb, var(--intel-signal, #60a5fa) 32%, transparent),
+    0 20px 50px -32px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -20px 40px -28px rgba(2, 6, 14, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.intel-expanded__chrome {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.45rem 0.55rem 0.45rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(2, 8, 20, 0.35);
+}
+
+.intel-expanded__meta {
+  min-width: 0;
+}
+
+.intel-expanded__callsign {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(167, 243, 208, 0.95);
+  text-shadow:
+    0 0.06em 0.1em rgba(0, 0, 0, 0.85),
+    0 0 0.45rem rgba(2, 8, 23, 0.55);
+}
+
+.intel-expanded__domain {
+  margin: 0.15rem 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.52rem;
+  color: rgba(148, 163, 184, 0.88);
+}
+
+.intel-expanded__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.intel-expanded__external,
+.intel-expanded__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(2, 10, 24, 0.45);
+  color: rgba(34, 211, 238, 0.88);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.intel-expanded__external {
+  width: 2rem;
+  height: 2rem;
+  text-decoration: none;
+}
+
+.intel-expanded__close {
+  width: 2.15rem;
+  height: 2.15rem;
+  cursor: pointer;
+}
+
+.intel-expanded__external:hover,
+.intel-expanded__external:focus-visible,
+.intel-expanded__close:hover,
+.intel-expanded__close:focus-visible {
+  border-color: rgba(34, 211, 238, 0.45);
+  background: rgba(2, 12, 28, 0.72);
+  color: #e0f2fe;
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  outline: none;
+}
+
+.intel-expanded__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  padding: 0.45rem 0.55rem 0.55rem;
+  gap: 0.35rem;
+}
+
+.intel-expanded__frame {
+  flex: 1;
+  width: 100%;
+  min-height: 12rem;
+  border: none;
+  border-radius: 0.55rem;
+  background: rgba(2, 6, 14, 0.65);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.intel-expanded__hint {
+  margin: 0;
+  flex-shrink: 0;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.58rem;
+  line-height: 1.45;
+  color: rgba(148, 163, 184, 0.82);
+}
+
+.intel-expanded__hint-link {
+  color: rgba(34, 211, 238, 0.9);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .aircraft-icon {
@@ -1679,6 +2068,30 @@ button.fleet-card {
   height: 26px;
 }
 
+.founder-social__contact {
+  margin: 1.75rem 0 0;
+  text-align: center;
+}
+
+.founder-social__email {
+  font-family: theme("fontFamily.sans");
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(34, 211, 238, 0.88);
+  text-decoration: none;
+  transition:
+    color 0.25s ease,
+    filter 0.25s ease;
+}
+
+.founder-social__email:hover,
+.founder-social__email:focus-visible {
+  color: #67e8f9;
+  filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.75)) drop-shadow(0 0 22px rgba(34, 211, 238, 0.35));
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .founder-social__link:hover,
   .founder-social__link:focus-visible {
@@ -1953,8 +2366,8 @@ button.fleet-card {
   }
 
   .intel-monitor__scan,
-  .intel-monitor__graph-line--main,
-  .intel-monitor__graph-line--echo,
+  .intel-monitor__graph-line--ghost-main,
+  .intel-monitor__graph-line--ghost-echo,
   .docking-box__scan {
     animation: none !important;
   }

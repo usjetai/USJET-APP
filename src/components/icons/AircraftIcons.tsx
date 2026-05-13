@@ -1,6 +1,8 @@
 import type { ReactElement, ReactNode } from "react";
 import type { FleetAircraftType } from "../../types/fleet";
 
+/** Plan-view wireframe silhouettes: inline SVG modules (bundled; not loaded from /public/aircraft). */
+
 type AircraftIconProps = {
   aircraftType: FleetAircraftType;
   accentId: string;

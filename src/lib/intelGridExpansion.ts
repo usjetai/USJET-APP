@@ -1,7 +1,10 @@
 import { HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
 
-/** Maximum simultaneous 2×2 Intel workbenches (triple workstation). */
-export const MAX_INTEL_EXPANDED_WORKSTATIONS = 3;
+/** Max simultaneous 2×2 workbenches on Intel or Hangar fleet grids (triple bay). */
+export const MAX_SIMULTANEOUS_WORKBENCHES = 3;
+
+/** @deprecated Prefer MAX_SIMULTANEOUS_WORKBENCHES */
+export const MAX_INTEL_EXPANDED_WORKSTATIONS = MAX_SIMULTANEOUS_WORKBENCHES;
 
 const COLS = HANGAR_COLUMNS;
 const ROWS = HANGAR_ROWS;
@@ -25,12 +28,17 @@ export function quadsOverlap(anchorA: number, anchorB: number): boolean {
   return quadSlotIndices(anchorB).some((i) => setA.has(i));
 }
 
+/**
+ * Resolves a fleet `href` (or bare host) to an absolute URL for iframe `src` / tactical launch.
+ * Hangar workstations use each unit's real tool origin (e.g. https://chatgpt.com).
+ */
 export function iframeSrcFromUnitHref(href: string): string {
-  if (href.startsWith("http://") || href.startsWith("https://")) {
-    return href;
+  const h = href.trim();
+  if (h.startsWith("http://") || h.startsWith("https://")) {
+    return h;
   }
-  if (href.startsWith("/")) {
-    return href;
+  if (h.startsWith("/")) {
+    return h;
   }
-  return `https://${href}`;
+  return `https://${h}`;
 }

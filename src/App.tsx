@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AppNav from "./components/layout/AppNav";
+import Usa250Countdown from "./components/layout/Usa250Countdown";
 import MovingBackground from "./components/layout/MovingBackground";
 import Fleet from "./pages/Fleet";
 import Hangar from "./pages/Hangar";
@@ -27,6 +28,8 @@ export default function App() {
 
         <MovingBackground />
 
+        <div aria-hidden className="aviation-pulse" />
+
         <AppNav />
 
         <main className="relative z-10">
@@ -39,9 +42,12 @@ export default function App() {
           </Routes>
         </main>
 
-        <div className="fixed bottom-6 left-8 z-[100] flex items-center gap-4 text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30">
-          <span className="h-2 w-2 animate-ping rounded-full bg-blue-500" />
-          USJET System Active // Port 8080
+        <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex items-center gap-4">
+            <span className="h-2 w-2 shrink-0 animate-ping rounded-full bg-blue-500" />
+            <span>USJET System Active // Port 8080</span>
+          </div>
+          <Usa250Countdown />
         </div>
       </div>
     </Router>

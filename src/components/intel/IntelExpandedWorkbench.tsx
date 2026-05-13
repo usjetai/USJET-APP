@@ -2,6 +2,7 @@ import { ExternalLink, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
+import MarketDualFeed from "./market/MarketDualFeed";
 
 type IntelExpandedWorkbenchProps = {
   unit: FleetUnit;
@@ -18,6 +19,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>
           <p className="intel-expanded__domain">{unit.domain}</p>
+          <p className="intel-expanded__tagline">Market workstation · BTC spot · NYSE composite</p>
         </div>
         <div className="intel-expanded__actions">
           <a
@@ -35,21 +37,8 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
         </div>
       </header>
 
-      <div className="intel-expanded__body">
-        <iframe
-          className="intel-expanded__frame"
-          title={`${unit.name} — live tool`}
-          src={src}
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-        <p className="intel-expanded__hint">
-          Many providers block embedding. If the frame stays blank, use{" "}
-          <a className="intel-expanded__hint-link" href={src} target="_blank" rel="noopener noreferrer">
-            open in new tab
-          </a>
-          .
-        </p>
+      <div className="intel-expanded__body intel-expanded__body--dual">
+        <MarketDualFeed seedSlot={unit.slot} />
       </div>
     </article>
   );

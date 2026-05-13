@@ -17,6 +17,7 @@ export default {
           "Roboto",
           "sans-serif",
         ],
+        aviation: ['"Audiowide"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
     },
   },

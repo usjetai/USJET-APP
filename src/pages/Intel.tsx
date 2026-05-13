@@ -1,15 +1,11 @@
 import { Activity, TrendingUp } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import IntelExpandedWorkbench from "../components/intel/IntelExpandedWorkbench";
 import IntelMonitor from "../components/intel/IntelMonitor";
 import { fleetManifest } from "../data/fleetManifest";
-import {
-  anchorIndexForSlot,
-  MAX_INTEL_EXPANDED_WORKSTATIONS,
-  quadSlotIndices,
-  quadsOverlap,
-} from "../lib/intelGridExpansion";
+import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
+import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
 import { type FleetUnit, FLEET_UNIT_COUNT, HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
 
 const intelUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
@@ -22,109 +18,8 @@ const BORDER_FORMATION = [
   { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing" },
 ];
 
-type Expansion = { anchor: number; unit: FleetUnit };
-
-const HANGAR_FULL_TOAST_MS = 3400;
-const HANGAR_TOAST_DEBOUNCE_MS = 750;
-
 const Intel = () => {
-  const [expansions, setExpansions] = useState<Expansion[]>([]);
-  const [hangarFullToast, setHangarFullToast] = useState(false);
-  const hangarToastTimerRef = useRef<number | null>(null);
-  const lastHangarToastAtRef = useRef(0);
-
-  const flashHangarFullToast = useCallback(() => {
-    const now = Date.now();
-    if (now - lastHangarToastAtRef.current < HANGAR_TOAST_DEBOUNCE_MS) {
-      return;
-    }
-    lastHangarToastAtRef.current = now;
-    if (hangarToastTimerRef.current !== null) {
-      window.clearTimeout(hangarToastTimerRef.current);
-    }
-    setHangarFullToast(true);
-    hangarToastTimerRef.current = window.setTimeout(() => {
-      setHangarFullToast(false);
-      hangarToastTimerRef.current = null;
-    }, HANGAR_FULL_TOAST_MS);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (hangarToastTimerRef.current !== null) {
-        window.clearTimeout(hangarToastTimerRef.current);
-      }
-    };
-  }, []);
-
-  const tryExpand = useCallback(
-    (unit: FleetUnit) => {
-      const anchor = anchorIndexForSlot(unit.slot);
-      let rejectHangarFull = false;
-
-      setExpansions((prev) => {
-        const same = prev.find((e) => e.anchor === anchor && e.unit.id === unit.id);
-        if (same) {
-          return prev.filter((e) => e.anchor !== anchor);
-        }
-
-        if (prev.some((e) => e.anchor === anchor)) {
-          return prev;
-        }
-
-        if (prev.some((e) => quadsOverlap(e.anchor, anchor))) {
-          return prev;
-        }
-
-        if (prev.length >= MAX_INTEL_EXPANDED_WORKSTATIONS) {
-          rejectHangarFull = true;
-          return prev;
-        }
-
-        return [...prev, { anchor, unit }];
-      });
-
-      if (rejectHangarFull) {
-        flashHangarFullToast();
-      }
-    },
-    [flashHangarFullToast],
-  );
-
-  const closeExpansion = useCallback((anchor: number) => {
-    setExpansions((prev) => prev.filter((e) => e.anchor !== anchor));
-  }, []);
-
-  const cellPlan = useMemo(() => {
-    const plan = new Map<
-      number,
-      { mode: "void" } | { mode: "monitor"; unit: FleetUnit } | { mode: "expanded"; unit: FleetUnit }
-    >();
-
-    for (let slot = 0; slot < FLEET_UNIT_COUNT; slot++) {
-      const unit = unitBySlot.get(slot);
-      if (!unit) continue;
-
-      let assigned = false;
-      for (const ex of expansions) {
-        const quad = quadSlotIndices(ex.anchor);
-        if (!quad.includes(slot)) continue;
-        assigned = true;
-        if (ex.anchor === slot) {
-          plan.set(slot, { mode: "expanded", unit: ex.unit });
-        } else {
-          plan.set(slot, { mode: "void" });
-        }
-        break;
-      }
-
-      if (!assigned) {
-        plan.set(slot, { mode: "monitor", unit });
-      }
-    }
-
-    return plan;
-  }, [expansions]);
+  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useFleetGridExpansions(unitBySlot);
 
   const gridCells = useMemo(() => {
     const out: ReactNode[] = [];
@@ -181,7 +76,7 @@ const Intel = () => {
 
   return (
     <div className="intel-page">
-      {hangarFullToast ? (
+      {workbenchFullToast ? (
         <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
           <p className="intel-hangar-toast__title">Hangar full</p>
           <p className="intel-hangar-toast__body">
@@ -226,13 +121,15 @@ const Intel = () => {
         <div className="mb-12 flex items-center gap-5 border-b border-emerald-500/20 pb-8 text-left text-white">
           <Activity className="text-emerald-400" size={48} />
           <div>
-            <h1 className="text-6xl font-black uppercase italic tracking-tighter sm:text-7xl">Intel Stream</h1>
+            <h1 className="font-aviation text-6xl font-black uppercase italic tracking-tighter sm:text-7xl">
+              Intel Stream
+            </h1>
             <p className="mt-3 text-sm font-medium uppercase tracking-[0.28em] text-white/45">
               {HANGAR_COLUMNS} monitors wide · {HANGAR_ROWS} rows deep · {FLEET_UNIT_COUNT} feeds
             </p>
             <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.24em] text-emerald-300/70">
               Wings 1-10 BTC/USD · 11-20 NVDA · 21-30 TSLA · click a monitor to expand (max{" "}
-              {MAX_INTEL_EXPANDED_WORKSTATIONS} simultaneous 2×2 workbenches)
+              {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches)
             </p>
           </div>
         </div>

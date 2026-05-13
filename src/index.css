@@ -49,6 +49,227 @@
   }
 }
 
+/* Global: thin white aviation scan lines (gradient-only, GPU-friendly) */
+.aviation-pulse {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.36;
+  mix-blend-mode: soft-light;
+  will-change: background-position;
+  background-image:
+    repeating-linear-gradient(
+      94deg,
+      transparent 0,
+      transparent 88px,
+      rgba(255, 255, 255, 0) 88px,
+      rgba(255, 255, 255, 0.1) 92px,
+      rgba(255, 255, 255, 0.26) 94px,
+      rgba(255, 255, 255, 0.1) 96px,
+      rgba(255, 255, 255, 0) 100px,
+      transparent 100px,
+      transparent 280px
+    ),
+    repeating-linear-gradient(
+      91deg,
+      transparent 0,
+      transparent 160px,
+      rgba(255, 255, 255, 0) 160px,
+      rgba(255, 255, 255, 0.06) 168px,
+      rgba(255, 255, 255, 0.14) 170px,
+      rgba(255, 255, 255, 0.06) 172px,
+      rgba(255, 255, 255, 0) 176px,
+      transparent 176px,
+      transparent 420px
+    );
+  background-size: 280px 120%, 520px 120%;
+  background-position: 0 0, 120px 0;
+  animation: aviation-pulse-drift 20s linear infinite;
+}
+
+@keyframes aviation-pulse-drift {
+  0% {
+    background-position: 0 0, 120px 0;
+  }
+
+  100% {
+    background-position: 560px 0, -400px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviation-pulse {
+    animation: none;
+    opacity: 0.16;
+  }
+}
+
+/* ─── Liquid Glass (web adaptation of iOS 26 glassEffect / GlassEffectContainer) ─── */
+.liquid-glass-background {
+  background-color: rgba(5, 10, 20, 0.42);
+  background-image: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.02) 38%,
+    rgba(2, 8, 23, 0.35) 100%
+  );
+  backdrop-filter: blur(40px) saturate(1.35);
+  -webkit-backdrop-filter: blur(40px) saturate(1.35);
+}
+
+.glass-effect-container {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: inherit;
+}
+
+.glass-effect-container::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 80% at 12% 0%, rgba(255, 255, 255, 0.14), transparent 55%);
+  opacity: 0.85;
+}
+
+.glass-effect {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 42%,
+    rgba(8, 20, 40, 0.38) 100%
+  );
+  box-shadow:
+    0 24px 60px -36px rgba(37, 99, 235, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(28px) saturate(1.25);
+  -webkit-backdrop-filter: blur(28px) saturate(1.25);
+}
+
+.glass-effect--capsule {
+  border-radius: 9999px;
+}
+
+.glass-effect--rounded-rect {
+  border-radius: 1.75rem;
+}
+
+.glass-tint-cyan {
+  --glass-tint: rgba(34, 211, 238, 0.22);
+  border-color: color-mix(in srgb, var(--glass-tint) 45%, rgba(255, 255, 255, 0.2));
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--glass-tint) 35%, transparent),
+    0 24px 60px -36px rgba(37, 99, 235, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.glass-tint-blue {
+  --glass-tint: rgba(59, 130, 246, 0.28);
+  border-color: color-mix(in srgb, var(--glass-tint) 50%, rgba(255, 255, 255, 0.2));
+}
+
+/* .interactive() equivalent — only on touch/pointer targets */
+.glass-effect-interactive {
+  cursor: pointer;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.glass-effect-interactive:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    0 0 20px rgba(34, 211, 238, 0.12),
+    0 24px 60px -32px rgba(37, 99, 235, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.glass-effect-interactive:active {
+  transform: scale(0.98);
+}
+
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.45rem 0.85rem;
+  font: inherit;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.btn-glass:hover,
+.btn-glass:focus-visible {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.btn-glass-prominent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  padding: 0.5rem 1.25rem;
+  font: inherit;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.72) 0%, rgba(29, 78, 216, 0.85) 100%);
+  box-shadow:
+    0 0 22px rgba(37, 99, 235, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.btn-glass-prominent:hover,
+.btn-glass-prominent:focus-visible {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.82) 0%, rgba(37, 99, 235, 0.92) 100%);
+  box-shadow: 0 0 28px rgba(59, 130, 246, 0.45);
+  outline: none;
+}
+
+.btn-glass-prominent:active {
+  transform: scale(0.98);
+}
+
+.liquid-glass-nav {
+  pointer-events: none;
+}
+
+.liquid-glass-nav .glass-effect-container {
+  pointer-events: auto;
+}
+
 @layer base {
   html {
     @apply scroll-smooth;
@@ -617,6 +838,29 @@
   outline-offset: 4px;
 }
 
+/* Hangar grid: primary action is expand (Cmd/Ctrl-click still follows href) */
+.fleet-card--hangar-expand {
+  cursor: pointer;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    opacity 0.28s ease;
+}
+
+.fleet-card--hangar-expand:active {
+  transform: scale(0.992);
+}
+
+.fleet-card--hangar-expand:hover .fleet-card__glass,
+.fleet-card--hangar-expand:focus-visible .fleet-card__glass {
+  border-color: color-mix(in srgb, rgba(56, 189, 248, 0.55) 40%, rgba(255, 255, 255, 0.22));
+  box-shadow:
+    0 24px 60px -36px rgba(37, 99, 235, 0.6),
+    0 0 28px -12px rgba(56, 189, 248, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -24px 48px -36px rgba(2, 8, 23, 0.75);
+}
+
 .fleet-card__glass {
   position: relative;
   height: 100%;
@@ -680,6 +924,54 @@
 /* Intel route: fixed three-jet escort on viewport edges (lg+) */
 .intel-page {
   position: relative;
+}
+
+/* Nav: USJET wordmark — oscillating electric cyan / white (throttle glow) */
+@keyframes usjet-nav-logo-throttle-glow {
+  0% {
+    text-shadow:
+      0 0 4px rgba(34, 211, 238, 0.75),
+      0 0 10px rgba(34, 211, 238, 0.4),
+      0 0 18px rgba(255, 255, 255, 0.06);
+  }
+  100% {
+    text-shadow:
+      0 0 6px rgba(255, 255, 255, 0.55),
+      0 0 14px rgba(34, 211, 238, 0.55),
+      0 0 22px rgba(255, 255, 255, 0.12);
+  }
+}
+
+.nav-brand-usjet {
+  text-decoration: none;
+  animation: usjet-nav-logo-throttle-glow 2.75s ease-in-out infinite alternate;
+}
+
+.nav-brand-usjet:hover,
+.nav-brand-usjet:focus-visible {
+  animation-duration: 1.35s;
+}
+
+.nav-brand-usjet:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.55);
+  outline-offset: 4px;
+  border-radius: 0.35rem;
+}
+
+.hangar-ops-badge {
+  animation: hangar-ops-ready 4s ease-in-out infinite;
+}
+
+@keyframes hangar-ops-ready {
+  0%,
+  100% {
+    border-color: rgba(34, 211, 238, 0.28);
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.06);
+  }
+  50% {
+    border-color: rgba(103, 232, 249, 0.45);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.14);
+  }
 }
 
 .intel-hangar-toast {
@@ -844,6 +1136,11 @@
 }
 
 .intel-grid .intel-expanded {
+  height: 100%;
+  min-height: 0;
+}
+
+.intel-grid .fleet-card {
   height: 100%;
   min-height: 0;
 }
@@ -1203,7 +1500,7 @@
   color: color-mix(in srgb, var(--intel-signal-dim, #fca5a5) 88%, white);
 }
 
-/* Intel expanded 2×2 workstation (iframe) */
+/* Intel expanded 2×2 workstation (market dual-feed) */
 .intel-expanded {
   position: relative;
   z-index: 20;
@@ -1268,6 +1565,16 @@
   color: rgba(148, 163, 184, 0.88);
 }
 
+.intel-expanded__tagline {
+  margin: 0.28rem 0 0;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.45);
+}
+
 .intel-expanded__actions {
   display: flex;
   flex-shrink: 0;
@@ -1323,6 +1630,232 @@
   gap: 0.35rem;
 }
 
+.intel-expanded__body--dual {
+  padding: 0.35rem 0.45rem 0.5rem;
+  gap: 0;
+}
+
+/* Intel market dual-feed (50 / 50) inside expanded 2×2 */
+.intel-market-dual {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 0;
+}
+
+.intel-market-dual__divider {
+  position: relative;
+  z-index: 6;
+  width: 2px;
+  align-self: stretch;
+  margin: 0.35rem 0.3rem;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(34, 211, 238, 0) 0%,
+    rgba(34, 211, 238, 0.55) 22%,
+    rgba(129, 140, 248, 0.5) 50%,
+    rgba(34, 211, 238, 0.55) 78%,
+    rgba(34, 211, 238, 0) 100%
+  );
+  box-shadow:
+    0 0 12px rgba(34, 211, 238, 0.55),
+    0 0 26px rgba(34, 211, 238, 0.2),
+    -2px 0 14px rgba(34, 211, 238, 0.12),
+    2px 0 14px rgba(129, 140, 248, 0.12);
+}
+
+.intel-market-dual__divider::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -6px -12px;
+  z-index: -1;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgba(34, 211, 238, 0.22), transparent 70%);
+}
+
+.intel-market-dual__pane {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(2, 8, 20, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 -18px 36px -22px rgba(0, 0, 0, 0.45);
+}
+
+.intel-market-dual__pulse {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.88;
+  pointer-events: none;
+}
+
+.intel-market-dual__pulse .intel-monitor__graph--ghost {
+  width: 100%;
+  height: 100%;
+  min-height: 5.5rem;
+}
+
+.intel-market-dual__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--intel-signal, #34d399) 12%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--intel-signal, #34d399) 12%, transparent) 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+
+.intel-market-dual__content {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0.5rem 0.55rem 0.55rem;
+}
+
+.intel-market-dual__content--nyse {
+  padding-bottom: 0.45rem;
+}
+
+.intel-market-dual__eyebrow {
+  margin: 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.48rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.55);
+}
+
+.intel-market-dual__instrument {
+  margin: 0;
+  font-family: theme("fontFamily.aviation");
+  letter-spacing: 0.06em;
+  text-shadow:
+    0 0.06em 0.12em rgba(0, 0, 0, 0.88),
+    0 0 0.45rem rgba(2, 8, 23, 0.55),
+    0 0 10px rgba(34, 211, 238, 0.08);
+}
+
+.intel-market-dual__instrument--hero {
+  margin-top: 0.35rem;
+  font-size: clamp(1.1rem, 2.8vw, 1.65rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: rgba(240, 253, 250, 0.96);
+}
+
+.intel-market-dual__instrument--delta {
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.intel-market-dual__instrument--label {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.intel-market-dual__instrument--nyse-clock {
+  margin-top: 0.28rem;
+  font-size: clamp(0.92rem, 2.1vw, 1.18rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+  color: rgba(224, 242, 254, 0.96);
+}
+
+.intel-market-dual__instrument--nyse-date {
+  margin-top: 0.12rem;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.82);
+}
+
+.intel-market-dual__instrument--up {
+  color: rgba(134, 239, 172, 0.95);
+}
+
+.intel-market-dual__instrument--down {
+  color: rgba(252, 165, 165, 0.95);
+}
+
+.intel-market-dual__instrument--muted {
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.intel-market-dual__chart {
+  margin-top: auto;
+  padding-top: 0.45rem;
+  min-height: 3.25rem;
+  flex-shrink: 0;
+}
+
+.intel-market-dual__spark {
+  display: block;
+  width: 100%;
+  height: 2.75rem;
+}
+
+.intel-market-dual__spark-line {
+  fill: none;
+  stroke: rgb(34, 211, 238);
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.25));
+}
+
+.intel-market-dual__chart-placeholder {
+  height: 2.75rem;
+  border-radius: 0.35rem;
+  background: rgba(2, 8, 20, 0.35);
+}
+
+.intel-market-dual__iframe-shell {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  margin-top: 0.35rem;
+  overflow: hidden;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 6, 14, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.intel-market-dual__iframe {
+  flex: 1;
+  width: 100%;
+  min-height: 7.5rem;
+  border: none;
+}
+
 .intel-expanded__frame {
   flex: 1;
   width: 100%;
@@ -1346,6 +1879,231 @@
   color: rgba(34, 211, 238, 0.9);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+.intel-expanded__tactical {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(103, 232, 249, 0.35);
+  background: rgba(6, 40, 48, 0.55);
+  color: rgba(165, 243, 252, 0.95);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.intel-expanded__tactical:hover,
+.intel-expanded__tactical:focus-visible {
+  border-color: rgba(34, 211, 238, 0.55);
+  background: rgba(8, 47, 73, 0.75);
+  color: #ecfeff;
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.35);
+  outline: none;
+}
+
+.hangar-cockpit-frame {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.hangar-tool-workbench {
+  isolation: isolate;
+  animation: hangar-cockpit-enter 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+  border-color: rgba(255, 255, 255, 0.26);
+  background-color: rgb(4 12 26 / 0.96);
+  background-image: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgb(3 10 22 / 0.99) 100%
+  );
+  box-shadow:
+    0 0 28px rgba(34, 211, 238, 0.12),
+    0 20px 50px -32px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -20px 40px -28px rgba(2, 6, 14, 0.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.hangar-tool-workbench .intel-expanded__chrome {
+  background: rgba(2, 10, 24, 0.94);
+}
+
+.hangar-tool-workbench .intel-expanded__body {
+  background: rgba(2, 8, 20, 0.9);
+}
+
+.hangar-tool-workbench .hangar-cockpit-frame {
+  border-radius: 0.5rem;
+  background: rgba(2, 8, 20, 0.88);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.hangar-tool-workbench .intel-expanded__frame {
+  background: rgb(3 10 22 / 0.96);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Hangar shell stays open—aviation-pulse and mesh read through bay gaps & glass negative space */
+.hangar-page {
+  background: transparent;
+}
+
+.hangar-page .intel-grid-wrap,
+.hangar-page .intel-grid {
+  background: transparent;
+}
+
+@keyframes hangar-cockpit-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.988);
+    filter: brightness(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.hangar-iframe--arming {
+  opacity: 0.86;
+  filter: saturate(0.92);
+  transition:
+    opacity 0.45s ease,
+    filter 0.5s ease;
+}
+
+.hangar-iframe--ready {
+  opacity: 1;
+  filter: saturate(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hangar-tool-workbench {
+    animation: none;
+  }
+
+  .hangar-iframe--arming,
+  .hangar-iframe--ready {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
+
+.hangar-embed-shield {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.5rem 0.55rem 0.55rem;
+  border-top: 1px solid rgba(34, 211, 238, 0.38);
+  border-radius: 0 0 0.55rem 0.55rem;
+  background: linear-gradient(180deg, rgba(2, 12, 28, 0.05) 0%, rgba(2, 12, 28, 0.92) 38%, rgba(2, 8, 20, 0.97) 100%);
+  box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.45);
+  animation: hangar-embed-shield-in 0.4s ease-out both;
+}
+
+.hangar-embed-shield__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+@keyframes hangar-embed-shield-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hangar-embed-shield__text {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.52rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: rgba(226, 232, 240, 0.92);
+}
+
+.hangar-embed-shield__dismiss {
+  flex-shrink: 0;
+  display: inline-flex;
+  width: 1.35rem;
+  height: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
+  color: rgba(148, 163, 184, 0.85);
+  background: rgba(255, 255, 255, 0.04);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.hangar-embed-shield__dismiss:hover,
+.hangar-embed-shield__dismiss:focus-visible {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.hangar-embed-shield__cta {
+  align-self: flex-start;
+  cursor: pointer;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(103, 232, 249, 0.45);
+  padding: 0.35rem 0.65rem;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(236, 254, 255, 0.98);
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.55) 0%, rgba(6, 78, 59, 0.45) 100%);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.22);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.hangar-embed-shield__cta:hover,
+.hangar-embed-shield__cta:focus-visible {
+  border-color: rgba(236, 254, 255, 0.55);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.38);
+  outline: none;
+}
+
+.hangar-embed-shield__cta:active {
+  transform: scale(0.98);
 }
 
 .aircraft-icon {

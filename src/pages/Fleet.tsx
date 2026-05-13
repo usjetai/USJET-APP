@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { fleetManifest } from "../data/fleetManifest";
 import FleetCard from "../components/fleet/FleetCard";
+import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { HANGAR_ROWS } from "../types/fleet";
 
 const Fleet = () => (
@@ -12,9 +13,9 @@ const Fleet = () => (
     <motion.h1
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mb-16 text-8xl font-black uppercase italic leading-none tracking-tighter text-white md:text-[11rem]"
+      className="mb-16 flex justify-center"
     >
-      USJET<span className="text-blue-500">.AI</span>
+      <UsjetWordmark size="hero" />
     </motion.h1>
 
     <div

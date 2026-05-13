@@ -1,5 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import { ShieldCheck } from "lucide-react";
+import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
 
 const NAV_LINKS = [
@@ -21,10 +22,10 @@ const AppNav = () => (
     >
       <Link
         to="/"
-        className="nav-brand-usjet shrink-0 font-aviation text-[10px] font-black uppercase italic tracking-[0.14em] text-white/95 sm:text-[11px] sm:tracking-[0.18em]"
+        className="nav-brand-usjet shrink-0"
         aria-label="USJet.ai home"
       >
-        USJET<span className="text-blue-500">.AI</span>
+        <UsjetWordmark size="nav" />
       </Link>
 
       <span className="hidden h-7 w-px shrink-0 bg-white/10 sm:block" aria-hidden />
@@ -46,11 +47,14 @@ const AppNav = () => (
         ))}
       </nav>
 
-      <a
-        href="https://buy.stripe.com/your_stripe_link_here"
-        target="_blank"
-        rel="noreferrer"
-        className="btn-glass-prominent glass-effect-interactive glass-tint-blue shrink-0"
+      <NavLink
+        to="/special"
+        className={({ isActive }) =>
+          [
+            "btn-glass-prominent glass-effect-interactive glass-tint-blue shrink-0",
+            isActive ? "ring-2 ring-cyan-400/45" : "",
+          ].join(" ")
+        }
       >
         <ShieldCheck size={16} className="animate-pulse text-white" aria-hidden />
         <span className="flex flex-col items-start leading-none">
@@ -59,7 +63,7 @@ const AppNav = () => (
             $19.95<span className="text-[9px] lowercase opacity-70">/mo</span>
           </span>
         </span>
-      </a>
+      </NavLink>
     </GlassEffectContainer>
   </header>
 );

@@ -45,16 +45,16 @@ type StorySection = {
   silhouetteType: FleetAircraftType;
 };
 
-/** Drop high-res panels into `public/founder/` (e.g. IMG_0515-origin.jpeg). Vector silhouettes show until images load. */
+/** Japanese animation panels in `public/founder/` — IMG_0516 (Origin), 0517 (Fleet), 0518 (Industry First). */
 const FOUNDERS_STORY: StorySection[] = [
   {
     heading: "The Origin",
     kicker: "Built on Queens Grit",
     paragraph:
       "Every great system starts with a single point of impact. For us, that point was the hustle between Long Beach and Queens. This isn't just code; it's the digital evolution of blue-collar sweat. We took the relentless work ethic of the New York streets—the kind that doesn't punch out until the job is done—and used it as the foundation for usjet.ai. We aren't just building an app; we're honoring the grit that keeps the world moving.",
-    imageSrc: "/founder/IMG_0515-origin.jpeg",
-    imageAlt: "The Origin — Queens grit and the foundation of USJET",
-    imageLabel: "IMG_0515 — The Origin",
+    imageSrc: "/founder/IMG_0516.jpeg",
+    imageAlt: "The Origin — Japanese animation panel",
+    imageLabel: "IMG_0516 — The Origin",
     silhouetteType: "sr71",
   },
   {
@@ -62,9 +62,9 @@ const FOUNDERS_STORY: StorySection[] = [
     kicker: "Wrenches, Not Slides",
     paragraph:
       "This isn't an 'enterprise solution' built in a boardroom—this is a digital hive built by someone who's turned wrenches, not just turned slides. Every unit in this fleet is synchronized to solve real-world problems at a scale the industry hasn't seen yet.",
-    imageSrc: "/founder/IMG_0515-fleet.jpeg",
-    imageAlt: "The Fleet — thirty AI units in synchronized formation",
-    imageLabel: "IMG_0515 — The Fleet",
+    imageSrc: "/founder/IMG_0517.jpeg",
+    imageAlt: "The Fleet — Japanese animation panel",
+    imageLabel: "IMG_0517 — The Fleet",
     silhouetteType: "f35",
   },
   {
@@ -72,9 +72,9 @@ const FOUNDERS_STORY: StorySection[] = [
     kicker: "Pioneering the Blue-Collar AI",
     paragraph:
       "We saw a gap where others saw a wall. While the tech world focused on the abstract, we looked toward the tangible. usjet.ai stands as the world's first AI platform dedicated to the blue-collar sector. By combining first-mover architecture with a deep respect for human labor, we are redefining what it means to work. This is the future of industry: high-fidelity technology meets high-intensity grit.",
-    imageSrc: "/founder/IMG_0515-industry-first.jpeg",
-    imageAlt: "Industry First — blue-collar AI pioneering",
-    imageLabel: "IMG_0515 — Industry First",
+    imageSrc: "/founder/IMG_0518.jpeg",
+    imageAlt: "Industry First — Japanese animation panel",
+    imageLabel: "IMG_0518 — Industry First",
     silhouetteType: "b2",
   },
 ];
@@ -117,16 +117,23 @@ const Founder = () => {
       <div className="founder-page__grid">
         <div className="founder-page__main">
           <article className="founder-story">
-            <GlassEffectContainer
-              className="founder-story__intro glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan flex flex-col gap-0 p-6 sm:p-8"
-            >
-              <p className="founder-story__eyebrow">Founder Field Brief</p>
-              <h1 className="founder-story__title">Three Paragraphs of Grit</h1>
+            <header className="founder-story__hero">
+              <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect--rounded-rect">
+                <img
+                  className="founder-story__hero-logo"
+                  src="/founder/usjet-hero-logo.png"
+                  alt="USJET.AI — liquid glass star emblem"
+                  width={1200}
+                  height={675}
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </GlassEffectContainer>
               <p className="founder-story__lede">
                 Ameer Karim on Queens hustle, the digital hive, and the first AI platform built for
                 blue-collar America.
               </p>
-            </GlassEffectContainer>
+            </header>
 
             {FOUNDERS_STORY.map((section) => {
               const showPhoto = section.imageSrc && !brokenImages[section.heading];
@@ -135,13 +142,14 @@ const Founder = () => {
                 <section key={section.heading} className="founder-story__section">
                   <p className="founder-story__kicker">{section.kicker}</p>
                   <h2 className="founder-story__heading">{section.heading}</h2>
-                  <p className="founder-story__body">{section.paragraph}</p>
 
                   <figure className="founder-story__visual">
                     <div
                       className={[
                         "founder-story__visual-frame glass-effect glass-effect--rounded-rect",
-                        showPhoto ? "founder-story__visual-frame--photo" : "founder-story__visual-frame--vector liquid-glass-background",
+                        showPhoto
+                          ? "founder-story__visual-frame--photo"
+                          : "founder-story__visual-frame--vector liquid-glass-background",
                       ].join(" ")}
                     >
                       {showPhoto ? (
@@ -167,6 +175,8 @@ const Founder = () => {
                     </div>
                     <figcaption className="founder-story__visual-caption">{section.imageLabel}</figcaption>
                   </figure>
+
+                  <p className="founder-story__body founder-story__body--after-panel">{section.paragraph}</p>
                 </section>
               );
             })}

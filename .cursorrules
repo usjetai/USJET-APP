@@ -1,5 +1,12 @@
 # USJET — React + Vite (web). Not a native iOS/SwiftUI app.
 
+## Product vision (four pillars)
+
+1. **Warp Speed** — global `.aviation-pulse.aviation-pulse--warp` in `App.tsx` (fixed, z-index -1); keep page shells transparent.
+2. **Stone wordmark** — `<UsjetWordmark>` + `.usjet-logo-stone` (chiseled Audiowide; `.AI` cyan gradient).
+3. **Founder story** — three `IMG_0515` panels in `public/founder/`; grit copy in `Founder.tsx`.
+4. **Liquid Glass** — web CSS mapping below (never SwiftUI in this repo).
+
 ## Liquid Glass (web mapping of iOS 26 concepts)
 
 Use these CSS classes instead of SwiftUI `glassEffect` / `liquidGlassBackground`:
@@ -29,6 +36,6 @@ Hangar workbench: `.hangar-tool-workbench` uses opaque glass for iframe clarity;
 - Intro hero: `<GlassEffectContainer>` + `.liquid-glass-background` + `.glass-effect` + `.glass-effect--rounded-rect` + `.glass-tint-cyan`.
 - Story panels (vector fallback): same rounded glass on `.founder-story__visual-frame`; photo panels use `--photo` variant without extra blur over the image.
 - Social links: `.btn-glass` + `.glass-effect-interactive` (interactive only on `<a>` targets).
-- **Founder images:** place JPEGs in `public/founder/` as `IMG_0515-origin.jpeg`, `IMG_0515-fleet.jpeg`, `IMG_0515-industry-first.jpeg`.
+- **Founder images:** place JPEGs in `public/founder/` as `IMG_0516.jpeg` (Origin), `IMG_0517.jpeg` (Fleet), `IMG_0518.jpeg` (Industry First), plus `usjet-hero-logo.png` for the hero.
 
 Do not reference SwiftUI APIs in this codebase unless adding a separate native Xcode target.

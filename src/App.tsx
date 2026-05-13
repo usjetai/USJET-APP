@@ -1,5 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import AppNav from "./components/layout/AppNav";
+import PageTransition from "./components/layout/PageTransition";
 import Usa250Countdown from "./components/layout/Usa250Countdown";
 import MovingBackground from "./components/layout/MovingBackground";
 import Fleet from "./pages/Fleet";
@@ -7,6 +9,7 @@ import Hangar from "./pages/Hangar";
 import Intel from "./pages/Intel";
 import Founder from "./pages/Founder";
 import Origin from "./pages/Origin";
+import Special from "./pages/Special";
 
 const globalAtmosphereStyle = {
   position: "fixed",
@@ -18,6 +21,25 @@ const globalAtmosphereStyle = {
   pointerEvents: "none",
 } as const;
 
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <PageTransition key={location.pathname} routeKey={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<Fleet />} />
+          <Route path="/hangar" element={<Hangar />} />
+          <Route path="/intel" element={<Intel />} />
+          <Route path="/founder" element={<Founder />} />
+          <Route path="/origin" element={<Origin />} />
+          <Route path="/special" element={<Special />} />
+        </Routes>
+      </PageTransition>
+    </AnimatePresence>
+  );
+}
+
 export default function App() {
   return (
     <Router>
@@ -28,18 +50,12 @@ export default function App() {
 
         <MovingBackground />
 
-        <div aria-hidden className="aviation-pulse" />
+        <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
 
         <AppNav />
 
         <main className="relative z-10">
-          <Routes>
-            <Route path="/" element={<Fleet />} />
-            <Route path="/hangar" element={<Hangar />} />
-            <Route path="/intel" element={<Intel />} />
-            <Route path="/founder" element={<Founder />} />
-            <Route path="/origin" element={<Origin />} />
-          </Routes>
+          <AnimatedRoutes />
         </main>
 
         <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">

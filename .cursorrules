@@ -1,0 +1,26 @@
+# USJET — React + Vite (web). Not a native iOS/SwiftUI app.
+
+## Liquid Glass (web mapping of iOS 26 concepts)
+
+Use these CSS classes instead of SwiftUI `glassEffect` / `liquidGlassBackground`:
+
+| SwiftUI / iOS 26              | This repo (React + CSS)                                      |
+|-------------------------------|--------------------------------------------------------------|
+| `liquidGlassBackground()`     | `.liquid-glass-background`                                   |
+| `glassEffect` + capsule       | `.glass-effect` + `.glass-effect--capsule`                   |
+| `glassEffect` + rounded rect  | `.glass-effect` + `.glass-effect--rounded-rect`              |
+| `GlassEffectContainer`        | `<GlassEffectContainer>` + `.glass-effect-container`         |
+| `buttonStyle(.glass)`         | `.btn-glass` + `.glass-effect-interactive` on links/buttons  |
+| `buttonStyle(.glassProminent)`| `.btn-glass-prominent`                                       |
+| `.interactive()`              | `.glass-effect-interactive` — only on clickable elements     |
+| `.tint()`                     | `.glass-tint-cyan` / `.glass-tint-blue`                      |
+
+Modifier order (web): layout → visual glass classes → interactive classes → handlers.
+
+Floating chrome: `AppNav` uses `liquid-glass-nav` + `GlassEffectContainer` (native-style capsule header).
+
+Background motion: global `.aviation-pulse` in `App.tsx` (z-index: -1). Keep Hangar grid / page shells transparent so lines read through negative space.
+
+Hangar workbench: `.hangar-tool-workbench` uses opaque glass for iframe clarity; do not make the whole page opaque.
+
+Do not reference SwiftUI APIs in this codebase unless adding a separate native Xcode target.

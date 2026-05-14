@@ -3865,12 +3865,45 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
+.hangar-page--workbench .hangar-bay-grid--cols-1,
+.hangar-page--workbench .hangar-bay-grid--cols-2 {
+  min-width: unset;
+  grid-template-rows: unset;
+}
+
+.hangar-page--workbench .hangar-bay-grid--cols-2 .hangar-tool-workbench {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .hangar-page--workbench .hangar-bay-grid--cols-2 .hangar-tool-workbench {
+    grid-column: span 2;
+  }
+}
+
+.hangar-layout-toggle__btn {
+  padding: 0.5rem 0.9rem;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(254, 243, 199, 0.82);
+}
+
+.hangar-layout-toggle__btn--active {
+  color: rgb(252 211 77);
+  border-color: color-mix(in srgb, rgba(251, 191, 36, 0.72) 55%, rgba(255, 255, 255, 0.22));
+  box-shadow:
+    0 0 20px color-mix(in srgb, rgba(251, 191, 36, 0.38) 40%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
 @media (min-width: 1024px) {
   .hangar-bay-grid-wrap {
     overflow-x: auto;
   }
 
-  .hangar-page--workbench .hangar-bay-grid {
+  .hangar-page--workbench .hangar-bay-grid:not(.hangar-bay-grid--cols-1):not(.hangar-bay-grid--cols-2) {
     min-width: 52rem;
     grid-template-rows: repeat(5, minmax(11.5rem, auto));
   }

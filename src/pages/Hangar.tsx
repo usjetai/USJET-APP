@@ -6,9 +6,10 @@ import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
+import { type HangarColumnLayout, useHangarColumnLayout } from "../hooks/useHangarColumnLayout";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
 import { KING_KARIM_HANGAR_META } from "../lib/memberMasterKey";
-import { type FleetUnit, FLEET_UNIT_COUNT, HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
+import { type FleetUnit, FLEET_UNIT_COUNT } from "../types/fleet";
 
 const hangarUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 
@@ -22,6 +23,7 @@ const HANGAR_VISION_RIBBON =
 
 const Hangar = () => {
   const { session } = useMemberAuth();
+  const { columns, setColumnLayout } = useHangarColumnLayout();
   const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useFleetGridExpansions(unitBySlot);
 
   useEffect(() => {
@@ -47,15 +49,7 @@ const Hangar = () => {
       const cell = cellPlan.get(slot);
       if (!cell) continue;
 
-      const r0 = Math.floor(slot / HANGAR_COLUMNS);
-      const c0 = slot % HANGAR_COLUMNS;
-      const gridRow = r0 + 1;
-      const gridColumn = c0 + 1;
-
       if (cell.mode === "void") {
-        out.push(
-          <HangarGridVoid key={`void-${slot}`} gridRow={gridRow} gridColumn={gridColumn} />,
-        );
         continue;
       }
 
@@ -65,10 +59,7 @@ const Hangar = () => {
             key={`hangar-wb-${cell.unit.id}-anchor-${slot}`}
             unit={cell.unit}
             onClose={() => closeExpansion(slot)}
-            gridStyle={{
-              gridRow: `${gridRow} / span 2`,
-              gridColumn: `${gridColumn} / span 2`,
-            }}
+            gridStyle={{}}
           />,
         );
         continue;
@@ -87,7 +78,6 @@ const Hangar = () => {
           systemPrompt={u.systemPrompt}
           isCommandBay={u.href === "/origin" || u.slot === 29}
           surface="hangar"
-          style={{ gridRow, gridColumn }}
           onExpandBay={() => tryExpand(u)}
         />,
       );
@@ -107,7 +97,7 @@ const Hangar = () => {
         <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
           <p className="intel-hangar-toast__title">Hangar full</p>
           <p className="intel-hangar-toast__body">
-            Three workstations are live. Close one to open another 2×2 bay.
+            Three workstations are live. Close one to open another cockpit.
           </p>
         </div>
       ) : null}
@@ -135,41 +125,89 @@ const Hangar = () => {
               {HANGAR_VISION_RIBBON}
             </p>
             <p className="mt-4 max-w-2xl text-sm font-medium uppercase tracking-[0.28em] text-amber-200/40">
-              {HANGAR_COLUMNS} bays wide · {HANGAR_ROWS} rows deep · {FLEET_UNIT_COUNT} units · click a bay to expand
-              (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 cockpits)
+              {FLEET_UNIT_COUNT} units · {columns === 1 ? "1-column" : "2-column"} bay floor · click a bay to expand
+              (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous cockpits)
             </p>
+            <HangarLayoutToggle columns={columns} onChange={setColumnLayout} />
           </div>
 
           <MemberPrimeBadge session={session} founderReviewOpen />
         </div>
 
-        <HangarBayGrid gridCells={gridCells} />
+        <HangarBayGrid gridCells={gridCells} columns={columns} />
       </div>
     </div>
   );
 };
 
-function HangarGridVoid({ gridRow, gridColumn }: { gridRow: number; gridColumn: number }) {
+function HangarLayoutToggle({
+  columns,
+  onChange,
+}: {
+  columns: HangarColumnLayout;
+  onChange: (next: HangarColumnLayout) => void;
+}) {
   return (
     <div
-      className="intel-grid__void"
-      style={{ gridRow, gridColumn }}
-      aria-hidden
-    />
+      className="hangar-layout-toggle mt-6 flex flex-wrap items-center gap-2"
+      role="group"
+      aria-label="Hangar bay grid layout"
+    >
+      <span className="mr-1 text-[10px] font-black uppercase tracking-[0.28em] text-amber-200/50">
+        Layout
+      </span>
+      <button
+        type="button"
+        className={[
+          "hangar-layout-toggle__btn btn-glass glass-effect-interactive glass-tint-amber",
+          columns === 1 ? "hangar-layout-toggle__btn--active" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        aria-pressed={columns === 1}
+        onClick={() => onChange(1)}
+      >
+        1 Column
+      </button>
+      <button
+        type="button"
+        className={[
+          "hangar-layout-toggle__btn btn-glass glass-effect-interactive glass-tint-amber",
+          columns === 2 ? "hangar-layout-toggle__btn--active" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        aria-pressed={columns === 2}
+        onClick={() => onChange(2)}
+      >
+        2 Columns
+      </button>
+    </div>
   );
 }
 
-function HangarBayGrid({ gridCells }: { gridCells: ReactNode[] }) {
+function HangarBayGrid({
+  gridCells,
+  columns,
+}: {
+  gridCells: ReactNode[];
+  columns: HangarColumnLayout;
+}) {
+  const gridClass =
+    columns === 1
+      ? "hangar-bay-grid intel-grid grid grid-cols-1 gap-5 hangar-bay-grid--cols-1"
+      : "hangar-bay-grid intel-grid grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-4 hangar-bay-grid--cols-2";
+
   return (
-        <div className="hangar-bay-grid-wrap">
-          <div
-            className="hangar-bay-grid intel-grid grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-4 lg:grid-cols-6 lg:gap-3"
-            role="region"
-            aria-label="USJET hangar: networked AI cockpits in formation"
-          >
-            {gridCells}
-          </div>
-        </div>
+    <div className="hangar-bay-grid-wrap">
+      <div
+        className={gridClass}
+        role="region"
+        aria-label="USJET hangar: networked AI cockpits in formation"
+      >
+        {gridCells}
+      </div>
+    </div>
   );
 }
 

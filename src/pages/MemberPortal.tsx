@@ -5,6 +5,7 @@ import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import MemberFleetControlBoard from "../components/member/MemberFleetControlBoard";
 import MemberFleetUsageChart from "../components/member/MemberFleetUsageChart";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
+import MemberProjectTracker from "../components/member/MemberProjectTracker";
 import MemberVitalsPanel from "../components/member/MemberVitalsPanel";
 import { useMemberAuth } from "../context/MemberAuthContext";
 
@@ -42,6 +43,7 @@ export default function MemberPortal() {
       {active && session ? (
         <section className="member-portal__dashboard" aria-label="Member control board">
           <MemberVitalsPanel session={session} />
+          <MemberProjectTracker customerId={session.customerId} />
           <MemberFleetControlBoard />
           <MemberFleetUsageChart />
         </section>

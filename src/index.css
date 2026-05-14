@@ -7177,6 +7177,301 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: rgba(255, 255, 255, 0.45);
 }
 
+/* ─── Member mission projects ─── */
+.member-projects {
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+}
+
+.member-projects__header {
+  padding: 1.1rem 1.25rem 0.75rem;
+}
+
+.member-projects__kicker {
+  margin: 0;
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.72);
+}
+
+.member-projects__title {
+  margin: 0.35rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: 1.2rem;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.member-projects__copy {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.member-projects__create {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.65rem;
+  padding: 0 1.25rem 1rem;
+}
+
+.member-projects__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.member-projects__field--inline {
+  flex: 1 1 14rem;
+}
+
+.member-projects__field-label {
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.member-projects__input,
+.member-projects__select {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  background: rgba(2, 8, 23, 0.5);
+  color: #f8fafc;
+  font-size: 0.82rem;
+}
+
+.member-projects__select {
+  cursor: pointer;
+}
+
+.member-projects__create-btn,
+.member-projects__add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  background: rgba(14, 116, 144, 0.22);
+  color: #67e8f9;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.member-projects__create-btn:disabled,
+.member-projects__add-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.member-projects__empty {
+  margin: 0;
+  padding: 0 1.25rem 1.25rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.member-projects__workspace {
+  padding: 0 1.25rem 1.15rem;
+}
+
+.member-projects__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.member-projects__tab {
+  padding: 0.4rem 0.7rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(2, 8, 23, 0.38);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.member-projects__tab--active {
+  border-color: rgba(34, 211, 238, 0.45);
+  background: rgba(14, 116, 144, 0.28);
+  color: #e0f2fe;
+}
+
+.member-projects__panel {
+  padding: 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 8, 23, 0.32);
+}
+
+.member-projects__panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.member-projects__panel-title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.member-projects__panel-icon {
+  color: rgba(251, 191, 36, 0.85);
+}
+
+.member-projects__panel-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.member-projects__delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  background: rgba(127, 29, 29, 0.2);
+  color: #fca5a5;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.member-projects__assign {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+
+.member-projects__panel-empty {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.member-projects__assignments {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.member-projects__assignment {
+  padding: 0.65rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 8, 23, 0.38);
+}
+
+.member-projects__assignment-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.member-projects__callsign {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(96, 165, 250, 0.92);
+}
+
+.member-projects__unit-name {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.member-projects__usage {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.member-projects__usage-label {
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.member-projects__usage-count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #67e8f9;
+}
+
+.member-projects__usage-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  background: rgba(14, 116, 144, 0.25);
+  color: #67e8f9;
+  cursor: pointer;
+}
+
+.member-projects__remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.45rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .member-vitals__heartbeat-dot {
     animation: none;

@@ -47,6 +47,7 @@ function waitForVoices(timeoutMs = 750): Promise<SpeechSynthesisVoice[]> {
 export type SpeakWithBrandVoiceOptions = {
   rate?: number;
   pitch?: number;
+  onStart?: () => void;
   onEnd?: () => void;
   onError?: () => void;
 };
@@ -95,6 +96,7 @@ export function speakWithBrandVoice(
     }
 
     utterance.onstart = () => {
+      options?.onStart?.();
       clearResumeTimer();
       resumeTimer = window.setInterval(() => {
         if (!synth.speaking) {

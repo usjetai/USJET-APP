@@ -29,7 +29,8 @@ const BULLETIN_LINES = [
 const ORIGIN_WELCOME =
   "Welcome to USJET. USJET Origin online. Thirty partner systems are networked. Hangar bays launch direct. Intel pulse is live. Command acknowledged.";
 
-const ORIGIN_MIC_GREET = "Welcome to USJET. USJET Origin online.";
+/** Short greet on load — speakableBrand renders as U. S. Jet */
+const ORIGIN_LOAD_GREET = "Welcome to USJET. USJET Origin online.";
 
 function bulletinTrackText(): string {
   return BULLETIN_LINES.map((line) => `◆ ${line}`).join("     ");
@@ -47,10 +48,16 @@ function getSpeechRecognitionCtor():
 export default function Origin() {
   const [micEnabled, setMicEnabled] = useState(false);
   const [voiceMode, setVoiceMode] = useState<VoiceMode>("idle");
+  const [speakLive, setSpeakLive] = useState(false);
   const [voiceLevel, setVoiceLevel] = useState(0);
   const [showTroubleshoot, setShowTroubleshoot] = useState(false);
+  const [showAutoplayBanner, setShowAutoplayBanner] = useState(false);
   const [statusLine, setStatusLine] = useState("Status: Online // Port 8080 Active");
   const micEnabledRef = useRef(false);
+  const speakLiveRef = useRef(false);
+  const bootstrapRef = useRef(false);
+  const greetStartedRef = useRef(false);
+  const autoplayProbeRef = useRef<number | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const speakHandleRef = useRef<{ cancel: () => void } | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -62,6 +69,25 @@ export default function Origin() {
     () => [...fleetManifest].sort((a, b) => a.slot - b.slot),
     [],
   );
+
+  const clearAutoplayProbe = useCallback(() => {
+    if (autoplayProbeRef.current !== null) {
+      window.clearTimeout(autoplayProbeRef.current);
+      autoplayProbeRef.current = null;
+    }
+  }, []);
+
+  const armSpeakChannel = useCallback(() => {
+    speakLiveRef.current = true;
+    setSpeakLive(true);
+    setShowAutoplayBanner(false);
+    clearAutoplayProbe();
+  }, [clearAutoplayProbe]);
+
+  const disarmSpeakChannel = useCallback(() => {
+    speakLiveRef.current = false;
+    setSpeakLive(false);
+  }, []);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -180,22 +206,45 @@ export default function Origin() {
 
   const speakMicGreet = useCallback(() => {
     if (!("speechSynthesis" in window)) {
-      setStatusLine("Mic live — Origin listening");
+      if (micEnabledRef.current) {
+        setStatusLine("Mic live — Origin listening");
+      }
       return;
     }
 
+    greetStartedRef.current = false;
+    clearAutoplayProbe();
+
     speakHandleRef.current?.cancel();
     setVoiceMode("speaking");
-    setStatusLine("Origin acknowledging mic channel…");
+    setStatusLine("Origin voice channel opening…");
 
-    const handle = speakWithBrandVoice(ORIGIN_MIC_GREET, {
+    autoplayProbeRef.current = window.setTimeout(() => {
+      if (!greetStartedRef.current) {
+        setShowAutoplayBanner(true);
+        setVoiceMode("idle");
+        setStatusLine(
+          micEnabledRef.current
+            ? "Mic live — tap banner to enable Origin voice"
+            : "Tap banner to enable Origin voice",
+        );
+      }
+    }, 1800);
+
+    const handle = speakWithBrandVoice(ORIGIN_LOAD_GREET, {
       rate: 0.95,
       pitch: 0.92,
+      onStart: () => {
+        greetStartedRef.current = true;
+        armSpeakChannel();
+      },
       onEnd: () => {
         speakHandleRef.current = null;
         setVoiceMode("idle");
         if (micEnabledRef.current) {
           setStatusLine("Mic live — Origin listening");
+        } else if (speakLiveRef.current) {
+          setStatusLine("Origin voice online.");
         } else {
           setStatusLine("Status: Online // 8080 Active");
         }
@@ -203,10 +252,14 @@ export default function Origin() {
       onError: () => {
         speakHandleRef.current = null;
         setVoiceMode("idle");
+        clearAutoplayProbe();
+        if (!greetStartedRef.current) {
+          setShowAutoplayBanner(true);
+        }
         if (micEnabledRef.current) {
-          setStatusLine("Mic live — Origin listening");
+          setStatusLine("Mic live — tap banner to enable Origin voice");
         } else {
-          setStatusLine("Voice transmit interrupted.");
+          setStatusLine("Voice transmit blocked — tap banner to enable.");
         }
       },
     });
@@ -215,9 +268,12 @@ export default function Origin() {
       speakHandleRef.current = handle;
     } else {
       setVoiceMode("idle");
-      setStatusLine("Mic live — Origin listening");
+      setShowAutoplayBanner(true);
+      if (micEnabledRef.current) {
+        setStatusLine("Mic live — Origin listening");
+      }
     }
-  }, []);
+  }, [armSpeakChannel, clearAutoplayProbe]);
 
   const enableMic = useCallback(async () => {
     stopSpeaking();
@@ -269,8 +325,13 @@ export default function Origin() {
       setShowTroubleshoot(true);
       stopAudioLevelLoop();
       setStatusLine("Microphone permission denied.");
+      speakMicGreet();
     }
   }, [restartRecognition, speakMicGreet, stopAudioLevelLoop, stopSpeaking]);
+
+  const resumeAutoplayVoice = useCallback(() => {
+    speakMicGreet();
+  }, [speakMicGreet]);
 
   const startSpeak = useCallback(() => {
     disableMic();
@@ -287,6 +348,9 @@ export default function Origin() {
     const handle = speakWithBrandVoice(ORIGIN_WELCOME, {
       rate: 0.95,
       pitch: 0.92,
+      onStart: () => {
+        armSpeakChannel();
+      },
       onEnd: () => {
         speakHandleRef.current = null;
         setVoiceMode("idle");
@@ -306,15 +370,25 @@ export default function Origin() {
     }
 
     speakHandleRef.current = handle;
-  }, [disableMic, stopSpeaking]);
+  }, [armSpeakChannel, disableMic, stopSpeaking]);
+
+  useEffect(() => {
+    if (bootstrapRef.current) return;
+    bootstrapRef.current = true;
+    void enableMic();
+  }, [enableMic]);
 
   useEffect(
     () => () => {
+      clearAutoplayProbe();
       disableMic();
       stopSpeaking();
+      disarmSpeakChannel();
     },
-    [disableMic, stopSpeaking],
+    [clearAutoplayProbe, disableMic, disarmSpeakChannel, stopSpeaking],
   );
+
+  const speakActive = speakLive || voiceMode === "speaking";
 
   const shellClass = [
     "origin-voice-shell",
@@ -324,7 +398,7 @@ export default function Origin() {
     .filter(Boolean)
     .join(" ");
 
-  const shieldAura = micEnabled ? "listening" : voiceMode === "speaking" ? "talking" : "idle";
+  const shieldAura = micEnabled ? "listening" : speakActive ? "talking" : "idle";
 
   return (
     <div className="origin-page page-atmosphere page-nav-offset relative min-h-screen overflow-hidden pb-24">
@@ -353,6 +427,16 @@ export default function Origin() {
         </header>
 
         <div className="origin-page__core mb-12 flex w-full max-w-3xl flex-col items-center">
+          {showAutoplayBanner ? (
+            <div className="origin-autoplay-banner mb-4 w-full max-w-lg" role="status">
+              <p className="origin-autoplay-banner__text">
+                Browser blocked auto voice. Tap once to hear the Origin welcome.
+              </p>
+              <button type="button" className="origin-autoplay-banner__btn" onClick={resumeAutoplayVoice}>
+                Enable Origin voice
+              </button>
+            </div>
+          ) : null}
           <div
             className={shellClass}
             style={{ ["--voice-level" as string]: String(voiceLevel.toFixed(3)) }}
@@ -406,17 +490,25 @@ export default function Origin() {
 
             <button
               type="button"
-              className="group absolute -right-6 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-xl transition-all hover:border-cyan-400/50 hover:bg-white/10 sm:-right-28"
+              className={`group absolute -right-6 top-1/2 z-10 -translate-y-1/2 rounded-full border p-5 shadow-xl backdrop-blur-xl transition-all sm:-right-28 ${
+                speakActive
+                  ? "border-cyan-400/60 bg-cyan-500/10 hover:border-cyan-300/80 hover:bg-cyan-500/15"
+                  : "border-white/10 bg-white/5 hover:border-cyan-400/50 hover:bg-white/10"
+              }`}
               onClick={voiceMode === "speaking" ? stopSpeaking : startSpeak}
-              aria-pressed={voiceMode === "speaking"}
+              aria-pressed={speakActive}
               aria-label={voiceMode === "speaking" ? "Stop Origin briefing" : "Speak Origin briefing"}
             >
               <Volume2
                 className={`h-8 w-8 transition-colors ${
-                  voiceMode === "speaking" ? "text-cyan-300" : "text-white/40 group-hover:text-cyan-400"
+                  speakActive ? "text-cyan-300" : "text-white/40 group-hover:text-cyan-400"
                 }`}
               />
-              <span className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-widest text-white/20 group-hover:text-cyan-400 sm:block">
+              <span
+                className={`absolute -bottom-8 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-widest sm:block ${
+                  speakActive ? "text-cyan-300" : "text-white/20 group-hover:text-cyan-400"
+                }`}
+              >
                 {voiceMode === "speaking" ? "Stop" : "Speak"}
               </span>
             </button>

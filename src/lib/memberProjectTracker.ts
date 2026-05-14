@@ -193,6 +193,28 @@ export function readMemberProjects(customerId: string): MemberProject[] {
   );
 }
 
+export type SavedMissionRecord = {
+  projectId: string;
+  projectName: string;
+  assignment: ProjectFleetAssignment;
+};
+
+/** All saved assignments for this member — newest save first. */
+export function readSavedMissionRecords(customerId: string): SavedMissionRecord[] {
+  return readMemberProjects(customerId).flatMap((project) =>
+    project.assignments
+      .filter((assignment) => assignment.isSaved && assignment.searchIntent.trim())
+      .map((assignment) => ({
+        projectId: project.id,
+        projectName: project.name,
+        assignment,
+      })),
+  ).sort(
+    (a, b) =>
+      new Date(b.assignment.savedAt).getTime() - new Date(a.assignment.savedAt).getTime(),
+  );
+}
+
 export function createMemberProject(customerId: string, name: string): MemberProject | null {
   const trimmed = name.trim();
   if (!trimmed) {

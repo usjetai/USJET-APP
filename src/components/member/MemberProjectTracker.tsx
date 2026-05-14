@@ -9,6 +9,7 @@ import {
   createMemberProject,
   deleteMemberProject,
   readMemberProjects,
+  readSavedMissionRecords,
   removeFleetUnitFromProject,
   saveProjectAssignment,
   setMemberActiveProject,
@@ -16,10 +17,26 @@ import {
   unlockProjectAssignment,
   type MemberProject,
   type ProjectFleetAssignment,
+  type SavedMissionRecord,
 } from "../../lib/memberProjectTracker";
 
 const fleetUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const HOLD_MESSAGE_MS = 6000;
+const SAVE_FLASH_MS = 2400;
+
+function formatSavedTimestamp(iso: string): string {
+  if (!iso) {
+    return "—";
+  }
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+}
 
 const SESSION_FORKS_DISCIPLINE =
   "Parallel browser sessions fragment your project. Without discipline, you burn RAM, lose continuity, and start over. USJET tracks session forks so you operate like a professional—not a clone factory.";
@@ -37,7 +54,11 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
   useEffect(() => subscribeMemberProjects(() => setTick((value) => value + 1)), []);
 
   const projects = useMemo(() => readMemberProjects(customerId), [customerId, tick]);
+  const savedRecords = useMemo(() => readSavedMissionRecords(customerId), [customerId, tick]);
   const activeProject = projects.find((project) => project.id === activeProjectId) ?? projects[0] ?? null;
+  const activeProjectHasSaves = Boolean(
+    activeProject?.assignments.some((assignment) => assignment.isSaved),
+  );
 
   useEffect(() => {
     if (projects.length === 0) {
@@ -90,7 +111,14 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
   };
 
   return (
-    <GlassEffectContainer className="member-projects glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
+    <GlassEffectContainer
+      className={[
+        "member-projects glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan",
+        savedRecords.length > 0 ? "member-projects--has-saves" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <div className="member-projects__header">
         <p className="member-projects__kicker">Mission control</p>
         <h2 className="member-projects__title">Mission Projects</h2>
@@ -99,6 +127,10 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
         wastes work—operate with discipline.
       </p>
       </div>
+
+      {savedRecords.length > 0 ? (
+        <SavedRecordsPanel records={savedRecords} onSelectProject={handleSelectProject} />
+      ) : null}
 
       <form className="member-projects__create" onSubmit={handleCreate}>
         <label className="member-projects__field">
@@ -132,6 +164,9 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
                 className={[
                   "member-projects__tab glass-effect-interactive",
                   activeProject?.id === project.id ? "member-projects__tab--active" : "",
+                  project.assignments.some((assignment) => assignment.isSaved)
+                    ? "member-projects__tab--has-saves"
+                    : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
@@ -146,6 +181,7 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
             <ProjectWorkspace
               customerId={customerId}
               project={activeProject}
+              hasSavedAssignments={activeProjectHasSaves}
               availableUnits={availableUnits}
               pickerUnitId={pickerUnitId}
               onPickerChange={setPickerUnitId}
@@ -158,9 +194,50 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
   );
 }
 
+type SavedRecordsPanelProps = {
+  records: SavedMissionRecord[];
+  onSelectProject: (projectId: string) => void;
+};
+
+function SavedRecordsPanel({ records, onSelectProject }: SavedRecordsPanelProps) {
+  return (
+    <section className="member-projects__saved-log" aria-label="Saved mission records">
+      <div className="member-projects__saved-log-head">
+        <p className="member-projects__saved-log-kicker">Your account</p>
+        <h3 className="member-projects__saved-log-title">Saved mission log</h3>
+        <p className="member-projects__saved-log-copy">
+          {records.length} saved assignment{records.length === 1 ? "" : "s"} on this device — retrievable
+          after refresh while you stay signed in.
+        </p>
+      </div>
+      <ul className="member-projects__saved-log-list">
+        {records.map((record) => (
+          <li key={`${record.projectId}-${record.assignment.unitId}`} className="member-projects__saved-log-item">
+            <button
+              type="button"
+              className="member-projects__saved-log-link glass-effect-interactive"
+              onClick={() => onSelectProject(record.projectId)}
+            >
+              <span className="member-projects__saved-log-project">{record.projectName}</span>
+              <span className="member-projects__saved-log-unit">
+                {record.assignment.callsign} — {record.assignment.name}
+              </span>
+              <span className="member-projects__saved-log-intent">{record.assignment.searchIntent}</span>
+              <time className="member-projects__saved-log-time" dateTime={record.assignment.savedAt}>
+                {formatSavedTimestamp(record.assignment.savedAt)}
+              </time>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 type ProjectWorkspaceProps = {
   customerId: string;
   project: MemberProject;
+  hasSavedAssignments: boolean;
   availableUnits: typeof fleetUnits;
   pickerUnitId: string;
   onPickerChange: (value: string) => void;
@@ -170,13 +247,22 @@ type ProjectWorkspaceProps = {
 function ProjectWorkspace({
   customerId,
   project,
+  hasSavedAssignments,
   availableUnits,
   pickerUnitId,
   onPickerChange,
   onAddUnit,
 }: ProjectWorkspaceProps) {
   return (
-    <div className="member-projects__panel" role="tabpanel">
+    <div
+      className={[
+        "member-projects__panel",
+        hasSavedAssignments ? "member-projects__panel--saved" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      role="tabpanel"
+    >
       <div className="member-projects__panel-head">
         <div className="member-projects__panel-title-row">
           <FolderKanban size={16} aria-hidden className="member-projects__panel-icon" />
@@ -258,7 +344,9 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
   const [draftSearch, setDraftSearch] = useState(assignment.searchIntent);
   const [editing, setEditing] = useState(!assignment.isSaved);
   const [holdVisible, setHoldVisible] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
   const holdTimerRef = useRef<number | null>(null);
+  const flashTimerRef = useRef<number | null>(null);
   const unitSlot = fleetUnits.find((unit) => unit.id === assignment.unitId)?.slot;
   const accentStyle = typeof unitSlot === "number" ? fleetBayAccentStyle(unitSlot) : undefined;
 
@@ -272,6 +360,9 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
       if (holdTimerRef.current !== null) {
         window.clearTimeout(holdTimerRef.current);
       }
+      if (flashTimerRef.current !== null) {
+        window.clearTimeout(flashTimerRef.current);
+      }
     },
     [],
   );
@@ -282,7 +373,15 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
     }
     saveProjectAssignment(customerId, projectId, assignment.unitId, draftSearch);
     setEditing(false);
+    setJustSaved(true);
     setHoldVisible(true);
+    if (flashTimerRef.current !== null) {
+      window.clearTimeout(flashTimerRef.current);
+    }
+    flashTimerRef.current = window.setTimeout(() => {
+      setJustSaved(false);
+      flashTimerRef.current = null;
+    }, SAVE_FLASH_MS);
     if (holdTimerRef.current !== null) {
       window.clearTimeout(holdTimerRef.current);
     }
@@ -295,6 +394,7 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
   const handleEdit = () => {
     unlockProjectAssignment(customerId, projectId, assignment.unitId);
     setEditing(true);
+    setJustSaved(false);
   };
 
   const parallelSessions = assignment.sessionForks > 1;
@@ -305,6 +405,7 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
       className={[
         "member-projects__assignment member-projects__assignment--bay-accent",
         locked ? "member-projects__assignment--saved" : "",
+        justSaved ? "member-projects__assignment--just-saved" : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -340,7 +441,7 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
 
       {holdVisible ? (
         <p className="member-projects__hold" role="status" aria-live="polite">
-          {MEMBER_ASSIGNMENT_HOLD_MESSAGE}
+          {MEMBER_ASSIGNMENT_HOLD_MESSAGE} Saved to your account — see mission log above.
         </p>
       ) : null}
     </li>
@@ -373,12 +474,24 @@ function SavedRecord({ assignment, onEdit, onRemove }: SavedRecordProps) {
     <div className="member-projects__saved-record">
       <div className="member-projects__saved-fields">
         <div className="member-projects__saved-field">
+          <span className="member-projects__field-label">Fleet unit</span>
+          <p className="member-projects__saved-value">
+            {assignment.callsign} — {assignment.name}
+          </p>
+        </div>
+        <div className="member-projects__saved-field">
           <span className="member-projects__field-label">Prompt call sign</span>
           <p className="member-projects__saved-value">{assignment.copilotName}</p>
         </div>
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">What you are searching</span>
           <p className="member-projects__saved-value">{assignment.searchIntent}</p>
+        </div>
+        <div className="member-projects__saved-field">
+          <span className="member-projects__field-label">Saved at</span>
+          <p className="member-projects__saved-value member-projects__saved-value--timestamp">
+            <time dateTime={assignment.savedAt}>{formatSavedTimestamp(assignment.savedAt)}</time>
+          </p>
         </div>
       </div>
       <div className="member-projects__assignment-actions member-projects__assignment-actions--saved">

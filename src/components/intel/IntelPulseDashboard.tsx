@@ -2,14 +2,13 @@ import { Activity, Wrench } from "lucide-react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import EkgPulseLine from "./EkgPulseLine";
 import MarketCandlesticks from "./MarketCandlesticks";
-import SovereignPartnershipBay from "./SovereignPartnershipBay";
 import TickerDisplay from "./TickerDisplay";
 import { getWingForSlot } from "../../lib/intelWings";
 
-const PULSE_WINGS: { slot: number; volatility: number; sovereign?: boolean }[] = [
+const PULSE_WINGS: { slot: number; volatility: number }[] = [
+  { slot: 2, volatility: 420 },
   { slot: 12, volatility: 18 },
   { slot: 22, volatility: 4.2 },
-  { slot: 2, volatility: 420, sovereign: true },
 ];
 
 export default function IntelPulseDashboard() {
@@ -48,10 +47,6 @@ export default function IntelPulseDashboard() {
 
       <div className="intel-pulse__wing-grid">
         {PULSE_WINGS.map((wing, index) => {
-          if (wing.sovereign) {
-            return <SovereignPartnershipBay key="sovereign-crypto-slot-01" />;
-          }
-
           const config = getWingForSlot(wing.slot);
 
           return (

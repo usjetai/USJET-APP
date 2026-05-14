@@ -2043,6 +2043,191 @@
   animation: intel-scan 2.8s linear infinite;
 }
 
+/* Intel grid — Slot 01 (market) & Slot 02 (crypto) partnership bays */
+.intel-reserved-bay--hot {
+  animation: intel-reserved-engine-pulse 1.55s ease-in-out infinite;
+}
+
+.intel-reserved-bay--hot .intel-monitor__scan,
+.intel-reserved-bay__scan,
+.intel-reserved-bay--crypto .intel-monitor__scan {
+  animation-duration: 1.65s;
+}
+
+.intel-reserved-bay--hot .intel-ekg__beacon,
+.intel-reserved-bay--crypto .intel-ekg__beacon {
+  animation-duration: 0.72s;
+}
+
+@keyframes intel-reserved-engine-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.012);
+    filter: brightness(1.06);
+  }
+}
+
+.intel-reserved-bay__screen {
+  position: relative;
+}
+
+.intel-reserved-bay__ekg {
+  opacity: 0.92;
+}
+
+.intel-reserved-bay--crypto .intel-reserved-bay__ekg .intel-ekg__trace--main {
+  stroke: rgba(255, 215, 0, 0.82);
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.55)) drop-shadow(0 0 16px rgba(255, 193, 7, 0.28));
+}
+
+.intel-reserved-bay--crypto .intel-reserved-bay__ekg .intel-ekg__trace--echo {
+  stroke: rgba(255, 215, 0, 0.28);
+}
+
+.intel-reserved-bay--crypto .intel-reserved-bay__ekg .intel-ekg__beacon {
+  fill: #ffd700;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.9));
+}
+
+.intel-reserved-bay--market {
+  --intel-signal: #22d3ee;
+  --intel-signal-bright: #67e8f9;
+}
+
+.intel-reserved-bay--crypto {
+  --intel-signal: #ffd700;
+  --intel-signal-bright: #ffe566;
+  border: 1px solid rgba(255, 215, 0, 0.38);
+  background: rgba(8, 6, 2, 0.22);
+  box-shadow:
+    0 0 36px rgba(255, 215, 0, 0.22),
+    0 0 64px rgba(255, 193, 7, 0.1),
+    0 12px 40px -28px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 248, 220, 0.16);
+  animation: intel-reserved-crypto-glow 1.55s ease-in-out infinite;
+}
+
+@keyframes intel-reserved-crypto-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 28px rgba(255, 215, 0, 0.18),
+      0 12px 40px -28px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 248, 220, 0.14);
+    border-color: rgba(255, 215, 0, 0.32);
+  }
+  50% {
+    box-shadow:
+      0 0 48px rgba(255, 215, 0, 0.38),
+      0 0 80px rgba(255, 193, 7, 0.16),
+      0 16px 44px -24px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 248, 220, 0.24);
+    border-color: rgba(255, 215, 0, 0.52);
+  }
+}
+
+.intel-reserved-bay__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  text-align: center;
+}
+
+.intel-reserved-bay__overlay--market {
+  border-radius: inherit;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(2, 12, 24, 0.52);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.intel-reserved-bay__market-label {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: clamp(0.52rem, 1.4vw, 0.68rem);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.92);
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.35);
+}
+
+.intel-reserved-bay__overlay--crypto {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 6, 2, 0.35) 0%,
+    rgba(2, 4, 8, 0.55) 100%
+  );
+}
+
+.intel-reserved-bay__titans {
+  margin: 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(0.72rem, 1.8vw, 0.95rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 220, 0.98) 0%,
+    rgba(255, 215, 0, 0.95) 45%,
+    rgba(184, 134, 11, 0.92) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(255, 193, 7, 0.4));
+}
+
+.intel-reserved-bay__hook {
+  margin: 0;
+  max-width: 11rem;
+  font-size: 0.46rem;
+  font-weight: 800;
+  line-height: 1.55;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(254, 243, 199, 0.68);
+}
+
+.intel-reserved-bay__email {
+  color: rgba(255, 215, 0, 0.9);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.intel-reserved-bay__email:hover {
+  color: rgba(255, 248, 220, 1);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intel-reserved-bay--hot,
+  .intel-reserved-bay--crypto {
+    animation: none;
+  }
+
+  .intel-reserved-bay--hot .intel-monitor__scan,
+  .intel-reserved-bay__scan {
+    animation-duration: 2.8s;
+  }
+}
+
 .intel-monitor__graph {
   position: relative;
   flex: 1;

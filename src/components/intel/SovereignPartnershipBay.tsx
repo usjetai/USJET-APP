@@ -1,3 +1,4 @@
+import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import EkgPulseLine from "./EkgPulseLine";
 
@@ -23,8 +24,8 @@ export default function SovereignPartnershipBay() {
           </h2>
           <p className="intel-sovereign-bay__subtext">
             SLOT 01: RESERVED FOR PREMIER CRYPTO EXCHANGE. ENQUIRE AT{" "}
-            <a className="intel-sovereign-bay__email" href="mailto:ops@usjet.ai">
-              OPS@USJET.AI
+            <a className="intel-sovereign-bay__email" href={`mailto:${USJET_OPS_EMAIL}`}>
+              {USJET_OPS_EMAIL.toUpperCase()}
             </a>
           </p>
         </div>

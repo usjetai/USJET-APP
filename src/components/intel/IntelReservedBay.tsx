@@ -4,6 +4,7 @@ import EkgPulseLine from "./EkgPulseLine";
 import ReservedBayLiveMock from "./ReservedBayLiveMock";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import { usePartnershipBayAnalytics } from "../../hooks/usePartnershipBayAnalytics";
+import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
 import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
 
 export type IntelReservedVariant = "market" | "crypto";
@@ -91,8 +92,8 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
             <h2 className="intel-reserved-bay__titans">RESERVED FOR TITANS</h2>
             <p className="intel-reserved-bay__hook">
               PREMIUM EXCHANGE PARTNERSHIP ENQUIRIES:{" "}
-              <a className="intel-reserved-bay__email" href="mailto:ops@usjet.ai" onClick={stopBubble}>
-                OPS@USJET.AI
+              <a className="intel-reserved-bay__email" href={`mailto:${USJET_OPS_EMAIL}`} onClick={stopBubble}>
+                {USJET_OPS_EMAIL.toUpperCase()}
               </a>
             </p>
             <button

@@ -5,7 +5,7 @@ import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
-import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
+import { useHangarGridExpansions } from "../hooks/useHangarGridExpansions";
 import { type HangarColumnLayout, useHangarColumnLayout } from "../hooks/useHangarColumnLayout";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
 import { KING_KARIM_HANGAR_META } from "../lib/memberMasterKey";
@@ -24,7 +24,7 @@ const HANGAR_VISION_RIBBON =
 const Hangar = () => {
   const { session } = useMemberAuth();
   const { columns, setColumnLayout } = useHangarColumnLayout();
-  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useFleetGridExpansions(unitBySlot);
+  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useHangarGridExpansions(unitBySlot);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -49,17 +49,12 @@ const Hangar = () => {
       const cell = cellPlan.get(slot);
       if (!cell) continue;
 
-      if (cell.mode === "void") {
-        continue;
-      }
-
       if (cell.mode === "expanded") {
         out.push(
           <HangarToolWorkbench
-            key={`hangar-wb-${cell.unit.id}-anchor-${slot}`}
+            key={`hangar-wb-${cell.unit.id}-slot-${slot}`}
             unit={cell.unit}
             onClose={() => closeExpansion(slot)}
-            gridStyle={{}}
           />,
         );
         continue;

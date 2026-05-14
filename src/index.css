@@ -4291,11 +4291,22 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
-.hangar-page--workbench .hangar-bay-grid--cols-1 .hangar-tool-workbench,
-.hangar-page--workbench .hangar-bay-grid--cols-2 .hangar-tool-workbench,
-.hangar-page--workbench .hangar-bay-grid--cols-3 .hangar-tool-workbench {
-  grid-column: 1 / -1;
-  z-index: 1;
+.hangar-page--workbench .hangar-bay-grid .hangar-tool-workbench {
+  position: relative;
+  z-index: auto;
+  grid-column: auto;
+  grid-row: auto;
+  aspect-ratio: auto;
+  min-height: 22rem;
+}
+
+.hangar-page--workbench .hangar-tool-workbench .hangar-cockpit-frame {
+  flex: 1;
+  min-height: 14rem;
+}
+
+.hangar-page--workbench .hangar-tool-workbench .intel-expanded__frame {
+  min-height: 14rem;
 }
 
 .hangar-layout-toggle__btn {
@@ -4336,13 +4347,9 @@
 @keyframes hangar-cockpit-enter {
   from {
     opacity: 0;
-    transform: scale(0.988);
-    filter: brightness(0.88);
   }
   to {
     opacity: 1;
-    transform: scale(1);
-    filter: brightness(1);
   }
 }
 

@@ -14,11 +14,15 @@ function auraBlobClass(aura: FleetAuraMode): string {
     return "aura-blob aura-blob--listening";
   }
 
+  if (aura === "processing") {
+    return "aura-blob aura-blob--processing";
+  }
+
   if (aura === "talking") {
     return "aura-blob aura-blob--talking";
   }
 
-  return "aura-blob";
+  return "aura-blob aura-blob--idle";
 }
 
 export default function AuraFrame({
@@ -49,6 +53,7 @@ export default function AuraFrame({
         className={[
           "tool-card h-full rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-white/10 via-white/[0.03] to-transparent backdrop-blur-xl",
           aura === "listening" ? "ring-1 ring-teal-300/40" : "",
+          aura === "processing" ? "ring-1 ring-amber-400/45" : "",
           aura === "talking" ? "ring-1 ring-sky-400/50" : "",
         ]
           .filter(Boolean)

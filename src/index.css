@@ -3348,8 +3348,228 @@
 }
 
 .hangar-page .intel-grid-wrap,
-.hangar-page .intel-grid {
+.hangar-page .intel-grid,
+.hangar-page .hangar-bay-grid-wrap,
+.hangar-page .hangar-bay-grid {
   background: transparent;
+}
+
+/* ── Fleet runway vs Hangar workbench — unmistakable visual dialects ── */
+
+.glass-tint-amber {
+  --glass-tint: rgba(251, 191, 36, 0.28);
+  border-color: color-mix(in srgb, var(--glass-tint) 48%, rgba(255, 255, 255, 0.18));
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--glass-tint) 32%, transparent),
+    0 24px 60px -36px rgba(120, 53, 15, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.fleet-page--runway {
+  position: relative;
+}
+
+.fleet-page--runway::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 130% 55% at 50% -8%, rgba(34, 211, 238, 0.09), transparent 58%),
+    radial-gradient(ellipse 70% 45% at 100% 40%, rgba(37, 99, 235, 0.07), transparent 52%),
+    radial-gradient(ellipse 60% 35% at 0% 70%, rgba(56, 189, 248, 0.05), transparent 48%);
+}
+
+.hangar-page--workbench::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 90% 50% at 12% 0%, rgba(251, 191, 36, 0.07), transparent 55%),
+    radial-gradient(ellipse 80% 45% at 88% 100%, rgba(234, 88, 12, 0.05), transparent 52%),
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(180, 83, 9, 0.04), transparent 60%);
+}
+
+/* Fleet runway — wide landscape capsule bays */
+.fleet-runway-grid {
+  align-items: stretch;
+}
+
+.fleet-page--runway .fleet-card--surface-runway {
+  aspect-ratio: 5 / 3;
+  min-height: 8.25rem;
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__glass {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1.15rem 0.85rem 0.95rem;
+  border-radius: 2.75rem;
+  border-color: color-mix(in srgb, rgba(34, 211, 238, 0.42) 38%, rgba(255, 255, 255, 0.2));
+  background:
+    linear-gradient(
+      118deg,
+      rgba(34, 211, 238, 0.1) 0%,
+      rgba(255, 255, 255, 0.06) 38%,
+      rgba(8, 20, 40, 0.5) 100%
+    );
+  box-shadow:
+    0 20px 50px -34px rgba(37, 99, 235, 0.55),
+    0 0 20px -10px rgba(34, 211, 238, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -18px 40px -30px rgba(2, 8, 23, 0.72);
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__glass::before {
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(34, 211, 238, 0.1) 42%,
+    rgba(59, 130, 246, 0.06) 100%
+  );
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__aircraft-wrap {
+  margin-bottom: 0;
+  flex-shrink: 0;
+  width: 4.75rem;
+  border-radius: 9999px;
+  border-color: rgba(34, 211, 238, 0.22);
+  background: rgba(34, 211, 238, 0.06);
+  padding: 0.65rem;
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__aircraft {
+  height: 3.25rem;
+  width: 3.25rem;
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__meta {
+  margin-top: 0;
+  min-width: 0;
+}
+
+.fleet-page--runway .fleet-card--surface-runway h3 {
+  font-size: 0.95rem;
+}
+
+.fleet-page--runway .fleet-card--surface-runway:hover h3,
+.fleet-page--runway .fleet-card--surface-runway:focus-visible h3 {
+  color: rgb(103 232 249);
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__meta p {
+  color: rgba(34, 211, 238, 0.72);
+}
+
+.fleet-page--runway .fleet-card:hover .fleet-card__glass,
+.fleet-page--runway .fleet-card:focus-visible .fleet-card__glass {
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow:
+    0 28px 70px -34px rgba(37, 99, 235, 0.72),
+    0 0 24px -8px rgba(34, 211, 238, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+/* Hangar workbench — tall portrait bay tiles */
+.hangar-bay-grid-wrap {
+  position: relative;
+  min-height: 0;
+  overflow: visible;
+}
+
+.hangar-page--workbench .hangar-bay-grid {
+  isolation: isolate;
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar {
+  aspect-ratio: 4 / 5;
+  min-height: 13.5rem;
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass {
+  border-radius: 1rem;
+  border-color: color-mix(in srgb, rgba(251, 191, 36, 0.45) 36%, rgba(255, 255, 255, 0.18));
+  background:
+    linear-gradient(
+      168deg,
+      rgba(251, 191, 36, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 36%,
+      rgba(28, 16, 8, 0.52) 100%
+    );
+  box-shadow:
+    0 22px 55px -36px rgba(180, 83, 9, 0.5),
+    0 0 18px -12px rgba(251, 191, 36, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    inset 0 -22px 44px -32px rgba(20, 10, 4, 0.78);
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass::before {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(251, 191, 36, 0.12) 40%,
+    rgba(234, 88, 12, 0.06) 100%
+  );
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__aircraft-wrap {
+  border-radius: 0.75rem;
+  border-color: rgba(251, 191, 36, 0.22);
+  background: rgba(251, 191, 36, 0.05);
+}
+
+.hangar-page--workbench .fleet-card--hangar-expand:hover .fleet-card__glass,
+.hangar-page--workbench .fleet-card--hangar-expand:focus-visible .fleet-card__glass {
+  border-color: color-mix(in srgb, rgba(251, 191, 36, 0.62) 42%, rgba(255, 255, 255, 0.22));
+  box-shadow:
+    0 24px 60px -36px rgba(180, 83, 9, 0.55),
+    0 0 26px -10px rgba(251, 191, 36, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar:hover h3,
+.hangar-page--workbench .fleet-card--surface-hangar:focus-visible h3 {
+  color: rgb(252 211 77);
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__meta p {
+  color: rgba(251, 191, 36, 0.65);
+}
+
+.hangar-page--workbench .hangar-tool-workbench {
+  border-color: rgba(251, 191, 36, 0.28);
+  box-shadow:
+    0 0 28px rgba(251, 191, 36, 0.1),
+    0 20px 50px -32px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+@media (min-width: 1024px) {
+  .hangar-bay-grid-wrap {
+    overflow-x: auto;
+  }
+
+  .hangar-page--workbench .hangar-bay-grid {
+    min-width: 52rem;
+    grid-template-rows: repeat(5, minmax(11.5rem, auto));
+  }
+}
+
+@media (max-width: 639px) {
+  .fleet-page--runway .fleet-card--surface-runway {
+    aspect-ratio: auto;
+    min-height: 7.5rem;
+  }
+
+  .hangar-page--workbench .fleet-card--surface-hangar {
+    aspect-ratio: auto;
+    min-height: 12rem;
+  }
 }
 
 @keyframes hangar-cockpit-enter {

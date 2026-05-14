@@ -113,28 +113,28 @@ const Hangar = () => {
       ) : null}
 
       <div className="page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
-        <div className="mb-12 flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-10 md:flex-row md:items-end">
+        <div className="hangar-workbench-hero mb-12 flex flex-col items-start justify-between gap-8 border-b border-amber-400/20 pb-10 md:flex-row md:items-end">
           <div className="text-left">
-            <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-black uppercase tracking-[0.35em] text-blue-400">
-              <ShieldCheck size={20} className="shrink-0" />
+            <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-black uppercase tracking-[0.35em] text-amber-300/90">
+              <ShieldCheck size={20} className="shrink-0 text-amber-400" />
               <span>{session?.active ? "Founder's Access Granted" : "Founder's Hangar"}</span>
               <span
-                className="hangar-ops-badge rounded-full border border-cyan-400/35 bg-cyan-500/[0.08] px-3 py-1 text-[8px] font-black tracking-[0.2em] text-cyan-200/90 sm:text-[9px] sm:tracking-[0.28em]"
+                className="hangar-ops-badge rounded-md border border-amber-400/40 bg-amber-500/[0.1] px-3 py-1 text-[8px] font-black tracking-[0.2em] text-amber-100/90 sm:text-[9px] sm:tracking-[0.28em]"
                 title="Each bay is a USJET cockpit—expand to bring the partner AI aboard without leaving the hangar"
               >
-                Open for flight operations
+                Bay floor · workbench ops
               </span>
             </div>
             <h1 className="font-aviation text-6xl font-black uppercase italic leading-[0.9] tracking-tighter text-white sm:text-7xl lg:text-8xl">
-              The <span className="text-blue-500">Hangar</span>
+              The <span className="text-amber-400">Hangar</span>
             </h1>
             <p className="mt-5 max-w-3xl text-base font-medium leading-relaxed tracking-tight text-white/70">
               {HANGAR_META_DESCRIPTION}
             </p>
-            <p className="mt-3 max-w-3xl text-sm font-medium leading-relaxed tracking-tight text-cyan-100/55">
+            <p className="mt-3 max-w-3xl text-sm font-medium leading-relaxed tracking-tight text-amber-100/55">
               {HANGAR_VISION_RIBBON}
             </p>
-            <p className="mt-4 max-w-2xl text-sm font-medium uppercase tracking-[0.28em] text-white/45">
+            <p className="mt-4 max-w-2xl text-sm font-medium uppercase tracking-[0.28em] text-amber-200/40">
               {HANGAR_COLUMNS} bays wide · {HANGAR_ROWS} rows deep · {FLEET_UNIT_COUNT} units · click a bay to expand
               (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 cockpits)
             </p>

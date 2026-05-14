@@ -8032,6 +8032,22 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   margin-top: 0.35rem;
 }
 
+.founder-special-1995__cta--clearance .founder-special-1995__cta-kicker {
+  color: rgba(103, 232, 249, 0.85);
+}
+
+.founder-special-1995__cta-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #a5f3fc;
+  text-shadow: 0 0 18px rgba(34, 211, 238, 0.35);
+}
+
 /* ─── Founder 1995 Feature Grid — Past / Present / Dynasty triptych ─── */
 .founder-1995-feature-grid {
   margin: 2.25rem 0 2.75rem;

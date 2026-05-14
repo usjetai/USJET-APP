@@ -211,7 +211,7 @@ export function hangarBayHeroBadge(session: MemberSession | null | undefined): s
     return `${limit} bays · preview access`;
   }
   if (rank === 1) {
-    return `${limit} bays · $20 limited time`;
+    return `${limit} bays · $19.90/mo`;
   }
   if (rank === 2) {
     return `${limit} bays · Hangar Pro`;

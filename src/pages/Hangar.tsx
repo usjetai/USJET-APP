@@ -97,7 +97,7 @@ const Hangar = () => {
             </p>
           </div>
 
-          <MemberPrimeBadge session={session} />
+          <MemberPrimeBadge session={session} founderReviewOpen />
         </div>
 
         <div className="intel-grid-wrap">

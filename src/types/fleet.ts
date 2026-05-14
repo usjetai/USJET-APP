@@ -24,6 +24,10 @@ export type FleetUnit = {
   status: FleetUnitStatus;
   aura: FleetAuraMode;
   aircraftType: FleetAircraftType;
+  /** One-Prompt Protocol system instructions for this bay (derived in fleetManifest). */
+  systemPrompt: string;
+  /** Optional unit-specific fleet role line appended to the Master Lock. */
+  fleetRole?: string;
 };
 
 export const HANGAR_COLUMNS = 6;

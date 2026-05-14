@@ -1,6 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import { ShieldCheck } from "lucide-react";
 import UsjetWordmark from "../brand/UsjetWordmark";
+import FleetCommand from "../fleet/FleetCommand";
 import GlassEffectContainer from "./GlassEffectContainer";
 
 const NAV_LINKS = [
@@ -47,6 +48,10 @@ const AppNav = () => (
           </NavLink>
         ))}
       </nav>
+
+      <FleetCommand />
+
+      <span className="hidden h-7 w-px shrink-0 bg-white/10 lg:block" aria-hidden />
 
       <NavLink
         to="/special"

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Shield, Sparkles, Target, Wrench } from "lucide-react";
-import { FOUNDER_CREATIVE_MANIFESTO, PRIME_OBJECTIVE } from "../data/founderManifesto";
+import { FOUNDER_CREATIVE_MANIFESTO, LINE_OF_SUCCESSION_LOG, PRIME_OBJECTIVE } from "../data/founderManifesto";
+import { LINE_OF_SUCCESSION } from "../data/lineOfSuccession";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import type { FleetAircraftType } from "../types/fleet";
@@ -120,8 +121,16 @@ export default function FounderSpecial1995() {
               </div>
             </GlassEffectContainer>
 
+            <GlassEffectContainer className="founder-special-1995__succession glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
+              <div className="founder-special-1995__succession-inner">
+                <p className="founder-special-1995__succession-kicker">{LINE_OF_SUCCESSION_LOG.logTitle}</p>
+                <p className="founder-special-1995__succession-directive">{LINE_OF_SUCCESSION_LOG.directive}</p>
+                <p className="founder-special-1995__succession-mission">{LINE_OF_SUCCESSION_LOG.fleetMission}</p>
+              </div>
+            </GlassEffectContainer>
+
             <header className="founder-story__hero">
-              <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect glass-effect--rounded-rect glass-tint-gold">
+              <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo founder-special-1995__vault-seal glass-effect glass-effect--rounded-rect glass-tint-gold">
                 <img
                   className="founder-story__hero-logo"
                   src="/founder/usjet-hero-logo.png"
@@ -131,9 +140,13 @@ export default function FounderSpecial1995() {
                   decoding="async"
                   fetchPriority="high"
                 />
+                <p className="founder-special-1995__king-signature" aria-hidden>
+                  King Karim · Third Generation · The Future Command
+                </p>
               </GlassEffectContainer>
               <p className="founder-special-1995__edition">Grit Vault · Special Edition · 1995</p>
               <h1 className="founder-special-1995__vault-title">1995 Origin</h1>
+              <p className="founder-special-1995__legacy-inscription">{LINE_OF_SUCCESSION.vaultInscription}</p>
               <p className="founder-story__lede founder-special-1995__lede">
                 The 1995 Origin Story — looking back at raw labor while the warp tunnel carries us forward.
                 This is the Grit chapter: wrenches, Queens hustle, and the fortress that guards the brand.

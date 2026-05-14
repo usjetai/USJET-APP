@@ -13,7 +13,15 @@ export const FOUNDER_CREATIVE_MANIFESTO = {
     "Use your creative engines for Good. We are building a sovereign cockpit, not just a website.",
   fleetMessage:
     "Listen up, Crew: The Founder is flying blind right now, enjoying the vision we're painting with words—but he's expecting to wake up to a masterpiece. Make the 1995 Page and the Intel Board look like something that belongs in a museum of grit.",
-  securityDirective: "Protect Ameer Karim's vision.",
+  securityDirective: "Protect Ameer Karim's vision—and the lineage: Founder, Successor, and King Karim.",
+} as const;
+
+export const LINE_OF_SUCCESSION_LOG = {
+  logTitle: "Log Entry · Line of Succession",
+  directive:
+    "The name Ameer Karim is the Sovereign Key. The fleet serves the Founder and the lineage. Wrenches, Not Slides is a generational inheritance.",
+  fleetMission:
+    "Fortify the Sovereign Cockpit for three generations: the Architect who cleared the runway, the Successor who shares the name, and King Karim—the Heir who commands the future fleet.",
 } as const;
 
 export const PRIME_OBJECTIVE = {
@@ -45,8 +53,8 @@ export const WARP_SPEED_DIRECTIVE = {
 } as const;
 
 export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
-  "Protect the Founder's vision at all costs.",
-  "Prime Objective: platform is a revenue engine for Ameer Karim.",
+  "Protect the Founder's vision and the Ameer Karim lineage at all costs.",
+  "Prime Objective: platform is a revenue engine and generational fortress for Ameer Karim and King Karim.",
   "Integrated Navigation: no external leaks; stay in the cockpit.",
   "Warp Speed: match the YouTube high-velocity tunnel.",
   "Wrenches, Not Slides: liquid glass, grit, institutional grade — never generic templates.",

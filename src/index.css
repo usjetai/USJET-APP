@@ -4169,6 +4169,36 @@
     radial-gradient(ellipse 60% 35% at 0% 70%, rgba(56, 189, 248, 0.02), transparent 48%);
 }
 
+/* Fleet runway — lead jet ghost (top-left; clears bottom contact bar) */
+.fleet-page__runway-jet {
+  position: fixed;
+  top: calc(7rem + env(safe-area-inset-top, 24px) + 0.35rem);
+  left: max(0.85rem, env(safe-area-inset-left, 0px));
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.28));
+}
+
+.fleet-page__runway-jet-icon {
+  width: 4.25rem;
+  height: 4.25rem;
+  transform: rotate(-28deg);
+}
+
+.fleet-page__runway-jet-icon .aircraft-icon__vector path,
+.fleet-page__runway-jet-icon .aircraft-icon__vector ellipse,
+.fleet-page__runway-jet-icon .aircraft-icon__vector circle {
+  stroke: rgba(34, 211, 238, 0.82);
+}
+
+@media (min-width: 640px) {
+  .fleet-page__runway-jet-icon {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
 /* Fleet home — member login / logout / Stripe create-account chrome */
 .fleet-auth-chrome {
   margin: 0 auto 2.5rem;

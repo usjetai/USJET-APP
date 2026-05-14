@@ -33,14 +33,7 @@ function AnimatedRoutes() {
               </TierRouteGate>
             }
           />
-          <Route
-            path="/founder"
-            element={
-              <TierRouteGate path="/founder" pageLabel="Founder">
-                <Founder />
-              </TierRouteGate>
-            }
-          />
+          <Route path="/founder" element={<Founder />} />
           <Route
             path="/origin"
             element={

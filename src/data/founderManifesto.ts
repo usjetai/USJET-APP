@@ -142,6 +142,35 @@ export const PARTNERSHIP_INTEL_REVENUE_MAY_2026 = {
     "Listen up, Crew: the Intel board is a museum of grit with the lights off on purpose. Hold the line. Titans pay to flip the switch.",
 } as const;
 
+export const SECURITY_STRIPE_ONLY_MAY_2026 = {
+  logTitle: "Command Log · May 14, 2026 — Founder Authoritative Access & Security Lock",
+  status: "Absolute Lock",
+  noOAuthEver: [
+    "NO Google login — ever.",
+    "NO Apple login — ever.",
+    "NO OAuth providers — ever.",
+  ],
+  loginModel:
+    "Member clearance stays basic: Stripe-issued Member ID + Stripe subscription verification only. One sovereign gate, no social sign-in.",
+  paymentModel:
+    "Stripe ONLY — Flight Pass, Hangar Pro, Enterprise Commander. No alternate processors, no complication.",
+  guestPublicRoutes: {
+    fleet: "/ — everyone",
+    hangar: "/hangar — everyone, max 2 simultaneous bays",
+    founder: "/founder — everyone",
+    blocked: "/intel, /origin, /member — paid clearance required",
+  },
+  tierMatrix: {
+    guest: "Fleet + Hangar (2 bays) + Founder — no Intel, Origin, or Member Portal",
+    tier1FlightPass: "Fleet + Hangar (4 bays) + Member Portal — no Intel, no Origin",
+    tier2HangarPro: "Tier 1 + Intel — no Origin",
+    tier3Enterprise: "Full sovereign command including Origin",
+    founderGodMode: "USJET-AMEER — all routes, all bays",
+  },
+  fleetMessage:
+    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get two bays and the Founder story — everything else bills through the extraction ports.",
+} as const;
+
 export const DIRECT_LANDING_PROTOCOL = {
   logTitle: "Command Log · Direct Landing Protocol",
   flightPassDirectExtractionPort: "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02",
@@ -167,6 +196,7 @@ export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Command Log May 14, 2026: Unity Protocol locked. General = Ameer Karim.",
   "Direct Landing Protocol: $19.90 Flight Pass → Stripe extraction port. High-pressure funnels land direct.",
   "Intel Partnership Revenue May 2026: bays stay open; no live prices, logins, or NYSE feeds until Titans pay.",
+  "Security Stripe Only May 2026: NO OAuth ever; Member ID + Stripe verification only; Stripe-only payments.",
 ] as const;
 
 export const ONE_SHIP_DIRECTIVE = INTEGRATED_NAVIGATION.rule;
@@ -182,6 +212,7 @@ export const SOVEREIGN_MASTER_LOG = {
   founderVoiceProfile: FOUNDER_VOICE_PROFILE,
   commandLogMay142026: COMMAND_LOG_MAY_14_2026,
   partnershipIntelRevenueMay2026: PARTNERSHIP_INTEL_REVENUE_MAY_2026,
+  securityStripeOnlyMay2026: SECURITY_STRIPE_ONLY_MAY_2026,
   directLandingProtocol: DIRECT_LANDING_PROTOCOL,
   priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

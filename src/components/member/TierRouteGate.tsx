@@ -6,8 +6,9 @@ import { useMemberAuth } from "../../context/MemberAuthContext";
 import {
   canMemberAccessRoute,
   clearanceTierLabel,
-  clearanceTierPrice,
+  clearanceTierStripeId,
   routeMinClearanceRank,
+  tierRouteGateCopy,
 } from "../../lib/memberAccessLevel";
 
 type TierRouteGateProps = {
@@ -16,7 +17,7 @@ type TierRouteGateProps = {
   children: ReactNode;
 };
 
-export default function TierRouteGate({ path, pageLabel, children }: TierRouteGateProps) {
+export default function TierRouteGate({ path, pageLabel: _pageLabel, children }: TierRouteGateProps) {
   const { session, loading } = useMemberAuth();
 
   if (loading || canMemberAccessRoute(path, session)) {
@@ -25,7 +26,8 @@ export default function TierRouteGate({ path, pageLabel, children }: TierRouteGa
 
   const minRank = routeMinClearanceRank(path);
   const tierLabel = clearanceTierLabel(minRank);
-  const tierPrice = clearanceTierPrice(minRank);
+  const { title, body } = tierRouteGateCopy(path, minRank);
+  const upgradeTier = clearanceTierStripeId(minRank);
 
   return (
     <div className="tier-route-gate">
@@ -41,22 +43,28 @@ export default function TierRouteGate({ path, pageLabel, children }: TierRouteGa
             <Lock size={28} className="tier-route-gate__icon" aria-hidden />
           </div>
           <p className="tier-route-gate__kicker">Clearance required</p>
-          <h2 className="tier-route-gate__title">{pageLabel} is locked at your tier</h2>
-          <p className="tier-route-gate__copy">
-            {tierLabel} ({tierPrice}) unlocks this route. Upgrade clearance to enter the sovereign cockpit — no
-            external leaks, one ship.
-          </p>
+          <h2 className="tier-route-gate__title">{title}</h2>
+          <p className="tier-route-gate__copy">{body}</p>
 
-          <Link to="/special" className="tier-route-gate__cta btn-glass-prominent glass-effect-interactive">
+          <Link
+            to={`/special?tier=${upgradeTier}`}
+            className="tier-route-gate__cta btn-glass-prominent glass-effect-interactive"
+          >
             <ShieldAlert size={16} aria-hidden />
             Upgrade to {tierLabel}
           </Link>
 
           <p className="tier-route-gate__footer">
-            Fleet and Hangar remain open.{" "}
-            <Link to="/member" className="tier-route-gate__link">
-              Member Portal
-            </Link>
+            Fleet, Hangar, and Founder stay public.{" "}
+            {path === "/member" ? (
+              <Link to="/special" className="tier-route-gate__link">
+                Stripe checkout
+              </Link>
+            ) : (
+              <Link to="/member" className="tier-route-gate__link">
+                Member Portal
+              </Link>
+            )}
           </p>
         </div>
       </GlassEffectContainer>

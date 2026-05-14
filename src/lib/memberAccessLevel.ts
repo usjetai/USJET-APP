@@ -4,16 +4,22 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Minimum clearance rank per route — 0 = Fleet/Hangar browse (guest + Tier 1). */
+/**
+ * Minimum clearance rank per route.
+ * 0 = public (guest): Fleet, Hangar (2 bays), Founder story.
+ * 1 = Flight Pass+: Member Portal.
+ * 2 = Hangar Pro+: Intel.
+ * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
+ */
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
   "/hangar": 0,
+  "/founder": 0,
+  "/special": 0,
+  "/member": 1,
   "/intel": 2,
-  "/founder": 2,
-  "/member": 2,
   "/origin": 3,
   "/founder-special-1995": 3,
-  "/special": 0,
 };
 
 export function normalizeRoutePath(path: string): string {
@@ -67,6 +73,48 @@ export function clearanceTierPrice(minRank: number): string {
     return "$49.95/mo";
   }
   return "$19.90/mo";
+}
+
+export type ClearanceStripeTierId = "founder" | "hangar-pro" | "fleet-command";
+
+export function clearanceTierStripeId(minRank: number): ClearanceStripeTierId {
+  if (minRank >= 3) {
+    return "fleet-command";
+  }
+  if (minRank >= 2) {
+    return "hangar-pro";
+  }
+  return "founder";
+}
+
+export function tierRouteGateCopy(path: string, minRank: number): { title: string; body: string } {
+  const tierLabel = clearanceTierLabel(minRank);
+  const tierPrice = clearanceTierPrice(minRank);
+  const normalized = normalizeRoutePath(path);
+
+  if (normalized === "/member") {
+    return {
+      title: "Member Portal — paid clearance only",
+      body: `Verify your Stripe-issued Member ID here. ${tierLabel} (${tierPrice}) or higher unlocks the portal — no OAuth, one sovereign gate.`,
+    };
+  }
+  if (normalized === "/intel") {
+    return {
+      title: "Intel board locked at your tier",
+      body: `${tierLabel} (${tierPrice}) unlocks the Intel museum of grit. Flight Pass keeps Fleet + Hangar; upgrade for the institutional board.`,
+    };
+  }
+  if (normalized === "/origin") {
+    return {
+      title: "Origin command locked at your tier",
+      body: `${tierLabel} (${tierPrice}) unlocks Origin — the sovereign hardware arc. Enterprise Commander clears the runway.`,
+    };
+  }
+
+  return {
+    title: `${normalized.replace(/^\//, "") || "Route"} is locked at your tier`,
+    body: `${tierLabel} (${tierPrice}) unlocks this route. Upgrade clearance to enter the sovereign cockpit — no external leaks, one ship.`,
+  };
 }
 
 export function accessLevelRank(accessLevel?: string): number {

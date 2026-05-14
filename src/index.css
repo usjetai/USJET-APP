@@ -4303,6 +4303,78 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
+/* Runway — per-bay accent personality (CSS vars from FleetCard) */
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-card__glass {
+  border-color: color-mix(in srgb, var(--fleet-accent) 38%, rgba(255, 255, 255, 0.2));
+  background:
+    linear-gradient(
+      118deg,
+      color-mix(in srgb, var(--fleet-accent) 10%, transparent) 0%,
+      rgba(255, 255, 255, 0.06) 38%,
+      rgba(8, 20, 40, 0.5) 100%
+    );
+  box-shadow:
+    0 20px 50px -34px rgba(var(--fleet-accent-rgb), 0.45),
+    0 0 20px -10px rgba(var(--fleet-accent-rgb), 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -18px 40px -30px rgba(2, 8, 23, 0.72);
+}
+
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-card__glass::before {
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    color-mix(in srgb, var(--fleet-accent) 10%, transparent) 42%,
+    color-mix(in srgb, var(--fleet-accent) 6%, transparent) 100%
+  );
+}
+
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-card__aircraft-wrap {
+  border-color: color-mix(in srgb, var(--fleet-accent) 28%, transparent);
+  background: color-mix(in srgb, var(--fleet-accent) 7%, transparent);
+}
+
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent:hover h3,
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent:focus-visible h3 {
+  color: var(--fleet-accent-bright);
+}
+
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-card__personality {
+  color: color-mix(in srgb, var(--fleet-accent-bright) 72%, white);
+  letter-spacing: 0.22em;
+}
+
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-card__callsign {
+  color: color-mix(in srgb, var(--fleet-accent-bright) 88%, white);
+}
+
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-cap-badge {
+  border-color: color-mix(in srgb, var(--fleet-accent) 30%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--fleet-accent) 12%, transparent) 0%,
+    rgba(255, 255, 255, 0.05) 55%,
+    rgba(8, 20, 40, 0.35) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 4px 12px -8px rgba(var(--fleet-accent-rgb), 0.32);
+  color: color-mix(in srgb, var(--fleet-accent-bright) 82%, white);
+}
+
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-cap-badge__icon {
+  color: var(--fleet-accent-bright);
+}
+
+.fleet-page--runway .fleet-card--bay-accent:hover .fleet-card__glass,
+.fleet-page--runway .fleet-card--bay-accent:focus-visible .fleet-card__glass {
+  border-color: color-mix(in srgb, var(--fleet-accent) 58%, rgba(255, 255, 255, 0.22));
+  box-shadow:
+    0 28px 70px -34px rgba(var(--fleet-accent-rgb), 0.58),
+    0 0 24px -8px rgba(var(--fleet-accent-rgb), 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
 /* Hangar workbench — tall portrait bay tiles */
 .hangar-bay-grid-wrap {
   position: relative;

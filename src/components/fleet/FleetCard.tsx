@@ -1,3 +1,4 @@
+import { getFleetBayAccent } from "../../data/fleetBayAccents";
 import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
@@ -46,6 +47,7 @@ export default function FleetCard({
   const CardTag = launchUrl.startsWith("/") ? Link : "a";
   const cardProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
+  const bayAccent = surface === "fleet" && typeof slot === "number" ? getFleetBayAccent(slot) : null;
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
 
@@ -83,12 +85,22 @@ export default function FleetCard({
       className={[
         "fleet-card group block h-full",
         surface === "hangar" ? "fleet-card--surface-hangar min-h-[13.5rem]" : "fleet-card--surface-runway min-h-[8rem]",
+        bayAccent ? "fleet-card--bay-accent" : "",
         expandInteractive ? "fleet-card--hangar-expand" : "",
         isCommandBay ? "fleet-card--command" : "",
       ]
         .filter(Boolean)
         .join(" ")}
-      style={style}
+      style={
+        bayAccent
+          ? ({
+              ...style,
+              "--fleet-accent": bayAccent.accent,
+              "--fleet-accent-bright": bayAccent.accentBright,
+              "--fleet-accent-rgb": bayAccent.accentRgb,
+            } as CSSProperties)
+          : style
+      }
       data-usjet-cockpit={expandInteractive ? "true" : undefined}
       data-usjet-fleet-bay={expandInteractive && typeof slot === "number" ? String(slot + 1) : undefined}
       data-usjet-partner={expandInteractive ? domain : undefined}
@@ -121,8 +133,13 @@ export default function FleetCard({
             <p className="text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/50">USJET fleet · consensus bay</p>
           ) : null}
           {typeof slot === "number" ? (
-            <p className={`text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}>
+            <p
+              className={`fleet-card__bay-label text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}
+            >
               Bay {String(slot + 1).padStart(2, "0")}
+              {bayAccent ? (
+                <span className="fleet-card__personality"> · {bayAccent.personality}</span>
+              ) : null}
             </p>
           ) : null}
           <h3 className="mt-2 text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
@@ -131,7 +148,11 @@ export default function FleetCard({
           {surface === "fleet" && typeof slot === "number" ? (
             <FleetCapabilityBadges capabilities={getFleetCapabilities(slot)} />
           ) : null}
-          <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-blue-400/90">{callsign}</p>
+          <p
+            className={`mt-1 text-[10px] font-bold uppercase tracking-widest ${bayAccent ? "fleet-card__callsign" : "text-blue-400/90"}`}
+          >
+            {callsign}
+          </p>
           <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
         </div>
       </div>

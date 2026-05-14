@@ -1,5 +1,10 @@
 import type { MemberSession, VerifyMemberResponse } from "../types/member";
-import { sessionFromMasterKey, sessionFromStoredCustomerId, sessionFromKingKarimKey } from "./memberMasterKey";
+import {
+  sessionFromFounderTestAccess,
+  sessionFromMasterKey,
+  sessionFromStoredCustomerId,
+  sessionFromKingKarimKey,
+} from "./memberMasterKey";
 
 const VERIFY_URL = import.meta.env.VITE_MEMBER_VERIFY_URL ?? "/api/verify-member";
 
@@ -17,6 +22,8 @@ export async function verifyMemberAccess(input: VerifyInput): Promise<MemberSess
   }
 
   const masterSession =
+    sessionFromFounderTestAccess(memberId) ??
+    sessionFromFounderTestAccess(email) ??
     sessionFromMasterKey(memberId) ??
     sessionFromKingKarimKey(memberId) ??
     sessionFromStoredCustomerId(memberId);

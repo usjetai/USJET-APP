@@ -5,6 +5,11 @@ import { LINE_OF_SUCCESSION } from "../data/lineOfSuccession";
 export const MEMBER_MASTER_KEY = "USJET-1995";
 export const FOUNDER_MASTER_CUSTOMER_ID = "founder-master-1995";
 
+/** Founder permanent test credentials — one Member ID for all gates (/member, /hangar, /intel). */
+export const FOUNDER_TEST_MEMBER_ID = "USJET-AMEER";
+export const FOUNDER_TEST_CUSTOMER_ID = "founder-test-ameer";
+export const FOUNDER_TEST_EMAIL = "ameerkarim100@icloud.com";
+
 /** Heir access — third generation (King Karim). Hidden succession tier for stealth build. */
 export const KING_KARIM_ACCESS_KEY = "KING-KARIM";
 export const KING_KARIM_CUSTOMER_ID = "heir-king-karim";
@@ -17,6 +22,27 @@ export function sessionFromMasterKey(raw: string): MemberSession | null {
 
   return {
     customerId: FOUNDER_MASTER_CUSTOMER_ID,
+    tier: "USJET-PRIME-ACTIVE",
+    active: true,
+    verifiedAt: new Date().toISOString(),
+  };
+}
+
+export function sessionFromFounderTestAccess(raw: string): MemberSession | null {
+  const trimmed = raw.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const memberKey = trimmed.toUpperCase().replace(/\s+/g, "-");
+  const email = trimmed.toLowerCase();
+  if (memberKey !== FOUNDER_TEST_MEMBER_ID && email !== FOUNDER_TEST_EMAIL) {
+    return null;
+  }
+
+  return {
+    customerId: FOUNDER_TEST_CUSTOMER_ID,
+    email: FOUNDER_TEST_EMAIL,
     tier: "USJET-PRIME-ACTIVE",
     active: true,
     verifiedAt: new Date().toISOString(),
@@ -43,6 +69,9 @@ export function sessionFromStoredCustomerId(customerId: string): MemberSession |
   if (id === FOUNDER_MASTER_CUSTOMER_ID) {
     return sessionFromMasterKey(MEMBER_MASTER_KEY);
   }
+  if (id === FOUNDER_TEST_CUSTOMER_ID) {
+    return sessionFromFounderTestAccess(FOUNDER_TEST_MEMBER_ID);
+  }
   if (id === KING_KARIM_CUSTOMER_ID) {
     return sessionFromKingKarimKey(KING_KARIM_ACCESS_KEY);
   }
@@ -55,6 +84,10 @@ export function isMasterKey(raw: string): boolean {
 
 export function isKingKarimAccessKey(raw: string): boolean {
   return raw.trim().toUpperCase().replace(/\s+/g, "-") === KING_KARIM_ACCESS_KEY;
+}
+
+export function isFounderTestAccess(raw: string): boolean {
+  return sessionFromFounderTestAccess(raw) !== null;
 }
 
 /** Hangar metadata — third-generation legacy bay (stealth). */

@@ -39,7 +39,28 @@ export default function MemberPortal() {
         <GlassEffectContainer className="member-portal__card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
           <div className="member-portal__card-inner">
             <p className="member-portal__card-kicker">Authentication</p>
-            <h2 className="member-portal__card-title">Verify Member ID</h2>
+            <h2 className="member-portal__card-title">
+              {session?.active ? "Active clearance" : "Verify Member ID"}
+            </h2>
+
+            {session?.active ? (
+              <dl className="member-portal__session">
+                <div className="member-portal__session-row">
+                  <dt>Tier</dt>
+                  <dd>{session.tier}</dd>
+                </div>
+                <div className="member-portal__session-row">
+                  <dt>Member ID</dt>
+                  <dd>{session.customerId}</dd>
+                </div>
+                {session.email ? (
+                  <div className="member-portal__session-row">
+                    <dt>Email</dt>
+                    <dd>{session.email}</dd>
+                  </div>
+                ) : null}
+              </dl>
+            ) : null}
 
             <form className="member-portal__form" onSubmit={handleSubmit}>
               <label className="member-portal__field">

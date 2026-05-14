@@ -4163,6 +4163,7 @@ button.fleet-card {
 
 .founder-story__visual {
   margin: 1.75rem 0 0;
+  overflow: visible;
 }
 
 .founder-story__body + .founder-story__visual {
@@ -4203,10 +4204,11 @@ button.fleet-card {
   -webkit-backdrop-filter: blur(24px);
 }
 
-.founder-story__visual-frame--photo {
-  min-height: 0;
+.founder-story__visual-frame.founder-story__visual-frame--photo {
+  min-height: unset;
+  height: auto;
   width: fit-content;
-  max-width: min(100%, 43rem);
+  max-width: min(100%, 24rem);
   margin-inline: auto;
   align-items: center;
   justify-content: center;
@@ -4222,7 +4224,7 @@ button.fleet-card {
   -webkit-backdrop-filter: none;
 }
 
-.founder-story__visual-frame--photo::before {
+.founder-story__visual-frame.founder-story__visual-frame--photo::before {
   display: none;
 }
 
@@ -4232,11 +4234,13 @@ button.fleet-card {
   display: block;
   width: auto;
   height: auto;
-  max-width: min(100%, 43rem);
+  max-width: 100%;
+  max-height: none;
   object-fit: contain;
   object-position: center;
   background: #000;
   border-radius: calc(1.75rem - 1px);
+  vertical-align: top;
 }
 
 .founder-page--warp {

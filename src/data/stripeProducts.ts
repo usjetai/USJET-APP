@@ -37,13 +37,13 @@ export type StripeTierProduct = {
   badge?: string;
 };
 
-/** USJet Flight Pass ($19.95/mo) — entry clearance tier. */
+/** USJet Flight Pass ($19.90/mo) — entry clearance tier. */
 export const FLIGHT_PASS_STRIPE: StripeTierProduct = {
   id: "founder",
   name: "USJet Flight Pass",
   hook: "Entry clearance · first on the runway",
-  priceCents: 1995,
-  priceDisplay: "$19.95",
+  priceCents: 1990,
+  priceDisplay: "$19.90",
   period: "/mo",
   description:
     "Your clearance into the sovereign hangar. Thirty AI bays, live Intel, and fleet protocol locked to your Member ID—built for operators who measure worth in what they fix, not what they pitch.",

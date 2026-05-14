@@ -217,7 +217,7 @@ export default function FounderSpecial1995() {
 
             <GlassEffectContainer className="founder-special-1995__cta glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
               <p className="founder-special-1995__cta-kicker">Founder Special</p>
-              <p className="founder-special-1995__cta-price">$19.95/mo</p>
+              <p className="founder-special-1995__cta-price">$19.90/mo</p>
               <p className="founder-special-1995__cta-copy">
                 Join the Grit chapter. Support the hangar that networks thirty AIs for blue-collar America.
               </p>

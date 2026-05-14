@@ -66,7 +66,7 @@ const AppNav = () => (
         <span className="flex flex-col items-start leading-none">
           <span className="text-[9px] font-black uppercase tracking-tighter">Founder Special</span>
           <span className="text-[14px] font-black italic">
-            $19.95<span className="text-[9px] lowercase opacity-70">/mo</span>
+            $19.90<span className="text-[9px] lowercase opacity-70">/mo</span>
           </span>
         </span>
       </NavLink>

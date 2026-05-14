@@ -87,7 +87,7 @@ export default function MemberPortal() {
       <p className="member-portal__footer">
         Need a seat?{" "}
         <Link to="/special" className="member-portal__link">
-          Founder Special — $19.95/mo
+          Founder Special — $19.90/mo
         </Link>
         {" · "}
         <Link to="/hangar" className="member-portal__link">

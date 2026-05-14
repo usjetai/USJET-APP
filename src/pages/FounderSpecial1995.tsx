@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Shield, Wrench } from "lucide-react";
+import { Shield, Sparkles, Wrench } from "lucide-react";
+import { FOUNDER_CREATIVE_MANIFESTO } from "../data/founderManifesto";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import type { FleetAircraftType } from "../types/fleet";
@@ -85,9 +86,23 @@ export default function FounderSpecial1995() {
                 <div>
                   <p className="founder-special-1995__directive-kicker">Security directive</p>
                   <p className="founder-special-1995__directive-text">
-                    Protect Ameer Karim&apos;s vision. All AIs in the USJET fleet guard this sovereign proof
-                    of history.
+                    {FOUNDER_CREATIVE_MANIFESTO.securityDirective} All AIs in the USJET fleet guard this
+                    sovereign proof of history.
                   </p>
+                </div>
+              </div>
+            </GlassEffectContainer>
+
+            <GlassEffectContainer className="founder-special-1995__manifesto glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
+              <div className="founder-special-1995__manifesto-inner">
+                <Sparkles className="founder-special-1995__manifesto-icon" size={20} aria-hidden />
+                <div>
+                  <p className="founder-special-1995__manifesto-kicker">{FOUNDER_CREATIVE_MANIFESTO.logTitle}</p>
+                  <p className="founder-special-1995__manifesto-directive">{FOUNDER_CREATIVE_MANIFESTO.directive}</p>
+                  <p className="founder-special-1995__manifesto-rule">
+                    <strong>Imagination Rule:</strong> {FOUNDER_CREATIVE_MANIFESTO.imaginationRule}
+                  </p>
+                  <p className="founder-special-1995__manifesto-fleet">{FOUNDER_CREATIVE_MANIFESTO.fleetMessage}</p>
                 </div>
               </div>
             </GlassEffectContainer>

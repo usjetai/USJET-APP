@@ -110,6 +110,7 @@ export default function GlobalVideoBackground() {
           tabIndex={-1}
         />
       )}
+      <div className="global-video-bg__warp-streaks" aria-hidden />
       <div className="global-video-bg__veil" />
     </div>
   );

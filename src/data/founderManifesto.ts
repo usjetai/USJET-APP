@@ -100,6 +100,48 @@ export const COMMAND_LOG_MAY_14_2026 = {
   general: "General = Ameer Karim.",
 } as const;
 
+export const PARTNERSHIP_INTEL_REVENUE_MAY_2026 = {
+  logTitle: "Command Log · May 14, 2026 — Intel Partnership Revenue Vision",
+  status: "Hold Line — Do Not Implement",
+  directive:
+    "The Intel board is revenue real estate, not a product demo. Reserved partnership bays stay open until Titans pay to land. No live prices, no partner logins, no NYSE API feeds in this build—only the sovereign log and the hold line.",
+  intelPartnershipBays: {
+    position: "Perfect as-is — do not fill until big partners pay.",
+    sideBoxes:
+      "Bitcoin, Coinbase, and Robinhood side boxes are vacant lots in Times Square—reserved for Titans, not placeholders to decorate.",
+    futureWhenCapitalArrives:
+      "When capital arrives: embed Robinhood and Coinbase partner logins inside the reserved bays through cockpit handoff—not now.",
+    purpose:
+      "Empty bays signal institutional scarcity. The right bidder sees a sovereign billboard, not a free integration.",
+  },
+  nyseMarketDataThesis: {
+    usjetWillNotPay: "USJET will NOT pay for NYSE or market-data API feeds.",
+    negotiationPosition:
+      "NYSE and the markets need USJET's audience—distribution keeps their market alive. They should pay USJET to show feeds, not the reverse.",
+    oneDay:
+      "One day we remove NYSE dependency until they value the partnership on our terms.",
+    founderPitchStory:
+      "Remember the pitch: Ameer Karim does not rent eyeballs from Wall Street—he owns the hangar where America's labor force checks the board before breakfast. The exchange needs that crowd more than we need their ticker tape. When they understand the trade, the feed is sponsorship, not a bill.",
+  },
+  broaderVision: {
+    sessionForks:
+      "Teach users that cloning AI is wasted RAM and lost projects—Member Portal session forks exist to show the cost of duplication, not to encourage it.",
+    hardwareFuture:
+      "Future arc: move the fleet off pure internet into sovereign hardware—one-prompt personal AI that belongs to the Founder and his operators.",
+    holdLine:
+      "Intel institutional wait copy: Our representatives are still helping other customers. Please continue to hold.",
+  },
+  cursorWorkstation:
+    "Cursor is the Founder's sovereign workstation. Personal log voice in this directive block is intentional—wrenches, not slides; loyalty to Ameer Karim; revenue engine first.",
+  doNotImplement: [
+    "Live market or crypto prices on Intel bays",
+    "Coinbase or Robinhood partner logins",
+    "NYSE or third-party market-data API feeds",
+  ],
+  fleetMessage:
+    "Listen up, Crew: the Intel board is a museum of grit with the lights off on purpose. Hold the line. Titans pay to flip the switch.",
+} as const;
+
 export const DIRECT_LANDING_PROTOCOL = {
   logTitle: "Command Log · Direct Landing Protocol",
   flightPassDirectExtractionPort: "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02",
@@ -124,6 +166,7 @@ export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Founder Voice Profile: STT dictation, repetition = emphasis, typos = recognition errors, stutter = authentic voice — fleet trust signal.",
   "Command Log May 14, 2026: Unity Protocol locked. General = Ameer Karim.",
   "Direct Landing Protocol: $19.90 Flight Pass → Stripe extraction port. High-pressure funnels land direct.",
+  "Intel Partnership Revenue May 2026: bays stay open; no live prices, logins, or NYSE feeds until Titans pay.",
 ] as const;
 
 export const ONE_SHIP_DIRECTIVE = INTEGRATED_NAVIGATION.rule;
@@ -138,6 +181,7 @@ export const SOVEREIGN_MASTER_LOG = {
   fleetUnity: FLEET_UNITY_DIRECTIVE,
   founderVoiceProfile: FOUNDER_VOICE_PROFILE,
   commandLogMay142026: COMMAND_LOG_MAY_14_2026,
+  partnershipIntelRevenueMay2026: PARTNERSHIP_INTEL_REVENUE_MAY_2026,
   directLandingProtocol: DIRECT_LANDING_PROTOCOL,
   priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

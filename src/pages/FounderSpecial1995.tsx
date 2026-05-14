@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Shield, Sparkles, Target, Wrench } from "lucide-react";
 import { FOUNDER_CREATIVE_MANIFESTO, LINE_OF_SUCCESSION_LOG, PRIME_OBJECTIVE } from "../data/founderManifesto";
 import { LINE_OF_SUCCESSION } from "../data/lineOfSuccession";
+import Founder1995FeatureGrid from "../components/founder/Founder1995FeatureGrid";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import type { FleetAircraftType } from "../types/fleet";
@@ -121,6 +122,7 @@ export default function FounderSpecial1995() {
               </div>
             </GlassEffectContainer>
 
+            <section id="king-karim" className="founder-special-1995__succession-anchor">
             <GlassEffectContainer className="founder-special-1995__succession glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
               <div className="founder-special-1995__succession-inner">
                 <p className="founder-special-1995__succession-kicker">{LINE_OF_SUCCESSION_LOG.logTitle}</p>
@@ -128,6 +130,7 @@ export default function FounderSpecial1995() {
                 <p className="founder-special-1995__succession-mission">{LINE_OF_SUCCESSION_LOG.fleetMission}</p>
               </div>
             </GlassEffectContainer>
+            </section>
 
             <header className="founder-story__hero">
               <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo founder-special-1995__vault-seal glass-effect glass-effect--rounded-rect glass-tint-gold">
@@ -153,11 +156,17 @@ export default function FounderSpecial1995() {
               </p>
             </header>
 
-            {GRIT_1995_STORY.map((section) => {
+            <Founder1995FeatureGrid />
+
+            {GRIT_1995_STORY.map((section, index) => {
               const showPhoto = section.imageSrc && !brokenImages[section.heading];
 
               return (
-                <section key={section.heading} className="founder-story__section">
+                <section
+                  key={section.heading}
+                  id={index === 0 ? "grit-story" : undefined}
+                  className="founder-story__section"
+                >
                   <p className="founder-story__kicker founder-special-1995__kicker">
                     <Wrench size={12} className="inline-block shrink-0" aria-hidden />
                     {section.kicker}

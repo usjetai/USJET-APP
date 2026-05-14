@@ -5364,8 +5364,13 @@ body.usjet-atmosphere--cinematic .moving-clouds {
     0 0 28px rgba(255, 215, 0, 0.22);
 }
 
-.founder-special-1995__succession {
+.founder-special-1995__succession-anchor {
+  scroll-margin-top: 7rem;
   margin-bottom: 1.25rem;
+}
+
+.founder-special-1995__succession {
+  margin-bottom: 0;
   border-color: rgba(255, 215, 0, 0.28) !important;
 }
 
@@ -5514,6 +5519,356 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 .founder-special-1995__cta-link {
   text-decoration: none;
   margin-top: 0.35rem;
+}
+
+/* ─── Founder 1995 Feature Grid — Past / Present / Dynasty triptych ─── */
+.founder-1995-feature-grid {
+  margin: 2.25rem 0 2.75rem;
+}
+
+.founder-1995-feature-grid__kicker {
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.72);
+}
+
+.founder-1995-feature-grid__heading {
+  margin: 0.55rem 0 1.35rem;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 220, 0.96);
+  text-shadow: 0 0 22px rgba(255, 215, 0, 0.18);
+}
+
+.founder-1995-feature-grid__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.15rem;
+}
+
+@media (min-width: 768px) {
+  .founder-1995-feature-grid__cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+.founder-1995-feature-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  perspective: 900px;
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.founder-1995-feature-card:focus-visible {
+  outline: 2px solid rgba(255, 215, 0, 0.55);
+  outline-offset: 4px;
+  border-radius: 1.75rem;
+}
+
+.founder-1995-feature-card__glass {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.founder-1995-feature-card__scene {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 17.5rem;
+  transform: translateZ(0);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.founder-1995-feature-card__art {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 9.5rem;
+  overflow: hidden;
+}
+
+.founder-1995-feature-card__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  filter: saturate(1.12) contrast(1.08) brightness(0.72);
+  transform: scale(1.08);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.founder-1995-feature-card__art-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 4, 10, 0.08) 0%, rgba(2, 4, 10, 0.55) 58%, rgba(2, 4, 10, 0.92) 100%),
+    radial-gradient(ellipse 90% 70% at 50% 18%, rgba(255, 255, 255, 0.08), transparent 62%);
+  pointer-events: none;
+}
+
+.founder-1995-feature-card__art-rim {
+  position: absolute;
+  inset: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.founder-1995-feature-card__silhouette-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(155deg, rgba(8, 12, 22, 0.92), rgba(2, 4, 10, 0.88));
+}
+
+.founder-1995-feature-card__silhouette {
+  width: min(72%, 11rem);
+  height: auto;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.12));
+}
+
+.founder-1995-feature-card__content {
+  position: relative;
+  z-index: 2;
+  padding: 1rem 1.05rem 1.15rem;
+}
+
+.founder-1995-feature-card__era {
+  margin: 0;
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.founder-1995-feature-card__title {
+  margin: 0.45rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.founder-1995-feature-card__tagline {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.founder-1995-feature-card__blurb {
+  margin: 0.55rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* Violet tint for Dynasty card */
+.founder-1995-feature-card__tint--violet {
+  --glass-tint: rgba(139, 92, 246, 0.32);
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  box-shadow:
+    0 0 28px rgba(139, 92, 246, 0.14),
+    0 24px 60px -36px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* Past — Amber/Gold inner glow (The Grit) */
+.founder-1995-feature-card--past .founder-1995-feature-card__glass {
+  box-shadow:
+    0 0 24px rgba(255, 193, 7, 0.1),
+    inset 0 0 48px rgba(255, 193, 7, 0.06),
+    inset 0 1px 0 rgba(255, 248, 220, 0.18);
+}
+
+.founder-1995-feature-card--past:hover .founder-1995-feature-card__glass,
+.founder-1995-feature-card--past:focus-visible .founder-1995-feature-card__glass,
+.founder-1995-feature-card--past:active .founder-1995-feature-card__glass {
+  border-color: rgba(251, 191, 36, 0.55);
+  box-shadow:
+    0 0 42px rgba(255, 193, 7, 0.28),
+    0 0 72px rgba(255, 215, 0, 0.12),
+    inset 0 0 64px rgba(255, 193, 7, 0.14),
+    inset 0 1px 0 rgba(255, 248, 220, 0.28);
+}
+
+.founder-1995-feature-card--past .founder-1995-feature-card__title {
+  color: rgba(254, 243, 199, 0.98);
+  text-shadow: 0 0 16px rgba(255, 193, 7, 0.22);
+}
+
+/* Present — Electric Cyan glow (The Machine) */
+.founder-1995-feature-card--present .founder-1995-feature-card__glass {
+  border-color: rgba(34, 211, 238, 0.28);
+  box-shadow:
+    0 0 24px rgba(34, 211, 238, 0.1),
+    inset 0 0 48px rgba(34, 211, 238, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.founder-1995-feature-card--present:hover .founder-1995-feature-card__glass,
+.founder-1995-feature-card--present:focus-visible .founder-1995-feature-card__glass,
+.founder-1995-feature-card--present:active .founder-1995-feature-card__glass {
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow:
+    0 0 42px rgba(34, 211, 238, 0.32),
+    0 0 68px rgba(56, 189, 248, 0.14),
+    inset 0 0 64px rgba(34, 211, 238, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+.founder-1995-feature-card--present .founder-1995-feature-card__title {
+  color: rgba(224, 242, 254, 0.98);
+  text-shadow: 0 0 16px rgba(34, 211, 238, 0.28);
+}
+
+/* Future — Deep Purple/Violet glow (The Dynasty) */
+.founder-1995-feature-card--future .founder-1995-feature-card__glass {
+  box-shadow:
+    0 0 24px rgba(139, 92, 246, 0.12),
+    inset 0 0 48px rgba(124, 58, 237, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.founder-1995-feature-card--future:hover .founder-1995-feature-card__glass,
+.founder-1995-feature-card--future:focus-visible .founder-1995-feature-card__glass,
+.founder-1995-feature-card--future:active .founder-1995-feature-card__glass {
+  border-color: rgba(167, 139, 250, 0.58);
+  box-shadow:
+    0 0 42px rgba(139, 92, 246, 0.34),
+    0 0 72px rgba(124, 58, 237, 0.16),
+    inset 0 0 64px rgba(139, 92, 246, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.founder-1995-feature-card--future .founder-1995-feature-card__title {
+  color: rgba(237, 233, 254, 0.98);
+  text-shadow: 0 0 18px rgba(139, 92, 246, 0.32);
+}
+
+#grit-story {
+  scroll-margin-top: 7rem;
+}
+
+/* Hover / touch — scale + 3D glass depth */
+.founder-1995-feature-card:hover,
+.founder-1995-feature-card:focus-visible {
+  transform: scale(1.05);
+}
+
+.founder-1995-feature-card:hover .founder-1995-feature-card__scene,
+.founder-1995-feature-card:focus-visible .founder-1995-feature-card__scene {
+  transform: translateZ(18px);
+}
+
+.founder-1995-feature-card:hover .founder-1995-feature-card__glass,
+.founder-1995-feature-card:focus-visible .founder-1995-feature-card__glass {
+  transform: translateZ(8px);
+}
+
+.founder-1995-feature-card:hover .founder-1995-feature-card__photo,
+.founder-1995-feature-card:focus-visible .founder-1995-feature-card__photo {
+  transform: scale(1.14);
+}
+
+.founder-1995-feature-card.glass-effect-interactive:active {
+  transform: scale(1.02);
+}
+
+/* Click ripple across glass */
+.founder-1995-feature-card__ripple {
+  pointer-events: none;
+  position: absolute;
+  z-index: 4;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: -0.25rem 0 0 -0.25rem;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: founder-1995-card-ripple 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.founder-1995-feature-card--past .founder-1995-feature-card__ripple {
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.55) 0%, rgba(255, 193, 7, 0.12) 55%, transparent 72%);
+}
+
+.founder-1995-feature-card--present .founder-1995-feature-card__ripple {
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.55) 0%, rgba(56, 189, 248, 0.12) 55%, transparent 72%);
+}
+
+.founder-1995-feature-card--future .founder-1995-feature-card__ripple {
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.58) 0%, rgba(139, 92, 246, 0.14) 55%, transparent 72%);
+}
+
+@keyframes founder-1995-card-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(28);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-1995-feature-card,
+  .founder-1995-feature-card__glass,
+  .founder-1995-feature-card__scene,
+  .founder-1995-feature-card__photo {
+    transition: none;
+  }
+
+  .founder-1995-feature-card:hover,
+  .founder-1995-feature-card:focus-visible {
+    transform: none;
+  }
+
+  .founder-1995-feature-card:hover .founder-1995-feature-card__scene,
+  .founder-1995-feature-card:focus-visible .founder-1995-feature-card__scene,
+  .founder-1995-feature-card:hover .founder-1995-feature-card__glass,
+  .founder-1995-feature-card:focus-visible .founder-1995-feature-card__glass {
+    transform: none;
+  }
+
+  .founder-1995-feature-card:hover .founder-1995-feature-card__photo,
+  .founder-1995-feature-card:focus-visible .founder-1995-feature-card__photo {
+    transform: scale(1.08);
+  }
+
+  .founder-1995-feature-card__ripple {
+    animation-duration: 0.2s;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

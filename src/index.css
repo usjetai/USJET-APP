@@ -1654,11 +1654,48 @@
 
 .intel-fleet-vitals__meta {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.55rem 0.85rem;
   border-bottom: 1px solid rgba(34, 211, 238, 0.1);
+}
+
+.intel-fleet-vitals__meta-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.intel-fleet-vitals__meta-end {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.intel-fleet-vitals__disclaimer {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 0.62rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.intel-fleet-vitals__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.45rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  background: rgba(251, 191, 36, 0.08);
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.92);
 }
 
 .intel-fleet-vitals__label {
@@ -1694,6 +1731,54 @@
 .intel-fleet-vitals__ekg {
   height: 3.75rem;
   padding: 0.25rem 0.5rem 0;
+}
+
+.intel-fleet-vitals__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.45rem 0.85rem;
+  border-bottom: 1px solid rgba(34, 211, 238, 0.08);
+}
+
+.intel-fleet-vitals__metric {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+
+.intel-fleet-vitals__metric-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.intel-fleet-vitals__metric-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.intel-fleet-vitals__metric-value--up {
+  color: rgba(52, 211, 153, 0.95);
+}
+
+.intel-fleet-vitals__metric-value--down {
+  color: rgba(248, 113, 113, 0.95);
+}
+
+.intel-fleet-vitals__metric-note {
+  margin: 0;
+  flex: 1 1 12rem;
+  font-size: 0.58rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .intel-fleet-vitals__ticks {
@@ -1798,11 +1883,42 @@
 
 .intel-pulse__ekg-meta {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.85rem 1.15rem;
   border-bottom: 1px solid rgba(34, 211, 238, 0.12);
+}
+
+.intel-pulse__ekg-meta-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.intel-pulse__ekg-hold {
+  margin: 0;
+  max-width: 32rem;
+  font-size: 0.72rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.intel-pulse__ekg-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.55rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  background: rgba(251, 191, 36, 0.08);
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.92);
 }
 
 .intel-pulse__ekg-label {
@@ -1861,6 +1977,74 @@
       transparent 1px,
       transparent 12px
     );
+}
+
+.intel-pulse__ekg-footer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid rgba(34, 211, 238, 0.1);
+}
+
+@media (max-width: 640px) {
+  .intel-pulse__ekg-footer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.intel-pulse__ekg-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.65rem 1rem;
+  border-right: 1px solid rgba(34, 211, 238, 0.08);
+}
+
+.intel-pulse__ekg-metric:last-child {
+  border-right: none;
+}
+
+@media (max-width: 640px) {
+  .intel-pulse__ekg-metric {
+    border-right: none;
+    border-bottom: 1px solid rgba(34, 211, 238, 0.08);
+  }
+
+  .intel-pulse__ekg-metric:last-child {
+    border-bottom: none;
+  }
+}
+
+.intel-pulse__ekg-metric-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.72);
+}
+
+.intel-pulse__ekg-metric-symbol {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.intel-pulse__ekg-metric-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.intel-pulse__ekg-metric-value--up {
+  color: rgba(52, 211, 153, 0.95);
+}
+
+.intel-pulse__ekg-metric-value--down {
+  color: rgba(248, 113, 113, 0.95);
 }
 
 .intel-pulse__wing-grid {
@@ -2119,6 +2303,12 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+}
+
+.intel-ekg__trace--ghost {
+  stroke: rgba(34, 211, 238, 0.12);
+  stroke-width: 0.95;
+  filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.15));
 }
 
 .intel-ekg__trace--echo {

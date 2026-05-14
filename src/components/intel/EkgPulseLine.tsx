@@ -5,6 +5,8 @@ type EkgPulseLineProps = {
   variant?: "hero" | "monitor";
   className?: string;
   seed?: number;
+  /** Number of overlaid traces — Intel Pulse hero uses 3 to match wing vitals. */
+  traces?: 1 | 2 | 3;
 };
 
 const VIEW_WIDTH = 100;
@@ -41,9 +43,21 @@ function buildEkgPath(scroll: number, pointCount: number, seed: number): string 
   return parts.join(" ");
 }
 
-export default function EkgPulseLine({ variant = "monitor", className = "", seed = 0 }: EkgPulseLineProps) {
+const TRACE_LAYERS: { scrollOffset: number; seedOffset: number; className: string }[] = [
+  { scrollOffset: -3.4, seedOffset: 11, className: "intel-ekg__trace--ghost" },
+  { scrollOffset: -1.8, seedOffset: 3, className: "intel-ekg__trace--echo" },
+  { scrollOffset: 0, seedOffset: 0, className: "intel-ekg__trace--main" },
+];
+
+export default function EkgPulseLine({
+  variant = "monitor",
+  className = "",
+  seed = 0,
+  traces = 2,
+}: EkgPulseLineProps) {
   const [scroll, setScroll] = useState(0);
   const pointCount = variant === "hero" ? 140 : 72;
+  const activeLayers = TRACE_LAYERS.slice(3 - traces);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -56,8 +70,13 @@ export default function EkgPulseLine({ variant = "monitor", className = "", seed
     return () => window.clearInterval(intervalId);
   }, [variant]);
 
-  const path = useMemo(() => buildEkgPath(scroll, pointCount, seed), [pointCount, scroll, seed]);
-  const echoPath = useMemo(() => buildEkgPath(scroll - 1.8, pointCount, seed + 3), [pointCount, scroll, seed]);
+  const paths = useMemo(
+    () =>
+      activeLayers.map((layer) =>
+        buildEkgPath(scroll + layer.scrollOffset, pointCount, seed + layer.seedOffset),
+      ),
+    [activeLayers, pointCount, scroll, seed],
+  );
 
   return (
     <svg
@@ -69,8 +88,9 @@ export default function EkgPulseLine({ variant = "monitor", className = "", seed
       aria-hidden
     >
       <line className="intel-ekg__baseline" x1="0" y1={BASELINE} x2={VIEW_WIDTH} y2={BASELINE} />
-      <path className="intel-ekg__trace intel-ekg__trace--echo" d={echoPath} />
-      <path className="intel-ekg__trace intel-ekg__trace--main" d={path} />
+      {activeLayers.map((layer, index) => (
+        <path key={layer.className} className={["intel-ekg__trace", layer.className].join(" ")} d={paths[index]} />
+      ))}
       <circle className="intel-ekg__beacon" cx={VIEW_WIDTH - 1.5} cy={BASELINE} r="1.1" />
     </svg>
   );

@@ -1,15 +1,46 @@
+import { useEffect, useState } from "react";
 import { Activity, Wrench } from "lucide-react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import EkgPulseLine from "./EkgPulseLine";
 import MarketCandlesticks from "./MarketCandlesticks";
 import TickerDisplay from "./TickerDisplay";
-import { getWingForSlot } from "../../lib/intelWings";
+import { formatTickerChange, getWingForSlot } from "../../lib/intelWings";
 
 const PULSE_WINGS: { slot: number; volatility: number }[] = [
   { slot: 2, volatility: 420 },
   { slot: 12, volatility: 18 },
   { slot: 22, volatility: 4.2 },
 ];
+
+function PulseVitalMetric({ slot }: { slot: number }) {
+  const config = getWingForSlot(slot);
+  const [changePct, setChangePct] = useState(0);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      const drift = (Math.random() - 0.48) * config.step;
+      const next = Math.max(config.basePrice * 0.82, config.basePrice + drift);
+      setChangePct(((next - config.basePrice) / config.basePrice) * 100);
+    }, 2000);
+
+    return () => window.clearInterval(intervalId);
+  }, [config.basePrice, config.step]);
+
+  return (
+    <div className="intel-pulse__ekg-metric">
+      <span className="intel-pulse__ekg-metric-label">{config.label}</span>
+      <span className="intel-pulse__ekg-metric-symbol">{config.symbol}</span>
+      <span
+        className={[
+          "intel-pulse__ekg-metric-value",
+          changePct >= 0 ? "intel-pulse__ekg-metric-value--up" : "intel-pulse__ekg-metric-value--down",
+        ].join(" ")}
+      >
+        {formatTickerChange(changePct)}
+      </span>
+    </div>
+  );
+}
 
 export default function IntelPulseDashboard() {
   return (
@@ -34,14 +65,23 @@ export default function IntelPulseDashboard() {
 
       <GlassEffectContainer className="intel-pulse__ekg-shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
         <div className="intel-pulse__ekg-meta">
-          <span className="intel-pulse__ekg-label">Vitals · Market EKG</span>
-          <span className="intel-pulse__ekg-status">
-            <span className="intel-pulse__ekg-dot" aria-hidden />
-            Live
+          <div className="intel-pulse__ekg-meta-copy">
+            <span className="intel-pulse__ekg-label">Vitals Market EKG</span>
+            <p className="intel-pulse__ekg-hold">
+              Frequency channels are still helping other customers. Please continue to hold.
+            </p>
+          </div>
+          <span className="intel-pulse__ekg-badge" title="Cockpit immersion telemetry — not live partner P&L">
+            Market Pulse · Simulated
           </span>
         </div>
         <div className="intel-pulse__ekg-stage">
-          <EkgPulseLine variant="hero" seed={7} />
+          <EkgPulseLine variant="hero" seed={7} traces={3} />
+        </div>
+        <div className="intel-pulse__ekg-footer" aria-label="Intel pulse vitals channels">
+          {PULSE_WINGS.map((wing) => (
+            <PulseVitalMetric key={wing.slot} slot={wing.slot} />
+          ))}
         </div>
       </GlassEffectContainer>
 

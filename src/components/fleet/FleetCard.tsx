@@ -1,5 +1,6 @@
 import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
+import { Link } from "react-router-dom";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
@@ -14,6 +15,8 @@ type FleetCardProps = {
   href?: string;
   slot?: number;
   systemPrompt?: string;
+  /** Cockpit return route — Fleet `/`, Hangar `/hangar`, etc. */
+  returnTo?: string;
   /** Bay 30 / USJet Origin — command styling */
   isCommandBay?: boolean;
   /** When set, plain click / Enter / Space expands the hangar bay instead of navigating. Cmd/Ctrl-click still opens the URL. */
@@ -29,11 +32,14 @@ export default function FleetCard({
   href,
   slot,
   systemPrompt,
+  returnTo = "/hangar",
   isCommandBay = false,
   onExpandBay,
   style,
 }: FleetCardProps) {
-  const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name });
+  const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name, returnTo });
+  const CardTag = launchUrl.startsWith("/") ? Link : "a";
+  const cardProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
@@ -67,8 +73,8 @@ export default function FleetCard({
   };
 
   return (
-    <a
-      href={launchUrl}
+    <CardTag
+      {...cardProps}
       className={["fleet-card group block h-full min-h-[11.5rem]", expandInteractive ? "fleet-card--hangar-expand" : "", isCommandBay ? "fleet-card--command" : ""]
         .filter(Boolean)
         .join(" ")}
@@ -116,6 +122,6 @@ export default function FleetCard({
           <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
         </div>
       </div>
-    </a>
+    </CardTag>
   );
 }

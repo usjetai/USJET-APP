@@ -4957,6 +4957,26 @@ button.fleet-card {
   color: rgba(255, 255, 255, 0.58);
 }
 
+.special-page__contact {
+  margin-top: 2.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.special-page__contact-link {
+  color: rgba(34, 211, 238, 0.88);
+  text-decoration: none;
+  transition: color 0.2s ease, filter 0.2s ease;
+}
+
+.special-page__contact-link:hover,
+.special-page__contact-link:focus-visible {
+  color: #67e8f9;
+  filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.5));
+  outline: none;
+}
+
 .special-tier-card {
   border: 0;
   padding: 0;
@@ -5265,6 +5285,18 @@ button.fleet-card {
   font-size: 0.8rem;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.72);
+}
+
+.special-checkout__support-link {
+  color: rgba(34, 211, 238, 0.9);
+  text-decoration: none;
+}
+
+.special-checkout__support-link:hover,
+.special-checkout__support-link:focus-visible {
+  color: #67e8f9;
+  text-decoration: underline;
+  outline: none;
 }
 
 .special-checkout__hint {
@@ -6989,12 +7021,31 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: rgba(255, 255, 255, 0.38);
 }
 
+.cockpit-shell__frame-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
 .cockpit-shell__frame {
   flex: 1;
   width: 100%;
   min-height: 0;
   border: 0;
   background: #000;
+}
+
+.cockpit-embed-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0;
+  border-radius: 0;
 }
 
 .cockpit-ghost-btn {

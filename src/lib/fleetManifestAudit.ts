@@ -1,5 +1,4 @@
 import type { FleetUnit } from "../types/fleet";
-import { fleetLaunchUrl } from "./fleetLaunchUrl";
 
 /**
  * Canonical partner launch URLs — bays 01–30.
@@ -58,5 +57,6 @@ export function resolveFleetUnitHref(unit: FleetUnit): string {
     return fallback;
   }
 
-  return fleetLaunchUrl(unit.domain, unit.href, unit.slot);
+  const host = unit.domain.replace(/^https?:\/\//i, "").replace(/\/$/, "");
+  return `https://${host}`;
 }

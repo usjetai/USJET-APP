@@ -29,8 +29,8 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
   const [frameRevealed, setFrameRevealed] = useState(false);
 
   const launchIntegrated = useCallback(() => {
-    window.location.assign(launchHref);
-  }, [launchHref]);
+    window.location.assign(src);
+  }, [src]);
 
   useEffect(() => {
     setEmbedAssist(false);

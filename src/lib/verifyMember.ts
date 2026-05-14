@@ -2,6 +2,7 @@ import type { MemberSession, VerifyMemberResponse } from "../types/member";
 import {
   sessionFromFounderTestAccess,
   sessionFromMasterKey,
+  sessionFromOperatorTestAccess,
   sessionFromStoredCustomerId,
   sessionFromKingKarimKey,
 } from "./memberMasterKey";
@@ -24,6 +25,7 @@ export async function verifyMemberAccess(input: VerifyInput): Promise<MemberSess
   const masterSession =
     sessionFromFounderTestAccess(memberId) ??
     sessionFromFounderTestAccess(email) ??
+    sessionFromOperatorTestAccess(memberId) ??
     sessionFromMasterKey(memberId) ??
     sessionFromKingKarimKey(memberId) ??
     sessionFromStoredCustomerId(memberId);

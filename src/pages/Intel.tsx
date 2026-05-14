@@ -95,7 +95,7 @@ const Intel = () => {
     return out;
   }, [cellPlan, closeExpansion, tryExpand]);
 
-  // Founder review — gate temporarily open; re-lock before Titans launch
+  // Founder review — Intel Top 10 gated to Tier 2+ in IntelTop10Section
   return (
     <div className="intel-page">
       {workbenchFullToast ? (

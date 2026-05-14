@@ -195,8 +195,8 @@ function HangarBayGrid({
 }) {
   const gridClass =
     columns === 1
-      ? "hangar-bay-grid intel-grid grid grid-cols-1 gap-5 hangar-bay-grid--cols-1"
-      : "hangar-bay-grid intel-grid grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-4 hangar-bay-grid--cols-2";
+      ? "hangar-bay-grid grid gap-5 hangar-bay-grid--cols-1"
+      : "hangar-bay-grid grid gap-4 hangar-bay-grid--cols-2";
 
   return (
     <div className="hangar-bay-grid-wrap">

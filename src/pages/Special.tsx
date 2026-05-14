@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Check, ShieldCheck, Sparkles, Wrench, Zap } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout/StripeSecureCheckout";
+import OriginTierLockInAd from "../components/origin/OriginTierLockInAd";
 import { WRENCHES_PHILOSOPHY } from "../data/founderManifesto";
 import {
   FLIGHT_PASS_STRIPE,
@@ -9,31 +11,28 @@ import {
   HANGAR_PRO_STRIPE,
   type StripeTierProduct,
 } from "../data/stripeProducts";
+import {
+  resolveEnterprisePaymentLink,
+  resolveFounderPaymentLink,
+  resolveHangarProPaymentLink,
+} from "../lib/stripePaymentLink";
 
 type ServiceTier = StripeTierProduct & {
   paymentLink?: string;
 };
 
-const PAYMENT_LINK_BY_ENV: Record<StripeTierProduct["paymentLinkEnvKey"], string | undefined> = {
-  VITE_STRIPE_FOUNDER_PAYMENT_LINK: import.meta.env.VITE_STRIPE_FOUNDER_PAYMENT_LINK?.trim(),
-  VITE_STRIPE_PRO_PAYMENT_LINK: import.meta.env.VITE_STRIPE_PRO_PAYMENT_LINK?.trim(),
-  VITE_STRIPE_ENTERPRISE_PAYMENT_LINK: import.meta.env.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK?.trim(),
-};
-
 const SERVICE_TIERS: ServiceTier[] = [
   {
     ...FLIGHT_PASS_STRIPE,
-    paymentLink:
-      PAYMENT_LINK_BY_ENV.VITE_STRIPE_FOUNDER_PAYMENT_LINK ||
-      "https://buy.stripe.com/your_stripe_link_here",
+    paymentLink: resolveFounderPaymentLink(),
   },
   {
     ...HANGAR_PRO_STRIPE,
-    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_PRO_PAYMENT_LINK,
+    paymentLink: resolveHangarProPaymentLink(),
   },
   {
     ...FLEET_COMMANDER_STRIPE,
-    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK,
+    paymentLink: resolveEnterprisePaymentLink(),
   },
 ];
 
@@ -45,7 +44,14 @@ const VALUE_LADDER = [
 ] as const;
 
 const Special = () => {
-  const [selectedTierId, setSelectedTierId] = useState<SpecialTierId>("founder");
+  const [searchParams] = useSearchParams();
+  const [selectedTierId, setSelectedTierId] = useState<SpecialTierId>(() => {
+    const tier = searchParams.get("tier");
+    if (tier === "fleet-command" || tier === "hangar-pro" || tier === "founder") {
+      return tier;
+    }
+    return "founder";
+  });
 
   const selectedTier = useMemo(
     () => SERVICE_TIERS.find((tier) => tier.id === selectedTierId) ?? SERVICE_TIERS[0],
@@ -61,7 +67,7 @@ const Special = () => {
   }, []);
 
   return (
-    <div className="special-page page-atmosphere mx-auto max-w-6xl px-4 pb-28 pt-36 sm:px-6 lg:px-8">
+    <div className="special-page page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-28 sm:px-6 lg:px-8">
       <header className="special-page__header mb-12 border-b border-white/10 pb-10">
         <div className="mb-4 flex flex-wrap items-center gap-3 font-black uppercase tracking-[0.35em] text-cyan-300/90">
           <ShieldCheck size={20} className="shrink-0" aria-hidden />
@@ -172,6 +178,8 @@ const Special = () => {
         })}
       </div>
 
+      {selectedTierId === "fleet-command" ? <OriginTierLockInAd /> : null}
+
       <section className="special-checkout" aria-labelledby="special-checkout-heading">
         <GlassEffectContainer className="special-checkout__shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan flex-col items-stretch gap-0 p-0">
           <div className="special-checkout__header">
@@ -204,6 +212,7 @@ const Special = () => {
           />
         </GlassEffectContainer>
       </section>
+
     </div>
   );
 };

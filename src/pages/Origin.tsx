@@ -7,6 +7,11 @@ import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import {
+  buildOpenRouterMessages,
+  completeChat,
+  OPENROUTER_API_KEY,
+} from "../lib/openrouter";
 import { speakWithBrandVoice } from "../lib/speakableBrand";
 
 type VoiceMode = "idle" | "speaking";
@@ -31,6 +36,16 @@ const ORIGIN_WELCOME =
 
 /** Short greet on load — speakableBrand renders as U. S. Jet */
 const ORIGIN_LOAD_GREET = "Welcome to USJET. USJET Origin online.";
+
+/** Pause after last speech chunk before treating utterance as complete */
+const UTTERANCE_SILENCE_MS = 1400;
+
+type ChatTurn = { role: "user" | "assistant"; content: string };
+
+/** Survives React Strict Mode remount — true once welcome audio actually starts */
+let originWelcomeAudioStarted = false;
+/** Survives Strict Mode remount — bootstrap finished (welcome done + mic path armed) */
+let originBootstrapDone = false;
 
 function bulletinTrackText(): string {
   return BULLETIN_LINES.map((line) => `◆ ${line}`).join("     ");
@@ -58,6 +73,13 @@ export default function Origin() {
   const bootstrapRef = useRef(false);
   const greetStartedRef = useRef(false);
   const autoplayProbeRef = useRef<number | null>(null);
+  const pendingTranscriptRef = useRef("");
+  const silenceTimerRef = useRef<number | null>(null);
+  const processingRef = useRef(false);
+  const listeningPausedRef = useRef(false);
+  const chatTurnsRef = useRef<ChatTurn[]>([]);
+  const restartRecognitionRef = useRef<() => void>(() => undefined);
+  const handleTranscriptRef = useRef<(raw: string) => void>(() => undefined);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const speakHandleRef = useRef<{ cancel: () => void } | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -126,7 +148,16 @@ export default function Origin() {
     setVoiceLevel(0);
   }, []);
 
+  const clearSilenceTimer = useCallback(() => {
+    if (silenceTimerRef.current !== null) {
+      window.clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = null;
+    }
+  }, []);
+
   const stopRecognition = useCallback(() => {
+    clearSilenceTimer();
+    pendingTranscriptRef.current = "";
     const recognition = recognitionRef.current;
     recognitionRef.current = null;
     if (!recognition) return;
@@ -138,22 +169,147 @@ export default function Origin() {
     } catch {
       /* already stopped */
     }
-  }, []);
+  }, [clearSilenceTimer]);
 
   const disableMic = useCallback(() => {
     micEnabledRef.current = false;
     setMicEnabled(false);
+    processingRef.current = false;
+    listeningPausedRef.current = false;
     stopRecognition();
     stopAudioLevelLoop();
     setStatusLine((line) =>
-      line.startsWith("Heard:") || line.startsWith("Mic live") || line.startsWith("Listening")
+      line.startsWith("Heard:") ||
+      line.startsWith("Mic live") ||
+      line.startsWith("Listening") ||
+      line.startsWith("Origin thinking") ||
+      line.startsWith("Origin responding")
         ? "Status: Online // 8080 Active"
         : line,
     );
   }, [stopAudioLevelLoop, stopRecognition]);
 
+  const speakOriginReply = useCallback(
+    (text: string, onComplete?: () => void) => {
+      if (!("speechSynthesis" in window)) {
+        onComplete?.();
+        return;
+      }
+
+      speakHandleRef.current?.cancel();
+      setVoiceMode("speaking");
+      setStatusLine("Origin responding…");
+
+      const handle = speakWithBrandVoice(text, {
+        rate: 0.95,
+        pitch: 0.92,
+        onStart: () => {
+          armSpeakChannel();
+        },
+        onEnd: () => {
+          speakHandleRef.current = null;
+          setVoiceMode("idle");
+          onComplete?.();
+        },
+        onError: () => {
+          speakHandleRef.current = null;
+          setVoiceMode("idle");
+          onComplete?.();
+        },
+      });
+
+      if (handle) {
+        speakHandleRef.current = handle;
+      } else {
+        setVoiceMode("idle");
+        onComplete?.();
+      }
+    },
+    [armSpeakChannel],
+  );
+
+  const handleTranscript = useCallback(
+    async (raw: string) => {
+      const text = raw.trim();
+      if (!text || processingRef.current || !micEnabledRef.current) return;
+
+      processingRef.current = true;
+      listeningPausedRef.current = true;
+      clearSilenceTimer();
+      pendingTranscriptRef.current = "";
+      stopRecognition();
+
+      setStatusLine(`Heard: “${text.slice(0, 72)}${text.length > 72 ? "…" : ""}”`);
+
+      if (!OPENROUTER_API_KEY) {
+        speakOriginReply(
+          "OpenRouter is not configured on this deployment. Mic channel is live — check your environment keys.",
+          () => {
+            processingRef.current = false;
+            listeningPausedRef.current = false;
+            if (micEnabledRef.current) {
+              setStatusLine("Mic live — Origin listening");
+              restartRecognitionRef.current();
+            }
+          },
+        );
+        return;
+      }
+
+      setStatusLine("Origin thinking…");
+
+      const turns = [...chatTurnsRef.current, { role: "user" as const, content: text }];
+      chatTurnsRef.current = turns;
+
+      try {
+        const reply = await completeChat(
+          OPENROUTER_API_KEY,
+          buildOpenRouterMessages(turns),
+        );
+        chatTurnsRef.current = [...turns, { role: "assistant", content: reply }];
+        speakOriginReply(reply, () => {
+          processingRef.current = false;
+          listeningPausedRef.current = false;
+          if (micEnabledRef.current) {
+            setStatusLine("Mic live — Origin listening");
+            restartRecognitionRef.current();
+          }
+        });
+      } catch {
+        speakOriginReply(
+          "Signal lost on the Aura channel. Mic is still live — try again.",
+          () => {
+            processingRef.current = false;
+            listeningPausedRef.current = false;
+            if (micEnabledRef.current) {
+              setStatusLine("Mic live — Origin listening");
+              restartRecognitionRef.current();
+            }
+          },
+        );
+      }
+    },
+    [clearSilenceTimer, speakOriginReply, stopRecognition],
+  );
+
+  handleTranscriptRef.current = (raw: string) => {
+    void handleTranscript(raw);
+  };
+
+  const scheduleTranscriptProcessing = useCallback(() => {
+    clearSilenceTimer();
+    silenceTimerRef.current = window.setTimeout(() => {
+      silenceTimerRef.current = null;
+      const text = pendingTranscriptRef.current.trim();
+      pendingTranscriptRef.current = "";
+      if (text) {
+        handleTranscriptRef.current(text);
+      }
+    }, UTTERANCE_SILENCE_MS);
+  }, [clearSilenceTimer]);
+
   const restartRecognition = useCallback(() => {
-    if (!micEnabledRef.current) return;
+    if (!micEnabledRef.current || listeningPausedRef.current || processingRef.current) return;
 
     const SpeechRecognitionCtor = getSpeechRecognitionCtor();
     if (!SpeechRecognitionCtor) return;
@@ -167,23 +323,33 @@ export default function Origin() {
     recognition.lang = "en-US";
 
     recognition.onresult = (event) => {
-      const last = event.results[event.results.length - 1];
-      const text = last?.[0]?.transcript?.trim();
-      if (text && last.isFinal) {
-        setStatusLine(`Heard: “${text.slice(0, 72)}${text.length > 72 ? "…" : ""}”`);
+      if (processingRef.current || listeningPausedRef.current) return;
+
+      let chunk = "";
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        chunk += event.results[i]?.[0]?.transcript ?? "";
       }
+
+      const combined = chunk.trim();
+      if (!combined) return;
+
+      pendingTranscriptRef.current = combined;
+      setStatusLine(
+        `Listening: “${combined.slice(0, 72)}${combined.length > 72 ? "…" : ""}”`,
+      );
+      scheduleTranscriptProcessing();
     };
 
     recognition.onerror = (event) => {
-      if (!micEnabledRef.current) return;
+      if (!micEnabledRef.current || listeningPausedRef.current) return;
 
       if (event.error === "no-speech" || event.error === "aborted") {
-        window.setTimeout(() => restartRecognition(), 120);
+        window.setTimeout(() => restartRecognitionRef.current(), 120);
         return;
       }
 
       if (event.error === "network") {
-        window.setTimeout(() => restartRecognition(), 400);
+        window.setTimeout(() => restartRecognitionRef.current(), 400);
         return;
       }
 
@@ -193,97 +359,90 @@ export default function Origin() {
     };
 
     recognition.onend = () => {
-      if (!micEnabledRef.current) return;
-      window.setTimeout(() => restartRecognition(), 80);
+      if (!micEnabledRef.current || listeningPausedRef.current || processingRef.current) return;
+      window.setTimeout(() => restartRecognitionRef.current(), 80);
     };
 
     try {
       recognition.start();
     } catch {
-      window.setTimeout(() => restartRecognition(), 200);
+      window.setTimeout(() => restartRecognitionRef.current(), 200);
     }
-  }, [disableMic, stopRecognition]);
+  }, [disableMic, scheduleTranscriptProcessing, stopRecognition]);
 
-  const speakMicGreet = useCallback(() => {
-    if (!("speechSynthesis" in window)) {
-      if (micEnabledRef.current) {
-        setStatusLine("Mic live — Origin listening");
+  restartRecognitionRef.current = restartRecognition;
+
+  const speakWelcomeGreet = useCallback(
+    (onComplete?: () => void) => {
+      if (!("speechSynthesis" in window)) {
+        onComplete?.();
+        return;
       }
-      return;
-    }
 
-    greetStartedRef.current = false;
-    clearAutoplayProbe();
+      greetStartedRef.current = false;
+      clearAutoplayProbe();
 
-    speakHandleRef.current?.cancel();
-    setVoiceMode("speaking");
-    setStatusLine("Origin voice channel opening…");
+      speakHandleRef.current?.cancel();
+      setVoiceMode("speaking");
+      setStatusLine("Origin voice channel opening…");
 
-    autoplayProbeRef.current = window.setTimeout(() => {
-      if (!greetStartedRef.current) {
-        setShowAutoplayBanner(true);
-        setVoiceMode("idle");
-        setStatusLine(
-          micEnabledRef.current
-            ? "Mic live — tap banner to enable Origin voice"
-            : "Tap banner to enable Origin voice",
-        );
-      }
-    }, 1800);
-
-    const handle = speakWithBrandVoice(ORIGIN_LOAD_GREET, {
-      rate: 0.95,
-      pitch: 0.92,
-      onStart: () => {
-        greetStartedRef.current = true;
-        armSpeakChannel();
-      },
-      onEnd: () => {
-        speakHandleRef.current = null;
-        setVoiceMode("idle");
-        if (micEnabledRef.current) {
-          setStatusLine("Mic live — Origin listening");
-        } else if (speakLiveRef.current) {
-          setStatusLine("Origin voice online.");
-        } else {
-          setStatusLine("Status: Online // 8080 Active");
-        }
-      },
-      onError: () => {
-        speakHandleRef.current = null;
-        setVoiceMode("idle");
-        clearAutoplayProbe();
+      autoplayProbeRef.current = window.setTimeout(() => {
         if (!greetStartedRef.current) {
           setShowAutoplayBanner(true);
+          setVoiceMode("idle");
+          setStatusLine("Tap banner to enable Origin voice");
         }
-        if (micEnabledRef.current) {
-          setStatusLine("Mic live — tap banner to enable Origin voice");
-        } else {
-          setStatusLine("Voice transmit blocked — tap banner to enable.");
-        }
-      },
-    });
+      }, 1800);
 
-    if (handle) {
-      speakHandleRef.current = handle;
-    } else {
-      setVoiceMode("idle");
-      setShowAutoplayBanner(true);
-      if (micEnabledRef.current) {
-        setStatusLine("Mic live — Origin listening");
+      const handle = speakWithBrandVoice(ORIGIN_LOAD_GREET, {
+        rate: 0.95,
+        pitch: 0.92,
+        onStart: () => {
+          greetStartedRef.current = true;
+          originWelcomeAudioStarted = true;
+          armSpeakChannel();
+        },
+        onEnd: () => {
+          speakHandleRef.current = null;
+          setVoiceMode("idle");
+          clearAutoplayProbe();
+          originBootstrapDone = true;
+          onComplete?.();
+        },
+        onError: () => {
+          speakHandleRef.current = null;
+          setVoiceMode("idle");
+          clearAutoplayProbe();
+          if (!greetStartedRef.current) {
+            setShowAutoplayBanner(true);
+            setStatusLine("Voice transmit blocked — tap banner to enable.");
+            return;
+          }
+          originBootstrapDone = true;
+          onComplete?.();
+        },
+      });
+
+      if (handle) {
+        speakHandleRef.current = handle;
+      } else {
+        setVoiceMode("idle");
+        setShowAutoplayBanner(true);
+        setStatusLine("Tap banner to enable Origin voice");
       }
-    }
-  }, [armSpeakChannel, clearAutoplayProbe]);
+    },
+    [armSpeakChannel, clearAutoplayProbe],
+  );
 
-  const enableMic = useCallback(async () => {
-    stopSpeaking();
-
+  const enableMicSession = useCallback(async () => {
     const SpeechRecognitionCtor = getSpeechRecognitionCtor();
     if (!SpeechRecognitionCtor) {
       setShowTroubleshoot(true);
       setStatusLine("Speech recognition not supported — see troubleshoot.");
       return;
     }
+
+    if (micEnabledRef.current) return;
 
     micEnabledRef.current = true;
     setMicEnabled(true);
@@ -317,21 +476,27 @@ export default function Origin() {
       };
       tick();
 
-      restartRecognition();
-      speakMicGreet();
+      restartRecognitionRef.current();
+      setStatusLine("Mic live — Origin listening");
     } catch {
       micEnabledRef.current = false;
       setMicEnabled(false);
       setShowTroubleshoot(true);
       stopAudioLevelLoop();
       setStatusLine("Microphone permission denied.");
-      speakMicGreet();
     }
-  }, [restartRecognition, speakMicGreet, stopAudioLevelLoop, stopSpeaking]);
+  }, [stopAudioLevelLoop]);
+
+  const enableMic = useCallback(async () => {
+    stopSpeaking();
+    await enableMicSession();
+  }, [enableMicSession, stopSpeaking]);
 
   const resumeAutoplayVoice = useCallback(() => {
-    speakMicGreet();
-  }, [speakMicGreet]);
+    speakWelcomeGreet(() => {
+      void enableMicSession();
+    });
+  }, [enableMicSession, speakWelcomeGreet]);
 
   const startSpeak = useCallback(() => {
     disableMic();
@@ -375,17 +540,32 @@ export default function Origin() {
   useEffect(() => {
     if (bootstrapRef.current) return;
     bootstrapRef.current = true;
-    void enableMic();
-  }, [enableMic]);
+
+    if (originBootstrapDone) {
+      void enableMicSession();
+      return;
+    }
+
+    if (originWelcomeAudioStarted) {
+      originBootstrapDone = true;
+      void enableMicSession();
+      return;
+    }
+
+    speakWelcomeGreet(() => {
+      void enableMicSession();
+    });
+  }, [enableMicSession, speakWelcomeGreet]);
 
   useEffect(
     () => () => {
       clearAutoplayProbe();
+      clearSilenceTimer();
       disableMic();
       stopSpeaking();
       disarmSpeakChannel();
     },
-    [clearAutoplayProbe, disableMic, disarmSpeakChannel, stopSpeaking],
+    [clearAutoplayProbe, clearSilenceTimer, disableMic, disarmSpeakChannel, stopSpeaking],
   );
 
   const speakActive = speakLive || voiceMode === "speaking";

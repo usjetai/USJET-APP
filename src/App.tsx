@@ -5,6 +5,7 @@ import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import WarpBackground from "./components/layout/WarpBackground";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
+import TierRouteGate from "./components/member/TierRouteGate";
 import Fleet from "./pages/Fleet";
 import Hangar from "./pages/Hangar";
 import Intel from "./pages/Intel";
@@ -24,12 +25,47 @@ function AnimatedRoutes() {
         <Routes location={location}>
           <Route path="/" element={<Fleet />} />
           <Route path="/hangar" element={<Hangar />} />
-          <Route path="/intel" element={<Intel />} />
-          <Route path="/founder" element={<Founder />} />
-          <Route path="/origin" element={<Origin />} />
-          <Route path="/founder-special-1995" element={<FounderSpecial1995 />} />
+          <Route
+            path="/intel"
+            element={
+              <TierRouteGate path="/intel" pageLabel="Intel">
+                <Intel />
+              </TierRouteGate>
+            }
+          />
+          <Route
+            path="/founder"
+            element={
+              <TierRouteGate path="/founder" pageLabel="Founder">
+                <Founder />
+              </TierRouteGate>
+            }
+          />
+          <Route
+            path="/origin"
+            element={
+              <TierRouteGate path="/origin" pageLabel="Origin">
+                <Origin />
+              </TierRouteGate>
+            }
+          />
+          <Route
+            path="/founder-special-1995"
+            element={
+              <TierRouteGate path="/founder-special-1995" pageLabel="1995 Grit Vault">
+                <FounderSpecial1995 />
+              </TierRouteGate>
+            }
+          />
           <Route path="/special" element={<Special />} />
-          <Route path="/member" element={<MemberPortal />} />
+          <Route
+            path="/member"
+            element={
+              <TierRouteGate path="/member" pageLabel="Member Portal">
+                <MemberPortal />
+              </TierRouteGate>
+            }
+          />
         </Routes>
       </PageTransition>
     </AnimatePresence>

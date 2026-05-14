@@ -19,11 +19,10 @@ export const KING_KARIM_ACCESS_KEY = "KING-KARIM";
 export const KING_KARIM_CUSTOMER_ID = "heir-king-karim";
 
 /**
- * Founder test key clearance map (Intel Top 10 gate):
- * - USJET-AMEER / ameerkarim100@icloud.com → Tier 1 (LVL_01 RECRUIT) — Top 10 locked
- * - USJET-OPERATOR → Tier 2 (LVL_02 OPERATOR / Hangar Pro) — Top 10 unlocked
- * - USJET-1995 → Tier 3 (LVL_03_SOVEREIGN COMMANDER) — Top 10 unlocked
- * - KING-KARIM → Tier 3 heir (USJET-ROYAL-HEIR) — Top 10 unlocked
+ * Founder test key clearance map (route + Intel Top 10 gates):
+ * - USJET-AMEER / ameerkarim100@icloud.com → FOUNDER_GOD_MODE — all routes + all tiers
+ * - USJET-OPERATOR → Tier 2 (LVL_02 OPERATOR / Hangar Pro)
+ * - USJET-1995 / KING-KARIM → Tier 3 (LVL_03_SOVEREIGN COMMANDER / heir)
  */
 
 export function sessionFromMasterKey(raw: string): MemberSession | null {
@@ -58,8 +57,9 @@ export function sessionFromFounderTestAccess(raw: string): MemberSession | null 
     customerId: FOUNDER_TEST_CUSTOMER_ID,
     email: FOUNDER_TEST_EMAIL,
     tier: "USJET-PRIME-ACTIVE",
-    stripeTier: "RECRUIT",
-    accessLevel: "LVL_01",
+    stripeTier: "COMMANDER",
+    accessLevel: "LVL_03_SOVEREIGN",
+    founderGodMode: true,
     active: true,
     verifiedAt: new Date().toISOString(),
   };

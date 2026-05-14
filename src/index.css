@@ -8624,6 +8624,116 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: #fff;
 }
 
+.tier-route-gate {
+  position: relative;
+  min-height: 60vh;
+}
+
+.tier-route-gate__preview {
+  pointer-events: none;
+  user-select: none;
+  filter: blur(5px) saturate(0.65);
+  opacity: 0.35;
+  max-height: 72vh;
+  overflow: hidden;
+}
+
+.tier-route-gate__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.55) 0%, rgba(2, 8, 23, 0.82) 100%);
+  pointer-events: none;
+}
+
+.tier-route-gate__panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 30;
+  width: min(92vw, 26rem);
+  transform: translate(-50%, -50%);
+  padding: 0;
+  overflow: hidden;
+  animation: founders-gate-pulse 1.8s ease-in-out infinite;
+}
+
+.tier-route-gate__inner {
+  padding: 1.5rem 1.35rem 1.35rem;
+}
+
+.tier-route-gate__icon-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.tier-route-gate__icon {
+  color: rgba(103, 232, 249, 0.9);
+  filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.45));
+}
+
+.tier-route-gate__kicker {
+  margin: 0;
+  text-align: center;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.72);
+}
+
+.tier-route-gate__title {
+  margin: 0.45rem 0 0;
+  text-align: center;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.tier-route-gate__copy {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.tier-route-gate__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  margin-top: 1.1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tier-route-gate__footer {
+  margin: 0.9rem 0 0;
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.tier-route-gate__link {
+  color: rgba(103, 232, 249, 0.88);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tier-route-gate__link:hover {
+  color: rgba(224, 242, 254, 0.95);
+}
+
 .member-portal__header {
   margin-bottom: 2rem;
 }

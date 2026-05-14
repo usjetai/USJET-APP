@@ -9,6 +9,8 @@ export type MemberSession = {
   stripeTier?: string;
   accessLevel?: string;
   legacyId?: string;
+  /** Founder-only — bypasses all tier route gates (Ameer Karim). */
+  founderGodMode?: boolean;
 };
 
 export type VerifyMemberResponse = {

@@ -1,7 +1,73 @@
 import type { MemberSession } from "../types/member";
+import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey";
 
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
+
+/** Minimum clearance rank per route — 0 = Fleet/Hangar browse (guest + Tier 1). */
+export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
+  "/": 0,
+  "/hangar": 0,
+  "/intel": 2,
+  "/founder": 2,
+  "/member": 2,
+  "/origin": 3,
+  "/founder-special-1995": 3,
+  "/special": 0,
+};
+
+export function normalizeRoutePath(path: string): string {
+  const base = path.split("?")[0]?.split("#")[0] ?? "/";
+  if (base.length > 1 && base.endsWith("/")) {
+    return base.slice(0, -1);
+  }
+  return base || "/";
+}
+
+export function routeMinClearanceRank(path: string): number {
+  return ROUTE_MIN_CLEARANCE[normalizeRoutePath(path)] ?? 0;
+}
+
+export function isFounderGodMode(session: MemberSession | null | undefined): boolean {
+  if (!session?.active) {
+    return false;
+  }
+  if (session.founderGodMode) {
+    return true;
+  }
+  const email = session.email?.trim().toLowerCase();
+  return session.customerId === FOUNDER_TEST_CUSTOMER_ID || email === FOUNDER_TEST_EMAIL;
+}
+
+export function canAccessRoute(path: string, clearanceRank: number, founderGodMode = false): boolean {
+  if (founderGodMode) {
+    return true;
+  }
+  return clearanceRank >= routeMinClearanceRank(path);
+}
+
+export function clearanceTierLabel(minRank: number): string {
+  if (minRank >= 3) {
+    return "Enterprise Commander";
+  }
+  if (minRank >= 2) {
+    return "Hangar Pro";
+  }
+  if (minRank >= 1) {
+    return "Flight Pass";
+  }
+  return "Member clearance";
+}
+
+export function clearanceTierPrice(minRank: number): string {
+  if (minRank >= 3) {
+    return "$199.99/mo";
+  }
+  if (minRank >= 2) {
+    return "$49.95/mo";
+  }
+  return "$19.90/mo";
+}
 
 export function accessLevelRank(accessLevel?: string): number {
   if (!accessLevel) {
@@ -52,6 +118,10 @@ export function memberClearanceRank(session: MemberSession | null | undefined): 
     return 0;
   }
 
+  if (isFounderGodMode(session)) {
+    return 3;
+  }
+
   if (session.tier === "USJET-ROYAL-HEIR") {
     return 3;
   }
@@ -60,7 +130,19 @@ export function memberClearanceRank(session: MemberSession | null | undefined): 
 }
 
 export function hasIntelTop10Clearance(session: MemberSession | null | undefined): boolean {
+  if (isFounderGodMode(session)) {
+    return true;
+  }
   return memberClearanceRank(session) >= INTEL_TOP10_MIN_ACCESS_LEVEL;
+}
+
+export function canMemberAccessRoute(
+  path: string,
+  session: MemberSession | null | undefined,
+): boolean {
+  const godMode = isFounderGodMode(session);
+  const rank = memberClearanceRank(session);
+  return canAccessRoute(path, rank, godMode);
 }
 
 /** Hangar workbench simultaneous bay caps by clearance rank (0 = teaser / no session). */

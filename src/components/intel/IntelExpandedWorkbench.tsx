@@ -25,9 +25,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
           <a
             className="intel-expanded__external"
             href={src}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${unit.name} in a new tab`}
+            aria-label={`Launch ${unit.name} — integrated navigation`}
           >
             <ExternalLink size={16} strokeWidth={2} />
           </a>

@@ -6,7 +6,7 @@ import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
-import { fleetLaunchUrl, isExternalFleetUrl } from "../lib/fleetLaunchUrl";
+import { fleetLaunchUrl } from "../lib/fleetLaunchUrl";
 
 type VoiceMode = "idle" | "listening" | "speaking";
 
@@ -284,12 +284,11 @@ export default function Origin() {
             <h2 id="origin-fleet-heading" className="origin-page__fleet-title">
               Fleet manifest — 30 bays
             </h2>
-            <p className="origin-page__fleet-copy">Launch any partner from Origin. External bays open in a new tab.</p>
+            <p className="origin-page__fleet-copy">Launch any partner from Origin — integrated navigation across the fleet.</p>
           </div>
           <div className="origin-page__fleet-grid">
             {sortedFleet.map((unit) => {
               const url = fleetLaunchUrl(unit.domain, unit.href);
-              const external = isExternalFleetUrl(url);
               const isOrigin = unit.href === "/origin" || unit.slot === 29;
 
               if (isOrigin) {
@@ -309,8 +308,6 @@ export default function Origin() {
                 <a
                   key={unit.id}
                   href={url}
-                  target={external ? "_blank" : undefined}
-                  rel={external ? "noopener noreferrer" : undefined}
                   className="origin-page__fleet-chip"
                 >
                   <span className="origin-page__fleet-slot">{String(unit.slot + 1).padStart(2, "0")}</span>

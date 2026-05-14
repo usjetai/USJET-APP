@@ -200,8 +200,6 @@ const Founder = () => {
               <nav className="founder-social__nav" aria-label="USJet on social media">
                 <a
                   href={USJET_SOCIAL.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
                   aria-label="USJet on Instagram (usjet)"
                 >
@@ -209,8 +207,6 @@ const Founder = () => {
                 </a>
                 <a
                   href={USJET_SOCIAL.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
                   aria-label="USJet on Facebook (usjets)"
                 >
@@ -218,8 +214,6 @@ const Founder = () => {
                 </a>
                 <a
                   href={USJET_SOCIAL.x}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
                   aria-label="USJet on X (usajet)"
                 >

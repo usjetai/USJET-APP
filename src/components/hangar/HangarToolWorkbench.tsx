@@ -10,28 +10,9 @@ type HangarToolWorkbenchProps = {
   onClose: () => void;
 };
 
-const TACTICAL_POPUP_FEATURES =
-  "width=1280,height=840,left=72,top=48,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,status=no";
-
-/** Unique window per fleet unit so three simultaneous bays do not reuse one tactical window. */
-function tacticalWindowName(unit: FleetUnit): string {
-  return `usjet-hangar-tactical-${unit.id}`;
-}
-
-function openDedicatedTacticalWindow(src: string, unit: FleetUnit): void {
-  const w = window.open(src, tacticalWindowName(unit), TACTICAL_POPUP_FEATURES);
-  if (w) {
-    try {
-      w.opener = null;
-    } catch {
-      /* cross-realm */
-    }
-  }
-}
-
 /**
  * Hangar 2×2 active cockpit: embeds the fleet unit's real tool URL (`unit.href` → iframe `src`).
- * When providers block iframes, operators can launch the same URL in a dedicated tactical window (Hangar stays mounted).
+ * Integrated Navigation: partner launches stay in the same window when operators leave the embed.
  */
 export default function HangarToolWorkbench({ unit, gridStyle, onClose }: HangarToolWorkbenchProps) {
   const rawHref = unit.href?.trim() || unit.domain?.trim() || "";
@@ -41,9 +22,9 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
   const [assistDismissed, setAssistDismissed] = useState(false);
   const [frameRevealed, setFrameRevealed] = useState(false);
 
-  const launchTactical = useCallback(() => {
-    openDedicatedTacticalWindow(src, unit);
-  }, [src, unit]);
+  const launchIntegrated = useCallback(() => {
+    window.location.assign(src);
+  }, [src]);
 
   useEffect(() => {
     setEmbedAssist(false);
@@ -61,25 +42,21 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>
           <p className="intel-expanded__domain">{unit.domain}</p>
-          <p className="intel-expanded__tagline">
-            USJET consensus bay · {unit.name} cockpit
-          </p>
+          <p className="intel-expanded__tagline">USJET consensus bay · {unit.name} cockpit</p>
         </div>
         <div className="intel-expanded__actions">
           <a
             className="intel-expanded__external"
             href={src}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${unit.name} partner interface in a new tab (USJET hangar stays open)`}
+            aria-label={`Launch ${unit.name} — integrated navigation`}
           >
             <ExternalLink size={16} strokeWidth={2} />
           </a>
           <button
             type="button"
             className="intel-expanded__tactical"
-            onClick={launchTactical}
-            aria-label={`Launch tactical window for ${unit.name} — USJET hangar remains home base`}
+            onClick={launchIntegrated}
+            aria-label={`Launch ${unit.name} in the same window — USJET integrated navigation`}
           >
             <Rocket size={15} strokeWidth={2.25} aria-hidden />
           </button>
@@ -105,11 +82,11 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
             referrerPolicy="no-referrer-when-downgrade"
           />
           {showShieldPanel ? (
-            <div className="hangar-embed-shield" role="region" aria-label="Tactical launch fallback">
+            <div className="hangar-embed-shield" role="region" aria-label="Integrated launch fallback">
               <div className="hangar-embed-shield__row">
                 <p className="hangar-embed-shield__text">
-                  Partner security shields may block in-hangar embedding. Launch the live interface in a tactical
-                  window—USJET stays your home base.
+                  Partner security shields may block in-hangar embedding. Launch the live module with integrated
+                  navigation—your session continues in the USJET fleet.
                 </p>
                 <button
                   type="button"
@@ -120,17 +97,17 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
                   ×
                 </button>
               </div>
-              <button type="button" className="hangar-embed-shield__cta" onClick={launchTactical}>
-                Launch tactical interface
+              <button type="button" className="hangar-embed-shield__cta" onClick={launchIntegrated}>
+                Launch integrated interface
               </button>
             </div>
           ) : null}
         </div>
 
         <p className="intel-expanded__hint">
-          Official partner URL, flown in-network by USJET. New tab:{" "}
-          <a className="intel-expanded__hint-link" href={src} target="_blank" rel="noopener noreferrer">
-            open in new tab
+          Official partner URL, flown in-network by USJET. Integrated navigation:{" "}
+          <a className="intel-expanded__hint-link" href={src}>
+            launch module
           </a>
           .
         </p>

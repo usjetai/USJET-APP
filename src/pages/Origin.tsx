@@ -1,10 +1,11 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { Mic, Shield, Volume2, Wrench } from "lucide-react";
+import { Mic, Shield, Volume2, VolumeX, Wrench } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AuraFrame from "../components/aura/AuraFrame";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import OriginBrowserConnectModal from "../components/origin/OriginBrowserConnectModal";
+import OriginMemberStrip from "../components/origin/OriginMemberStrip";
 import OriginTierLockInAd from "../components/origin/OriginTierLockInAd";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
@@ -19,8 +20,38 @@ import {
   completeChat,
   OPENROUTER_API_KEY,
 } from "../lib/openrouter";
-import { ORIGIN_SPOKEN_LOAD_GREET, ORIGIN_SPOKEN_WELCOME, ORIGIN_CS_SPOKEN_GREET, ORIGIN_CS_SCREEN_GREET, speakWithBrandVoice } from "../lib/speakableBrand";
+import {
+  buildOriginMemberContext,
+  readMemberProjects,
+} from "../lib/memberProjectTracker";
+import {
+  adoptCsSubjectFromText,
+  augmentMemberContextForCs,
+  buildCsEstablishSubjectSpokenReply,
+  buildCsGuestVerificationSpokenReply,
+  buildCsOverwhelmSpokenReply,
+  buildCsOverwhelmSystemNudge,
+  buildCsSubjectSystemNudge,
+  buildCsTopicShiftSpokenReply,
+  buildCsVerificationSystemNudge,
+  bumpCsUserTurn,
+  detectCsOverwhelm,
+  detectCsTopicShift,
+  detectCsVerificationIntent,
+  readOriginCsSubjectState,
+  seedCsSubjectFromMember,
+} from "../lib/originCsSubject";
+import {
+  buildOriginCsMemberScreenGreet,
+  buildOriginCsMemberSpokenGreet,
+  ORIGIN_SPOKEN_LOAD_GREET,
+  ORIGIN_SPOKEN_WELCOME,
+  ORIGIN_CS_SPOKEN_GREET,
+  ORIGIN_CS_SCREEN_GREET,
+  speakWithBrandVoice,
+} from "../lib/speakableBrand";
 import { isOriginCustomerServiceEntry } from "../lib/memberAccessLevel";
+import { useMemberAuth } from "../context/MemberAuthContext";
 
 import type { FleetAuraMode } from "../types/fleet";
 
@@ -42,12 +73,13 @@ const BULLETIN_LINES = [
 ];
 
 const ORIGIN_IDLE_STATUS = "Tap Aura when ready to speak";
+const ORIGIN_SPEAKERS_OFF_STATUS = "Speakers off — USJET website audio muted";
 
 const AURA_STATE_LABELS: Record<OriginInteractionState, string> = {
   idle: "Origin idle — tap Aura to listen",
   listening: "Origin listening for your question",
   processing: "Origin processing your question",
-  speaking: "Origin speaking — tap to stop",
+  speaking: "Aura speaking — tap to mute website audio",
 };
 
 /** Spoken briefing from the Speak control — separate from conversational loop */
@@ -111,12 +143,29 @@ function collectRecognitionTranscript(event: SpeechRecognitionEvent): {
 
 export default function Origin() {
   const [searchParams] = useSearchParams();
+  const { session } = useMemberAuth();
   const isCustomerServiceEntry = isOriginCustomerServiceEntry(`?${searchParams.toString()}`);
-  const loadGreet = isCustomerServiceEntry ? ORIGIN_CS_SPOKEN_GREET : ORIGIN_LOAD_GREET;
+  const loadGreet = useMemo(() => {
+    if (isCustomerServiceEntry && session?.active) {
+      return buildOriginCsMemberSpokenGreet(session);
+    }
+    return isCustomerServiceEntry ? ORIGIN_CS_SPOKEN_GREET : ORIGIN_LOAD_GREET;
+  }, [isCustomerServiceEntry, session]);
+  const csScreenGreet = useMemo(() => {
+    if (isCustomerServiceEntry && session?.active) {
+      return buildOriginCsMemberScreenGreet(session);
+    }
+    return ORIGIN_CS_SCREEN_GREET;
+  }, [isCustomerServiceEntry, session]);
+  const memberContext = useMemo(
+    () => buildOriginMemberContext(session?.active ? session : null),
+    [session],
+  );
 
   const [micEnabled, setMicEnabled] = useState(false);
   const [interactionState, setInteractionState] = useState<OriginInteractionState>("idle");
   const [speakLive, setSpeakLive] = useState(false);
+  const [siteMuted, setSiteMuted] = useState(false);
   const [voiceLevel, setVoiceLevel] = useState(0);
   const [showTroubleshoot, setShowTroubleshoot] = useState(false);
   const [showBrowserConnect, setShowBrowserConnect] = useState(false);
@@ -125,6 +174,7 @@ export default function Origin() {
   const micEnabledRef = useRef(false);
   const interactionStateRef = useRef<OriginInteractionState>("idle");
   const speakLiveRef = useRef(false);
+  const siteMutedRef = useRef(false);
   const bootstrapRef = useRef(false);
   const greetStartedRef = useRef(false);
   const autoplayProbeRef = useRef<number | null>(null);
@@ -172,11 +222,35 @@ export default function Origin() {
     setSpeakLive(false);
   }, []);
 
+  const setSiteMutedState = useCallback((muted: boolean) => {
+    siteMutedRef.current = muted;
+    setSiteMuted(muted);
+  }, []);
+
+  const muteSiteAudio = useCallback(() => {
+    speakHandleRef.current?.cancel();
+    speakHandleRef.current = null;
+    voiceSpeakingRef.current = false;
+    window.speechSynthesis?.cancel();
+    disarmSpeakChannel();
+    setSiteMutedState(true);
+    if (interactionStateRef.current === "speaking") {
+      setInteraction("idle");
+    }
+    setStatusLine(ORIGIN_SPEAKERS_OFF_STATUS);
+  }, [disarmSpeakChannel, setInteraction, setSiteMutedState]);
+
   useEffect(() => {
     if (isCustomerServiceEntry && chatTurnsRef.current.length === 0) {
-      chatTurnsRef.current = [{ role: "assistant", content: ORIGIN_CS_SCREEN_GREET }];
+      chatTurnsRef.current = [{ role: "assistant", content: csScreenGreet }];
     }
-  }, [isCustomerServiceEntry]);
+  }, [csScreenGreet, isCustomerServiceEntry]);
+
+  useEffect(() => {
+    if (isCustomerServiceEntry) {
+      seedCsSubjectFromMember(session?.active ? session : null);
+    }
+  }, [isCustomerServiceEntry, session]);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -266,6 +340,11 @@ export default function Origin() {
 
   const speakOriginReply = useCallback(
     (text: string, onComplete?: () => void) => {
+      if (siteMutedRef.current) {
+        onComplete?.();
+        return;
+      }
+
       if (!("speechSynthesis" in window)) {
         onComplete?.();
         return;
@@ -286,11 +365,13 @@ export default function Origin() {
         onEnd: () => {
           voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
+          if (siteMutedRef.current) return;
           onComplete?.();
         },
         onError: () => {
           voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
+          if (siteMutedRef.current) return;
           onComplete?.();
         },
       });
@@ -363,17 +444,63 @@ export default function Origin() {
       const turns = [...chatTurnsRef.current, { role: "user" as const, content: text }];
       chatTurnsRef.current = turns;
 
+      let csPreface: string | null = null;
+      const csNudges: string[] = [];
+      let csState = readOriginCsSubjectState();
+
+      if (isCustomerServiceEntry) {
+        csState = seedCsSubjectFromMember(session?.active ? session : null);
+        const projects = session?.active ? readMemberProjects(session.customerId) : [];
+
+        if (detectCsOverwhelm(text)) {
+          csPreface = buildCsOverwhelmSpokenReply();
+          csNudges.push(buildCsOverwhelmSystemNudge());
+        } else if (detectCsVerificationIntent(text)) {
+          if (session?.active) {
+            csNudges.push(buildCsVerificationSystemNudge(true));
+          } else {
+            csPreface = buildCsGuestVerificationSpokenReply();
+            csNudges.push(buildCsVerificationSystemNudge(false));
+          }
+        } else {
+          const shift = detectCsTopicShift(text, csState, projects);
+          if (shift.shifted) {
+            csPreface = buildCsTopicShiftSpokenReply(csState);
+            csNudges.push(buildCsSubjectSystemNudge(csState));
+          } else {
+            csState = adoptCsSubjectFromText(text, csState, session?.active ? session : null);
+            if (!csState.activeCsSubject && csState.userTurnCount === 0) {
+              csPreface = buildCsEstablishSubjectSpokenReply();
+            }
+          }
+        }
+
+        csState = bumpCsUserTurn(csState);
+      }
+
+      const augmentedMemberContext = isCustomerServiceEntry
+        ? augmentMemberContextForCs(memberContext, csState, csNudges)
+        : memberContext;
+
       try {
         const reply = await completeChat(
           OPENROUTER_API_KEY,
           buildOpenRouterMessages(turns, {
             entry: isCustomerServiceEntry ? "customer-service" : undefined,
+            memberContext: augmentedMemberContext,
           }),
         );
         chatTurnsRef.current = [...turns, { role: "assistant", content: reply }];
-        speakOriginReply(reply, () => {
-          finishTranscriptCycle();
-        });
+        const deliverReply = () => {
+          speakOriginReply(reply, () => {
+            finishTranscriptCycle();
+          });
+        };
+        if (csPreface) {
+          speakOriginReply(csPreface, deliverReply);
+        } else {
+          deliverReply();
+        }
       } catch {
         speakOriginReply(ORIGIN_AURA_LINK_LOST, () => {
           finishTranscriptCycle();
@@ -386,6 +513,8 @@ export default function Origin() {
       openBrowserConnectModal,
       speakOriginReply,
       isCustomerServiceEntry,
+      memberContext,
+      session,
     ],
   );
 
@@ -520,6 +649,7 @@ export default function Origin() {
           voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
           clearAutoplayProbe();
+          if (siteMutedRef.current) return;
           originBootstrapDone = true;
           onComplete?.();
         },
@@ -527,6 +657,7 @@ export default function Origin() {
           voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
           clearAutoplayProbe();
+          if (siteMutedRef.current) return;
           if (!greetStartedRef.current) {
             setShowAutoplayBanner(true);
             setStatusLine("Voice transmit blocked — tap banner to enable.");
@@ -632,14 +763,16 @@ export default function Origin() {
   }, [enterListening, stopSpeaking]);
 
   const resumeAutoplayVoice = useCallback(() => {
+    setSiteMutedState(false);
     speakWelcomeGreet(() => {
       enterIdle();
     });
-  }, [enterIdle, speakWelcomeGreet]);
+  }, [enterIdle, setSiteMutedState, speakWelcomeGreet]);
 
   const startSpeak = useCallback(() => {
     disableMic();
     stopSpeaking();
+    setSiteMutedState(false);
 
     if (!("speechSynthesis" in window)) {
       setStatusLine("Speech output unavailable in this browser.");
@@ -659,11 +792,13 @@ export default function Origin() {
       onEnd: () => {
         voiceSpeakingRef.current = false;
         speakHandleRef.current = null;
+        if (siteMutedRef.current) return;
         enterIdle("Status: Online // 8080 Active");
       },
       onError: () => {
         voiceSpeakingRef.current = false;
         speakHandleRef.current = null;
+        if (siteMutedRef.current) return;
         enterIdle("Voice transmit interrupted.");
       },
     });
@@ -674,18 +809,22 @@ export default function Origin() {
     }
 
     speakHandleRef.current = handle;
-  }, [armSpeakChannel, disableMic, enterIdle, setInteraction, stopSpeaking]);
+  }, [armSpeakChannel, disableMic, enterIdle, setInteraction, setSiteMutedState, stopSpeaking]);
 
   const handleAuraClick = useCallback(() => {
-    if (interactionStateRef.current === "speaking") {
-      stopSpeaking();
+    if (
+      interactionStateRef.current === "speaking" ||
+      speakLiveRef.current ||
+      voiceSpeakingRef.current
+    ) {
+      muteSiteAudio();
       return;
     }
 
     if (interactionStateRef.current === "idle") {
       void enterListening();
     }
-  }, [enterListening, stopSpeaking]);
+  }, [enterListening, muteSiteAudio]);
 
   useEffect(() => {
     if (bootstrapRef.current) return;
@@ -734,9 +873,16 @@ export default function Origin() {
   );
 
   const isSpeaking = interactionState === "speaking";
-  const speakActive = speakLive || isSpeaking;
+  const speakersLive = speakLive || isSpeaking;
+  const speakButtonMuted = siteMuted && !speakersLive;
 
-  const shellClass = `origin-voice-shell origin-voice-shell--${interactionState}`;
+  const shellClass = [
+    "origin-voice-shell",
+    `origin-voice-shell--${interactionState}`,
+    siteMuted ? "origin-voice-shell--site-muted" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const shieldAura: FleetAuraMode =
     interactionState === "speaking"
@@ -774,10 +920,12 @@ export default function Origin() {
           </p>
         </header>
 
+        {session?.active ? <OriginMemberStrip session={session} /> : null}
+
         <div className="origin-page__core mb-12 flex w-full max-w-3xl flex-col items-center">
           {isCustomerServiceEntry ? (
             <p className="origin-page__cs-greet mb-4 max-w-lg text-center text-sm leading-relaxed text-cyan-200/90">
-              {ORIGIN_CS_SCREEN_GREET}
+              {csScreenGreet}
             </p>
           ) : null}
           {showAutoplayBanner ? (
@@ -846,25 +994,50 @@ export default function Origin() {
             <button
               type="button"
               className={`group absolute -right-6 top-1/2 z-10 -translate-y-1/2 rounded-full border p-5 shadow-xl backdrop-blur-xl transition-all sm:-right-28 ${
-                speakActive
+                speakersLive
                   ? "border-cyan-400/60 bg-cyan-500/10 hover:border-cyan-300/80 hover:bg-cyan-500/15"
-                  : "border-white/10 bg-white/5 hover:border-cyan-400/50 hover:bg-white/10"
+                  : speakButtonMuted
+                    ? "border-amber-400/50 bg-amber-500/10 hover:border-amber-300/70 hover:bg-amber-500/15"
+                    : "border-white/10 bg-white/5 hover:border-cyan-400/50 hover:bg-white/10"
               }`}
-              onClick={isSpeaking ? stopSpeaking : startSpeak}
-              aria-pressed={speakActive}
-              aria-label={isSpeaking ? "Stop Origin briefing" : "Speak Origin briefing"}
+              onClick={speakersLive ? muteSiteAudio : startSpeak}
+              aria-pressed={speakersLive || speakButtonMuted}
+              aria-label={
+                speakersLive
+                  ? "Mute website audio"
+                  : speakButtonMuted
+                    ? "Turn USJET website audio back on"
+                    : "Turn on website audio"
+              }
+              title={
+                speakersLive
+                  ? "Mute website audio — speakers off to USJET"
+                  : speakButtonMuted
+                    ? "Speakers off — tap to turn USJET audio back on"
+                    : "Turn on website audio"
+              }
             >
-              <Volume2
-                className={`h-8 w-8 transition-colors ${
-                  speakActive ? "text-cyan-300" : "text-white/40 group-hover:text-cyan-400"
-                }`}
-              />
+              {speakersLive || speakButtonMuted ? (
+                <VolumeX
+                  className={`h-8 w-8 transition-colors ${
+                    speakersLive ? "text-cyan-300" : "text-amber-300/90"
+                  }`}
+                />
+              ) : (
+                <Volume2
+                  className="h-8 w-8 text-white/40 transition-colors group-hover:text-cyan-400"
+                />
+              )}
               <span
                 className={`absolute -bottom-8 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-widest sm:block ${
-                  speakActive ? "text-cyan-300" : "text-white/20 group-hover:text-cyan-400"
+                  speakersLive
+                    ? "text-cyan-300"
+                    : speakButtonMuted
+                      ? "text-amber-300/80"
+                      : "text-white/20 group-hover:text-cyan-400"
                 }`}
               >
-                {isSpeaking ? "Stop" : "Speak"}
+                {speakersLive ? "Mute" : speakButtonMuted ? "Speakers off" : "Speak"}
               </span>
             </button>
           </div>

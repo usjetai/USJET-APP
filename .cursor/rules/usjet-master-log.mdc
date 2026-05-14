@@ -38,7 +38,13 @@ The 30 fleet AIs work **for the Founder**, not for generic task completion. Buil
 
 ## Direct Landing Protocol
 
-**Flight Pass Direct Extraction Port:** `https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02` — hard-wired $19.90 Flight Pass checkout. High-pressure funnels / quick-entry gates land direct (no intermediate stall). **One-Click Revenue:** every fleet unit knows this link. Constant: `FLIGHT_PASS_DIRECT_URL` in `src/lib/stripePaymentLink.ts`.
+| Tier | Price | Constant | Extraction port |
+|------|-------|----------|-----------------|
+| Flight Pass | $19.90/mo | `FLIGHT_PASS_DIRECT_URL` | `https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02` |
+| Hangar Pro | $49.95/mo | `HANGAR_PRO_DIRECT_URL` | `https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03` |
+| Enterprise Commander | $199.99/mo | `ENTERPRISE_DIRECT_URL` | `https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04` |
+
+Hard-wired in `src/lib/stripePaymentLink.ts`. High-pressure funnels / quick-entry gates land direct (no intermediate stall). **One-Click Revenue:** every fleet unit knows these links.
 
 ## Do not deviate
 

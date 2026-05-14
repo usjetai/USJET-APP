@@ -7,15 +7,9 @@
     background: transparent !important;
   }
 
-  /* Clears fixed liquid-glass nav + iOS safe-area (notch / Dynamic Island) */
+  /* Clears fixed liquid-glass nav — pt-32 (8rem) + iOS safe-area */
   .page-nav-offset {
-    padding-top: max(6rem, calc(env(safe-area-inset-top, 0px) + 5.25rem));
-  }
-
-  @media (min-width: 640px) {
-    .page-nav-offset {
-      padding-top: max(9rem, calc(env(safe-area-inset-top, 0px) + 8rem));
-    }
+    padding-top: calc(8rem + env(safe-area-inset-top, 0px));
   }
 
   .moving-clouds {
@@ -1941,8 +1935,9 @@
   filter: drop-shadow(0 0 5px rgba(248, 113, 113, 0.45));
 }
 
-/* Intel grid expansion (6×5 explicit placement) */
+/* Intel grid expansion (6×5 explicit placement on lg+) */
 .intel-grid-wrap {
+  position: relative;
   min-height: 0;
   overflow: visible;
 }
@@ -1959,10 +1954,16 @@
   grid-auto-rows: auto;
 }
 
-/* Mobile / tablet: stack bays — ignore explicit 6×5 placement from inline styles */
-.intel-grid > * {
-  grid-row: auto !important;
-  grid-column: auto !important;
+/* Mobile / tablet: single-column stack — ignore explicit 6×5 inline placement */
+@media (max-width: 1023px) {
+  .intel-grid > * {
+    grid-row: auto !important;
+    grid-column: auto !important;
+  }
+
+  .intel-grid__void {
+    display: none;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -3190,6 +3191,7 @@
 
 /* Hangar shell stays open—aviation-pulse and mesh read through bay gaps & glass negative space */
 .hangar-page {
+  position: relative;
   background: transparent;
 }
 

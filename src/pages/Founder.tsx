@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Facebook, Instagram } from "lucide-react";
-import FounderFleetRoster from "../components/founder/FounderFleetRoster";
+import FounderJetWing from "../components/founder/FounderJetWing";
 import FounderWorkerSilhouette, {
   type FounderWorkerSilhouetteType,
 } from "../components/founder/FounderWorkerSilhouettes";
@@ -87,119 +87,125 @@ const Founder = () => {
   const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
 
   return (
-    <div className="founder-page founder-page--warp page-atmosphere page-nav-offset mx-auto max-w-6xl px-6 pb-28 sm:px-8">
-      <article className="founder-story founder-page__main">
-        <header className="founder-story__hero">
-          <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect--rounded-rect">
-            <img
-              className="founder-story__hero-logo"
-              src="/founder/usjet-hero-logo.png"
-              alt="USJET.AI — liquid glass star emblem"
-              width={1200}
-              height={675}
-              decoding="async"
-              fetchPriority="high"
-            />
-          </GlassEffectContainer>
-          <p className="founder-story__lede founder-story__lede--centered">
-            Queens hustle, the digital hive, and the first AI platform built for blue-collar
-            America — from someone who turned wrenches before slides.
-          </p>
-        </header>
+    <div className="founder-page founder-page--warp founder-page--wing page-atmosphere page-nav-offset px-6 pb-28 sm:px-8">
+      <div className="founder-page__wing-grid">
+        <FounderJetWing side="left" />
 
-        <FounderFleetRoster />
+        <div className="founder-page__center">
+          <article className="founder-story founder-page__main">
+            <header className="founder-story__hero">
+              <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect--rounded-rect">
+                <img
+                  className="founder-story__hero-logo"
+                  src="/founder/usjet-hero-logo.png"
+                  alt="USJET.AI — liquid glass star emblem"
+                  width={1200}
+                  height={675}
+                  decoding="async"
+                  fetchPriority="high"
+                />
+              </GlassEffectContainer>
+              <p className="founder-story__lede founder-story__lede--centered">
+                Queens hustle, the digital hive, and the first AI platform built for blue-collar
+                America — from someone who turned wrenches before slides.
+              </p>
+            </header>
 
-        {FOUNDERS_STORY.map((section) => {
-          const showPhoto = !brokenImages[section.heading];
+            {FOUNDERS_STORY.map((section) => {
+              const showPhoto = !brokenImages[section.heading];
 
-          return (
-            <section key={section.heading} className="founder-story__section">
-              <p className="founder-story__kicker">{section.kicker}</p>
-              <h2 className="founder-story__heading">{section.heading}</h2>
-              <p className="founder-story__body">{section.paragraph}</p>
+              return (
+                <section key={section.heading} className="founder-story__section">
+                  <p className="founder-story__kicker">{section.kicker}</p>
+                  <h2 className="founder-story__heading">{section.heading}</h2>
+                  <p className="founder-story__body">{section.paragraph}</p>
 
-              <figure className="founder-story__visual">
-                <GlassEffectContainer
-                  className={[
-                    "founder-story__visual-frame",
-                    "glass-effect",
-                    "glass-effect--rounded-rect",
-                    showPhoto
-                      ? "founder-story__visual-frame--photo"
-                      : "founder-story__visual-frame--vector liquid-glass-background",
-                  ].join(" ")}
-                >
-                  {showPhoto ? (
-                    <img
-                      className="founder-story__photo"
-                      src={section.imageSrc}
-                      alt={section.imageAlt}
-                      width={section.imageWidth}
-                      height={section.imageHeight}
-                      loading="lazy"
-                      decoding="async"
-                      onError={() =>
-                        setBrokenImages((prev) => ({ ...prev, [section.heading]: true }))
-                      }
-                    />
-                  ) : (
-                    <div className="founder-story__vector-stage" aria-hidden>
-                      <FounderWorkerSilhouette
-                        silhouetteType={section.silhouetteType}
-                        className="founder-story__worker-silhouette"
-                      />
-                    </div>
-                  )}
-                </GlassEffectContainer>
-                <figcaption className="founder-story__visual-caption">
-                  {section.imageLabel}
-                </figcaption>
-              </figure>
-            </section>
-          );
-        })}
+                  <figure className="founder-story__visual">
+                    <GlassEffectContainer
+                      className={[
+                        "founder-story__visual-frame",
+                        "glass-effect",
+                        "glass-effect--rounded-rect",
+                        showPhoto
+                          ? "founder-story__visual-frame--photo"
+                          : "founder-story__visual-frame--vector liquid-glass-background",
+                      ].join(" ")}
+                    >
+                      {showPhoto ? (
+                        <img
+                          className="founder-story__photo"
+                          src={section.imageSrc}
+                          alt={section.imageAlt}
+                          width={section.imageWidth}
+                          height={section.imageHeight}
+                          loading="lazy"
+                          decoding="async"
+                          onError={() =>
+                            setBrokenImages((prev) => ({ ...prev, [section.heading]: true }))
+                          }
+                        />
+                      ) : (
+                        <div className="founder-story__vector-stage" aria-hidden>
+                          <FounderWorkerSilhouette
+                            silhouetteType={section.silhouetteType}
+                            className="founder-story__worker-silhouette"
+                          />
+                        </div>
+                      )}
+                    </GlassEffectContainer>
+                    <figcaption className="founder-story__visual-caption">
+                      {section.imageLabel}
+                    </figcaption>
+                  </figure>
+                </section>
+              );
+            })}
 
-        <footer className="founder-social">
-          <p className="founder-social__eyebrow">Social navigation</p>
-          <div className="founder-social__row">
-            <div className="founder-social__escort" aria-hidden>
-              <span className="founder-social__escort-slot founder-social__escort-slot--wing">
-                <AircraftIcon aircraftType="f22" accentId="escort-1" className="founder-escort-jet" />
-              </span>
-              <span className="founder-social__escort-slot founder-social__escort-slot--lead">
-                <AircraftIcon aircraftType="sr71" accentId="escort-2" className="founder-escort-jet" />
-              </span>
-              <span className="founder-social__escort-slot founder-social__escort-slot--wing">
-                <AircraftIcon aircraftType="f35" accentId="escort-3" className="founder-escort-jet" />
-              </span>
-            </div>
+            <footer className="founder-social">
+              <p className="founder-social__eyebrow">Social navigation</p>
+              <div className="founder-social__row">
+                <div className="founder-social__escort" aria-hidden>
+                  <span className="founder-social__escort-slot founder-social__escort-slot--wing">
+                    <AircraftIcon aircraftType="f22" accentId="escort-1" className="founder-escort-jet" />
+                  </span>
+                  <span className="founder-social__escort-slot founder-social__escort-slot--lead">
+                    <AircraftIcon aircraftType="sr71" accentId="escort-2" className="founder-escort-jet" />
+                  </span>
+                  <span className="founder-social__escort-slot founder-social__escort-slot--wing">
+                    <AircraftIcon aircraftType="f35" accentId="escort-3" className="founder-escort-jet" />
+                  </span>
+                </div>
 
-            <nav className="founder-social__nav" aria-label="USJet on social media">
-              <a
-                href={USJET_SOCIAL.instagram}
-                className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                aria-label="USJet on Instagram (usjet)"
-              >
-                <Instagram size={26} strokeWidth={1.35} className="founder-social__icon" />
-              </a>
-              <a
-                href={USJET_SOCIAL.facebook}
-                className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                aria-label="USJet on Facebook (usjets)"
-              >
-                <Facebook size={26} strokeWidth={1.35} className="founder-social__icon" />
-              </a>
-              <a
-                href={USJET_SOCIAL.x}
-                className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                aria-label="USJet on X (usajet)"
-              >
-                <XComIcon className="founder-social__x-icon founder-social__icon" />
-              </a>
-            </nav>
-          </div>
-        </footer>
-      </article>
+                <nav className="founder-social__nav" aria-label="USJet on social media">
+                  <a
+                    href={USJET_SOCIAL.instagram}
+                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                    aria-label="USJet on Instagram (usjet)"
+                  >
+                    <Instagram size={26} strokeWidth={1.35} className="founder-social__icon" />
+                  </a>
+                  <a
+                    href={USJET_SOCIAL.facebook}
+                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                    aria-label="USJet on Facebook (usjets)"
+                  >
+                    <Facebook size={26} strokeWidth={1.35} className="founder-social__icon" />
+                  </a>
+                  <a
+                    href={USJET_SOCIAL.x}
+                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                    aria-label="USJet on X (usajet)"
+                  >
+                    <XComIcon className="founder-social__x-icon founder-social__icon" />
+                  </a>
+                </nav>
+              </div>
+            </footer>
+          </article>
+        </div>
+
+        <FounderJetWing side="right" />
+      </div>
     </div>
   );
 };

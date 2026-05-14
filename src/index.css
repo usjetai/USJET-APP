@@ -5078,157 +5078,221 @@ button.fleet-card {
   background: rgba(120, 53, 15, 0.12);
 }
 
-/* Founder page layout — centered single column */
+/* Founder page — wing layout (30 jets flanking center story) */
+.founder-page--wing {
+  width: 100%;
+  max-width: 92rem;
+  margin-inline: auto;
+}
+
+.founder-page__wing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "center"
+    "left"
+    "right";
+  align-items: start;
+  justify-items: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.founder-page__center {
+  grid-area: center;
+  width: 100%;
+  max-width: 42rem;
+}
+
+.founder-jet-wing--left {
+  grid-area: left;
+}
+
+.founder-jet-wing--right {
+  grid-area: right;
+}
+
+@media (min-width: 1080px) {
+  .founder-page__wing-grid {
+    grid-template-columns: minmax(2.75rem, 4rem) minmax(0, 42rem) minmax(2.75rem, 4rem);
+    grid-template-areas: "left center right";
+    justify-content: center;
+    column-gap: clamp(1rem, 2.5vw, 2.25rem);
+    row-gap: 0;
+  }
+
+  .founder-jet-wing--left,
+  .founder-jet-wing--right {
+    position: sticky;
+    top: clamp(5rem, 12vh, 8.5rem);
+    align-self: start;
+  }
+}
+
 .founder-page__main {
   width: 100%;
-  max-width: 52rem;
+  max-width: 42rem;
   margin-inline: auto;
 }
 
-/* Founder fleet roster — dual vertical columns */
-.founder-fleet-roster {
-  margin-bottom: 3rem;
-}
-
-.founder-fleet-roster__frame {
+/* Founder jet wing columns — pure silhouettes, no card chrome */
+.founder-jet-wing {
   width: 100%;
-  max-width: 52rem;
-  margin-inline: auto;
-  padding: 1.1rem 1rem 1.15rem;
+  max-width: 42rem;
 }
 
-@media (min-width: 640px) {
-  .founder-fleet-roster__frame {
-    padding: 1.25rem 1.35rem 1.35rem;
+@media (min-width: 1080px) {
+  .founder-jet-wing {
+    width: 100%;
+    max-width: none;
   }
 }
 
-.founder-fleet-roster__header {
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.founder-fleet-roster__kicker {
-  margin: 0;
-  font-size: 0.58rem;
-  font-weight: 800;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(34, 211, 238, 0.62);
-}
-
-.founder-fleet-roster__title {
-  margin: 0.35rem 0 0;
-  font-family: theme("fontFamily.aviation");
-  font-size: clamp(1rem, 2.4vw, 1.35rem);
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(248, 250, 252, 0.94);
-}
-
-.founder-fleet-roster__columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-}
-
-@media (min-width: 540px) {
-  .founder-fleet-roster__columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem 1.35rem;
-  }
-}
-
-.founder-fleet-roster__column-label {
-  margin: 0 0 0.55rem;
-  font-size: 0.52rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.38);
-  text-align: center;
-}
-
-.founder-fleet-roster__list {
+.founder-jet-wing__list {
   display: flex;
-  flex-direction: column;
-  gap: 0.38rem;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem;
   margin: 0;
-  padding: 0;
+  padding: 0.35rem 0.15rem;
   list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 211, 238, 0.28) transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
-.founder-fleet-roster__cell {
+@media (min-width: 1080px) {
+  .founder-jet-wing__list {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(0.28rem, 0.9vh, 0.62rem);
+    overflow: visible;
+    padding: 0.15rem 0;
+  }
+}
+
+.founder-jet-wing__slot {
+  flex: 0 0 auto;
+}
+
+.founder-jet-wing__jet {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  width: 100%;
-  padding: 0.42rem 0.55rem;
-  border: 1px solid color-mix(in srgb, var(--founder-fleet-accent) 32%, transparent);
-  border-radius: 0.65rem;
-  background: color-mix(in srgb, var(--founder-fleet-accent) 9%, rgba(0, 0, 0, 0.42));
+  justify-content: center;
+  padding: 0.12rem;
+  border: 0;
+  background: transparent;
   text-decoration: none;
+  cursor: pointer;
   transition:
-    border-color 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease;
+    transform 0.22s ease,
+    filter 0.22s ease;
 }
 
-.founder-fleet-roster__cell:hover {
-  border-color: color-mix(in srgb, var(--founder-fleet-accent) 55%, transparent);
-  background: color-mix(in srgb, var(--founder-fleet-accent) 16%, rgba(0, 0, 0, 0.5));
-  box-shadow: 0 0 14px color-mix(in srgb, var(--founder-fleet-accent) 22%, transparent);
+.founder-jet-wing__icon {
+  width: clamp(1.65rem, 4.8vw, 2.35rem);
+  height: clamp(1.65rem, 4.8vw, 2.35rem);
+  opacity: 0.86;
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease,
+    filter 0.22s ease;
 }
 
-.founder-fleet-roster__cell--command {
-  border-color: rgba(251, 191, 36, 0.42);
-  background: rgba(120, 53, 15, 0.22);
+@media (min-width: 1080px) {
+  .founder-jet-wing__icon {
+    width: clamp(1.55rem, 1.65vw, 2.15rem);
+    height: clamp(1.55rem, 1.65vw, 2.15rem);
+  }
+
+  .founder-jet-wing__jet--left .founder-jet-wing__icon {
+    transform: rotate(-90deg);
+  }
+
+  .founder-jet-wing__jet--right .founder-jet-wing__icon {
+    transform: rotate(90deg) scaleX(-1);
+  }
 }
 
-.founder-fleet-roster__cell--command:hover {
-  border-color: rgba(251, 191, 36, 0.62);
-  background: rgba(120, 53, 15, 0.32);
-  box-shadow: 0 0 16px rgba(251, 191, 36, 0.18);
+.founder-jet-wing__icon .aircraft-icon__vector path,
+.founder-jet-wing__icon .aircraft-icon__vector ellipse,
+.founder-jet-wing__icon .aircraft-icon__vector circle {
+  stroke: var(--founder-jet-accent, rgba(255, 255, 255, 0.88));
+  stroke-width: 1.45;
 }
 
-.founder-fleet-roster__bay {
-  flex-shrink: 0;
-  min-width: 1.65rem;
+.founder-jet-wing__jet:hover .founder-jet-wing__icon,
+.founder-jet-wing__jet:focus-visible .founder-jet-wing__icon {
+  opacity: 1;
+  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--founder-jet-accent) 55%, transparent));
+}
+
+@media (min-width: 1080px) {
+  .founder-jet-wing__jet--left:hover .founder-jet-wing__icon,
+  .founder-jet-wing__jet--left:focus-visible .founder-jet-wing__icon {
+    transform: rotate(-90deg) translateX(2px) scale(1.06);
+  }
+
+  .founder-jet-wing__jet--right:hover .founder-jet-wing__icon,
+  .founder-jet-wing__jet--right:focus-visible .founder-jet-wing__icon {
+    transform: rotate(90deg) scaleX(-1) translateX(2px) scale(1.06);
+  }
+}
+
+.founder-jet-wing__jet--command .founder-jet-wing__icon .aircraft-icon__vector path,
+.founder-jet-wing__jet--command .founder-jet-wing__icon .aircraft-icon__vector ellipse,
+.founder-jet-wing__jet--command .founder-jet-wing__icon .aircraft-icon__vector circle {
+  stroke: hsl(43 88% 58%);
+}
+
+.founder-jet-wing__jet--command:hover .founder-jet-wing__icon,
+.founder-jet-wing__jet--command:focus-visible .founder-jet-wing__icon {
+  filter: drop-shadow(0 0 9px rgba(251, 191, 36, 0.45));
+}
+
+.founder-jet-wing__callsign {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.2rem);
+  transform: translateX(-50%);
+  padding: 0.12rem 0.38rem;
+  border-radius: 0.35rem;
   font-family: theme("fontFamily.aviation");
-  font-size: 0.62rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  color: var(--founder-fleet-accent);
-}
-
-.founder-fleet-roster__text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
-  min-width: 0;
-}
-
-.founder-fleet-roster__callsign {
-  font-family: theme("fontFamily.aviation");
-  font-size: 0.58rem;
+  font-size: 0.48rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--founder-fleet-accent);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--founder-jet-accent, #22d3ee);
+  background: rgba(2, 8, 23, 0.82);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
 }
 
-.founder-fleet-roster__name {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.82);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+@media (min-width: 1080px) {
+  .founder-jet-wing--left .founder-jet-wing__callsign {
+    left: calc(100% + 0.35rem);
+    bottom: 50%;
+    transform: translateY(50%);
+  }
+
+  .founder-jet-wing--right .founder-jet-wing__callsign {
+    right: calc(100% + 0.35rem);
+    left: auto;
+    bottom: 50%;
+    transform: translateY(50%);
+  }
+}
+
+.founder-jet-wing__jet:hover .founder-jet-wing__callsign,
+.founder-jet-wing__jet:focus-visible .founder-jet-wing__callsign {
+  opacity: 1;
 }
 
 .founder-story__lede--centered {
@@ -5462,7 +5526,7 @@ button.fleet-card {
 
 .founder-story,
 .founder-page__main,
-.founder-wingman,
+.founder-jet-wing,
 .founder-social {
   position: relative;
   z-index: 1;

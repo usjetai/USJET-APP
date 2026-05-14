@@ -1,0 +1,88 @@
+import type { CSSProperties } from "react";
+import { Link } from "react-router-dom";
+import { fleetManifest } from "../../data/fleetManifest";
+import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
+import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
+import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
+import type { FleetUnit } from "../../types/fleet";
+import AircraftIcon from "../icons/AircraftIcons";
+
+const SORTED_UNITS = [...fleetManifest].sort((a, b) => a.slot - b.slot);
+const LEFT_WING = SORTED_UNITS.slice(0, 15);
+const RIGHT_WING = SORTED_UNITS.slice(15, 30);
+
+function fleetBayLabel(slot: number): string {
+  return String(slot + 1).padStart(2, "0");
+}
+
+function fleetUnitAccent(slot: number): string {
+  const hue = Math.round((slot / 30) * 360);
+  return `hsl(${hue} 68% 58%)`;
+}
+
+function FounderJetCell({ unit, side }: { unit: FleetUnit; side: "left" | "right" }) {
+  const launchUrl = integratedLaunchUrl(unit.domain, resolveFleetUnitHref(unit), unit.slot, {
+    returnTo: "/founder",
+    label: unit.name,
+  });
+  const isCommandBay = unit.slot === 29;
+  const accent = fleetUnitAccent(unit.slot);
+  const bay = fleetBayLabel(unit.slot);
+  const Tag = launchUrl.startsWith("/") ? Link : "a";
+  const linkProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
+
+  return (
+    <li className="founder-jet-wing__slot">
+      <Tag
+        {...linkProps}
+        className={[
+          "founder-jet-wing__jet",
+          "glass-effect-interactive",
+          side === "left" ? "founder-jet-wing__jet--left" : "founder-jet-wing__jet--right",
+          isCommandBay ? "founder-jet-wing__jet--command" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        style={
+          {
+            "--founder-jet-accent": accent,
+          } as CSSProperties
+        }
+        aria-label={`Bay ${bay} — ${unit.callsign}, ${unit.name}`}
+        onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
+      >
+        <AircraftIcon
+          aircraftType={unit.aircraftType}
+          accentId={`founder-wing-${unit.id}`}
+          className="founder-jet-wing__icon"
+        />
+        <span className="founder-jet-wing__callsign" aria-hidden>
+          {unit.callsign}
+        </span>
+      </Tag>
+    </li>
+  );
+}
+
+type FounderJetWingProps = {
+  side: "left" | "right";
+};
+
+export default function FounderJetWing({ side }: FounderJetWingProps) {
+  const units = side === "left" ? LEFT_WING : RIGHT_WING;
+  const label =
+    side === "left" ? "Sovereign fleet — bays 01–15" : "Sovereign fleet — bays 16–30";
+
+  return (
+    <aside
+      className={`founder-jet-wing founder-jet-wing--${side}`}
+      aria-label={label}
+    >
+      <ul className="founder-jet-wing__list">
+        {units.map((unit) => (
+          <FounderJetCell key={unit.id} unit={unit} side={side} />
+        ))}
+      </ul>
+    </aside>
+  );
+}

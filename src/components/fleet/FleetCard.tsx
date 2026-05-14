@@ -47,7 +47,7 @@ export default function FleetCard({
   const CardTag = launchUrl.startsWith("/") ? Link : "a";
   const cardProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
-  const bayAccent = surface === "fleet" && typeof slot === "number" ? getFleetBayAccent(slot) : null;
+  const bayAccent = typeof slot === "number" ? getFleetBayAccent(slot) : null;
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
 

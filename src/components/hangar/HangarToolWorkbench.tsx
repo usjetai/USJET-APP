@@ -1,5 +1,6 @@
 import { ExternalLink, Rocket, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { getFleetBayAccent } from "../../data/fleetBayAccents";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
@@ -39,9 +40,19 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
   }, [src, unit.id]);
 
   const showShieldPanel = embedAssist && !assistDismissed;
+  const bayAccent = getFleetBayAccent(unit.slot);
 
   return (
-    <article className="intel-expanded hangar-tool-workbench">
+    <article
+      className="intel-expanded hangar-tool-workbench hangar-tool-workbench--bay-accent"
+      style={
+        {
+          "--fleet-accent": bayAccent.accent,
+          "--fleet-accent-bright": bayAccent.accentBright,
+          "--fleet-accent-rgb": bayAccent.accentRgb,
+        } as CSSProperties
+      }
+    >
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>

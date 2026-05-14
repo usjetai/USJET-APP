@@ -1,4 +1,4 @@
-/** Curated runway accent + one-word personality per fleet slot (0–29). Fleet `/` only. */
+/** Curated accent + one-word personality per fleet slot (0–29). Shared by Fleet runway and Hangar bays. */
 export type FleetBayAccent = {
   personality: string;
   accent: string;

@@ -8,7 +8,12 @@ export type ProjectFleetAssignment = {
   unitId: string;
   callsign: string;
   name: string;
-  jobDescription: string;
+  /** Auto-generated on add — e.g. "Gemini Co-Pilot". */
+  copilotName: string;
+  /** User's search / task intent for their own record. */
+  searchIntent: string;
+  savedAt: string;
+  isSaved: boolean;
   /** Cockpit / browser launches for this unit on this project (one thread per launch). */
   sessionForks: number;
 };
@@ -29,6 +34,11 @@ function newId(): string {
   return `proj_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 }
 
+export function buildCopilotName(fleetUnitName: string): string {
+  const trimmed = fleetUnitName.trim();
+  return trimmed ? `${trimmed} Co-Pilot` : "Co-Pilot";
+}
+
 function normalizeAssignment(raw: Record<string, unknown>): ProjectFleetAssignment {
   const sessionForks =
     typeof raw.sessionForks === "number"
@@ -37,11 +47,21 @@ function normalizeAssignment(raw: Record<string, unknown>): ProjectFleetAssignme
         ? raw.usageCount
         : 0;
 
+  const unitName = String(raw.name ?? "");
+  const legacyJob = String(raw.jobDescription ?? "");
+  const searchIntent = String(raw.searchIntent ?? legacyJob);
+  const migratedSaved = searchIntent.trim().length > 0;
+
   return {
     unitId: String(raw.unitId ?? ""),
     callsign: String(raw.callsign ?? ""),
-    name: String(raw.name ?? ""),
-    jobDescription: String(raw.jobDescription ?? ""),
+    name: unitName,
+    copilotName: String(
+      raw.copilotName ?? (unitName ? buildCopilotName(unitName) : ""),
+    ),
+    searchIntent,
+    savedAt: String(raw.savedAt ?? (migratedSaved ? new Date().toISOString() : "")),
+    isSaved: Boolean(raw.isSaved ?? migratedSaved),
     sessionForks,
   };
 }
@@ -214,7 +234,10 @@ export function addFleetUnitToProject(
       unitId: unit.id,
       callsign: unit.callsign,
       name: unit.name,
-      jobDescription: "",
+      copilotName: buildCopilotName(unit.name),
+      searchIntent: "",
+      savedAt: "",
+      isSaved: false,
       sessionForks: 0,
     };
 
@@ -242,12 +265,33 @@ export function saveProjectAssignment(
   customerId: string,
   projectId: string,
   unitId: string,
-  jobDescription: string,
+  searchIntent: string,
+): void {
+  const trimmed = searchIntent.trim();
+  updateProject(customerId, projectId, (project) => ({
+    ...project,
+    assignments: project.assignments.map((assignment) =>
+      assignment.unitId === unitId
+        ? {
+            ...assignment,
+            searchIntent: trimmed,
+            isSaved: true,
+            savedAt: new Date().toISOString(),
+          }
+        : assignment,
+    ),
+  }));
+}
+
+export function unlockProjectAssignment(
+  customerId: string,
+  projectId: string,
+  unitId: string,
 ): void {
   updateProject(customerId, projectId, (project) => ({
     ...project,
     assignments: project.assignments.map((assignment) =>
-      assignment.unitId === unitId ? { ...assignment, jobDescription } : assignment,
+      assignment.unitId === unitId ? { ...assignment, isSaved: false } : assignment,
     ),
   }));
 }

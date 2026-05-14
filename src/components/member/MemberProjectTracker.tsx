@@ -1,5 +1,5 @@
-import { FolderKanban, Minus, Plus, Save, Trash2 } from "lucide-react";
-import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import { FolderKanban, Minus, Pencil, Plus, Save, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
@@ -13,12 +13,16 @@ import {
   saveProjectAssignment,
   setMemberActiveProject,
   subscribeMemberProjects,
+  unlockProjectAssignment,
   type MemberProject,
   type ProjectFleetAssignment,
 } from "../../lib/memberProjectTracker";
 
 const fleetUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const HOLD_MESSAGE_MS = 6000;
+
+const SESSION_FORKS_DISCIPLINE =
+  "Parallel browser sessions fragment your project. Without discipline, you burn RAM, lose continuity, and start over. USJET tracks session forks so you operate like a professional—not a clone factory.";
 
 type MemberProjectTrackerProps = {
   customerId: string;
@@ -90,10 +94,10 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
       <div className="member-projects__header">
         <p className="member-projects__kicker">Mission control</p>
         <h2 className="member-projects__title">Mission Projects</h2>
-        <p className="member-projects__copy">
-          Assign fleet units per mission, save each role, and track session forks when you launch from
-          Hangar or Intel.
-        </p>
+      <p className="member-projects__copy">
+        Name each Co-Pilot, record your search intent, save the assignment. Misuse burns equipment and
+        wastes work—operate with discipline.
+      </p>
       </div>
 
       <form className="member-projects__create" onSubmit={handleCreate}>
@@ -282,15 +286,17 @@ type AssignmentRowProps = {
 };
 
 function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps) {
-  const [draftJob, setDraftJob] = useState(assignment.jobDescription);
+  const [draftSearch, setDraftSearch] = useState(assignment.searchIntent);
+  const [editing, setEditing] = useState(!assignment.isSaved);
   const [holdVisible, setHoldVisible] = useState(false);
   const holdTimerRef = useRef<number | null>(null);
   const unitSlot = fleetUnits.find((unit) => unit.id === assignment.unitId)?.slot;
   const accentStyle = typeof unitSlot === "number" ? fleetBayAccentStyle(unitSlot) : undefined;
 
   useEffect(() => {
-    setDraftJob(assignment.jobDescription);
-  }, [assignment.jobDescription, assignment.unitId]);
+    setDraftSearch(assignment.searchIntent);
+    setEditing(!assignment.isSaved);
+  }, [assignment.searchIntent, assignment.isSaved, assignment.unitId]);
 
   useEffect(
     () => () => {
@@ -302,7 +308,11 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
   );
 
   const handleSave = () => {
-    saveProjectAssignment(customerId, projectId, assignment.unitId, draftJob);
+    if (!draftSearch.trim()) {
+      return;
+    }
+    saveProjectAssignment(customerId, projectId, assignment.unitId, draftSearch);
+    setEditing(false);
     setHoldVisible(true);
     if (holdTimerRef.current !== null) {
       window.clearTimeout(holdTimerRef.current);
@@ -313,24 +323,25 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
     }, HOLD_MESSAGE_MS);
   };
 
-  const dirty = draftJob !== assignment.jobDescription;
+  const handleEdit = () => {
+    unlockProjectAssignment(customerId, projectId, assignment.unitId);
+    setEditing(true);
+  };
+
   const parallelSessions = assignment.sessionForks > 1;
+  const locked = assignment.isSaved && !editing;
 
   return (
     <li
-      className="member-projects__assignment member-projects__assignment--bay-accent"
+      className={[
+        "member-projects__assignment member-projects__assignment--bay-accent",
+        locked ? "member-projects__assignment--saved" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={accentStyle as CSSProperties | undefined}
     >
-      <div className="member-projects__assignment-head">
-        <div>
-          <p className="member-projects__callsign">{assignment.callsign}</p>
-          <p className="member-projects__unit-name">{assignment.name}</p>
-        </div>
-        <div className="member-projects__forks">
-          <span className="member-projects__forks-label">Session forks</span>
-          <SessionForksBadge count={assignment.sessionForks} />
-        </div>
-      </div>
+      <AssignmentHead assignment={assignment} />
 
       <p className="member-projects__forks-hint">
         Each launch from Hangar or Intel opens a new thread for this project.
@@ -343,14 +354,108 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
         </p>
       ) : null}
 
+      {locked ? (
+        <SavedRecord
+          assignment={assignment}
+          onEdit={handleEdit}
+          onRemove={() => removeFleetUnitFromProject(customerId, projectId, assignment.unitId)}
+        />
+      ) : (
+        <EditForm
+          assignment={assignment}
+          draftSearch={draftSearch}
+          onDraftChange={setDraftSearch}
+          onSave={handleSave}
+          onRemove={() => removeFleetUnitFromProject(customerId, projectId, assignment.unitId)}
+        />
+      )}
+
+      {holdVisible ? (
+        <p className="member-projects__hold" role="status" aria-live="polite">
+          {MEMBER_ASSIGNMENT_HOLD_MESSAGE}
+        </p>
+      ) : null}
+    </li>
+  );
+}
+
+function AssignmentHead({ assignment }: { assignment: ProjectFleetAssignment }) {
+  return (
+    <div className="member-projects__assignment-head">
+      <div>
+        <p className="member-projects__callsign">{assignment.callsign}</p>
+        <p className="member-projects__unit-name">{assignment.name}</p>
+      </div>
+      <div className="member-projects__forks">
+        <span className="member-projects__forks-label">Session forks</span>
+        <SessionForksBadge count={assignment.sessionForks} />
+      </div>
+    </div>
+  );
+}
+
+type SavedRecordProps = {
+  assignment: ProjectFleetAssignment;
+  onEdit: () => void;
+  onRemove: () => void;
+};
+
+function SavedRecord({ assignment, onEdit, onRemove }: SavedRecordProps) {
+  return (
+    <div className="member-projects__saved-record">
+      <div className="member-projects__saved-fields">
+        <div className="member-projects__saved-field">
+          <span className="member-projects__field-label">Prompt call sign</span>
+          <p className="member-projects__saved-value">{assignment.copilotName}</p>
+        </div>
+        <div className="member-projects__saved-field">
+          <span className="member-projects__field-label">What you are searching</span>
+          <p className="member-projects__saved-value">{assignment.searchIntent}</p>
+        </div>
+      </div>
+      <div className="member-projects__assignment-actions member-projects__assignment-actions--saved">
+        <span className="member-projects__saved-badge" aria-label="Assignment saved">
+          Saved
+        </span>
+        <button type="button" className="member-projects__edit-btn glass-effect-interactive" onClick={onEdit}>
+          <Pencil size={11} aria-hidden />
+          Edit
+        </button>
+        <button type="button" className="member-projects__remove glass-effect-interactive" onClick={onRemove}>
+          <Minus size={12} aria-hidden />
+          Remove
+        </button>
+      </div>
+    </div>
+  );
+}
+
+type EditFormProps = {
+  assignment: ProjectFleetAssignment;
+  draftSearch: string;
+  onDraftChange: (value: string) => void;
+  onSave: () => void;
+  onRemove: () => void;
+};
+
+function EditForm({ assignment, draftSearch, onDraftChange, onSave, onRemove }: EditFormProps) {
+  return (
+    <>
+      <div className="member-projects__field">
+        <span className="member-projects__field-label">Co-Pilot name</span>
+        <p className="member-projects__copilot-preview" aria-readonly="true">
+          {assignment.copilotName}
+        </p>
+      </div>
+
       <label className="member-projects__field">
-        <span className="member-projects__field-label">Job on this project</span>
+        <span className="member-projects__field-label">Enter what you are searching</span>
         <input
           className="member-projects__input"
           type="text"
-          value={draftJob}
-          onChange={(event) => setDraftJob(event.target.value)}
-          placeholder='e.g. "writing contracts", "research"'
+          value={draftSearch}
+          onChange={(event) => onDraftChange(event.target.value)}
+          placeholder='e.g. "Help me build my house"'
           maxLength={120}
         />
       </label>
@@ -359,27 +464,18 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
         <button
           type="button"
           className="member-projects__save-btn btn-glass glass-effect glass-effect-interactive"
-          onClick={handleSave}
+          onClick={onSave}
+          disabled={!draftSearch.trim()}
         >
           <Save size={13} aria-hidden />
           Save assignment
         </button>
 
-        <button
-          type="button"
-          className="member-projects__remove glass-effect-interactive"
-          onClick={() => removeFleetUnitFromProject(customerId, projectId, assignment.unitId)}
-        >
+        <button type="button" className="member-projects__remove glass-effect-interactive" onClick={onRemove}>
           <Minus size={12} aria-hidden />
           Remove
         </button>
       </div>
-
-      {holdVisible ? (
-        <p className="member-projects__hold" role="status" aria-live="polite">
-          {MEMBER_ASSIGNMENT_HOLD_MESSAGE}
-        </p>
-      ) : null}
-    </li>
+    </>
   );
 }

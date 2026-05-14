@@ -9742,6 +9742,84 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: rgba(148, 163, 184, 0.92);
 }
 
+.member-projects__assignment--saved {
+  background: color-mix(in srgb, var(--fleet-accent) 10%, rgba(2, 8, 23, 0.52));
+  border-color: color-mix(in srgb, var(--fleet-accent) 38%, rgba(34, 211, 238, 0.22));
+}
+
+.member-projects__copilot-preview,
+.member-projects__saved-value {
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(2, 8, 23, 0.72);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.member-projects__copilot-preview {
+  color: rgba(224, 242, 254, 0.88);
+  font-weight: 700;
+}
+
+.member-projects__saved-record {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.member-projects__saved-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.member-projects__saved-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.member-projects__saved-value {
+  font-weight: 600;
+}
+
+.member-projects__assignment-actions--saved {
+  margin-top: 0.15rem;
+}
+
+.member-projects__saved-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.55rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  background: rgba(14, 116, 144, 0.22);
+  color: rgba(224, 242, 254, 0.9);
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.member-projects__edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 .member-projects__remove {
   display: inline-flex;
   align-items: center;

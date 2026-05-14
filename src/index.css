@@ -4089,7 +4089,11 @@ button.fleet-card {
 }
 
 .founder-story__visual {
-  margin: 2rem 0 0;
+  margin: 1.75rem 0 0;
+}
+
+.founder-story__body + .founder-story__visual {
+  margin-top: 1.75rem;
 }
 
 .founder-story__visual-frame {
@@ -4294,6 +4298,24 @@ button.fleet-card {
 }
 
 .founder-story__vector-silhouette.aircraft-icon {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
+}
+
+.founder-story__worker-silhouette {
+  width: clamp(7rem, 24vw, 10.5rem);
+  height: clamp(7rem, 24vw, 10.5rem);
+  opacity: 0.96;
+}
+
+.founder-story__worker-silhouette .founder-worker-silhouette__vector path,
+.founder-story__worker-silhouette .founder-worker-silhouette__vector circle,
+.founder-story__worker-silhouette .founder-worker-silhouette__vector ellipse,
+.founder-story__worker-silhouette .founder-worker-silhouette__vector rect {
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-width: 1.65;
+}
+
+.founder-story__worker-silhouette.founder-worker-silhouette {
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
 }
 

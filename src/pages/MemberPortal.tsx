@@ -7,7 +7,6 @@ import MemberFleetUsageChart from "../components/member/MemberFleetUsageChart";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import MemberVitalsPanel from "../components/member/MemberVitalsPanel";
 import { useMemberAuth } from "../context/MemberAuthContext";
-import { USJET_OPS_EMAIL } from "../lib/usjetContact";
 
 export default function MemberPortal() {
   const { session, loading, login, logout, error } = useMemberAuth();
@@ -114,10 +113,6 @@ export default function MemberPortal() {
         <Link to="/intel" className="member-portal__link">
           Intel
         </Link>
-        {" · "}
-        <a href={`mailto:${USJET_OPS_EMAIL}`} className="member-portal__link">
-          {USJET_OPS_EMAIL}
-        </a>
       </p>
     </div>
   );

@@ -14,7 +14,6 @@ import {
   resolveFounderPaymentLink,
   resolveHangarProPaymentLink,
 } from "../lib/stripePaymentLink";
-import { USJET_OPS_EMAIL } from "../lib/usjetContact";
 
 type ServiceTier = StripeTierProduct & {
   paymentLink?: string;
@@ -203,12 +202,6 @@ const Special = () => {
         </GlassEffectContainer>
       </section>
 
-      <p className="special-page__contact">
-        Questions?{" "}
-        <a href={`mailto:${USJET_OPS_EMAIL}`} className="special-page__contact-link">
-          {USJET_OPS_EMAIL}
-        </a>
-      </p>
     </div>
   );
 };

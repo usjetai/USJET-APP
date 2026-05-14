@@ -517,6 +517,95 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+/* Global ops contact strip — every route including cockpit */
+.usjet-global-contact-bar {
+  position: fixed;
+  right: max(0.75rem, env(safe-area-inset-right, 0px));
+  bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
+  left: max(0.75rem, env(safe-area-inset-left, 0px));
+  z-index: 260;
+  pointer-events: none;
+}
+
+.usjet-global-contact-bar__shell {
+  pointer-events: auto;
+  margin: 0 auto;
+  max-width: 72rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 0.85rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.5625rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.usjet-global-contact-bar__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+.usjet-global-contact-bar__ping {
+  width: 0.45rem;
+  height: 0.45rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: rgb(59, 130, 246);
+  animation: usjet-ops-ping 1.8s ease-in-out infinite;
+}
+
+@keyframes usjet-ops-ping {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.usjet-global-contact-bar__ops {
+  margin-left: auto;
+  padding: 0.28rem 0.65rem;
+  font-size: 0.5625rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: none;
+  color: rgba(103, 232, 249, 0.88);
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .usjet-global-contact-bar {
+    right: max(1.5rem, env(safe-area-inset-right, 0px));
+    bottom: max(0.85rem, env(safe-area-inset-bottom, 0px));
+    left: max(1.5rem, env(safe-area-inset-left, 0px));
+  }
+
+  .usjet-global-contact-bar__shell {
+    padding: 0.45rem 1rem;
+    font-size: 0.625rem;
+  }
+
+  .usjet-global-contact-bar__ops {
+    font-size: 0.625rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .usjet-global-contact-bar__ping {
+    animation: none;
+  }
+}
+
 .fleet-command {
   display: inline-flex;
   align-items: center;

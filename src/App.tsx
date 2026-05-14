@@ -2,7 +2,7 @@ import { AnimatePresence } from "framer-motion";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import AppNav from "./components/layout/AppNav";
 import PageTransition from "./components/layout/PageTransition";
-import Usa250Countdown from "./components/layout/Usa250Countdown";
+import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import MovingBackground from "./components/layout/MovingBackground";
 import WarpBackground from "./components/layout/WarpBackground";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
@@ -15,7 +15,6 @@ import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
 import Cockpit from "./pages/Cockpit";
-import { USJET_OPS_EMAIL } from "./lib/usjetContact";
 
 const globalAtmosphereStyle = {
   position: "fixed",
@@ -70,21 +69,6 @@ function AppChrome() {
       <main className="relative z-10">
         <AnimatedRoutes />
       </main>
-      <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 pb-[env(safe-area-inset-bottom,0px)] text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex items-center gap-4">
-          <span className="h-2 w-2 shrink-0 animate-ping rounded-full bg-blue-500" />
-          <span>USJET System Active // Port 8080</span>
-        </div>
-        <div className="flex flex-col items-start gap-1 sm:items-end">
-          <Usa250Countdown />
-          <a
-            href={`mailto:${USJET_OPS_EMAIL}`}
-            className="normal-case tracking-[0.12em] text-cyan-300/55 transition-colors hover:text-cyan-300/90"
-          >
-            {USJET_OPS_EMAIL}
-          </a>
-        </div>
-      </div>
     </>
   );
 }
@@ -97,6 +81,7 @@ export default function App() {
           <div aria-hidden className="moving-clouds" />
         </div>
         <AppChrome />
+        <UsjetGlobalContactBar />
       </div>
     </Router>
   );

@@ -6,6 +6,7 @@ import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
 import IntelTop10Section from "../components/intel/IntelTop10Section";
+import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
@@ -16,9 +17,9 @@ const intelUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const unitBySlot = new Map<number, FleetUnit>(intelUnits.map((u) => [u.slot, u]));
 
 const BORDER_FORMATION = [
-  { accentId: "intel-border-l-1", aircraftType: "f22" as const, slotClass: "intel-page__escort-slot--wing" },
-  { accentId: "intel-border-l-2", aircraftType: "sr71" as const, slotClass: "intel-page__escort-slot--lead" },
-  { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing" },
+  { accentId: "intel-border-l-1", aircraftType: "f22" as const, slotClass: "intel-page__escort-slot--wing", slot: 0 },
+  { accentId: "intel-border-l-2", aircraftType: "sr71" as const, slotClass: "intel-page__escort-slot--lead", slot: 1 },
+  { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing", slot: 2 },
 ];
 
 const Intel = () => {
@@ -109,14 +110,22 @@ const Intel = () => {
 
       <div className="intel-page__escort intel-page__escort--left" aria-hidden>
         {BORDER_FORMATION.map((jet) => (
-          <span key={jet.accentId} className={`intel-page__escort-slot ${jet.slotClass}`}>
+          <span
+            key={jet.accentId}
+            className={`intel-page__escort-slot intel-page__escort-slot--bay-accent ${jet.slotClass}`}
+            style={fleetBayAccentStyle(jet.slot)}
+          >
             <AircraftIcon aircraftType={jet.aircraftType} accentId={jet.accentId} className="intel-page__border-jet" />
           </span>
         ))}
       </div>
       <div className="intel-page__escort intel-page__escort--right" aria-hidden>
         {BORDER_FORMATION.map((jet) => (
-          <span key={`${jet.accentId}-r`} className={`intel-page__escort-slot ${jet.slotClass}`}>
+          <span
+            key={`${jet.accentId}-r`}
+            className={`intel-page__escort-slot intel-page__escort-slot--bay-accent ${jet.slotClass}`}
+            style={fleetBayAccentStyle(jet.slot)}
+          >
             <AircraftIcon aircraftType={jet.aircraftType} accentId={`${jet.accentId}-r`} className="intel-page__border-jet" />
           </span>
         ))}

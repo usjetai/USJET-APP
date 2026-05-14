@@ -1,4 +1,5 @@
 import type { CSSProperties, KeyboardEvent } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { getWingForSlot } from "../../lib/intelWings";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
@@ -29,6 +30,7 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
     <article
       className={[
         "intel-monitor",
+        "intel-monitor--bay-accent",
         "glass-effect",
         "liquid-glass-background",
         "glass-tint-cyan",
@@ -38,6 +40,7 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
         .join(" ")}
       style={{
         animationDelay: `${(index % HANGAR_COLUMNS) * 0.15}s`,
+        ...fleetBayAccentStyle(unit.slot),
         ...style,
       }}
       onClick={

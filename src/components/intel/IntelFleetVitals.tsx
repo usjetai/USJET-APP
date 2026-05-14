@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import EkgPulseLine from "./EkgPulseLine";
 
@@ -71,11 +72,13 @@ export default function IntelFleetVitals() {
             key={unit.id}
             className={[
               "intel-fleet-vitals__tick",
+              "intel-fleet-vitals__tick--bay-accent",
               unit.status === "active" ? "intel-fleet-vitals__tick--active" : "",
               unit.status === "staging" ? "intel-fleet-vitals__tick--staging" : "",
             ]
               .filter(Boolean)
               .join(" ")}
+            style={fleetBayAccentStyle(unit.slot)}
             title={`Bay ${unit.slot + 1} · ${unit.name}`}
           />
         ))}

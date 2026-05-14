@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import AircraftIcon from "../icons/AircraftIcons";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
@@ -29,7 +30,8 @@ export default function MemberFleetControlBoard() {
             <li key={unit.id}>
               <a
                 href={launchUrl}
-                className="member-control-board__cell glass-effect-interactive"
+                className="member-control-board__cell member-control-board__cell--bay-accent glass-effect-interactive"
+                style={fleetBayAccentStyle(unit.slot)}
                 aria-label={`Launch ${unit.name} — ${unit.callsign}`}
                 onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
               >

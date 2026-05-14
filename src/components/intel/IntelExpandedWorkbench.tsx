@@ -1,5 +1,6 @@
 import { ExternalLink, X } from "lucide-react";
 import type { CSSProperties } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
@@ -21,7 +22,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
   });
 
   return (
-    <article className="intel-expanded" style={gridStyle}>
+    <article className="intel-expanded intel-expanded--bay-accent" style={{ ...fleetBayAccentStyle(unit.slot), ...gridStyle }}>
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>

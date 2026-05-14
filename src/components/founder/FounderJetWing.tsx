@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
+import { fleetBayAccentStyle, getFleetBayAccent } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
@@ -15,18 +16,13 @@ function fleetBayLabel(slot: number): string {
   return String(slot + 1).padStart(2, "0");
 }
 
-function fleetUnitAccent(slot: number): string {
-  const hue = Math.round((slot / 30) * 360);
-  return `hsl(${hue} 68% 58%)`;
-}
-
 function FounderJetCell({ unit, side }: { unit: FleetUnit; side: "left" | "right" }) {
   const launchUrl = integratedLaunchUrl(unit.domain, resolveFleetUnitHref(unit), unit.slot, {
     returnTo: "/founder",
     label: unit.name,
   });
   const isCommandBay = unit.slot === 29;
-  const accent = fleetUnitAccent(unit.slot);
+  const bayAccent = getFleetBayAccent(unit.slot);
   const bay = fleetBayLabel(unit.slot);
   const Tag = launchUrl.startsWith("/") ? Link : "a";
   const linkProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
@@ -45,7 +41,8 @@ function FounderJetCell({ unit, side }: { unit: FleetUnit; side: "left" | "right
           .join(" ")}
         style={
           {
-            "--founder-jet-accent": accent,
+            ...fleetBayAccentStyle(unit.slot),
+            "--founder-jet-accent": bayAccent.accent,
           } as CSSProperties
         }
         aria-label={`Bay ${bay} — ${unit.callsign}, ${unit.name}`}

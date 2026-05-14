@@ -1,6 +1,7 @@
 import { FolderKanban, Minus, Plus, Save, Trash2 } from "lucide-react";
-import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { MEMBER_ASSIGNMENT_HOLD_MESSAGE } from "../../lib/usjetContact";
 import {
@@ -284,6 +285,8 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
   const [draftJob, setDraftJob] = useState(assignment.jobDescription);
   const [holdVisible, setHoldVisible] = useState(false);
   const holdTimerRef = useRef<number | null>(null);
+  const unitSlot = fleetUnits.find((unit) => unit.id === assignment.unitId)?.slot;
+  const accentStyle = typeof unitSlot === "number" ? fleetBayAccentStyle(unitSlot) : undefined;
 
   useEffect(() => {
     setDraftJob(assignment.jobDescription);
@@ -314,7 +317,10 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
   const parallelSessions = assignment.sessionForks > 1;
 
   return (
-    <li className="member-projects__assignment">
+    <li
+      className="member-projects__assignment member-projects__assignment--bay-accent"
+      style={accentStyle as CSSProperties | undefined}
+    >
       <div className="member-projects__assignment-head">
         <div>
           <p className="member-projects__callsign">{assignment.callsign}</p>

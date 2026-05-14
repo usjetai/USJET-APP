@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import CockpitReturnBar from "../components/layout/CockpitReturnBar";
+import { fleetBayAccentStyle, slotFromBayId } from "../data/fleetBayAccents";
 import { TRUSTED_FLEET_LAUNCH_COPY } from "../data/usjetProtocol";
 import { isFleetBayTrusted, markFleetBayTrusted, sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
 import { logFleetLaunchHandoff } from "../lib/fleetUsageHistory";
@@ -23,6 +24,11 @@ export default function Cockpit() {
   const bay = params.get("bay");
   const partnerLabel = params.get("label");
   const handoffParam = params.get("handoff");
+  const baySlot = useMemo(() => slotFromBayId(bay), [bay]);
+  const bayAccentStyle = useMemo(
+    () => (baySlot !== null ? fleetBayAccentStyle(baySlot) : undefined),
+    [baySlot],
+  );
 
   const isTrustedHandoff = useMemo(() => {
     if (handoffParam === "trusted") {
@@ -83,11 +89,12 @@ export default function Cockpit() {
   const displayName = partnerLabel ?? "partner module";
 
   return (
-    <div className="cockpit-shell">
+    <div className="cockpit-shell" style={bayAccentStyle}>
       <CockpitReturnBar returnTo={returnTo} bay={bay} partnerLabel={partnerLabel} />
       <div
         className={[
           "cockpit-handoff-interstitial",
+          "cockpit-handoff-interstitial--bay-accent",
           isTrustedHandoff ? "cockpit-handoff-interstitial--trusted" : "cockpit-handoff-interstitial--first",
         ].join(" ")}
         role="region"

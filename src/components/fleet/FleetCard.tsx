@@ -1,4 +1,4 @@
-import { getFleetBayAccent } from "../../data/fleetBayAccents";
+import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
@@ -95,9 +95,7 @@ export default function FleetCard({
         bayAccent
           ? ({
               ...style,
-              "--fleet-accent": bayAccent.accent,
-              "--fleet-accent-bright": bayAccent.accentBright,
-              "--fleet-accent-rgb": bayAccent.accentRgb,
+              ...fleetBayAccentStyle(slot as number),
             } as CSSProperties)
           : style
       }

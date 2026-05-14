@@ -1,4 +1,5 @@
 import { useState, type CSSProperties, type MouseEvent } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import EkgPulseLine from "./EkgPulseLine";
 import ReservedBayLiveMock from "./ReservedBayLiveMock";
@@ -40,6 +41,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
     <article
       className={[
         "intel-monitor",
+        "intel-monitor--bay-accent",
         "intel-reserved-bay",
         "intel-reserved-bay--hot",
         "glass-effect",
@@ -53,6 +55,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
         .join(" ")}
       style={{
         animationDelay: `${(index % HANGAR_COLUMNS) * 0.08}s`,
+        ...fleetBayAccentStyle(unit.slot),
         ...style,
       }}
       aria-label={

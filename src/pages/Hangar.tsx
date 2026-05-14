@@ -14,7 +14,7 @@ const HANGAR_META_DESCRIPTION =
   "USJET is not a passive directory—it networks Gemini, ChatGPT, Claude, and 27 other elite AIs into one US hangar. Each system claims a cockpit bay aboard the same high-velocity fleet: a consensus of intelligence on the path to a digital nervous system.";
 
 const HANGAR_VISION_RIBBON =
-  "Click any bay to launch the live partner interface in a new tab—direct navigation, no dead iframes.";
+  "Direct flight links active—Integrated Navigation.";
 
 const Hangar = () => {
   const { session } = useMemberAuth();
@@ -72,7 +72,7 @@ const Hangar = () => {
               <span>{session?.active ? "Founder's Access Granted" : "Founder's Hangar"}</span>
               <span
                 className="hangar-ops-badge rounded-full border border-cyan-400/35 bg-cyan-500/[0.08] px-3 py-1 text-[8px] font-black tracking-[0.2em] text-cyan-200/90 sm:text-[9px] sm:tracking-[0.28em]"
-                title="Each bay links straight to the partner AI—open in a new tab from the hangar"
+                title="Each bay navigates to its partner module inside the USJET experience"
               >
                 Direct flight links active
               </span>

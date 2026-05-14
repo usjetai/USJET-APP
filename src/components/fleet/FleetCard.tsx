@@ -1,6 +1,6 @@
 import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
-import { fleetLaunchUrl, isExternalFleetUrl } from "../../lib/fleetLaunchUrl";
+import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type FleetCardProps = {
@@ -30,10 +30,7 @@ export default function FleetCard({
 }: FleetCardProps) {
   const launchUrl = fleetLaunchUrl(domain, href, slot);
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
-  const external = isExternalFleetUrl(launchUrl);
   const expandInteractive = Boolean(onExpandBay);
-  /** Hangar: left-click expands in-grid only; omit _blank so there is no parallel “new tab” path for primary clicks. */
-  const linkTarget = expandInteractive ? undefined : external ? "_blank" : undefined;
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (!onExpandBay) return;
@@ -54,8 +51,6 @@ export default function FleetCard({
   return (
     <a
       href={launchUrl}
-      target={linkTarget}
-      rel={external ? "noopener noreferrer" : undefined}
       className={["fleet-card group block h-full min-h-[11.5rem]", expandInteractive ? "fleet-card--hangar-expand" : "", isCommandBay ? "fleet-card--command" : ""]
         .filter(Boolean)
         .join(" ")}

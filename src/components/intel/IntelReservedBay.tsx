@@ -1,8 +1,11 @@
 import { useState, type CSSProperties, type MouseEvent } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
+import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import EkgPulseLine from "./EkgPulseLine";
 import ReservedBayLiveMock from "./ReservedBayLiveMock";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import { usePartnershipBayAnalytics } from "../../hooks/usePartnershipBayAnalytics";
+import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
 import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
 
 export type IntelReservedVariant = "market" | "crypto";
@@ -38,6 +41,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
     <article
       className={[
         "intel-monitor",
+        "intel-monitor--bay-accent",
         "intel-reserved-bay",
         "intel-reserved-bay--hot",
         "glass-effect",
@@ -51,6 +55,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
         .join(" ")}
       style={{
         animationDelay: `${(index % HANGAR_COLUMNS) * 0.08}s`,
+        ...fleetBayAccentStyle(unit.slot),
         ...style,
       }}
       aria-label={
@@ -62,7 +67,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
       onClick={onClick}
     >
       <header className="intel-monitor__header">
-        <p className="intel-monitor__callsign">{unit.callsign}</p>
+        <IntelMonitorIdentity unit={unit} />
         <span className="intel-monitor__status intel-monitor__status--staging">
           {isMarket ? "slot 01" : "slot 02"}
         </span>
@@ -90,8 +95,8 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
             <h2 className="intel-reserved-bay__titans">RESERVED FOR TITANS</h2>
             <p className="intel-reserved-bay__hook">
               PREMIUM EXCHANGE PARTNERSHIP ENQUIRIES:{" "}
-              <a className="intel-reserved-bay__email" href="mailto:ops@usjet.ai" onClick={stopBubble}>
-                OPS@USJET.AI
+              <a className="intel-reserved-bay__email" href={`mailto:${USJET_OPS_EMAIL}`} onClick={stopBubble}>
+                {USJET_OPS_EMAIL.toUpperCase()}
               </a>
             </p>
             <button

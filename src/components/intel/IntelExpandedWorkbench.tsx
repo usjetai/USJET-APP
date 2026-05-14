@@ -1,7 +1,9 @@
 import { ExternalLink, X } from "lucide-react";
 import type { CSSProperties } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
+import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 import MarketDualFeed from "./market/MarketDualFeed";
 
@@ -20,10 +22,11 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
   });
 
   return (
-    <article className="intel-expanded" style={gridStyle}>
+    <article className="intel-expanded intel-expanded--bay-accent" style={{ ...fleetBayAccentStyle(unit.slot), ...gridStyle }}>
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>
+          <p className="intel-expanded__unit-name">{unit.name}</p>
           <p className="intel-expanded__domain">{unit.domain}</p>
           <p className="intel-expanded__tagline">Market workstation · BTC spot · NYSE composite</p>
         </div>
@@ -32,6 +35,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
             className="intel-expanded__external"
             href={launchHref}
             aria-label={`Launch ${unit.name} — integrated navigation`}
+            onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
           >
             <ExternalLink size={16} strokeWidth={2} />
           </a>

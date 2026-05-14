@@ -1,5 +1,8 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, KeyboardEvent } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { getWingForSlot } from "../../lib/intelWings";
+import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
+import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import TickerDisplay from "./TickerDisplay";
 import EkgPulseLine from "./EkgPulseLine";
 import MarketCandlesticks from "./MarketCandlesticks";
@@ -27,6 +30,7 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
     <article
       className={[
         "intel-monitor",
+        "intel-monitor--bay-accent",
         "glass-effect",
         "liquid-glass-background",
         "glass-tint-cyan",
@@ -36,14 +40,23 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
         .join(" ")}
       style={{
         animationDelay: `${(index % HANGAR_COLUMNS) * 0.15}s`,
+        ...fleetBayAccentStyle(unit.slot),
         ...style,
       }}
-      onClick={interactive ? onExpandRequest : undefined}
+      onClick={
+        interactive
+          ? () => {
+              logFleetUsageIfMember(unit.callsign, unit.name);
+              onExpandRequest?.();
+            }
+          : undefined
+      }
       onKeyDown={
         interactive
           ? (event) => {
               if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
+                logFleetUsageIfMember(unit.callsign, unit.name);
                 onExpandRequest?.();
               }
             }
@@ -51,10 +64,10 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
       }
       tabIndex={interactive ? 0 : undefined}
       role={interactive ? "button" : undefined}
-      aria-label={interactive ? `Expand ${unit.callsign} workstation` : undefined}
+      aria-label={interactive ? `Expand ${unit.callsign} · ${unit.name} workstation` : undefined}
     >
       <header className="intel-monitor__header">
-        <p className="intel-monitor__callsign">{unit.callsign}</p>
+        <IntelMonitorIdentity unit={unit} />
         <span className="intel-monitor__status">{unit.status}</span>
       </header>
 

@@ -5,7 +5,8 @@ import IntelMonitor from "../components/intel/IntelMonitor";
 import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
-import FoundersAccessGate from "../components/member/FoundersAccessGate";
+import IntelTop10Section from "../components/intel/IntelTop10Section";
+import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
@@ -16,9 +17,9 @@ const intelUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const unitBySlot = new Map<number, FleetUnit>(intelUnits.map((u) => [u.slot, u]));
 
 const BORDER_FORMATION = [
-  { accentId: "intel-border-l-1", aircraftType: "f22" as const, slotClass: "intel-page__escort-slot--wing" },
-  { accentId: "intel-border-l-2", aircraftType: "sr71" as const, slotClass: "intel-page__escort-slot--lead" },
-  { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing" },
+  { accentId: "intel-border-l-1", aircraftType: "f22" as const, slotClass: "intel-page__escort-slot--wing", slot: 0 },
+  { accentId: "intel-border-l-2", aircraftType: "sr71" as const, slotClass: "intel-page__escort-slot--lead", slot: 1 },
+  { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing", slot: 2 },
 ];
 
 const Intel = () => {
@@ -95,9 +96,9 @@ const Intel = () => {
     return out;
   }, [cellPlan, closeExpansion, tryExpand]);
 
+  // Founder review — Intel Top 10 gated to Tier 2+ in IntelTop10Section
   return (
-    <FoundersAccessGate pageLabel="Intel Pulse">
-      <div className="intel-page">
+    <div className="intel-page">
       {workbenchFullToast ? (
         <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
           <p className="intel-hangar-toast__title">Hangar full</p>
@@ -109,22 +110,31 @@ const Intel = () => {
 
       <div className="intel-page__escort intel-page__escort--left" aria-hidden>
         {BORDER_FORMATION.map((jet) => (
-          <span key={jet.accentId} className={`intel-page__escort-slot ${jet.slotClass}`}>
+          <span
+            key={jet.accentId}
+            className={`intel-page__escort-slot intel-page__escort-slot--bay-accent ${jet.slotClass}`}
+            style={fleetBayAccentStyle(jet.slot)}
+          >
             <AircraftIcon aircraftType={jet.aircraftType} accentId={jet.accentId} className="intel-page__border-jet" />
           </span>
         ))}
       </div>
       <div className="intel-page__escort intel-page__escort--right" aria-hidden>
         {BORDER_FORMATION.map((jet) => (
-          <span key={`${jet.accentId}-r`} className={`intel-page__escort-slot ${jet.slotClass}`}>
+          <span
+            key={`${jet.accentId}-r`}
+            className={`intel-page__escort-slot intel-page__escort-slot--bay-accent ${jet.slotClass}`}
+            style={fleetBayAccentStyle(jet.slot)}
+          >
             <AircraftIcon aircraftType={jet.aircraftType} accentId={`${jet.accentId}-r`} className="intel-page__border-jet" />
           </span>
         ))}
       </div>
 
-      <div className="intel-page__shell page-atmosphere mx-auto max-w-[88rem] px-4 pb-24 pt-36 sm:px-6 lg:px-8">
+      <div className="intel-page__shell page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
         <IntelFleetVitals />
         <IntelPulseDashboard />
+        <IntelTop10Section />
 
         <div className="intel-page__grid-intro">
           <p className="intel-page__grid-kicker">Monitor grid</p>
@@ -134,12 +144,11 @@ const Intel = () => {
           </p>
         </div>
 
-        <div className="intel-grid-wrap -mx-2 overflow-x-auto px-2 sm:mx-0 sm:overflow-visible sm:px-0">
-          <div className="intel-grid">{gridCells}</div>
+        <div className="intel-grid-wrap">
+          <div className="intel-grid grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6">{gridCells}</div>
         </div>
       </div>
     </div>
-    </FoundersAccessGate>
   );
 };
 

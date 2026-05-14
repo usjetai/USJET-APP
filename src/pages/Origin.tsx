@@ -38,7 +38,12 @@ const ORIGIN_WELCOME =
 const ORIGIN_LOAD_GREET = "Welcome to USJET. USJET Origin online.";
 
 /** Pause after last speech chunk before treating utterance as complete */
-const UTTERANCE_SILENCE_MS = 1400;
+const UTTERANCE_SILENCE_MS = 700;
+/** Shorter dead-air when the recognizer marks a final segment */
+const UTTERANCE_FINAL_MS = 450;
+
+const ORIGIN_OFFLINE_FALLBACK =
+  "Origin online. I heard you, Commander. OpenRouter is not configured on this deployment — add VITE_OPENROUTER_API_KEY in Vercel for live Aura replies.";
 
 type ChatTurn = { role: "user" | "assistant"; content: string };
 
@@ -58,6 +63,28 @@ function getSpeechRecognitionCtor():
     window.SpeechRecognition ??
     (window as Window & { webkitSpeechRecognition?: new () => SpeechRecognition }).webkitSpeechRecognition
   );
+}
+
+function isIosLike(): boolean {
+  if (typeof navigator === "undefined") return false;
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
+}
+
+function collectRecognitionTranscript(event: SpeechRecognitionEvent): {
+  text: string;
+  hasFinal: boolean;
+} {
+  let text = "";
+  let hasFinal = false;
+  for (let i = 0; i < event.results.length; i += 1) {
+    const result = event.results[i];
+    text += result?.[0]?.transcript ?? "";
+    if (result?.isFinal) hasFinal = true;
+  }
+  return { text: text.trim(), hasFinal };
 }
 
 export default function Origin() {
@@ -82,6 +109,7 @@ export default function Origin() {
   const handleTranscriptRef = useRef<(raw: string) => void>(() => undefined);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const speakHandleRef = useRef<{ cancel: () => void } | null>(null);
+  const voiceSpeakingRef = useRef(false);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -122,6 +150,7 @@ export default function Origin() {
   const stopSpeaking = useCallback(() => {
     speakHandleRef.current?.cancel();
     speakHandleRef.current = null;
+    voiceSpeakingRef.current = false;
     window.speechSynthesis?.cancel();
     setVoiceMode("idle");
     setStatusLine((line) =>
@@ -204,14 +233,17 @@ export default function Origin() {
         rate: 0.95,
         pitch: 0.92,
         onStart: () => {
+          voiceSpeakingRef.current = true;
           armSpeakChannel();
         },
         onEnd: () => {
+          voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
           setVoiceMode("idle");
           onComplete?.();
         },
         onError: () => {
+          voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
           setVoiceMode("idle");
           onComplete?.();
@@ -242,17 +274,15 @@ export default function Origin() {
       setStatusLine(`Heard: “${text.slice(0, 72)}${text.length > 72 ? "…" : ""}”`);
 
       if (!OPENROUTER_API_KEY) {
-        speakOriginReply(
-          "OpenRouter is not configured on this deployment. Mic channel is live — check your environment keys.",
-          () => {
-            processingRef.current = false;
-            listeningPausedRef.current = false;
-            if (micEnabledRef.current) {
-              setStatusLine("Mic live — Origin listening");
-              restartRecognitionRef.current();
-            }
-          },
-        );
+        setStatusLine("Aura offline — local fallback (set VITE_OPENROUTER_API_KEY in Vercel)");
+        speakOriginReply(ORIGIN_OFFLINE_FALLBACK, () => {
+          processingRef.current = false;
+          listeningPausedRef.current = false;
+          if (micEnabledRef.current) {
+            setStatusLine("Mic live — Origin listening");
+            restartRecognitionRef.current();
+          }
+        });
         return;
       }
 
@@ -296,7 +326,7 @@ export default function Origin() {
     void handleTranscript(raw);
   };
 
-  const scheduleTranscriptProcessing = useCallback(() => {
+  const scheduleTranscriptProcessing = useCallback((delayMs = UTTERANCE_SILENCE_MS) => {
     clearSilenceTimer();
     silenceTimerRef.current = window.setTimeout(() => {
       silenceTimerRef.current = null;
@@ -305,11 +335,18 @@ export default function Origin() {
       if (text) {
         handleTranscriptRef.current(text);
       }
-    }, UTTERANCE_SILENCE_MS);
+    }, delayMs);
   }, [clearSilenceTimer]);
 
   const restartRecognition = useCallback(() => {
-    if (!micEnabledRef.current || listeningPausedRef.current || processingRef.current) return;
+    if (
+      !micEnabledRef.current ||
+      listeningPausedRef.current ||
+      processingRef.current ||
+      voiceSpeakingRef.current
+    ) {
+      return;
+    }
 
     const SpeechRecognitionCtor = getSpeechRecognitionCtor();
     if (!SpeechRecognitionCtor) return;
@@ -318,26 +355,21 @@ export default function Origin() {
 
     const recognition = new SpeechRecognitionCtor();
     recognitionRef.current = recognition;
-    recognition.continuous = true;
+    recognition.continuous = !isIosLike();
     recognition.interimResults = true;
     recognition.lang = "en-US";
 
     recognition.onresult = (event) => {
       if (processingRef.current || listeningPausedRef.current) return;
 
-      let chunk = "";
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        chunk += event.results[i]?.[0]?.transcript ?? "";
-      }
+      const { text, hasFinal } = collectRecognitionTranscript(event);
+      if (!text) return;
 
-      const combined = chunk.trim();
-      if (!combined) return;
-
-      pendingTranscriptRef.current = combined;
+      pendingTranscriptRef.current = text;
       setStatusLine(
-        `Listening: “${combined.slice(0, 72)}${combined.length > 72 ? "…" : ""}”`,
+        `Listening: “${text.slice(0, 72)}${text.length > 72 ? "…" : ""}”`,
       );
-      scheduleTranscriptProcessing();
+      scheduleTranscriptProcessing(hasFinal ? UTTERANCE_FINAL_MS : UTTERANCE_SILENCE_MS);
     };
 
     recognition.onerror = (event) => {
@@ -359,7 +391,14 @@ export default function Origin() {
     };
 
     recognition.onend = () => {
-      if (!micEnabledRef.current || listeningPausedRef.current || processingRef.current) return;
+      if (
+        !micEnabledRef.current ||
+        listeningPausedRef.current ||
+        processingRef.current ||
+        voiceSpeakingRef.current
+      ) {
+        return;
+      }
       window.setTimeout(() => restartRecognitionRef.current(), 80);
     };
 
@@ -398,11 +437,13 @@ export default function Origin() {
         rate: 0.95,
         pitch: 0.92,
         onStart: () => {
+          voiceSpeakingRef.current = true;
           greetStartedRef.current = true;
           originWelcomeAudioStarted = true;
           armSpeakChannel();
         },
         onEnd: () => {
+          voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
           setVoiceMode("idle");
           clearAutoplayProbe();
@@ -410,6 +451,7 @@ export default function Origin() {
           onComplete?.();
         },
         onError: () => {
+          voiceSpeakingRef.current = false;
           speakHandleRef.current = null;
           setVoiceMode("idle");
           clearAutoplayProbe();
@@ -483,7 +525,12 @@ export default function Origin() {
       setMicEnabled(false);
       setShowTroubleshoot(true);
       stopAudioLevelLoop();
-      setStatusLine("Microphone permission denied.");
+      if (isIosLike()) {
+        setShowAutoplayBanner(true);
+        setStatusLine("Tap Enable Origin voice — iPhone requires a tap for mic access.");
+      } else {
+        setStatusLine("Microphone permission denied.");
+      }
     }
   }, [stopAudioLevelLoop]);
 
@@ -514,14 +561,17 @@ export default function Origin() {
       rate: 0.95,
       pitch: 0.92,
       onStart: () => {
+        voiceSpeakingRef.current = true;
         armSpeakChannel();
       },
       onEnd: () => {
+        voiceSpeakingRef.current = false;
         speakHandleRef.current = null;
         setVoiceMode("idle");
         setStatusLine("Status: Online // 8080 Active");
       },
       onError: () => {
+        voiceSpeakingRef.current = false;
         speakHandleRef.current = null;
         setVoiceMode("idle");
         setStatusLine("Voice transmit interrupted.");
@@ -542,17 +592,32 @@ export default function Origin() {
     bootstrapRef.current = true;
 
     if (originBootstrapDone) {
-      void enableMicSession();
+      if (isIosLike()) {
+        setShowAutoplayBanner(true);
+        setStatusLine("Tap Enable Origin voice to open mic on iPhone.");
+      } else {
+        void enableMicSession();
+      }
       return;
     }
 
     if (originWelcomeAudioStarted) {
       originBootstrapDone = true;
-      void enableMicSession();
+      if (isIosLike()) {
+        setShowAutoplayBanner(true);
+        setStatusLine("Tap Enable Origin voice to open mic on iPhone.");
+      } else {
+        void enableMicSession();
+      }
       return;
     }
 
     speakWelcomeGreet(() => {
+      if (isIosLike()) {
+        setShowAutoplayBanner(true);
+        setStatusLine("Tap Enable Origin voice to open mic on iPhone.");
+        return;
+      }
       void enableMicSession();
     });
   }, [enableMicSession, speakWelcomeGreet]);
@@ -610,7 +675,9 @@ export default function Origin() {
           {showAutoplayBanner ? (
             <div className="origin-autoplay-banner mb-4 w-full max-w-lg" role="status">
               <p className="origin-autoplay-banner__text">
-                Browser blocked auto voice. Tap once to hear the Origin welcome.
+                {isIosLike()
+                  ? "iPhone needs one tap to open voice and mic. Tap below, then speak to Origin."
+                  : "Browser blocked auto voice. Tap once to hear the Origin welcome."}
               </p>
               <button type="button" className="origin-autoplay-banner__btn" onClick={resumeAutoplayVoice}>
                 Enable Origin voice

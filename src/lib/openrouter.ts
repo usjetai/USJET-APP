@@ -31,6 +31,13 @@ export function buildOpenRouterMessages(
   return [SYSTEM_PROMPT, ...turns];
 }
 
+function openRouterReferer(): string {
+  if (typeof window !== "undefined" && window.location?.origin) {
+    return window.location.origin;
+  }
+  return "https://www.usjet.ai";
+}
+
 export async function completeChat(
   apiKey: string,
   messages: ApiChatMessage[]
@@ -40,7 +47,7 @@ export async function completeChat(
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
-      "HTTP-Referer": "http://localhost:5173",
+      "HTTP-Referer": openRouterReferer(),
       "X-Title": "USJet AI",
     },
     body: JSON.stringify({

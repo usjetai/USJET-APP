@@ -1,20 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Facebook, Instagram } from "lucide-react";
+import FounderJetWing from "../components/founder/FounderJetWing";
+import FounderWorkerSilhouette, {
+  type FounderWorkerSilhouetteType,
+} from "../components/founder/FounderWorkerSilhouettes";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
-import type { FleetAircraftType } from "../types/fleet";
 
 const USJET_SOCIAL = {
   instagram: "https://www.instagram.com/usjet/",
   facebook: "https://www.facebook.com/usjets",
   x: "https://x.com/usajet",
 } as const;
-
-const WINGMAN_JETS: { id: string; aircraftType: FleetAircraftType; parallaxFactor: number }[] = [
-  { id: "wingman-b2", aircraftType: "b2", parallaxFactor: 0.068 },
-  { id: "wingman-sr71", aircraftType: "sr71", parallaxFactor: 0.092 },
-  { id: "wingman-ghawk", aircraftType: "globalHawk", parallaxFactor: 0.118 },
-];
 
 function XComIcon({ className }: { className?: string }) {
   return (
@@ -40,83 +37,62 @@ type StorySection = {
   kicker: string;
   paragraph: string;
   imageSrc: string;
+  imageWidth: number;
+  imageHeight: number;
   imageAlt: string;
   imageLabel: string;
-  silhouetteType: FleetAircraftType;
+  silhouetteType: FounderWorkerSilhouetteType;
 };
 
-/** Japanese animation panels in `public/founder/` — IMG_0516 (Origin), 0517 (Fleet), 0518 (Industry First). */
 const FOUNDERS_STORY: StorySection[] = [
   {
     heading: "The Origin",
     kicker: "Built on Queens Grit",
     paragraph:
       "Every great system starts with a single point of impact. For us, that point was the hustle between Long Beach and Queens. This isn't just code; it's the digital evolution of blue-collar sweat. We took the relentless work ethic of the New York streets—the kind that doesn't punch out until the job is done—and used it as the foundation for usjet.ai. We aren't just building an app; we're honoring the grit that keeps the world moving.",
-    imageSrc: "/founder/IMG_0516.jpeg",
-    imageAlt: "The Origin — Japanese animation panel",
-    imageLabel: "IMG_0516 — The Origin",
-    silhouetteType: "sr71",
+    imageSrc: "/founder/IMG_0516.png",
+    imageWidth: 626,
+    imageHeight: 600,
+    imageAlt: "The Origin — Long Beach to Queens",
+    imageLabel: "The Origin · Long Beach to Queens",
+    silhouetteType: "origin",
   },
   {
     heading: "The Fleet",
     kicker: "Wrenches, Not Slides",
     paragraph:
       "This isn't an 'enterprise solution' built in a boardroom—this is a digital hive built by someone who's turned wrenches, not just turned slides. Every unit in this fleet is synchronized to solve real-world problems at a scale the industry hasn't seen yet.",
-    imageSrc: "/founder/IMG_0517.jpeg",
-    imageAlt: "The Fleet — Japanese animation panel",
-    imageLabel: "IMG_0517 — The Fleet",
-    silhouetteType: "f35",
+    imageSrc: "/founder/IMG_0517.png",
+    imageWidth: 637,
+    imageHeight: 610,
+    imageAlt: "The Fleet — 30 AI units",
+    imageLabel: "The Fleet · 30 AI units",
+    silhouetteType: "wrenches",
   },
   {
     heading: "Industry First",
     kicker: "Pioneering the Blue-Collar AI",
     paragraph:
       "We saw a gap where others saw a wall. While the tech world focused on the abstract, we looked toward the tangible. usjet.ai stands as the world's first AI platform dedicated to the blue-collar sector. By combining first-mover architecture with a deep respect for human labor, we are redefining what it means to work. This is the future of industry: high-fidelity technology meets high-intensity grit.",
-    imageSrc: "/founder/IMG_0518.jpeg",
-    imageAlt: "Industry First — Japanese animation panel",
-    imageLabel: "IMG_0518 — Industry First",
-    silhouetteType: "b2",
+    imageSrc: "/founder/IMG_0518.png",
+    imageWidth: 689,
+    imageHeight: 625,
+    imageAlt: "Industry First — pioneering blue-collar AI",
+    imageLabel: "Industry First",
+    silhouetteType: "industryFirst",
   },
 ];
 
 const Founder = () => {
-  const [scrollY, setScrollY] = useState(0);
   const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
 
-  useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (reducedMotion) {
-      return;
-    }
-
-    let ticking = false;
-
-    const update = () => {
-      setScrollY(window.scrollY || document.documentElement.scrollTop);
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
   return (
-    <div className="founder-page founder-page--warp page-atmosphere mx-auto max-w-5xl px-6 pb-28 pt-40 sm:px-8">
-      <div className="founder-page__grid">
-        <div className="founder-page__main">
-          <article className="founder-story">
+    <div className="founder-page founder-page--warp founder-page--wing page-atmosphere page-nav-offset px-6 pb-28 sm:px-8">
+      <div className="founder-page__wing-grid">
+        <FounderJetWing side="left" />
+
+        <div className="founder-page__center">
+          <article className="founder-story founder-page__main">
             <header className="founder-story__hero">
               <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect--rounded-rect">
                 <img
@@ -129,24 +105,27 @@ const Founder = () => {
                   fetchPriority="high"
                 />
               </GlassEffectContainer>
-              <p className="founder-story__lede">
-                Ameer Karim on Queens hustle, the digital hive, and the first AI platform built for
-                blue-collar America.
+              <p className="founder-story__lede founder-story__lede--centered">
+                Queens hustle, the digital hive, and the first AI platform built for blue-collar
+                America — from someone who turned wrenches before slides.
               </p>
             </header>
 
             {FOUNDERS_STORY.map((section) => {
-              const showPhoto = section.imageSrc && !brokenImages[section.heading];
+              const showPhoto = !brokenImages[section.heading];
 
               return (
                 <section key={section.heading} className="founder-story__section">
                   <p className="founder-story__kicker">{section.kicker}</p>
                   <h2 className="founder-story__heading">{section.heading}</h2>
+                  <p className="founder-story__body">{section.paragraph}</p>
 
                   <figure className="founder-story__visual">
-                    <div
+                    <GlassEffectContainer
                       className={[
-                        "founder-story__visual-frame glass-effect glass-effect--rounded-rect",
+                        "founder-story__visual-frame",
+                        "glass-effect",
+                        "glass-effect--rounded-rect",
                         showPhoto
                           ? "founder-story__visual-frame--photo"
                           : "founder-story__visual-frame--vector liquid-glass-background",
@@ -157,6 +136,8 @@ const Founder = () => {
                           className="founder-story__photo"
                           src={section.imageSrc}
                           alt={section.imageAlt}
+                          width={section.imageWidth}
+                          height={section.imageHeight}
                           loading="lazy"
                           decoding="async"
                           onError={() =>
@@ -165,91 +146,65 @@ const Founder = () => {
                         />
                       ) : (
                         <div className="founder-story__vector-stage" aria-hidden>
-                          <AircraftIcon
-                            aircraftType={section.silhouetteType}
-                            accentId={`founder-visual-${section.heading.replace(/\s+/g, "-").toLowerCase()}`}
-                            className="founder-story__vector-silhouette"
+                          <FounderWorkerSilhouette
+                            silhouetteType={section.silhouetteType}
+                            className="founder-story__worker-silhouette"
                           />
                         </div>
                       )}
-                    </div>
-                    <figcaption className="founder-story__visual-caption">{section.imageLabel}</figcaption>
+                    </GlassEffectContainer>
+                    <figcaption className="founder-story__visual-caption">
+                      {section.imageLabel}
+                    </figcaption>
                   </figure>
-
-                  <p className="founder-story__body founder-story__body--after-panel">{section.paragraph}</p>
                 </section>
               );
             })}
-          </article>
 
-          <footer className="founder-social">
-            <p className="founder-social__eyebrow">Social navigation</p>
-            <div className="founder-social__row">
-              <div className="founder-social__escort" aria-hidden>
-                <span className="founder-social__escort-slot founder-social__escort-slot--wing">
-                  <AircraftIcon aircraftType="f22" accentId="escort-1" className="founder-escort-jet" />
-                </span>
-                <span className="founder-social__escort-slot founder-social__escort-slot--lead">
-                  <AircraftIcon aircraftType="sr71" accentId="escort-2" className="founder-escort-jet" />
-                </span>
-                <span className="founder-social__escort-slot founder-social__escort-slot--wing">
-                  <AircraftIcon aircraftType="f35" accentId="escort-3" className="founder-escort-jet" />
-                </span>
+            <footer className="founder-social">
+              <p className="founder-social__eyebrow">Social navigation</p>
+              <div className="founder-social__row">
+                <div className="founder-social__escort" aria-hidden>
+                  <span className="founder-social__escort-slot founder-social__escort-slot--wing">
+                    <AircraftIcon aircraftType="f22" accentId="escort-1" className="founder-escort-jet" />
+                  </span>
+                  <span className="founder-social__escort-slot founder-social__escort-slot--lead">
+                    <AircraftIcon aircraftType="sr71" accentId="escort-2" className="founder-escort-jet" />
+                  </span>
+                  <span className="founder-social__escort-slot founder-social__escort-slot--wing">
+                    <AircraftIcon aircraftType="f35" accentId="escort-3" className="founder-escort-jet" />
+                  </span>
+                </div>
+
+                <nav className="founder-social__nav" aria-label="USJet on social media">
+                  <a
+                    href={USJET_SOCIAL.instagram}
+                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                    aria-label="USJet on Instagram (usjet)"
+                  >
+                    <Instagram size={26} strokeWidth={1.35} className="founder-social__icon" />
+                  </a>
+                  <a
+                    href={USJET_SOCIAL.facebook}
+                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                    aria-label="USJet on Facebook (usjets)"
+                  >
+                    <Facebook size={26} strokeWidth={1.35} className="founder-social__icon" />
+                  </a>
+                  <a
+                    href={USJET_SOCIAL.x}
+                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                    aria-label="USJet on X (usajet)"
+                  >
+                    <XComIcon className="founder-social__x-icon founder-social__icon" />
+                  </a>
+                </nav>
               </div>
-
-              <nav className="founder-social__nav" aria-label="USJet on social media">
-                <a
-                  href={USJET_SOCIAL.instagram}
-                  className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                  aria-label="USJet on Instagram (usjet)"
-                >
-                  <Instagram size={26} strokeWidth={1.35} className="founder-social__icon" />
-                </a>
-                <a
-                  href={USJET_SOCIAL.facebook}
-                  className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                  aria-label="USJet on Facebook (usjets)"
-                >
-                  <Facebook size={26} strokeWidth={1.35} className="founder-social__icon" />
-                </a>
-                <a
-                  href={USJET_SOCIAL.x}
-                  className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                  aria-label="USJet on X (usajet)"
-                >
-                  <XComIcon className="founder-social__x-icon founder-social__icon" />
-                </a>
-              </nav>
-            </div>
-          </footer>
+            </footer>
+          </article>
         </div>
 
-        <aside className="founder-wingman" aria-label="Wingman escort column">
-          <div className="founder-wingman__sticky">
-            <div className="founder-wingman__row">
-              <p className="founder-wingman__rail">Wingman</p>
-              <div className="founder-wingman__jets">
-                {WINGMAN_JETS.map((jet) => {
-                  const offset = scrollY * jet.parallaxFactor;
-
-                  return (
-                    <div
-                      key={jet.id}
-                      className="founder-wingman__jet-slot"
-                      style={{ transform: `translate3d(0, ${offset}px, 0)` }}
-                    >
-                      <AircraftIcon
-                        aircraftType={jet.aircraftType}
-                        accentId={jet.id}
-                        className="founder-wingman__jet"
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </aside>
+        <FounderJetWing side="right" />
       </div>
     </div>
   );

@@ -62,3 +62,77 @@ export function memberClearanceRank(session: MemberSession | null | undefined): 
 export function hasIntelTop10Clearance(session: MemberSession | null | undefined): boolean {
   return memberClearanceRank(session) >= INTEL_TOP10_MIN_ACCESS_LEVEL;
 }
+
+/** Hangar workbench simultaneous bay caps by clearance rank (0 = teaser / no session). */
+export const HANGAR_BAY_LIMIT_TEASER = 2;
+export const HANGAR_BAY_LIMIT_FLIGHT_PASS = 4;
+export const HANGAR_BAY_LIMIT_HANGAR_PRO = 6;
+export const HANGAR_BAY_LIMIT_ENTERPRISE = 10;
+
+export function getHangarBayLimit(session: MemberSession | null | undefined): number {
+  const rank = memberClearanceRank(session);
+  if (rank >= 3) {
+    return HANGAR_BAY_LIMIT_ENTERPRISE;
+  }
+  if (rank === 2) {
+    return HANGAR_BAY_LIMIT_HANGAR_PRO;
+  }
+  if (rank === 1) {
+    return HANGAR_BAY_LIMIT_FLIGHT_PASS;
+  }
+  return HANGAR_BAY_LIMIT_TEASER;
+}
+
+export type HangarBayLimitToast = {
+  title: string;
+  body: string;
+  showUpgradeLink: boolean;
+};
+
+export function hangarBayLimitToast(session: MemberSession | null | undefined): HangarBayLimitToast {
+  const rank = memberClearanceRank(session);
+  const limit = getHangarBayLimit(session);
+
+  if (rank === 0) {
+    return {
+      title: "Preview limit",
+      body: `Teaser holds ${limit} bays — Flight Pass unlocks 4 cockpits.`,
+      showUpgradeLink: true,
+    };
+  }
+  if (rank === 1) {
+    return {
+      title: "Hangar full",
+      body: `Flight Pass holds ${limit} bays — upgrade for more.`,
+      showUpgradeLink: true,
+    };
+  }
+  if (rank === 2) {
+    return {
+      title: "Hangar full",
+      body: `Hangar Pro holds ${limit} bays — upgrade for Enterprise command.`,
+      showUpgradeLink: true,
+    };
+  }
+  return {
+    title: "Hangar full",
+    body: `${limit} workstations are live. Close one to open another cockpit.`,
+    showUpgradeLink: false,
+  };
+}
+
+export function hangarBayHeroBadge(session: MemberSession | null | undefined): string {
+  const rank = memberClearanceRank(session);
+  const limit = getHangarBayLimit(session);
+
+  if (rank === 0) {
+    return `${limit} bays · preview access`;
+  }
+  if (rank === 1) {
+    return `${limit} bays · $20 limited time`;
+  }
+  if (rank === 2) {
+    return `${limit} bays · Hangar Pro`;
+  }
+  return `${limit} bays · Enterprise command`;
+}

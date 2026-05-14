@@ -1521,6 +1521,21 @@
   animation: intel-hangar-toast-in 0.45s ease-out both;
 }
 
+.intel-hangar-toast--actionable {
+  pointer-events: auto;
+}
+
+.intel-hangar-toast__link {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: rgba(34, 211, 238, 0.95);
+}
+
+.intel-hangar-toast__link:hover {
+  color: rgba(103, 232, 249, 1);
+}
+
 .intel-hangar-toast__title {
   margin: 0;
   font-family: theme("fontFamily.aviation");

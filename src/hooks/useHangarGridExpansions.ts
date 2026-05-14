@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
 import type { FleetUnit } from "../types/fleet";
 import { FLEET_UNIT_COUNT } from "../types/fleet";
 
@@ -15,7 +14,10 @@ const WORKBENCH_TOAST_DEBOUNCE_MS = 750;
 /**
  * Hangar bay floor: each expansion stays in its own grid cell (no 2×2 quad / void tiles).
  */
-export function useHangarGridExpansions(unitBySlot: ReadonlyMap<number, FleetUnit>) {
+export function useHangarGridExpansions(
+  unitBySlot: ReadonlyMap<number, FleetUnit>,
+  maxExpansions: number,
+) {
   const [expansions, setExpansions] = useState<Expansion[]>([]);
   const [workbenchFullToast, setWorkbenchFullToast] = useState(false);
   const toastTimerRef = useRef<number | null>(null);
@@ -56,7 +58,7 @@ export function useHangarGridExpansions(unitBySlot: ReadonlyMap<number, FleetUni
           return prev.filter((e) => e.slot !== slot);
         }
 
-        if (prev.length >= MAX_SIMULTANEOUS_WORKBENCHES) {
+        if (prev.length >= maxExpansions) {
           rejectFull = true;
           return prev;
         }
@@ -68,7 +70,7 @@ export function useHangarGridExpansions(unitBySlot: ReadonlyMap<number, FleetUni
         flashWorkbenchFullToast();
       }
     },
-    [flashWorkbenchFullToast],
+    [flashWorkbenchFullToast, maxExpansions],
   );
 
   const closeExpansion = useCallback((slot: number) => {

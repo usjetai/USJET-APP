@@ -1,5 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import FleetCard from "../components/fleet/FleetCard";
 import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
@@ -7,7 +8,11 @@ import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
 import { useHangarGridExpansions } from "../hooks/useHangarGridExpansions";
 import { type HangarColumnLayout, useHangarColumnLayout } from "../hooks/useHangarColumnLayout";
-import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
+import {
+  getHangarBayLimit,
+  hangarBayHeroBadge,
+  hangarBayLimitToast,
+} from "../lib/memberAccessLevel";
 import { KING_KARIM_HANGAR_META } from "../lib/memberMasterKey";
 import { type FleetUnit, FLEET_UNIT_COUNT } from "../types/fleet";
 
@@ -23,8 +28,14 @@ const HANGAR_VISION_RIBBON =
 
 const Hangar = () => {
   const { session } = useMemberAuth();
+  const bayLimit = getHangarBayLimit(session);
+  const bayToast = hangarBayLimitToast(session);
+  const bayBadge = hangarBayHeroBadge(session);
   const { columns, setColumnLayout } = useHangarColumnLayout();
-  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useHangarGridExpansions(unitBySlot);
+  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useHangarGridExpansions(
+    unitBySlot,
+    bayLimit,
+  );
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -89,10 +100,28 @@ const Hangar = () => {
       data-usjet-legacy-note={KING_KARIM_HANGAR_META.note}
     >
       {workbenchFullToast ? (
-        <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
-          <p className="intel-hangar-toast__title">Hangar full</p>
+        <div
+          className={[
+            "intel-hangar-toast",
+            bayToast.showUpgradeLink ? "intel-hangar-toast--actionable" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <p className="intel-hangar-toast__title">{bayToast.title}</p>
           <p className="intel-hangar-toast__body">
-            Three workstations are live. Close one to open another cockpit.
+            {bayToast.body}
+            {bayToast.showUpgradeLink ? (
+              <>
+                {" "}
+                <Link to="/special" className="intel-hangar-toast__link">
+                  Upgrade clearance
+                </Link>
+              </>
+            ) : null}
           </p>
         </div>
       ) : null}
@@ -105,9 +134,9 @@ const Hangar = () => {
               <span>{session?.active ? "Founder's Access Granted" : "Founder's Hangar"}</span>
               <span
                 className="hangar-ops-badge rounded-md border border-amber-400/40 bg-amber-500/[0.1] px-3 py-1 text-[8px] font-black tracking-[0.2em] text-amber-100/90 sm:text-[9px] sm:tracking-[0.28em]"
-                title="Each bay is a USJET cockpit—expand to bring the partner AI aboard without leaving the hangar"
+                title="Simultaneous cockpit bays allowed on your clearance tier"
               >
-                Bay floor · workbench ops
+                {bayBadge}
               </span>
             </div>
             <h1 className="font-aviation text-6xl font-black uppercase italic leading-[0.9] tracking-tighter text-white sm:text-7xl lg:text-8xl">
@@ -121,7 +150,7 @@ const Hangar = () => {
             </p>
             <p className="mt-4 max-w-2xl text-sm font-medium uppercase tracking-[0.28em] text-amber-200/40">
               {FLEET_UNIT_COUNT} units · {columns}-column bay floor · click a bay to expand (max{" "}
-              {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous cockpits)
+              {bayLimit} simultaneous cockpits)
             </p>
             <HangarLayoutToggle columns={columns} onChange={setColumnLayout} />
           </div>

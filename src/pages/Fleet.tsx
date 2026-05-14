@@ -15,7 +15,7 @@ const Fleet = () => (
     animate={{ opacity: 1 }}
     className="fleet-page fleet-page--runway relative"
   >
-    <div className="page-atmosphere page-nav-offset mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
+    <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
       <header className="fleet-runway-hero mb-14 flex flex-col items-center gap-8 border-b border-cyan-400/15 pb-12 text-center md:mb-16">
         <motion.div
           initial={{ opacity: 0, y: -12 }}
@@ -47,7 +47,7 @@ const Fleet = () => (
 
       <div
         className="fleet-runway-grid grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
-        style={{ gridTemplateRows: `repeat(${HANGAR_ROWS}, minmax(0, 1fr))` }}
+        style={{ gridTemplateRows: `repeat(${HANGAR_ROWS}, minmax(0, auto))` }}
         role="region"
         aria-label="USJET fleet runway: partner bays with sovereign handoff"
       >

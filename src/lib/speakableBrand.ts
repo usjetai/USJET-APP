@@ -1,3 +1,10 @@
+/** Spoken welcome lines for Origin (she teaches all 29 partner AIs). */
+export const ORIGIN_SPOKEN_LOAD_GREET =
+  "Welcome to USJET. USJET Origin online. I'm here to teach you about all twenty-nine partner AIs — what to do, how to use them, and which bay to open.";
+
+export const ORIGIN_SPOKEN_WELCOME =
+  "Welcome to USJET. USJET Origin online. I'm here to teach you about all twenty-nine partner AIs — what each one does, how to use them, and which hangar bay to open. Ask me anything about the fleet. Command acknowledged.";
+
 /** Spoken brand — U.S. (United States) + JET, not four separate letters. */
 export const USJET_SPOKEN = "U. S. Jet";
 
@@ -11,25 +18,125 @@ export function toSpeakableText(text: string): string {
     .replace(/\busjet\b/gi, USJET_SPOKEN);
 }
 
-export function speakWithBrandVoice(
-  text: string,
-  options?: {
-    rate?: number;
-    pitch?: number;
-    onEnd?: () => void;
-    onError?: () => void;
-  },
-): boolean {
-  if (!("speechSynthesis" in window)) {
-    return false;
+function pickEnglishVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
+  return (
+    voices.find((voice) => voice.lang.startsWith("en") && voice.localService) ??
+    voices.find((voice) => voice.lang.startsWith("en")) ??
+    voices[0]
+  );
+}
+
+function waitForVoices(timeoutMs = 750): Promise<SpeechSynthesisVoice[]> {
+  const synth = window.speechSynthesis;
+  const existing = synth.getVoices();
+  if (existing.length > 0) {
+    return Promise.resolve(existing);
   }
 
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(toSpeakableText(text));
-  utterance.rate = options?.rate ?? 0.95;
-  utterance.pitch = options?.pitch ?? 0.92;
-  utterance.onend = () => options?.onEnd?.();
-  utterance.onerror = () => options?.onError?.();
-  window.speechSynthesis.speak(utterance);
-  return true;
+  return new Promise((resolve) => {
+    let settled = false;
+
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      synth.removeEventListener("voiceschanged", onVoicesChanged);
+      window.clearTimeout(timer);
+      resolve(synth.getVoices());
+    };
+
+    const onVoicesChanged = () => finish();
+    const timer = window.setTimeout(finish, timeoutMs);
+
+    synth.addEventListener("voiceschanged", onVoicesChanged);
+  });
+}
+
+export type SpeakWithBrandVoiceOptions = {
+  rate?: number;
+  pitch?: number;
+  onStart?: () => void;
+  onEnd?: () => void;
+  onError?: () => void;
+};
+
+export type SpeakHandle = {
+  cancel: () => void;
+};
+
+export function speakWithBrandVoice(
+  text: string,
+  options?: SpeakWithBrandVoiceOptions,
+): SpeakHandle | null {
+  if (!("speechSynthesis" in window)) {
+    return null;
+  }
+
+  const synth = window.speechSynthesis;
+  let resumeTimer: number | null = null;
+  let cancelled = false;
+
+  const clearResumeTimer = () => {
+    if (resumeTimer !== null) {
+      window.clearInterval(resumeTimer);
+      resumeTimer = null;
+    }
+  };
+
+  const cancel = () => {
+    cancelled = true;
+    clearResumeTimer();
+    synth.cancel();
+  };
+
+  const beginSpeak = (voices: SpeechSynthesisVoice[]) => {
+    if (cancelled) return;
+
+    synth.cancel();
+    const utterance = new SpeechSynthesisUtterance(toSpeakableText(text));
+    utterance.rate = options?.rate ?? 0.95;
+    utterance.pitch = options?.pitch ?? 0.92;
+    utterance.lang = "en-US";
+
+    const voice = pickEnglishVoice(voices);
+    if (voice) {
+      utterance.voice = voice;
+    }
+
+    utterance.onstart = () => {
+      options?.onStart?.();
+      clearResumeTimer();
+      resumeTimer = window.setInterval(() => {
+        if (!synth.speaking) {
+          clearResumeTimer();
+          return;
+        }
+        synth.resume();
+      }, 120);
+    };
+
+    utterance.onend = () => {
+      clearResumeTimer();
+      options?.onEnd?.();
+    };
+
+    utterance.onerror = (event) => {
+      clearResumeTimer();
+      if (event.error === "interrupted" || event.error === "canceled") {
+        return;
+      }
+      options?.onError?.();
+    };
+
+    synth.speak(utterance);
+
+    window.setTimeout(() => {
+      if (!cancelled && synth.paused) {
+        synth.resume();
+      }
+    }, 0);
+  };
+
+  void waitForVoices().then(beginSpeak);
+
+  return { cancel };
 }

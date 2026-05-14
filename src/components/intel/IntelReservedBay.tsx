@@ -62,7 +62,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
 
         {isMarket ? (
           <div className="intel-reserved-bay__overlay intel-reserved-bay__overlay--market liquid-glass-background glass-effect">
-            <p className="intel-reserved-bay__market-label">INSTITUTIONAL FEED: STATUS PENDING</p>
+            <p className="intel-reserved-bay__market-label">INSTITUTIONAL FEED · FOUNDER&apos;S ACCESS · STATUS PENDING</p>
           </div>
         ) : (
           <div className="intel-reserved-bay__overlay intel-reserved-bay__overlay--crypto">

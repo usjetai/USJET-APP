@@ -4853,6 +4853,69 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   z-index: 1;
 }
 
+.founder-special-1995__prime {
+  margin-bottom: 1rem;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.42);
+  box-shadow:
+    0 0 48px rgba(255, 215, 0, 0.16),
+    0 0 80px rgba(255, 193, 7, 0.06),
+    inset 0 1px 0 rgba(255, 248, 220, 0.2);
+}
+
+.founder-special-1995__prime-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.2rem 1.2rem 1.25rem;
+}
+
+.founder-special-1995__prime-icon {
+  flex-shrink: 0;
+  color: rgba(255, 215, 0, 0.95);
+  filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.5));
+}
+
+.founder-special-1995__prime-kicker {
+  margin: 0;
+  font-size: 0.54rem;
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.7);
+}
+
+.founder-special-1995__prime-title {
+  margin: 0.4rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1rem, 2.8vw, 1.35rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 220, 0.98);
+  text-shadow: 0 0 22px rgba(255, 215, 0, 0.22);
+}
+
+.founder-special-1995__prime-directive,
+.founder-special-1995__prime-briefing,
+.founder-special-1995__prime-orders {
+  margin: 0.6rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.58;
+  color: rgba(255, 248, 220, 0.84);
+}
+
+.founder-special-1995__prime-orders {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 215, 0, 0.18);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .founder-special-1995__directive {
   margin-bottom: 1rem;
   padding: 0;

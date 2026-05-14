@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Shield, Sparkles, Wrench } from "lucide-react";
-import { FOUNDER_CREATIVE_MANIFESTO } from "../data/founderManifesto";
+import { Shield, Sparkles, Target, Wrench } from "lucide-react";
+import { FOUNDER_CREATIVE_MANIFESTO, PRIME_OBJECTIVE } from "../data/founderManifesto";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import type { FleetAircraftType } from "../types/fleet";
@@ -80,6 +80,19 @@ export default function FounderSpecial1995() {
       <div className="founder-page__grid">
         <div className="founder-page__main">
           <article className="founder-story founder-special-1995-story">
+            <GlassEffectContainer className="founder-special-1995__prime glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
+              <div className="founder-special-1995__prime-inner">
+                <Target className="founder-special-1995__prime-icon" size={22} aria-hidden />
+                <div>
+                  <p className="founder-special-1995__prime-kicker">Sovereign Master Log</p>
+                  <p className="founder-special-1995__prime-title">{PRIME_OBJECTIVE.logTitle}</p>
+                  <p className="founder-special-1995__prime-directive">{PRIME_OBJECTIVE.directive}</p>
+                  <p className="founder-special-1995__prime-briefing">{PRIME_OBJECTIVE.fleetBriefing}</p>
+                  <p className="founder-special-1995__prime-orders">{PRIME_OBJECTIVE.fleetOrders}</p>
+                </div>
+              </div>
+            </GlassEffectContainer>
+
             <GlassEffectContainer className="founder-special-1995__directive glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
               <div className="founder-special-1995__directive-inner">
                 <Shield className="founder-special-1995__directive-icon" size={22} aria-hidden />

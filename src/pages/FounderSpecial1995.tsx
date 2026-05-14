@@ -78,7 +78,7 @@ export default function FounderSpecial1995() {
   }, []);
 
   return (
-    <div className="founder-special-1995-page founder-page--warp founder-special-1995-page--cinematic page-atmosphere mx-auto max-w-5xl px-6 pb-28 pt-40 sm:px-8">
+    <div className="founder-special-1995-page founder-page--warp founder-special-1995-page--cinematic page-atmosphere page-nav-offset mx-auto max-w-5xl px-6 pb-28 sm:px-8">
       <div className="founder-page__grid">
         <div className="founder-page__main">
           <article className="founder-story founder-special-1995-story">

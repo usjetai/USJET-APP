@@ -10,22 +10,20 @@ import {
   type StripeTierProduct,
 } from "../data/stripeProducts";
 
-type ServiceTier = StripeTierProduct & {
-  paymentLink?: string;
-};
-
 const PAYMENT_LINK_BY_ENV: Record<StripeTierProduct["paymentLinkEnvKey"], string | undefined> = {
   VITE_STRIPE_FOUNDER_PAYMENT_LINK: import.meta.env.VITE_STRIPE_FOUNDER_PAYMENT_LINK?.trim(),
   VITE_STRIPE_PRO_PAYMENT_LINK: import.meta.env.VITE_STRIPE_PRO_PAYMENT_LINK?.trim(),
   VITE_STRIPE_ENTERPRISE_PAYMENT_LINK: import.meta.env.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK?.trim(),
 };
 
+type ServiceTier = StripeTierProduct & {
+  paymentLink?: string;
+};
+
 const SERVICE_TIERS: ServiceTier[] = [
   {
     ...FLIGHT_PASS_STRIPE,
-    paymentLink:
-      PAYMENT_LINK_BY_ENV.VITE_STRIPE_FOUNDER_PAYMENT_LINK ||
-      "https://buy.stripe.com/your_stripe_link_here",
+    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_FOUNDER_PAYMENT_LINK,
   },
   {
     ...HANGAR_PRO_STRIPE,
@@ -61,7 +59,7 @@ const Special = () => {
   }, []);
 
   return (
-    <div className="special-page page-atmosphere mx-auto max-w-6xl px-4 pb-28 pt-36 sm:px-6 lg:px-8">
+    <div className="special-page page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-28 sm:px-6 lg:px-8">
       <header className="special-page__header mb-12 border-b border-white/10 pb-10">
         <div className="mb-4 flex flex-wrap items-center gap-3 font-black uppercase tracking-[0.35em] text-cyan-300/90">
           <ShieldCheck size={20} className="shrink-0" aria-hidden />

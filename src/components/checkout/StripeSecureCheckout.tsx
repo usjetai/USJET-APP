@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
 import { CreditCard, Lock } from "lucide-react";
+import { isUsableStripePaymentLink } from "../../lib/stripePaymentLink";
 
 export type SpecialTierId = "founder" | "hangar-pro" | "fleet-command";
 
@@ -15,6 +16,7 @@ type StripeSecureCheckoutProps = {
 
 const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY?.trim() ?? "";
 const clientSecret = import.meta.env.VITE_STRIPE_PAYMENT_INTENT_CLIENT_SECRET?.trim() ?? "";
+const isDev = import.meta.env.DEV;
 
 const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
@@ -29,12 +31,25 @@ function CheckoutForm({
   const [status, setStatus] = useState<"idle" | "processing" | "error">("idle");
   const [message, setMessage] = useState<string | null>(null);
 
+  const usablePaymentLink = isUsableStripePaymentLink(paymentLink) ? paymentLink : undefined;
+  const checkoutReady = Boolean(clientSecret || usablePaymentLink);
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
+    if (!checkoutReady) {
+      setStatus("error");
+      setMessage(
+        isDev
+          ? "Payment link not configured. Set VITE_STRIPE_FOUNDER_PAYMENT_LINK in your environment."
+          : "Checkout is temporarily unavailable. Please try again later.",
+      );
+      return;
+    }
+
     if (!stripe || !elements) {
-      if (paymentLink) {
-        window.location.assign(paymentLink);
+      if (usablePaymentLink) {
+        window.location.assign(usablePaymentLink);
       }
       return;
     }
@@ -60,11 +75,25 @@ function CheckoutForm({
 
   return (
     <form className="special-checkout__form" onSubmit={handleSubmit}>
+      {!checkoutReady ? (
+        <div
+          className="special-checkout__unconfigured liquid-glass-background glass-effect glass-effect--rounded-rect"
+          role="alert"
+        >
+          <p className="special-checkout__unconfigured-title">Checkout not wired</p>
+          <p className="special-checkout__unconfigured-copy">
+            {isDev
+              ? "Payment link not configured. Add VITE_STRIPE_FOUNDER_PAYMENT_LINK (and sibling tier links) in .env or Vercel."
+              : "Secure checkout is being provisioned. Contact support or try again shortly."}
+          </p>
+        </div>
+      ) : null}
+
       {clientSecret ? (
         <div className="special-checkout__element-shell liquid-glass-background glass-effect glass-effect--rounded-rect">
           <PaymentElement options={{ layout: "tabs" }} />
         </div>
-      ) : (
+      ) : checkoutReady ? (
         <div className="special-checkout__fallback liquid-glass-background glass-effect glass-effect--rounded-rect">
           <label className="special-checkout__field">
             <span className="special-checkout__label">Cardholder name</span>
@@ -112,7 +141,7 @@ function CheckoutForm({
             </label>
           </div>
         </div>
-      )}
+      ) : null}
 
       {message ? (
         <p className="special-checkout__message special-checkout__message--error" role="alert">
@@ -123,7 +152,7 @@ function CheckoutForm({
       <button
         type="submit"
         className="special-checkout__submit btn-glass-prominent glass-effect-interactive w-full justify-center"
-        disabled={status === "processing"}
+        disabled={status === "processing" || !checkoutReady}
       >
         <Lock size={16} aria-hidden />
         <span>
@@ -142,7 +171,7 @@ function CheckoutForm({
         </p>
       ) : null}
 
-      {!clientSecret && paymentLink ? (
+      {!clientSecret && usablePaymentLink ? (
         <p className="special-checkout__hint">
           Secure checkout routes through Stripe. Your Member ID is issued on confirmation—use it to unlock the
           sovereign cockpit.

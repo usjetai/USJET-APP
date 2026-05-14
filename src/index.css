@@ -7,6 +7,17 @@
     background: transparent !important;
   }
 
+  /* Clears fixed liquid-glass nav + iOS safe-area (notch / Dynamic Island) */
+  .page-nav-offset {
+    padding-top: max(6rem, calc(env(safe-area-inset-top, 0px) + 5.25rem));
+  }
+
+  @media (min-width: 640px) {
+    .page-nav-offset {
+      padding-top: max(9rem, calc(env(safe-area-inset-top, 0px) + 8rem));
+    }
+  }
+
   .moving-clouds {
     position: absolute;
     inset: 0;
@@ -496,12 +507,21 @@
 
 .liquid-glass-nav {
   pointer-events: none;
+  top: max(0.75rem, env(safe-area-inset-top, 0px));
+  z-index: 200;
+  isolation: isolate;
 }
 
 .liquid-glass-nav .glass-effect-container {
   pointer-events: auto;
   flex-wrap: wrap;
   row-gap: 0.65rem;
+  background: rgba(2, 8, 23, 0.78);
+  backdrop-filter: blur(12px) saturate(1.25);
+  -webkit-backdrop-filter: blur(12px) saturate(1.25);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .fleet-command {
@@ -1924,6 +1944,7 @@
 /* Intel grid expansion (6×5 explicit placement) */
 .intel-grid-wrap {
   min-height: 0;
+  overflow: visible;
 }
 
 .intel-grid {
@@ -1931,11 +1952,31 @@
   isolation: isolate;
   display: grid;
   width: 100%;
-  min-width: 52rem;
+  min-width: 0;
   align-items: stretch;
-  gap: 0.875rem;
-  grid-template-columns: repeat(6, minmax(8.25rem, 1fr));
-  grid-template-rows: repeat(5, minmax(10rem, auto));
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: auto;
+}
+
+/* Mobile / tablet: stack bays — ignore explicit 6×5 placement from inline styles */
+.intel-grid > * {
+  grid-row: auto !important;
+  grid-column: auto !important;
+}
+
+@media (min-width: 1024px) {
+  .intel-grid-wrap {
+    overflow-x: auto;
+  }
+
+  .intel-grid {
+    min-width: 52rem;
+    gap: 1.5rem;
+    grid-template-columns: repeat(6, minmax(8.25rem, 1fr));
+    grid-template-rows: repeat(5, minmax(10rem, auto));
+    grid-auto-rows: unset;
+  }
 }
 
 .intel-grid .intel-monitor {
@@ -5088,6 +5129,27 @@ button.fleet-card {
 
 .special-checkout__message--error {
   color: #fca5a5;
+}
+
+.special-checkout__unconfigured {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+}
+
+.special-checkout__unconfigured-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(253, 224, 71, 0.95);
+}
+
+.special-checkout__unconfigured-copy {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .special-checkout__hint {

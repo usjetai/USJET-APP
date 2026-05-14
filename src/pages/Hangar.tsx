@@ -70,7 +70,7 @@ const Hangar = () => {
         data-usjet-legacy-access={KING_KARIM_HANGAR_META.key}
         data-usjet-legacy-note={KING_KARIM_HANGAR_META.note}
       >
-      <div className="page-atmosphere mx-auto max-w-[88rem] px-4 pb-24 pt-36 sm:px-6 lg:px-8">
+      <div className="page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-10 md:flex-row md:items-end">
           <div className="text-left">
             <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-black uppercase tracking-[0.35em] text-blue-400">
@@ -101,7 +101,7 @@ const Hangar = () => {
           <MemberPrimeBadge session={session} />
         </div>
 
-        <div className="intel-grid-wrap -mx-2 overflow-x-auto px-2 sm:mx-0 sm:overflow-visible sm:px-0">
+        <div className="intel-grid-wrap">
           <div
             className="intel-grid"
             role="region"

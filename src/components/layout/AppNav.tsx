@@ -14,7 +14,7 @@ const NAV_LINKS = [
 ] as const;
 
 const AppNav = () => (
-  <header className="liquid-glass-nav fixed left-1/2 top-8 z-[100] w-full max-w-[min(100vw-1.25rem,56rem)] -translate-x-1/2 px-2 sm:max-w-none sm:px-0">
+  <header className="liquid-glass-nav fixed left-1/2 w-full max-w-[min(100vw-1.25rem,56rem)] -translate-x-1/2 px-2 sm:max-w-none sm:px-0">
     <GlassEffectContainer
       aria-label="USJET primary navigation"
       className={[

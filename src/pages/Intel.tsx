@@ -122,7 +122,7 @@ const Intel = () => {
         ))}
       </div>
 
-      <div className="intel-page__shell page-atmosphere mx-auto max-w-[88rem] px-4 pb-24 pt-36 sm:px-6 lg:px-8">
+      <div className="intel-page__shell page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
         <IntelFleetVitals />
         <IntelPulseDashboard />
 
@@ -134,7 +134,7 @@ const Intel = () => {
           </p>
         </div>
 
-        <div className="intel-grid-wrap -mx-2 overflow-x-auto px-2 sm:mx-0 sm:overflow-visible sm:px-0">
+        <div className="intel-grid-wrap">
           <div className="intel-grid">{gridCells}</div>
         </div>
       </div>

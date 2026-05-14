@@ -19,7 +19,7 @@ export default function MemberPortal() {
   };
 
   return (
-    <div className="member-portal page-atmosphere mx-auto max-w-3xl px-6 pb-28 pt-40 sm:px-8">
+    <div className="member-portal page-atmosphere page-nav-offset mx-auto max-w-3xl px-6 pb-28 sm:px-8">
       <header className="member-portal__header">
         <div className="member-portal__kicker-row">
           <Wrench size={14} aria-hidden />

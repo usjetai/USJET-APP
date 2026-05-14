@@ -9,7 +9,7 @@ const Fleet = () => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="mx-auto max-w-[88rem] px-6 pb-20 pt-40 text-center"
+    className="page-nav-offset mx-auto max-w-[88rem] px-6 pb-20 text-center"
   >
     <motion.h1
       initial={{ opacity: 0, y: -20 }}

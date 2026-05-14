@@ -64,12 +64,12 @@ function AppChrome() {
       <WarpBackground />
       <GlobalVideoBackground />
       <MovingBackground />
-      <div aria-hidden className="aviation-pulse" />
+      <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
       <AppNav />
       <main className="relative z-10">
         <AnimatedRoutes />
       </main>
-      <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">
+      <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 pb-[env(safe-area-inset-bottom,0px)] text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-center gap-4">
           <span className="h-2 w-2 shrink-0 animate-ping rounded-full bg-blue-500" />
           <span>USJET System Active // Port 8080</span>

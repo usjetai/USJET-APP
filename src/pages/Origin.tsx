@@ -184,7 +184,7 @@ export default function Origin() {
     .join(" ");
 
   return (
-    <div className="origin-page page-atmosphere relative min-h-screen overflow-hidden pb-24 pt-28">
+    <div className="origin-page page-atmosphere page-nav-offset relative min-h-screen overflow-hidden pb-24">
       <div className="origin-page__ekg" aria-hidden>
         <EkgPulseLine variant="hero" seed={29} />
       </div>

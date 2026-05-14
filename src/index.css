@@ -1555,6 +1555,151 @@
   min-width: 0;
 }
 
+/* Crypto Intel Bay — Sovereign Partnership placeholder (right wing) */
+.intel-sovereign-bay {
+  position: relative;
+  overflow: hidden;
+  min-height: 11.5rem;
+  animation: intel-sovereign-gold-pulse 2.8s ease-in-out infinite;
+}
+
+.intel-sovereign-bay.liquid-glass-background {
+  background-color: rgba(8, 6, 2, 0.62);
+  background-image: linear-gradient(
+    165deg,
+    rgba(255, 215, 0, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 42%,
+    rgba(2, 4, 8, 0.78) 100%
+  );
+  backdrop-filter: blur(44px) saturate(1.15);
+  -webkit-backdrop-filter: blur(44px) saturate(1.15);
+}
+
+@keyframes intel-sovereign-gold-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 24px rgba(255, 215, 0, 0.14),
+      0 20px 50px -30px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 215, 0, 0.28);
+  }
+  50% {
+    box-shadow:
+      0 0 42px rgba(255, 215, 0, 0.32),
+      0 0 72px rgba(255, 193, 7, 0.12),
+      0 24px 56px -28px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 248, 220, 0.22);
+    border-color: rgba(255, 215, 0, 0.48);
+  }
+}
+
+.intel-sovereign-bay__stage {
+  position: relative;
+  display: flex;
+  min-height: 11.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1.35rem 1.1rem;
+}
+
+.intel-sovereign-bay__ekg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.intel-sovereign-bay__ekg .intel-ekg {
+  width: 100%;
+  height: 100%;
+}
+
+.intel-sovereign-bay__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255, 215, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 215, 0, 0.06) 1px, transparent 1px);
+  background-size: 14px 14px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.9));
+}
+
+.intel-sovereign-bay__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  max-width: 22rem;
+  text-align: center;
+}
+
+.intel-sovereign-bay__kicker {
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.72);
+}
+
+.intel-sovereign-bay__headline {
+  margin: 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(0.82rem, 2.1vw, 1.05rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 248, 220, 0.98) 0%,
+    rgba(255, 215, 0, 0.92) 38%,
+    rgba(184, 134, 11, 0.95) 72%,
+    rgba(255, 248, 220, 0.88) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 8px rgba(255, 193, 7, 0.35));
+}
+
+.intel-sovereign-bay__subtext {
+  margin: 0;
+  font-size: 0.52rem;
+  font-weight: 800;
+  line-height: 1.65;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(254, 243, 199, 0.62);
+}
+
+.intel-sovereign-bay__email {
+  color: rgba(255, 215, 0, 0.88);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.intel-sovereign-bay__email:hover {
+  color: rgba(255, 248, 220, 1);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intel-sovereign-bay {
+    animation: none;
+  }
+}
+
 .intel-page__grid-intro {
   margin: 2rem 0 1.25rem;
   padding-bottom: 0.85rem;

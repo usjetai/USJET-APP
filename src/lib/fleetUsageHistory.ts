@@ -44,6 +44,13 @@ function writeFleetUsage(store: FleetUsageStore): void {
   window.dispatchEvent(new CustomEvent(USAGE_UPDATED_EVENT));
 }
 
+/** Log sovereign handoff execution when an active member session is present. */
+export function logFleetLaunchHandoff(partnerLabel: string | null, bayId: string | null): void {
+  const callsign = bayId ? `BAY-${bayId}` : "HANDOFF";
+  const name = partnerLabel?.trim() || (bayId ? `Bay ${bayId}` : "Fleet partner");
+  logFleetUsageIfMember(callsign, name);
+}
+
 /** Log a fleet bay open when an active member session is present. */
 export function logFleetUsageIfMember(callsign: string, name: string): void {
   const session = readMemberSession();

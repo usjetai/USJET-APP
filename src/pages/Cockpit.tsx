@@ -1,13 +1,19 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import CockpitReturnBar from "../components/layout/CockpitReturnBar";
-import { sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
+import { TRUSTED_FLEET_LAUNCH_COPY } from "../data/usjetProtocol";
+import { isFleetBayTrusted, markFleetBayTrusted, sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
+import { logFleetLaunchHandoff } from "../lib/fleetUsageHistory";
 
 const ALLOWED_RETURN = new Set(["/hangar", "/intel", "/origin", "/"]);
+const FIRST_HANDOFF_AUTO_MS = 1500;
+const TRUSTED_HANDOFF_AUTO_MS = 800;
 
 export default function Cockpit() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const [autoLaunchCancelled, setAutoLaunchCancelled] = useState(false);
+  const handoffStarted = useRef(false);
 
   const src = useMemo(() => sanitizeCockpitSrc(params.get("src")), [params]);
   const returnTo = useMemo(() => {
@@ -16,12 +22,29 @@ export default function Cockpit() {
   }, [params]);
   const bay = params.get("bay");
   const partnerLabel = params.get("label");
+  const handoffParam = params.get("handoff");
 
-  const launchPartnerDirect = useCallback(() => {
-    if (src) {
-      window.location.assign(src);
+  const isTrustedHandoff = useMemo(() => {
+    if (handoffParam === "trusted") {
+      return true;
     }
-  }, [src]);
+    if (bay) {
+      return isFleetBayTrusted(bay);
+    }
+    return false;
+  }, [bay, handoffParam]);
+
+  const executeHandoff = useCallback(() => {
+    if (!src || handoffStarted.current) {
+      return;
+    }
+    handoffStarted.current = true;
+    if (bay) {
+      markFleetBayTrusted(bay);
+    }
+    logFleetLaunchHandoff(partnerLabel, bay);
+    window.location.assign(src);
+  }, [bay, partnerLabel, src]);
 
   useEffect(() => {
     if (!src) {
@@ -37,31 +60,76 @@ export default function Cockpit() {
     }
   }, [navigate, src]);
 
+  useEffect(() => {
+    if (!src) {
+      return;
+    }
+
+    if (isTrustedHandoff) {
+      const timer = window.setTimeout(executeHandoff, TRUSTED_HANDOFF_AUTO_MS);
+      return () => window.clearTimeout(timer);
+    }
+
+    if (!autoLaunchCancelled) {
+      const timer = window.setTimeout(executeHandoff, FIRST_HANDOFF_AUTO_MS);
+      return () => window.clearTimeout(timer);
+    }
+  }, [autoLaunchCancelled, executeHandoff, isTrustedHandoff, src]);
+
   if (!src) {
     return null;
   }
 
+  const displayName = partnerLabel ?? "partner module";
+
   return (
     <div className="cockpit-shell">
       <CockpitReturnBar returnTo={returnTo} bay={bay} partnerLabel={partnerLabel} />
-      <div className="cockpit-shell__frame-wrap">
-        <iframe
-          className="cockpit-shell__frame"
-          title="USJET integrated partner module"
-          src={src}
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-        <div className="hangar-embed-shield cockpit-embed-shield" role="region" aria-label="Partner launch fallback">
-          <div className="hangar-embed-shield__row">
-            <p className="hangar-embed-shield__text">
-              {partnerLabel ?? "This partner"} blocks in-cockpit embedding on most browsers. Launch the live module
-              in this window — use back or USJET nav to return to the fleet.
+      <div
+        className={[
+          "cockpit-handoff-interstitial",
+          isTrustedHandoff ? "cockpit-handoff-interstitial--trusted" : "cockpit-handoff-interstitial--first",
+        ].join(" ")}
+        role="region"
+        aria-label={isTrustedHandoff ? "Trusted fleet handoff" : "Sovereign fleet handoff clearance"}
+        aria-live="polite"
+      >
+        <div className="cockpit-handoff-interstitial__glow" aria-hidden />
+        <div className="cockpit-handoff-interstitial__inner">
+          <p className="cockpit-handoff-interstitial__kicker">{TRUSTED_FLEET_LAUNCH_COPY.certified}</p>
+          <h1 className="cockpit-handoff-interstitial__title">
+            {isTrustedHandoff ? TRUSTED_FLEET_LAUNCH_COPY.trustedTitle : TRUSTED_FLEET_LAUNCH_COPY.firstTitle}
+          </h1>
+          <p className="cockpit-handoff-interstitial__pulse" aria-hidden>
+            {TRUSTED_FLEET_LAUNCH_COPY.securing}
+          </p>
+          <p className="cockpit-handoff-interstitial__body">
+            {isTrustedHandoff ? TRUSTED_FLEET_LAUNCH_COPY.trustedBody : TRUSTED_FLEET_LAUNCH_COPY.firstBody}
+          </p>
+          {!isTrustedHandoff ? (
+            <div className="cockpit-handoff-interstitial__actions">
+              <button type="button" className="cockpit-handoff-interstitial__cta" onClick={executeHandoff}>
+                {TRUSTED_FLEET_LAUNCH_COPY.launchCta} — {displayName}
+              </button>
+              {!autoLaunchCancelled ? (
+                <button
+                  type="button"
+                  className="cockpit-handoff-interstitial__cancel"
+                  onClick={() => setAutoLaunchCancelled(true)}
+                >
+                  {TRUSTED_FLEET_LAUNCH_COPY.cancelAuto}
+                </button>
+              ) : (
+                <p className="cockpit-handoff-interstitial__hold">{TRUSTED_FLEET_LAUNCH_COPY.autoPaused}</p>
+              )}
+            </div>
+          ) : (
+            <p className="cockpit-handoff-interstitial__meta">
+              {bay ? `Bay ${bay}` : null}
+              {bay && displayName ? " · " : null}
+              {displayName}
             </p>
-          </div>
-          <button type="button" className="hangar-embed-shield__cta" onClick={launchPartnerDirect}>
-            Launch {partnerLabel ?? "partner module"}
-          </button>
+          )}
         </div>
       </div>
       <Link to={returnTo} className="cockpit-ghost-btn" aria-label="Return to USJET Hangar">

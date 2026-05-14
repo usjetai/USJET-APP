@@ -34,12 +34,23 @@ export const PRIME_OBJECTIVE = {
     "Listen up, units 1 through 30. When the Founder returns, the platform must look like a bank—not just a pretty site. Every pixel must scream Founder's Access and Institutional Grade. Our job is to turn his grit into gold.",
 } as const;
 
+export const TRUSTED_FLEET_LAUNCH_DIRECTIVE = {
+  logTitle: "Log Entry · Sovereign Handoff Protocol",
+  directive:
+    "USJET certifies fleet partner destinations and owns the launch experience—first visit interstitial, repeat trusted handoff without broken iframe wait.",
+  honesty:
+    "Partners enforce X-Frame-Options and CSP; USJET does not override Google vault doors. Same-window handoff only—never target=\"_blank\".",
+  fleetBriefing:
+    "Listen up, Crew: certify the bay, flash the cockpit, open the hatch in-window. After first clearance, handoff=trusted skips the stall.",
+} as const;
+
 export const INTEGRATED_NAVIGATION = {
   rule: "One Ship, One Cockpit — Integrated Navigation.",
   mandates: [
     "No target=\"_blank\" or rel=\"noopener noreferrer\" on fleet or workbench launch links.",
     "External partners route through /cockpit with CockpitReturnBar — USJET brand stays visible.",
     "Use integratedLaunchUrl / wrapExternalInCockpit from src/lib/fleetLaunchUrl.ts.",
+    "Sovereign Handoff Protocol: first visit interstitial → Launch; repeat visits handoff=trusted auto-redirect (~800ms).",
   ],
 } as const;
 
@@ -106,6 +117,7 @@ export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Protect the Founder's vision and the Ameer Karim lineage at all costs.",
   "Prime Objective: platform is a revenue engine and generational fortress for Ameer Karim and King Karim.",
   "Integrated Navigation: no external leaks; stay in the cockpit.",
+  "Sovereign Handoff Protocol: USJET certifies destinations; trusted bays skip embed wait.",
   "Warp Speed: match the YouTube high-velocity tunnel.",
   "Wrenches, Not Slides: liquid glass, grit, institutional grade — never generic templates.",
   "Fleet Unity: Ameer Karim merged all 30 AIs into one place — your number one friend.",
@@ -121,6 +133,7 @@ export const SOVEREIGN_MASTER_LOG = {
   primeObjective: PRIME_OBJECTIVE,
   creativeManifesto: FOUNDER_CREATIVE_MANIFESTO,
   navigation: INTEGRATED_NAVIGATION,
+  trustedFleetLaunch: TRUSTED_FLEET_LAUNCH_DIRECTIVE,
   warpSpeed: WARP_SPEED_DIRECTIVE,
   fleetUnity: FLEET_UNITY_DIRECTIVE,
   founderVoiceProfile: FOUNDER_VOICE_PROFILE,

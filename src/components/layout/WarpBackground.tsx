@@ -1,27 +1,47 @@
 import { useEffect, useRef } from "react";
 
-const NUM_STARS = 450;
-const STAR_SPEED = 0.08;
+const NUM_STARS = 1100;
+const STAR_SPEED = 0.22;
+
+type StarTone = "white" | "cyan" | "gold";
+
+const TONE_RGB: Record<StarTone, [number, number, number]> = {
+  white: [255, 255, 255],
+  cyan: [56, 232, 255],
+  gold: [251, 191, 36],
+};
+
+function pickTone(): StarTone {
+  const r = Math.random();
+  if (r < 0.62) return "white";
+  if (r < 0.88) return "cyan";
+  return "gold";
+}
 
 class Star {
   x: number;
   y: number;
   z: number;
   prevZ: number;
+  tone: StarTone;
 
   constructor() {
     this.x = (Math.random() - 0.5) * 2000;
     this.y = (Math.random() - 0.5) * 2000;
     this.z = Math.random() * 2000;
     this.prevZ = this.z;
+    this.tone = pickTone();
   }
 
   update() {
     this.prevZ = this.z;
-    this.z -= STAR_SPEED * 100;
+    this.z -= STAR_SPEED * 120;
     if (this.z <= 0) {
+      this.x = (Math.random() - 0.5) * 2000;
+      this.y = (Math.random() - 0.5) * 2000;
       this.z = 2000;
       this.prevZ = this.z;
+      this.tone = pickTone();
     }
   }
 
@@ -33,9 +53,11 @@ class Star {
     const px = cx + (this.x / this.prevZ) * 1000;
     const py = cy + (this.y / this.prevZ) * 1000;
     const depth = 1 - this.z / 2000;
+    const [r, g, b] = TONE_RGB[this.tone];
+    const alpha = Math.min(1, depth * 0.96 + 0.22);
 
-    ctx.strokeStyle = `rgba(34, 211, 238, ${depth})`;
-    ctx.lineWidth = 2 * depth;
+    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    ctx.lineWidth = 3.4 * depth + 0.35;
     ctx.beginPath();
     ctx.moveTo(px, py);
     ctx.lineTo(x, y);
@@ -43,7 +65,7 @@ class Star {
   }
 }
 
-/** Canvas starfield warp — reliable site-wide atmosphere (YouTube/local video optional on top). */
+/** Canvas starfield warp — AA-VFX UQgBVsbbKRs hyperspace tunnel (radial streaks toward viewer). */
 export default function WarpBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -73,13 +95,16 @@ export default function WarpBackground() {
       stars = Array.from({ length: NUM_STARS }, () => new Star());
     };
 
-    const paintStatic = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const gradient = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.max(w, h) * 0.7);
-      gradient.addColorStop(0, "#0c1a32");
-      gradient.addColorStop(0.55, "#050a14");
-      gradient.addColorStop(1, "#020617");
+    const paintVoid = (w: number, h: number) => {
+      const cx = w / 2;
+      const cy = h / 2;
+      const radius = Math.max(w, h) * 0.85;
+      const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+      gradient.addColorStop(0, "rgba(255, 255, 255, 0.14)");
+      gradient.addColorStop(0.04, "rgba(186, 230, 253, 0.08)");
+      gradient.addColorStop(0.12, "#0a1424");
+      gradient.addColorStop(0.42, "#040810");
+      gradient.addColorStop(1, "#010308");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, w, h);
     };
@@ -87,7 +112,7 @@ export default function WarpBackground() {
     const animate = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      ctx.fillStyle = "rgba(2, 6, 23, 0.38)";
+      ctx.fillStyle = "rgba(1, 4, 12, 0.16)";
       ctx.fillRect(0, 0, w, h);
       for (const star of stars) {
         star.update();
@@ -100,10 +125,11 @@ export default function WarpBackground() {
       cancelAnimationFrame(animationFrameId);
       resize();
       if (motionMq.matches) {
-        paintStatic();
+        paintVoid(window.innerWidth, window.innerHeight);
         return;
       }
       initStars();
+      paintVoid(window.innerWidth, window.innerHeight);
       animate();
     };
 

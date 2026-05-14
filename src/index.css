@@ -4763,6 +4763,44 @@ button.fleet-card {
   text-align: left;
 }
 
+.special-page__lead {
+  text-wrap: pretty;
+}
+
+.special-page__mandate {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.special-page__ladder {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.special-page__ladder-item {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 8, 23, 0.35);
+}
+
+.special-page__ladder-label {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.9);
+}
+
+.special-page__ladder-detail {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.58);
+}
+
 .special-tier-card {
   border: 0;
   padding: 0;
@@ -4889,6 +4927,20 @@ button.fleet-card {
   color: rgba(52, 211, 153, 0.9);
 }
 
+.special-tier-card__descriptor {
+  margin: 0.85rem 0 0;
+  font-size: 0.62rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.special-tier-card__descriptor code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.6rem;
+  color: rgba(125, 211, 252, 0.75);
+}
+
 .special-tier-card__footer {
   padding: 0 1.25rem 1.25rem;
 }
@@ -4947,6 +4999,29 @@ button.fleet-card {
   font-size: 0.9rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.72);
+}
+
+.special-checkout__trust {
+  margin: 0;
+  padding: 0 1.5rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.special-checkout__descriptor {
+  margin: 0;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.special-checkout__descriptor code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.65rem;
+  color: rgba(125, 211, 252, 0.8);
 }
 
 .special-checkout__form {

@@ -1,80 +1,60 @@
-import { useEffect, useState } from "react";
-import { Check, ShieldCheck, Sparkles, Zap } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Check, ShieldCheck, Sparkles, Wrench, Zap } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout/StripeSecureCheckout";
-import { HANGAR_PRO_STRIPE } from "../data/stripeProducts";
+import { WRENCHES_PHILOSOPHY } from "../data/founderManifesto";
+import {
+  FLIGHT_PASS_STRIPE,
+  FLEET_COMMANDER_STRIPE,
+  HANGAR_PRO_STRIPE,
+  type StripeTierProduct,
+} from "../data/stripeProducts";
 
-type ServiceTier = {
-  id: SpecialTierId;
-  name: string;
-  kicker: string;
-  price: string;
-  period: string;
-  description: string;
-  features: string[];
-  highlighted?: boolean;
+type ServiceTier = StripeTierProduct & {
   paymentLink?: string;
+};
+
+const PAYMENT_LINK_BY_ENV: Record<StripeTierProduct["paymentLinkEnvKey"], string | undefined> = {
+  VITE_STRIPE_FOUNDER_PAYMENT_LINK: import.meta.env.VITE_STRIPE_FOUNDER_PAYMENT_LINK?.trim(),
+  VITE_STRIPE_PRO_PAYMENT_LINK: import.meta.env.VITE_STRIPE_PRO_PAYMENT_LINK?.trim(),
+  VITE_STRIPE_ENTERPRISE_PAYMENT_LINK: import.meta.env.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK?.trim(),
 };
 
 const SERVICE_TIERS: ServiceTier[] = [
   {
-    id: "founder",
-    name: "Founder Special",
-    kicker: "Limited launch rate",
-    price: "$19.95",
-    period: "/mo",
-    description:
-      "Early-adopter access to the USJET hangar: full fleet routing, Intel monitors, and founder-priority support.",
-    features: [
-      "All 30 AI cockpit bays",
-      "Intel market dual-feed",
-      "Founder priority lane",
-      "Cancel anytime",
-    ],
-    highlighted: true,
-    paymentLink: import.meta.env.VITE_STRIPE_FOUNDER_PAYMENT_LINK?.trim() || "https://buy.stripe.com/your_stripe_link_here",
+    ...FLIGHT_PASS_STRIPE,
+    paymentLink:
+      PAYMENT_LINK_BY_ENV.VITE_STRIPE_FOUNDER_PAYMENT_LINK ||
+      "https://buy.stripe.com/your_stripe_link_here",
   },
   {
-    id: "hangar-pro",
-    name: HANGAR_PRO_STRIPE.name,
-    kicker: "Operator tier",
-    price: HANGAR_PRO_STRIPE.priceDisplay,
-    period: HANGAR_PRO_STRIPE.period,
-    description: HANGAR_PRO_STRIPE.description,
-    features: [
-      "Real-time AI Fleet networking",
-      "30-unit Hangar connectivity",
-      "Live Intel Pulse (Crypto/NYSE)",
-      "Direct flight links — no dead iframes",
-    ],
-    paymentLink: import.meta.env.VITE_STRIPE_PRO_PAYMENT_LINK?.trim(),
+    ...HANGAR_PRO_STRIPE,
+    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_PRO_PAYMENT_LINK,
   },
   {
-    id: "fleet-command",
-    name: "Fleet Command",
-    kicker: "Enterprise hangar",
-    price: "$199",
-    period: "/mo",
-    description:
-      "Command-level control for distributed crews: custom domains, SLA routing, and dedicated liaison.",
-    features: [
-      "Unlimited workbench bays",
-      "Custom fleet manifest",
-      "Dedicated success liaison",
-      "SSO + audit exports",
-    ],
-    paymentLink: import.meta.env.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK?.trim(),
+    ...FLEET_COMMANDER_STRIPE,
+    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK,
   },
 ];
+
+const VALUE_LADDER = [
+  { label: "Hangar", detail: "30 AI cockpit bays — one sovereign switchboard" },
+  { label: "Intel", detail: "Crypto & NYSE pulse — institutional-grade board" },
+  { label: "Fleet Protocol", detail: "Integrated navigation — no dead iframes, one cockpit" },
+  { label: "Member ID", detail: "Stripe-issued clearance — gate unlock on every route" },
+] as const;
 
 const Special = () => {
   const [selectedTierId, setSelectedTierId] = useState<SpecialTierId>("founder");
 
-  const selectedTier = SERVICE_TIERS.find((tier) => tier.id === selectedTierId) ?? SERVICE_TIERS[0];
+  const selectedTier = useMemo(
+    () => SERVICE_TIERS.find((tier) => tier.id === selectedTierId) ?? SERVICE_TIERS[0],
+    [selectedTierId],
+  );
 
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = "Founder Special · USJet.ai";
+    document.title = "Sovereign Access · USJet.ai";
     return () => {
       document.title = prevTitle;
     };
@@ -85,15 +65,38 @@ const Special = () => {
       <header className="special-page__header mb-12 border-b border-white/10 pb-10">
         <div className="mb-4 flex flex-wrap items-center gap-3 font-black uppercase tracking-[0.35em] text-cyan-300/90">
           <ShieldCheck size={20} className="shrink-0" aria-hidden />
-          <span>Secure founder pricing</span>
+          <span>Sovereign cockpit access · bank-ready</span>
         </div>
         <h1 className="font-aviation text-5xl font-black uppercase italic leading-[0.95] tracking-tighter text-white sm:text-6xl lg:text-7xl">
-          Choose Your <span className="text-blue-500">Hangar Tier</span>
+          Put Your Money <span className="text-blue-500">On The Screen</span>
         </h1>
-        <p className="mt-5 max-w-2xl text-base font-medium leading-relaxed text-white/65">
-          Liquid-glass access to the USJET fleet. Select a tier, then complete secure checkout—powered by
-          Stripe.
+        <p className="special-page__lead mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/70 sm:text-lg">
+          This is not an investor pitch deck. It is the USJET sovereign cockpit—a 30-unit AI hangar built
+          from shop-floor grit for operators who turn wrenches, not slides. Pick your clearance. Stripe
+          issues your Member ID. You fly same-window—always in the cockpit.
         </p>
+
+        <div className="special-page__mandate mt-6 inline-flex flex-wrap items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
+          <Wrench size={14} className="text-cyan-300/90" aria-hidden />
+          <span className="text-[0.65rem] font-black uppercase tracking-[0.22em] text-white/75">
+            {WRENCHES_PHILOSOPHY}
+          </span>
+          <span className="text-white/25" aria-hidden>
+            ·
+          </span>
+          <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/55">
+            Launch rates live in test — institutional grade
+          </span>
+        </div>
+
+        <ul className="special-page__ladder mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {VALUE_LADDER.map((item) => (
+            <li key={item.label} className="special-page__ladder-item">
+              <span className="special-page__ladder-label">{item.label}</span>
+              <span className="special-page__ladder-detail">{item.detail}</span>
+            </li>
+          ))}
+        </ul>
       </header>
 
       <div className="special-page__tiers grid gap-5 lg:grid-cols-3">
@@ -121,18 +124,18 @@ const Special = () => {
                   isHighlighted ? "glass-tint-blue" : "glass-tint-cyan",
                 ].join(" ")}
               >
-                {isHighlighted ? (
+                {tier.badge ? (
                   <span className="special-tier-card__badge">
                     <Sparkles size={12} aria-hidden />
-                    Founder rate
+                    {tier.badge}
                   </span>
                 ) : null}
 
                 <div className="special-tier-card__body">
-                  <p className="special-tier-card__kicker">{tier.kicker}</p>
+                  <p className="special-tier-card__kicker">{tier.hook}</p>
                   <h2 className="special-tier-card__name">{tier.name}</h2>
                   <p className="special-tier-card__price">
-                    {tier.price}
+                    {tier.priceDisplay}
                     <span className="special-tier-card__period">{tier.period}</span>
                   </p>
                   <p className="special-tier-card__description">{tier.description}</p>
@@ -145,6 +148,10 @@ const Special = () => {
                       </li>
                     ))}
                   </ul>
+
+                  <p className="special-tier-card__descriptor">
+                    Card statement: <code>{tier.statementDescriptor}</code>
+                  </p>
                 </div>
 
                 <div className="special-tier-card__footer">
@@ -152,10 +159,10 @@ const Special = () => {
                     {isSelected ? (
                       <>
                         <Zap size={14} aria-hidden />
-                        Selected for checkout
+                        Cleared for checkout
                       </>
                     ) : (
-                      "Select tier"
+                      `Select ${tier.name}`
                     )}
                   </span>
                 </div>
@@ -171,22 +178,28 @@ const Special = () => {
             <div className="flex items-center gap-3">
               <ShieldCheck size={22} className="text-cyan-300" aria-hidden />
               <div>
-                <p className="special-checkout__eyebrow">Stripe-secured</p>
+                <p className="special-checkout__eyebrow">Stripe-secured · PCI compliant</p>
                 <h2 id="special-checkout-heading" className="special-checkout__title">
-                  Secure Checkout
+                  Authorize Clearance
                 </h2>
               </div>
             </div>
             <p className="special-checkout__summary">
-              {selectedTier.name} · {selectedTier.price}
+              {selectedTier.name} · {selectedTier.priceDisplay}
               {selectedTier.period}
             </p>
           </div>
 
+          <p className="special-checkout__trust">
+            Your payment unlocks Hangar, Intel, Fleet Protocol, and a Stripe Member ID for cockpit gate
+            access. Cancel anytime. One ship, one cockpit—no external tabs.
+          </p>
+
           <StripeSecureCheckout
             tierId={selectedTier.id}
             tierLabel={selectedTier.name}
-            amountLabel={`${selectedTier.price}${selectedTier.period}`}
+            amountLabel={`${selectedTier.priceDisplay}${selectedTier.period}`}
+            statementDescriptor={selectedTier.statementDescriptor}
             paymentLink={selectedTier.paymentLink}
           />
         </GlassEffectContainer>

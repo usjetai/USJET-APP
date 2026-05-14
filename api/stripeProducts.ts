@@ -6,11 +6,11 @@ export const STRIPE_METADATA_KEYS = {
   tier: "Tier",
 } as const;
 
-const HANGAR_PRO_METADATA = {
-  [STRIPE_METADATA_KEYS.role]: "PRIME-OPERATOR",
-  [STRIPE_METADATA_KEYS.access]: "FULL-FLEET-SYNC",
-  [STRIPE_METADATA_KEYS.tier]: "FOUNDER-LEVEL",
-} as const;
+const TIER_METADATA = [
+  { Role: "FLIGHT-CLEARANCE", Access: "HANGAR-ENTRY", Tier: "LAUNCH-RATE" },
+  { Role: "PRIME-OPERATOR", Access: "FULL-FLEET-SYNC", Tier: "FOUNDER-LEVEL" },
+  { Role: "FLEET-COMMANDER", Access: "ENTERPRISE-SOVEREIGN", Tier: "COMMAND-LEVEL" },
+] as const;
 
 export type MemberTier = "USJET-PRIME-ACTIVE" | "USJET-ROYAL-HEIR" | "INACTIVE" | "PENDING";
 
@@ -26,12 +26,10 @@ export function memberTierFromStripeMetadata(
   const access = metadata[STRIPE_METADATA_KEYS.access]?.trim().toUpperCase();
   const tier = metadata[STRIPE_METADATA_KEYS.tier]?.trim().toUpperCase();
 
-  if (
-    role === HANGAR_PRO_METADATA.Role ||
-    access === HANGAR_PRO_METADATA.Access ||
-    tier === HANGAR_PRO_METADATA.Tier
-  ) {
-    return "USJET-PRIME-ACTIVE";
+  for (const product of TIER_METADATA) {
+    if (role === product.Role || access === product.Access || tier === product.Tier) {
+      return "USJET-PRIME-ACTIVE";
+    }
   }
 
   return fallback;

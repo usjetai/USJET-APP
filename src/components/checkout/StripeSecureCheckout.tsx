@@ -9,6 +9,7 @@ type StripeSecureCheckoutProps = {
   tierId: SpecialTierId;
   tierLabel: string;
   amountLabel: string;
+  statementDescriptor?: string;
   paymentLink?: string;
 };
 
@@ -20,6 +21,7 @@ const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 function CheckoutForm({
   tierLabel,
   amountLabel,
+  statementDescriptor,
   paymentLink,
 }: Omit<StripeSecureCheckoutProps, "tierId">) {
   const stripe = useStripe();
@@ -126,18 +128,24 @@ function CheckoutForm({
         <Lock size={16} aria-hidden />
         <span>
           {status === "processing"
-            ? "Processing…"
+            ? "Authorizing clearance…"
             : clientSecret
-              ? `Pay ${amountLabel} — ${tierLabel}`
-              : `Secure Checkout — ${amountLabel}`}
+              ? `Authorize ${amountLabel} — ${tierLabel}`
+              : `Enter the Hangar — ${amountLabel}`}
         </span>
       </button>
 
+      {statementDescriptor ? (
+        <p className="special-checkout__descriptor">
+          Your card will show <code>{statementDescriptor}</code>. Recurring monthly until you cancel in the
+          Member Portal.
+        </p>
+      ) : null}
+
       {!clientSecret && paymentLink ? (
         <p className="special-checkout__hint">
-          Add <code className="special-checkout__code">VITE_STRIPE_PUBLISHABLE_KEY</code> and a server-issued
-          PaymentIntent client secret to enable inline Stripe Elements. Until then, checkout uses your Stripe
-          payment link.
+          Secure checkout routes through Stripe. Your Member ID is issued on confirmation—use it to unlock the
+          sovereign cockpit.
         </p>
       ) : null}
     </form>

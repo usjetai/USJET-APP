@@ -83,8 +83,8 @@ export default function FleetCard({
     <CardTag
       {...cardProps}
       className={[
-        "fleet-card group block h-full",
-        surface === "hangar" ? "fleet-card--surface-hangar min-h-[13.5rem]" : "fleet-card--surface-runway min-h-[8rem]",
+        "fleet-card group block",
+        surface === "hangar" ? "fleet-card--surface-hangar h-full min-h-[13.5rem]" : "fleet-card--surface-runway min-h-[8rem]",
         bayAccent ? "fleet-card--bay-accent" : "",
         expandInteractive ? "fleet-card--hangar-expand" : "",
         isCommandBay ? "fleet-card--command" : "",

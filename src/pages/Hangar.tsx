@@ -125,8 +125,8 @@ const Hangar = () => {
               {HANGAR_VISION_RIBBON}
             </p>
             <p className="mt-4 max-w-2xl text-sm font-medium uppercase tracking-[0.28em] text-amber-200/40">
-              {FLEET_UNIT_COUNT} units · {columns === 1 ? "1-column" : "2-column"} bay floor · click a bay to expand
-              (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous cockpits)
+              {FLEET_UNIT_COUNT} units · {columns}-column bay floor · click a bay to expand (max{" "}
+              {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous cockpits)
             </p>
             <HangarLayoutToggle columns={columns} onChange={setColumnLayout} />
           </div>
@@ -152,6 +152,8 @@ function HangarLayoutToggle({
       className="hangar-layout-toggle mt-6 flex flex-wrap items-center gap-2"
       role="group"
       aria-label="Hangar bay grid layout"
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={(e) => e.stopPropagation()}
     >
       <span className="mr-1 text-[10px] font-black uppercase tracking-[0.28em] text-amber-200/50">
         Layout
@@ -182,6 +184,19 @@ function HangarLayoutToggle({
       >
         2 Columns
       </button>
+      <button
+        type="button"
+        className={[
+          "hangar-layout-toggle__btn btn-glass glass-effect-interactive glass-tint-amber",
+          columns === 3 ? "hangar-layout-toggle__btn--active" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        aria-pressed={columns === 3}
+        onClick={() => onChange(3)}
+      >
+        3 Columns
+      </button>
     </div>
   );
 }
@@ -193,10 +208,14 @@ function HangarBayGrid({
   gridCells: ReactNode[];
   columns: HangarColumnLayout;
 }) {
-  const gridClass =
-    columns === 1
-      ? "hangar-bay-grid grid gap-5 hangar-bay-grid--cols-1"
-      : "hangar-bay-grid grid gap-4 hangar-bay-grid--cols-2";
+  const gridClass = [
+    "hangar-bay-grid grid",
+    columns === 1 ? "gap-5 hangar-bay-grid--cols-1" : "gap-4",
+    columns === 2 ? "hangar-bay-grid--cols-2" : "",
+    columns === 3 ? "hangar-bay-grid--cols-3" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className="hangar-bay-grid-wrap">

@@ -2,10 +2,10 @@ import { AnimatePresence } from "framer-motion";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import AppNav from "./components/layout/AppNav";
 import PageTransition from "./components/layout/PageTransition";
-import Usa250Countdown from "./components/layout/Usa250Countdown";
-import MovingBackground from "./components/layout/MovingBackground";
+import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import WarpBackground from "./components/layout/WarpBackground";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
+import TierRouteGate from "./components/member/TierRouteGate";
 import Fleet from "./pages/Fleet";
 import Hangar from "./pages/Hangar";
 import Intel from "./pages/Intel";
@@ -16,16 +16,6 @@ import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
 import Cockpit from "./pages/Cockpit";
 
-const globalAtmosphereStyle = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100vw",
-  height: "100vh",
-  zIndex: 1,
-  pointerEvents: "none",
-} as const;
-
 function AnimatedRoutes() {
   const location = useLocation();
 
@@ -35,12 +25,40 @@ function AnimatedRoutes() {
         <Routes location={location}>
           <Route path="/" element={<Fleet />} />
           <Route path="/hangar" element={<Hangar />} />
-          <Route path="/intel" element={<Intel />} />
+          <Route
+            path="/intel"
+            element={
+              <TierRouteGate path="/intel" pageLabel="Intel">
+                <Intel />
+              </TierRouteGate>
+            }
+          />
           <Route path="/founder" element={<Founder />} />
-          <Route path="/origin" element={<Origin />} />
-          <Route path="/founder-special-1995" element={<FounderSpecial1995 />} />
+          <Route
+            path="/origin"
+            element={
+              <TierRouteGate path="/origin" pageLabel="Origin">
+                <Origin />
+              </TierRouteGate>
+            }
+          />
+          <Route
+            path="/founder-special-1995"
+            element={
+              <TierRouteGate path="/founder-special-1995" pageLabel="1995 Grit Vault">
+                <FounderSpecial1995 />
+              </TierRouteGate>
+            }
+          />
           <Route path="/special" element={<Special />} />
-          <Route path="/member" element={<MemberPortal />} />
+          <Route
+            path="/member"
+            element={
+              <TierRouteGate path="/member" pageLabel="Member Portal">
+                <MemberPortal />
+              </TierRouteGate>
+            }
+          />
         </Routes>
       </PageTransition>
     </AnimatePresence>
@@ -63,19 +81,10 @@ function AppChrome() {
     <>
       <WarpBackground />
       <GlobalVideoBackground />
-      <MovingBackground />
-      <div aria-hidden className="aviation-pulse" />
       <AppNav />
       <main className="relative z-10">
         <AnimatedRoutes />
       </main>
-      <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex items-center gap-4">
-          <span className="h-2 w-2 shrink-0 animate-ping rounded-full bg-blue-500" />
-          <span>USJET System Active // Port 8080</span>
-        </div>
-        <Usa250Countdown />
-      </div>
     </>
   );
 }
@@ -84,10 +93,8 @@ export default function App() {
   return (
     <Router>
       <div className="relative min-h-screen overflow-x-hidden bg-transparent text-white">
-        <div id="global-atmosphere" style={globalAtmosphereStyle}>
-          <div aria-hidden className="moving-clouds" />
-        </div>
         <AppChrome />
+        <UsjetGlobalContactBar />
       </div>
     </Router>
   );

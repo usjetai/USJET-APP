@@ -1,12 +1,26 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Shield, Sparkles, Target, Wrench } from "lucide-react";
+import { Shield, ShieldCheck, Sparkles, Target, Wrench } from "lucide-react";
+import { FLIGHT_PASS_DIRECT_URL } from "../lib/stripePaymentLink";
 import { FOUNDER_CREATIVE_MANIFESTO, LINE_OF_SUCCESSION_LOG, PRIME_OBJECTIVE } from "../data/founderManifesto";
 import { LINE_OF_SUCCESSION } from "../data/lineOfSuccession";
 import Founder1995FeatureGrid from "../components/founder/Founder1995FeatureGrid";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import { useMemberAuth } from "../context/MemberAuthContext";
+import { clearanceTierLabel, isFounderGodMode, memberClearanceRank } from "../lib/memberAccessLevel";
 import type { FleetAircraftType } from "../types/fleet";
+
+/** Flight Pass list price — always $19.90/mo (not raw cents). */
+const FLIGHT_PASS_PRICE_DISPLAY = "$19.90/mo";
+
+/**
+ * Bottom CTA on /founder-special-1995:
+ * - Guest / unpaid (clearance rank 0): Flight Pass paywall at FLIGHT_PASS_PRICE_DISPLAY.
+ * - Stripe live test: same Flight Pass $19.90 link (FLIGHT_PASS_DIRECT_URL).
+ * - Founder god mode (USJET-AMEER): bypasses paywall display only — welcome, no purchase CTA.
+ * - Paid tier ≥ 1 (Stripe verify): "Clearance active" — optional upgrade links only.
+ */
 
 type GritSection = {
   heading: string;
@@ -54,7 +68,17 @@ const GRIT_1995_STORY: GritSection[] = [
 const CINEMATIC_BODY_CLASS = "usjet-atmosphere--cinematic";
 
 export default function FounderSpecial1995() {
+  const { session, loading } = useMemberAuth();
   const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
+
+  const founderGodMode = isFounderGodMode(session);
+  const clearanceRank = memberClearanceRank(session);
+  const hasHangarClearance = !loading && (founderGodMode || clearanceRank >= 1);
+  const tierLabel = clearanceTierLabel(clearanceRank);
+
+  const handleFlightPassCheckout = useCallback(() => {
+    window.location.href = FLIGHT_PASS_DIRECT_URL;
+  }, []);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -78,7 +102,7 @@ export default function FounderSpecial1995() {
   }, []);
 
   return (
-    <div className="founder-special-1995-page founder-page--warp founder-special-1995-page--cinematic page-atmosphere mx-auto max-w-5xl px-6 pb-28 pt-40 sm:px-8">
+    <div className="founder-special-1995-page founder-page--warp founder-special-1995-page--cinematic page-atmosphere page-nav-offset mx-auto max-w-5xl px-6 pb-28 sm:px-8">
       <div className="founder-page__grid">
         <div className="founder-page__main">
           <article className="founder-story founder-special-1995-story">
@@ -215,15 +239,66 @@ export default function FounderSpecial1995() {
               );
             })}
 
-            <GlassEffectContainer className="founder-special-1995__cta glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
-              <p className="founder-special-1995__cta-kicker">Founder Special</p>
-              <p className="founder-special-1995__cta-price">$19.90/mo</p>
-              <p className="founder-special-1995__cta-copy">
-                Join the Grit chapter. Support the hangar that networks thirty AIs for blue-collar America.
-              </p>
-              <Link to="/special" className="founder-special-1995__cta-link btn-glass-prominent glass-effect-interactive">
-                Secure Founder Access
-              </Link>
+            <GlassEffectContainer
+              className={[
+                "founder-special-1995__cta glass-effect glass-effect--rounded-rect liquid-glass-background",
+                hasHangarClearance ? "glass-tint-cyan founder-special-1995__cta--clearance" : "glass-tint-gold",
+              ].join(" ")}
+            >
+              {hasHangarClearance ? (
+                <>
+                  <p className="founder-special-1995__cta-kicker">
+                    {founderGodMode ? "Founder welcome" : "Clearance active"}
+                  </p>
+                  <p className="founder-special-1995__cta-status">
+                    <ShieldCheck size={18} aria-hidden />
+                    {founderGodMode ? "USJET-AMEER · sovereign god mode" : `${tierLabel} · hangar unlocked`}
+                  </p>
+                  <p className="founder-special-1995__cta-copy">
+                    {founderGodMode
+                      ? "The Grit Vault is yours, General. Thirty units stand ready — no extraction port required on this route."
+                      : "Your Flight Pass clearance is live. The 1995 origin vault stays open — upgrade only if you want more bays."}
+                  </p>
+                  {clearanceRank === 1 ? (
+                    <Link
+                      to="/special?tier=hangar-pro"
+                      className="founder-special-1995__cta-link btn-glass glass-effect-interactive"
+                    >
+                      Optional upgrade — Hangar Pro $49.95/mo
+                    </Link>
+                  ) : clearanceRank === 2 ? (
+                    <Link
+                      to="/special?tier=fleet-command"
+                      className="founder-special-1995__cta-link btn-glass glass-effect-interactive"
+                    >
+                      Optional upgrade — Enterprise Commander $199.99/mo
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/hangar"
+                      className="founder-special-1995__cta-link btn-glass glass-effect-interactive"
+                    >
+                      Enter the Hangar
+                    </Link>
+                  )}
+                </>
+              ) : (
+                <>
+                  <p className="founder-special-1995__cta-kicker">Founder Special</p>
+                  <p className="founder-special-1995__cta-price">{FLIGHT_PASS_PRICE_DISPLAY}</p>
+                  <p className="founder-special-1995__cta-copy">
+                    Join the Grit chapter. Support the hangar that networks thirty AIs for blue-collar
+                    America — Flight Pass at {FLIGHT_PASS_PRICE_DISPLAY}.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleFlightPassCheckout}
+                    className="founder-special-1995__cta-link btn-glass-prominent glass-effect-interactive"
+                  >
+                    Secure Founder Access — Flight Pass
+                  </button>
+                </>
+              )}
             </GlassEffectContainer>
           </article>
         </div>

@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import GlassEffectContainer from "./GlassEffectContainer";
 import Usa250Countdown from "./Usa250Countdown";
-import { mailtoUsjetOps, USJET_OPS_EMAIL } from "../../lib/usjetContact";
+import { mailtoUsjetOps, SUPPORT_POLICY, USJET_OPS_EMAIL } from "../../lib/usjetContact";
 
 /** Fixed liquid-glass strip — ops inbox on every route (including cockpit). */
 export default function UsjetGlobalContactBar() {
@@ -12,13 +13,28 @@ export default function UsjetGlobalContactBar() {
           <span>USJET System Active</span>
         </div>
         <Usa250Countdown />
-        <a
-          href={mailtoUsjetOps()}
-          className="usjet-global-contact-bar__ops btn-glass glass-effect-interactive glass-tint-cyan"
-          aria-label={`Email USJET operations at ${USJET_OPS_EMAIL}`}
-        >
-          {USJET_OPS_EMAIL}
-        </a>
+        <p className="usjet-global-contact-bar__policy" title={`${SUPPORT_POLICY.primary}. ${SUPPORT_POLICY.email}.`}>
+          <span>{SUPPORT_POLICY.primary}</span>
+          <span className="usjet-global-contact-bar__policy-sep" aria-hidden>
+            ·
+          </span>
+          <span>{SUPPORT_POLICY.email}</span>
+        </p>
+        <div className="usjet-global-contact-bar__actions">
+          <Link
+            to="/origin"
+            className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
+          >
+            Customer Service
+          </Link>
+          <a
+            href={mailtoUsjetOps()}
+            className="usjet-global-contact-bar__ops btn-glass glass-effect-interactive glass-tint-cyan"
+            aria-label={`Email USJET operations at ${USJET_OPS_EMAIL}`}
+          >
+            {USJET_OPS_EMAIL}
+          </a>
+        </div>
       </GlassEffectContainer>
     </footer>
   );

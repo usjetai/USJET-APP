@@ -1,3 +1,5 @@
+import { getFleetCapabilities } from "../../data/fleetCapabilities";
+import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
 import { Link } from "react-router-dom";
@@ -126,6 +128,9 @@ export default function FleetCard({
           <h3 className="mt-2 text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
             {name}
           </h3>
+          {surface === "fleet" && typeof slot === "number" ? (
+            <FleetCapabilityBadges capabilities={getFleetCapabilities(slot)} />
+          ) : null}
           <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-blue-400/90">{callsign}</p>
           <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-const NUM_STARS = 450;
-const STAR_SPEED = 0.08;
+const NUM_STARS = 580;
+const STAR_SPEED = 0.14;
 
 class Star {
   x: number;
@@ -34,8 +34,8 @@ class Star {
     const py = cy + (this.y / this.prevZ) * 1000;
     const depth = 1 - this.z / 2000;
 
-    ctx.strokeStyle = `rgba(34, 211, 238, ${depth})`;
-    ctx.lineWidth = 2 * depth;
+    ctx.strokeStyle = `rgba(56, 232, 255, ${Math.min(1, depth * 0.92 + 0.12)})`;
+    ctx.lineWidth = 2.6 * depth + 0.4;
     ctx.beginPath();
     ctx.moveTo(px, py);
     ctx.lineTo(x, y);
@@ -87,7 +87,7 @@ export default function WarpBackground() {
     const animate = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      ctx.fillStyle = "rgba(2, 6, 23, 0.38)";
+      ctx.fillStyle = "rgba(2, 6, 23, 0.26)";
       ctx.fillRect(0, 0, w, h);
       for (const star of stars) {
         star.update();

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { Lock, ShieldAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
@@ -22,6 +22,10 @@ export default function TierRouteGate({ path, pageLabel: _pageLabel, children }:
 
   if (loading || canMemberAccessRoute(path, session)) {
     return <>{children}</>;
+  }
+
+  if (!session?.active) {
+    return <Navigate to="/member/login" replace state={{ blockedRoute: path }} />;
   }
 
   const minRank = routeMinClearanceRank(path);
@@ -55,16 +59,10 @@ export default function TierRouteGate({ path, pageLabel: _pageLabel, children }:
           </Link>
 
           <p className="tier-route-gate__footer">
-            Fleet, Hangar, and Founder stay public.{" "}
-            {path === "/member" ? (
-              <Link to="/special" className="tier-route-gate__link">
-                Stripe checkout
-              </Link>
-            ) : (
-              <Link to="/member" className="tier-route-gate__link">
-                Member Portal
-              </Link>
-            )}
+            Fleet and Founder stay public for guests.{" "}
+            <Link to="/member/login" className="tier-route-gate__link">
+              Member login
+            </Link>
           </p>
         </div>
       </GlassEffectContainer>

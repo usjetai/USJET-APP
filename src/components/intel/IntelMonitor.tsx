@@ -1,5 +1,6 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, KeyboardEvent } from "react";
 import { getWingForSlot } from "../../lib/intelWings";
+import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import TickerDisplay from "./TickerDisplay";
 import EkgPulseLine from "./EkgPulseLine";
@@ -39,12 +40,20 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
         animationDelay: `${(index % HANGAR_COLUMNS) * 0.15}s`,
         ...style,
       }}
-      onClick={interactive ? onExpandRequest : undefined}
+      onClick={
+        interactive
+          ? () => {
+              logFleetUsageIfMember(unit.callsign, unit.name);
+              onExpandRequest?.();
+            }
+          : undefined
+      }
       onKeyDown={
         interactive
           ? (event) => {
               if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
+                logFleetUsageIfMember(unit.callsign, unit.name);
                 onExpandRequest?.();
               }
             }

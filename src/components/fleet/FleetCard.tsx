@@ -2,6 +2,7 @@ import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
+import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import type { FleetAircraftType } from "../../types/fleet";
 
@@ -42,6 +43,8 @@ export default function FleetCard({
   };
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    logFleetUsageIfMember(callsign, name);
+
     if (onExpandBay) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
         syncProtocolToClipboard();

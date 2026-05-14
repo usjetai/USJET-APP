@@ -6493,6 +6493,379 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   text-decoration: none;
 }
 
+.member-portal--active .member-portal__header {
+  margin-bottom: 1.5rem;
+}
+
+.member-portal__dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Member vitals panel ─── */
+.member-vitals {
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  box-shadow:
+    0 0 40px rgba(34, 211, 238, 0.08),
+    inset 0 1px 0 rgba(251, 191, 36, 0.12);
+}
+
+.member-vitals__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.1rem 1.25rem 0.35rem;
+}
+
+.member-vitals__kicker {
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.82);
+}
+
+.member-vitals__pulse-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.member-vitals__heartbeat-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: #4ade80;
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.75);
+  animation: member-vitals-heartbeat 1.35s ease-in-out infinite;
+}
+
+.member-vitals__status {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #86efac;
+}
+
+.member-vitals__body {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.member-vitals__ekg {
+  height: 3.5rem;
+  margin-bottom: 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  background: linear-gradient(180deg, rgba(2, 8, 23, 0.45), rgba(2, 8, 23, 0.2));
+  padding: 0.35rem 0.5rem 0;
+}
+
+.member-vitals__ekg-line {
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.45));
+}
+
+.member-vitals__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 1rem;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .member-vitals__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.member-vitals__cell {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(34, 211, 238, 0.14);
+  background: rgba(2, 8, 23, 0.38);
+}
+
+.member-vitals__label {
+  margin: 0 0 0.25rem;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.member-vitals__value {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+  word-break: break-word;
+}
+
+.member-vitals__value--mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.member-vitals__value--accent {
+  color: #67e8f9;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@keyframes member-vitals-heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.72;
+  }
+}
+
+/* ─── Member fleet control board ─── */
+.member-control-board {
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+}
+
+.member-control-board__header {
+  padding: 1.1rem 1.25rem 0.75rem;
+}
+
+.member-control-board__kicker {
+  margin: 0;
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.72);
+}
+
+.member-control-board__title {
+  margin: 0.35rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: 1.2rem;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.member-control-board__copy {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.member-control-board__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0 1rem 1.1rem;
+  list-style: none;
+}
+
+@media (min-width: 480px) {
+  .member-control-board__grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .member-control-board__grid {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+}
+
+.member-control-board__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  min-height: 4.75rem;
+  padding: 0.4rem 0.25rem 0.45rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 8, 23, 0.42);
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.member-control-board__cell:hover {
+  border-color: rgba(34, 211, 238, 0.35);
+  background: rgba(14, 116, 144, 0.18);
+  transform: translateY(-1px);
+}
+
+.member-control-board__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+}
+
+.member-control-board__icon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.member-control-board__callsign {
+  font-size: 0.42rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(96, 165, 250, 0.9);
+  line-height: 1.15;
+}
+
+.member-control-board__name {
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.2;
+}
+
+/* ─── Member fleet usage chart ─── */
+.member-usage {
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+.member-usage__header {
+  padding: 1.1rem 1.25rem 0.35rem;
+}
+
+.member-usage__kicker {
+  margin: 0;
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.78);
+}
+
+.member-usage__title {
+  margin: 0.35rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.member-usage__narrative {
+  margin: 0;
+  padding: 0 1.25rem 0.85rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: rgba(226, 232, 240, 0.82);
+}
+
+.member-usage__list {
+  margin: 0;
+  padding: 0 1.25rem 1.15rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.member-usage__row {
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 8, 23, 0.35);
+}
+
+.member-usage__row-head {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: 0.5rem;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
+}
+
+.member-usage__rank {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: rgba(251, 191, 36, 0.75);
+}
+
+.member-usage__name {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.member-usage__count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.72rem;
+  color: #67e8f9;
+}
+
+.member-usage__bar-track {
+  height: 0.35rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.member-usage__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.85), rgba(251, 191, 36, 0.75));
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.35);
+}
+
+.member-usage__last {
+  margin: 0.35rem 0 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.member-usage__empty {
+  margin: 0;
+  padding: 0 1.25rem 1.25rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .member-vitals__heartbeat-dot {
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .founders-access-panel {
     animation: none;

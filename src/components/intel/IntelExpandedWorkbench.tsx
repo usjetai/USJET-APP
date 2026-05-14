@@ -2,6 +2,7 @@ import { ExternalLink, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
+import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 import MarketDualFeed from "./market/MarketDualFeed";
 
@@ -33,6 +34,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
             className="intel-expanded__external"
             href={launchHref}
             aria-label={`Launch ${unit.name} — integrated navigation`}
+            onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
           >
             <ExternalLink size={16} strokeWidth={2} />
           </a>

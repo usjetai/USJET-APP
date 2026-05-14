@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import { LogOut, ShieldCheck, Wrench } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import MemberFleetControlBoard from "../components/member/MemberFleetControlBoard";
+import MemberFleetUsageChart from "../components/member/MemberFleetUsageChart";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
+import MemberVitalsPanel from "../components/member/MemberVitalsPanel";
 import { useMemberAuth } from "../context/MemberAuthContext";
 
 export default function MemberPortal() {
@@ -10,6 +13,7 @@ export default function MemberPortal() {
   const [memberId, setMemberId] = useState(session?.customerId ?? "");
   const [email, setEmail] = useState(session?.email ?? "");
   const [submitting, setSubmitting] = useState(false);
+  const active = Boolean(session?.active);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -19,12 +23,14 @@ export default function MemberPortal() {
   };
 
   return (
-    <div className="member-portal page-atmosphere page-nav-offset mx-auto max-w-3xl px-6 pb-28 sm:px-8">
+    <div
+      className={[
+        "member-portal page-atmosphere page-nav-offset mx-auto px-6 pb-28 sm:px-8",
+        active ? "member-portal--active max-w-6xl" : "max-w-3xl",
+      ].join(" ")}
+    >
       <header className="member-portal__header">
-        <div className="member-portal__kicker-row">
-          <Wrench size={14} aria-hidden />
-          <p className="member-portal__kicker">Wrenches, Not Slides</p>
-        </div>
+        <motionKickerRow />
         <h1 className="member-portal__title">
           Member <span className="member-portal__title-accent">Portal</span>
         </h1>
@@ -33,6 +39,14 @@ export default function MemberPortal() {
         </p>
       </header>
 
+      {active && session ? (
+        <section className="member-portal__dashboard" aria-label="Member control board">
+          <MemberVitalsPanel session={session} />
+          <MemberFleetControlBoard />
+          <MemberFleetUsageChart />
+        </section>
+      ) : null}
+
       <div className="member-portal__grid">
         <MemberPrimeBadge session={session} />
 
@@ -40,27 +54,8 @@ export default function MemberPortal() {
           <div className="member-portal__card-inner">
             <p className="member-portal__card-kicker">Authentication</p>
             <h2 className="member-portal__card-title">
-              {session?.active ? "Active clearance" : "Verify Member ID"}
+              {active ? "Active clearance" : "Verify Member ID"}
             </h2>
-
-            {session?.active ? (
-              <dl className="member-portal__session">
-                <div className="member-portal__session-row">
-                  <dt>Tier</dt>
-                  <dd>{session.tier}</dd>
-                </div>
-                <div className="member-portal__session-row">
-                  <dt>Member ID</dt>
-                  <dd>{session.customerId}</dd>
-                </div>
-                {session.email ? (
-                  <div className="member-portal__session-row">
-                    <dt>Email</dt>
-                    <dd>{session.email}</dd>
-                  </div>
-                ) : null}
-              </dl>
-            ) : null}
 
             <form className="member-portal__form" onSubmit={handleSubmit}>
               <label className="member-portal__field">
@@ -91,11 +86,11 @@ export default function MemberPortal() {
 
               <button type="submit" className="member-portal__submit" disabled={submitting || loading}>
                 <ShieldCheck size={16} aria-hidden />
-                {submitting || loading ? "Verifying subscription…" : "Activate access"}
+                {submitting || loading ? "Verifying subscription…" : active ? "Refresh clearance" : "Activate access"}
               </button>
             </form>
 
-            {session?.active ? (
+            {active ? (
               <button type="button" className="member-portal__logout" onClick={logout}>
                 <LogOut size={14} aria-hidden />
                 Sign out
@@ -119,6 +114,15 @@ export default function MemberPortal() {
           Intel
         </Link>
       </p>
+    </div>
+  );
+}
+
+function motionKickerRow() {
+  return (
+    <div className="member-portal__kicker-row">
+      <Wrench size={14} aria-hidden />
+      <p className="member-portal__kicker">Wrenches, Not Slides</p>
     </div>
   );
 }

@@ -98,6 +98,7 @@ function AppChrome() {
     <>
       <WarpBackground />
       <GlobalVideoBackground />
+      <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
       <AppNav />
       <main className="relative z-10">
         <AnimatedRoutes />

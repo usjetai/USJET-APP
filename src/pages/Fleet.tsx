@@ -5,6 +5,7 @@ import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import FleetCard from "../components/fleet/FleetCard";
 import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
+import AircraftIcon from "../components/icons/AircraftIcons";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
 const FLEET_RUNWAY_DESCRIPTION =
@@ -16,6 +17,16 @@ const Fleet = () => (
     animate={{ opacity: 1 }}
     className="fleet-page fleet-page--runway relative"
   >
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className="fleet-page__runway-jet"
+      aria-hidden
+    >
+      <AircraftIcon aircraftType="sr71" accentId="fleet-runway-lead" className="fleet-page__runway-jet-icon" />
+    </motion.div>
+
     <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
       <header className="fleet-runway-hero mb-14 flex flex-col items-center gap-8 border-b border-cyan-400/15 pb-12 text-center md:mb-16">
         <motion.div

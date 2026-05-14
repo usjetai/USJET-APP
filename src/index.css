@@ -571,8 +571,15 @@
   }
 }
 
-.usjet-global-contact-bar__policy {
+.usjet-global-contact-bar__meta {
   flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.usjet-global-contact-bar__policy {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
@@ -590,6 +597,18 @@
 
 .usjet-global-contact-bar__policy-sep {
   opacity: 0.45;
+}
+
+.usjet-global-contact-bar__entity {
+  margin: 0;
+  font-size: 0.4375rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.22);
+  line-height: 1.2;
+  text-align: center;
 }
 
 .usjet-global-contact-bar__actions {
@@ -626,6 +645,10 @@
 
   .usjet-global-contact-bar__policy {
     font-size: 0.5625rem;
+  }
+
+  .usjet-global-contact-bar__entity {
+    font-size: 0.5rem;
   }
 
   .usjet-global-contact-bar__cs,

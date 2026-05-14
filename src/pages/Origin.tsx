@@ -659,17 +659,18 @@ export default function Origin() {
     [clearAutoplayProbe, clearSilenceTimer, disableMic, disarmSpeakChannel, stopSpeaking],
   );
 
-  const speakActive = speakLive || voiceMode === "speaking";
+  const isSpeaking = voiceMode === "speaking";
+  const speakActive = speakLive || isSpeaking;
 
   const shellClass = [
     "origin-voice-shell",
     micEnabled ? "origin-voice-shell--listening" : "",
-    voiceMode === "speaking" ? "origin-voice-shell--speaking" : "",
+    isSpeaking ? "origin-voice-shell--speaking" : "",
   ]
     .filter(Boolean)
     .join(" ");
 
-  const shieldAura = micEnabled ? "listening" : speakActive ? "talking" : "idle";
+  const shieldAura = isSpeaking ? "talking" : micEnabled ? "listening" : "idle";
 
   return (
     <div className="origin-page page-atmosphere page-nav-offset relative min-h-screen overflow-hidden pb-24">
@@ -756,7 +757,11 @@ export default function Origin() {
               aria-pressed={voiceMode === "speaking"}
               aria-label={voiceMode === "speaking" ? "Stop Origin briefing" : "Origin shield — transmit briefing"}
             >
-              <AuraFrame aura={shieldAura} variant="orb" className="h-56 w-56 sm:h-72 sm:w-72">
+              <AuraFrame
+                aura={shieldAura}
+                variant="orb"
+                className={`origin-aura h-56 w-56 sm:h-72 sm:w-72${isSpeaking ? " origin-aura--speaking" : ""}`}
+              >
                 <Shield className="relative z-20 h-14 w-14 text-white/90 sm:h-16 sm:w-16" strokeWidth={1} />
               </AuraFrame>
             </button>
@@ -874,7 +879,11 @@ export default function Origin() {
         <p>System: Liquid Glass</p>
       </div>
 
-      <OriginBrowserConnectModal open={showBrowserConnect} onClose={closeBrowserConnectModal} />
+      <OriginBrowserConnectModal
+        open={showBrowserConnect}
+        onClose={closeBrowserConnectModal}
+        onRequestMic={enableMic}
+      />
 
       {showTroubleshoot ? (
         <>

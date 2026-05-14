@@ -5012,84 +5012,210 @@ button.fleet-card {
   transition: opacity 0.35s ease;
 }
 
-.origin-voice-shell--listening .origin-voice-ripple,
 .origin-voice-shell--speaking .origin-voice-ripple {
   opacity: 1;
 }
 
 .origin-voice-ripple--a {
   inset: -4%;
-  animation: origin-ripple-pulse 2.4s ease-in-out infinite;
+  animation: origin-liquid-wave-a 1.618s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
   animation-delay: 0s;
 }
 
 .origin-voice-ripple--b {
   inset: -10%;
-  animation: origin-ripple-pulse 2.4s ease-in-out infinite;
-  animation-delay: 0.35s;
+  animation: origin-liquid-wave-b 2.618s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: 0.21s;
   border-color: rgba(129, 230, 217, 0.18);
 }
 
 .origin-voice-ripple--c {
   inset: -16%;
-  animation: origin-ripple-pulse 2.4s ease-in-out infinite;
-  animation-delay: 0.7s;
+  animation: origin-liquid-wave-c 4.236s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: 0.42s;
   border-color: rgba(96, 165, 250, 0.14);
 }
 
-.origin-voice-shell--listening .origin-voice-ripple--a {
-  transform: scale(calc(1 + var(--voice-level, 0) * 0.55));
-  opacity: calc(0.12 + var(--voice-level, 0) * 0.55);
-}
-
-.origin-voice-shell--listening .origin-voice-ripple--b {
-  transform: scale(calc(1 + var(--voice-level, 0) * 0.42));
-  opacity: calc(0.08 + var(--voice-level, 0) * 0.42);
-}
-
-.origin-voice-shell--listening .origin-voice-ripple--c {
-  transform: scale(calc(1 + var(--voice-level, 0) * 0.32));
-  opacity: calc(0.05 + var(--voice-level, 0) * 0.32);
-}
-
 .origin-voice-shell--speaking .origin-voice-ripple--a {
-  animation: origin-ripple-speak 1.1s ease-in-out infinite;
-  opacity: 0.35;
+  animation: origin-liquid-wave-a 1.618s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  opacity: 0.42;
 }
 
 .origin-voice-shell--speaking .origin-voice-ripple--b {
-  animation: origin-ripple-speak 1.1s ease-in-out infinite;
-  animation-delay: 0.12s;
-  opacity: 0.22;
+  animation: origin-liquid-wave-b 2.618s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: 0.21s;
+  opacity: 0.28;
 }
 
 .origin-voice-shell--speaking .origin-voice-ripple--c {
-  animation: origin-ripple-speak 1.1s ease-in-out infinite;
-  animation-delay: 0.24s;
-  opacity: 0.14;
+  animation: origin-liquid-wave-c 4.236s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: 0.42s;
+  opacity: 0.16;
 }
 
-@keyframes origin-ripple-pulse {
+@keyframes origin-liquid-wave-a {
   0%,
   100% {
+    transform: scale(1) rotate(0deg);
+    border-radius: 48% 52% 50% 50% / 52% 48% 54% 48%;
     filter: blur(0);
   }
 
-  50% {
-    filter: blur(0.5px);
+  33% {
+    transform: scale(1.05) rotate(2deg);
+    border-radius: 54% 46% 52% 48% / 48% 54% 46% 52%;
+    filter: blur(0.4px);
+  }
+
+  66% {
+    transform: scale(1.03) rotate(-1.5deg);
+    border-radius: 46% 54% 48% 52% / 54% 46% 52% 48%;
+    filter: blur(0.2px);
   }
 }
 
-@keyframes origin-ripple-speak {
+@keyframes origin-liquid-wave-b {
   0%,
   100% {
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
+    border-radius: 50% 50% 46% 54% / 50% 50% 54% 46%;
     opacity: 0.12;
   }
 
   50% {
-    transform: scale(1.04);
-    opacity: 0.38;
+    transform: scale(1.08) rotate(-2.5deg);
+    border-radius: 44% 56% 50% 50% / 56% 44% 50% 50%;
+    opacity: 0.32;
+  }
+}
+
+@keyframes origin-liquid-wave-c {
+  0%,
+  100% {
+    transform: scale(1);
+    border-radius: 52% 48% 54% 46% / 46% 54% 48% 52%;
+    opacity: 0.08;
+  }
+
+  50% {
+    transform: scale(1.12);
+    border-radius: 48% 52% 46% 54% / 52% 48% 54% 46%;
+    opacity: 0.22;
+  }
+}
+
+/* Origin feminine aura — liquid glass orb; waves only while she speaks */
+.origin-aura {
+  position: relative;
+}
+
+.origin-aura .aura-blob {
+  border-radius: 48% 52% 50% 50% / 52% 48% 54% 48%;
+  transition:
+    border-radius 0.6s ease,
+    box-shadow 0.45s ease;
+}
+
+.origin-aura--speaking .aura-blob {
+  animation: origin-aura-liquid-body 1.618s ease-in-out infinite;
+  border-color: rgba(125, 211, 252, 0.62);
+  box-shadow:
+    0 48px 140px -42px rgba(56, 189, 248, 0.55),
+    0 0 0 1px rgba(186, 230, 253, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    inset 0 -40px 84px -58px rgba(8, 47, 73, 0.55);
+}
+
+.origin-aura--speaking .aura-blob__wave {
+  opacity: 1;
+  animation:
+    origin-aura-liquid-wave 0.809s ease-in-out infinite,
+    aura-wave-flow 0.55s ease-in-out infinite;
+}
+
+.origin-aura--speaking .aura-blob__rim {
+  animation:
+    origin-aura-liquid-rim 1.309s ease-in-out infinite,
+    aura-rim-ripple 1.1s ease-in-out infinite;
+}
+
+.origin-aura--speaking::before,
+.origin-aura--speaking::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -6%;
+  z-index: 0;
+  border-radius: 50% 48% 52% 50% / 48% 52% 50% 50%;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  opacity: 0.55;
+}
+
+.origin-aura--speaking::before {
+  animation: origin-aura-liquid-ring 2.618s ease-in-out infinite;
+}
+
+.origin-aura--speaking::after {
+  inset: -12%;
+  border-color: rgba(167, 139, 250, 0.14);
+  animation: origin-aura-liquid-ring 4.236s ease-in-out infinite reverse;
+  animation-delay: 0.35s;
+}
+
+@keyframes origin-aura-liquid-body {
+  0%,
+  100% {
+    border-radius: 48% 52% 50% 50% / 52% 48% 54% 48%;
+    transform: scale(1);
+  }
+
+  38% {
+    border-radius: 54% 46% 52% 48% / 48% 54% 46% 52%;
+    transform: scale(1.028);
+  }
+
+  72% {
+    border-radius: 46% 54% 48% 52% / 54% 46% 52% 48%;
+    transform: scale(1.014);
+  }
+}
+
+@keyframes origin-aura-liquid-wave {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: blur(14px);
+  }
+
+  50% {
+    transform: scale(1.09) rotate(3deg);
+    filter: blur(18px);
+  }
+}
+
+@keyframes origin-aura-liquid-rim {
+  0%,
+  100% {
+    border-radius: 46% 54% 50% 50% / 52% 46% 54% 48%;
+    opacity: 0.88;
+  }
+
+  50% {
+    border-radius: 52% 48% 46% 54% / 48% 52% 54% 46%;
+    opacity: 1;
+  }
+}
+
+@keyframes origin-aura-liquid-ring {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.18;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: 0.42;
   }
 }
 
@@ -5276,7 +5402,7 @@ button.fleet-card {
   max-height: min(88vh, 52rem);
   translate: -50% -50%;
   overflow: hidden;
-  border-radius: 1.15rem;
+  border-radius: 1.35rem;
   padding: 0;
   box-shadow:
     0 0 0 1px rgba(56, 189, 248, 0.08),
@@ -5363,12 +5489,159 @@ button.fleet-card {
 .origin-connect-card {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  border-radius: 0.75rem;
+  gap: 0;
+  border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(2, 10, 24, 0.55);
-  padding: 0.85rem 0.9rem;
+  overflow: hidden;
   transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.origin-connect-card--expanded {
+  border-color: rgba(56, 189, 248, 0.28);
+  background: rgba(4, 16, 36, 0.78);
+}
+
+.origin-connect-card--safari.origin-connect-card--expanded {
+  border-color: rgba(10, 132, 255, 0.42);
+  box-shadow: inset 0 1px 0 rgba(125, 211, 252, 0.08);
+}
+
+.origin-connect-card__toggle {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  padding: 0.85rem 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+
+.origin-connect-card__toggle:hover,
+.origin-connect-card__toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.03);
+  outline: none;
+}
+
+.origin-connect-card__chevron {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: rgba(148, 163, 184, 0.75);
+  transition: transform 0.25s ease, color 0.2s ease;
+}
+
+.origin-connect-card__chevron--open {
+  transform: rotate(180deg);
+  color: rgba(125, 211, 252, 0.9);
+}
+
+.origin-connect-card__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0 0.9rem 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.origin-connect-card__summary {
+  margin: 0.65rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: rgba(191, 219, 254, 0.82);
+}
+
+.origin-connect-card__titles {
+  min-width: 0;
+}
+
+.origin-connect-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.origin-connect-steps__item {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+}
+
+.origin-connect-steps__label {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: rgba(8, 47, 73, 0.45);
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: rgba(186, 230, 253, 0.95);
+}
+
+.origin-connect-steps__text {
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: rgba(203, 213, 225, 0.88);
+}
+
+.origin-connect-safari-block {
+  border-radius: 0.85rem;
+  border: 1px solid rgba(10, 132, 255, 0.22);
+  background: rgba(8, 47, 73, 0.28);
+  padding: 0.65rem 0.7rem;
+}
+
+.origin-connect-safari-block--actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.origin-connect-safari-block__heading {
+  margin: 0 0 0.45rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.88);
+}
+
+.origin-connect-card__mic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  border-radius: 9999px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.origin-connect-card__mic-note,
+.origin-connect-card__privacy-fallback {
+  margin: 0;
+  font-size: 0.64rem;
+  line-height: 1.45;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.origin-connect-card__link--privacy {
+  border-color: rgba(148, 163, 184, 0.28);
+  color: rgba(203, 213, 225, 0.9);
 }
 
 .origin-connect-card:hover {
@@ -5389,7 +5662,7 @@ button.fleet-card {
   justify-content: center;
   width: 2.1rem;
   height: 2.1rem;
-  border-radius: 0.55rem;
+  border-radius: 0.85rem;
   border: 1px solid color-mix(in srgb, var(--browser-hue) 45%, transparent);
   background: color-mix(in srgb, var(--browser-hue) 18%, rgba(0, 0, 0, 0.4));
   font-size: 0.72rem;
@@ -5421,7 +5694,7 @@ button.fleet-card {
 .origin-connect-card__link {
   display: block;
   width: 100%;
-  border-radius: 0.45rem;
+  border-radius: 0.65rem;
   padding: 0.42rem 0.55rem;
   font-size: 0.62rem;
   font-weight: 700;
@@ -5449,7 +5722,7 @@ button.fleet-card {
 .origin-connect-modal__primary {
   display: block;
   width: 100%;
-  border-radius: 0.55rem;
+  border-radius: 9999px;
   padding: 0.65rem 1rem;
   font-size: 0.72rem;
   font-weight: 800;
@@ -5457,6 +5730,8 @@ button.fleet-card {
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  cursor: pointer;
+  border: none;
 }
 
 .origin-connect-modal__mono {

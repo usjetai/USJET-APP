@@ -4062,14 +4062,18 @@
 
 .fleet-page--runway .fleet-card--surface-runway {
   aspect-ratio: 5 / 3;
-  min-height: 8.25rem;
+  min-height: 9rem;
+  overflow: hidden;
 }
 
 .fleet-page--runway .fleet-card--surface-runway .fleet-card__glass {
+  display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem 1.15rem 0.85rem 0.95rem;
+  gap: 0.65rem;
+  padding: 0.7rem 0.95rem 0.7rem 0.85rem;
+  min-height: 0;
+  min-width: 0;
   border-radius: 2.75rem;
   border-color: color-mix(in srgb, rgba(34, 211, 238, 0.42) 38%, rgba(255, 255, 255, 0.2));
   background:
@@ -4113,10 +4117,22 @@
 .fleet-page--runway .fleet-card--surface-runway .fleet-card__meta {
   margin-top: 0;
   min-width: 0;
+  flex: 1 1 0%;
+  overflow: hidden;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
 }
 
 .fleet-page--runway .fleet-card--surface-runway h3 {
-  font-size: 0.95rem;
+  margin: 0 !important;
+  font-size: 0.82rem;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .fleet-page--runway .fleet-card--surface-runway:hover h3,
@@ -4125,7 +4141,23 @@
 }
 
 .fleet-page--runway .fleet-card--surface-runway .fleet-card__meta p {
-  color: rgba(34, 211, 238, 0.72);
+  margin: 0 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 8px;
+  line-height: 1.25;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.fleet-page--runway .fleet-card--surface-runway h3 + p,
+.fleet-page--runway .fleet-card--surface-runway .fleet-cap-badges + p {
+  color: rgba(96, 165, 250, 0.9);
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__meta p:last-child {
+  color: rgba(255, 255, 255, 0.4);
 }
 
 /* Fleet runway — partner capability badges (input + platform) */
@@ -4182,6 +4214,68 @@
   .fleet-cap-badge {
     font-size: 7.5px;
     padding: 0.14rem 0.42rem;
+  }
+}
+
+/* Runway bays — compact badges so content stays inside the capsule */
+.fleet-page--runway .fleet-cap-badges {
+  margin-top: 0.12rem;
+  gap: 0.16rem;
+  max-height: 2rem;
+  overflow: hidden;
+  flex-shrink: 1;
+  min-height: 0;
+  align-content: flex-start;
+}
+
+.fleet-page--runway .fleet-cap-badge {
+  font-size: 6px;
+  padding: 0.07rem 0.28rem;
+  letter-spacing: 0.04em;
+  max-width: 100%;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.fleet-page--runway .fleet-cap-badge > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.fleet-page--runway .fleet-cap-badge svg {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .fleet-page--runway .fleet-card--surface-runway h3 {
+    font-size: 0.88rem;
+  }
+
+  .fleet-page--runway .fleet-cap-badge {
+    font-size: 6.5px;
+    padding: 0.08rem 0.32rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .fleet-page--runway .fleet-cap-badges {
+    max-height: 1.85rem;
+    gap: 0.12rem;
+  }
+
+  .fleet-page--runway .fleet-cap-badge {
+    font-size: 5.75px;
+    padding: 0.05rem 0.22rem;
+    gap: 0.1rem;
+  }
+
+  .fleet-page--runway .fleet-cap-badge svg {
+    width: 6px;
+    height: 6px;
   }
 }
 
@@ -4335,7 +4429,7 @@
 @media (max-width: 639px) {
   .fleet-page--runway .fleet-card--surface-runway {
     aspect-ratio: auto;
-    min-height: 7.5rem;
+    min-height: 7.75rem;
   }
 
   .hangar-page--workbench .fleet-card--surface-hangar {

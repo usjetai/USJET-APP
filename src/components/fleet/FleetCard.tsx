@@ -28,7 +28,7 @@ export default function FleetCard({
   onExpandBay,
   style,
 }: FleetCardProps) {
-  const launchUrl = fleetLaunchUrl(domain, href);
+  const launchUrl = fleetLaunchUrl(domain, href, slot);
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
   const external = isExternalFleetUrl(launchUrl);
   const expandInteractive = Boolean(onExpandBay);

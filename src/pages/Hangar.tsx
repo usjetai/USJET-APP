@@ -2,6 +2,7 @@ import { ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, type ReactNode } from "react";
 import FleetCard from "../components/fleet/FleetCard";
 import { fleetManifest } from "../data/fleetManifest";
+import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import { FLEET_UNIT_COUNT, HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
 
 const hangarUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
@@ -45,7 +46,7 @@ const Hangar = () => {
           aircraftType={u.aircraftType}
           name={u.name}
           callsign={u.callsign}
-          href={u.href}
+          href={resolveFleetUnitHref(u)}
           slot={u.slot}
           isCommandBay={u.href === "/origin" || u.slot === 29}
           style={{ gridRow: r0 + 1, gridColumn: c0 + 1 }}

@@ -10,6 +10,7 @@ import Hangar from "./pages/Hangar";
 import Intel from "./pages/Intel";
 import Founder from "./pages/Founder";
 import Origin from "./pages/Origin";
+import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
 
 const globalAtmosphereStyle = {
@@ -34,6 +35,7 @@ function AnimatedRoutes() {
           <Route path="/intel" element={<Intel />} />
           <Route path="/founder" element={<Founder />} />
           <Route path="/origin" element={<Origin />} />
+          <Route path="/founder-special-1995" element={<FounderSpecial1995 />} />
           <Route path="/special" element={<Special />} />
         </Routes>
       </PageTransition>

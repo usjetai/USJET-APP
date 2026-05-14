@@ -2,6 +2,7 @@ import { useMemo, type ReactNode } from "react";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import IntelExpandedWorkbench from "../components/intel/IntelExpandedWorkbench";
 import IntelMonitor from "../components/intel/IntelMonitor";
+import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
@@ -101,6 +102,7 @@ const Intel = () => {
       </div>
 
       <div className="intel-page__shell page-atmosphere mx-auto max-w-[88rem] px-4 pb-24 pt-36 sm:px-6 lg:px-8">
+        <IntelFleetVitals />
         <IntelPulseDashboard />
 
         <div className="intel-page__grid-intro">

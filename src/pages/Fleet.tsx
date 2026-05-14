@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { fleetManifest } from "../data/fleetManifest";
+import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import FleetCard from "../components/fleet/FleetCard";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { HANGAR_ROWS } from "../types/fleet";
@@ -29,7 +30,7 @@ const Fleet = () => (
           aircraftType={unit.aircraftType}
           name={unit.name}
           callsign={unit.callsign}
-          href={unit.href}
+          href={resolveFleetUnitHref(unit)}
           slot={unit.slot}
           isCommandBay={unit.href === "/origin" || unit.slot === 29}
         />

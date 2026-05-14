@@ -9354,6 +9354,115 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 .member-projects {
   overflow: hidden;
   border: 1px solid rgba(34, 211, 238, 0.22);
+  transition:
+    border-color 0.45s ease,
+    box-shadow 0.45s ease,
+    background 0.45s ease;
+}
+
+.member-projects--has-saves {
+  border-color: rgba(34, 211, 238, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.12),
+    0 0 28px rgba(14, 116, 144, 0.22),
+    inset 0 1px 0 rgba(224, 242, 254, 0.08);
+  background: linear-gradient(
+    165deg,
+    rgba(8, 47, 73, 0.34) 0%,
+    rgba(2, 8, 23, 0.18) 48%,
+    rgba(6, 78, 59, 0.12) 100%
+  );
+}
+
+.member-projects__saved-log {
+  margin: 0 1.25rem 1rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(34, 211, 238, 0.14), transparent 55%),
+    rgba(2, 8, 23, 0.48);
+}
+
+.member-projects__saved-log-head {
+  margin-bottom: 0.65rem;
+}
+
+.member-projects__saved-log-kicker {
+  margin: 0;
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.78);
+}
+
+.member-projects__saved-log-title {
+  margin: 0.3rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #e0f2fe;
+}
+
+.member-projects__saved-log-copy {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.member-projects__saved-log-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.member-projects__saved-log-link {
+  display: grid;
+  gap: 0.2rem;
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 8, 23, 0.42);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.member-projects__saved-log-link:hover {
+  border-color: rgba(34, 211, 238, 0.35);
+  background: rgba(14, 116, 144, 0.18);
+}
+
+.member-projects__saved-log-project {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.82);
+}
+
+.member-projects__saved-log-unit {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.member-projects__saved-log-intent {
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: rgba(241, 245, 249, 0.88);
+}
+
+.member-projects__saved-log-time {
+  font-size: 0.62rem;
+  color: rgba(148, 163, 184, 0.88);
 }
 
 .member-projects__header {
@@ -9489,11 +9598,28 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: #e0f2fe;
 }
 
+.member-projects__tab--has-saves {
+  border-color: rgba(52, 211, 153, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.12);
+}
+
 .member-projects__panel {
   padding: 0.85rem;
   border-radius: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(2, 8, 23, 0.32);
+  transition:
+    border-color 0.4s ease,
+    background 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.member-projects__panel--saved {
+  border-color: rgba(34, 211, 238, 0.32);
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgba(34, 211, 238, 0.12), transparent 60%),
+    rgba(8, 47, 73, 0.38);
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.1);
 }
 
 .member-projects__panel-head {
@@ -9769,6 +9895,28 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   border-color: color-mix(in srgb, var(--fleet-accent) 38%, rgba(34, 211, 238, 0.22));
 }
 
+.member-projects__assignment--just-saved {
+  animation: member-projects-save-flash 2.4s ease-out;
+}
+
+@keyframes member-projects-save-flash {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(34, 211, 238, 0.55),
+      0 0 24px rgba(34, 211, 238, 0.35);
+    background: color-mix(in srgb, var(--fleet-accent) 22%, rgba(8, 47, 73, 0.62));
+  }
+  100% {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fleet-accent) 12%, transparent);
+    background: color-mix(in srgb, var(--fleet-accent) 10%, rgba(2, 8, 23, 0.52));
+  }
+}
+
+.member-projects__saved-value--timestamp {
+  color: rgba(148, 163, 184, 0.92);
+  font-weight: 600;
+}
+
 .member-projects__copilot-preview,
 .member-projects__saved-value {
   margin: 0;
@@ -9861,6 +10009,10 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 
 @media (prefers-reduced-motion: reduce) {
   .member-vitals__heartbeat-dot {
+    animation: none;
+  }
+
+  .member-projects__assignment--just-saved {
     animation: none;
   }
 }

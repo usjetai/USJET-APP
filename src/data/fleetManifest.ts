@@ -1,6 +1,7 @@
 import type { FleetUnit } from "../types/fleet";
+import { buildUnitSystemPrompt } from "./usjetProtocol";
 
-export const fleetManifest: FleetUnit[] = [
+const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
   {
     id: "0",
     slot: 0,
@@ -332,6 +333,11 @@ export const fleetManifest: FleetUnit[] = [
     aircraftType: "f22",
   },
 ];
+
+export const fleetManifest: FleetUnit[] = FLEET_MANIFEST_CORE.map((unit) => ({
+  ...unit,
+  systemPrompt: buildUnitSystemPrompt(unit),
+}));
 
 export const FLEET_MANIFEST = fleetManifest;
 

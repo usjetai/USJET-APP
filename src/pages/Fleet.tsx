@@ -32,6 +32,7 @@ const Fleet = () => (
           callsign={unit.callsign}
           href={resolveFleetUnitHref(unit)}
           slot={unit.slot}
+          systemPrompt={unit.systemPrompt}
           isCommandBay={unit.href === "/origin" || unit.slot === 29}
         />
       ))}

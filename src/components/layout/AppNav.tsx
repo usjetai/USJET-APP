@@ -1,6 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import { ShieldCheck } from "lucide-react";
 import UsjetWordmark from "../brand/UsjetWordmark";
+import FleetCommand from "../fleet/FleetCommand";
 import GlassEffectContainer from "./GlassEffectContainer";
 
 const NAV_LINKS = [
@@ -18,7 +19,7 @@ const AppNav = () => (
       aria-label="USJET primary navigation"
       className={[
         "glass-effect glass-effect--capsule liquid-glass-background glass-tint-cyan",
-        "max-w-full gap-4 overflow-x-auto p-3 px-5 sm:gap-6 sm:p-4 sm:px-8 lg:gap-8 lg:px-10",
+        "flex max-w-full flex-wrap items-center gap-3 overflow-x-auto p-3 px-5 sm:gap-4 sm:p-4 sm:px-6 lg:gap-6 lg:px-8",
       ].join(" ")}
     >
       <Link
@@ -31,7 +32,7 @@ const AppNav = () => (
 
       <span className="hidden h-7 w-px shrink-0 bg-white/10 sm:block" aria-hidden />
 
-      <nav className="flex min-w-0 shrink gap-2 border-white/10 pr-3 sm:gap-3 sm:border-r sm:pr-8" aria-label="Fleet routes">
+      <nav className="flex min-w-0 max-w-full shrink gap-2 overflow-x-auto border-white/10 pr-2 sm:gap-3 sm:border-r sm:pr-6" aria-label="Fleet routes">
         {NAV_LINKS.map((link) => (
           <NavLink
             key={link.to}
@@ -47,6 +48,10 @@ const AppNav = () => (
           </NavLink>
         ))}
       </nav>
+
+      <FleetCommand />
+
+      <span className="hidden h-7 w-px shrink-0 bg-white/10 lg:block" aria-hidden />
 
       <NavLink
         to="/special"

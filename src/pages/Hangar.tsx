@@ -6,6 +6,7 @@ import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
+import { KING_KARIM_HANGAR_META } from "../lib/memberMasterKey";
 import { FLEET_UNIT_COUNT, HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
 
 const hangarUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
@@ -52,6 +53,7 @@ const Hangar = () => {
           callsign={u.callsign}
           href={resolveFleetUnitHref(u)}
           slot={u.slot}
+          systemPrompt={u.systemPrompt}
           isCommandBay={u.href === "/origin" || u.slot === 29}
           style={{ gridRow: r0 + 1, gridColumn: c0 + 1 }}
         />,
@@ -63,7 +65,11 @@ const Hangar = () => {
 
   return (
     <FoundersAccessGate pageLabel="The Hangar">
-      <div className="relative hangar-page">
+      <div
+        className="relative hangar-page"
+        data-usjet-legacy-access={KING_KARIM_HANGAR_META.key}
+        data-usjet-legacy-note={KING_KARIM_HANGAR_META.note}
+      >
       <div className="page-atmosphere mx-auto max-w-[88rem] px-4 pb-24 pt-36 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-10 md:flex-row md:items-end">
           <div className="text-left">

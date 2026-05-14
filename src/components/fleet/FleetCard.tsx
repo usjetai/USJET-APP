@@ -1,6 +1,8 @@
 import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
-import { fleetLaunchUrl, integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
+import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
+import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
+import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type FleetCardProps = {
@@ -10,6 +12,7 @@ type FleetCardProps = {
   callsign: string;
   href?: string;
   slot?: number;
+  systemPrompt?: string;
   /** Bay 30 / USJet Origin — command styling */
   isCommandBay?: boolean;
   /** When set, plain click / Enter / Space expands the hangar bay instead of navigating. Cmd/Ctrl-click still opens the URL. */
@@ -24,6 +27,7 @@ export default function FleetCard({
   callsign,
   href,
   slot,
+  systemPrompt,
   isCommandBay = false,
   onExpandBay,
   style,
@@ -31,12 +35,23 @@ export default function FleetCard({
   const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name });
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
   const expandInteractive = Boolean(onExpandBay);
+  const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
+
+  const syncProtocolToClipboard = () => {
+    void copyUsjetProtocol(protocolText);
+  };
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (!onExpandBay) return;
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-    e.preventDefault();
-    onExpandBay();
+    if (onExpandBay) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+        syncProtocolToClipboard();
+        return;
+      }
+      e.preventDefault();
+      onExpandBay();
+      return;
+    }
+    syncProtocolToClipboard();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {

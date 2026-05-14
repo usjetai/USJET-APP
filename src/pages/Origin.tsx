@@ -39,6 +39,7 @@ export default function Origin() {
   const [showTroubleshoot, setShowTroubleshoot] = useState(false);
   const [statusLine, setStatusLine] = useState("Status: Online // Port 8080 Active");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const speakHandleRef = useRef<{ cancel: () => void } | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -57,6 +58,18 @@ export default function Origin() {
     };
   }, []);
 
+  const stopSpeaking = useCallback(() => {
+    speakHandleRef.current?.cancel();
+    speakHandleRef.current = null;
+    window.speechSynthesis?.cancel();
+    setVoiceMode((mode) => (mode === "speaking" ? "idle" : mode));
+    setStatusLine((line) =>
+      line.startsWith("Transmitting") || line.startsWith("Voice transmit")
+        ? "Status: Online // 8080 Active"
+        : line,
+    );
+  }, []);
+
   const stopListening = useCallback(() => {
     recognitionRef.current?.stop();
     recognitionRef.current = null;
@@ -73,10 +86,18 @@ export default function Origin() {
     setVoiceMode("idle");
   }, []);
 
-  useEffect(() => () => stopListening(), [stopListening]);
+  useEffect(
+    () => () => {
+      stopListening();
+      stopSpeaking();
+    },
+    [stopListening, stopSpeaking],
+  );
 
   const startSpeak = useCallback(() => {
     stopListening();
+    stopSpeaking();
+
     if (!("speechSynthesis" in window)) {
       setStatusLine("Speech output unavailable in this browser.");
       return;
@@ -85,27 +106,32 @@ export default function Origin() {
     setVoiceMode("speaking");
     setStatusLine("Transmitting Origin briefing…");
 
-    const spoke = speakWithBrandVoice(ORIGIN_WELCOME, {
+    const handle = speakWithBrandVoice(ORIGIN_WELCOME, {
       rate: 0.95,
       pitch: 0.92,
       onEnd: () => {
+        speakHandleRef.current = null;
         setVoiceMode("idle");
         setStatusLine("Status: Online // 8080 Active");
       },
       onError: () => {
+        speakHandleRef.current = null;
         setVoiceMode("idle");
         setStatusLine("Voice transmit interrupted.");
       },
     });
 
-    if (!spoke) {
+    if (!handle) {
       setVoiceMode("idle");
       setStatusLine("Speech output unavailable in this browser.");
+      return;
     }
-  }, [stopListening]);
+
+    speakHandleRef.current = handle;
+  }, [stopListening, stopSpeaking]);
 
   const startListen = useCallback(async () => {
-    window.speechSynthesis?.cancel();
+    stopSpeaking();
     setVoiceMode("listening");
     setStatusLine("Listening — Origin mic channel open");
 
@@ -173,7 +199,7 @@ export default function Origin() {
       stopListening();
       setStatusLine("Microphone permission denied.");
     }
-  }, [stopListening]);
+  }, [stopListening, stopSpeaking]);
 
   const shellClass = [
     "origin-voice-shell",
@@ -238,14 +264,13 @@ export default function Origin() {
               className="origin-shield-hit"
               onClick={() => {
                 if (voiceMode === "speaking") {
-                  window.speechSynthesis?.cancel();
-                  setVoiceMode("idle");
-                  setStatusLine("Status: Online // 8080 Active");
+                  stopSpeaking();
                 } else {
                   startSpeak();
                 }
               }}
-              aria-label="Origin shield — transmit briefing"
+              aria-pressed={voiceMode === "speaking"}
+              aria-label={voiceMode === "speaking" ? "Stop Origin briefing" : "Origin shield — transmit briefing"}
             >
               <AuraFrame aura={voiceMode === "listening" ? "listening" : voiceMode === "speaking" ? "talking" : "idle"} variant="orb" className="h-56 w-56 sm:h-72 sm:w-72">
                 <Shield className="relative z-20 h-14 w-14 text-white/90 sm:h-16 sm:w-16" strokeWidth={1} />
@@ -255,12 +280,17 @@ export default function Origin() {
             <button
               type="button"
               className="group absolute -right-6 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-xl transition-all hover:border-cyan-400/50 hover:bg-white/10 sm:-right-28"
-              onClick={startSpeak}
-              aria-label="Speak Origin briefing"
+              onClick={voiceMode === "speaking" ? stopSpeaking : startSpeak}
+              aria-pressed={voiceMode === "speaking"}
+              aria-label={voiceMode === "speaking" ? "Stop Origin briefing" : "Speak Origin briefing"}
             >
-              <Volume2 className="h-8 w-8 text-white/40 transition-colors group-hover:text-cyan-400" />
+              <Volume2
+                className={`h-8 w-8 transition-colors ${
+                  voiceMode === "speaking" ? "text-cyan-300" : "text-white/40 group-hover:text-cyan-400"
+                }`}
+              />
               <span className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-widest text-white/20 group-hover:text-cyan-400 sm:block">
-                Speak
+                {voiceMode === "speaking" ? "Stop" : "Speak"}
               </span>
             </button>
           </div>

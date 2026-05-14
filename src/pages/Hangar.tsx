@@ -54,7 +54,7 @@ const Hangar = () => {
 
       if (cell.mode === "void") {
         out.push(
-          <motionlessVoid key={`void-${slot}`} gridRow={gridRow} gridColumn={gridColumn} />,
+          <HangarGridVoid key={`void-${slot}`} gridRow={gridRow} gridColumn={gridColumn} />,
         );
         continue;
       }
@@ -143,13 +143,13 @@ const Hangar = () => {
           <MemberPrimeBadge session={session} founderReviewOpen />
         </div>
 
-        <motionlessGrid gridCells={gridCells} />
+        <HangarBayGrid gridCells={gridCells} />
       </div>
     </div>
   );
 };
 
-function motionlessVoid({ gridRow, gridColumn }: { gridRow: number; gridColumn: number }) {
+function HangarGridVoid({ gridRow, gridColumn }: { gridRow: number; gridColumn: number }) {
   return (
     <div
       className="intel-grid__void"
@@ -159,7 +159,7 @@ function motionlessVoid({ gridRow, gridColumn }: { gridRow: number; gridColumn: 
   );
 }
 
-function motionlessGrid({ gridCells }: { gridCells: ReactNode[] }) {
+function HangarBayGrid({ gridCells }: { gridCells: ReactNode[] }) {
   return (
         <div className="hangar-bay-grid-wrap">
           <div

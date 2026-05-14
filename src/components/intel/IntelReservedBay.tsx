@@ -1,9 +1,14 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties, type MouseEvent } from "react";
 import EkgPulseLine from "./EkgPulseLine";
+import ReservedBayLiveMock from "./ReservedBayLiveMock";
+import { useMemberAuth } from "../../context/MemberAuthContext";
 import { usePartnershipBayAnalytics } from "../../hooks/usePartnershipBayAnalytics";
 import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
 
 export type IntelReservedVariant = "market" | "crypto";
+
+const TITANS_PITCH =
+  "This bay is reserved for a premier Financial/Crypto partner. 30 AI units. 1 Unified Cockpit. Your data here.";
 
 type IntelReservedBayProps = {
   variant: IntelReservedVariant;
@@ -21,6 +26,13 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
   const bayId = isMarket ? "slot-01-market" : "slot-02-titans";
   const label = isMarket ? "INSTITUTIONAL FEED: STATUS PENDING" : "RESERVED FOR TITANS";
   const { onMouseEnter, onClick } = usePartnershipBayAnalytics({ bayId, label });
+  const { session } = useMemberAuth();
+  const authorized = Boolean(session?.active);
+  const [pitchOpen, setPitchOpen] = useState(false);
+
+  const stopBubble = (event: MouseEvent) => {
+    event.stopPropagation();
+  };
 
   return (
     <article
@@ -33,7 +45,10 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
         isMarket
           ? "intel-reserved-bay--market intel-reserved-bay--hot glass-tint-cyan"
           : "intel-reserved-bay--crypto glass-tint-gold",
-      ].join(" ")}
+        authorized ? "intel-reserved-bay--live" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={{
         animationDelay: `${(index % HANGAR_COLUMNS) * 0.08}s`,
         ...style,
@@ -60,19 +75,41 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
         <div className="intel-monitor__grid" aria-hidden />
         <div className="intel-monitor__scan intel-reserved-bay__scan" aria-hidden />
 
+        {authorized ? <ReservedBayLiveMock variant={variant} /> : null}
+
         {isMarket ? (
           <div className="intel-reserved-bay__overlay intel-reserved-bay__overlay--market liquid-glass-background glass-effect">
-            <p className="intel-reserved-bay__market-label">INSTITUTIONAL FEED · FOUNDER&apos;S ACCESS · STATUS PENDING</p>
+            <p className="intel-reserved-bay__market-label">
+              {authorized
+                ? "INSTITUTIONAL FEED · FOUNDER ACCESS · LIVE MOCK"
+                : "INSTITUTIONAL FEED · FOUNDER'S ACCESS · STATUS PENDING"}
+            </p>
           </div>
         ) : (
           <div className="intel-reserved-bay__overlay intel-reserved-bay__overlay--crypto">
             <h2 className="intel-reserved-bay__titans">RESERVED FOR TITANS</h2>
             <p className="intel-reserved-bay__hook">
               PREMIUM EXCHANGE PARTNERSHIP ENQUIRIES:{" "}
-              <a className="intel-reserved-bay__email" href="mailto:ops@usjet.ai">
+              <a className="intel-reserved-bay__email" href="mailto:ops@usjet.ai" onClick={stopBubble}>
                 OPS@USJET.AI
               </a>
             </p>
+            <button
+              type="button"
+              className="intel-reserved-bay__details"
+              onClick={(event) => {
+                stopBubble(event);
+                setPitchOpen((open) => !open);
+              }}
+              aria-expanded={pitchOpen}
+            >
+              Details
+            </button>
+            {pitchOpen ? (
+              <p className="intel-reserved-bay__pitch" onClick={stopBubble}>
+                {TITANS_PITCH}
+              </p>
+            ) : null}
           </div>
         )}
       </div>

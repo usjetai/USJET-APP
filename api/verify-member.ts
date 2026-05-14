@@ -1,5 +1,10 @@
 import Stripe from "stripe";
-import { memberAccessFromStripeMetadata, productMetadataFromSubscription } from "./stripeProducts";
+import {
+  memberAccessFromStripeMetadata,
+  metadataForConfiguredProductId,
+  productIdFromSubscription,
+  productMetadataFromSubscription,
+} from "./stripeProducts";
 
 type VerifyBody = {
   customerId?: string;
@@ -73,7 +78,19 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
     const subscription = activeSubs.data[0] ?? trialingSubs.data[0];
     const active = Boolean(subscription);
-    const stripeMetadata = subscription ? productMetadataFromSubscription(subscription) : undefined;
+    let stripeMetadata = subscription ? productMetadataFromSubscription(subscription) : undefined;
+
+    if (subscription && !stripeMetadata) {
+      const productId = productIdFromSubscription(subscription);
+      if (productId) {
+        const liveProduct = await stripe.products.retrieve(productId);
+        if (liveProduct.metadata && Object.keys(liveProduct.metadata).length > 0) {
+          stripeMetadata = liveProduct.metadata;
+        } else {
+          stripeMetadata = metadataForConfiguredProductId(productId);
+        }
+      }
+    }
     const access = active
       ? memberAccessFromStripeMetadata(stripeMetadata)
       : { tier: "INACTIVE" as const };

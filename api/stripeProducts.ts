@@ -12,6 +12,63 @@ const TIER_METADATA = [
   { tier: "COMMANDER", access_level: "LVL_03_SOVEREIGN", legacy_id: "AM_KARIM_SUCCESSION" },
 ] as const;
 
+/** Server-only — maps Stripe Dashboard product IDs to tier metadata (see .env.example). */
+export const STRIPE_PRODUCT_ENV_KEYS = {
+  flightPass: "STRIPE_PRODUCT_FLIGHT_PASS",
+  hangarPro: "STRIPE_PRODUCT_HANGAR_PRO",
+  enterprise: "STRIPE_PRODUCT_ENTERPRISE",
+} as const;
+
+const CONFIGURED_PRODUCT_SLOTS = [
+  { envKey: STRIPE_PRODUCT_ENV_KEYS.flightPass, meta: TIER_METADATA[0] },
+  { envKey: STRIPE_PRODUCT_ENV_KEYS.hangarPro, meta: TIER_METADATA[1] },
+  { envKey: STRIPE_PRODUCT_ENV_KEYS.enterprise, meta: TIER_METADATA[2] },
+] as const;
+
+function tierMetadataRecord(meta: (typeof TIER_METADATA)[number]): Record<string, string> {
+  const record: Record<string, string> = {
+    [STRIPE_METADATA_KEYS.tier]: meta.tier,
+    [STRIPE_METADATA_KEYS.accessLevel]: meta.access_level,
+  };
+  if ("legacy_id" in meta) {
+    record[STRIPE_METADATA_KEYS.legacyId] = meta.legacy_id;
+  }
+  return record;
+}
+
+/** Resolve canonical tier metadata when subscription product ID matches a configured env var. */
+export function metadataForConfiguredProductId(productId: string): Record<string, string> | undefined {
+  const normalized = productId.trim();
+  if (!normalized) {
+    return undefined;
+  }
+
+  for (const slot of CONFIGURED_PRODUCT_SLOTS) {
+    const configured = process.env[slot.envKey]?.trim();
+    if (configured && configured === normalized) {
+      return tierMetadataRecord(slot.meta);
+    }
+  }
+
+  return undefined;
+}
+
+export function productIdFromSubscription(subscription: {
+  items: { data: Array<{ price?: { product?: unknown } | null }> };
+}): string | undefined {
+  const product = subscription.items.data[0]?.price?.product;
+
+  if (typeof product === "string") {
+    return product;
+  }
+
+  if (product && typeof product === "object" && product !== null && "id" in product) {
+    return (product as { id: string }).id;
+  }
+
+  return undefined;
+}
+
 export type MemberTier = "USJET-PRIME-ACTIVE" | "USJET-ROYAL-HEIR" | "INACTIVE" | "PENDING";
 
 export type StripeMemberAccess = {
@@ -90,6 +147,11 @@ export function productMetadataFromSubscription(
 
   if (subscription.metadata && Object.keys(subscription.metadata).length > 0) {
     return subscription.metadata;
+  }
+
+  const productId = productIdFromSubscription(subscription);
+  if (productId) {
+    return metadataForConfiguredProductId(productId);
   }
 
   return undefined;

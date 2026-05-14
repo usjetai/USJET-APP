@@ -74,8 +74,8 @@ export default function FoundersAccessGate({ pageLabel, children }: FoundersAcce
               Claim Founder Special
             </Link>
             {" · "}
-            <Link to="/member" className="founders-access-panel__link">
-              Member Portal
+            <Link to="/member/login" className="founders-access-panel__link">
+              Member login
             </Link>
           </p>
         </div>

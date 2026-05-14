@@ -14,6 +14,7 @@ import Origin from "./pages/Origin";
 import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
+import MemberLogin from "./pages/MemberLogin";
 import Cockpit from "./pages/Cockpit";
 
 function AnimatedRoutes() {
@@ -24,7 +25,15 @@ function AnimatedRoutes() {
       <PageTransition key={location.pathname} routeKey={location.pathname}>
         <Routes location={location}>
           <Route path="/" element={<Fleet />} />
-          <Route path="/hangar" element={<Hangar />} />
+          <Route path="/login" element={<MemberLogin />} />
+          <Route
+            path="/hangar"
+            element={
+              <TierRouteGate path="/hangar" pageLabel="Hangar">
+                <Hangar />
+              </TierRouteGate>
+            }
+          />
           <Route
             path="/intel"
             element={
@@ -50,7 +59,15 @@ function AnimatedRoutes() {
               </TierRouteGate>
             }
           />
-          <Route path="/special" element={<Special />} />
+          <Route
+            path="/special"
+            element={
+              <TierRouteGate path="/special" pageLabel="Founder Special">
+                <Special />
+              </TierRouteGate>
+            }
+          />
+          <Route path="/member/login" element={<MemberLogin />} />
           <Route
             path="/member"
             element={

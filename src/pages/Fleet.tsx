@@ -3,6 +3,7 @@ import { Plane } from "lucide-react";
 import { fleetManifest } from "../data/fleetManifest";
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import FleetCard from "../components/fleet/FleetCard";
+import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
@@ -45,6 +46,7 @@ const Fleet = () => (
         </div>
       </header>
 
+      <FleetAuthChrome />
 
       <div
         className="fleet-runway-grid grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"

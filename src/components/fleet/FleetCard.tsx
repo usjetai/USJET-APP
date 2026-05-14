@@ -21,6 +21,8 @@ type FleetCardProps = {
   isCommandBay?: boolean;
   /** When set, plain click / Enter / Space expands the hangar bay instead of navigating. Cmd/Ctrl-click still opens the URL. */
   onExpandBay?: () => void;
+  /** Visual surface — runway (Fleet `/`) vs workbench bays (Hangar). */
+  surface?: "fleet" | "hangar";
   style?: CSSProperties;
 };
 
@@ -35,6 +37,7 @@ export default function FleetCard({
   returnTo = "/hangar",
   isCommandBay = false,
   onExpandBay,
+  surface = "fleet",
   style,
 }: FleetCardProps) {
   const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name, returnTo });
@@ -75,7 +78,12 @@ export default function FleetCard({
   return (
     <CardTag
       {...cardProps}
-      className={["fleet-card group block h-full min-h-[11.5rem]", expandInteractive ? "fleet-card--hangar-expand" : "", isCommandBay ? "fleet-card--command" : ""]
+      className={[
+        "fleet-card group block h-full",
+        surface === "hangar" ? "fleet-card--surface-hangar min-h-[13.5rem]" : "fleet-card--surface-runway min-h-[8rem]",
+        expandInteractive ? "fleet-card--hangar-expand" : "",
+        isCommandBay ? "fleet-card--command" : "",
+      ]
         .filter(Boolean)
         .join(" ")}
       style={style}
@@ -104,7 +112,7 @@ export default function FleetCard({
           />
         </div>
 
-        <div className="mt-auto text-left">
+        <div className="fleet-card__meta mt-auto text-left">
           {isCommandBay ? (
             <p className="text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
           ) : expandInteractive ? (

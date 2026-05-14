@@ -15,6 +15,7 @@ import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
 import Cockpit from "./pages/Cockpit";
+import { USJET_OPS_EMAIL } from "./lib/usjetContact";
 
 const globalAtmosphereStyle = {
   position: "fixed",
@@ -74,7 +75,15 @@ function AppChrome() {
           <span className="h-2 w-2 shrink-0 animate-ping rounded-full bg-blue-500" />
           <span>USJET System Active // Port 8080</span>
         </div>
-        <Usa250Countdown />
+        <div className="flex flex-col items-start gap-1 sm:items-end">
+          <Usa250Countdown />
+          <a
+            href={`mailto:${USJET_OPS_EMAIL}`}
+            className="normal-case tracking-[0.12em] text-cyan-300/55 transition-colors hover:text-cyan-300/90"
+          >
+            {USJET_OPS_EMAIL}
+          </a>
+        </div>
       </div>
     </>
   );

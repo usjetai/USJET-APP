@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Lock } from "lucide-react";
 import { isUsableStripePaymentLink, resolvePaymentLinkForTier } from "../../lib/stripePaymentLink";
+import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
 
 export type SpecialTierId = "founder" | "hangar-pro" | "fleet-command";
 
@@ -103,7 +104,15 @@ function UnconfiguredCheckout() {
       <p className="special-checkout__unconfigured-copy">
         {isDev
           ? "Payment link not configured. Add VITE_STRIPE_FOUNDER_PAYMENT_LINK (and sibling tier links) in .env or Vercel."
-          : "Secure checkout is being provisioned. Contact support or try again shortly."}
+          : (
+              <>
+                Secure checkout is being provisioned.{" "}
+                <a href={`mailto:${USJET_OPS_EMAIL}`} className="special-checkout__support-link">
+                  Contact {USJET_OPS_EMAIL}
+                </a>{" "}
+                or try again shortly.
+              </>
+            )}
       </p>
     </div>
   );

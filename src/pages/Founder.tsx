@@ -5,6 +5,7 @@ import FounderWorkerSilhouette, {
 } from "../components/founder/FounderWorkerSilhouettes";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import { USJET_OPS_EMAIL } from "../lib/usjetContact";
 import type { FleetAircraftType } from "../types/fleet";
 
 const USJET_SOCIAL = {
@@ -235,6 +236,11 @@ const Founder = () => {
                 </a>
               </nav>
             </div>
+            <p className="founder-social__contact">
+              <a href={`mailto:${USJET_OPS_EMAIL}`} className="founder-social__email">
+                {USJET_OPS_EMAIL}
+              </a>
+            </p>
           </footer>
         </div>
 

@@ -6,6 +6,9 @@ export type MemberSession = {
   tier: MemberTier;
   active: boolean;
   verifiedAt: string;
+  stripeTier?: string;
+  accessLevel?: string;
+  legacyId?: string;
 };
 
 export type VerifyMemberResponse = {
@@ -13,4 +16,7 @@ export type VerifyMemberResponse = {
   customerId: string;
   tier: MemberTier;
   email?: string;
+  stripeTier?: string;
+  accessLevel?: string;
+  legacyId?: string;
 };

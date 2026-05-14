@@ -59,5 +59,8 @@ export async function verifyMemberAccess(input: VerifyInput): Promise<MemberSess
     tier: data.tier,
     active: data.active,
     verifiedAt: new Date().toISOString(),
+    stripeTier: data.stripeTier,
+    accessLevel: data.accessLevel,
+    legacyId: data.legacyId,
   };
 }

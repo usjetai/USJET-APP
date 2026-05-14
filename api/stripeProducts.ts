@@ -1,38 +1,75 @@
 /** Server mirror of `src/data/stripeProducts.ts` — keep metadata keys in sync. */
 
 export const STRIPE_METADATA_KEYS = {
-  role: "Role",
-  access: "Access",
-  tier: "Tier",
+  tier: "tier",
+  accessLevel: "access_level",
+  legacyId: "legacy_id",
 } as const;
 
 const TIER_METADATA = [
-  { Role: "FLIGHT-CLEARANCE", Access: "HANGAR-ENTRY", Tier: "LAUNCH-RATE" },
-  { Role: "PRIME-OPERATOR", Access: "FULL-FLEET-SYNC", Tier: "FOUNDER-LEVEL" },
-  { Role: "FLEET-COMMANDER", Access: "ENTERPRISE-SOVEREIGN", Tier: "COMMAND-LEVEL" },
+  { tier: "RECRUIT", access_level: "LVL_01" },
+  { tier: "OPERATOR", access_level: "LVL_02" },
+  { tier: "COMMANDER", access_level: "LVL_03_SOVEREIGN", legacy_id: "AM_KARIM_SUCCESSION" },
 ] as const;
 
 export type MemberTier = "USJET-PRIME-ACTIVE" | "USJET-ROYAL-HEIR" | "INACTIVE" | "PENDING";
+
+export type StripeMemberAccess = {
+  tier: MemberTier;
+  stripeTier?: string;
+  accessLevel?: string;
+  legacyId?: string;
+};
+
+function normalizeMetaValue(value: string | undefined): string | undefined {
+  return value?.trim().toUpperCase() || undefined;
+}
+
+export function memberAccessFromStripeMetadata(
+  metadata: Record<string, string> | null | undefined,
+  fallback: MemberTier = "USJET-PRIME-ACTIVE",
+): StripeMemberAccess {
+  if (!metadata) {
+    return { tier: fallback };
+  }
+
+  const stripeTier = metadata[STRIPE_METADATA_KEYS.tier]?.trim();
+  const accessLevel = metadata[STRIPE_METADATA_KEYS.accessLevel]?.trim();
+  const legacyId = metadata[STRIPE_METADATA_KEYS.legacyId]?.trim();
+
+  const normalizedTier = normalizeMetaValue(stripeTier);
+  const normalizedAccess = normalizeMetaValue(accessLevel);
+
+  for (const product of TIER_METADATA) {
+    const productTier = normalizeMetaValue(product.tier);
+    const productAccess = normalizeMetaValue(product.access_level);
+
+    if (
+      (normalizedTier && normalizedTier === productTier) ||
+      (normalizedAccess && normalizedAccess === productAccess)
+    ) {
+      return {
+        tier: "USJET-PRIME-ACTIVE",
+        stripeTier: stripeTier ?? product.tier,
+        accessLevel: accessLevel ?? product.access_level,
+        legacyId: legacyId ?? ("legacy_id" in product ? product.legacy_id : undefined),
+      };
+    }
+  }
+
+  return {
+    tier: fallback,
+    stripeTier,
+    accessLevel,
+    legacyId,
+  };
+}
 
 export function memberTierFromStripeMetadata(
   metadata: Record<string, string> | null | undefined,
   fallback: MemberTier = "USJET-PRIME-ACTIVE",
 ): MemberTier {
-  if (!metadata) {
-    return fallback;
-  }
-
-  const role = metadata[STRIPE_METADATA_KEYS.role]?.trim().toUpperCase();
-  const access = metadata[STRIPE_METADATA_KEYS.access]?.trim().toUpperCase();
-  const tier = metadata[STRIPE_METADATA_KEYS.tier]?.trim().toUpperCase();
-
-  for (const product of TIER_METADATA) {
-    if (role === product.Role || access === product.Access || tier === product.Tier) {
-      return "USJET-PRIME-ACTIVE";
-    }
-  }
-
-  return fallback;
+  return memberAccessFromStripeMetadata(metadata, fallback).tier;
 }
 
 export function productMetadataFromSubscription(

@@ -1,16 +1,23 @@
 import type { MemberTier } from "../types/member";
 
-/** Stripe product / price metadata keys — paste identical keys in Stripe Dashboard. */
+/** Stripe product metadata keys — paste identical keys in Stripe Dashboard. */
 export const STRIPE_METADATA_KEYS = {
-  role: "Role",
-  access: "Access",
-  tier: "Tier",
+  tier: "tier",
+  accessLevel: "access_level",
+  legacyId: "legacy_id",
 } as const;
 
 export type StripeProductMetadata = {
-  [STRIPE_METADATA_KEYS.role]: string;
-  [STRIPE_METADATA_KEYS.access]: string;
   [STRIPE_METADATA_KEYS.tier]: string;
+  [STRIPE_METADATA_KEYS.accessLevel]: string;
+  [STRIPE_METADATA_KEYS.legacyId]?: string;
+};
+
+export type StripeMemberAccess = {
+  tier: MemberTier;
+  stripeTier?: string;
+  accessLevel?: string;
+  legacyId?: string;
 };
 
 export type StripeTierProduct = {
@@ -30,27 +37,26 @@ export type StripeTierProduct = {
   badge?: string;
 };
 
-/** USJet Flight Pass ($19.95/mo) — launch clearance tier. */
+/** USJet Flight Pass ($19.95/mo) — entry clearance tier. */
 export const FLIGHT_PASS_STRIPE: StripeTierProduct = {
   id: "founder",
   name: "USJet Flight Pass",
-  hook: "Launch clearance · first on the runway",
+  hook: "Entry clearance · first on the runway",
   priceCents: 1995,
   priceDisplay: "$19.95",
   period: "/mo",
   description:
     "Your clearance into the sovereign hangar. Thirty AI bays, live Intel, and fleet protocol locked to your Member ID—built for operators who measure worth in what they fix, not what they pitch.",
   features: [
-    "Full 30-unit Hangar bay access",
-    "Intel Pulse — Crypto & NYSE live board",
-    "USJET Fleet Protocol routing",
-    "Stripe Member ID — cockpit gate unlock",
+    "30-Tool AI Fleet Access",
+    "Sovereign Cockpit Interface",
+    "Unlimited Access to Captain Aura",
+    "Standard Hangar Support",
   ],
   statementDescriptor: "USJET.AI-FLIGHT-PASS",
   metadata: {
-    [STRIPE_METADATA_KEYS.role]: "FLIGHT-CLEARANCE",
-    [STRIPE_METADATA_KEYS.access]: "HANGAR-ENTRY",
-    [STRIPE_METADATA_KEYS.tier]: "LAUNCH-RATE",
+    [STRIPE_METADATA_KEYS.tier]: "RECRUIT",
+    [STRIPE_METADATA_KEYS.accessLevel]: "LVL_01",
   },
   memberTier: "USJET-PRIME-ACTIVE",
   paymentLinkEnvKey: "VITE_STRIPE_FOUNDER_PAYMENT_LINK",
@@ -67,25 +73,23 @@ export const HANGAR_PRO_STRIPE: StripeTierProduct = {
   priceDisplay: "$49.95",
   period: "/mo",
   description:
-    "Full access to the USJET Sovereign Cockpit. Real-time AI Fleet networking, 30-unit Hangar connectivity, and live Intel Pulse (Crypto/NYSE). Integrated for high-velocity labor and enterprise founders. No dead iframes—direct flight links only.",
+    "Full access to the USJET Sovereign Cockpit. Includes real-time AI Fleet networking, 30-unit Hangar connectivity, and live Intel Pulse dashboard (Crypto/NYSE). Integrated for high-velocity labor and enterprise founders. No dead iframes—direct flight links only.",
   features: [
-    "Everything in Flight Pass",
-    "Real-time AI Fleet networking",
-    "Live Intel Pulse — dual market feed",
-    "Direct flight links — no dead iframes",
-    "PRIME-OPERATOR Member ID clearance",
+    "Full Hangar Automation Suite",
+    'High-Velocity Logistics AI',
+    'Priority "Wrenches, Not Slides" Toolset',
+    "Integrated Multi-AI Networking",
   ],
   statementDescriptor: "USJET.AI-HANGAR-PRO",
   metadata: {
-    [STRIPE_METADATA_KEYS.role]: "PRIME-OPERATOR",
-    [STRIPE_METADATA_KEYS.access]: "FULL-FLEET-SYNC",
-    [STRIPE_METADATA_KEYS.tier]: "FOUNDER-LEVEL",
+    [STRIPE_METADATA_KEYS.tier]: "OPERATOR",
+    [STRIPE_METADATA_KEYS.accessLevel]: "LVL_02",
   },
   memberTier: "USJET-PRIME-ACTIVE",
   paymentLinkEnvKey: "VITE_STRIPE_PRO_PAYMENT_LINK",
 };
 
-/** USJET Enterprise Fleet Commander ($199.99/mo) — crew-scale command. */
+/** USJET Enterprise Fleet Commander ($199.99/mo) — sovereign command tier. */
 export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
   id: "fleet-command",
   name: "USJET Enterprise Fleet Commander",
@@ -96,17 +100,16 @@ export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
   description:
     "Command-level sovereignty for distributed crews and institutional operators. Unlimited workbench concurrency, custom fleet manifest, dedicated liaison, and audit-grade exports—one cockpit, zero external leaks.",
   features: [
-    "Everything in Hangar Pro",
-    "Unlimited workbench bays",
-    "Custom fleet manifest & SLA routing",
-    "Dedicated success liaison",
-    "SSO, audit exports & enterprise Member ID",
+    'Direct "Master Lock" Protocol Access',
+    "Real-Time Titans Intel Dashboard (Crypto/NYSE)",
+    "Dedicated Fleet Command Channel",
+    "Priority Revenue-Engine Support",
   ],
   statementDescriptor: "USJET.AI-FLEET-CMD",
   metadata: {
-    [STRIPE_METADATA_KEYS.role]: "FLEET-COMMANDER",
-    [STRIPE_METADATA_KEYS.access]: "ENTERPRISE-SOVEREIGN",
-    [STRIPE_METADATA_KEYS.tier]: "COMMAND-LEVEL",
+    [STRIPE_METADATA_KEYS.tier]: "COMMANDER",
+    [STRIPE_METADATA_KEYS.accessLevel]: "LVL_03_SOVEREIGN",
+    [STRIPE_METADATA_KEYS.legacyId]: "AM_KARIM_SUCCESSION",
   },
   memberTier: "USJET-PRIME-ACTIVE",
   paymentLinkEnvKey: "VITE_STRIPE_ENTERPRISE_PAYMENT_LINK",
@@ -127,28 +130,55 @@ export const HANGAR_PRO_STRIPE_DASHBOARD = {
   recurringPrice: HANGAR_PRO_STRIPE.priceDisplay + HANGAR_PRO_STRIPE.period,
 } as const;
 
-/** Map Stripe Product metadata to internal MemberTier without touching master keys. */
+function normalizeMetaValue(value: string | undefined): string | undefined {
+  return value?.trim().toUpperCase() || undefined;
+}
+
+/** Map Stripe Product metadata to MemberSession fields without touching master keys. */
+export function memberAccessFromStripeMetadata(
+  metadata: Record<string, string> | null | undefined,
+  fallback: MemberTier = "USJET-PRIME-ACTIVE",
+): StripeMemberAccess {
+  if (!metadata) {
+    return { tier: fallback };
+  }
+
+  const stripeTier = metadata[STRIPE_METADATA_KEYS.tier]?.trim();
+  const accessLevel = metadata[STRIPE_METADATA_KEYS.accessLevel]?.trim();
+  const legacyId = metadata[STRIPE_METADATA_KEYS.legacyId]?.trim();
+
+  const normalizedTier = normalizeMetaValue(stripeTier);
+  const normalizedAccess = normalizeMetaValue(accessLevel);
+
+  for (const product of STRIPE_TIER_PRODUCTS) {
+    const productTier = normalizeMetaValue(product.metadata[STRIPE_METADATA_KEYS.tier]);
+    const productAccess = normalizeMetaValue(product.metadata[STRIPE_METADATA_KEYS.accessLevel]);
+
+    if (
+      (normalizedTier && normalizedTier === productTier) ||
+      (normalizedAccess && normalizedAccess === productAccess)
+    ) {
+      return {
+        tier: product.memberTier,
+        stripeTier: stripeTier ?? product.metadata[STRIPE_METADATA_KEYS.tier],
+        accessLevel: accessLevel ?? product.metadata[STRIPE_METADATA_KEYS.accessLevel],
+        legacyId: legacyId ?? product.metadata[STRIPE_METADATA_KEYS.legacyId],
+      };
+    }
+  }
+
+  return {
+    tier: fallback,
+    stripeTier,
+    accessLevel,
+    legacyId,
+  };
+}
+
+/** @deprecated Use memberAccessFromStripeMetadata — kept for callers needing tier only. */
 export function memberTierFromStripeMetadata(
   metadata: Record<string, string> | null | undefined,
   fallback: MemberTier = "USJET-PRIME-ACTIVE",
 ): MemberTier {
-  if (!metadata) {
-    return fallback;
-  }
-
-  const role = metadata[STRIPE_METADATA_KEYS.role]?.trim().toUpperCase();
-  const access = metadata[STRIPE_METADATA_KEYS.access]?.trim().toUpperCase();
-  const tier = metadata[STRIPE_METADATA_KEYS.tier]?.trim().toUpperCase();
-
-  for (const product of STRIPE_TIER_PRODUCTS) {
-    const productRole = product.metadata[STRIPE_METADATA_KEYS.role].toUpperCase();
-    const productAccess = product.metadata[STRIPE_METADATA_KEYS.access].toUpperCase();
-    const productTier = product.metadata[STRIPE_METADATA_KEYS.tier].toUpperCase();
-
-    if (role === productRole || access === productAccess || tier === productTier) {
-      return product.memberTier;
-    }
-  }
-
-  return fallback;
+  return memberAccessFromStripeMetadata(metadata, fallback).tier;
 }

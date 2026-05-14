@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { memberTierFromStripeMetadata, productMetadataFromSubscription } from "./stripeProducts";
+import { memberAccessFromStripeMetadata, productMetadataFromSubscription } from "./stripeProducts";
 
 type VerifyBody = {
   customerId?: string;
@@ -74,12 +74,17 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     const subscription = activeSubs.data[0] ?? trialingSubs.data[0];
     const active = Boolean(subscription);
     const stripeMetadata = subscription ? productMetadataFromSubscription(subscription) : undefined;
-    const tier = active ? memberTierFromStripeMetadata(stripeMetadata) : "INACTIVE";
+    const access = active
+      ? memberAccessFromStripeMetadata(stripeMetadata)
+      : { tier: "INACTIVE" as const };
 
     return res.status(200).json({
       active,
       customerId: resolvedCustomerId,
-      tier,
+      tier: access.tier,
+      stripeTier: access.stripeTier,
+      accessLevel: access.accessLevel,
+      legacyId: access.legacyId,
       email: email || undefined,
     });
   } catch (error) {

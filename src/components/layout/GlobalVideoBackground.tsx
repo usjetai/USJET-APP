@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-/** AA-VFX warp tunnel — https://youtu.be/UQgBVsbbKRs */
+/** AA-VFX warp tunnel — optional enhancement over canvas warp */
 const YOUTUBE_ID = "UQgBVsbbKRs";
 
-/** Seamless loop segment length (seconds) when a local clip is hosted. */
 const CLIP_START_SEC = 6;
 const CLIP_DURATION_SEC = 22;
 
@@ -25,7 +24,7 @@ const YOUTUBE_EMBED = [
   "&enablejsapi=0",
 ].join("");
 
-type VideoMode = "checking" | "local" | "youtube";
+type VideoMode = "checking" | "local" | "youtube" | "canvas";
 
 export default function GlobalVideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -59,14 +58,16 @@ export default function GlobalVideoBackground() {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) {
-      video.pause();
+      setMode("canvas");
       return;
     }
 
     const onLoaded = () => {
       video.currentTime = CLIP_START_SEC;
-      void video.play().catch(() => undefined);
+      void video.play().catch(() => setMode("canvas"));
     };
+
+    const onError = () => setMode("canvas");
 
     const onTimeUpdate = () => {
       if (video.currentTime >= CLIP_START_SEC + CLIP_DURATION_SEC) {
@@ -75,16 +76,18 @@ export default function GlobalVideoBackground() {
     };
 
     video.addEventListener("loadeddata", onLoaded);
+    video.addEventListener("error", onError);
     video.addEventListener("timeupdate", onTimeUpdate);
 
     return () => {
       video.removeEventListener("loadeddata", onLoaded);
+      video.removeEventListener("error", onError);
       video.removeEventListener("timeupdate", onTimeUpdate);
     };
   }, [mode]);
 
-  if (mode === "checking") {
-    return <div className="global-video-bg global-video-bg--arming" aria-hidden />;
+  if (mode === "checking" || mode === "canvas") {
+    return <div className="global-video-bg global-video-bg--canvas-only" aria-hidden />;
   }
 
   return (
@@ -110,7 +113,6 @@ export default function GlobalVideoBackground() {
           tabIndex={-1}
         />
       )}
-      <div className="global-video-bg__warp-streaks" aria-hidden />
       <div className="global-video-bg__veil" />
     </div>
   );

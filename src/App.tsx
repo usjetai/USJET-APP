@@ -4,6 +4,7 @@ import AppNav from "./components/layout/AppNav";
 import PageTransition from "./components/layout/PageTransition";
 import Usa250Countdown from "./components/layout/Usa250Countdown";
 import MovingBackground from "./components/layout/MovingBackground";
+import WarpBackground from "./components/layout/WarpBackground";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
 import Fleet from "./pages/Fleet";
 import Hangar from "./pages/Hangar";
@@ -21,7 +22,7 @@ const globalAtmosphereStyle = {
   left: 0,
   width: "100vw",
   height: "100vh",
-  zIndex: -10,
+  zIndex: 1,
   pointerEvents: "none",
 } as const;
 
@@ -60,9 +61,10 @@ function AppChrome() {
 
   return (
     <>
+      <WarpBackground />
       <GlobalVideoBackground />
       <MovingBackground />
-      <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
+      <div aria-hidden className="aviation-pulse" />
       <AppNav />
       <main className="relative z-10">
         <AnimatedRoutes />

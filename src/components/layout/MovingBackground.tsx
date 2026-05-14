@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 
 const MovingBackground = () => (
-  <div className="fixed inset-0 -z-20 overflow-hidden bg-[#020617]">
+  <motion.div
+    className="moving-bg-layer pointer-events-none fixed inset-0 z-[2] overflow-hidden bg-transparent"
+    aria-hidden
+  >
     <div className="absolute left-[-10%] top-[-10%] h-[50%] w-[50%] rounded-full bg-blue-900/20 blur-[120px]" />
     <div className="absolute bottom-[-10%] right-[-10%] h-[50%] w-[50%] rounded-full bg-blue-600/10 blur-[120px]" />
     {[...Array(8)].map((_, i) => (
@@ -18,7 +21,7 @@ const MovingBackground = () => (
         className="absolute h-px w-[400px] bg-gradient-to-r from-transparent via-blue-500 to-transparent"
       />
     ))}
-  </div>
+  </motion.div>
 );
 
 export default MovingBackground;

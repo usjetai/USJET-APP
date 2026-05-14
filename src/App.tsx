@@ -13,6 +13,7 @@ import Origin from "./pages/Origin";
 import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
+import Cockpit from "./pages/Cockpit";
 
 const globalAtmosphereStyle = {
   position: "fixed",
@@ -45,6 +46,38 @@ function AnimatedRoutes() {
   );
 }
 
+function AppChrome() {
+  const location = useLocation();
+  const cockpitMode = location.pathname === "/cockpit";
+
+  if (cockpitMode) {
+    return (
+      <Routes>
+        <Route path="/cockpit" element={<Cockpit />} />
+      </Routes>
+    );
+  }
+
+  return (
+    <>
+      <GlobalVideoBackground />
+      <MovingBackground />
+      <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
+      <AppNav />
+      <main className="relative z-10">
+        <AnimatedRoutes />
+      </main>
+      <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex items-center gap-4">
+          <span className="h-2 w-2 shrink-0 animate-ping rounded-full bg-blue-500" />
+          <span>USJET System Active // Port 8080</span>
+        </div>
+        <Usa250Countdown />
+      </div>
+    </>
+  );
+}
+
 export default function App() {
   return (
     <Router>
@@ -52,26 +85,7 @@ export default function App() {
         <div id="global-atmosphere" style={globalAtmosphereStyle}>
           <div aria-hidden className="moving-clouds" />
         </div>
-
-        <GlobalVideoBackground />
-
-        <MovingBackground />
-
-        <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
-
-        <AppNav />
-
-        <main className="relative z-10">
-          <AnimatedRoutes />
-        </main>
-
-        <div className="fixed bottom-5 left-4 right-4 z-[100] flex flex-col gap-1.5 text-[9px] font-black uppercase italic tracking-[0.3em] text-white/30 sm:bottom-6 sm:left-8 sm:right-8 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex items-center gap-4">
-            <span className="h-2 w-2 shrink-0 animate-ping rounded-full bg-blue-500" />
-            <span>USJET System Active // Port 8080</span>
-          </div>
-          <Usa250Countdown />
-        </div>
+        <AppChrome />
       </div>
     </Router>
   );

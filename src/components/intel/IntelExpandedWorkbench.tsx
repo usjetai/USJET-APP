@@ -2,6 +2,7 @@ import { ExternalLink, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
+import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 import MarketDualFeed from "./market/MarketDualFeed";
 
 type IntelExpandedWorkbenchProps = {
@@ -12,6 +13,11 @@ type IntelExpandedWorkbenchProps = {
 
 export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: IntelExpandedWorkbenchProps) {
   const src = iframeSrcFromUnitHref(unit.href);
+  const launchHref = wrapExternalInCockpit(src, {
+    slot: unit.slot,
+    returnTo: "/intel",
+    label: unit.name,
+  });
 
   return (
     <article className="intel-expanded" style={gridStyle}>
@@ -24,7 +30,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
         <div className="intel-expanded__actions">
           <a
             className="intel-expanded__external"
-            href={src}
+            href={launchHref}
             aria-label={`Launch ${unit.name} — integrated navigation`}
           >
             <ExternalLink size={16} strokeWidth={2} />

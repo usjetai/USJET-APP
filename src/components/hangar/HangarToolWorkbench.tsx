@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { useCallback, useEffect, useState } from "react";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
+import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 
 type HangarToolWorkbenchProps = {
   unit: FleetUnit;
@@ -17,14 +18,19 @@ type HangarToolWorkbenchProps = {
 export default function HangarToolWorkbench({ unit, gridStyle, onClose }: HangarToolWorkbenchProps) {
   const rawHref = unit.href?.trim() || unit.domain?.trim() || "";
   const src = iframeSrcFromUnitHref(rawHref);
+  const launchHref = wrapExternalInCockpit(src, {
+    slot: unit.slot,
+    returnTo: "/hangar",
+    label: unit.name,
+  });
 
   const [embedAssist, setEmbedAssist] = useState(false);
   const [assistDismissed, setAssistDismissed] = useState(false);
   const [frameRevealed, setFrameRevealed] = useState(false);
 
   const launchIntegrated = useCallback(() => {
-    window.location.assign(src);
-  }, [src]);
+    window.location.assign(launchHref);
+  }, [launchHref]);
 
   useEffect(() => {
     setEmbedAssist(false);
@@ -47,7 +53,7 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
         <div className="intel-expanded__actions">
           <a
             className="intel-expanded__external"
-            href={src}
+            href={launchHref}
             aria-label={`Launch ${unit.name} — integrated navigation`}
           >
             <ExternalLink size={16} strokeWidth={2} />
@@ -106,7 +112,7 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
 
         <p className="intel-expanded__hint">
           Official partner URL, flown in-network by USJET. Integrated navigation:{" "}
-          <a className="intel-expanded__hint-link" href={src}>
+          <a className="intel-expanded__hint-link" href={launchHref}>
             launch module
           </a>
           .

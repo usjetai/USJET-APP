@@ -1,6 +1,6 @@
 import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
-import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
+import { fleetLaunchUrl, integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type FleetCardProps = {
@@ -28,7 +28,7 @@ export default function FleetCard({
   onExpandBay,
   style,
 }: FleetCardProps) {
-  const launchUrl = fleetLaunchUrl(domain, href, slot);
+  const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name });
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
   const expandInteractive = Boolean(onExpandBay);
 

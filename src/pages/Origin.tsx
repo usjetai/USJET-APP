@@ -6,7 +6,7 @@ import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
-import { fleetLaunchUrl } from "../lib/fleetLaunchUrl";
+import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 
 type VoiceMode = "idle" | "listening" | "speaking";
 
@@ -288,7 +288,10 @@ export default function Origin() {
           </div>
           <div className="origin-page__fleet-grid">
             {sortedFleet.map((unit) => {
-              const url = fleetLaunchUrl(unit.domain, unit.href);
+              const url = integratedLaunchUrl(unit.domain, unit.href, unit.slot, {
+                returnTo: "/origin",
+                label: unit.name,
+              });
               const isOrigin = unit.href === "/origin" || unit.slot === 29;
 
               if (isOrigin) {

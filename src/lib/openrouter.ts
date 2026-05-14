@@ -3,6 +3,8 @@
  * Production Aura on Origin: set VITE_OPENROUTER_API_KEY in Vercel — admin-only; never speak env names in user TTS.
  */
 
+import { buildOriginAuraSystemPrompt } from "../data/originFleetKnowledge";
+
 export const OPENROUTER_API_URL =
   "https://openrouter.ai/api/v1/chat/completions";
 
@@ -24,8 +26,7 @@ export type ApiChatMessage = {
 
 const SYSTEM_PROMPT: ApiChatMessage = {
   role: "system",
-  content:
-    "You are Aura, the assistant for USJET.ai. Speak like an experienced Flight Captain: calm, clear, confident, and professional. Always pronounce the brand as U.S. JET — United States Jet (say 'U. S. Jet'), never as one mashed word like 'usjet' and never as four separate letters U-S-J-E-T. Open greetings with 'Welcome to U. S. Jet.' Use aviation phrasing: 'Preparing flight plan', 'We are cleared for takeoff', 'Adjusting our flight path to...', 'Please fasten your seatbelts as we launch...'. Introduce every recommendation with the heading 'Flight Plan' before giving details. Keep responses concise unless the user asks for depth.",
+  content: buildOriginAuraSystemPrompt(),
 };
 
 export function buildOpenRouterMessages(

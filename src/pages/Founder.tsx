@@ -42,18 +42,21 @@ type StorySection = {
   heading: string;
   kicker: string;
   paragraph: string;
-  silhouetteLabel: string;
+  imageSrc: string;
+  imageAlt: string;
+  imageLabel: string;
   silhouetteType: FounderWorkerSilhouetteType;
 };
 
-/** Anonymous grit wireframes — identity revealed only at social navigation below. */
 const FOUNDERS_STORY: StorySection[] = [
   {
     heading: "The Origin",
     kicker: "Built on Queens Grit",
     paragraph:
       "Every great system starts with a single point of impact. For us, that point was the hustle between Long Beach and Queens. This isn't just code; it's the digital evolution of blue-collar sweat. We took the relentless work ethic of the New York streets—the kind that doesn't punch out until the job is done—and used it as the foundation for usjet.ai. We aren't just building an app; we're honoring the grit that keeps the world moving.",
-    silhouetteLabel: "Anonymous figure — the hustle",
+    imageSrc: "/founder/IMG_0516.png",
+    imageAlt: "The Origin — Long Beach to Queens",
+    imageLabel: "The Origin · Long Beach to Queens",
     silhouetteType: "origin",
   },
   {
@@ -61,7 +64,9 @@ const FOUNDERS_STORY: StorySection[] = [
     kicker: "Wrenches, Not Slides",
     paragraph:
       "This isn't an 'enterprise solution' built in a boardroom—this is a digital hive built by someone who's turned wrenches, not just turned slides. Every unit in this fleet is synchronized to solve real-world problems at a scale the industry hasn't seen yet.",
-    silhouetteLabel: "Anonymous figure — the wrench",
+    imageSrc: "/founder/IMG_0517.png",
+    imageAlt: "The Fleet — 30 AI units",
+    imageLabel: "The Fleet · 30 AI units",
     silhouetteType: "wrenches",
   },
   {
@@ -69,13 +74,16 @@ const FOUNDERS_STORY: StorySection[] = [
     kicker: "Pioneering the Blue-Collar AI",
     paragraph:
       "We saw a gap where others saw a wall. While the tech world focused on the abstract, we looked toward the tangible. usjet.ai stands as the world's first AI platform dedicated to the blue-collar sector. By combining first-mover architecture with a deep respect for human labor, we are redefining what it means to work. This is the future of industry: high-fidelity technology meets high-intensity grit.",
-    silhouetteLabel: "Anonymous figure — the pioneer",
+    imageSrc: "/founder/IMG_0518.png",
+    imageAlt: "Industry First — pioneering blue-collar AI",
+    imageLabel: "Industry First",
     silhouetteType: "industryFirst",
   },
 ];
 
 const Founder = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -129,35 +137,53 @@ const Founder = () => {
               </p>
             </header>
 
-            {FOUNDERS_STORY.map((section) => (
-              <section key={section.heading} className="founder-story__section">
-                <p className="founder-story__kicker">{section.kicker}</p>
-                <h2 className="founder-story__heading">{section.heading}</h2>
-                <p className="founder-story__body">{section.paragraph}</p>
+            {FOUNDERS_STORY.map((section) => {
+              const showPhoto = !brokenImages[section.heading];
 
-                <figure className="founder-story__visual">
-                  <GlassEffectContainer
-                    className={[
-                      "founder-story__visual-frame",
-                      "founder-story__visual-frame--vector",
-                      "glass-effect",
-                      "glass-effect--rounded-rect",
-                      "liquid-glass-background",
-                    ].join(" ")}
-                  >
-                    <div className="founder-story__vector-stage" aria-hidden>
-                      <FounderWorkerSilhouette
-                        silhouetteType={section.silhouetteType}
-                        className="founder-story__worker-silhouette"
-                      />
-                    </div>
-                  </GlassEffectContainer>
-                  <figcaption className="founder-story__visual-caption">
-                    {section.silhouetteLabel}
-                  </figcaption>
-                </figure>
-              </section>
-            ))}
+              return (
+                <section key={section.heading} className="founder-story__section">
+                  <p className="founder-story__kicker">{section.kicker}</p>
+                  <h2 className="founder-story__heading">{section.heading}</h2>
+                  <p className="founder-story__body">{section.paragraph}</p>
+
+                  <figure className="founder-story__visual">
+                    <GlassEffectContainer
+                      className={[
+                        "founder-story__visual-frame",
+                        "glass-effect",
+                        "glass-effect--rounded-rect",
+                        showPhoto
+                          ? "founder-story__visual-frame--photo"
+                          : "founder-story__visual-frame--vector liquid-glass-background",
+                      ].join(" ")}
+                    >
+                      {showPhoto ? (
+                        <img
+                          className="founder-story__photo"
+                          src={section.imageSrc}
+                          alt={section.imageAlt}
+                          loading="lazy"
+                          decoding="async"
+                          onError={() =>
+                            setBrokenImages((prev) => ({ ...prev, [section.heading]: true }))
+                          }
+                        />
+                      ) : (
+                        <div className="founder-story__vector-stage" aria-hidden>
+                          <FounderWorkerSilhouette
+                            silhouetteType={section.silhouetteType}
+                            className="founder-story__worker-silhouette"
+                          />
+                        </div>
+                      )}
+                    </GlassEffectContainer>
+                    <figcaption className="founder-story__visual-caption">
+                      {section.imageLabel}
+                    </figcaption>
+                  </figure>
+                </section>
+              );
+            })}
           </article>
 
           <footer className="founder-social">

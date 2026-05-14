@@ -1,5 +1,5 @@
 import { FolderKanban, Minus, Plus, Save, Trash2 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { fleetManifest } from "../../data/fleetManifest";
 import { MEMBER_ASSIGNMENT_HOLD_MESSAGE } from "../../lib/usjetContact";
@@ -235,6 +235,45 @@ function ProjectWorkspace({
   );
 }
 
+function SessionForksBadge({ count }: { count: number }) {
+  const tooltipId = useId();
+
+  return (
+    <div className="member-projects__forks-badge-wrap">
+      <button
+        type="button"
+        className="member-projects__forks-count glass-effect-interactive"
+        aria-describedby={tooltipId}
+        aria-label={`${count} session forks`}
+      >
+        {count}
+      </button>
+      <GlassEffectContainer
+        className="member-projects__forks-tooltip glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+      >
+        <div id={tooltipId} role="tooltip" className="member-projects__forks-tooltip-body">
+          <p className="member-projects__forks-tooltip-lead">
+            One window. One thread. Your project stays intact.
+          </p>
+          <p className="member-projects__forks-tooltip-copy">
+            Each new browser launch starts this unit&apos;s work from a clean slate — the AI does not
+            carry context from another tab or window.
+          </p>
+          <p className="member-projects__forks-tooltip-copy">
+            Design, drafts, and decisions from your last session are not waiting in a fresh launch.
+            Keep one subject in one session; opening many browsers splits the mission and your
+            project drifts.
+          </p>
+          <p className="member-projects__forks-tooltip-copy member-projects__forks-tooltip-copy--muted">
+            Extra windows also strain memory — continuity is what protects the work you&apos;ve already
+            built.
+          </p>
+        </div>
+      </GlassEffectContainer>
+    </div>
+  );
+}
+
 type AssignmentRowProps = {
   customerId: string;
   projectId: string;
@@ -283,12 +322,7 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
         </div>
         <div className="member-projects__forks">
           <span className="member-projects__forks-label">Session forks</span>
-          <span
-            className="member-projects__forks-count"
-            aria-label={`${assignment.sessionForks} session forks`}
-          >
-            {assignment.sessionForks}
-          </span>
+          <SessionForksBadge count={assignment.sessionForks} />
         </div>
       </div>
 

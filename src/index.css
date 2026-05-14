@@ -8818,6 +8818,77 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: #67e8f9;
 }
 
+.member-projects__forks-badge-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.member-projects__forks-count {
+  margin: 0;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid rgba(103, 232, 249, 0.32);
+  border-radius: 0.4rem;
+  background: rgba(8, 47, 73, 0.28);
+  cursor: help;
+  line-height: 1.2;
+}
+
+.member-projects__forks-count:focus-visible {
+  outline: 2px solid rgba(103, 232, 249, 0.72);
+  outline-offset: 2px;
+}
+
+.member-projects__forks-tooltip {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 30;
+  width: min(17rem, 78vw);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-0.2rem);
+  transition:
+    opacity 0.18s ease,
+    visibility 0.18s ease,
+    transform 0.18s ease;
+}
+
+.member-projects__forks-badge-wrap:hover .member-projects__forks-tooltip,
+.member-projects__forks-badge-wrap:focus-within .member-projects__forks-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.member-projects__forks-tooltip-body {
+  padding: 0.65rem 0.72rem;
+}
+
+.member-projects__forks-tooltip-lead {
+  margin: 0 0 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: #e0f2fe;
+}
+
+.member-projects__forks-tooltip-copy {
+  margin: 0 0 0.4rem;
+  font-size: 0.64rem;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.member-projects__forks-tooltip-copy:last-child {
+  margin-bottom: 0;
+}
+
+.member-projects__forks-tooltip-copy--muted {
+  color: rgba(148, 163, 184, 0.92);
+}
+
 .member-projects__forks-hint {
   margin: 0.35rem 0 0;
   font-size: 0.68rem;

@@ -135,7 +135,7 @@ const Intel = () => {
         </div>
 
         <div className="intel-grid-wrap">
-          <div className="intel-grid">{gridCells}</div>
+          <div className="intel-grid grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6">{gridCells}</div>
         </div>
       </div>
     </div>

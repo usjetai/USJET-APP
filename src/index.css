@@ -7,9 +7,9 @@
     background: transparent !important;
   }
 
-  /* Clears fixed liquid-glass nav — pt-32 (8rem) + iOS safe-area */
+  /* Clears fixed liquid-glass nav — pt-28 (7rem) + iOS safe-area */
   .page-nav-offset {
-    padding-top: calc(8rem + env(safe-area-inset-top, 0px));
+    padding-top: calc(7rem + env(safe-area-inset-top, 24px));
   }
 
   .moving-clouds {
@@ -501,8 +501,7 @@
 
 .liquid-glass-nav {
   pointer-events: none;
-  top: max(0.75rem, env(safe-area-inset-top, 0px));
-  z-index: 200;
+  z-index: 50;
   isolation: isolate;
 }
 
@@ -1945,12 +1944,9 @@
 .intel-grid {
   position: relative;
   isolation: isolate;
-  display: grid;
   width: 100%;
   min-width: 0;
   align-items: stretch;
-  gap: 1.5rem;
-  grid-template-columns: minmax(0, 1fr);
   grid-auto-rows: auto;
 }
 
@@ -1973,8 +1969,6 @@
 
   .intel-grid {
     min-width: 52rem;
-    gap: 1.5rem;
-    grid-template-columns: repeat(6, minmax(8.25rem, 1fr));
     grid-template-rows: repeat(5, minmax(10rem, auto));
     grid-auto-rows: unset;
   }

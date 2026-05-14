@@ -103,7 +103,7 @@ const Hangar = () => {
 
         <div className="intel-grid-wrap">
           <div
-            className="intel-grid"
+            className="intel-grid grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6"
             role="region"
             aria-label="USJET hangar: networked AI cockpits in formation"
           >

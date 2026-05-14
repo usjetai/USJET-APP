@@ -28,8 +28,8 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
   const [frameRevealed, setFrameRevealed] = useState(false);
 
   const launchIntegrated = useCallback(() => {
-    window.location.assign(src);
-  }, [src]);
+    window.location.assign(launchHref);
+  }, [launchHref]);
 
   useEffect(() => {
     setEmbedAssist(false);

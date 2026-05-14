@@ -1,13 +1,12 @@
 import { ExternalLink, Rocket, X } from "lucide-react";
-import type { CSSProperties } from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 
 type HangarToolWorkbenchProps = {
   unit: FleetUnit;
-  gridStyle: CSSProperties;
   onClose: () => void;
 };
 
@@ -15,7 +14,7 @@ type HangarToolWorkbenchProps = {
  * Hangar 2×2 active cockpit: embeds the fleet unit's real tool URL (`unit.href` → iframe `src`).
  * Integrated Navigation: partner launches stay in the same window when operators leave the embed.
  */
-export default function HangarToolWorkbench({ unit, gridStyle, onClose }: HangarToolWorkbenchProps) {
+export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkbenchProps) {
   const rawHref = unit.href?.trim() || unit.domain?.trim() || "";
   const src = iframeSrcFromUnitHref(rawHref);
   const launchHref = wrapExternalInCockpit(src, {
@@ -29,8 +28,8 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
   const [frameRevealed, setFrameRevealed] = useState(false);
 
   const launchIntegrated = useCallback(() => {
-    window.location.assign(launchHref);
-  }, [launchHref]);
+    window.location.assign(src);
+  }, [src]);
 
   useEffect(() => {
     setEmbedAssist(false);
@@ -43,7 +42,10 @@ export default function HangarToolWorkbench({ unit, gridStyle, onClose }: Hangar
   const showShieldPanel = embedAssist && !assistDismissed;
 
   return (
-    <article className="intel-expanded hangar-tool-workbench" style={gridStyle}>
+    <article
+      className="intel-expanded hangar-tool-workbench hangar-tool-workbench--bay-accent"
+      style={fleetBayAccentStyle(unit.slot) as CSSProperties}
+    >
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>

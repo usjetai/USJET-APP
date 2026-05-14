@@ -2,7 +2,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
 import { CreditCard, Lock } from "lucide-react";
-import { isUsableStripePaymentLink } from "../../lib/stripePaymentLink";
+import { isUsableStripePaymentLink, resolveFounderPaymentLink } from "../../lib/stripePaymentLink";
 
 export type SpecialTierId = "founder" | "hangar-pro" | "fleet-command";
 
@@ -21,17 +21,22 @@ const isDev = import.meta.env.DEV;
 const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
 function CheckoutForm({
+  tierId,
   tierLabel,
   amountLabel,
   statementDescriptor,
   paymentLink,
-}: Omit<StripeSecureCheckoutProps, "tierId">) {
+}: StripeSecureCheckoutProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [status, setStatus] = useState<"idle" | "processing" | "error">("idle");
   const [message, setMessage] = useState<string | null>(null);
 
-  const usablePaymentLink = isUsableStripePaymentLink(paymentLink) ? paymentLink : undefined;
+  const usablePaymentLink = isUsableStripePaymentLink(paymentLink)
+    ? paymentLink
+    : tierId === "founder"
+      ? resolveFounderPaymentLink()
+      : undefined;
   const checkoutReady = Boolean(clientSecret || usablePaymentLink);
 
   const handleSubmit = async (event: FormEvent) => {

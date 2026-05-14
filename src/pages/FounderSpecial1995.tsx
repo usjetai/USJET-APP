@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Shield, Sparkles, Target, Wrench } from "lucide-react";
-import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
+import { FLIGHT_PASS_DIRECT_URL } from "../lib/stripePaymentLink";
 import { FOUNDER_CREATIVE_MANIFESTO, LINE_OF_SUCCESSION_LOG, PRIME_OBJECTIVE } from "../data/founderManifesto";
 import { LINE_OF_SUCCESSION } from "../data/lineOfSuccession";
 import Founder1995FeatureGrid from "../components/founder/Founder1995FeatureGrid";
@@ -55,17 +54,11 @@ const GRIT_1995_STORY: GritSection[] = [
 const CINEMATIC_BODY_CLASS = "usjet-atmosphere--cinematic";
 
 export default function FounderSpecial1995() {
-  const navigate = useNavigate();
   const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
 
   const handleFlightPassCheckout = useCallback(() => {
-    const paymentLink = resolveFounderPaymentLink();
-    if (paymentLink) {
-      window.location.href = paymentLink;
-      return;
-    }
-    navigate("/special");
-  }, [navigate]);
+    window.location.href = FLIGHT_PASS_DIRECT_URL;
+  }, []);
 
   useEffect(() => {
     const prevTitle = document.title;

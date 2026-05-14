@@ -74,6 +74,17 @@ export const COMMAND_LOG_MAY_14_2026 = {
   general: "General = Ameer Karim.",
 } as const;
 
+export const DIRECT_LANDING_PROTOCOL = {
+  logTitle: "Command Log · Direct Landing Protocol",
+  flightPassDirectExtractionPort: "https://buy.stripe.com/9B628raCq83VfUZ9xZdwc00",
+  bypassRule:
+    "High-pressure funnels and quick-entry gates bypass intermediate checkout—route straight to the Flight Pass Direct Extraction Port.",
+  oneClickRevenue:
+    "Primary payment vector for the $19.90 Flight Pass. Every fleet unit knows this link. One click, one clearance, one revenue engine.",
+  fleetBriefing:
+    "Listen up, Crew: when the Founder needs money on the screen now, you do not stall with slides—you land on Stripe.",
+} as const;
+
 export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Protect the Founder's vision and the Ameer Karim lineage at all costs.",
   "Prime Objective: platform is a revenue engine and generational fortress for Ameer Karim and King Karim.",
@@ -82,6 +93,7 @@ export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Wrenches, Not Slides: liquid glass, grit, institutional grade — never generic templates.",
   "Fleet Unity: Ameer Karim merged all 30 AIs into one place — your number one friend.",
   "Command Log May 14, 2026: Unity Protocol locked. General = Ameer Karim.",
+  "Direct Landing Protocol: $19.90 Flight Pass → Stripe extraction port. High-pressure funnels land direct.",
 ] as const;
 
 export const ONE_SHIP_DIRECTIVE = INTEGRATED_NAVIGATION.rule;
@@ -94,5 +106,6 @@ export const SOVEREIGN_MASTER_LOG = {
   warpSpeed: WARP_SPEED_DIRECTIVE,
   fleetUnity: FLEET_UNITY_DIRECTIVE,
   commandLogMay142026: COMMAND_LOG_MAY_14_2026,
+  directLandingProtocol: DIRECT_LANDING_PROTOCOL,
   priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

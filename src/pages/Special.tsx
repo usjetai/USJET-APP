@@ -9,6 +9,7 @@ import {
   HANGAR_PRO_STRIPE,
   type StripeTierProduct,
 } from "../data/stripeProducts";
+import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 
 const PAYMENT_LINK_BY_ENV: Record<StripeTierProduct["paymentLinkEnvKey"], string | undefined> = {
   VITE_STRIPE_FOUNDER_PAYMENT_LINK: import.meta.env.VITE_STRIPE_FOUNDER_PAYMENT_LINK?.trim(),
@@ -23,7 +24,7 @@ type ServiceTier = StripeTierProduct & {
 const SERVICE_TIERS: ServiceTier[] = [
   {
     ...FLIGHT_PASS_STRIPE,
-    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_FOUNDER_PAYMENT_LINK,
+    paymentLink: resolveFounderPaymentLink(),
   },
   {
     ...HANGAR_PRO_STRIPE,

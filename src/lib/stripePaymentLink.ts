@@ -1,7 +1,10 @@
-/** Flight Pass ($19.90/mo) — reads VITE_STRIPE_FOUNDER_PAYMENT_LINK (set in Vercel env). */
-export function resolveFounderPaymentLink(): string | undefined {
+/** Flight Pass ($19.90/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
+export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/9B628raCq83VfUZ9xZdwc00";
+
+/** Flight Pass ($19.90/mo) — env override when set, else FLIGHT_PASS_DIRECT_URL. */
+export function resolveFounderPaymentLink(): string {
   const url = import.meta.env.VITE_STRIPE_FOUNDER_PAYMENT_LINK?.trim();
-  return isUsableStripePaymentLink(url) ? url : undefined;
+  return isUsableStripePaymentLink(url) ? url : FLIGHT_PASS_DIRECT_URL;
 }
 
 /** Returns true when a Stripe Payment Link URL is configured and safe to navigate to. */

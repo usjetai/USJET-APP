@@ -1,7 +1,7 @@
-/** Spoken brand — USJET is an acronym (U·S·J·E·T), not one word. */
-export const USJET_SPOKEN = "U S J E T";
+/** Spoken brand — U.S. (United States) + JET, not four separate letters. */
+export const USJET_SPOKEN = "U. S. Jet";
 
-/** Convert display copy to speech-synthesis text with correct acronym pronunciation. */
+/** Convert display copy to speech-synthesis text with correct brand pronunciation. */
 export function toSpeakableText(text: string): string {
   return text
     .replace(/\bUSJET\.AI\b/gi, `${USJET_SPOKEN} dot A I`)

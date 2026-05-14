@@ -1,0 +1,27 @@
+{
+  "name": "USJET.AI",
+  "short_name": "USJET",
+  "description": "Sovereign AI fleet cockpit — 30 elite tools, one hangar command deck for aviation fintech and blue-collar America.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050d18",
+  "theme_color": "#0a192f",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

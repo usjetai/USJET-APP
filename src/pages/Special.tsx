@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Check, ShieldCheck, Sparkles, Wrench, Zap } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout/StripeSecureCheckout";
+import OriginTierLockInAd from "../components/origin/OriginTierLockInAd";
 import { WRENCHES_PHILOSOPHY } from "../data/founderManifesto";
 import {
   FLIGHT_PASS_STRIPE,
@@ -42,7 +44,14 @@ const VALUE_LADDER = [
 ] as const;
 
 const Special = () => {
-  const [selectedTierId, setSelectedTierId] = useState<SpecialTierId>("founder");
+  const [searchParams] = useSearchParams();
+  const [selectedTierId, setSelectedTierId] = useState<SpecialTierId>(() => {
+    const tier = searchParams.get("tier");
+    if (tier === "fleet-command" || tier === "hangar-pro" || tier === "founder") {
+      return tier;
+    }
+    return "founder";
+  });
 
   const selectedTier = useMemo(
     () => SERVICE_TIERS.find((tier) => tier.id === selectedTierId) ?? SERVICE_TIERS[0],
@@ -168,6 +177,8 @@ const Special = () => {
           );
         })}
       </div>
+
+      {selectedTierId === "fleet-command" ? <OriginTierLockInAd /> : null}
 
       <section className="special-checkout" aria-labelledby="special-checkout-heading">
         <GlassEffectContainer className="special-checkout__shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan flex-col items-stretch gap-0 p-0">

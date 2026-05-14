@@ -5,6 +5,7 @@ import AuraFrame from "../components/aura/AuraFrame";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import OriginBrowserConnectModal from "../components/origin/OriginBrowserConnectModal";
+import OriginTierLockInAd from "../components/origin/OriginTierLockInAd";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
@@ -18,7 +19,7 @@ import {
   completeChat,
   OPENROUTER_API_KEY,
 } from "../lib/openrouter";
-import { speakWithBrandVoice } from "../lib/speakableBrand";
+import { ORIGIN_SPOKEN_LOAD_GREET, ORIGIN_SPOKEN_WELCOME, speakWithBrandVoice } from "../lib/speakableBrand";
 
 type VoiceMode = "idle" | "speaking";
 
@@ -37,11 +38,10 @@ const BULLETIN_LINES = [
   "LAT 40.7128° N · LONG 74.0060° W · PROTOCOL USJET-v5 · LIQUID GLASS ACTIVE",
 ];
 
-const ORIGIN_WELCOME =
-  "Welcome to USJET. USJET Origin online. Thirty partner systems are networked. Hangar bays launch direct. Intel pulse is live. Command acknowledged.";
+const ORIGIN_WELCOME = ORIGIN_SPOKEN_WELCOME;
 
 /** Short greet on load — speakableBrand renders as U. S. Jet */
-const ORIGIN_LOAD_GREET = "Welcome to USJET. USJET Origin online.";
+const ORIGIN_LOAD_GREET = ORIGIN_SPOKEN_LOAD_GREET;
 
 /** Pause after last speech chunk before treating utterance as complete */
 const UTTERANCE_SILENCE_MS = 700;
@@ -812,6 +812,8 @@ export default function Origin() {
             ))}
           </nav>
         </GlassEffectContainer>
+
+        <OriginTierLockInAd />
 
         <section className="origin-page__fleet w-full max-w-5xl" aria-labelledby="origin-fleet-heading">
           <div className="origin-page__fleet-head">

@@ -5315,6 +5315,236 @@ button.fleet-card {
   right: 1rem;
 }
 
+/* Origin Enterprise lock-in promo — cyan + gold liquid glass */
+.origin-tier-lock-in-ad {
+  position: relative;
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto 2.5rem;
+}
+
+.special-page .origin-tier-lock-in-ad {
+  max-width: none;
+  margin: 0 0 2rem;
+}
+
+.origin-tier-lock-in-ad__glass {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in srgb, rgba(34, 211, 238, 0.55) 40%, rgba(251, 191, 36, 0.35));
+  box-shadow:
+    0 0 40px rgba(34, 211, 238, 0.16),
+    0 0 56px rgba(251, 191, 36, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.origin-tier-lock-in-ad__glow {
+  pointer-events: none;
+  position: absolute;
+  inset: -30% auto auto -20%;
+  width: 55%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.22) 0%, transparent 68%);
+  filter: blur(18px);
+  animation: origin-tier-lock-pulse 4.5s ease-in-out infinite;
+}
+
+.origin-tier-lock-in-ad__glow--gold {
+  inset: auto -18% -35% auto;
+  width: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+  animation-delay: -2.2s;
+}
+
+@keyframes origin-tier-lock-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.origin-tier-lock-in-ad__head {
+  position: relative;
+  z-index: 1;
+  padding: 1.15rem 1.25rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.origin-tier-lock-in-ad__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(253, 224, 171, 0.88);
+}
+
+.origin-tier-lock-in-ad__title {
+  margin: 0.45rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1.15rem, 2.8vw, 1.55rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.origin-tier-lock-in-ad__lede {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.origin-tier-lock-in-ad__body {
+  position: relative;
+  z-index: 1;
+  padding: 0.95rem 1.25rem 1rem;
+}
+
+.origin-tier-lock-in-ad__countdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+  margin: 0 0 0.9rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.78);
+}
+
+.origin-tier-lock-in-ad__countdown-days {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: rgba(251, 191, 36, 0.95);
+  text-shadow: 0 0 18px rgba(251, 191, 36, 0.35);
+}
+
+.origin-tier-lock-in-ad__price-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+@media (max-width: 520px) {
+  .origin-tier-lock-in-ad__price-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .origin-tier-lock-in-ad__price-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+.origin-tier-lock-in-ad__price-block {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  background: rgba(8, 47, 73, 0.28);
+  padding: 0.7rem 0.8rem;
+}
+
+.origin-tier-lock-in-ad__price-block--future {
+  border-color: rgba(251, 191, 36, 0.38);
+  background: rgba(120, 53, 15, 0.22);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+}
+
+.origin-tier-lock-in-ad__price-label {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.origin-tier-lock-in-ad__price-now,
+.origin-tier-lock-in-ad__price-future {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.35rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #fff;
+}
+
+.origin-tier-lock-in-ad__price-future {
+  color: rgba(253, 224, 171, 0.96);
+}
+
+.origin-tier-lock-in-ad__price-period {
+  margin-left: 0.1rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.origin-tier-lock-in-ad__price-note {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.origin-tier-lock-in-ad__price-arrow {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: rgba(34, 211, 238, 0.75);
+  text-align: center;
+}
+
+.origin-tier-lock-in-ad__footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.55rem;
+  padding: 0.85rem 1.25rem 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.origin-tier-lock-in-ad__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.origin-tier-lock-in-ad__fine {
+  margin: 0;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.48);
+}
+
 .fleet-card--command .fleet-card__glass {
   border-color: rgba(251, 191, 36, 0.42);
   box-shadow:

@@ -105,14 +105,15 @@ export const HANGAR_PRO_STRIPE: StripeTierProduct = {
 export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
   id: "fleet-command",
   name: "USJET Enterprise Fleet Commander",
-  hook: "Command tier · crew-scale sovereignty",
+  hook: "Command tier · Origin Bay 30 authority",
   priceCents: 19999,
   priceDisplay: "$199.99",
   period: "/mo",
   description:
-    "Command-level sovereignty for distributed crews and institutional operators. Unlimited workbench concurrency, custom fleet manifest, dedicated liaison, and audit-grade exports—one cockpit, zero external leaks.",
+    "The only clearance that seats you at Origin — Aura teaches and orchestrates all twenty-nine partner AIs from one command node. Lock in $199.99/mo for one year before USA 250: on July 4, 2026, Enterprise Commander rises to $500/mo.",
   features: [
     'Direct "Master Lock" Protocol Access',
+    "Origin command — teach, route, and orchestrate all 29 partner AIs",
     "Real-Time Titans Intel Dashboard (Crypto/NYSE)",
     "Dedicated Fleet Command Channel",
     "Priority Revenue-Engine Support",
@@ -125,6 +126,7 @@ export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
   },
   memberTier: "USJET-PRIME-ACTIVE",
   paymentLinkEnvKey: "VITE_STRIPE_ENTERPRISE_PAYMENT_LINK",
+  badge: "USA 250 lock-in",
 };
 
 export const STRIPE_TIER_PRODUCTS = [

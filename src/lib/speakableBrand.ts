@@ -1,3 +1,10 @@
+/** Spoken welcome lines for Origin (she teaches all 29 partner AIs). */
+export const ORIGIN_SPOKEN_LOAD_GREET =
+  "Welcome to USJET. USJET Origin online. I'm here to teach you about all twenty-nine partner AIs — what to do, how to use them, and which bay to open.";
+
+export const ORIGIN_SPOKEN_WELCOME =
+  "Welcome to USJET. USJET Origin online. I'm here to teach you about all twenty-nine partner AIs — what each one does, how to use them, and which hangar bay to open. Ask me anything about the fleet. Command acknowledged.";
+
 /** Spoken brand — U.S. (United States) + JET, not four separate letters. */
 export const USJET_SPOKEN = "U. S. Jet";
 

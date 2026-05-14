@@ -3056,13 +3056,13 @@
 }
 
 .aircraft-icon__vector {
-  transform-origin: center;
+  transform-origin: 42% 48%;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fleet-card:hover .aircraft-icon__vector,
 .fleet-card:focus-visible .aircraft-icon__vector {
-  transform: translate3d(0, -4px, 0) scale(1.03);
+  transform: translate3d(3px, -5px, 0) scale(1.05) rotate(-4deg);
 }
 
 .fleet-card__aircraft {
@@ -3091,7 +3091,8 @@
 
 .fleet-card:hover .fleet-card__aircraft,
 .fleet-card:focus-visible .fleet-card__aircraft {
-  transform: translate3d(0, -4px, 0) scale(1.03);
+  transform: translate3d(3px, -5px, 0) scale(1.05) rotate(-4deg);
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.45));
 }
 
 button.fleet-card {

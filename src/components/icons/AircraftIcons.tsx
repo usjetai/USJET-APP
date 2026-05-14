@@ -1,7 +1,7 @@
 import type { ReactElement, ReactNode } from "react";
 import type { FleetAircraftType } from "../../types/fleet";
 
-/** Plan-view wireframe silhouettes: inline SVG modules (bundled; not loaded from /public/aircraft). */
+/** Plan-view wireframe silhouettes — aerodynamic deltas, tapered fuselages, high-velocity strokes. */
 
 type AircraftIconProps = {
   aircraftType: FleetAircraftType;
@@ -12,24 +12,36 @@ type AircraftIconProps = {
 const airframeStroke = {
   fill: "none" as const,
   stroke: "white",
-  strokeWidth: 1.5,
+  strokeWidth: 1.35,
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
   vectorEffect: "non-scaling-stroke" as const,
 };
 
+/** Tapered fuselage spine — needle nose to narrow tail. */
+function FuselageSpine({ noseY = 6, tailY = 68 }: { noseY?: number; tailY?: number }) {
+  const mid = (noseY + tailY) / 2;
+  return (
+    <path
+      {...airframeStroke}
+      d={`M40 ${noseY} Q38.5 ${mid} 40 ${tailY} Q41.5 ${mid} 40 ${noseY}`}
+    />
+  );
+}
+
 export function Sr71Icon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 6 L40 66" />
-      <path {...airframeStroke} d="M40 20 L10 52 L22 58 L40 48 L58 58 L70 52 Z" />
-      <path {...airframeStroke} d="M40 20 L40 48" />
-      <ellipse {...airframeStroke} cx="24" cy="42" rx="5" ry="7" />
-      <ellipse {...airframeStroke} cx="56" cy="42" rx="5" ry="7" />
-      <path {...airframeStroke} d="M22 44 L18 48" />
-      <path {...airframeStroke} d="M58 44 L62 48" />
-      <path {...airframeStroke} d="M34 64 L40 72 L46 64" />
-      <path {...airframeStroke} d="M32 66 L48 66" />
+      <FuselageSpine noseY={5} tailY={70} />
+      <path
+        {...airframeStroke}
+        d="M40 14 C32 22 8 46 4 54 L18 58 L40 42 L62 58 L76 54 C72 46 48 22 40 14 Z"
+      />
+      <path {...airframeStroke} d="M40 14 L40 42" />
+      <ellipse {...airframeStroke} cx="22" cy="44" rx="4.2" ry="6" />
+      <ellipse {...airframeStroke} cx="58" cy="44" rx="4.2" ry="6" />
+      <path {...airframeStroke} d="M36 66 L40 74 L44 66" />
+      <path {...airframeStroke} d="M20 50 L12 54 M60 50 L68 54" />
     </>
   );
 }
@@ -37,13 +49,14 @@ export function Sr71Icon() {
 export function F22Icon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 8 L40 58" />
-      <path {...airframeStroke} d="M40 22 L14 44 L28 50 L40 42 L52 50 L66 44 Z" />
-      <path {...airframeStroke} d="M32 56 L40 68 L48 56" />
-      <path {...airframeStroke} d="M22 40 L10 46" />
-      <path {...airframeStroke} d="M58 40 L70 46" />
-      <path {...airframeStroke} d="M36 28 L44 28" />
-      <path {...airframeStroke} d="M34 60 L46 60" />
+      <FuselageSpine noseY={7} tailY={66} />
+      <path
+        {...airframeStroke}
+        d="M40 16 L6 44 L22 50 L40 38 L58 50 L74 44 Z"
+      />
+      <path {...airframeStroke} d="M34 62 L40 72 L46 62" />
+      <path {...airframeStroke} d="M18 42 L8 48 M62 42 L72 48" />
+      <path {...airframeStroke} d="M35 24 L45 24" />
     </>
   );
 }
@@ -51,12 +64,13 @@ export function F22Icon() {
 export function F35Icon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 8 L40 56" />
-      <path {...airframeStroke} d="M40 22 L18 42 L30 47 L40 40 L50 47 L62 42 Z" />
-      <path {...airframeStroke} d="M35 54 L40 62 L45 54" />
-      <path {...airframeStroke} d="M24 38 L14 42" />
-      <path {...airframeStroke} d="M56 38 L66 42" />
-      <path {...airframeStroke} d="M38 26 L42 26" />
+      <FuselageSpine noseY={8} tailY={64} />
+      <path
+        {...airframeStroke}
+        d="M40 18 C34 24 16 40 12 46 L26 50 L40 40 L54 50 L68 46 C64 40 46 24 40 18 Z"
+      />
+      <path {...airframeStroke} d="M36 58 L40 66 L44 58" />
+      <path {...airframeStroke} d="M22 40 L14 44 M58 40 L66 44" />
     </>
   );
 }
@@ -66,12 +80,11 @@ export function B2Icon() {
     <>
       <path
         {...airframeStroke}
-        d="M40 10 L8 42 L18 50 L30 46 L40 52 L50 46 L62 50 L72 42 Z"
+        d="M40 8 C28 12 6 38 4 44 L16 52 L32 46 L40 54 L48 46 L64 52 L76 44 C74 38 52 12 40 8 Z"
       />
-      <path {...airframeStroke} d="M40 10 L40 52" />
-      <path {...airframeStroke} d="M34 18 C34 14 46 14 46 18" />
-      <path {...airframeStroke} d="M22 46 L16 42" />
-      <path {...airframeStroke} d="M58 46 L64 42" />
+      <path {...airframeStroke} d="M40 8 Q40 30 40 54" />
+      <path {...airframeStroke} d="M32 16 C32 12 48 12 48 16" />
+      <path {...airframeStroke} d="M18 48 L10 44 M62 48 L70 44" />
     </>
   );
 }
@@ -79,17 +92,12 @@ export function B2Icon() {
 export function B52Icon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 8 L40 62" />
-      <path {...airframeStroke} d="M6 38 L74 38" />
-      <path {...airframeStroke} d="M14 38 L14 42" />
-      <path {...airframeStroke} d="M24 38 L24 42" />
-      <path {...airframeStroke} d="M34 38 L34 42" />
-      <path {...airframeStroke} d="M46 38 L46 42" />
-      <path {...airframeStroke} d="M56 38 L56 42" />
-      <path {...airframeStroke} d="M66 38 L66 42" />
-      <path {...airframeStroke} d="M30 58 L50 58" />
-      <path {...airframeStroke} d="M20 36 L12 32" />
-      <path {...airframeStroke} d="M60 36 L68 32" />
+      <FuselageSpine noseY={8} tailY={62} />
+      <path {...airframeStroke} d="M4 36 Q40 34 76 36" />
+      <path {...airframeStroke} d="M12 36 L12 40 M22 36 L22 40 M32 36 L32 40 M48 36 L48 40 M58 36 L58 40 M68 36 L68 40" />
+      <path {...airframeStroke} d="M28 56 L52 56" />
+      <path {...airframeStroke} d="M18 34 L10 30 M62 34 L70 30" />
+      <path {...airframeStroke} d="M36 20 L44 20" />
     </>
   );
 }
@@ -97,16 +105,15 @@ export function B52Icon() {
 export function C130Icon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 12 L40 58" />
-      <path {...airframeStroke} d="M8 30 L72 30" />
-      <path {...airframeStroke} d="M30 58 L50 58" />
-      <path {...airframeStroke} d="M40 58 L40 64" />
-      <path {...airframeStroke} d="M34 64 L46 64" />
-      <circle {...airframeStroke} cx="18" cy="30" r="3.4" />
-      <circle {...airframeStroke} cx="30" cy="30" r="3.4" />
-      <circle {...airframeStroke} cx="50" cy="30" r="3.4" />
-      <circle {...airframeStroke} cx="62" cy="30" r="3.4" />
-      <path {...airframeStroke} d="M18 26 L18 22 M30 26 L30 22 M50 26 L50 22 M62 26 L62 22" />
+      <FuselageSpine noseY={12} tailY={60} />
+      <path {...airframeStroke} d="M6 28 Q40 26 74 28" />
+      <path {...airframeStroke} d="M32 56 L48 56" />
+      <path {...airframeStroke} d="M40 60 L40 66 M34 66 L46 66" />
+      <ellipse {...airframeStroke} cx="18" cy="28" rx="3.2" ry="3.2" />
+      <ellipse {...airframeStroke} cx="30" cy="28" rx="3.2" ry="3.2" />
+      <ellipse {...airframeStroke} cx="50" cy="28" rx="3.2" ry="3.2" />
+      <ellipse {...airframeStroke} cx="62" cy="28" rx="3.2" ry="3.2" />
+      <path {...airframeStroke} d="M18 24 L18 20 M30 24 L30 20 M50 24 L50 20 M62 24 L62 20" />
     </>
   );
 }
@@ -114,13 +121,11 @@ export function C130Icon() {
 export function GlobalHawkIcon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 14 L40 56" />
-      <path {...airframeStroke} d="M4 40 L76 40" />
-      <path {...airframeStroke} d="M4 40 L8 44" />
-      <path {...airframeStroke} d="M76 40 L72 44" />
-      <path {...airframeStroke} d="M34 14 C34 10 46 10 46 14" />
-      <path {...airframeStroke} d="M40 56 L40 62" />
-      <path {...airframeStroke} d="M34 62 L46 62" />
+      <FuselageSpine noseY={14} tailY={58} />
+      <path {...airframeStroke} d="M2 38 Q40 36 78 38" />
+      <path {...airframeStroke} d="M2 38 L6 42 M78 38 L74 42" />
+      <path {...airframeStroke} d="M34 12 C34 9 46 9 46 12" />
+      <path {...airframeStroke} d="M40 58 L40 64 M34 64 L46 64" />
     </>
   );
 }
@@ -128,15 +133,14 @@ export function GlobalHawkIcon() {
 export function V22Icon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 14 L40 56" />
-      <path {...airframeStroke} d="M12 36 L68 36" />
-      <path {...airframeStroke} d="M32 56 L48 56" />
-      <circle {...airframeStroke} cx="12" cy="36" r="8" />
-      <circle {...airframeStroke} cx="68" cy="36" r="8" />
-      <path {...airframeStroke} d="M12 28 L12 44 M4 36 L20 36" />
-      <path {...airframeStroke} d="M68 28 L68 44 M60 36 L76 36" />
-      <path {...airframeStroke} d="M12 22 L12 18 M68 22 L68 18" />
-      <path {...airframeStroke} d="M8 36 L16 36 M64 36 L72 36" />
+      <FuselageSpine noseY={14} tailY={56} />
+      <path {...airframeStroke} d="M10 34 Q40 32 70 34" />
+      <path {...airframeStroke} d="M32 54 L48 54" />
+      <ellipse {...airframeStroke} cx="10" cy="34" rx="7.5" ry="7.5" />
+      <ellipse {...airframeStroke} cx="70" cy="34" rx="7.5" ry="7.5" />
+      <path {...airframeStroke} d="M10 26 L10 42 M2 34 L18 34" />
+      <path {...airframeStroke} d="M70 26 L70 42 M62 34 L78 34" />
+      <path {...airframeStroke} d="M10 20 L10 16 M70 20 L70 16" />
     </>
   );
 }
@@ -144,12 +148,11 @@ export function V22Icon() {
 export function CessnaIcon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 12 L40 56" />
-      <path {...airframeStroke} d="M16 28 L64 28" />
-      <path {...airframeStroke} d="M34 56 L46 56" />
-      <circle {...airframeStroke} cx="40" cy="10" r="3.2" />
-      <path {...airframeStroke} d="M40 10 L40 6" />
-      <path {...airframeStroke} d="M36 6 L44 6" />
+      <FuselageSpine noseY={10} tailY={56} />
+      <path {...airframeStroke} d="M14 26 Q40 24 66 26" />
+      <path {...airframeStroke} d="M34 54 L46 54" />
+      <circle {...airframeStroke} cx="40" cy="9" r="2.8" />
+      <path {...airframeStroke} d="M40 9 L40 5 M36 5 L44 5" />
     </>
   );
 }
@@ -157,14 +160,13 @@ export function CessnaIcon() {
 export function BizjetIcon() {
   return (
     <>
-      <path {...airframeStroke} d="M40 10 L40 54" />
-      <path {...airframeStroke} d="M16 38 L64 38" />
-      <path {...airframeStroke} d="M20 38 L26 44" />
-      <path {...airframeStroke} d="M60 38 L54 44" />
-      <path {...airframeStroke} d="M40 54 L40 60" />
-      <path {...airframeStroke} d="M34 60 L46 60" />
-      <ellipse {...airframeStroke} cx="33" cy="50" rx="2.6" ry="4.2" />
-      <ellipse {...airframeStroke} cx="47" cy="50" rx="2.6" ry="4.2" />
+      <FuselageSpine noseY={9} tailY={58} />
+      <path {...airframeStroke} d="M14 36 Q40 34 66 36" />
+      <path {...airframeStroke} d="M22 36 L28 42 M58 36 L52 42" />
+      <path {...airframeStroke} d="M40 58 L40 64 M34 64 L46 64" />
+      <ellipse {...airframeStroke} cx="33" cy="48" rx="2.4" ry="3.8" />
+      <ellipse {...airframeStroke} cx="47" cy="48" rx="2.4" ry="3.8" />
+      <path {...airframeStroke} d="M38 18 L42 18" />
     </>
   );
 }

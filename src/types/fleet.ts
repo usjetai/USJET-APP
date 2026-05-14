@@ -14,6 +14,15 @@ export type FleetAircraftType =
   | "cessna"
   | "bizjet";
 
+export type FleetInputMode = "text" | "voice" | "both";
+
+export type FleetPlatform = "web" | "mac" | "windows" | "ios" | "android";
+
+export type FleetCapabilities = {
+  inputModes: FleetInputMode;
+  platforms: FleetPlatform[];
+};
+
 export type FleetUnit = {
   id: string;
   slot: number;

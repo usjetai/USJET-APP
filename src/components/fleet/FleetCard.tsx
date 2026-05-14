@@ -1,7 +1,12 @@
+import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccents";
+import { getFleetCapabilities } from "../../data/fleetCapabilities";
+import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
+import { Link } from "react-router-dom";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
+import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import type { FleetAircraftType } from "../../types/fleet";
 
@@ -13,10 +18,14 @@ type FleetCardProps = {
   href?: string;
   slot?: number;
   systemPrompt?: string;
+  /** Cockpit return route — Fleet `/`, Hangar `/hangar`, etc. */
+  returnTo?: string;
   /** Bay 30 / USJet Origin — command styling */
   isCommandBay?: boolean;
   /** When set, plain click / Enter / Space expands the hangar bay instead of navigating. Cmd/Ctrl-click still opens the URL. */
   onExpandBay?: () => void;
+  /** Visual surface — runway (Fleet `/`) vs workbench bays (Hangar). */
+  surface?: "fleet" | "hangar";
   style?: CSSProperties;
 };
 
@@ -28,12 +37,17 @@ export default function FleetCard({
   href,
   slot,
   systemPrompt,
+  returnTo = "/hangar",
   isCommandBay = false,
   onExpandBay,
+  surface = "fleet",
   style,
 }: FleetCardProps) {
-  const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name });
+  const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name, returnTo });
+  const CardTag = launchUrl.startsWith("/") ? Link : "a";
+  const cardProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
+  const bayAccent = typeof slot === "number" ? getFleetBayAccent(slot) : null;
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
 
@@ -42,6 +56,8 @@ export default function FleetCard({
   };
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    logFleetUsageIfMember(callsign, name);
+
     if (onExpandBay) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
         syncProtocolToClipboard();
@@ -64,12 +80,25 @@ export default function FleetCard({
   };
 
   return (
-    <a
-      href={launchUrl}
-      className={["fleet-card group block h-full min-h-[11.5rem]", expandInteractive ? "fleet-card--hangar-expand" : "", isCommandBay ? "fleet-card--command" : ""]
+    <CardTag
+      {...cardProps}
+      className={[
+        "fleet-card group block h-full",
+        surface === "hangar" ? "fleet-card--surface-hangar min-h-[13.5rem]" : "fleet-card--surface-runway min-h-[8rem]",
+        bayAccent ? "fleet-card--bay-accent" : "",
+        expandInteractive ? "fleet-card--hangar-expand" : "",
+        isCommandBay ? "fleet-card--command" : "",
+      ]
         .filter(Boolean)
         .join(" ")}
-      style={style}
+      style={
+        bayAccent
+          ? ({
+              ...style,
+              ...fleetBayAccentStyle(slot as number),
+            } as CSSProperties)
+          : style
+      }
       data-usjet-cockpit={expandInteractive ? "true" : undefined}
       data-usjet-fleet-bay={expandInteractive && typeof slot === "number" ? String(slot + 1) : undefined}
       data-usjet-partner={expandInteractive ? domain : undefined}
@@ -95,24 +124,36 @@ export default function FleetCard({
           />
         </div>
 
-        <div className="mt-auto text-left">
+        <div className="fleet-card__meta mt-auto text-left">
           {isCommandBay ? (
             <p className="text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
           ) : expandInteractive ? (
             <p className="text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/50">USJET fleet · consensus bay</p>
           ) : null}
           {typeof slot === "number" ? (
-            <p className={`text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}>
+            <p
+              className={`fleet-card__bay-label text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}
+            >
               Bay {String(slot + 1).padStart(2, "0")}
+              {bayAccent ? (
+                <span className="fleet-card__personality"> · {bayAccent.personality}</span>
+              ) : null}
             </p>
           ) : null}
           <h3 className="mt-2 text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
             {name}
           </h3>
-          <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-blue-400/90">{callsign}</p>
+          {surface === "fleet" && typeof slot === "number" ? (
+            <FleetCapabilityBadges capabilities={getFleetCapabilities(slot)} />
+          ) : null}
+          <p
+            className={`mt-1 text-[10px] font-bold uppercase tracking-widest ${bayAccent ? "fleet-card__callsign" : "text-blue-400/90"}`}
+          >
+            {callsign}
+          </p>
           <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
         </div>
       </div>
-    </a>
+    </CardTag>
   );
 }

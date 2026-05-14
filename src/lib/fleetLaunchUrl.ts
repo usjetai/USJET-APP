@@ -1,8 +1,48 @@
 /**
  * Resolves fleet launch URLs and wraps external partners in the USJET cockpit shell
  * so the return bar stays visible — Integrated Navigation without leaving the ship.
+ *
+ * Trusted Fleet Launch: first visit = sovereign handoff interstitial; repeat visits
+ * carry handoff=trusted and skip embed wait (partners control X-Frame-Options).
  */
 import { FLEET_PARTNER_HREFS } from "./fleetManifestAudit";
+
+export const FLEET_TRUSTED_STORAGE_PREFIX = "usjet-fleet-trusted-" as const;
+
+export function fleetBayIdFromSlot(slot?: number): string | null {
+  if (typeof slot !== "number") {
+    return null;
+  }
+  return String(slot + 1).padStart(2, "0");
+}
+
+export function trustedFleetStorageKey(bayId: string): string {
+  return `${FLEET_TRUSTED_STORAGE_PREFIX}${bayId}`;
+}
+
+/** Browser remembers authorized handoff after first sovereign launch. */
+export function isFleetBayTrusted(bayId: string | null | undefined): boolean {
+  if (!bayId || typeof window === "undefined") {
+    return false;
+  }
+  try {
+    const raw = localStorage.getItem(trustedFleetStorageKey(bayId));
+    return raw !== null && raw !== "";
+  } catch {
+    return false;
+  }
+}
+
+export function markFleetBayTrusted(bayId: string): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+  try {
+    localStorage.setItem(trustedFleetStorageKey(bayId), String(Date.now()));
+  } catch {
+    // storage full or private mode
+  }
+}
 
 export function fleetLaunchUrl(domain: string, href?: string, slot?: number): string {
   const trimmed = href?.trim();
@@ -78,8 +118,12 @@ export function wrapExternalInCockpit(rawUrl: string, options?: CockpitWrapOptio
   const returnTo = options?.returnTo ?? "/hangar";
   params.set("return", returnTo);
 
-  if (typeof options?.slot === "number") {
-    params.set("bay", String(options.slot + 1).padStart(2, "0"));
+  const bayId = fleetBayIdFromSlot(options?.slot);
+  if (bayId) {
+    params.set("bay", bayId);
+    if (isFleetBayTrusted(bayId)) {
+      params.set("handoff", "trusted");
+    }
   }
 
   if (options?.label) {

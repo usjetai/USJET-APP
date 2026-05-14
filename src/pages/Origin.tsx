@@ -7,6 +7,7 @@ import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import { speakWithBrandVoice } from "../lib/speakableBrand";
 
 type VoiceMode = "idle" | "listening" | "speaking";
 
@@ -26,7 +27,7 @@ const BULLETIN_LINES = [
 ];
 
 const ORIGIN_WELCOME =
-  "USJet Origin online. Thirty partner systems are networked. Hangar bays launch direct. Intel pulse is live. Command acknowledged.";
+  "Welcome to USJET. USJET Origin online. Thirty partner systems are networked. Hangar bays launch direct. Intel pulse is live. Command acknowledged.";
 
 function bulletinTrackText(): string {
   return BULLETIN_LINES.map((line) => `◆ ${line}`).join("     ");
@@ -84,19 +85,23 @@ export default function Origin() {
     setVoiceMode("speaking");
     setStatusLine("Transmitting Origin briefing…");
 
-    const utterance = new SpeechSynthesisUtterance(ORIGIN_WELCOME);
-    utterance.rate = 0.95;
-    utterance.pitch = 0.92;
-    utterance.onend = () => {
+    const spoke = speakWithBrandVoice(ORIGIN_WELCOME, {
+      rate: 0.95,
+      pitch: 0.92,
+      onEnd: () => {
+        setVoiceMode("idle");
+        setStatusLine("Status: Online // 8080 Active");
+      },
+      onError: () => {
+        setVoiceMode("idle");
+        setStatusLine("Voice transmit interrupted.");
+      },
+    });
+
+    if (!spoke) {
       setVoiceMode("idle");
-      setStatusLine("Status: Online // 8080 Active");
-    };
-    utterance.onerror = () => {
-      setVoiceMode("idle");
-      setStatusLine("Voice transmit interrupted.");
-    };
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+      setStatusLine("Speech output unavailable in this browser.");
+    }
   }, [stopListening]);
 
   const startListen = useCallback(async () => {

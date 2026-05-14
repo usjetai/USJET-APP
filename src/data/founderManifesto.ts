@@ -76,7 +76,7 @@ export const COMMAND_LOG_MAY_14_2026 = {
 
 export const DIRECT_LANDING_PROTOCOL = {
   logTitle: "Command Log · Direct Landing Protocol",
-  flightPassDirectExtractionPort: "https://buy.stripe.com/9B628raCq83VfUZ9xZdwc00",
+  flightPassDirectExtractionPort: "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02",
   bypassRule:
     "High-pressure funnels and quick-entry gates bypass intermediate checkout—route straight to the Flight Pass Direct Extraction Port.",
   oneClickRevenue:

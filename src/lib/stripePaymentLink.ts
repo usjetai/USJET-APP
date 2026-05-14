@@ -1,5 +1,5 @@
 /** Flight Pass ($19.90/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
-export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/9B628raCq83VfUZ9xZdwc00";
+export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02";
 
 /** Flight Pass ($19.90/mo) — env override when set, else FLIGHT_PASS_DIRECT_URL. */
 export function resolveFounderPaymentLink(): string {

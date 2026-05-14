@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Check, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout/StripeSecureCheckout";
+import { HANGAR_PRO_STRIPE } from "../data/stripeProducts";
 
 type ServiceTier = {
   id: SpecialTierId;
@@ -35,17 +36,16 @@ const SERVICE_TIERS: ServiceTier[] = [
   },
   {
     id: "hangar-pro",
-    name: "Hangar Pro",
+    name: HANGAR_PRO_STRIPE.name,
     kicker: "Operator tier",
-    price: "$49.95",
-    period: "/mo",
-    description:
-      "For shops and teams running multiple workstations—expanded bay concurrency and ops telemetry.",
+    price: HANGAR_PRO_STRIPE.priceDisplay,
+    period: HANGAR_PRO_STRIPE.period,
+    description: HANGAR_PRO_STRIPE.description,
     features: [
-      "Everything in Founder",
-      "5 simultaneous workbenches",
-      "Team seat invites (up to 5)",
-      "Ops status webhooks",
+      "Real-time AI Fleet networking",
+      "30-unit Hangar connectivity",
+      "Live Intel Pulse (Crypto/NYSE)",
+      "Direct flight links — no dead iframes",
     ],
     paymentLink: import.meta.env.VITE_STRIPE_PRO_PAYMENT_LINK?.trim(),
   },

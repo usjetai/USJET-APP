@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { memberTierFromStripeMetadata, productMetadataFromSubscription } from "./stripeProducts";
 
 type VerifyBody = {
   customerId?: string;
@@ -56,16 +57,29 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
 
     const [activeSubs, trialingSubs] = await Promise.all([
-      stripe.subscriptions.list({ customer: resolvedCustomerId!, status: "active", limit: 1 }),
-      stripe.subscriptions.list({ customer: resolvedCustomerId!, status: "trialing", limit: 1 }),
+      stripe.subscriptions.list({
+        customer: resolvedCustomerId!,
+        status: "active",
+        limit: 1,
+        expand: ["data.items.data.price.product"],
+      }),
+      stripe.subscriptions.list({
+        customer: resolvedCustomerId!,
+        status: "trialing",
+        limit: 1,
+        expand: ["data.items.data.price.product"],
+      }),
     ]);
 
-    const active = activeSubs.data.length > 0 || trialingSubs.data.length > 0;
+    const subscription = activeSubs.data[0] ?? trialingSubs.data[0];
+    const active = Boolean(subscription);
+    const stripeMetadata = subscription ? productMetadataFromSubscription(subscription) : undefined;
+    const tier = active ? memberTierFromStripeMetadata(stripeMetadata) : "INACTIVE";
 
     return res.status(200).json({
       active,
       customerId: resolvedCustomerId,
-      tier: active ? "USJET-PRIME-ACTIVE" : "INACTIVE",
+      tier,
       email: email || undefined,
     });
   } catch (error) {

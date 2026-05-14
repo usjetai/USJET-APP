@@ -4,9 +4,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AuraFrame from "../components/aura/AuraFrame";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import OriginBrowserConnectModal from "../components/origin/OriginBrowserConnectModal";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import {
+  isConnectGuideIntent,
+  ORIGIN_CONNECT_ACK,
+  ORIGIN_CONNECT_PROMPT,
+} from "../lib/originConnectGuide";
 import {
   buildOpenRouterMessages,
   completeChat,
@@ -43,23 +49,10 @@ const UTTERANCE_SILENCE_MS = 700;
 const UTTERANCE_FINAL_MS = 450;
 
 /** Spoken when Aura link is not live — no deployment jargon in TTS */
-const ORIGIN_OFFLINE_PROMPT =
-  "Origin online. I heard you, Commander. Would you like me to explain how we can connect this service right now — as easy and as fast as possible?";
-
-/** Member-facing steps after yes / explain / how — not admin Vercel instructions */
-const ORIGIN_OFFLINE_EXPLAIN =
-  "Step one: our flight crew is bringing Aura fully online. Step two: for instant help, tap Customer Service or email ops at usjet dot ai. Step three: members get first access when the link is live.";
+const ORIGIN_OFFLINE_PROMPT = ORIGIN_CONNECT_PROMPT;
 
 const ORIGIN_AURA_LINK_LOST =
   "Origin online. Aura link is quiet right now — mic is still live. Try again in a moment, Commander.";
-
-function isOfflineExplainIntent(text: string): boolean {
-  const t = text.toLowerCase();
-  return (
-    /\b(yes|yeah|yep|sure|please|explain|how|connect|help|tell me)\b/.test(t) ||
-    /\bhow (do|can|to|we)\b/.test(t)
-  );
-}
 
 type ChatTurn = { role: "user" | "assistant"; content: string };
 
@@ -109,6 +102,7 @@ export default function Origin() {
   const [speakLive, setSpeakLive] = useState(false);
   const [voiceLevel, setVoiceLevel] = useState(0);
   const [showTroubleshoot, setShowTroubleshoot] = useState(false);
+  const [showBrowserConnect, setShowBrowserConnect] = useState(false);
   const [showAutoplayBanner, setShowAutoplayBanner] = useState(false);
   const [statusLine, setStatusLine] = useState("Status: Online // Port 8080 Active");
   const micEnabledRef = useRef(false);
@@ -121,7 +115,6 @@ export default function Origin() {
   const processingRef = useRef(false);
   const listeningPausedRef = useRef(false);
   const chatTurnsRef = useRef<ChatTurn[]>([]);
-  const awaitingOfflineExplainRef = useRef(false);
   const restartRecognitionRef = useRef<() => void>(() => undefined);
   const handleTranscriptRef = useRef<(raw: string) => void>(() => undefined);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -277,6 +270,23 @@ export default function Origin() {
     [armSpeakChannel],
   );
 
+  const openBrowserConnectModal = useCallback(() => {
+    setShowBrowserConnect(true);
+  }, []);
+
+  const closeBrowserConnectModal = useCallback(() => {
+    setShowBrowserConnect(false);
+  }, []);
+
+  const finishTranscriptCycle = useCallback(() => {
+    processingRef.current = false;
+    listeningPausedRef.current = false;
+    if (micEnabledRef.current) {
+      setStatusLine("Mic live — Origin listening");
+      restartRecognitionRef.current();
+    }
+  }, []);
+
   const handleTranscript = useCallback(
     async (raw: string) => {
       const text = raw.trim();
@@ -290,29 +300,24 @@ export default function Origin() {
 
       setStatusLine(`Heard: “${text.slice(0, 72)}${text.length > 72 ? "…" : ""}”`);
 
-      if (!OPENROUTER_API_KEY) {
-        const offlineReply =
-          awaitingOfflineExplainRef.current && isOfflineExplainIntent(text)
-            ? ORIGIN_OFFLINE_EXPLAIN
-            : ORIGIN_OFFLINE_PROMPT;
-        if (offlineReply === ORIGIN_OFFLINE_EXPLAIN) {
-          awaitingOfflineExplainRef.current = false;
-        } else {
-          awaitingOfflineExplainRef.current = true;
-        }
-        setStatusLine("Origin online — standby briefing");
-        speakOriginReply(offlineReply, () => {
-          processingRef.current = false;
-          listeningPausedRef.current = false;
-          if (micEnabledRef.current) {
-            setStatusLine("Mic live — Origin listening");
-            restartRecognitionRef.current();
-          }
+      if (isConnectGuideIntent(text)) {
+        setStatusLine("Origin online — browser connect guide");
+        speakOriginReply(ORIGIN_CONNECT_ACK, () => {
+          openBrowserConnectModal();
+          finishTranscriptCycle();
         });
         return;
       }
 
-      awaitingOfflineExplainRef.current = false;
+      if (!OPENROUTER_API_KEY) {
+        const offlineReply = ORIGIN_OFFLINE_PROMPT;
+        setStatusLine("Origin online — standby briefing");
+        speakOriginReply(offlineReply, () => {
+          openBrowserConnectModal();
+          finishTranscriptCycle();
+        });
+        return;
+      }
 
       setStatusLine("Origin thinking…");
 
@@ -326,25 +331,21 @@ export default function Origin() {
         );
         chatTurnsRef.current = [...turns, { role: "assistant", content: reply }];
         speakOriginReply(reply, () => {
-          processingRef.current = false;
-          listeningPausedRef.current = false;
-          if (micEnabledRef.current) {
-            setStatusLine("Mic live — Origin listening");
-            restartRecognitionRef.current();
-          }
+          finishTranscriptCycle();
         });
       } catch {
         speakOriginReply(ORIGIN_AURA_LINK_LOST, () => {
-          processingRef.current = false;
-          listeningPausedRef.current = false;
-          if (micEnabledRef.current) {
-            setStatusLine("Mic live — Origin listening");
-            restartRecognitionRef.current();
-          }
+          finishTranscriptCycle();
         });
       }
     },
-    [clearSilenceTimer, speakOriginReply, stopRecognition],
+    [
+      clearSilenceTimer,
+      finishTranscriptCycle,
+      openBrowserConnectModal,
+      speakOriginReply,
+      stopRecognition,
+    ],
   );
 
   handleTranscriptRef.current = (raw: string) => {
@@ -789,6 +790,13 @@ export default function Origin() {
           <p className="origin-page__status mt-8 font-mono text-[10px] uppercase tracking-widest text-cyan-300/70">
             {statusLine}
           </p>
+          <button
+            type="button"
+            className="origin-connect-btn"
+            onClick={openBrowserConnectModal}
+          >
+            Connect through your browser
+          </button>
         </div>
 
         <GlassEffectContainer className="origin-page__deck glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mb-10 w-full max-w-4xl flex-col items-stretch gap-0 p-0">
@@ -863,6 +871,8 @@ export default function Origin() {
         <p>Protocol: USJET-v5</p>
         <p>System: Liquid Glass</p>
       </div>
+
+      <OriginBrowserConnectModal open={showBrowserConnect} onClose={closeBrowserConnectModal} />
 
       {showTroubleshoot ? (
         <>

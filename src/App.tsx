@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import AppNav from "./components/layout/AppNav";
 import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
-import MovingBackground from "./components/layout/MovingBackground";
 import WarpBackground from "./components/layout/WarpBackground";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
 import Fleet from "./pages/Fleet";
@@ -15,16 +14,6 @@ import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
 import Cockpit from "./pages/Cockpit";
-
-const globalAtmosphereStyle = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100vw",
-  height: "100vh",
-  zIndex: 1,
-  pointerEvents: "none",
-} as const;
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -63,7 +52,6 @@ function AppChrome() {
     <>
       <WarpBackground />
       <GlobalVideoBackground />
-      <MovingBackground />
       <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
       <AppNav />
       <main className="relative z-10">
@@ -77,9 +65,6 @@ export default function App() {
   return (
     <Router>
       <div className="relative min-h-screen overflow-x-hidden bg-transparent text-white">
-        <div id="global-atmosphere" style={globalAtmosphereStyle}>
-          <div aria-hidden className="moving-clouds" />
-        </div>
         <AppChrome />
         <UsjetGlobalContactBar />
       </div>

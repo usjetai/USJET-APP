@@ -54,11 +54,11 @@
   }
 }
 
-/* Canvas warp starfield — primary atmosphere (z-index 0) */
+/* Canvas warp starfield — primary atmosphere */
 .warp-bg-canvas {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -2;
   display: block;
   width: 100%;
   height: 100%;
@@ -67,16 +67,17 @@
   filter: blur(0.6px);
 }
 
-/* Global warp tunnel video — optional enhancement over canvas */
+/* Global warp tunnel — streak overlay only (no video/veil) */
 .global-video-bg {
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   overflow: hidden;
   background: transparent;
 }
 
+.global-video-bg--warp-only,
 .global-video-bg--canvas-only {
   background: transparent;
 }
@@ -132,7 +133,7 @@
   margin-left: -110vmax;
   margin-top: -110vmax;
   pointer-events: none;
-  opacity: 0.42;
+  opacity: 0.52;
   mix-blend-mode: screen;
   transform-origin: 50% 50%;
   will-change: transform, opacity;
@@ -184,9 +185,7 @@
   }
 
   .global-video-bg {
-    background:
-      radial-gradient(ellipse 80% 55% at 50% 35%, rgba(34, 211, 238, 0.08), transparent 62%),
-      #050a14;
+    background: transparent;
   }
 }
 
@@ -194,7 +193,7 @@
 .aviation-pulse {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: -1;
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -255,7 +254,8 @@
 
 /* Warp-speed variant: faster, brighter streaks (global — every route) */
 .aviation-pulse--warp {
-  opacity: 0.3;
+  z-index: -1;
+  opacity: 0.36;
   mix-blend-mode: screen;
   background-image:
     repeating-linear-gradient(
@@ -3370,27 +3370,13 @@
 }
 
 .fleet-page--runway::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse 130% 55% at 50% -8%, rgba(34, 211, 238, 0.09), transparent 58%),
-    radial-gradient(ellipse 70% 45% at 100% 40%, rgba(37, 99, 235, 0.07), transparent 52%),
-    radial-gradient(ellipse 60% 35% at 0% 70%, rgba(56, 189, 248, 0.05), transparent 48%);
+  content: none;
+  display: none;
 }
 
 .hangar-page--workbench::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse 90% 50% at 12% 0%, rgba(251, 191, 36, 0.07), transparent 55%),
-    radial-gradient(ellipse 80% 45% at 88% 100%, rgba(234, 88, 12, 0.05), transparent 52%),
-    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(180, 83, 9, 0.04), transparent 60%);
+  content: none;
+  display: none;
 }
 
 /* Fleet runway — wide landscape capsule bays */
@@ -4596,80 +4582,13 @@ button.fleet-card {
  * Sits above global .aviation-pulse (-1), below glass story cards (z-index 1+).
  */
 .founder-page--warp::before {
-  content: "";
-  pointer-events: none;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  z-index: 0;
-  width: 240vmax;
-  height: 240vmax;
-  margin-left: -120vmax;
-  margin-top: -120vmax;
-  opacity: 0.65;
-  mix-blend-mode: screen;
-  transform-origin: 50% 50%;
-  will-change: transform, opacity;
-  background: repeating-conic-gradient(
-    from 0deg at 50% 50%,
-    rgba(255, 255, 255, 0) 0deg 6.25deg,
-    rgba(255, 255, 255, 0.32) 6.3deg 6.75deg,
-    rgba(255, 255, 255, 0.06) 6.8deg 7.1deg,
-    rgba(255, 255, 255, 0) 7.15deg 16.5deg
-  );
-  -webkit-mask-image: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.82) 14%,
-    rgba(0, 0, 0, 0.35) 36%,
-    transparent 68%
-  );
-  mask-image: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 0, 0, 0.98) 0%,
-    rgba(0, 0, 0, 0.82) 14%,
-    rgba(0, 0, 0, 0.35) 36%,
-    transparent 68%
-  );
-  animation: founder-warp-tunnel-deep 3.1s linear infinite;
+  content: none;
+  display: none;
 }
 
 .founder-page--warp::after {
-  content: "";
-  pointer-events: none;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  z-index: 0;
-  width: 200vmax;
-  height: 200vmax;
-  margin-left: -100vmax;
-  margin-top: -100vmax;
-  opacity: 0.42;
-  mix-blend-mode: screen;
-  transform-origin: 50% 50%;
-  will-change: transform, opacity;
-  background: repeating-conic-gradient(
-    from 14deg at 50% 50%,
-    rgba(255, 255, 255, 0) 0deg 10.5deg,
-    rgba(255, 255, 255, 0.2) 10.55deg 10.95deg,
-    rgba(255, 255, 255, 0) 11deg 21deg
-  );
-  -webkit-mask-image: radial-gradient(
-    circle at 50% 50%,
-    transparent 0%,
-    rgba(0, 0, 0, 0.45) 10%,
-    rgba(0, 0, 0, 0.92) 26%,
-    transparent 58%
-  );
-  mask-image: radial-gradient(
-    circle at 50% 50%,
-    transparent 0%,
-    rgba(0, 0, 0, 0.45) 10%,
-    rgba(0, 0, 0, 0.92) 26%,
-    transparent 58%
-  );
-  animation: founder-warp-tunnel-fast 1.65s linear infinite;
+  content: none;
+  display: none;
 }
 
 @keyframes founder-warp-tunnel-deep {

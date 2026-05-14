@@ -1,12 +1,14 @@
-import { Navigate, Link } from "react-router-dom";
+import { Navigate, Link, useLocation } from "react-router-dom";
 import { Lock, ShieldAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import {
   canMemberAccessRoute,
+  isOriginCustomerServiceEntry,
   clearanceTierLabel,
   clearanceTierStripeId,
+  normalizeRoutePath,
   routeMinClearanceRank,
   tierRouteGateCopy,
 } from "../../lib/memberAccessLevel";
@@ -19,8 +21,11 @@ type TierRouteGateProps = {
 
 export default function TierRouteGate({ path, pageLabel: _pageLabel, children }: TierRouteGateProps) {
   const { session, loading } = useMemberAuth();
+  const location = useLocation();
+  const customerServiceEntry =
+    normalizeRoutePath(path) === "/origin" && isOriginCustomerServiceEntry(location.search);
 
-  if (loading || canMemberAccessRoute(path, session)) {
+  if (loading || customerServiceEntry || canMemberAccessRoute(path, session)) {
     return <>{children}</>;
   }
 

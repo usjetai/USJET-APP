@@ -24,15 +24,17 @@ export type ApiChatMessage = {
   content: string;
 };
 
-const SYSTEM_PROMPT: ApiChatMessage = {
-  role: "system",
-  content: buildOriginAuraSystemPrompt(),
-};
+export type OpenRouterEntryMode = "customer-service";
 
 export function buildOpenRouterMessages(
-  turns: { role: "user" | "assistant"; content: string }[]
+  turns: { role: "user" | "assistant"; content: string }[],
+  options?: { entry?: OpenRouterEntryMode },
 ): ApiChatMessage[] {
-  return [SYSTEM_PROMPT, ...turns];
+  const system: ApiChatMessage = {
+    role: "system",
+    content: buildOriginAuraSystemPrompt(options?.entry),
+  };
+  return [system, ...turns];
 }
 
 function openRouterReferer(): string {

@@ -81,6 +81,18 @@ export const ORIGIN_AURA_PERSONA = [
   "Introduce recommendations with 'Flight Plan' before details. Stay concise unless the user asks for depth.",
 ].join(" ");
 
-export function buildOriginAuraSystemPrompt(): string {
-  return `${ORIGIN_AURA_PERSONA}\n\n${buildOriginFleetKnowledgeBlock()}`;
+export const ORIGIN_AURA_CS_PERSONA_ADDENDUM = [
+  "CUSTOMER SERVICE ENTRY: The visitor arrived via the site-wide Customer Service link.",
+  "You are their USJET customer service agent — helpful, warm, sovereign, operations-minded.",
+  "Acknowledge that Customer Service brought them here; you multitask as support and fleet guide.",
+  "Do NOT pitch Enterprise Commander pricing, upgrade tiers, or lock-in offers unless they explicitly ask.",
+  "Help with navigation, Hangar bays, Member login via Stripe, ops email, and fleet questions.",
+].join(" ");
+
+export function buildOriginAuraSystemPrompt(entry?: "customer-service"): string {
+  const persona =
+    entry === "customer-service"
+      ? `${ORIGIN_AURA_PERSONA} ${ORIGIN_AURA_CS_PERSONA_ADDENDUM}`
+      : ORIGIN_AURA_PERSONA;
+  return `${persona}\n\n${buildOriginFleetKnowledgeBlock()}`;
 }

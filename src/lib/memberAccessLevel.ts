@@ -215,6 +215,21 @@ export function canMemberAccessRoute(
   return canAccessRoute(path, rank, godMode);
 }
 
+/** Customer Service treasure path — guests land on Origin in limited CS mode. */
+export const ORIGIN_CS_ENTRY = "customer-service";
+
+export const ORIGIN_CS_ROUTE = `/origin?entry=${ORIGIN_CS_ENTRY}`;
+
+export function isOriginCustomerServiceEntry(searchOrPath: string): boolean {
+  const raw = searchOrPath.trim();
+  const query = raw.startsWith("?")
+    ? raw.slice(1)
+    : raw.includes("?")
+      ? (raw.split("?")[1]?.split("#")[0] ?? "")
+      : raw;
+  return new URLSearchParams(query).get("entry") === ORIGIN_CS_ENTRY;
+}
+
 /** Hangar workbench simultaneous bay caps by clearance rank (0 = teaser / no session). */
 export const HANGAR_BAY_LIMIT_TEASER = 2;
 export const HANGAR_BAY_LIMIT_FLIGHT_PASS = 4;

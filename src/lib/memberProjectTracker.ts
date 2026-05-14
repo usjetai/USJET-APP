@@ -1,4 +1,10 @@
 import type { FleetUnit } from "../types/fleet";
+import {
+  memberClearanceDisplayLabel,
+  memberClearanceRank,
+  membershipTenureLabel,
+} from "./memberAccessLevel";
+import type { MemberSession } from "../types/member";
 import { readMemberSession } from "./memberSession";
 
 export const MEMBER_PROJECTS_STORAGE_KEY = "usjet-member-projects";
@@ -200,6 +206,138 @@ export type SavedMissionRecord = {
 };
 
 /** All saved assignments for this member — newest save first. */
+export function readMemberActiveProjectId(customerId: string): string | null {
+  return readActiveProjectStore()[customerId] ?? null;
+}
+
+export type MemberProjectStats = {
+  projectCount: number;
+  totalSessionForks: number;
+  activeProjectId: string | null;
+  activeProjectName: string | null;
+};
+
+export function getMemberProjectStats(customerId: string): MemberProjectStats {
+  const projects = readMemberProjects(customerId);
+  const activeProjectId =
+    readMemberActiveProjectId(customerId) ?? projects[0]?.id ?? null;
+  const activeProject = projects.find((project) => project.id === activeProjectId);
+  const totalSessionForks = projects.reduce(
+    (sum, project) =>
+      sum + project.assignments.reduce((forkSum, assignment) => forkSum + assignment.sessionForks, 0),
+    0,
+  );
+
+  return {
+    projectCount: projects.length,
+    totalSessionForks,
+    activeProjectId,
+    activeProjectName: activeProject?.name ?? null,
+  };
+}
+
+/** Serialize Mission Projects for Aura — ground-truth member intelligence in Origin chat. */
+export function buildOriginMemberContext(session: MemberSession | null): string | undefined {
+  if (!session?.active) {
+    return undefined;
+  }
+
+  const customerId = session.customerId;
+  const projects = readMemberProjects(customerId);
+  const stats = getMemberProjectStats(customerId);
+  const activeProjectId = stats.activeProjectId;
+  const savedRecords = readSavedMissionRecords(customerId);
+  const clearanceRank = memberClearanceRank(session);
+  const clearanceLabel = memberClearanceDisplayLabel(session);
+
+  const lines: string[] = [
+    "MEMBER_CONTEXT (ground truth — cite only these values; never invent counts or names):",
+    "loggedIn: true",
+    `customerId: ${customerId}`,
+    ...(session.email ? [`email: ${session.email}`] : []),
+    `tier: ${session.tier}`,
+    ...(session.accessLevel ? [`accessLevel: ${session.accessLevel}`] : []),
+    ...(session.stripeTier ? [`stripeTier: ${session.stripeTier}`] : []),
+    `clearanceRank: ${clearanceRank}`,
+    `clearanceLabel: ${clearanceLabel}`,
+    `founderGodMode: ${session.founderGodMode === true}`,
+    `verifiedAt: ${session.verifiedAt}`,
+    `membershipTenure: ${membershipTenureLabel(session.verifiedAt)}`,
+    ...(session.legacyId ? [`legacyId: ${session.legacyId}`] : []),
+    `activeProjectId: ${activeProjectId ?? "none"}`,
+    `activeProjectName: ${stats.activeProjectName ?? "none"}`,
+    `projectCount: ${stats.projectCount}`,
+    `totalSessionForks: ${stats.totalSessionForks}`,
+  ];
+
+  if (projects.length === 0) {
+    lines.push("projects: none — member has not created Mission Projects yet.");
+  } else {
+    for (const project of projects) {
+      const isActive = project.id === activeProjectId;
+      lines.push(
+        `PROJECT id=${project.id} name="${project.name}" created=${project.createdAt} active=${isActive} assignmentCount=${project.assignments.length}`,
+      );
+
+      if (project.assignments.length === 0) {
+        lines.push("  assignments: none");
+        continue;
+      }
+
+      const firstSaved = project.assignments.find(
+        (assignment) => assignment.isSaved && assignment.searchIntent.trim(),
+      );
+      const firstSearchMatchesProject =
+        firstSaved &&
+        firstSaved.searchIntent.trim().toLowerCase() === project.name.trim().toLowerCase();
+
+      for (const assignment of project.assignments) {
+        const isFirstSaved = assignment === firstSaved;
+        const ruleNote =
+          isFirstSaved && firstSearchMatchesProject
+            ? " firstSearchEqualsProjectName=true (USJET rule: first search mirrors project name until they rename the project or edit the assignment)"
+            : "";
+        lines.push(
+          [
+            `  ASSIGNMENT unit="${assignment.name}"`,
+            `callsign=${assignment.callsign}`,
+            `copilotName="${assignment.copilotName}"`,
+            `searchIntent="${assignment.searchIntent.trim() || "(empty)"}"`,
+            `saved=${assignment.isSaved}`,
+            `savedAt=${assignment.savedAt || "—"}`,
+            `sessionForks=${assignment.sessionForks}${ruleNote}`,
+          ].join(" "),
+        );
+      }
+    }
+  }
+
+  if (savedRecords.length === 0) {
+    lines.push("savedMissions: none");
+  } else {
+    lines.push(`savedMissionCount: ${savedRecords.length}`);
+    for (const record of savedRecords) {
+      lines.push(
+        [
+          `SAVED_MISSION project="${record.projectName}"`,
+          `unit="${record.assignment.name}"`,
+          `copilot="${record.assignment.copilotName}"`,
+          `search="${record.assignment.searchIntent}"`,
+          `forks=${record.assignment.sessionForks}`,
+          `savedAt=${record.assignment.savedAt}`,
+        ].join(" "),
+      );
+    }
+  }
+
+  lines.push(
+    "RULE: Until a member renames a project or edits an assignment, the first saved search intent often equals the project name — treat that as their opening mission subject.",
+    "If a field is missing or count is zero, say you have no record yet — do not guess.",
+  );
+
+  return lines.join("\n");
+}
+
 export function readSavedMissionRecords(customerId: string): SavedMissionRecord[] {
   return readMemberProjects(customerId).flatMap((project) =>
     project.assignments

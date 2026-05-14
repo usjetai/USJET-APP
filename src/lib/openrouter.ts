@@ -26,13 +26,21 @@ export type ApiChatMessage = {
 
 export type OpenRouterEntryMode = "customer-service";
 
+export type BuildOpenRouterOptions = {
+  entry?: OpenRouterEntryMode;
+  memberContext?: string;
+};
+
 export function buildOpenRouterMessages(
   turns: { role: "user" | "assistant"; content: string }[],
-  options?: { entry?: OpenRouterEntryMode },
+  options?: BuildOpenRouterOptions,
 ): ApiChatMessage[] {
   const system: ApiChatMessage = {
     role: "system",
-    content: buildOriginAuraSystemPrompt(options?.entry),
+    content: buildOriginAuraSystemPrompt({
+      entry: options?.entry,
+      memberContext: options?.memberContext,
+    }),
   };
   return [system, ...turns];
 }

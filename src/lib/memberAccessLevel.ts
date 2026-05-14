@@ -182,6 +182,58 @@ export function stripeTierRank(stripeTier?: string): number {
   return 0;
 }
 
+/** Human tier label for strips, Aura, and member-facing copy. */
+export function memberClearanceDisplayLabel(session: MemberSession | null | undefined): string {
+  if (!session?.active) {
+    return "Guest";
+  }
+  if (isFounderGodMode(session)) {
+    return "God mode";
+  }
+  const rank = memberClearanceRank(session);
+  if (rank >= 3 || session.tier === "USJET-ROYAL-HEIR") {
+    return "Enterprise Commander";
+  }
+  if (rank >= 2) {
+    return "Hangar Pro";
+  }
+  if (rank >= 1) {
+    return "Flight Pass";
+  }
+  return "Member clearance";
+}
+
+/** Tenure since Stripe verification — for MEMBER_CONTEXT and Origin strip. */
+export function membershipTenureLabel(verifiedAt: string): string {
+  const verified = new Date(verifiedAt);
+  if (Number.isNaN(verified.getTime())) {
+    return "tenure unknown";
+  }
+
+  const days = Math.max(0, Math.floor((Date.now() - verified.getTime()) / (1000 * 60 * 60 * 24)));
+  if (days < 1) {
+    return "verified today";
+  }
+  if (days === 1) {
+    return "1 day aboard";
+  }
+  if (days < 30) {
+    return `${days} days aboard`;
+  }
+
+  const months = Math.floor(days / 30);
+  if (months < 12) {
+    return `${months} month${months === 1 ? "" : "s"} aboard`;
+  }
+
+  const years = Math.floor(days / 365);
+  const remMonths = Math.floor((days % 365) / 30);
+  if (remMonths === 0) {
+    return `${years} year${years === 1 ? "" : "s"} aboard`;
+  }
+  return `${years}y ${remMonths}mo aboard`;
+}
+
 /** Numeric clearance rank — 0 = none, 1 = Flight Pass, 2 = Hangar Pro, 3 = Enterprise / heir. */
 export function memberClearanceRank(session: MemberSession | null | undefined): number {
   if (!session?.active) {

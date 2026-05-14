@@ -8,6 +8,9 @@ interface ImportMetaEnv {
   readonly VITE_STRIPE_FOUNDER_PAYMENT_LINK?: string;
   readonly VITE_STRIPE_PRO_PAYMENT_LINK?: string;
   readonly VITE_STRIPE_ENTERPRISE_PAYMENT_LINK?: string;
+  readonly VITE_MEMBER_VERIFY_URL?: string;
+  readonly VITE_MEMBER_DEMO_ID?: string;
+  readonly VITE_PARTNERSHIP_ANALYTICS_URL?: string;
 }
 
 interface ImportMeta {

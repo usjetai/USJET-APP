@@ -12,6 +12,7 @@ import Founder from "./pages/Founder";
 import Origin from "./pages/Origin";
 import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
+import MemberPortal from "./pages/MemberPortal";
 
 const globalAtmosphereStyle = {
   position: "fixed",
@@ -37,6 +38,7 @@ function AnimatedRoutes() {
           <Route path="/origin" element={<Origin />} />
           <Route path="/founder-special-1995" element={<FounderSpecial1995 />} />
           <Route path="/special" element={<Special />} />
+          <Route path="/member" element={<MemberPortal />} />
         </Routes>
       </PageTransition>
     </AnimatePresence>

@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { to: "/intel", label: "Intel" },
   { to: "/founder", label: "Founder" },
   { to: "/origin", label: "Origin" },
+  { to: "/member", label: "Member" },
 ] as const;
 
 const AppNav = () => (

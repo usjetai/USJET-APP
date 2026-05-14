@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import EkgPulseLine from "./EkgPulseLine";
+import { usePartnershipBayAnalytics } from "../../hooks/usePartnershipBayAnalytics";
 import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
 
 export type IntelReservedVariant = "market" | "crypto";
@@ -17,6 +18,9 @@ type IntelReservedBayProps = {
  */
 export default function IntelReservedBay({ variant, unit, index, style }: IntelReservedBayProps) {
   const isMarket = variant === "market";
+  const bayId = isMarket ? "slot-01-market" : "slot-02-titans";
+  const label = isMarket ? "INSTITUTIONAL FEED: STATUS PENDING" : "RESERVED FOR TITANS";
+  const { onMouseEnter, onClick } = usePartnershipBayAnalytics({ bayId, label });
 
   return (
     <article
@@ -39,6 +43,8 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
           ? "Slot 01 — Institutional market feed reserved"
           : "Slot 02 — Premium crypto exchange partnership reserved"
       }
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
     >
       <header className="intel-monitor__header">
         <p className="intel-monitor__callsign">{unit.callsign}</p>

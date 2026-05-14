@@ -1,6 +1,9 @@
 import { ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, type ReactNode } from "react";
 import FleetCard from "../components/fleet/FleetCard";
+import FoundersAccessGate from "../components/member/FoundersAccessGate";
+import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
+import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import { FLEET_UNIT_COUNT, HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
@@ -14,6 +17,7 @@ const HANGAR_VISION_RIBBON =
   "Click any bay to launch the live partner interface in a new tab—direct navigation, no dead iframes.";
 
 const Hangar = () => {
+  const { session } = useMemberAuth();
   useEffect(() => {
     const prevTitle = document.title;
     const meta = document.querySelector('meta[name="description"]');
@@ -58,13 +62,14 @@ const Hangar = () => {
   }, []);
 
   return (
-    <div className="relative hangar-page">
+    <FoundersAccessGate pageLabel="The Hangar">
+      <div className="relative hangar-page">
       <div className="page-atmosphere mx-auto max-w-[88rem] px-4 pb-24 pt-36 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-10 md:flex-row md:items-end">
           <div className="text-left">
             <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-black uppercase tracking-[0.35em] text-blue-400">
               <ShieldCheck size={20} className="shrink-0" />
-              <span>Founder&apos;s Access Granted</span>
+              <span>{session?.active ? "Founder's Access Granted" : "Founder's Hangar"}</span>
               <span
                 className="hangar-ops-badge rounded-full border border-cyan-400/35 bg-cyan-500/[0.08] px-3 py-1 text-[8px] font-black tracking-[0.2em] text-cyan-200/90 sm:text-[9px] sm:tracking-[0.28em]"
                 title="Each bay links straight to the partner AI—open in a new tab from the hangar"
@@ -87,10 +92,7 @@ const Hangar = () => {
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-            <p className="mb-2 text-[10px] font-black uppercase tracking-widest text-white/45">Member ID Status</p>
-            <p className="font-mono text-xl text-emerald-400">USJET-PRIME-ACTIVE</p>
-          </div>
+          <MemberPrimeBadge session={session} />
         </div>
 
         <div className="intel-grid-wrap -mx-2 overflow-x-auto px-2 sm:mx-0 sm:overflow-visible sm:px-0">
@@ -104,6 +106,7 @@ const Hangar = () => {
         </div>
       </div>
     </div>
+    </FoundersAccessGate>
   );
 };
 

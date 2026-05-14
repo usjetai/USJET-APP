@@ -5,6 +5,7 @@ import IntelMonitor from "../components/intel/IntelMonitor";
 import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
+import FoundersAccessGate from "../components/member/FoundersAccessGate";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
@@ -95,7 +96,8 @@ const Intel = () => {
   }, [cellPlan, closeExpansion, tryExpand]);
 
   return (
-    <div className="intel-page">
+    <FoundersAccessGate pageLabel="Intel Pulse">
+      <div className="intel-page">
       {workbenchFullToast ? (
         <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
           <p className="intel-hangar-toast__title">Hangar full</p>
@@ -137,6 +139,7 @@ const Intel = () => {
         </div>
       </div>
     </div>
+    </FoundersAccessGate>
   );
 };
 

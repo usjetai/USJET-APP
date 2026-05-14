@@ -9619,82 +9619,95 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: #67e8f9;
 }
 
-.member-projects__forks-badge-wrap {
-  position: relative;
-  display: inline-flex;
-}
-
 .member-projects__forks-count {
   margin: 0;
   padding: 0.12rem 0.45rem;
   border: 1px solid rgba(103, 232, 249, 0.32);
   border-radius: 0.4rem;
   background: rgba(8, 47, 73, 0.28);
-  cursor: help;
   line-height: 1.2;
 }
 
-.member-projects__forks-count:focus-visible {
-  outline: 2px solid rgba(103, 232, 249, 0.72);
-  outline-offset: 2px;
-}
-
-.member-projects__forks-tooltip {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  z-index: 30;
-  width: min(17rem, 78vw);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(-0.2rem);
-  transition:
-    opacity 0.18s ease,
-    visibility 0.18s ease,
-    transform 0.18s ease;
-}
-
-.member-projects__forks-badge-wrap:hover .member-projects__forks-tooltip,
-.member-projects__forks-badge-wrap:focus-within .member-projects__forks-tooltip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.member-projects__forks-tooltip-body {
-  padding: 0.65rem 0.72rem;
-}
-
-.member-projects__forks-tooltip-lead {
-  margin: 0 0 0.45rem;
-  font-size: 0.7rem;
-  font-weight: 800;
-  line-height: 1.35;
-  letter-spacing: 0.02em;
-  color: #e0f2fe;
-}
-
-.member-projects__forks-tooltip-copy {
-  margin: 0 0 0.4rem;
-  font-size: 0.64rem;
-  line-height: 1.45;
-  color: rgba(226, 232, 240, 0.88);
-}
-
-.member-projects__forks-tooltip-copy:last-child {
-  margin-bottom: 0;
-}
-
-.member-projects__forks-tooltip-copy--muted {
-  color: rgba(148, 163, 184, 0.92);
-}
-
-.member-projects__forks-hint {
-  margin: 0.35rem 0 0;
+.member-projects__forks-discipline {
+  margin: 0.45rem 0 0;
   font-size: 0.68rem;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.5;
+  font-weight: 600;
+  color: rgba(203, 213, 225, 0.82);
+}
+
+.member-projects__assignment--saved {
+  border-color: rgba(34, 211, 238, 0.14);
+}
+
+.member-projects__saved-record {
+  margin-top: 0.55rem;
+  padding: 0.65rem 0.7rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  background: rgba(2, 8, 23, 0.42);
+}
+
+.member-projects__saved-fields {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.member-projects__saved-field {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.member-projects__saved-value {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(241, 245, 249, 0.92);
+}
+
+.member-projects__saved-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.5rem;
+  border-radius: 0.4rem;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  background: rgba(6, 78, 59, 0.22);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.92);
+}
+
+.member-projects__edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(2, 8, 23, 0.45);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.member-projects__assignment-actions--saved {
+  margin-top: 0.65rem;
+}
+
+.member-projects__copilot-preview {
+  margin: 0;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(2, 8, 23, 0.35);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(224, 242, 254, 0.88);
 }
 
 .member-projects__forks-coach {

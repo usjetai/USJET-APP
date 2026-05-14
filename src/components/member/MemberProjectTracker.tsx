@@ -241,41 +241,10 @@ function ProjectWorkspace({
 }
 
 function SessionForksBadge({ count }: { count: number }) {
-  const tooltipId = useId();
-
   return (
-    <div className="member-projects__forks-badge-wrap">
-      <button
-        type="button"
-        className="member-projects__forks-count glass-effect-interactive"
-        aria-describedby={tooltipId}
-        aria-label={`${count} session forks`}
-      >
-        {count}
-      </button>
-      <GlassEffectContainer
-        className="member-projects__forks-tooltip glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-      >
-        <div id={tooltipId} role="tooltip" className="member-projects__forks-tooltip-body">
-          <p className="member-projects__forks-tooltip-lead">
-            One window. One thread. Your project stays intact.
-          </p>
-          <p className="member-projects__forks-tooltip-copy">
-            Each new browser launch starts this unit&apos;s work from a clean slate — the AI does not
-            carry context from another tab or window.
-          </p>
-          <p className="member-projects__forks-tooltip-copy">
-            Design, drafts, and decisions from your last session are not waiting in a fresh launch.
-            Keep one subject in one session; opening many browsers splits the mission and your
-            project drifts.
-          </p>
-          <p className="member-projects__forks-tooltip-copy member-projects__forks-tooltip-copy--muted">
-            Extra windows also strain memory — continuity is what protects the work you&apos;ve already
-            built.
-          </p>
-        </div>
-      </GlassEffectContainer>
-    </div>
+    <span className="member-projects__forks-count" aria-label={`${count} session forks`}>
+      {count}
+    </span>
   );
 }
 
@@ -343,23 +312,22 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
     >
       <AssignmentHead assignment={assignment} />
 
-      <p className="member-projects__forks-hint">
-        Each launch from Hangar or Intel opens a new thread for this project.
-      </p>
-
       {parallelSessions ? (
-        <p className="member-projects__forks-coach" role="note">
-          {assignment.sessionForks} parallel sessions — keep one cockpit open per unit so the mission
-          stays on one subject.
+        <p className="member-projects__forks-coach" role="alert">
+          {assignment.sessionForks} session forks — parallel cockpits burn RAM, scatter your work, and
+          force restarts. One unit, one thread, one mission.
         </p>
       ) : null}
 
       {locked ? (
-        <SavedRecord
+        <>
+          <p className="member-projects__forks-discipline">{SESSION_FORKS_DISCIPLINE}</p>
+          <SavedRecord
           assignment={assignment}
           onEdit={handleEdit}
           onRemove={() => removeFleetUnitFromProject(customerId, projectId, assignment.unitId)}
-        />
+          />
+        </>
       ) : (
         <EditForm
           assignment={assignment}

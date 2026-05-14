@@ -1,5 +1,5 @@
 import { readMemberSession } from "./memberSession";
-import { logProjectFleetUsageIfMember } from "./memberProjectTracker";
+import { logProjectSessionForkIfMember } from "./memberProjectTracker";
 
 export const FLEET_USAGE_STORAGE_KEY = "usjet-fleet-usage";
 
@@ -78,7 +78,7 @@ export function logFleetUsageIfMember(callsign: string, name: string): void {
   writeFleetUsage(store);
 
   if (session?.customerId) {
-    logProjectFleetUsageIfMember(session.customerId, callsign);
+    logProjectSessionForkIfMember(session.customerId, callsign);
   }
 }
 

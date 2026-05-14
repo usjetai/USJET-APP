@@ -1,20 +1,23 @@
-import { FolderKanban, Minus, Plus, Trash2 } from "lucide-react";
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { FolderKanban, Minus, Plus, Save, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { fleetManifest } from "../../data/fleetManifest";
+import { MEMBER_ASSIGNMENT_HOLD_MESSAGE } from "../../lib/usjetContact";
 import {
   addFleetUnitToProject,
   createMemberProject,
   deleteMemberProject,
-  incrementProjectFleetUsage,
   readMemberProjects,
   removeFleetUnitFromProject,
+  saveProjectAssignment,
+  setMemberActiveProject,
   subscribeMemberProjects,
-  updateProjectJobDescription,
   type MemberProject,
+  type ProjectFleetAssignment,
 } from "../../lib/memberProjectTracker";
 
 const fleetUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
+const HOLD_MESSAGE_MS = 6000;
 
 type MemberProjectTrackerProps = {
   customerId: string;
@@ -40,6 +43,12 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
       setActiveProjectId(projects[0].id);
     }
   }, [projects, activeProjectId]);
+
+  useEffect(() => {
+    if (activeProject) {
+      setMemberActiveProject(customerId, activeProject.id);
+    }
+  }, [customerId, activeProject?.id]);
 
   const availableUnits = useMemo(() => {
     if (!activeProject) {
@@ -70,13 +79,19 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
     setPickerUnitId("");
   };
 
+  const handleSelectProject = (projectId: string) => {
+    setActiveProjectId(projectId);
+    setMemberActiveProject(customerId, projectId);
+  };
+
   return (
     <GlassEffectContainer className="member-projects glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
       <div className="member-projects__header">
         <p className="member-projects__kicker">Mission control</p>
         <h2 className="member-projects__title">Mission Projects</h2>
         <p className="member-projects__copy">
-          Track which fleet units power each mission — job role and usage per project.
+          Assign fleet units per mission, save each role, and track session forks when you launch from
+          Hangar or Intel.
         </p>
       </div>
 
@@ -115,7 +130,7 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
                 ]
                   .filter(Boolean)
                   .join(" ")}
-                onClick={() => setActiveProjectId(project.id)}
+                onClick={() => handleSelectProject(project.id)}
               >
                 {project.name}
               </button>
@@ -207,59 +222,124 @@ function ProjectWorkspace({
       ) : (
         <ul className="member-projects__assignments">
           {project.assignments.map((assignment) => (
-            <li key={assignment.unitId} className="member-projects__assignment">
-              <div className="member-projects__assignment-head">
-                <div>
-                  <p className="member-projects__callsign">{assignment.callsign}</p>
-                  <p className="member-projects__unit-name">{assignment.name}</p>
-                </div>
-                <div className="member-projects__usage">
-                  <span className="member-projects__usage-label">Uses</span>
-                  <span className="member-projects__usage-count">{assignment.usageCount}</span>
-                  <button
-                    type="button"
-                    className="member-projects__usage-btn glass-effect-interactive"
-                    aria-label={`Log use for ${assignment.callsign}`}
-                    onClick={() =>
-                      incrementProjectFleetUsage(customerId, project.id, assignment.unitId)
-                    }
-                  >
-                    <Plus size={12} aria-hidden />
-                  </button>
-                </div>
-              </div>
-
-              <label className="member-projects__field">
-                <span className="member-projects__field-label">Job on this project</span>
-                <input
-                  className="member-projects__input"
-                  type="text"
-                  value={assignment.jobDescription}
-                  onChange={(event) =>
-                    updateProjectJobDescription(
-                      customerId,
-                      project.id,
-                      assignment.unitId,
-                      event.target.value,
-                    )
-                  }
-                  placeholder='e.g. "writing contracts", "research"'
-                  maxLength={120}
-                />
-              </label>
-
-              <button
-                type="button"
-                className="member-projects__remove glass-effect-interactive"
-                onClick={() => removeFleetUnitFromProject(customerId, project.id, assignment.unitId)}
-              >
-                <Minus size={12} aria-hidden />
-                Remove
-              </button>
-            </li>
+            <AssignmentRow
+              key={assignment.unitId}
+              customerId={customerId}
+              projectId={project.id}
+              assignment={assignment}
+            />
           ))}
         </ul>
       )}
     </div>
+  );
+}
+
+type AssignmentRowProps = {
+  customerId: string;
+  projectId: string;
+  assignment: ProjectFleetAssignment;
+};
+
+function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps) {
+  const [draftJob, setDraftJob] = useState(assignment.jobDescription);
+  const [holdVisible, setHoldVisible] = useState(false);
+  const holdTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setDraftJob(assignment.jobDescription);
+  }, [assignment.jobDescription, assignment.unitId]);
+
+  useEffect(
+    () => () => {
+      if (holdTimerRef.current !== null) {
+        window.clearTimeout(holdTimerRef.current);
+      }
+    },
+    [],
+  );
+
+  const handleSave = () => {
+    saveProjectAssignment(customerId, projectId, assignment.unitId, draftJob);
+    setHoldVisible(true);
+    if (holdTimerRef.current !== null) {
+      window.clearTimeout(holdTimerRef.current);
+    }
+    holdTimerRef.current = window.setTimeout(() => {
+      setHoldVisible(false);
+      holdTimerRef.current = null;
+    }, HOLD_MESSAGE_MS);
+  };
+
+  const dirty = draftJob !== assignment.jobDescription;
+  const parallelSessions = assignment.sessionForks > 1;
+
+  return (
+    <li className="member-projects__assignment">
+      <div className="member-projects__assignment-head">
+        <div>
+          <p className="member-projects__callsign">{assignment.callsign}</p>
+          <p className="member-projects__unit-name">{assignment.name}</p>
+        </div>
+        <div className="member-projects__forks">
+          <span className="member-projects__forks-label">Session forks</span>
+          <span
+            className="member-projects__forks-count"
+            aria-label={`${assignment.sessionForks} session forks`}
+          >
+            {assignment.sessionForks}
+          </span>
+        </div>
+      </div>
+
+      <p className="member-projects__forks-hint">
+        Each launch from Hangar or Intel opens a new thread for this project.
+      </p>
+
+      {parallelSessions ? (
+        <p className="member-projects__forks-coach" role="note">
+          {assignment.sessionForks} parallel sessions — keep one cockpit open per unit so the mission
+          stays on one subject.
+        </p>
+      ) : null}
+
+      <label className="member-projects__field">
+        <span className="member-projects__field-label">Job on this project</span>
+        <input
+          className="member-projects__input"
+          type="text"
+          value={draftJob}
+          onChange={(event) => setDraftJob(event.target.value)}
+          placeholder='e.g. "writing contracts", "research"'
+          maxLength={120}
+        />
+      </label>
+
+      <div className="member-projects__assignment-actions">
+        <button
+          type="button"
+          className="member-projects__save-btn btn-glass glass-effect glass-effect-interactive"
+          onClick={handleSave}
+        >
+          <Save size={13} aria-hidden />
+          Save assignment
+        </button>
+
+        <button
+          type="button"
+          className="member-projects__remove glass-effect-interactive"
+          onClick={() => removeFleetUnitFromProject(customerId, projectId, assignment.unitId)}
+        >
+          <Minus size={12} aria-hidden />
+          Remove
+        </button>
+      </div>
+
+      {holdVisible ? (
+        <p className="member-projects__hold" role="status" aria-live="polite">
+          {MEMBER_ASSIGNMENT_HOLD_MESSAGE}
+        </p>
+      ) : null}
+    </li>
   );
 }

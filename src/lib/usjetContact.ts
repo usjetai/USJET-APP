@@ -20,3 +20,7 @@ export function mailtoUsjetOps(subject?: string): string {
   const base = `mailto:${USJET_OPS_EMAIL}`;
   return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base;
 }
+
+/** Member Portal — assignment save acknowledgement (institutional hold line). */
+export const MEMBER_ASSIGNMENT_HOLD_MESSAGE =
+  "Our representatives are still helping other customers. Please continue to hold." as const;

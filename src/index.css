@@ -8793,13 +8793,15 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: #f8fafc;
 }
 
-.member-projects__usage {
+.member-projects__usage,
+.member-projects__forks {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
 }
 
-.member-projects__usage-label {
+.member-projects__usage-label,
+.member-projects__forks-label {
   font-size: 0.52rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -8807,7 +8809,8 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: rgba(255, 255, 255, 0.38);
 }
 
-.member-projects__usage-count {
+.member-projects__usage-count,
+.member-projects__forks-count {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
   font-size: 0.78rem;
@@ -8815,17 +8818,56 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: #67e8f9;
 }
 
-.member-projects__usage-btn {
+.member-projects__forks-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.member-projects__forks-coach {
+  margin: 0.45rem 0 0;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  background: rgba(120, 53, 15, 0.18);
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: rgba(253, 230, 138, 0.88);
+}
+
+.member-projects__assignment-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+}
+
+.member-projects__save-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 1.35rem;
-  height: 1.35rem;
-  border-radius: 0.4rem;
-  border: 1px solid rgba(34, 211, 238, 0.3);
-  background: rgba(14, 116, 144, 0.25);
-  color: #67e8f9;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.55rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e0f2fe;
   cursor: pointer;
+}
+
+.member-projects__hold {
+  margin: 0.55rem 0 0;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(2, 8, 23, 0.55);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  font-style: italic;
+  color: rgba(148, 163, 184, 0.92);
 }
 
 .member-projects__remove {

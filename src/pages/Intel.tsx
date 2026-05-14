@@ -5,6 +5,7 @@ import IntelMonitor from "../components/intel/IntelMonitor";
 import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
+import IntelTop10Section from "../components/intel/IntelTop10Section";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
@@ -124,6 +125,7 @@ const Intel = () => {
       <div className="intel-page__shell page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
         <IntelFleetVitals />
         <IntelPulseDashboard />
+        <IntelTop10Section />
 
         <div className="intel-page__grid-intro">
           <p className="intel-page__grid-kicker">Monitor grid</p>

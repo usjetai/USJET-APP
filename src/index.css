@@ -420,6 +420,60 @@
   border-color: color-mix(in srgb, var(--glass-tint) 50%, rgba(255, 255, 255, 0.2));
 }
 
+.glass-tint-violet {
+  --glass-tint: rgba(167, 139, 250, 0.28);
+  border-color: color-mix(in srgb, var(--glass-tint) 48%, rgba(255, 255, 255, 0.18));
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--glass-tint) 32%, transparent),
+    0 24px 60px -36px rgba(76, 29, 149, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.glass-tint-emerald {
+  --glass-tint: rgba(52, 211, 153, 0.26);
+  border-color: color-mix(in srgb, var(--glass-tint) 48%, rgba(255, 255, 255, 0.18));
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--glass-tint) 32%, transparent),
+    0 24px 60px -36px rgba(6, 78, 59, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.glass-tint-sovereign {
+  --glass-tint: rgba(226, 232, 240, 0.22);
+  border-color: color-mix(in srgb, var(--glass-tint) 50%, rgba(255, 255, 255, 0.2));
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--glass-tint) 28%, transparent),
+    0 24px 60px -36px rgba(51, 65, 85, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+.glass-tint-forge {
+  --glass-tint: rgba(249, 115, 22, 0.28);
+  border-color: color-mix(in srgb, var(--glass-tint) 48%, rgba(255, 255, 255, 0.18));
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--glass-tint) 32%, transparent),
+    0 24px 60px -36px rgba(124, 45, 18, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.glass-tint-arbiter {
+  --glass-tint: rgba(251, 113, 133, 0.26);
+  border-color: color-mix(in srgb, var(--glass-tint) 48%, rgba(255, 255, 255, 0.18));
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--glass-tint) 32%, transparent),
+    0 24px 60px -36px rgba(136, 19, 55, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.glass-tint-phalanx {
+  --glass-tint: rgba(20, 184, 166, 0.26);
+  border-color: color-mix(in srgb, var(--glass-tint) 48%, rgba(255, 255, 255, 0.18));
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--glass-tint) 32%, transparent),
+    0 24px 60px -36px rgba(19, 78, 74, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
 /* .interactive() equivalent — only on touch/pointer targets */
 .glass-effect-interactive {
   cursor: pointer;
@@ -2733,7 +2787,8 @@
   .intel-reserved-bay--hot,
   .intel-reserved-bay--crypto,
   .intel-reserved-bay--live,
-  .intel-reserved-live {
+  .intel-reserved-live,
+  .intel-top10-bay {
     animation: none;
   }
 
@@ -2741,6 +2796,238 @@
   .intel-reserved-bay__scan {
     animation-duration: 2.8s;
   }
+}
+
+/* Intel Top 10 — Titans-grade partnership row (slots 03–12) */
+.intel-top10 {
+  margin: 2.5rem 0 2.75rem;
+}
+
+.intel-top10__header {
+  margin-bottom: 1.35rem;
+}
+
+.intel-top10__kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.58rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.78);
+}
+
+.intel-top10__title {
+  margin: 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.95);
+}
+
+.intel-top10__title-accent {
+  background: linear-gradient(180deg, rgba(255, 248, 220, 0.98), rgba(255, 215, 0, 0.92));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(255, 193, 7, 0.35));
+}
+
+.intel-top10__copy {
+  margin: 0.45rem 0 0;
+  max-width: 42rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+  color: rgba(148, 163, 184, 0.82);
+}
+
+.intel-top10__grid {
+  align-items: stretch;
+}
+
+.intel-top10-bay {
+  --intel-signal: var(--intel-tier-accent, #ffd700);
+  --intel-signal-bright: var(--intel-tier-bright, #ffe566);
+  border: 1px solid color-mix(in srgb, var(--intel-tier-accent, #ffd700) 38%, transparent);
+  background: rgba(4, 6, 12, 0.24);
+  box-shadow:
+    0 0 32px color-mix(in srgb, var(--intel-tier-accent, #ffd700) 22%, transparent),
+    0 12px 40px -28px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  animation: intel-top10-heartbeat 1.4s ease-in-out infinite;
+}
+
+@keyframes intel-top10-heartbeat {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px color-mix(in srgb, var(--intel-tier-accent) 16%, transparent),
+      0 12px 40px -28px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: color-mix(in srgb, var(--intel-tier-accent) 30%, transparent);
+    transform: scale(1);
+  }
+  14% {
+    box-shadow:
+      0 0 48px color-mix(in srgb, var(--intel-tier-accent) 40%, transparent),
+      0 16px 44px -24px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: color-mix(in srgb, var(--intel-tier-accent) 52%, transparent);
+    transform: scale(1.008);
+  }
+  28% {
+    box-shadow:
+      0 0 24px color-mix(in srgb, var(--intel-tier-accent) 18%, transparent),
+      0 12px 40px -28px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.11);
+    border-color: color-mix(in srgb, var(--intel-tier-accent) 32%, transparent);
+    transform: scale(1);
+  }
+  42% {
+    box-shadow:
+      0 0 54px color-mix(in srgb, var(--intel-tier-accent) 44%, transparent),
+      0 18px 48px -22px rgba(0, 0, 0, 0.58),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    border-color: color-mix(in srgb, var(--intel-tier-accent) 55%, transparent);
+    transform: scale(1.01);
+  }
+  60% {
+    box-shadow:
+      0 0 22px color-mix(in srgb, var(--intel-tier-accent) 16%, transparent),
+      0 12px 40px -28px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: color-mix(in srgb, var(--intel-tier-accent) 30%, transparent);
+    transform: scale(1);
+  }
+}
+
+.intel-top10-bay .intel-reserved-bay__ekg .intel-ekg__trace--main {
+  stroke: color-mix(in srgb, var(--intel-tier-accent) 82%, transparent);
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--intel-tier-accent) 55%, transparent));
+}
+
+.intel-top10-bay .intel-reserved-bay__ekg .intel-ekg__trace--echo {
+  stroke: color-mix(in srgb, var(--intel-tier-accent) 28%, transparent);
+}
+
+.intel-top10-bay .intel-reserved-bay__ekg .intel-ekg__beacon {
+  fill: var(--intel-tier-accent);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--intel-tier-accent) 90%, transparent));
+}
+
+.intel-top10-bay__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.intel-top10-bay__slot {
+  font-size: 0.42rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.72);
+}
+
+.intel-top10-bay__badge {
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.52rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--intel-tier-bright) 92%, white);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--intel-tier-accent) 45%, transparent);
+}
+
+.intel-top10-bay__status {
+  font-size: 0.38rem;
+  letter-spacing: 0.1em;
+  color: color-mix(in srgb, var(--intel-tier-bright) 75%, rgba(148, 163, 184, 0.8));
+}
+
+.intel-top10-bay__overlay {
+  background: linear-gradient(180deg, rgba(4, 6, 12, 0.32) 0%, rgba(2, 4, 8, 0.58) 100%);
+  z-index: 5;
+}
+
+.intel-top10-bay__tier-name {
+  margin: 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(0.62rem, 1.5vw, 0.82rem);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.08;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--intel-tier-bright) 98%, white) 0%,
+    var(--intel-tier-accent) 48%,
+    color-mix(in srgb, var(--intel-tier-accent) 72%, black) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 10px color-mix(in srgb, var(--intel-tier-accent) 40%, transparent));
+}
+
+.intel-top10-bay--titan .intel-top10-bay__tier-name::after {
+  content: " · MUSEUM OF GRIT";
+  font-size: 0.42em;
+  letter-spacing: 0.28em;
+  font-style: normal;
+  opacity: 0.72;
+}
+
+.intel-top10-bay__tagline {
+  margin: 0;
+  max-width: 10.5rem;
+  font-size: 0.44rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(203, 213, 225, 0.62);
+}
+
+.intel-top10-bay__hook {
+  color: color-mix(in srgb, var(--intel-tier-bright) 55%, rgba(203, 213, 225, 0.65));
+}
+
+.intel-top10-bay__email {
+  color: var(--intel-tier-bright);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.intel-top10-bay__email:hover {
+  color: color-mix(in srgb, var(--intel-tier-bright) 88%, white);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--intel-tier-accent) 45%, transparent);
+}
+
+.intel-top10-bay__details {
+  border-color: color-mix(in srgb, var(--intel-tier-accent) 45%, transparent);
+  background: color-mix(in srgb, var(--intel-tier-accent) 8%, transparent);
+  color: color-mix(in srgb, var(--intel-tier-bright) 92%, white);
+}
+
+.intel-top10-bay__details:hover {
+  background: color-mix(in srgb, var(--intel-tier-accent) 16%, transparent);
+  border-color: color-mix(in srgb, var(--intel-tier-accent) 65%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--intel-tier-accent) 25%, transparent);
+}
+
+.intel-top10-bay__pitch {
+  border-color: color-mix(in srgb, var(--intel-tier-accent) 28%, transparent);
+  background: rgba(4, 6, 12, 0.78);
+  color: color-mix(in srgb, var(--intel-tier-bright) 78%, rgba(248, 250, 252, 0.88));
 }
 
 .intel-monitor__graph {

@@ -1,4 +1,5 @@
 import type { MemberSession, VerifyMemberResponse } from "../types/member";
+import { sessionFromMasterKey, sessionFromStoredCustomerId, sessionFromKingKarimKey } from "./memberMasterKey";
 
 const VERIFY_URL = import.meta.env.VITE_MEMBER_VERIFY_URL ?? "/api/verify-member";
 
@@ -12,7 +13,15 @@ export async function verifyMemberAccess(input: VerifyInput): Promise<MemberSess
   const email = input.email?.trim().toLowerCase() ?? "";
 
   if (!memberId && !email) {
-    throw new Error("Enter your Stripe Member ID or billing email.");
+    throw new Error("Enter your Member ID.");
+  }
+
+  const masterSession =
+    sessionFromMasterKey(memberId) ??
+    sessionFromKingKarimKey(memberId) ??
+    sessionFromStoredCustomerId(memberId);
+  if (masterSession) {
+    return masterSession;
   }
 
   if (import.meta.env.DEV) {

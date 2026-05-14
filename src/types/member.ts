@@ -1,4 +1,4 @@
-export type MemberTier = "USJET-PRIME-ACTIVE" | "INACTIVE" | "PENDING";
+export type MemberTier = "USJET-PRIME-ACTIVE" | "USJET-ROYAL-HEIR" | "INACTIVE" | "PENDING";
 
 export type MemberSession = {
   customerId: string;

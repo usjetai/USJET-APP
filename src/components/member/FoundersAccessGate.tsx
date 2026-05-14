@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import { Lock, ShieldCheck } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 
 type FoundersAccessGateProps = {
   pageLabel: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default function FoundersAccessGate({ pageLabel, children }: FoundersAccessGateProps) {
   const { session, loading, login, error } = useMemberAuth();
   const [memberId, setMemberId] = useState("");
-  const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   if (!loading && session?.active) {
@@ -22,7 +21,7 @@ export default function FoundersAccessGate({ pageLabel, children }: FoundersAcce
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setSubmitting(true);
-    await login(memberId, email || undefined);
+    await login(memberId);
     setSubmitting(false);
   };
 
@@ -39,36 +38,24 @@ export default function FoundersAccessGate({ pageLabel, children }: FoundersAcce
           <div className="founders-access-panel__icon-wrap">
             <Lock size={28} className="founders-access-panel__icon" aria-hidden />
           </div>
-          <p className="founders-access-panel__kicker">Secure channel</p>
-          <h2 className="founders-access-panel__title">Founders Access Required</h2>
+          <p className="founders-access-panel__kicker">Member ID Gateway</p>
+          <h2 className="founders-access-panel__title">FOUNDER ACCESS REQUIRED: ENTER MEMBER ID</h2>
           <p className="founders-access-panel__copy">
-            {pageLabel} is restricted to active USJET members. Enter your Stripe Member ID to verify subscription
-            status.
+            {pageLabel} is restricted to authorized founders. Enter your Member ID to unlock partnership bays and
+            Titans telemetry.
           </p>
 
           <form className="founders-access-panel__form" onSubmit={handleSubmit}>
             <label className="founders-access-panel__field">
-              <span>Stripe Member ID</span>
+              <span>Member ID</span>
               <input
                 type="text"
                 name="memberId"
                 autoComplete="off"
                 spellCheck={false}
-                placeholder="cus_..."
+                placeholder="Member ID"
                 value={memberId}
                 onChange={(event) => setMemberId(event.target.value)}
-                className="founders-access-panel__input"
-              />
-            </label>
-            <label className="founders-access-panel__field">
-              <span>Billing email (optional)</span>
-              <input
-                type="email"
-                name="email"
-                autoComplete="email"
-                placeholder="founder@company.com"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
                 className="founders-access-panel__input"
               />
             </label>
@@ -77,7 +64,7 @@ export default function FoundersAccessGate({ pageLabel, children }: FoundersAcce
 
             <button type="submit" className="founders-access-panel__submit" disabled={submitting || loading}>
               <ShieldCheck size={16} aria-hidden />
-              {submitting || loading ? "Verifying…" : "Verify Member ID"}
+              {submitting || loading ? "Authorizing…" : "Authorize access"}
             </button>
           </form>
 

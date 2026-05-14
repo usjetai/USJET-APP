@@ -4,19 +4,25 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
+/** Guest-only surface — Fleet, Founder, Stripe login, fleet cockpit handoff. */
+export const GUEST_PUBLIC_ROUTES = ["/", "/founder", "/member/login", "/login", "/cockpit"] as const;
+
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Fleet, Hangar (2 bays), Founder story.
- * 1 = Flight Pass+: Member Portal.
+ * 0 = public (guest): Fleet, Founder, member login, fleet cockpit handoff.
+ * 1 = Flight Pass+: Hangar, Member Portal, Founder Special checkout.
  * 2 = Hangar Pro+: Intel.
  * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
  */
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
-  "/hangar": 0,
   "/founder": 0,
-  "/special": 0,
+  "/member/login": 0,
+  "/login": 0,
+  "/cockpit": 0,
+  "/hangar": 1,
   "/member": 1,
+  "/special": 1,
   "/intel": 2,
   "/origin": 3,
   "/founder-special-1995": 3,
@@ -31,7 +37,11 @@ export function normalizeRoutePath(path: string): string {
 }
 
 export function routeMinClearanceRank(path: string): number {
-  return ROUTE_MIN_CLEARANCE[normalizeRoutePath(path)] ?? 0;
+  return ROUTE_MIN_CLEARANCE[normalizeRoutePath(path)] ?? 1;
+}
+
+export function isGuestPublicRoute(path: string): boolean {
+  return routeMinClearanceRank(path) === 0;
 }
 
 export function isFounderGodMode(session: MemberSession | null | undefined): boolean {
@@ -98,10 +108,22 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
       body: `Verify your Stripe-issued Member ID here. ${tierLabel} (${tierPrice}) or higher unlocks the portal — no OAuth, one sovereign gate.`,
     };
   }
+  if (normalized === "/hangar") {
+    return {
+      title: "Hangar locked — Flight Pass required",
+      body: `${tierLabel} (${tierPrice}) unlocks the sovereign workbench. Guests browse Fleet and Founder only — verify Stripe clearance to enter the hangar.`,
+    };
+  }
+  if (normalized === "/special") {
+    return {
+      title: "Founder Special — clearance required",
+      body: `Active Stripe clearance (${tierLabel}, ${tierPrice}) unlocks tier checkout inside the ship. Pay first on Member Login, then return to upgrade bays.`,
+    };
+  }
   if (normalized === "/intel") {
     return {
       title: "Intel board locked at your tier",
-      body: `${tierLabel} (${tierPrice}) unlocks the Intel museum of grit. Flight Pass keeps Fleet + Hangar; upgrade for the institutional board.`,
+      body: `${tierLabel} (${tierPrice}) unlocks the Intel museum of grit. Flight Pass clears Hangar + Member; upgrade for the institutional board.`,
     };
   }
   if (normalized === "/origin") {
@@ -160,6 +182,58 @@ export function stripeTierRank(stripeTier?: string): number {
   return 0;
 }
 
+/** Human tier label for strips, Aura, and member-facing copy. */
+export function memberClearanceDisplayLabel(session: MemberSession | null | undefined): string {
+  if (!session?.active) {
+    return "Guest";
+  }
+  if (isFounderGodMode(session)) {
+    return "God mode";
+  }
+  const rank = memberClearanceRank(session);
+  if (rank >= 3 || session.tier === "USJET-ROYAL-HEIR") {
+    return "Enterprise Commander";
+  }
+  if (rank >= 2) {
+    return "Hangar Pro";
+  }
+  if (rank >= 1) {
+    return "Flight Pass";
+  }
+  return "Member clearance";
+}
+
+/** Tenure since Stripe verification — for MEMBER_CONTEXT and Origin strip. */
+export function membershipTenureLabel(verifiedAt: string): string {
+  const verified = new Date(verifiedAt);
+  if (Number.isNaN(verified.getTime())) {
+    return "tenure unknown";
+  }
+
+  const days = Math.max(0, Math.floor((Date.now() - verified.getTime()) / (1000 * 60 * 60 * 24)));
+  if (days < 1) {
+    return "verified today";
+  }
+  if (days === 1) {
+    return "1 day aboard";
+  }
+  if (days < 30) {
+    return `${days} days aboard`;
+  }
+
+  const months = Math.floor(days / 30);
+  if (months < 12) {
+    return `${months} month${months === 1 ? "" : "s"} aboard`;
+  }
+
+  const years = Math.floor(days / 365);
+  const remMonths = Math.floor((days % 365) / 30);
+  if (remMonths === 0) {
+    return `${years} year${years === 1 ? "" : "s"} aboard`;
+  }
+  return `${years}y ${remMonths}mo aboard`;
+}
+
 /** Numeric clearance rank — 0 = none, 1 = Flight Pass, 2 = Hangar Pro, 3 = Enterprise / heir. */
 export function memberClearanceRank(session: MemberSession | null | undefined): number {
   if (!session?.active) {
@@ -191,6 +265,21 @@ export function canMemberAccessRoute(
   const godMode = isFounderGodMode(session);
   const rank = memberClearanceRank(session);
   return canAccessRoute(path, rank, godMode);
+}
+
+/** Customer Service treasure path — guests land on Origin in limited CS mode. */
+export const ORIGIN_CS_ENTRY = "customer-service";
+
+export const ORIGIN_CS_ROUTE = `/origin?entry=${ORIGIN_CS_ENTRY}`;
+
+export function isOriginCustomerServiceEntry(searchOrPath: string): boolean {
+  const raw = searchOrPath.trim();
+  const query = raw.startsWith("?")
+    ? raw.slice(1)
+    : raw.includes("?")
+      ? (raw.split("?")[1]?.split("#")[0] ?? "")
+      : raw;
+  return new URLSearchParams(query).get("entry") === ORIGIN_CS_ENTRY;
 }
 
 /** Hangar workbench simultaneous bay caps by clearance rank (0 = teaser / no session). */

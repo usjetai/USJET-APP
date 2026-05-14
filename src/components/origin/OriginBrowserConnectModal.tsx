@@ -1,11 +1,13 @@
-import { ChevronDown, Mic, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { ChevronDown, X } from "lucide-react";
+import { useCallback, useState } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import {
   ORIGIN_BROWSER_GUIDE,
+  ORIGIN_CONNECT_ALLOW_EMPHASIS,
   ORIGIN_CONNECT_MODAL_LEDE,
   ORIGIN_CONNECT_MODAL_TITLE,
   ORIGIN_CONNECT_THIS_BROWSER,
+  ORIGIN_CONNECT_UNIFIED_STEPS,
   type OriginBrowserDetailStep,
   type OriginBrowserGuideEntry,
 } from "../../lib/originConnectGuide";
@@ -15,12 +17,6 @@ type OriginBrowserConnectModalProps = {
   onClose: () => void;
   onRequestMic?: () => void;
 };
-
-function detectSafari(): boolean {
-  if (typeof navigator === "undefined") return false;
-  const ua = navigator.userAgent;
-  return /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Firefox/i.test(ua);
-}
 
 function StepList({ steps }: { steps: OriginBrowserDetailStep[] }) {
   return (
@@ -35,71 +31,12 @@ function StepList({ steps }: { steps: OriginBrowserDetailStep[] }) {
   );
 }
 
-function BrowserDetailPanel({
-  browser,
-  onRequestMic,
-}: {
-  browser: OriginBrowserGuideEntry;
-  onRequestMic?: () => void;
-}) {
-  const isSafari = browser.id === "safari";
-
+function BrowserDetailPanel({ browser }: { browser: OriginBrowserGuideEntry }) {
   return (
     <div className="origin-connect-card__detail">
       <p className="origin-connect-card__summary">{browser.summary}</p>
-
-      {browser.steps.length > 0 ? <StepList steps={browser.steps} /> : null}
-
-      {isSafari && browser.macSteps ? (
-        <div className="origin-connect-safari-block">
-          <p className="origin-connect-safari-block__heading">On Mac (Safari)</p>
-          <StepList steps={browser.macSteps} />
-        </div>
-      ) : null}
-
-      {isSafari && browser.iosSteps ? (
-        <div className="origin-connect-safari-block">
-          <p className="origin-connect-safari-block__heading">On iPhone / iPad (Safari)</p>
-          <StepList steps={browser.iosSteps} />
-        </div>
-      ) : null}
-
-      {isSafari ? (
-        <div className="origin-connect-safari-block origin-connect-safari-block--actions">
-          <button
-            type="button"
-            className="origin-connect-card__mic-btn btn-glass-prominent glass-effect-interactive"
-            onClick={onRequestMic}
-          >
-            <Mic size={14} aria-hidden />
-            Enable microphone on this page
-          </button>
-          <p className="origin-connect-card__mic-note">
-            This is the real Safari fix — your tap unlocks the mic on Origin. We cannot auto-enable it for you.
-          </p>
-
-          {browser.supportUrl ? (
-            <a href={browser.supportUrl} className="origin-connect-card__link btn-glass glass-effect-interactive">
-              {browser.supportLabel}
-            </a>
-          ) : null}
-
-          {browser.macPrivacyUrl ? (
-            <>
-              <a
-                href={browser.macPrivacyUrl}
-                className="origin-connect-card__link origin-connect-card__link--privacy btn-glass glass-effect-interactive"
-              >
-                {browser.macPrivacyLabel}
-              </a>
-              {browser.macPrivacyFallback ? (
-                <p className="origin-connect-card__privacy-fallback">{browser.macPrivacyFallback}</p>
-              ) : null}
-            </>
-          ) : null}
-        </div>
-      ) : null}
-
+      <StepList steps={ORIGIN_CONNECT_UNIFIED_STEPS} />
+      <p className="origin-connect-card__allow-emphasis">{ORIGIN_CONNECT_ALLOW_EMPHASIS}</p>
       <a href={browser.downloadUrl} className="origin-connect-card__link btn-glass glass-effect-interactive">
         {browser.downloadLabel}
       </a>
@@ -114,20 +51,9 @@ export default function OriginBrowserConnectModal({
 }: OriginBrowserConnectModalProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (open) {
-      setExpandedId(detectSafari() ? "safari" : null);
-    }
-  }, [open]);
-
   const toggleExpanded = useCallback((id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
   }, []);
-
-  const handleRequestMic = useCallback(() => {
-    onRequestMic?.();
-    onClose();
-  }, [onClose, onRequestMic]);
 
   const handleStayOnOrigin = useCallback(() => {
     onRequestMic?.();
@@ -169,7 +95,6 @@ export default function OriginBrowserConnectModal({
         <div className="origin-connect-modal__grid">
           {ORIGIN_BROWSER_GUIDE.map((browser) => {
             const expanded = expandedId === browser.id;
-            const isSafari = browser.id === "safari";
 
             return (
               <article
@@ -177,7 +102,6 @@ export default function OriginBrowserConnectModal({
                 className={[
                   "origin-connect-card",
                   expanded ? "origin-connect-card--expanded" : "",
-                  isSafari ? "origin-connect-card--safari" : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
@@ -208,9 +132,7 @@ export default function OriginBrowserConnectModal({
                   />
                 </button>
 
-                {expanded ? (
-                  <BrowserDetailPanel browser={browser} onRequestMic={handleRequestMic} />
-                ) : null}
+                {expanded ? <BrowserDetailPanel browser={browser} /> : null}
               </article>
             );
           })}

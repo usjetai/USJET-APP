@@ -1,6 +1,44 @@
 /** Spoken welcome lines for Origin (she teaches all 29 partner AIs). */
+import { memberClearanceDisplayLabel } from "./memberAccessLevel";
+import { getMemberProjectStats } from "./memberProjectTracker";
+import type { MemberSession } from "../types/member";
+
 export const ORIGIN_SPOKEN_LOAD_GREET =
   "Welcome to USJET. USJET Origin online. I'm here to teach you about all twenty-nine partner AIs — what to do, how to use them, and which bay to open.";
+
+/** Customer Service entry — Aura multitasks as support. */
+export const ORIGIN_CS_SPOKEN_GREET =
+  "Welcome to USJET. I see that you clicked on Customer Service — I'm also here to help. Ask about your account, the fleet, or how to reach USJET operations.";
+
+export const ORIGIN_CS_SCREEN_GREET =
+  "I see that you clicked on Customer Service. I'm also here to help.";
+
+/** Brief spoken member status on CS entry — cite real clearance only. */
+export function buildOriginCsMemberSpokenGreet(session: MemberSession): string {
+  const tier = memberClearanceDisplayLabel(session);
+  const stats = getMemberProjectStats(session.customerId);
+  const projectPhrase =
+    stats.projectCount === 0
+      ? "no mission projects yet"
+      : stats.projectCount === 1
+        ? "one mission project"
+        : `${stats.projectCount} mission projects`;
+  const forkPhrase =
+    stats.totalSessionForks === 0
+      ? ""
+      : stats.totalSessionForks === 1
+        ? " and one session fork logged"
+        : ` and ${stats.totalSessionForks} session forks logged`;
+
+  return `Welcome to USJET Customer Service. You're on ${tier} — welcome back, Commander. I see ${projectPhrase}${forkPhrase}. How can I help today?`;
+}
+
+/** On-screen CS greet when a verified member is logged in. */
+export function buildOriginCsMemberScreenGreet(session: MemberSession): string {
+  const tier = memberClearanceDisplayLabel(session);
+  const stats = getMemberProjectStats(session.customerId);
+  return `Customer Service — ${tier} clearance confirmed. ${stats.projectCount} mission project${stats.projectCount === 1 ? "" : "s"}, ${stats.totalSessionForks} session fork${stats.totalSessionForks === 1 ? "" : "s"}. I'm here to help.`;
+}
 
 export const ORIGIN_SPOKEN_WELCOME =
   "Welcome to USJET. USJET Origin online. I'm here to teach you about all twenty-nine partner AIs — what each one does, how to use them, and which hangar bay to open. Ask me anything about the fleet. Command acknowledged.";

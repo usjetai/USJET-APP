@@ -1,6 +1,6 @@
 export type FleetUnitStatus = "active" | "unlocking" | "locked" | "staging";
 
-export type FleetAuraMode = "idle" | "listening" | "talking";
+export type FleetAuraMode = "idle" | "listening" | "processing" | "talking";
 
 export type FleetAircraftType =
   | "sr71"

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import GlassEffectContainer from "./GlassEffectContainer";
 import Usa250Countdown from "./Usa250Countdown";
+import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
 import {
   mailtoUsjetOps,
   SUPPORT_POLICY,
@@ -30,7 +31,7 @@ export default function UsjetGlobalContactBar() {
         </div>
         <div className="usjet-global-contact-bar__actions">
           <Link
-            to="/origin"
+            to={ORIGIN_CS_ROUTE}
             className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
           >
             Customer Service

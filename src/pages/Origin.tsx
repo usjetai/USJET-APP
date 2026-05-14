@@ -1,68 +1,378 @@
-import { Mic, Shield, Volume2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Mic, Shield, Volume2, Wrench } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AuraFrame from "../components/aura/AuraFrame";
+import UsjetWordmark from "../components/brand/UsjetWordmark";
+import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import EkgPulseLine from "../components/intel/EkgPulseLine";
+import { fleetManifest } from "../data/fleetManifest";
+import { fleetLaunchUrl, isExternalFleetUrl } from "../lib/fleetLaunchUrl";
 
-const Origin = () => (
-  <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-black font-sans">
-    <div className="absolute inset-0 opacity-20">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent" />
-      <div className="grid h-full w-full grid-cols-[repeat(30,1fr)] grid-rows-[repeat(30,1fr)] border-[#ffffff05] [mask-image:radial-gradient(ellipse_at_center,black,transparent)]">
-        {[...Array(900)].map((_, i) => (
-          <div key={i} className="border-[0.5px] border-[#ffffff03]" />
-        ))}
+type VoiceMode = "idle" | "listening" | "speaking";
+
+const COMMAND_ROUTES = [
+  { to: "/hangar", label: "Hangar" },
+  { to: "/intel", label: "Intel Pulse" },
+  { to: "/founder", label: "Founder" },
+  { to: "/special", label: "Founder Special" },
+] as const;
+
+const BULLETIN_LINES = [
+  "ORIGIN CORE ONLINE — COMMAND AUTHORITY OVER 30 PARTNER AIS",
+  "HANGAR LINKS: DIRECT FLIGHT TO GEMINI · CHATGPT · CLAUDE · PERPLEXITY · GROK",
+  "INTEL PULSE: CYAN EKG + LIVE MARKET CANDLES — WRENCHES NOT SLIDES",
+  "FLEET MANIFEST: 29 EXTERNAL COCKPITS + 1 USJET ORIGIN COMMAND NODE",
+  "LAT 40.7128° N · LONG 74.0060° W · PROTOCOL USJET-v5 · LIQUID GLASS ACTIVE",
+];
+
+const ORIGIN_WELCOME =
+  "USJet Origin online. Thirty partner systems are networked. Hangar bays launch direct. Intel pulse is live. Command acknowledged.";
+
+function bulletinTrackText(): string {
+  return BULLETIN_LINES.map((line) => `◆ ${line}`).join("     ");
+}
+
+export default function Origin() {
+  const [voiceMode, setVoiceMode] = useState<VoiceMode>("idle");
+  const [voiceLevel, setVoiceLevel] = useState(0);
+  const [showTroubleshoot, setShowTroubleshoot] = useState(false);
+  const [statusLine, setStatusLine] = useState("Status: Online // Port 8080 Active");
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  const sortedFleet = useMemo(
+    () => [...fleetManifest].sort((a, b) => a.slot - b.slot),
+    [],
+  );
+
+  useEffect(() => {
+    const prevTitle = document.title;
+    document.title = "Origin · USJet.ai Command";
+    return () => {
+      document.title = prevTitle;
+    };
+  }, []);
+
+  const stopListening = useCallback(() => {
+    recognitionRef.current?.stop();
+    recognitionRef.current = null;
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    void audioContextRef.current?.close().catch(() => undefined);
+    audioContextRef.current = null;
+    analyserRef.current = null;
+    setVoiceLevel(0);
+    setVoiceMode("idle");
+  }, []);
+
+  useEffect(() => () => stopListening(), [stopListening]);
+
+  const startSpeak = useCallback(() => {
+    stopListening();
+    if (!("speechSynthesis" in window)) {
+      setStatusLine("Speech output unavailable in this browser.");
+      return;
+    }
+
+    setVoiceMode("speaking");
+    setStatusLine("Transmitting Origin briefing…");
+
+    const utterance = new SpeechSynthesisUtterance(ORIGIN_WELCOME);
+    utterance.rate = 0.95;
+    utterance.pitch = 0.92;
+    utterance.onend = () => {
+      setVoiceMode("idle");
+      setStatusLine("Status: Online // 8080 Active");
+    };
+    utterance.onerror = () => {
+      setVoiceMode("idle");
+      setStatusLine("Voice transmit interrupted.");
+    };
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }, [stopListening]);
+
+  const startListen = useCallback(async () => {
+    window.speechSynthesis?.cancel();
+    setVoiceMode("listening");
+    setStatusLine("Listening — Origin mic channel open");
+
+    const SpeechRecognitionCtor =
+      window.SpeechRecognition ??
+      (window as Window & { webkitSpeechRecognition?: typeof SpeechRecognition }).webkitSpeechRecognition;
+
+    if (!SpeechRecognitionCtor) {
+      setShowTroubleshoot(true);
+      setStatusLine("Speech recognition not supported — see troubleshoot.");
+      setVoiceMode("idle");
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      const audioContext = new AudioContext();
+      audioContextRef.current = audioContext;
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 256;
+      analyserRef.current = analyser;
+      const source = audioContext.createMediaStreamSource(stream);
+      source.connect(analyser);
+      const data = new Uint8Array(analyser.frequencyBinCount);
+
+      const tick = () => {
+        analyser.getByteFrequencyData(data);
+        let sum = 0;
+        for (let i = 0; i < data.length; i += 1) sum += data[i];
+        const avg = sum / data.length / 255;
+        setVoiceLevel(avg);
+        rafRef.current = requestAnimationFrame(tick);
+      };
+      tick();
+
+      const recognition = new SpeechRecognitionCtor();
+      recognitionRef.current = recognition;
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = "en-US";
+
+      recognition.onresult = (event) => {
+        const last = event.results[event.results.length - 1];
+        const text = last?.[0]?.transcript?.trim();
+        if (text && last.isFinal) {
+          setStatusLine(`Heard: “${text.slice(0, 72)}${text.length > 72 ? "…" : ""}”`);
+        }
+      };
+
+      recognition.onerror = () => {
+        setShowTroubleshoot(true);
+        stopListening();
+        setStatusLine("Mic channel error — troubleshoot open.");
+      };
+
+      recognition.onend = () => {
+        stopListening();
+        setStatusLine((line) => (line.startsWith("Heard:") ? line : "Status: Online // 8080 Active"));
+      };
+
+      recognition.start();
+    } catch {
+      setShowTroubleshoot(true);
+      stopListening();
+      setStatusLine("Microphone permission denied.");
+    }
+  }, [stopListening]);
+
+  const shellClass = [
+    "origin-voice-shell",
+    voiceMode === "listening" ? "origin-voice-shell--listening" : "",
+    voiceMode === "speaking" ? "origin-voice-shell--speaking" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div className="origin-page page-atmosphere relative min-h-screen overflow-hidden pb-24 pt-28">
+      <div className="origin-page__ekg" aria-hidden>
+        <EkgPulseLine variant="hero" seed={29} />
       </div>
-    </div>
 
-    <div className="relative z-10 flex flex-col items-center justify-center">
-      <div className="relative flex items-center justify-center">
-        <div className="absolute h-[450px] w-[450px] animate-ping rounded-full border border-blue-500/10 opacity-20" />
-        <div className="absolute h-[350px] w-[350px] animate-pulse rounded-full border border-white/5" />
+      <button
+        type="button"
+        className="origin-troubleshoot-btn"
+        onClick={() => setShowTroubleshoot(true)}
+      >
+        <Wrench size={12} aria-hidden />
+        Troubleshoot
+      </button>
 
-        <AuraFrame aura="listening" variant="orb" className="h-72 w-72">
-          <Shield className="relative z-20 h-16 w-16 text-white/80" strokeWidth={1} />
-        </AuraFrame>
+      <div className="origin-page__shell mx-auto flex max-w-6xl flex-col items-center px-4 sm:px-6">
+        <header className="origin-page__header mb-10 text-center">
+          <UsjetWordmark size="hero" className="origin-page__wordmark" />
+          <p className="origin-page__kicker">Command node · Bay 30</p>
+          <h1 className="origin-page__title">Origin Intelligence Core</h1>
+          <p className="origin-page__lede">
+            The only bay that commands the full fleet. Thirty partner AIs report through this node — you fly
+            the hangar, not a single vendor silo.
+          </p>
+        </header>
 
-        <button
-          type="button"
-          className="group absolute -left-28 rounded-full border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-xl transition-all hover:border-blue-400/50 hover:bg-white/10"
-        >
-          <Mic className="h-8 w-8 text-white/40 transition-colors group-hover:text-blue-400" />
-          <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-widest text-white/20 group-hover:text-blue-400">
-            Listen
-          </span>
-        </button>
+        <div className="origin-page__core mb-12 flex w-full max-w-3xl flex-col items-center">
+          <div
+            className={shellClass}
+            style={{ ["--voice-level" as string]: String(voiceLevel.toFixed(3)) }}
+          >
+            <span className="origin-voice-ripple origin-voice-ripple--a" aria-hidden />
+            <span className="origin-voice-ripple origin-voice-ripple--b" aria-hidden />
+            <span className="origin-voice-ripple origin-voice-ripple--c" aria-hidden />
 
-        <button
-          type="button"
-          className="group absolute -right-28 rounded-full border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-xl transition-all hover:border-blue-400/50 hover:bg-white/10"
-        >
-          <Volume2 className="h-8 w-8 text-white/40 transition-colors group-hover:text-blue-400" />
-          <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-widest text-white/20 group-hover:text-blue-400">
-            Speak
-          </span>
-        </button>
+            <button
+              type="button"
+              className="group absolute -left-6 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-xl transition-all hover:border-cyan-400/50 hover:bg-white/10 sm:-left-28"
+              onClick={voiceMode === "listening" ? stopListening : startListen}
+              aria-pressed={voiceMode === "listening"}
+              aria-label={voiceMode === "listening" ? "Stop listening" : "Listen on Origin channel"}
+            >
+              <Mic
+                className={`h-8 w-8 ${voiceMode === "listening" ? "text-cyan-300" : "text-white/40 group-hover:text-cyan-400"}`}
+              />
+              <span className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-widest text-white/20 group-hover:text-cyan-400 sm:block">
+                {voiceMode === "listening" ? "Stop" : "Listen"}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className="origin-shield-hit"
+              onClick={() => {
+                if (voiceMode === "speaking") {
+                  window.speechSynthesis?.cancel();
+                  setVoiceMode("idle");
+                  setStatusLine("Status: Online // 8080 Active");
+                } else {
+                  startSpeak();
+                }
+              }}
+              aria-label="Origin shield — transmit briefing"
+            >
+              <AuraFrame aura={voiceMode === "listening" ? "listening" : voiceMode === "speaking" ? "talking" : "idle"} variant="orb" className="h-56 w-56 sm:h-72 sm:w-72">
+                <Shield className="relative z-20 h-14 w-14 text-white/90 sm:h-16 sm:w-16" strokeWidth={1} />
+              </AuraFrame>
+            </button>
+
+            <button
+              type="button"
+              className="group absolute -right-6 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-xl transition-all hover:border-cyan-400/50 hover:bg-white/10 sm:-right-28"
+              onClick={startSpeak}
+              aria-label="Speak Origin briefing"
+            >
+              <Volume2 className="h-8 w-8 text-white/40 transition-colors group-hover:text-cyan-400" />
+              <span className="absolute -bottom-8 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-widest text-white/20 group-hover:text-cyan-400 sm:block">
+                Speak
+              </span>
+            </button>
+          </div>
+
+          <p className="origin-page__status mt-8 font-mono text-[10px] uppercase tracking-widest text-cyan-300/70">
+            {statusLine}
+          </p>
+        </div>
+
+        <GlassEffectContainer className="origin-page__deck glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mb-10 w-full max-w-4xl flex-col items-stretch gap-0 p-0">
+          <div className="origin-page__deck-head">
+            <p className="origin-page__deck-kicker">USJET command deck</p>
+            <p className="origin-page__deck-title">Internal routes</p>
+          </div>
+          <nav className="origin-page__deck-nav" aria-label="USJET command routes">
+            {COMMAND_ROUTES.map((route) => (
+              <Link key={route.to} to={route.to} className="origin-page__deck-link btn-glass glass-effect-interactive">
+                {route.label}
+              </Link>
+            ))}
+          </nav>
+        </GlassEffectContainer>
+
+        <section className="origin-page__fleet w-full max-w-5xl" aria-labelledby="origin-fleet-heading">
+          <div className="origin-page__fleet-head">
+            <h2 id="origin-fleet-heading" className="origin-page__fleet-title">
+              Fleet manifest — 30 bays
+            </h2>
+            <p className="origin-page__fleet-copy">Launch any partner from Origin. External bays open in a new tab.</p>
+          </div>
+          <div className="origin-page__fleet-grid">
+            {sortedFleet.map((unit) => {
+              const url = fleetLaunchUrl(unit.domain, unit.href);
+              const external = isExternalFleetUrl(url);
+              const isOrigin = unit.href === "/origin" || unit.slot === 29;
+
+              if (isOrigin) {
+                return (
+                  <span
+                    key={unit.id}
+                    className="origin-page__fleet-chip origin-page__fleet-chip--command"
+                    aria-current="page"
+                  >
+                    <span className="origin-page__fleet-slot">30</span>
+                    {unit.name}
+                  </span>
+                );
+              }
+
+              return (
+                <a
+                  key={unit.id}
+                  href={url}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="origin-page__fleet-chip"
+                >
+                  <span className="origin-page__fleet-slot">{String(unit.slot + 1).padStart(2, "0")}</span>
+                  {unit.name}
+                </a>
+              );
+            })}
+          </div>
+        </section>
       </div>
 
-      <div className="mt-24 text-center">
-        <p className="mb-2 text-[11px] font-light uppercase tracking-[0.8em] text-white/30">
-          Origin Intelligence Core
-        </p>
-        <div className="mx-auto h-px w-48 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-        <p className="mt-4 animate-pulse font-mono text-[10px] uppercase tracking-widest text-blue-400/60">
-          Status: Online // 8080 Active
-        </p>
+      <div className="origin-intel-bulletin" aria-hidden>
+        <div className="origin-intel-bulletin__track">
+          <span className="origin-intel-bulletin__text">{bulletinTrackText()}</span>
+          <span className="origin-intel-bulletin__text">{bulletinTrackText()}</span>
+        </div>
       </div>
-    </div>
 
-    <div className="absolute bottom-10 left-10 font-mono text-[10px] uppercase tracking-tighter text-white/20">
-      <p>Lat: 40.7128° N</p>
-      <p>Long: 74.0060° W</p>
-    </div>
+      <div className="origin-page__hud origin-page__hud--left font-mono text-[10px] uppercase tracking-tighter text-white/25">
+        <p>Lat: 40.7128° N</p>
+        <p>Long: 74.0060° W</p>
+      </div>
+      <div className="origin-page__hud origin-page__hud--right text-right font-mono text-[10px] uppercase tracking-tighter text-white/25">
+        <p>Protocol: USJET-v5</p>
+        <p>System: Liquid Glass</p>
+      </div>
 
-    <div className="absolute bottom-10 right-10 text-right font-mono text-[10px] uppercase tracking-tighter text-white/20">
-      <p>Protocol: USJET-v5</p>
-      <p>System: Liquid Glass</p>
+      {showTroubleshoot ? (
+        <>
+          <button
+            type="button"
+            className="origin-troubleshoot-backdrop"
+            aria-label="Close troubleshoot"
+            onClick={() => setShowTroubleshoot(false)}
+          />
+          <div className="origin-troubleshoot-panel" role="dialog" aria-labelledby="origin-troubleshoot-title">
+            <h2 id="origin-troubleshoot-title" className="origin-troubleshoot-panel__title">
+              Voice troubleshoot
+            </h2>
+            <p className="origin-troubleshoot-panel__body">
+              Origin needs microphone permission for Listen mode. Use HTTPS, allow mic access in browser settings,
+              and try again. Speak mode uses your device voice synthesizer — no mic required.
+            </p>
+            <div className="origin-troubleshoot-panel__actions">
+              <button type="button" className="origin-troubleshoot-panel__btn" onClick={startListen}>
+                Retry mic
+              </button>
+              <button type="button" className="origin-troubleshoot-panel__btn" onClick={startSpeak}>
+                Test speak
+              </button>
+              <button
+                type="button"
+                className="origin-troubleshoot-panel__btn origin-troubleshoot-panel__btn--ghost"
+                onClick={() => setShowTroubleshoot(false)}
+              >
+                Dismiss
+              </button>
+            </div>
+            <p className="origin-troubleshoot-panel__mono">Origin / Bay 30 / COMMAND-01</p>
+          </div>
+        </>
+      ) : null}
     </div>
-  </div>
-);
-
-export default Origin;
+  );
+}

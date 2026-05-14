@@ -31,6 +31,7 @@ const Fleet = () => (
           callsign={unit.callsign}
           href={unit.href}
           slot={unit.slot}
+          isCommandBay={unit.href === "/origin" || unit.slot === 29}
         />
       ))}
     </div>

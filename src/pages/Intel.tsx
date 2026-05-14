@@ -1,8 +1,8 @@
-import { Activity, TrendingUp } from "lucide-react";
 import { useMemo, type ReactNode } from "react";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import IntelExpandedWorkbench from "../components/intel/IntelExpandedWorkbench";
 import IntelMonitor from "../components/intel/IntelMonitor";
+import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
@@ -101,37 +101,14 @@ const Intel = () => {
       </div>
 
       <div className="intel-page__shell page-atmosphere mx-auto max-w-[88rem] px-4 pb-24 pt-36 sm:px-6 lg:px-8">
-        <div className="mb-10 overflow-hidden whitespace-nowrap border-y border-emerald-500/25 bg-emerald-500/[0.03] p-4 backdrop-blur-[1px]">
-          <div className="flex animate-pulse gap-12">
-            <span className="font-black italic text-white">
-              BTC: $62,450 <TrendingUp size={14} className="inline text-green-500" />
-            </span>
-            <span className="font-black italic text-white">
-              NVDA: $895.40 <TrendingUp size={14} className="inline text-green-500" />
-            </span>
-            <span className="font-black italic text-white">
-              TSLA: $182.50 <TrendingUp size={14} className="inline text-green-500" />
-            </span>
-            <span className="font-black italic text-white">
-              USJET: ACTIVE <TrendingUp size={14} className="inline text-blue-500" />
-            </span>
-          </div>
-        </div>
+        <IntelPulseDashboard />
 
-        <div className="mb-12 flex items-center gap-5 border-b border-emerald-500/20 pb-8 text-left text-white">
-          <Activity className="text-emerald-400" size={48} />
-          <div>
-            <h1 className="font-aviation text-6xl font-black uppercase italic tracking-tighter sm:text-7xl">
-              Intel Stream
-            </h1>
-            <p className="mt-3 text-sm font-medium uppercase tracking-[0.28em] text-white/45">
-              {HANGAR_COLUMNS} monitors wide · {HANGAR_ROWS} rows deep · {FLEET_UNIT_COUNT} feeds
-            </p>
-            <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.24em] text-emerald-300/70">
-              Wings 1-10 BTC/USD · 11-20 NVDA · 21-30 TSLA · click a monitor to expand (max{" "}
-              {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches)
-            </p>
-          </div>
+        <div className="intel-page__grid-intro">
+          <p className="intel-page__grid-kicker">Monitor grid</p>
+          <p className="intel-page__grid-copy">
+            {HANGAR_COLUMNS} wide · {HANGAR_ROWS} deep · {FLEET_UNIT_COUNT} feeds · click a bay to expand (max{" "}
+            {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches)
+          </p>
         </div>
 
         <div className="intel-grid-wrap -mx-2 overflow-x-auto px-2 sm:mx-0 sm:overflow-visible sm:px-0">

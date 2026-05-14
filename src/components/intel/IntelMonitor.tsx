@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
+import { getWingForSlot } from "../../lib/intelWings";
 import TickerDisplay from "./TickerDisplay";
-import SignalPulse from "./SignalPulse";
+import EkgPulseLine from "./EkgPulseLine";
+import MarketCandlesticks from "./MarketCandlesticks";
 import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
 
 type IntelMonitorProps = {
@@ -10,12 +12,28 @@ type IntelMonitorProps = {
   onExpandRequest?: () => void;
 };
 
+const WING_VOLATILITY: Record<string, number> = {
+  "BTC/USD": 420,
+  NVDA: 18,
+  TSLA: 4.2,
+};
+
 export default function IntelMonitor({ unit, index, style, onExpandRequest }: IntelMonitorProps) {
   const interactive = Boolean(onExpandRequest);
+  const wing = getWingForSlot(unit.slot);
+  const volatility = WING_VOLATILITY[wing.symbol] ?? 12;
 
   return (
     <article
-      className={["intel-monitor", interactive ? "intel-monitor--expandable" : ""].filter(Boolean).join(" ")}
+      className={[
+        "intel-monitor",
+        "glass-effect",
+        "liquid-glass-background",
+        "glass-tint-cyan",
+        interactive ? "intel-monitor--expandable" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={{
         animationDelay: `${(index % HANGAR_COLUMNS) * 0.15}s`,
         ...style,
@@ -40,9 +58,17 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
         <span className="intel-monitor__status">{unit.status}</span>
       </header>
 
-      <div className="intel-monitor__screen">
+      <div className="intel-monitor__screen liquid-glass-background">
+        <div className="intel-monitor__candles" aria-hidden>
+          <MarketCandlesticks
+            seed={unit.slot}
+            basePrice={wing.basePrice}
+            volatility={volatility}
+            candleCount={8}
+          />
+        </div>
         <div className="intel-monitor__pulse-back" aria-hidden>
-          <SignalPulse slot={unit.slot} />
+          <EkgPulseLine variant="monitor" seed={unit.slot} />
         </div>
         <div className="intel-monitor__grid" aria-hidden />
         <div className="intel-monitor__scan" aria-hidden />

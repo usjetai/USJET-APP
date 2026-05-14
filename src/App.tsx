@@ -4,6 +4,7 @@ import AppNav from "./components/layout/AppNav";
 import PageTransition from "./components/layout/PageTransition";
 import Usa250Countdown from "./components/layout/Usa250Countdown";
 import MovingBackground from "./components/layout/MovingBackground";
+import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
 import Fleet from "./pages/Fleet";
 import Hangar from "./pages/Hangar";
 import Intel from "./pages/Intel";
@@ -47,6 +48,8 @@ export default function App() {
         <div id="global-atmosphere" style={globalAtmosphereStyle}>
           <div aria-hidden className="moving-clouds" />
         </div>
+
+        <GlobalVideoBackground />
 
         <MovingBackground />
 

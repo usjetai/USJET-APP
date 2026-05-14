@@ -3,24 +3,12 @@ import GlassEffectContainer from "../layout/GlassEffectContainer";
 import EkgPulseLine from "./EkgPulseLine";
 import MarketCandlesticks from "./MarketCandlesticks";
 import TickerDisplay from "./TickerDisplay";
-import type { WingTickerConfig } from "../../lib/intelWings";
+import { getWingForSlot } from "../../lib/intelWings";
 
-const PULSE_WINGS: { slot: number; config: WingTickerConfig; volatility: number }[] = [
-  {
-    slot: 2,
-    config: { wing: "crypto", symbol: "BTC/USD", label: "Crypto Wing", basePrice: 62450, step: 95 },
-    volatility: 420,
-  },
-  {
-    slot: 12,
-    config: { wing: "infra", symbol: "NVDA", label: "Infra Wing", basePrice: 895.4, step: 1.85 },
-    volatility: 18,
-  },
-  {
-    slot: 22,
-    config: { wing: "autonomy", symbol: "TSLA", label: "Autonomy Wing", basePrice: 182.5, step: 0.65 },
-    volatility: 4.2,
-  },
+const PULSE_WINGS: { slot: number; volatility: number }[] = [
+  { slot: 2, volatility: 420 },
+  { slot: 12, volatility: 18 },
+  { slot: 22, volatility: 4.2 },
 ];
 
 export default function IntelPulseDashboard() {
@@ -33,14 +21,14 @@ export default function IntelPulseDashboard() {
         </div>
         <div className="intel-pulse__title-row">
           <Activity className="intel-pulse__icon" size={44} aria-hidden />
-          <motion.div>
+          <div>
             <h1 id="intel-pulse-heading" className="intel-pulse__title">
               Intel <span className="intel-pulse__title-accent">Pulse</span>
             </h1>
             <p className="intel-pulse__subtitle">
               Field-grade market telemetry — built for operators turning wrenches, not boardroom decks.
             </p>
-          </motion.div>
+          </div>
         </div>
       </header>
 
@@ -58,29 +46,33 @@ export default function IntelPulseDashboard() {
       </GlassEffectContainer>
 
       <div className="intel-pulse__wing-grid">
-        {PULSE_WINGS.map((wing, index) => (
-          <GlassEffectContainer
-            key={wing.config.symbol}
-            className="intel-pulse__wing glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-          >
-            <div className="intel-pulse__wing-head">
-              <p className="intel-pulse__wing-label">{wing.config.label}</p>
-              <p className="intel-pulse__wing-symbol">{wing.config.symbol}</p>
-            </div>
-            <div className="intel-pulse__wing-chart">
-              <MarketCandlesticks
-                seed={wing.slot + index * 11}
-                basePrice={wing.config.basePrice}
-                volatility={wing.volatility}
-                candleCount={12}
-              />
-            </div>
-            <div className="intel-pulse__wing-ticker">
-              <TickerDisplay slot={wing.slot} />
-            </div>
-          </GlassEffectContainer>
-        ))}
-      </motion.div>
+        {PULSE_WINGS.map((wing, index) => {
+          const config = getWingForSlot(wing.slot);
+
+          return (
+            <GlassEffectContainer
+              key={config.symbol}
+              className="intel-pulse__wing glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+            >
+              <div className="intel-pulse__wing-head">
+                <p className="intel-pulse__wing-label">{config.label}</p>
+                <p className="intel-pulse__wing-symbol">{config.symbol}</p>
+              </div>
+              <div className="intel-pulse__wing-chart">
+                <MarketCandlesticks
+                  seed={wing.slot + index * 11}
+                  basePrice={config.basePrice}
+                  volatility={wing.volatility}
+                  candleCount={12}
+                />
+              </div>
+              <div className="intel-pulse__wing-ticker">
+                <TickerDisplay slot={wing.slot} />
+              </div>
+            </GlassEffectContainer>
+          );
+        })}
+      </div>
     </section>
   );
 }

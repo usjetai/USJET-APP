@@ -1,5 +1,6 @@
 import AircraftIcon from "../icons/AircraftIcons";
 import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
+import { fleetLaunchUrl, isExternalFleetUrl } from "../../lib/fleetLaunchUrl";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type FleetCardProps = {
@@ -9,23 +10,12 @@ type FleetCardProps = {
   callsign: string;
   href?: string;
   slot?: number;
+  /** Bay 30 / USJet Origin — command styling */
+  isCommandBay?: boolean;
   /** When set, plain click / Enter / Space expands the hangar bay instead of navigating. Cmd/Ctrl-click still opens the URL. */
   onExpandBay?: () => void;
   style?: CSSProperties;
 };
-
-function fleetLaunchUrl(domain: string, href?: string): string {
-  if (href?.startsWith("/")) {
-    return href;
-  }
-
-  if (href && /^https?:\/\//i.test(href)) {
-    return href;
-  }
-
-  const host = domain.replace(/^https?:\/\//i, "").replace(/\/$/, "");
-  return `https://${host}`;
-}
 
 export default function FleetCard({
   domain,
@@ -34,12 +24,13 @@ export default function FleetCard({
   callsign,
   href,
   slot,
+  isCommandBay = false,
   onExpandBay,
   style,
 }: FleetCardProps) {
   const launchUrl = fleetLaunchUrl(domain, href);
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
-  const external = !launchUrl.startsWith("/");
+  const external = isExternalFleetUrl(launchUrl);
   const expandInteractive = Boolean(onExpandBay);
   /** Hangar: left-click expands in-grid only; omit _blank so there is no parallel “new tab” path for primary clicks. */
   const linkTarget = expandInteractive ? undefined : external ? "_blank" : undefined;
@@ -64,8 +55,8 @@ export default function FleetCard({
     <a
       href={launchUrl}
       target={linkTarget}
-      rel={external ? "noreferrer" : undefined}
-      className={["fleet-card group block h-full min-h-[11.5rem]", expandInteractive ? "fleet-card--hangar-expand" : ""]
+      rel={external ? "noopener noreferrer" : undefined}
+      className={["fleet-card group block h-full min-h-[11.5rem]", expandInteractive ? "fleet-card--hangar-expand" : "", isCommandBay ? "fleet-card--command" : ""]
         .filter(Boolean)
         .join(" ")}
       style={style}
@@ -95,7 +86,9 @@ export default function FleetCard({
         </div>
 
         <div className="mt-auto text-left">
-          {expandInteractive ? (
+          {isCommandBay ? (
+            <p className="text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
+          ) : expandInteractive ? (
             <p className="text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/50">USJET fleet · consensus bay</p>
           ) : null}
           {typeof slot === "number" ? (

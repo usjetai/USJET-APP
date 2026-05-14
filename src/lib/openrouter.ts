@@ -1,4 +1,7 @@
-/** OpenRouter chat (OpenAI-compatible). Model and endpoint are centralized here. */
+/**
+ * OpenRouter chat (OpenAI-compatible). Model and endpoint are centralized here.
+ * Production Aura on Origin: set VITE_OPENROUTER_API_KEY in Vercel — admin-only; never speak env names in user TTS.
+ */
 
 export const OPENROUTER_API_URL =
   "https://openrouter.ai/api/v1/chat/completions";

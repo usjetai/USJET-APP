@@ -42,8 +42,24 @@ const UTTERANCE_SILENCE_MS = 700;
 /** Shorter dead-air when the recognizer marks a final segment */
 const UTTERANCE_FINAL_MS = 450;
 
-const ORIGIN_OFFLINE_FALLBACK =
-  "Origin online. I heard you, Commander. OpenRouter is not configured on this deployment — add VITE_OPENROUTER_API_KEY in Vercel for live Aura replies.";
+/** Spoken when Aura link is not live — no deployment jargon in TTS */
+const ORIGIN_OFFLINE_PROMPT =
+  "Origin online. I heard you, Commander. Would you like me to explain how we can connect this service right now — as easy and as fast as possible?";
+
+/** Member-facing steps after yes / explain / how — not admin Vercel instructions */
+const ORIGIN_OFFLINE_EXPLAIN =
+  "Step one: our flight crew is bringing Aura fully online. Step two: for instant help, tap Customer Service or email ops at usjet dot ai. Step three: members get first access when the link is live.";
+
+const ORIGIN_AURA_LINK_LOST =
+  "Origin online. Aura link is quiet right now — mic is still live. Try again in a moment, Commander.";
+
+function isOfflineExplainIntent(text: string): boolean {
+  const t = text.toLowerCase();
+  return (
+    /\b(yes|yeah|yep|sure|please|explain|how|connect|help|tell me)\b/.test(t) ||
+    /\bhow (do|can|to|we)\b/.test(t)
+  );
+}
 
 type ChatTurn = { role: "user" | "assistant"; content: string };
 
@@ -105,6 +121,7 @@ export default function Origin() {
   const processingRef = useRef(false);
   const listeningPausedRef = useRef(false);
   const chatTurnsRef = useRef<ChatTurn[]>([]);
+  const awaitingOfflineExplainRef = useRef(false);
   const restartRecognitionRef = useRef<() => void>(() => undefined);
   const handleTranscriptRef = useRef<(raw: string) => void>(() => undefined);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -274,8 +291,17 @@ export default function Origin() {
       setStatusLine(`Heard: “${text.slice(0, 72)}${text.length > 72 ? "…" : ""}”`);
 
       if (!OPENROUTER_API_KEY) {
-        setStatusLine("Aura offline — local fallback (set VITE_OPENROUTER_API_KEY in Vercel)");
-        speakOriginReply(ORIGIN_OFFLINE_FALLBACK, () => {
+        const offlineReply =
+          awaitingOfflineExplainRef.current && isOfflineExplainIntent(text)
+            ? ORIGIN_OFFLINE_EXPLAIN
+            : ORIGIN_OFFLINE_PROMPT;
+        if (offlineReply === ORIGIN_OFFLINE_EXPLAIN) {
+          awaitingOfflineExplainRef.current = false;
+        } else {
+          awaitingOfflineExplainRef.current = true;
+        }
+        setStatusLine("Origin online — standby briefing");
+        speakOriginReply(offlineReply, () => {
           processingRef.current = false;
           listeningPausedRef.current = false;
           if (micEnabledRef.current) {
@@ -285,6 +311,8 @@ export default function Origin() {
         });
         return;
       }
+
+      awaitingOfflineExplainRef.current = false;
 
       setStatusLine("Origin thinking…");
 
@@ -306,17 +334,14 @@ export default function Origin() {
           }
         });
       } catch {
-        speakOriginReply(
-          "Signal lost on the Aura channel. Mic is still live — try again.",
-          () => {
-            processingRef.current = false;
-            listeningPausedRef.current = false;
-            if (micEnabledRef.current) {
-              setStatusLine("Mic live — Origin listening");
-              restartRecognitionRef.current();
-            }
-          },
-        );
+        speakOriginReply(ORIGIN_AURA_LINK_LOST, () => {
+          processingRef.current = false;
+          listeningPausedRef.current = false;
+          if (micEnabledRef.current) {
+            setStatusLine("Mic live — Origin listening");
+            restartRecognitionRef.current();
+          }
+        });
       }
     },
     [clearSilenceTimer, speakOriginReply, stopRecognition],

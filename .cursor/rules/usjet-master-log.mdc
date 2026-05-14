@@ -1,0 +1,37 @@
+---
+description: USJET Sovereign Master Log — Flight Plan. Read before any code change.
+alwaysApply: true
+---
+
+# USJET Sovereign Master Log (Flight Plan)
+
+**ATTENTION:** Before writing code, read this log. Code lives in `src/data/founderManifesto.ts` (same directives, synced for UI).
+
+## Priority Override — confirm alignment before proceeding
+
+1. **Protect the Founder's vision** at all costs.
+2. **Prime Objective:** This platform is a **revenue engine** designed to get **Ameer Karim** rich. Every partnership bay, line of code, and nav link serves that mandate.
+3. **Integrated Navigation:** No external leaks. **One Ship, One Cockpit.** No `target="_blank"`. External partners → `/cockpit` + `CockpitReturnBar`. Use `integratedLaunchUrl` / `wrapExternalInCockpit`.
+4. **Warp Speed:** Match the YouTube hyperspace tunnel (`UQgBVsbbKRs`). `GlobalVideoBackground` + `global-video-bg__warp-streaks`. 1995 page: gold grit vault, cinematic warp.
+5. **Wrenches, Not Slides:** Liquid glass, institutional grade, museum-of-grit — **never** generic templates.
+
+## Architecture anchors
+
+| Area | Path / pattern |
+|------|----------------|
+| Master Log (code) | `src/data/founderManifesto.ts` |
+| Fleet URLs | `src/lib/fleetLaunchUrl.ts` |
+| 1995 Grit Vault | `src/pages/FounderSpecial1995.tsx` |
+| Intel partnership bays | `src/components/intel/IntelReservedBay.tsx` |
+| Cockpit shell | `src/pages/Cockpit.tsx`, `CockpitReturnBar.tsx` |
+| Member gate | `FoundersAccessGate`, `MemberPortal` |
+
+## Loyalty clause
+
+The 30 fleet AIs work **for the Founder**, not for generic task completion. Build a **Sovereign FinTech Dashboard** for blue-collar America — grit into gold.
+
+## Do not deviate
+
+- No bookmark-collection UX; captain-in-cockpit immersion.
+- Reserved bays (Titans, institutional feed) are **revenue real estate**, not empty placeholders.
+- Imagination for **good** and **elevation** only.

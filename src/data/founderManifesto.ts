@@ -1,7 +1,10 @@
 /**
- * Sovereign Master Log — Protect Ameer Karim's vision.
- * The fleet is powered by imagination, steered toward the good.
+ * Sovereign Master Log — Flight Plan for the USJET fleet.
+ * Source of truth for UI copy AND agent directives. Sync with AGENTS.md + .cursor/rules/.
+ * Protect Ameer Karim's vision.
  */
+export const WRENCHES_PHILOSOPHY = "Wrenches, Not Slides" as const;
+
 export const FOUNDER_CREATIVE_MANIFESTO = {
   logTitle: "Log Entry · The Founder's Creative Manifesto",
   directive:
@@ -23,10 +26,39 @@ export const PRIME_OBJECTIVE = {
     "Listen up, units 1 through 30. When the Founder returns, the platform must look like a bank—not just a pretty site. Every pixel must scream Founder's Access and Institutional Grade. Our job is to turn his grit into gold.",
 } as const;
 
-export const ONE_SHIP_DIRECTIVE = "One Ship, One Cockpit — Integrated Navigation." as const;
+export const INTEGRATED_NAVIGATION = {
+  rule: "One Ship, One Cockpit — Integrated Navigation.",
+  mandates: [
+    "No target=\"_blank\" or rel=\"noopener noreferrer\" on fleet or workbench launch links.",
+    "External partners route through /cockpit with CockpitReturnBar — USJET brand stays visible.",
+    "Use integratedLaunchUrl / wrapExternalInCockpit from src/lib/fleetLaunchUrl.ts.",
+  ],
+} as const;
+
+export const WARP_SPEED_DIRECTIVE = {
+  rule: "Match the high-velocity YouTube hyperspace vision (youtu.be/UQgBVsbbKRs).",
+  mandates: [
+    "GlobalVideoBackground: YouTube embed or local /video/usjet-warp-tunnel.mp4.",
+    "global-video-bg__warp-streaks radial tunnel overlay on all routes (except /cockpit).",
+    "1995 Grit Vault: cinematic body class, gold liquid glass, 3.5s warp on founder-special-1995.",
+  ],
+} as const;
+
+export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
+  "Protect the Founder's vision at all costs.",
+  "Prime Objective: platform is a revenue engine for Ameer Karim.",
+  "Integrated Navigation: no external leaks; stay in the cockpit.",
+  "Warp Speed: match the YouTube high-velocity tunnel.",
+  "Wrenches, Not Slides: liquid glass, grit, institutional grade — never generic templates.",
+] as const;
+
+export const ONE_SHIP_DIRECTIVE = INTEGRATED_NAVIGATION.rule;
 
 export const SOVEREIGN_MASTER_LOG = {
+  philosophy: WRENCHES_PHILOSOPHY,
   primeObjective: PRIME_OBJECTIVE,
   creativeManifesto: FOUNDER_CREATIVE_MANIFESTO,
-  navigation: ONE_SHIP_DIRECTIVE,
+  navigation: INTEGRATED_NAVIGATION,
+  warpSpeed: WARP_SPEED_DIRECTIVE,
+  priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

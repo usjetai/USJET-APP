@@ -1,4 +1,16 @@
 import type { MemberTier } from "../types/member";
+import {
+  ENTERPRISE_DIRECT_URL,
+  FLIGHT_PASS_DIRECT_URL,
+  HANGAR_PRO_DIRECT_URL,
+} from "../lib/stripePaymentLink";
+
+/** Direct Landing Protocol — hard-wired Stripe extraction ports (env overrides in stripePaymentLink.ts). */
+export const STRIPE_DIRECT_EXTRACTION_PORTS = {
+  flightPass: FLIGHT_PASS_DIRECT_URL,
+  hangarPro: HANGAR_PRO_DIRECT_URL,
+  enterprise: ENTERPRISE_DIRECT_URL,
+} as const;
 
 /** Stripe product metadata keys — paste identical keys in Stripe Dashboard. */
 export const STRIPE_METADATA_KEYS = {

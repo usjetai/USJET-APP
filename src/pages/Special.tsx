@@ -9,13 +9,11 @@ import {
   HANGAR_PRO_STRIPE,
   type StripeTierProduct,
 } from "../data/stripeProducts";
-import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
-
-const PAYMENT_LINK_BY_ENV: Record<StripeTierProduct["paymentLinkEnvKey"], string | undefined> = {
-  VITE_STRIPE_FOUNDER_PAYMENT_LINK: import.meta.env.VITE_STRIPE_FOUNDER_PAYMENT_LINK?.trim(),
-  VITE_STRIPE_PRO_PAYMENT_LINK: import.meta.env.VITE_STRIPE_PRO_PAYMENT_LINK?.trim(),
-  VITE_STRIPE_ENTERPRISE_PAYMENT_LINK: import.meta.env.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK?.trim(),
-};
+import {
+  resolveEnterprisePaymentLink,
+  resolveFounderPaymentLink,
+  resolveHangarProPaymentLink,
+} from "../lib/stripePaymentLink";
 
 type ServiceTier = StripeTierProduct & {
   paymentLink?: string;
@@ -28,11 +26,11 @@ const SERVICE_TIERS: ServiceTier[] = [
   },
   {
     ...HANGAR_PRO_STRIPE,
-    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_PRO_PAYMENT_LINK,
+    paymentLink: resolveHangarProPaymentLink(),
   },
   {
     ...FLEET_COMMANDER_STRIPE,
-    paymentLink: PAYMENT_LINK_BY_ENV.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK,
+    paymentLink: resolveEnterprisePaymentLink(),
   },
 ];
 

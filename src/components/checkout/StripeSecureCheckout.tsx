@@ -2,7 +2,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe, type StripeElementsOptions } from "@stripe/stripe-js";
 import { CreditCard, Lock } from "lucide-react";
-import { isUsableStripePaymentLink, resolveFounderPaymentLink } from "../../lib/stripePaymentLink";
+import { isUsableStripePaymentLink, resolvePaymentLinkForTier } from "../../lib/stripePaymentLink";
 
 export type SpecialTierId = "founder" | "hangar-pro" | "fleet-command";
 
@@ -34,9 +34,7 @@ function CheckoutForm({
 
   const usablePaymentLink = isUsableStripePaymentLink(paymentLink)
     ? paymentLink
-    : tierId === "founder"
-      ? resolveFounderPaymentLink()
-      : undefined;
+    : resolvePaymentLinkForTier(tierId);
   const checkoutReady = Boolean(clientSecret || usablePaymentLink);
 
   const handleSubmit = async (event: FormEvent) => {
@@ -46,16 +44,18 @@ function CheckoutForm({
       setStatus("error");
       setMessage(
         isDev
-          ? "Payment link not configured. Set VITE_STRIPE_FOUNDER_PAYMENT_LINK in your environment."
+          ? "Payment link not configured. Set VITE_STRIPE_*_PAYMENT_LINK in your environment."
           : "Checkout is temporarily unavailable. Please try again later.",
       );
       return;
     }
 
+    if (!clientSecret && usablePaymentLink) {
+      window.location.href = usablePaymentLink;
+      return;
+    }
+
     if (!stripe || !elements) {
-      if (usablePaymentLink) {
-        window.location.assign(usablePaymentLink);
-      }
       return;
     }
 

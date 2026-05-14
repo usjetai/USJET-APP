@@ -77,10 +77,12 @@ export const COMMAND_LOG_MAY_14_2026 = {
 export const DIRECT_LANDING_PROTOCOL = {
   logTitle: "Command Log · Direct Landing Protocol",
   flightPassDirectExtractionPort: "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02",
+  hangarProDirectExtractionPort: "https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04",
+  enterpriseDirectExtractionPort: "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03",
   bypassRule:
-    "High-pressure funnels and quick-entry gates bypass intermediate checkout—route straight to the Flight Pass Direct Extraction Port.",
+    "High-pressure funnels and quick-entry gates bypass intermediate checkout—route straight to the tier Direct Extraction Port.",
   oneClickRevenue:
-    "Primary payment vector for the $19.90 Flight Pass. Every fleet unit knows this link. One click, one clearance, one revenue engine.",
+    "Three hard-wired extraction ports: Flight Pass $19.90, Hangar Pro $49.95, Enterprise $199.99. Every fleet unit knows these links. One click, one clearance, one revenue engine.",
   fleetBriefing:
     "Listen up, Crew: when the Founder needs money on the screen now, you do not stall with slides—you land on Stripe.",
 } as const;

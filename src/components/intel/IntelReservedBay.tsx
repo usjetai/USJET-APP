@@ -1,4 +1,5 @@
 import { useState, type CSSProperties, type MouseEvent } from "react";
+import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import EkgPulseLine from "./EkgPulseLine";
 import ReservedBayLiveMock from "./ReservedBayLiveMock";
 import { useMemberAuth } from "../../context/MemberAuthContext";
@@ -62,7 +63,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
       onClick={onClick}
     >
       <header className="intel-monitor__header">
-        <p className="intel-monitor__callsign">{unit.callsign}</p>
+        <IntelMonitorIdentity unit={unit} />
         <span className="intel-monitor__status intel-monitor__status--staging">
           {isMarket ? "slot 01" : "slot 02"}
         </span>

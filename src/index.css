@@ -2049,8 +2049,16 @@
   margin-bottom: 0.65rem;
 }
 
-.intel-monitor__callsign,
-.intel-monitor__unit {
+.intel-monitor__identity {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.intel-monitor__callsign {
+  margin: 0;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2066,6 +2074,20 @@
     0 0.05em 0.1em rgba(0, 0, 0, 0.88),
     0 0 0.4rem rgba(2, 8, 23, 0.55),
     0 0 10px rgba(34, 211, 238, 0.07);
+}
+
+.intel-monitor__unit {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.46rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(148, 163, 184, 0.62);
+  text-shadow: 0 0.04em 0.08em rgba(0, 0, 0, 0.78);
 }
 
 .intel-monitor__status {
@@ -2780,6 +2802,19 @@
   text-shadow:
     0 0.06em 0.1em rgba(0, 0, 0, 0.85),
     0 0 0.45rem rgba(2, 8, 23, 0.55);
+}
+
+.intel-expanded__unit-name {
+  margin: 0.08rem 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(148, 163, 184, 0.78);
+  text-shadow: 0 0.04em 0.08em rgba(0, 0, 0, 0.75);
 }
 
 .intel-expanded__domain {

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getWingForSlot } from "../../lib/intelWings";
+import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import TickerDisplay from "./TickerDisplay";
 import EkgPulseLine from "./EkgPulseLine";
 import MarketCandlesticks from "./MarketCandlesticks";
@@ -51,10 +52,10 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
       }
       tabIndex={interactive ? 0 : undefined}
       role={interactive ? "button" : undefined}
-      aria-label={interactive ? `Expand ${unit.callsign} workstation` : undefined}
+      aria-label={interactive ? `Expand ${unit.callsign} · ${unit.name} workstation` : undefined}
     >
       <header className="intel-monitor__header">
-        <p className="intel-monitor__callsign">{unit.callsign}</p>
+        <IntelMonitorIdentity unit={unit} />
         <span className="intel-monitor__status">{unit.status}</span>
       </header>
 

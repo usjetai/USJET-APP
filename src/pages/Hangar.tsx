@@ -1,7 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, type ReactNode } from "react";
 import FleetCard from "../components/fleet/FleetCard";
-import FoundersAccessGate from "../components/member/FoundersAccessGate";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
@@ -63,9 +62,9 @@ const Hangar = () => {
     return out;
   }, []);
 
+  // Founder review — gate temporarily open; re-lock before Titans launch
   return (
-    <FoundersAccessGate pageLabel="The Hangar">
-      <div
+    <div
         className="relative hangar-page"
         data-usjet-legacy-access={KING_KARIM_HANGAR_META.key}
         data-usjet-legacy-note={KING_KARIM_HANGAR_META.note}
@@ -112,7 +111,6 @@ const Hangar = () => {
         </div>
       </div>
     </div>
-    </FoundersAccessGate>
   );
 };
 

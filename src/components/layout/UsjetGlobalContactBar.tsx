@@ -31,6 +31,12 @@ export default function UsjetGlobalContactBar() {
         </div>
         <div className="usjet-global-contact-bar__actions">
           <Link
+            to="/sos"
+            className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
+          >
+            SOS
+          </Link>
+          <Link
             to={ORIGIN_CS_ROUTE}
             className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
           >

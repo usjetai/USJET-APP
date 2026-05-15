@@ -9,6 +9,15 @@ import { readMemberSession } from "./memberSession";
 
 export const MEMBER_PROJECTS_STORAGE_KEY = "usjet-member-projects";
 export const MEMBER_ACTIVE_PROJECT_KEY = "usjet-member-active-project";
+export const MEMBER_PORTAL_USAGE_MAX_SESSIONS = 50;
+const MIN_PORTAL_USAGE_WRITE_MS = 1_000;
+
+/** One credited stretch of Member Portal focus time (client-side). */
+export type PortalUsageSession = {
+  startedAt: string;
+  endedAt: string;
+  durationMs: number;
+};
 
 export type ProjectFleetAssignment = {
   unitId: string;
@@ -22,6 +31,12 @@ export type ProjectFleetAssignment = {
   isSaved: boolean;
   /** Cockpit / browser launches for this unit on this project (one thread per launch). */
   sessionForks: number;
+  /** Cumulative visible-focus time on /member attributed to this assignment (this device). */
+  activeTimeMs: number;
+  /** Recent credited segments, newest last — capped for storage. */
+  usageSessions: PortalUsageSession[];
+  /** ISO timestamp of last credited usage for this assignment. */
+  lastActiveAt: string;
 };
 
 export type MemberProject = {
@@ -29,6 +44,12 @@ export type MemberProject = {
   name: string;
   createdAt: string;
   assignments: ProjectFleetAssignment[];
+  /** Time on /member attributed to the project when no assignment row is expanded and none is selected for timing. */
+  portalActiveTimeMs: number;
+  portalUsageSessions: PortalUsageSession[];
+  lastPortalActiveAt: string;
+  /** When set, collapsed rows still attribute visible Portal time to this unit if it remains on the project. */
+  lastTimeTrackedUnitId: string | null;
 };
 
 type MemberProjectsByCustomer = Record<string, MemberProject[]>;
@@ -45,6 +66,22 @@ export function buildCopilotName(fleetUnitName: string): string {
   return trimmed ? `${trimmed} Co-Pilot` : "Co-Pilot";
 }
 
+function normalizeUsageSessions(raw: unknown): PortalUsageSession[] {
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+  const mapped = raw.map((entry) => {
+    const o = entry as Record<string, unknown>;
+    const durationMs = typeof o.durationMs === "number" ? o.durationMs : 0;
+    return {
+      startedAt: String(o.startedAt ?? ""),
+      endedAt: String(o.endedAt ?? ""),
+      durationMs,
+    };
+  });
+  return mapped.filter((s) => s.startedAt && s.endedAt && s.durationMs > 0);
+}
+
 function normalizeAssignment(raw: Record<string, unknown>): ProjectFleetAssignment {
   const sessionForks =
     typeof raw.sessionForks === "number"
@@ -58,6 +95,11 @@ function normalizeAssignment(raw: Record<string, unknown>): ProjectFleetAssignme
   const searchIntent = String(raw.searchIntent ?? legacyJob);
   const migratedSaved = searchIntent.trim().length > 0;
 
+  const rawSessions = raw.usageSessions ?? raw.sessions;
+  const usageSessions = normalizeUsageSessions(rawSessions);
+  const activeTimeMs = typeof raw.activeTimeMs === "number" ? raw.activeTimeMs : 0;
+  const lastActiveAt = String(raw.lastActiveAt ?? "");
+
   return {
     unitId: String(raw.unitId ?? ""),
     callsign: String(raw.callsign ?? ""),
@@ -69,6 +111,9 @@ function normalizeAssignment(raw: Record<string, unknown>): ProjectFleetAssignme
     savedAt: String(raw.savedAt ?? (migratedSaved ? new Date().toISOString() : "")),
     isSaved: Boolean(raw.isSaved ?? migratedSaved),
     sessionForks,
+    activeTimeMs,
+    usageSessions,
+    lastActiveAt,
   };
 }
 
@@ -77,11 +122,22 @@ function normalizeProject(raw: Record<string, unknown>): MemberProject {
     ? raw.assignments.map((entry) => normalizeAssignment(entry as Record<string, unknown>))
     : [];
 
+  const portalActiveTimeMs = typeof raw.portalActiveTimeMs === "number" ? raw.portalActiveTimeMs : 0;
+  const portalUsageSessions = normalizeUsageSessions(raw.portalUsageSessions);
+  const lastPortalActiveAt = String(raw.lastPortalActiveAt ?? "");
+  const lastRaw = raw.lastTimeTrackedUnitId;
+  const lastTimeTrackedUnitId =
+    typeof lastRaw === "string" && lastRaw.trim() ? lastRaw.trim() : null;
+
   return {
     id: String(raw.id ?? ""),
     name: String(raw.name ?? ""),
     createdAt: String(raw.createdAt ?? new Date().toISOString()),
     assignments,
+    portalActiveTimeMs,
+    portalUsageSessions,
+    lastPortalActiveAt,
+    lastTimeTrackedUnitId,
   };
 }
 
@@ -276,7 +332,7 @@ export function buildOriginMemberContext(session: MemberSession | null): string 
     for (const project of projects) {
       const isActive = project.id === activeProjectId;
       lines.push(
-        `PROJECT id=${project.id} name="${project.name}" created=${project.createdAt} active=${isActive} assignmentCount=${project.assignments.length}`,
+        `PROJECT id=${project.id} name="${project.name}" created=${project.createdAt} active=${isActive} assignmentCount=${project.assignments.length} portalProjectTimeMs=${project.portalActiveTimeMs} portalProjectLastActiveAt=${project.lastPortalActiveAt || "—"} lastTimeTrackedUnitId=${project.lastTimeTrackedUnitId ?? "none"}`,
       );
 
       if (project.assignments.length === 0) {
@@ -305,7 +361,10 @@ export function buildOriginMemberContext(session: MemberSession | null): string 
             `searchIntent="${assignment.searchIntent.trim() || "(empty)"}"`,
             `saved=${assignment.isSaved}`,
             `savedAt=${assignment.savedAt || "—"}`,
-            `sessionForks=${assignment.sessionForks}${ruleNote}`,
+            `sessionForks=${assignment.sessionForks}`,
+            `portalActiveTimeMs=${assignment.activeTimeMs}`,
+            `portalLastActiveAt=${assignment.lastActiveAt || "—"}`,
+            `portalUsageSessionCount=${assignment.usageSessions.length}${ruleNote}`,
           ].join(" "),
         );
       }
@@ -364,6 +423,10 @@ export function createMemberProject(customerId: string, name: string): MemberPro
     name: trimmed,
     createdAt: new Date().toISOString(),
     assignments: [],
+    portalActiveTimeMs: 0,
+    portalUsageSessions: [],
+    lastPortalActiveAt: "",
+    lastTimeTrackedUnitId: null,
   };
 
   saveProjects(customerId, [project, ...projectsFor(customerId)]);
@@ -399,6 +462,9 @@ export function addFleetUnitToProject(
       savedAt: "",
       isSaved: false,
       sessionForks: 0,
+      activeTimeMs: 0,
+      usageSessions: [],
+      lastActiveAt: "",
     };
 
     return {
@@ -495,6 +561,115 @@ export function logProjectSessionForkIfMember(customerId: string, callsign: stri
   if (changed) {
     saveProjects(customerId, next);
   }
+}
+
+/** Human-readable cumulative time for Member Portal usage rows. */
+export function formatPortalUsageDuration(totalMs: number): string {
+  if (!Number.isFinite(totalMs) || totalMs <= 0) {
+    return "—";
+  }
+  const sec = Math.floor(totalMs / 1000);
+  const m = Math.floor(sec / 60);
+  const h = Math.floor(m / 60);
+  const remM = m % 60;
+  if (h > 0) {
+    return `${h}h ${remM}m`;
+  }
+  if (m > 0) {
+    return `${m}m`;
+  }
+  return `${sec}s`;
+}
+
+export function formatPortalUsageTimestamp(iso: string): string {
+  if (!iso) {
+    return "—";
+  }
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+}
+
+/** Persist which assignment receives collapsed-row Portal timing for this project. */
+export function setMemberProjectTimeAttributionUnit(
+  customerId: string,
+  projectId: string,
+  unitId: string | null,
+): void {
+  updateProject(customerId, projectId, (project) => ({
+    ...project,
+    lastTimeTrackedUnitId: unitId,
+  }));
+}
+
+/**
+ * Credit a measured stretch of Member Portal tab focus (client-side).
+ * Caller ensures segment bounds and minimum delta; see `useMemberPortalUsageTimer`.
+ */
+export function appendMemberPortalUsage(
+  customerId: string,
+  projectId: string,
+  payload: {
+    assignmentUnitId: string | null;
+    deltaMs: number;
+    segmentStartedAt: string;
+    segmentEndedAt: string;
+  },
+): void {
+  if (payload.deltaMs < MIN_PORTAL_USAGE_WRITE_MS) {
+    return;
+  }
+
+  const session: PortalUsageSession = {
+    startedAt: payload.segmentStartedAt,
+    endedAt: payload.segmentEndedAt,
+    durationMs: payload.deltaMs,
+  };
+
+  updateProject(customerId, projectId, (project) => {
+    if (payload.assignmentUnitId) {
+      const target = payload.assignmentUnitId;
+      let hit = false;
+      const assignments = project.assignments.map((assignment) => {
+        if (assignment.unitId !== target) {
+          return assignment;
+        }
+        hit = true;
+        const usageSessions = [...assignment.usageSessions, session].slice(-MEMBER_PORTAL_USAGE_MAX_SESSIONS);
+        return {
+          ...assignment,
+          activeTimeMs: assignment.activeTimeMs + payload.deltaMs,
+          usageSessions,
+          lastActiveAt: payload.segmentEndedAt,
+        };
+      });
+      if (!hit) {
+        const portalUsageSessions = [...project.portalUsageSessions, session].slice(
+          -MEMBER_PORTAL_USAGE_MAX_SESSIONS,
+        );
+        return {
+          ...project,
+          portalActiveTimeMs: project.portalActiveTimeMs + payload.deltaMs,
+          portalUsageSessions,
+          lastPortalActiveAt: payload.segmentEndedAt,
+        };
+      }
+      return { ...project, assignments };
+    }
+
+    const portalUsageSessions = [...project.portalUsageSessions, session].slice(-MEMBER_PORTAL_USAGE_MAX_SESSIONS);
+    return {
+      ...project,
+      portalActiveTimeMs: project.portalActiveTimeMs + payload.deltaMs,
+      portalUsageSessions,
+      lastPortalActiveAt: payload.segmentEndedAt,
+    };
+  });
 }
 
 export function subscribeMemberProjects(onChange: () => void): () => void {

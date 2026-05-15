@@ -618,7 +618,7 @@
 .usjet-global-contact-bar {
   position: fixed;
   right: max(0.75rem, env(safe-area-inset-right, 0px));
-  bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
+  bottom: max(0.35rem, env(safe-area-inset-bottom, 0px));
   left: max(0.75rem, env(safe-area-inset-left, 0px));
   z-index: 260;
   pointer-events: none;
@@ -630,8 +630,8 @@
   max-width: 72rem;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.35rem 0.85rem;
-  padding: 0.4rem 0.75rem;
+  gap: 0.175rem 0.425rem;
+  padding: 0.2rem 0.5rem;
   font-size: 0.5625rem;
   font-weight: 800;
   font-style: italic;
@@ -643,13 +643,13 @@
 .usjet-global-contact-bar__status {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.225rem;
   white-space: nowrap;
 }
 
 .usjet-global-contact-bar__ping {
-  width: 0.45rem;
-  height: 0.45rem;
+  width: 0.36rem;
+  height: 0.36rem;
   flex-shrink: 0;
   border-radius: 9999px;
   background: rgb(59, 130, 246);
@@ -673,7 +673,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.075rem;
 }
 
 .usjet-global-contact-bar__policy {
@@ -682,14 +682,14 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem 0.5rem;
+  gap: 0.175rem 0.25rem;
   font-size: 0.5rem;
   font-style: normal;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: none;
   color: rgba(255, 255, 255, 0.32);
-  line-height: 1.35;
+  line-height: 1.18;
 }
 
 .usjet-global-contact-bar__policy-sep {
@@ -704,7 +704,7 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.22);
-  line-height: 1.2;
+  line-height: 1.1;
   text-align: center;
 }
 
@@ -712,13 +712,13 @@
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.175rem;
   margin-left: auto;
 }
 
 .usjet-global-contact-bar__cs,
 .usjet-global-contact-bar__ops {
-  padding: 0.28rem 0.65rem;
+  padding: 0.14rem 0.5rem;
   font-size: 0.5625rem;
   font-style: normal;
   font-weight: 700;
@@ -731,12 +731,12 @@
 @media (min-width: 640px) {
   .usjet-global-contact-bar {
     right: max(1.5rem, env(safe-area-inset-right, 0px));
-    bottom: max(0.85rem, env(safe-area-inset-bottom, 0px));
+    bottom: max(0.43rem, env(safe-area-inset-bottom, 0px));
     left: max(1.5rem, env(safe-area-inset-left, 0px));
   }
 
   .usjet-global-contact-bar__shell {
-    padding: 0.45rem 1rem;
+    padding: 0.225rem 0.5rem;
     font-size: 0.625rem;
   }
 
@@ -9619,6 +9619,181 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: rgba(224, 242, 254, 0.95);
 }
 
+/* Tier gate: outer rim matches minimum clearance for this route (liquid glass runway). */
+.tier-route-gate__panel-glow {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 32px rgba(34, 211, 238, 0.22);
+}
+
+.tier-route-gate__panel-glow--flight-pass {
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.45),
+    0 0 36px rgba(34, 211, 238, 0.35),
+    0 0 64px rgba(6, 182, 212, 0.18);
+}
+
+.tier-route-gate__panel-glow--hangar-pro {
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.5),
+    0 0 38px rgba(59, 130, 246, 0.38),
+    0 0 72px rgba(37, 99, 235, 0.2);
+}
+
+.tier-route-gate__panel-glow--enterprise {
+  box-shadow:
+    0 0 0 1px rgba(251, 191, 36, 0.55),
+    0 0 40px rgba(245, 158, 11, 0.42),
+    0 0 80px rgba(217, 119, 6, 0.22);
+}
+
+.tier-route-gate--guest-checkout .tier-route-gate__panel {
+  width: min(94vw, 40rem);
+}
+
+.tier-route-gate__guest-hint {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: rgba(186, 230, 253, 0.78);
+}
+
+.tier-route-gate__checkout-grid {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 640px) {
+  .tier-route-gate__checkout-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.tier-route-gate__checkout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  padding: 0.75rem 0.65rem;
+  border-radius: 0.65rem;
+  text-decoration: none;
+  color: rgba(248, 250, 252, 0.96);
+  background: rgba(2, 12, 24, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tier-route-gate__checkout:focus-visible {
+  outline: 2px solid rgba(103, 232, 249, 0.95);
+  outline-offset: 3px;
+}
+
+.tier-route-gate__checkout--flight-pass {
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.4),
+    0 0 22px rgba(34, 211, 238, 0.28);
+}
+
+.tier-route-gate__checkout--hangar-pro {
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.42),
+    0 0 22px rgba(59, 130, 246, 0.3);
+}
+
+.tier-route-gate__checkout--enterprise {
+  box-shadow:
+    0 0 0 1px rgba(251, 191, 36, 0.48),
+    0 0 24px rgba(245, 158, 11, 0.32);
+}
+
+.tier-route-gate__checkout:hover {
+  transform: translateY(-1px);
+}
+
+.tier-route-gate__checkout--flight-pass:hover {
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.55),
+    0 0 30px rgba(34, 211, 238, 0.42);
+}
+
+.tier-route-gate__checkout--hangar-pro:hover {
+  border-color: rgba(96, 165, 250, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.55),
+    0 0 30px rgba(59, 130, 246, 0.4);
+}
+
+.tier-route-gate__checkout--enterprise:hover {
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(251, 191, 36, 0.6),
+    0 0 32px rgba(245, 158, 11, 0.45);
+}
+
+.tier-route-gate__checkout-kicker {
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.88);
+}
+
+.tier-route-gate__checkout-label {
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.78rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tier-route-gate__checkout-price {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.tier-route-gate__checkout-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.92);
+}
+
+/* App nav: locked destinations glow by minimum route tier. */
+.app-nav__link--locked {
+  position: relative;
+}
+
+.app-nav__link--locked-flight-pass {
+  box-shadow:
+    0 0 0 1px rgba(34, 211, 238, 0.35),
+    0 0 16px rgba(34, 211, 238, 0.22);
+}
+
+.app-nav__link--locked-hangar-pro {
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.38),
+    0 0 16px rgba(59, 130, 246, 0.22);
+}
+
+.app-nav__link--locked-enterprise {
+  box-shadow:
+    0 0 0 1px rgba(251, 191, 36, 0.42),
+    0 0 18px rgba(245, 158, 11, 0.24);
+}
+
 .member-portal__header {
   margin-bottom: 2rem;
 }
@@ -10753,6 +10928,248 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
   color: rgba(125, 211, 252, 0.92);
+}
+
+.member-projects__telemetry-project-note {
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(103, 232, 249, 0.12);
+  background: rgba(8, 47, 73, 0.22);
+  font-size: 0.68rem;
+  line-height: 1.55;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.member-projects__telemetry-footnote {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.55rem;
+  border-radius: 0.5rem;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  font-size: 0.6rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.member-projects__telemetry {
+  margin: 0 0 0.55rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(2, 6, 23, 0.45);
+}
+
+.member-projects__telemetry-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.member-projects__telemetry-kicker {
+  margin: 0;
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.75);
+}
+
+.member-projects__pin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 999px;
+}
+
+.member-projects__pin-btn--active {
+  border-color: rgba(34, 211, 238, 0.45);
+  color: #ecfeff;
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.12);
+}
+
+.member-projects__telemetry-grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.4rem 0.65rem;
+}
+
+.member-projects__telemetry-cell {
+  margin: 0;
+}
+
+.member-projects__telemetry-cell--wide {
+  grid-column: 1 / -1;
+}
+
+.member-projects__telemetry-cell dt {
+  margin: 0 0 0.12rem;
+}
+
+.member-projects__telemetry-dt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.06rem;
+  cursor: help;
+  text-decoration: none;
+}
+
+.member-projects__telemetry-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: rgba(165, 243, 252, 0.98);
+  line-height: 1.1;
+}
+
+.member-projects__telemetry-fullname {
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.88);
+  line-height: 1.25;
+}
+
+.member-projects__telemetry-inline-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: rgba(103, 232, 249, 0.95);
+  text-decoration: underline dotted rgba(103, 232, 249, 0.35);
+  text-underline-offset: 2px;
+  cursor: help;
+}
+
+.member-projects__telemetry-inline-fullname {
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.78);
+}
+
+.member-projects__forks-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.06rem;
+}
+
+.member-projects__forks-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: rgba(165, 243, 252, 0.95);
+  cursor: help;
+  text-decoration: none;
+}
+
+.member-projects__forks-fullname {
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.82);
+  max-width: 9rem;
+  text-align: right;
+  line-height: 1.2;
+}
+
+.member-projects__telemetry-rfs-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: rgba(165, 243, 252, 0.92);
+  cursor: help;
+  text-decoration: none;
+}
+
+.member-projects__telemetry-rfs-tail {
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.member-projects__telemetry-cell dd {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.member-projects__telemetry-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: rgba(165, 243, 252, 0.95);
+}
+
+.member-projects__telemetry-inline-icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  margin-right: 0.2rem;
+  opacity: 0.85;
+}
+
+.member-projects__telemetry-sessions {
+  margin-top: 0.45rem;
+  font-size: 0.62rem;
+  color: rgba(203, 213, 225, 0.9);
+}
+
+.member-projects__telemetry-sessions summary {
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: rgba(125, 211, 252, 0.9);
+}
+
+.member-projects__telemetry-summary-count {
+  font-weight: 700;
+  color: rgba(148, 163, 184, 0.9);
+  margin-left: 0.25rem;
+}
+
+.member-projects__telemetry-empty {
+  margin: 0.35rem 0 0;
+  font-size: 0.62rem;
+  color: rgba(148, 163, 184, 0.88);
+}
+
+.member-projects__telemetry-session-list {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.member-projects__telemetry-session-list li {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.92);
 }
 
 .member-projects__callsign {

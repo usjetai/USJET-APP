@@ -5,7 +5,16 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
 /** Guest-only surface — Fleet, Founder, Stripe login, fleet cockpit handoff. */
-export const GUEST_PUBLIC_ROUTES = ["/", "/founder", "/member/login", "/login", "/cockpit", "/sos", "/ai-101"] as const;
+export const GUEST_PUBLIC_ROUTES = [
+  "/",
+  "/founder",
+  "/member/login",
+  "/login",
+  "/cockpit",
+  "/sos",
+  "/ai-101",
+  "/pdre",
+] as const;
 
 /**
  * Minimum clearance rank per route.
@@ -19,6 +28,7 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/founder": 0,
   "/sos": 0,
   "/ai-101": 0,
+  "/pdre": 0,
   "/member/login": 0,
   "/login": 0,
   "/cockpit": 0,

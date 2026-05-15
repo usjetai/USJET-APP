@@ -1,10 +1,16 @@
 import { NavLink, Link } from "react-router-dom";
+import { Newspaper } from "lucide-react";
+import GamingVrNavButton from "../gaming/GamingVrNavButton";
+import AppNavHangarLive from "./AppNavHangarLive";
 import UsjetWordmark from "../brand/UsjetWordmark";
-import FleetCommand from "../fleet/FleetCommand";
 import GlassEffectContainer from "./GlassEffectContainer";
+import FleetOnlineCursorCluster from "./FleetOnlineCursorCluster";
 import MobileRotateCue from "./MobileRotateCue";
+import FooterSurpriseWrap from "./FooterSurpriseWrap";
+import { BLOG_ROUTE } from "../../data/usjetBlog";
 import { useMemberAuth } from "../../context/MemberAuthContext";
-import { canMemberAccessRoute } from "../../lib/memberAccessLevel";
+import OriginGateLink from "../origin/OriginGateLink";
+import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
@@ -17,7 +23,9 @@ const NAV_LINKS = [
 
 const AppNav = () => {
   const { session } = useMemberAuth();
-  const visibleLinks = NAV_LINKS.filter((link) => canMemberAccessRoute(link.to, session));
+  const visibleLinks = NAV_LINKS.filter((link) =>
+    link.to === "/member" ? showMemberNavLink(session) : canMemberAccessRoute(link.to, session),
+  );
   const showFounderSpecial = canMemberAccessRoute("/special", session);
 
   return (
@@ -26,10 +34,9 @@ const AppNav = () => {
         aria-label="USJET primary navigation"
         className={[
           "glass-effect glass-effect--capsule liquid-glass-background glass-tint-cyan",
-          "flex max-w-full flex-wrap items-center gap-3 overflow-x-auto p-3 px-5 sm:gap-4 sm:p-4 sm:px-6 lg:gap-6 lg:px-8",
+          "flex max-w-full flex-wrap items-center gap-2 overflow-x-auto p-3 px-5 sm:gap-3 sm:p-4 sm:px-6 lg:gap-4 lg:px-8",
         ].join(" ")}
       >
-        <MobileRotateCue />
         <Link to="/" className="nav-brand-usjet shrink-0" aria-label="USJet.ai home">
           <UsjetWordmark size="nav" />
         </Link>
@@ -40,47 +47,97 @@ const AppNav = () => {
           className="flex min-w-0 max-w-full shrink gap-2 overflow-x-auto border-white/10 pr-2 sm:gap-3 sm:border-r sm:pr-6"
           aria-label="Fleet routes"
         >
-          {visibleLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                [
+          {visibleLinks.map((link) =>
+            link.to === "/origin" ? (
+              <OriginGateLink
+                key={link.to}
+                className={[
                   "btn-glass glass-effect-interactive shrink-0 px-3 py-1.5 text-[10px] font-black uppercase italic tracking-widest sm:text-[11px]",
                   "inline-flex items-center gap-1.5",
-                  isActive ? "text-white ring-1 ring-cyan-400/35" : "text-white/45 hover:text-white",
-                ].join(" ")
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
+                  "text-white/45 hover:text-white",
+                ].join(" ")}
+              />
+            ) : (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  [
+                    "btn-glass glass-effect-interactive shrink-0 px-3 py-1.5 text-[10px] font-black uppercase italic tracking-widest sm:text-[11px]",
+                    "inline-flex items-center gap-1.5",
+                    isActive ? "text-white ring-1 ring-cyan-400/35" : "text-white/45 hover:text-white",
+                  ].join(" ")
+                }
+              >
+                {link.label}
+              </NavLink>
+            ),
+          )}
         </nav>
 
-        <FleetCommand />
+        <NavLink
+          to={BLOG_ROUTE}
+          className={({ isActive }) =>
+            ["app-nav-blog btn-glass glass-effect-interactive shrink-0", isActive ? "app-nav-blog--active" : ""]
+              .filter(Boolean)
+              .join(" ")
+          }
+          title="USJET Operator Log — founding story, Form C dispatches, invest narrative"
+          aria-label="USJET Blog — Operator Log"
+        >
+          <span className="app-nav-blog__reflection" aria-hidden />
+          <Newspaper className="app-nav-blog__icon" size={13} strokeWidth={2.4} aria-hidden />
+          <span className="app-nav-blog__label">Blog</span>
+        </NavLink>
 
-        {showFounderSpecial ? (
-          <>
-            <span className="hidden h-7 w-px shrink-0 bg-white/10 lg:block" aria-hidden />
+        <AppNavHangarLive />
 
-            <NavLink
-              to="/special"
-              className={({ isActive }) =>
-                [
-                  "btn-glass-prominent glass-effect-interactive glass-tint-blue shrink-0",
-                  isActive ? "ring-2 ring-cyan-400/45" : "",
-                ].join(" ")
-              }
-            >
-              <span className="flex flex-col items-start leading-none">
-                <span className="text-[9px] font-black uppercase tracking-tighter">Founder Special</span>
-                <span className="text-[14px] font-black italic">
-                  $19.90<span className="text-[9px] lowercase opacity-70">/mo</span>
+        <NavLink
+          to="/b2b"
+          className={({ isActive }) =>
+            ["app-nav-b2b btn-glass glass-effect-interactive shrink-0", isActive ? "app-nav-b2b--active" : ""]
+              .filter(Boolean)
+              .join(" ")
+          }
+          title="B2B Enterprise — industrial operating system"
+          aria-label="B2B Enterprise gateway"
+        >
+          <span className="app-nav-b2b__reflection" aria-hidden />
+          <span className="app-nav-b2b__earth" aria-hidden>
+            🌍
+          </span>
+          <span className="app-nav-b2b__label">B2B</span>
+        </NavLink>
+
+        <GamingVrNavButton surface="header" />
+
+        <div className="app-nav-tail ml-auto flex shrink-0 flex-wrap items-center gap-2">
+          {showFounderSpecial ? (
+            <>
+              <span className="hidden h-7 w-px shrink-0 bg-white/10 lg:block" aria-hidden />
+              <MobileRotateCue />
+              <NavLink
+                to="/special"
+                className={({ isActive }) =>
+                  [
+                    "btn-glass-prominent glass-effect-interactive glass-tint-blue shrink-0",
+                    isActive ? "ring-2 ring-cyan-400/45" : "",
+                  ].join(" ")
+                }
+              >
+                <span className="flex flex-col items-start leading-none">
+                  <span className="text-[9px] font-black uppercase tracking-tighter">Founder Special</span>
+                  <span className="text-[14px] font-black italic">
+                    $19.90<span className="text-[9px] lowercase opacity-70">/mo</span>
+                  </span>
                 </span>
-              </span>
-            </NavLink>
-          </>
-        ) : null}
+              </NavLink>
+            </>
+          ) : (
+            <MobileRotateCue />
+          )}
+          <FleetOnlineCursorCluster />
+        </div>
       </GlassEffectContainer>
     </header>
   );

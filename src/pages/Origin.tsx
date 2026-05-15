@@ -578,12 +578,13 @@ export default function Origin() {
     recognition.onerror = (event) => {
       if (!micEnabledRef.current || listeningPausedRef.current) return;
 
-      if (event.error === "no-speech" || event.error === "aborted") {
+      const speechError = (event as SpeechRecognitionErrorEvent).error;
+      if (speechError === "no-speech" || speechError === "aborted") {
         window.setTimeout(() => restartRecognitionRef.current(), 120);
         return;
       }
 
-      if (event.error === "network") {
+      if (speechError === "network") {
         window.setTimeout(() => restartRecognitionRef.current(), 400);
         return;
       }

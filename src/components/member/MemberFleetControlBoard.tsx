@@ -5,7 +5,10 @@ import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
+import { getFleetBayAccent } from "../../data/fleetBayAccents";
+import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
+import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
 
 const controlBoardUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 
@@ -25,15 +28,28 @@ export default function MemberFleetControlBoard() {
             label: unit.name,
           });
           const accentId = `member-board-${unit.slot}`;
+          const bayAccent = getFleetBayAccent(unit.slot);
+          const terminalFeed = buildFleetTileTerminalFeed({
+            name: unit.name,
+            callsign: unit.callsign,
+            domain: unit.domain,
+            slot: unit.slot,
+            personality: bayAccent.personality,
+            capabilities: getFleetCapabilities(unit.slot),
+          });
 
           return (
             <li key={unit.id}>
               <a
                 href={launchUrl}
-                className="member-control-board__cell member-control-board__cell--bay-accent glass-effect-interactive"
+                className="member-control-board__cell fleet-card member-control-board__cell--bay-accent glass-effect-interactive"
                 style={fleetBayAccentStyle(unit.slot)}
                 aria-label={`Launch ${unit.name} — ${unit.callsign}`}
                 onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
+                onMouseEnter={() => publishLiveTerminalTile(terminalFeed)}
+                onMouseLeave={() => clearLiveTerminalTile()}
+                onFocus={() => publishLiveTerminalTile(terminalFeed)}
+                onBlur={() => clearLiveTerminalTile()}
               >
                 <span className="member-control-board__icon-wrap">
                   <AircraftIcon

@@ -1,15 +1,17 @@
-/**
- * Mobile-only cue: looping filmstrip + pink glow (toolbar, left).
- * Decorative; prefers-reduced-motion disables animation in CSS.
- */
+import { Link } from "react-router-dom";
+import { MOBILE_LANDSCAPE_CHIP_HOVER, MOBILE_LANDSCAPE_ROUTE } from "../../data/mobileLandscapeGuide";
+import MobileRotateIcon from "./MobileRotateIcon";
+
+/** Toolbar rotate glyph → landscape guide. Pink icon, static (no animation). */
 export default function MobileRotateCue() {
   return (
-    <div
-      className="mobile-rotate-cue"
-      role="img"
-      aria-label="Rotate your phone to landscape for the best view of this site."
+    <Link
+      to={MOBILE_LANDSCAPE_ROUTE}
+      className="mobile-rotate-cue btn-glass glass-effect-interactive"
+      title={MOBILE_LANDSCAPE_CHIP_HOVER}
+      aria-label={MOBILE_LANDSCAPE_CHIP_HOVER}
     >
-      <div className="mobile-rotate-cue__strip" aria-hidden />
-    </div>
+      <MobileRotateIcon />
+    </Link>
   );
 }

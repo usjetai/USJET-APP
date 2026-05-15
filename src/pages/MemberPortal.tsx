@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LogOut, Wrench } from "lucide-react";
 import MemberFleetControlBoard from "../components/member/MemberFleetControlBoard";
-import MemberFleetUsageChart from "../components/member/MemberFleetUsageChart";
+import MemberPortalDataBoard from "../components/member/MemberPortalDataBoard";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import MemberProjectTracker from "../components/member/MemberProjectTracker";
 import MemberVitalsPanel from "../components/member/MemberVitalsPanel";
@@ -38,15 +38,17 @@ export default function MemberPortal() {
       </header>
 
       <section className="member-portal__dashboard" aria-label="Member control board">
-        <MemberVitalsPanel session={session} />
-        <MemberProjectTracker customerId={session.customerId} />
-        <MemberFleetControlBoard />
-        <MemberFleetUsageChart />
-      </section>
+        <div className="member-portal__identity-row">
+          <MemberVitalsPanel session={session} />
+          <MemberPrimeBadge session={session} />
+        </div>
 
-      <div className="member-portal__grid">
-        <MemberPrimeBadge session={session} />
-      </div>
+        <MemberProjectTracker customerId={session.customerId} />
+
+        <MemberFleetControlBoard />
+
+        <MemberPortalDataBoard customerId={session.customerId} session={session} />
+      </section>
 
       <p className="member-portal__footer">
         Need higher clearance?{" "}
@@ -54,12 +56,20 @@ export default function MemberPortal() {
           Upgrade tiers
         </Link>
         {" · "}
+        <Link to="/intelligence" className="member-portal__link">
+          Intel ladder
+        </Link>
+        {" · "}
+        <Link to="/b2b" className="member-portal__link">
+          B2B
+        </Link>
+        {" · "}
         <Link to="/hangar" className="member-portal__link">
           Hangar
         </Link>
         {" · "}
         <Link to="/intel" className="member-portal__link">
-          Intel
+          Intel grid
         </Link>
       </p>
     </div>

@@ -2,11 +2,13 @@ import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccen
 import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
-import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
-import { Link } from "react-router-dom";
+import { useMemo, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
+import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
+import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
+import { useOriginLimitedOfferOptional } from "../../context/OriginLimitedOfferContext";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import type { FleetAircraftType } from "../../types/fleet";
 
@@ -43,13 +45,28 @@ export default function FleetCard({
   surface = "fleet",
   style,
 }: FleetCardProps) {
+  const originOffer = useOriginLimitedOfferOptional();
   const launchUrl = integratedLaunchUrl(domain, href, slot, { label: name, returnTo });
-  const CardTag = launchUrl.startsWith("/") ? Link : "a";
-  const cardProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
+  const isOriginLaunch = launchUrl === "/origin" || launchUrl.startsWith("/origin?");
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
   const bayAccent = typeof slot === "number" ? getFleetBayAccent(slot) : null;
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
+  const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
+  const terminalFeed = useMemo(
+    () =>
+      buildFleetTileTerminalFeed({
+        name,
+        callsign,
+        domain,
+        slot,
+        personality: bayAccent?.personality,
+        capabilities,
+        isCommandBay,
+        expandInteractive,
+      }),
+    [name, callsign, domain, slot, bayAccent?.personality, capabilities, isCommandBay, expandInteractive],
+  );
 
   const syncProtocolToClipboard = () => {
     void copyUsjetProtocol(protocolText);
@@ -57,6 +74,11 @@ export default function FleetCard({
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     logFleetUsageIfMember(callsign, name);
+
+    if (isOriginLaunch && originOffer) {
+      originOffer.requestOriginNavigation(e);
+      return;
+    }
 
     if (onExpandBay) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
@@ -80,8 +102,8 @@ export default function FleetCard({
   };
 
   return (
-    <CardTag
-      {...cardProps}
+    <FleetLaunchLink
+      launchUrl={launchUrl}
       className={[
         "fleet-card group block",
         surface === "hangar" ? "fleet-card--surface-hangar h-full min-h-[13.5rem]" : "fleet-card--surface-runway min-h-[8rem]",
@@ -114,6 +136,10 @@ export default function FleetCard({
       }
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      onMouseEnter={() => publishLiveTerminalTile(terminalFeed)}
+      onMouseLeave={() => clearLiveTerminalTile()}
+      onFocus={() => publishLiveTerminalTile(terminalFeed)}
+      onBlur={() => clearLiveTerminalTile()}
     >
       <div className="fleet-card__glass flex h-full flex-col p-5">
         <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-4">
@@ -143,9 +169,7 @@ export default function FleetCard({
           <h3 className="mt-2 text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
             {name}
           </h3>
-          {surface === "fleet" && typeof slot === "number" ? (
-            <FleetCapabilityBadges capabilities={getFleetCapabilities(slot)} />
-          ) : null}
+          {capabilities ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
           <p
             className={`mt-1 text-[10px] font-bold uppercase tracking-widest ${bayAccent ? "fleet-card__callsign" : "text-blue-400/90"}`}
           >
@@ -154,6 +178,6 @@ export default function FleetCard({
           <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
         </div>
       </div>
-    </CardTag>
+    </FleetLaunchLink>
   );
 }

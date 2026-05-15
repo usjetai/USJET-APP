@@ -30,6 +30,9 @@ export default function IntelPartnershipInvite() {
             <Link to="/pdre" className="intel-partnership-invite__tertiary btn-glass glass-effect-interactive">
               PDRE prospectus
             </Link>
+            <Link to="/licensing" className="intel-partnership-invite__tertiary btn-glass glass-effect-interactive">
+              Brand licensing
+            </Link>
             <Link to="/sos" className="intel-partnership-invite__secondary btn-glass glass-effect-interactive">
               Human operating window (SOS)
             </Link>

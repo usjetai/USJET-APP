@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Shield, ShieldCheck, Sparkles, Target, Wrench } from "lucide-react";
-import { FLIGHT_PASS_DIRECT_URL } from "../lib/stripePaymentLink";
+import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 import { FOUNDER_CREATIVE_MANIFESTO, LINE_OF_SUCCESSION_LOG, PRIME_OBJECTIVE } from "../data/founderManifesto";
 import { LINE_OF_SUCCESSION } from "../data/lineOfSuccession";
 import Founder1995FeatureGrid from "../components/founder/Founder1995FeatureGrid";
@@ -17,7 +17,7 @@ const FLIGHT_PASS_PRICE_DISPLAY = "$19.90/mo";
 /**
  * Bottom CTA on /founder-special-1995:
  * - Guest / unpaid (clearance rank 0): Flight Pass paywall at FLIGHT_PASS_PRICE_DISPLAY.
- * - Stripe live test: same Flight Pass $19.90 link (FLIGHT_PASS_DIRECT_URL).
+ * - Stripe live test: same Flight Pass $19.90 link (resolveFounderPaymentLink).
  * - Founder god mode (USJET-AMEER): bypasses paywall display only — welcome, no purchase CTA.
  * - Paid tier ≥ 1 (Stripe verify): "Clearance active" — optional upgrade links only.
  */
@@ -77,7 +77,7 @@ export default function FounderSpecial1995() {
   const tierLabel = clearanceTierLabel(clearanceRank);
 
   const handleFlightPassCheckout = useCallback(() => {
-    window.location.href = FLIGHT_PASS_DIRECT_URL;
+    window.location.href = resolveFounderPaymentLink();
   }, []);
 
   useEffect(() => {

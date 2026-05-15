@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Link } from "react-router-dom";
+import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { fleetBayAccentStyle, getFleetBayAccent } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
@@ -24,13 +24,10 @@ function FounderJetCell({ unit, side }: { unit: FleetUnit; side: "left" | "right
   const isCommandBay = unit.slot === 29;
   const bayAccent = getFleetBayAccent(unit.slot);
   const bay = fleetBayLabel(unit.slot);
-  const Tag = launchUrl.startsWith("/") ? Link : "a";
-  const linkProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
-
   return (
     <li className="founder-jet-wing__slot">
-      <Tag
-        {...linkProps}
+      <FleetLaunchLink
+        launchUrl={launchUrl}
         className={[
           "founder-jet-wing__jet",
           "glass-effect-interactive",
@@ -56,7 +53,7 @@ function FounderJetCell({ unit, side }: { unit: FleetUnit; side: "left" | "right
         <span className="founder-jet-wing__callsign" aria-hidden>
           {unit.callsign}
         </span>
-      </Tag>
+      </FleetLaunchLink>
     </li>
   );
 }

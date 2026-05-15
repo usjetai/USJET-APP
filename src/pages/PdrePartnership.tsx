@@ -164,7 +164,11 @@ export default function PdrePartnership() {
         <h1 className="pdre-page__title">Strategic Partnership Gateway</h1>
         <p className="pdre-page__lede mx-auto max-w-3xl text-pretty">
           USJET.AI concentrates the attention of America&apos;s labor force inside one sovereign cockpit. PDRE is how
-          global institutions lease structured placement—not affiliate crumbs—inside that daily workflow.
+          global institutions—crypto exchanges, brokerages, and holding companies—lease structured placement inside that
+          daily workflow.
+        </p>
+        <p className="pdre-page__targets" aria-label="Example institutional partners">
+          Coinbase · Robinhood · Institutional lanes · Reserved Intel bays
         </p>
       </header>
 
@@ -373,6 +377,10 @@ export default function PdrePartnership() {
           Return to Intel
         </Link>
         {" · "}
+        <Link to="/licensing" className="pdre-page__return-link glass-effect-interactive">
+          Brand licensing
+        </Link>
+        {" · "}
         <Link to="/" className="pdre-page__return-link glass-effect-interactive">
           Fleet
         </Link>
@@ -394,13 +402,13 @@ export default function PdrePartnership() {
         <div className="pdre-overlay" role="dialog" aria-modal="true" aria-labelledby="pdre-success-title">
           <div className="pdre-overlay__panel liquid-glass-background glass-effect glass-effect--rounded-rect glass-tint-cyan pdre-overlay__panel--success">
             <h2 id="pdre-success-title" className="pdre-overlay__success-title">
-              Application received
+              Application Received
             </h2>
             <p className="pdre-overlay__success-body">
-              Our institutional relations desk will contact you within 24 hours.
+              Our Institutional Relations team will contact you within 24 hours.
             </p>
             <p className="pdre-overlay__code">
-              Verification code: <strong>{verificationCode}</strong>
+              Verification Code: <strong>{verificationCode}</strong>
             </p>
             <button type="button" className="pdre-btn pdre-btn--primary glass-effect-interactive" onClick={closeSuccess}>
               Close

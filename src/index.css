@@ -11814,8 +11814,71 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   .cockpit-return-bar,
   .cockpit-ghost-btn,
   .cockpit-handoff-interstitial__glow,
-  .cockpit-handoff-interstitial__pulse {
+  .cockpit-handoff-interstitial__pulse,
+  .mobile-rotate-cue__strip {
     animation: none;
+  }
+
+  .mobile-rotate-cue__strip {
+    background-position: 0 50%;
+    transform: none;
+  }
+}
+
+/* ─── Mobile rotate cue (toolbar, phone filmstrip) ─── */
+.mobile-rotate-cue {
+  display: none;
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding-top: 0.1rem;
+}
+
+@media (max-width: 767.98px) {
+  .mobile-rotate-cue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.mobile-rotate-cue__strip {
+  --cue-h: 34px;
+  height: var(--cue-h);
+  width: calc(781px / 4 * var(--cue-h) / 280);
+  flex-shrink: 0;
+  border-radius: 0.2rem;
+  background-image: url("/mobile-rotate-cue.png");
+  background-repeat: no-repeat;
+  background-size: 400% 100%;
+  background-position: 0 50%;
+  filter:
+    drop-shadow(0 0 3px rgba(255, 182, 193, 0.95)) drop-shadow(0 0 10px rgba(255, 105, 180, 0.85))
+    drop-shadow(0 0 18px rgba(255, 20, 147, 0.55));
+  animation: mobile-rotate-cue-film 2.4s steps(4, end) infinite, mobile-rotate-cue-drop 2.4s ease-in-out infinite;
+}
+
+@keyframes mobile-rotate-cue-film {
+  from {
+    background-position: 0 50%;
+  }
+  to {
+    background-position: -100% 50%;
+  }
+}
+
+@keyframes mobile-rotate-cue-drop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  22% {
+    transform: translateY(1px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+  78% {
+    transform: translateY(1px);
   }
 }
 

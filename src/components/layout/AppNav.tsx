@@ -2,6 +2,7 @@ import { NavLink, Link } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import FleetCommand from "../fleet/FleetCommand";
 import GlassEffectContainer from "./GlassEffectContainer";
+import MobileRotateCue from "./MobileRotateCue";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import { canMemberAccessRoute } from "../../lib/memberAccessLevel";
 
@@ -28,6 +29,7 @@ const AppNav = () => {
           "flex max-w-full flex-wrap items-center gap-3 overflow-x-auto p-3 px-5 sm:gap-4 sm:p-4 sm:px-6 lg:gap-6 lg:px-8",
         ].join(" ")}
       >
+        <MobileRotateCue />
         <Link to="/" className="nav-brand-usjet shrink-0" aria-label="USJet.ai home">
           <UsjetWordmark size="nav" />
         </Link>

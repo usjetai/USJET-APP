@@ -5,6 +5,7 @@ import IntelMonitor from "../components/intel/IntelMonitor";
 import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
+import IntelPartnershipInvite from "../components/intel/IntelPartnershipInvite";
 import IntelTop10Section from "../components/intel/IntelTop10Section";
 import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
@@ -147,6 +148,8 @@ const Intel = () => {
         <div className="intel-grid-wrap">
           <div className="intel-grid grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6">{gridCells}</div>
         </div>
+
+        <IntelPartnershipInvite />
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import FounderSpecial1995 from "./pages/FounderSpecial1995";
 import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
 import MemberLogin from "./pages/MemberLogin";
+import Sos from "./pages/Sos";
 import Cockpit from "./pages/Cockpit";
 
 function AnimatedRoutes() {
@@ -43,6 +44,7 @@ function AnimatedRoutes() {
             }
           />
           <Route path="/founder" element={<Founder />} />
+          <Route path="/sos" element={<Sos />} />
           <Route
             path="/origin"
             element={

@@ -157,20 +157,22 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   guestPublicRoutes: {
     fleet: "/ — everyone",
     founder: "/founder — everyone",
+    learn: "/blog and /ai-101 — everyone (public AI literacy surfaces)",
+    sos: "/sos — everyone (site operating support; legacy /help redirects here)",
     login: "/member/login and /login — Stripe signup + verification",
     cockpit: "/cockpit — fleet sovereign handoff from Fleet runway only",
     blocked:
       "/hangar, /intel, /origin, /member, /special, /founder-special-1995 — paid clearance required",
   },
   tierMatrix: {
-    guest: "Fleet + Founder + login/cockpit handoff — no Hangar, Intel, Origin, Member, or Special",
+    guest: "Fleet + Founder + Blog + AI 101 + SOS + login/cockpit handoff — no Hangar, Intel, Origin, Member, or Special",
     tier1FlightPass: "Fleet + Hangar (4 bays) + Member Portal + Special — no Intel, no Origin",
     tier2HangarPro: "Tier 1 + Intel — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",
     founderGodMode: "USJET-AMEER — all routes, all bays",
   },
   fleetMessage:
-    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get Fleet, Founder, and the login runway — everything else bills through the extraction ports.",
+    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get Fleet, Founder, the public Blog, AI 101, SOS (site operating support), and the login runway — everything else bills through the extraction ports.",
 } as const;
 
 export const DIRECT_LANDING_PROTOCOL = {

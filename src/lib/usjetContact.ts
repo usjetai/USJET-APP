@@ -6,8 +6,8 @@ export const USJET_ENTITY_FOOTER = "USJET LLC · Established in 2018" as const;
 
 /** Support routing — Origin first; email is async (founder not on-call). */
 export const SUPPORT_POLICY = {
-  primary: "Instant help: Origin (voice AI)",
-  email: `Email ${USJET_OPS_EMAIL}: responses within 1–3 business days`,
+  primary: "SOS lane: Origin (voice AI)",
+  email: `For customer service, email OPS at ${USJET_OPS_EMAIL}`,
 } as const;
 
 /** Founder inbox — member gate demo + internal; configure after MX records. */

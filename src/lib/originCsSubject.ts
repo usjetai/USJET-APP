@@ -176,7 +176,7 @@ export function buildCsTopicShiftSpokenReply(state: OriginCsSubjectState): strin
 }
 
 export function buildCsOverwhelmSpokenReply(): string {
-  return `That's a lot to carry at once. Email me at Ops — ${USJET_OPS_EMAIL} — and I'll get back to you within one to three business days.`;
+  return `That's a lot to carry at once. For customer service, email OPS at ${USJET_OPS_EMAIL}.`;
 }
 
 export function buildCsEstablishSubjectSpokenReply(): string {
@@ -203,7 +203,7 @@ export function buildCsOverwhelmSystemNudge(): string {
   return [
     "OVERWHELM_ESCALATION_NUDGE:",
     "Visitor is overwhelmed or jumping topics. Keep the spoken reply short.",
-    `Offer ${USJET_OPS_EMAIL} — say "Email me at Ops and I'll get back to you."`,
+    `Offer Ops — say "For customer service, email OPS at ${USJET_OPS_EMAIL}."`,
     "Do not open new subjects; summarize what you heard and route to Ops async.",
   ].join("\n");
 }

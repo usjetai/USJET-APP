@@ -27,6 +27,9 @@ export default function IntelPartnershipInvite() {
             >
               Email OPS — institutional lane
             </a>
+            <Link to="/pdre" className="intel-partnership-invite__tertiary btn-glass glass-effect-interactive">
+              PDRE prospectus
+            </Link>
             <Link to="/sos" className="intel-partnership-invite__secondary btn-glass glass-effect-interactive">
               Human operating window (SOS)
             </Link>

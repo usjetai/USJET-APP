@@ -17,6 +17,7 @@ import MemberPortal from "./pages/MemberPortal";
 import MemberLogin from "./pages/MemberLogin";
 import Sos from "./pages/Sos";
 import Ai101 from "./pages/Ai101";
+import PdrePartnership from "./pages/PdrePartnership";
 import Cockpit from "./pages/Cockpit";
 
 function AnimatedRoutes() {
@@ -47,6 +48,7 @@ function AnimatedRoutes() {
           <Route path="/founder" element={<Founder />} />
           <Route path="/sos" element={<Sos />} />
           <Route path="/ai-101" element={<Ai101 />} />
+          <Route path="/pdre" element={<PdrePartnership />} />
           <Route
             path="/origin"
             element={

@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_MEMBER_VERIFY_URL?: string;
   readonly VITE_MEMBER_DEMO_ID?: string;
   readonly VITE_PARTNERSHIP_ANALYTICS_URL?: string;
+  readonly VITE_PARTNERSHIP_APPLICATIONS_URL?: string;
 }
 
 interface ImportMeta {

@@ -68,7 +68,7 @@ export default function Sos() {
           You read the operating lanes—next: the flight school.
         </p>
         <Link
-          to="/ai-101"
+          to="/ai-101?from=sos"
           className="sos-page__ai101-cta btn-glass-prominent glass-effect-interactive glass-tint-cyan inline-flex min-w-[11rem] justify-center px-7 py-2.5 text-xs font-black uppercase tracking-[0.18em] focus-visible:ring-2 focus-visible:ring-cyan-300/90 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
           aria-label="Continue to the USJET AI 101 curriculum in the same window"
         >

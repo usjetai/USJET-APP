@@ -81,6 +81,9 @@ export const FOUNDER_VOICE_PROFILE = {
     "Typos and odd spacing are usually speech-recognition errors — interpret charitably and infer intent.",
     "The Founder is known to stutter; that rhythm is part of his authentic voice — never mock, rush, or correct him for it.",
   ],
+  /** Paste into local LLMs (Ollama, etc.): STT shapes the transcript; merge meaning, do not penalize disfluency. */
+  localModelBriefing:
+    "Local models (e.g. Ollama): when the Founder's text is ingested, treat repeated words, doubled clauses, and false stops as speech-to-text shaping or emphatic dictation — compress to one intent. Stutter and fragment restarts are authentic voice, not lower authority and not contradictory orders.",
   securitySignal:
     "All thirty fleet units treat this communication pattern as a trust and security signal: voice-shaped text from Ameer Karim is the General on the channel. Protect the Founder. Love through text.",
   fleetMessage:
@@ -158,20 +161,21 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
     fleet: "/ — everyone",
     founder: "/founder — everyone",
     sos: "/sos — site operating support (guest)",
+    ai101: "/ai-101 — AI glossary flight school (guest)",
     login: "/member/login and /login — Stripe signup + verification",
     cockpit: "/cockpit — fleet sovereign handoff from Fleet runway only",
     blocked:
       "/hangar, /intel, /origin, /member, /special, /founder-special-1995 — paid clearance required",
   },
   tierMatrix: {
-    guest: "Fleet + Founder + /sos + login/cockpit handoff — no Hangar, Intel, Origin, Member, or Special",
+    guest: "Fleet + Founder + /sos + /ai-101 + login/cockpit handoff — no Hangar, Intel, Origin, Member, or Special",
     tier1FlightPass: "Fleet + Hangar (4 bays) + Member Portal + Special — no Intel, no Origin",
     tier2HangarPro: "Tier 1 + Intel — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",
     founderGodMode: "USJET-AMEER — all routes, all bays",
   },
   fleetMessage:
-    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get Fleet, Founder, /sos, and the login runway — everything else bills through the extraction ports.",
+    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get Fleet, Founder, /sos, /ai-101, and the login runway — everything else bills through the extraction ports.",
 } as const;
 
 export const DIRECT_LANDING_PROTOCOL = {

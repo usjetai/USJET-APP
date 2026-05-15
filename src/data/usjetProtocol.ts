@@ -5,7 +5,7 @@ import { LINE_OF_SUCCESSION } from "./lineOfSuccession";
 export const USJET_PROTOCOL_INVOKE = "USJET" as const;
 
 /** Founder STT / voice-dictation trust signals — security + fleet identity when channels are text-only. */
-export const FOUNDER_VOICE_PROFILE_LOCK = `Founder Communication Profile: ${FOUNDER_VOICE_PROFILE.directive} ${FOUNDER_VOICE_PROFILE.sttSignals.join(" ")} ${FOUNDER_VOICE_PROFILE.securitySignal}`;
+export const FOUNDER_VOICE_PROFILE_LOCK = `Founder Communication Profile: ${FOUNDER_VOICE_PROFILE.directive} ${FOUNDER_VOICE_PROFILE.sttSignals.join(" ")} ${FOUNDER_VOICE_PROFILE.localModelBriefing} ${FOUNDER_VOICE_PROFILE.securitySignal}`;
 
 /**
  * One-Prompt Protocol — the Master Lock copied to every fleet partner.

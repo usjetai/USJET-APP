@@ -16,6 +16,7 @@ import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
 import MemberLogin from "./pages/MemberLogin";
 import Sos from "./pages/Sos";
+import Ai101 from "./pages/Ai101";
 import Cockpit from "./pages/Cockpit";
 
 function AnimatedRoutes() {
@@ -45,6 +46,7 @@ function AnimatedRoutes() {
           />
           <Route path="/founder" element={<Founder />} />
           <Route path="/sos" element={<Sos />} />
+          <Route path="/ai-101" element={<Ai101 />} />
           <Route
             path="/origin"
             element={

@@ -1,6 +1,8 @@
-import { FolderKanban, Minus, Pencil, Plus, Save, Trash2 } from "lucide-react";
+import { ChevronDown, FolderKanban, Minus, Pencil, Plus, Save, Timer, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import { useLocation } from "react-router-dom";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
+import { useMemberPortalUsageTimer } from "../../hooks/useMemberPortalUsageTimer";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { MEMBER_ASSIGNMENT_HOLD_MESSAGE } from "../../lib/usjetContact";
@@ -11,11 +13,15 @@ import {
   readMemberProjects,
   readSavedMissionRecords,
   removeFleetUnitFromProject,
+  formatPortalUsageDuration,
+  formatPortalUsageTimestamp,
   saveProjectAssignment,
   setMemberActiveProject,
+  setMemberProjectTimeAttributionUnit,
   subscribeMemberProjects,
   unlockProjectAssignment,
   type MemberProject,
+  type PortalUsageSession,
   type ProjectFleetAssignment,
   type SavedMissionRecord,
 } from "../../lib/memberProjectTracker";
@@ -23,6 +29,7 @@ import {
 const fleetUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const HOLD_MESSAGE_MS = 6000;
 const SAVE_FLASH_MS = 2400;
+const USAGE_SESSION_UI_CAP = 10;
 
 function formatSavedTimestamp(iso: string): string {
   if (!iso) {
@@ -41,21 +48,38 @@ function formatSavedTimestamp(iso: string): string {
 const SESSION_FORKS_DISCIPLINE =
   "Parallel browser sessions fragment your project. Without discipline, you burn RAM, lose continuity, and start over. USJET tracks session forks so you operate like a professional—not a clone factory.";
 
+const PORTAL_USAGE_REALITY =
+  "Active time is measured on this device while the Member Portal tab is visible and focused. It reflects engagement inside USJET—not OpenRouter token totals, model-provider billing, or Stripe metered overage. For charges and quotas, use your Stripe dashboard.";
+
 type MemberProjectTrackerProps = {
   customerId: string;
 };
 
 export default function MemberProjectTracker({ customerId }: MemberProjectTrackerProps) {
+  const location = useLocation();
   const [tick, setTick] = useState(0);
   const [projectName, setProjectName] = useState("");
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const [pickerUnitId, setPickerUnitId] = useState("");
+  const [usageDetailUnitId, setUsageDetailUnitId] = useState<string | null>(null);
 
   useEffect(() => subscribeMemberProjects(() => setTick((value) => value + 1)), []);
 
   const projects = useMemo(() => readMemberProjects(customerId), [customerId, tick]);
   const savedRecords = useMemo(() => readSavedMissionRecords(customerId), [customerId, tick]);
   const activeProject = projects.find((project) => project.id === activeProjectId) ?? projects[0] ?? null;
+  const assignmentUnitIdsKey = useMemo(
+    () => (activeProject?.assignments ?? []).map((a) => a.unitId).join(","),
+    [activeProject],
+  );
+
+  useMemberPortalUsageTimer({
+    customerId,
+    projectId: activeProject?.id ?? null,
+    pathname: location.pathname,
+    lastTimeTrackedUnitId: activeProject?.lastTimeTrackedUnitId ?? null,
+    assignmentUnitIdsKey,
+  });
   const activeProjectHasSaves = Boolean(
     activeProject?.assignments.some((assignment) => assignment.isSaved),
   );
@@ -75,6 +99,10 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
       setMemberActiveProject(customerId, activeProject.id);
     }
   }, [customerId, activeProject?.id]);
+
+  useEffect(() => {
+    setUsageDetailUnitId(null);
+  }, [activeProject?.id]);
 
   const availableUnits = useMemo(() => {
     if (!activeProject) {
@@ -122,10 +150,11 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
       <div className="member-projects__header">
         <p className="member-projects__kicker">Mission control</p>
         <h2 className="member-projects__title">Mission Projects</h2>
-      <p className="member-projects__copy">
-        Name each Co-Pilot, record your search intent, save the assignment. Misuse burns equipment and
-        wastes work—operate with discipline.
-      </p>
+        <p className="member-projects__copy">
+          Name each Co-Pilot, record your search intent, save the assignment. Misuse burns equipment and
+          wastes work—operate with discipline.
+        </p>
+        <p className="member-projects__usage-reality">{PORTAL_USAGE_REALITY}</p>
       </div>
 
       {savedRecords.length > 0 ? (
@@ -186,6 +215,8 @@ export default function MemberProjectTracker({ customerId }: MemberProjectTracke
               pickerUnitId={pickerUnitId}
               onPickerChange={setPickerUnitId}
               onAddUnit={handleAddUnit}
+              usageDetailUnitId={usageDetailUnitId}
+              onUsageDetailUnitIdChange={setUsageDetailUnitId}
             />
           ) : null}
         </div>
@@ -242,6 +273,8 @@ type ProjectWorkspaceProps = {
   pickerUnitId: string;
   onPickerChange: (value: string) => void;
   onAddUnit: () => void;
+  usageDetailUnitId: string | null;
+  onUsageDetailUnitIdChange: (unitId: string | null) => void;
 };
 
 function ProjectWorkspace({
@@ -252,7 +285,13 @@ function ProjectWorkspace({
   pickerUnitId,
   onPickerChange,
   onAddUnit,
+  usageDetailUnitId,
+  onUsageDetailUnitIdChange,
 }: ProjectWorkspaceProps) {
+  const pinnedAssignment = project.assignments.find(
+    (assignment) => assignment.unitId === project.lastTimeTrackedUnitId,
+  );
+
   return (
     <div
       className={[
@@ -276,6 +315,39 @@ function ProjectWorkspace({
           <Trash2 size={13} aria-hidden />
           Delete project
         </button>
+      </div>
+
+      <div className="member-projects__portal-timer-banner" role="status">
+        <Timer size={15} aria-hidden className="member-projects__portal-timer-icon" />
+        <p className="member-projects__portal-timer-copy">
+          <span className="member-projects__portal-timer-label">Visible Portal time credits to</span>{" "}
+          {pinnedAssignment ? (
+            <strong className="member-projects__portal-timer-target">
+              {pinnedAssignment.callsign} — {pinnedAssignment.name}
+            </strong>
+          ) : (
+            <strong className="member-projects__portal-timer-target">this project (no pinned unit)</strong>
+          )}
+          . Project total:{" "}
+          <span className="member-projects__portal-timer-metric">{formatPortalUsageDuration(project.portalActiveTimeMs)}</span>
+          {project.lastPortalActiveAt ? (
+            <>
+              {" "}
+              · last activity{" "}
+              <time dateTime={project.lastPortalActiveAt} className="member-projects__portal-timer-metric">
+                {formatPortalUsageTimestamp(project.lastPortalActiveAt)}
+              </time>
+            </>
+          ) : null}
+          .{" "}
+          <button
+            type="button"
+            className="member-projects__portal-timer-clear glass-effect-interactive"
+            onClick={() => setMemberProjectTimeAttributionUnit(customerId, project.id, null)}
+          >
+            Project-wide timing only
+          </button>
+        </p>
       </div>
 
       <div className="member-projects__assign">
@@ -318,6 +390,11 @@ function ProjectWorkspace({
               customerId={customerId}
               projectId={project.id}
               assignment={assignment}
+              pinnedUnitId={project.lastTimeTrackedUnitId}
+              usageDetailOpen={usageDetailUnitId === assignment.unitId}
+              onToggleUsageDetail={() =>
+                onUsageDetailUnitIdChange(usageDetailUnitId === assignment.unitId ? null : assignment.unitId)
+              }
             />
           ))}
         </ul>
@@ -334,13 +411,46 @@ function SessionForksBadge({ count }: { count: number }) {
   );
 }
 
+function UsageSessionsBlock({ sessions }: { sessions: PortalUsageSession[] }) {
+  const items = [...sessions].reverse().slice(0, USAGE_SESSION_UI_CAP);
+  if (items.length === 0) {
+    return (
+      <p className="member-projects__usage-sessions-empty">No credited focus segments yet — stay on Portal with this tab visible.</p>
+    );
+  }
+  return (
+    <ul className="member-projects__usage-sessions" aria-label="Recent Portal focus segments for this assignment">
+      {items.map((session, idx) => (
+        <li key={`${session.startedAt}-${session.endedAt}-${idx}`} className="member-projects__usage-session">
+          <span className="member-projects__usage-session-range">
+            {formatPortalUsageTimestamp(session.startedAt)} → {formatPortalUsageTimestamp(session.endedAt)}
+          </span>
+          <span className="member-projects__usage-session-duration">
+            {formatPortalUsageDuration(session.durationMs)}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 type AssignmentRowProps = {
   customerId: string;
   projectId: string;
   assignment: ProjectFleetAssignment;
+  pinnedUnitId: string | null;
+  usageDetailOpen: boolean;
+  onToggleUsageDetail: () => void;
 };
 
-function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps) {
+function AssignmentRow({
+  customerId,
+  projectId,
+  assignment,
+  pinnedUnitId,
+  usageDetailOpen,
+  onToggleUsageDetail,
+}: AssignmentRowProps) {
   const [draftSearch, setDraftSearch] = useState(assignment.searchIntent);
   const [editing, setEditing] = useState(!assignment.isSaved);
   const [holdVisible, setHoldVisible] = useState(false);
@@ -349,6 +459,7 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
   const flashTimerRef = useRef<number | null>(null);
   const unitSlot = fleetUnits.find((unit) => unit.id === assignment.unitId)?.slot;
   const accentStyle = typeof unitSlot === "number" ? fleetBayAccentStyle(unitSlot) : undefined;
+  const isTimerPinned = pinnedUnitId === assignment.unitId;
 
   useEffect(() => {
     setDraftSearch(assignment.searchIntent);
@@ -406,12 +517,26 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
         "member-projects__assignment member-projects__assignment--bay-accent",
         locked ? "member-projects__assignment--saved" : "",
         justSaved ? "member-projects__assignment--just-saved" : "",
+        isTimerPinned ? "member-projects__assignment--timer-pinned" : "",
       ]
         .filter(Boolean)
         .join(" ")}
       style={accentStyle as CSSProperties | undefined}
     >
-      <AssignmentHead assignment={assignment} />
+      <AssignmentHead
+        assignment={assignment}
+        isTimerPinned={isTimerPinned}
+        usageDetailOpen={usageDetailOpen}
+        onToggleUsageDetail={onToggleUsageDetail}
+        onPinTimer={() => setMemberProjectTimeAttributionUnit(customerId, projectId, assignment.unitId)}
+      />
+
+      {usageDetailOpen ? (
+        <div className="member-projects__usage-detail">
+          <p className="member-projects__usage-detail-title">Recent focus segments (newest first)</p>
+          <UsageSessionsBlock sessions={assignment.usageSessions} />
+        </div>
+      ) : null}
 
       {parallelSessions ? (
         <p className="member-projects__forks-coach" role="alert">
@@ -424,9 +549,9 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
         <>
           <p className="member-projects__forks-discipline">{SESSION_FORKS_DISCIPLINE}</p>
           <SavedRecord
-          assignment={assignment}
-          onEdit={handleEdit}
-          onRemove={() => removeFleetUnitFromProject(customerId, projectId, assignment.unitId)}
+            assignment={assignment}
+            onEdit={handleEdit}
+            onRemove={() => removeFleetUnitFromProject(customerId, projectId, assignment.unitId)}
           />
         </>
       ) : (
@@ -448,16 +573,68 @@ function AssignmentRow({ customerId, projectId, assignment }: AssignmentRowProps
   );
 }
 
-function AssignmentHead({ assignment }: { assignment: ProjectFleetAssignment }) {
+type AssignmentHeadProps = {
+  assignment: ProjectFleetAssignment;
+  isTimerPinned: boolean;
+  usageDetailOpen: boolean;
+  onToggleUsageDetail: () => void;
+  onPinTimer: () => void;
+};
+
+function AssignmentHead({
+  assignment,
+  isTimerPinned,
+  usageDetailOpen,
+  onToggleUsageDetail,
+  onPinTimer,
+}: AssignmentHeadProps) {
   return (
-    <div className="member-projects__assignment-head">
-      <div>
-        <p className="member-projects__callsign">{assignment.callsign}</p>
-        <p className="member-projects__unit-name">{assignment.name}</p>
+    <div className="member-projects__assignment-head-wrap">
+      <div className="member-projects__assignment-head">
+        <div>
+          <p className="member-projects__callsign">{assignment.callsign}</p>
+          <p className="member-projects__unit-name">{assignment.name}</p>
+        </div>
+        <div className="member-projects__head-metrics">
+          <div className="member-projects__usage" aria-label="Portal focus time for this assignment on this device">
+            <span className="member-projects__usage-label">Portal focus</span>
+            <span className="member-projects__usage-count">{formatPortalUsageDuration(assignment.activeTimeMs)}</span>
+          </div>
+          <div className="member-projects__usage member-projects__usage--last">
+            <span className="member-projects__usage-label">Last activity</span>
+            <time className="member-projects__usage-count" dateTime={assignment.lastActiveAt || undefined}>
+              {formatPortalUsageTimestamp(assignment.lastActiveAt)}
+            </time>
+          </div>
+          <div className="member-projects__forks">
+            <span className="member-projects__forks-label">Session forks</span>
+            <SessionForksBadge count={assignment.sessionForks} />
+          </div>
+        </div>
       </div>
-      <div className="member-projects__forks">
-        <span className="member-projects__forks-label">Session forks</span>
-        <SessionForksBadge count={assignment.sessionForks} />
+      <div className="member-projects__assignment-usage-actions">
+        <button
+          type="button"
+          className={[
+            "member-projects__usage-toggle glass-effect-interactive",
+            usageDetailOpen ? "member-projects__usage-toggle--open" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          onClick={onToggleUsageDetail}
+          aria-expanded={usageDetailOpen}
+        >
+          <ChevronDown size={14} aria-hidden className="member-projects__usage-toggle-chevron" />
+          Sessions
+        </button>
+        <button type="button" className="member-projects__pin-timer-btn glass-effect-interactive" onClick={onPinTimer}>
+          Count visible time here
+        </button>
+        {isTimerPinned ? (
+          <span className="member-projects__timer-pinned-badge" aria-label="Portal timer pinned to this unit">
+            Timer pinned
+          </span>
+        ) : null}
       </div>
     </div>
   );

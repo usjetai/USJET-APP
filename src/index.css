@@ -10355,6 +10355,14 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: rgba(255, 255, 255, 0.48);
 }
 
+.member-projects__usage-reality {
+  margin: 0.55rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.55;
+  font-weight: 600;
+  color: rgba(186, 230, 253, 0.78);
+}
+
 .member-projects__create {
   display: flex;
   flex-wrap: wrap;
@@ -10524,6 +10532,60 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   cursor: pointer;
 }
 
+.member-projects__portal-timer-banner {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  margin: 0 0 0.85rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(2, 12, 32, 0.5);
+}
+
+.member-projects__portal-timer-icon {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: rgba(45, 212, 191, 0.9);
+}
+
+.member-projects__portal-timer-copy {
+  margin: 0;
+  font-size: 0.68rem;
+  line-height: 1.55;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.member-projects__portal-timer-label {
+  font-weight: 700;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.member-projects__portal-timer-target {
+  color: #e0f2fe;
+}
+
+.member-projects__portal-timer-metric {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-weight: 700;
+  color: rgba(125, 211, 252, 0.95);
+}
+
+.member-projects__portal-timer-clear {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  color: rgba(94, 234, 212, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
 .member-projects__assign {
   display: flex;
   flex-wrap: wrap;
@@ -10564,13 +10626,133 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   color: color-mix(in srgb, var(--fleet-accent-bright) 88%, white);
 }
 
+.member-projects__assignment-head-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+}
+
 .member-projects__assignment-head {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.55rem;
+  margin-bottom: 0;
+}
+
+.member-projects__head-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  justify-content: flex-end;
+}
+
+.member-projects__assignment-usage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.member-projects__usage-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(2, 8, 23, 0.4);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.88);
+  cursor: pointer;
+}
+
+.member-projects__usage-toggle-chevron {
+  transition: transform 0.18s ease;
+}
+
+.member-projects__usage-toggle--open .member-projects__usage-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+.member-projects__pin-timer-btn {
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(45, 212, 191, 0.28);
+  background: rgba(6, 78, 59, 0.22);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.95);
+  cursor: pointer;
+}
+
+.member-projects__timer-pinned-badge {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(56, 189, 248, 0.92);
+}
+
+.member-projects__assignment--timer-pinned {
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.35);
+}
+
+.member-projects__usage-detail {
+  margin: 0 0 0.55rem;
+  padding: 0.5rem 0.55rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(34, 211, 238, 0.14);
+  background: rgba(2, 8, 23, 0.38);
+}
+
+.member-projects__usage-detail-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.member-projects__usage-sessions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.member-projects__usage-sessions-empty {
+  margin: 0;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.member-projects__usage-session {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(241, 245, 249, 0.88);
+}
+
+.member-projects__usage-session-duration {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  color: rgba(125, 211, 252, 0.92);
 }
 
 .member-projects__callsign {

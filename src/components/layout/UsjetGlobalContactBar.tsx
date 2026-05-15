@@ -3,8 +3,10 @@ import UsjetWordmark from "../brand/UsjetWordmark";
 import AircraftIcon from "../icons/AircraftIcons";
 import GlassEffectContainer from "./GlassEffectContainer";
 import Usa250Countdown from "./Usa250Countdown";
+import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
+import { mailtoUsjetOps, USJET_OPS_EMAIL } from "../../lib/usjetContact";
 
-/** Fixed bottom strip — home, jet, live status (ping on active side), USA 250, SOS. */
+/** Fixed bottom strip — home, jet, status, USA 250, SOS (emergency blink), CS/OPS (periodic shine). */
 export default function UsjetGlobalContactBar() {
   return (
     <footer className="usjet-global-contact-bar" aria-label="USJET site status and quick links">
@@ -31,6 +33,19 @@ export default function UsjetGlobalContactBar() {
           <Link to="/sos" className="usjet-global-contact-bar__sos btn-glass glass-effect-interactive">
             SOS
           </Link>
+          <Link
+            to={ORIGIN_CS_ROUTE}
+            className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
+          >
+            <span className="usjet-global-contact-bar__cs-label">Customer Service</span>
+          </Link>
+          <a
+            href={mailtoUsjetOps()}
+            className="usjet-global-contact-bar__ops btn-glass glass-effect-interactive glass-tint-cyan"
+            aria-label={`Email USJET operations at ${USJET_OPS_EMAIL}`}
+          >
+            <span className="usjet-global-contact-bar__ops-label">{USJET_OPS_EMAIL}</span>
+          </a>
         </div>
       </GlassEffectContainer>
     </footer>

@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import AppNav from "./components/layout/AppNav";
 import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
@@ -16,6 +16,9 @@ import Special from "./pages/Special";
 import MemberPortal from "./pages/MemberPortal";
 import MemberLogin from "./pages/MemberLogin";
 import Cockpit from "./pages/Cockpit";
+import Blog from "./pages/Blog";
+import Ai101 from "./pages/Ai101";
+import Sos from "./pages/Sos";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -43,6 +46,10 @@ function AnimatedRoutes() {
             }
           />
           <Route path="/founder" element={<Founder />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/ai-101" element={<Ai101 />} />
+          <Route path="/sos" element={<Sos />} />
+          <Route path="/help" element={<Navigate to="/sos" replace />} />
           <Route
             path="/origin"
             element={

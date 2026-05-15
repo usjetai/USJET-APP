@@ -3,11 +3,7 @@ import { CreditCard, ShieldCheck } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
-import {
-  resolveEnterprisePaymentLink,
-  resolveFounderPaymentLink,
-  resolveHangarProPaymentLink,
-} from "../../lib/stripePaymentLink";
+import { stripeCheckoutCockpitPath } from "../../lib/stripeCockpitHandoff";
 
 type MemberLoginPanelProps = {
   onSuccess?: () => void;
@@ -86,24 +82,30 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
             <p className="member-login-panel__signup-copy">
               Flight Pass is the minimum clearance for the Member Portal — <strong>$19.90/mo</strong> through Stripe.
             </p>
-            <a
-              href={resolveFounderPaymentLink()}
+            <Link
+              to={stripeCheckoutCockpitPath("/member/login", "founder")}
               className="member-login-panel__create btn-glass-prominent glass-effect-interactive"
             >
               <CreditCard size={16} aria-hidden />
               Flight Pass — $19.90/mo
-            </a>
+            </Link>
             <p className="member-login-panel__signup-note">After checkout, return here and log in with your billing email.</p>
 
             <div className="member-login-panel__upsell">
               <p className="member-login-panel__upsell-kicker">Higher clearance</p>
               <div className="member-login-panel__upsell-actions">
-                <a href={resolveHangarProPaymentLink()} className="member-login-panel__upsell-btn btn-glass glass-effect-interactive">
+                <Link
+                  to={stripeCheckoutCockpitPath("/member/login", "hangar-pro")}
+                  className="member-login-panel__upsell-btn btn-glass glass-effect-interactive"
+                >
                   Hangar Pro $49.95
-                </a>
-                <a href={resolveEnterprisePaymentLink()} className="member-login-panel__upsell-btn btn-glass glass-effect-interactive">
+                </Link>
+                <Link
+                  to={stripeCheckoutCockpitPath("/member/login", "fleet-command")}
+                  className="member-login-panel__upsell-btn btn-glass glass-effect-interactive"
+                >
                   Enterprise $199.99
-                </a>
+                </Link>
               </div>
             </div>
           </section>

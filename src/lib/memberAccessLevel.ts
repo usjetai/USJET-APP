@@ -4,12 +4,22 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Guest-only surface — Fleet, Founder, Stripe login, fleet cockpit handoff. */
-export const GUEST_PUBLIC_ROUTES = ["/", "/founder", "/member/login", "/login", "/cockpit"] as const;
+/** Guest-only surface — Fleet, Founder, Help, public primers, Stripe login, fleet cockpit handoff. */
+export const GUEST_PUBLIC_ROUTES = [
+  "/",
+  "/founder",
+  "/blog",
+  "/ai-101",
+  "/sos",
+  "/help",
+  "/member/login",
+  "/login",
+  "/cockpit",
+] as const;
 
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Fleet, Founder, member login, fleet cockpit handoff.
+ * 0 = public (guest): Fleet, Founder, Help, member login, fleet cockpit handoff.
  * 1 = Flight Pass+: Hangar, Member Portal, Founder Special checkout.
  * 2 = Hangar Pro+: Intel.
  * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
@@ -17,6 +27,10 @@ export const GUEST_PUBLIC_ROUTES = ["/", "/founder", "/member/login", "/login", 
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
   "/founder": 0,
+  "/blog": 0,
+  "/ai-101": 0,
+  "/sos": 0,
+  "/help": 0,
   "/member/login": 0,
   "/login": 0,
   "/cockpit": 0,

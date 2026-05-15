@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { LifeBuoy } from "lucide-react";
+import { Award, LifeBuoy } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import { SECURITY_STRIPE_ONLY_MAY_2026 } from "../data/founderManifesto";
 import { mailtoUsjetOps, USJET_OPS_EMAIL } from "../lib/usjetContact";
@@ -69,10 +69,14 @@ export default function Sos() {
         </p>
         <Link
           to="/ai-101?from=sos"
-          className="sos-page__ai101-cta btn-glass-prominent glass-effect-interactive glass-tint-cyan inline-flex min-w-[11rem] justify-center px-7 py-2.5 text-xs font-black uppercase tracking-[0.18em] focus-visible:ring-2 focus-visible:ring-cyan-300/90 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
+          className="sos-page__ai101-badge glass-effect glass-effect--rounded-rect glass-effect-interactive"
           aria-label="Continue to the USJET AI 101 curriculum in the same window"
         >
-          AI 101
+          <span className="sos-page__ai101-badge__ribbon" aria-hidden>
+            Cleared
+          </span>
+          <Award className="sos-page__ai101-badge__icon" size={20} strokeWidth={2.2} aria-hidden />
+          <span className="sos-page__ai101-badge__label">AI 101</span>
         </Link>
       </section>
     </div>

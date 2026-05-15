@@ -768,25 +768,83 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   text-decoration: none;
-  animation: usjet-footer-sos-rwb 2.1s linear infinite;
+  animation: usjet-footer-sos-rw 0.72s ease-in-out infinite alternate;
 }
 
-@keyframes usjet-footer-sos-rwb {
+@keyframes usjet-footer-sos-rw {
   0% {
-    color: #ef4444;
-    text-shadow: 0 0 8px rgba(239, 68, 68, 0.95), 0 0 16px rgba(220, 38, 38, 0.45);
-  }
-  33% {
-    color: #f8fafc;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.95), 0 0 18px rgba(226, 232, 240, 0.4);
-  }
-  66% {
-    color: #2563eb;
-    text-shadow: 0 0 8px rgba(37, 99, 235, 0.95), 0 0 18px rgba(59, 130, 246, 0.55);
+    color: #fecaca;
+    text-shadow: 0 0 8px rgba(239, 68, 68, 1), 0 0 18px rgba(220, 38, 38, 0.65), 0 0 28px rgba(127, 29, 29, 0.35);
   }
   100% {
-    color: #ef4444;
-    text-shadow: 0 0 8px rgba(239, 68, 68, 0.95), 0 0 16px rgba(220, 38, 38, 0.45);
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 22px rgba(254, 226, 226, 0.55), 0 0 34px rgba(248, 113, 113, 0.25);
+  }
+}
+
+.usjet-global-contact-bar__cs,
+.usjet-global-contact-bar__ops {
+  position: relative;
+  overflow: hidden;
+  padding: 0.14rem 0.38rem;
+  font-size: 0.52rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  text-decoration: none;
+  color: rgba(103, 232, 249, 0.9);
+}
+
+.usjet-global-contact-bar__cs-label,
+.usjet-global-contact-bar__ops-label {
+  position: relative;
+  z-index: 2;
+}
+
+.usjet-global-contact-bar__cs::after,
+.usjet-global-contact-bar__ops::after {
+  content: "";
+  position: absolute;
+  inset: -30% -20%;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(255, 255, 255, 0.08) 44%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.12) 56%,
+    transparent 62%,
+    transparent 100%
+  );
+  transform: translateX(-120%) skewX(-16deg);
+  opacity: 0;
+  pointer-events: none;
+  animation: usjet-footer-csops-reflect 15s ease-in-out infinite;
+}
+
+.usjet-global-contact-bar__ops::after {
+  animation-delay: 3.5s;
+}
+
+@keyframes usjet-footer-csops-reflect {
+  0%,
+  88% {
+    transform: translateX(-140%) skewX(-16deg);
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+  }
+  94% {
+    transform: translateX(140%) skewX(-16deg);
+    opacity: 0.85;
+  }
+  96%,
+  100% {
+    transform: translateX(160%) skewX(-16deg);
+    opacity: 0;
   }
 }
 
@@ -809,7 +867,9 @@
     font-size: 0.54rem;
   }
 
-  .usjet-global-contact-bar__sos {
+  .usjet-global-contact-bar__sos,
+  .usjet-global-contact-bar__cs,
+  .usjet-global-contact-bar__ops {
     font-size: 0.6rem;
   }
 }
@@ -821,6 +881,12 @@
     animation: none;
   }
 
+  .usjet-global-contact-bar__cs::after,
+  .usjet-global-contact-bar__ops::after {
+    animation: none;
+    opacity: 0;
+  }
+
   .usjet-global-contact-bar__ping {
     opacity: 0.85;
     transform: none;
@@ -828,7 +894,7 @@
   }
 
   .usjet-global-contact-bar__sos {
-    color: rgba(248, 250, 252, 0.88);
+    color: rgba(248, 113, 113, 0.95);
     text-shadow: none;
   }
 }
@@ -4923,7 +4989,121 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* AI 101 curriculum (/ai-101) — fleet bay shell reuse */
+/* SOS → AI 101 award badge (blue idle, neon green on press) */
+.sos-page__ai101-badge {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-width: 12.75rem;
+  padding: 0.55rem 1.35rem 0.65rem;
+  border-radius: 1.35rem;
+  border: 2px solid rgba(56, 189, 248, 0.55);
+  background: linear-gradient(165deg, rgba(14, 165, 233, 0.38) 0%, rgba(8, 47, 73, 0.72) 48%, rgba(15, 23, 42, 0.88) 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 36px rgba(34, 211, 238, 0.22),
+    0 0 1px rgba(125, 211, 252, 0.4);
+  color: #e0f2fe;
+  text-decoration: none;
+  text-align: center;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.12s ease,
+    transform 0.14s ease;
+}
+
+.sos-page__ai101-badge__ribbon {
+  position: absolute;
+  top: -0.38rem;
+  right: 0.85rem;
+  padding: 0.12rem 0.45rem 0.14rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  background: linear-gradient(180deg, rgba(253, 224, 71, 0.35), rgba(180, 83, 9, 0.55));
+  font-size: 0.45rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(254, 243, 199, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.sos-page__ai101-badge__icon {
+  margin-top: 0.15rem;
+  color: rgba(125, 211, 252, 0.95);
+  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.45));
+  transition: color 0.15s ease, filter 0.15s ease;
+}
+
+.sos-page__ai101-badge__label {
+  font-size: 0.82rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #f0f9ff;
+  text-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+}
+
+.sos-page__ai101-badge:hover {
+  border-color: rgba(125, 211, 252, 0.88);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16) inset,
+    0 10px 36px rgba(0, 0, 0, 0.38),
+    0 0 48px rgba(34, 211, 238, 0.32);
+  transform: translateY(-1px);
+}
+
+.sos-page__ai101-badge:active {
+  border-color: rgba(52, 211, 153, 0.95);
+  background: linear-gradient(165deg, rgba(52, 211, 153, 0.55) 0%, rgba(6, 95, 70, 0.88) 45%, rgba(15, 23, 42, 0.95) 100%);
+  color: #ecfdf5;
+  box-shadow:
+    0 0 0 1px rgba(167, 243, 208, 0.45) inset,
+    0 0 40px rgba(52, 211, 153, 0.75),
+    0 0 72px rgba(16, 185, 129, 0.45),
+    0 0 96px rgba(52, 211, 153, 0.2);
+  transform: scale(0.97);
+}
+
+.sos-page__ai101-badge:active .sos-page__ai101-badge__icon {
+  color: #a7f3d0;
+  filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.85)) drop-shadow(0 0 22px rgba(16, 185, 129, 0.5));
+}
+
+.sos-page__ai101-badge:active .sos-page__ai101-badge__label {
+  color: #ecfdf5;
+  text-shadow: 0 0 22px rgba(52, 211, 153, 0.85), 0 0 40px rgba(16, 185, 129, 0.45);
+}
+
+.sos-page__ai101-badge:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(34, 211, 238, 0.65),
+    0 0 0 6px rgba(15, 23, 42, 0.95),
+    0 0 36px rgba(34, 211, 238, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sos-page__ai101-badge {
+    transition: none;
+  }
+
+  .sos-page__ai101-badge:hover {
+    transform: none;
+  }
+
+  .sos-page__ai101-badge:active {
+    transform: none;
+  }
+}
 .ai101-page__hero {
   max-width: 56rem;
   margin-left: auto;

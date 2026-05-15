@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import FleetCommand from "../components/fleet/FleetCommand";
 import { AI101_CANONICAL_CURRICULUM } from "../data/ai101Curriculum";
 import { fleetBayAccentStyle, getFleetBayAccent } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
@@ -128,15 +129,26 @@ export default function Ai101() {
           ))}
         </div>
 
-        <footer className="ai101-page__footer mt-16 border-t border-white/10 pt-8 text-center text-xs text-white/45">
-          <Link to="/sos" className="text-cyan-200/80 underline-offset-4 hover:underline">
-            /sos
-          </Link>{" "}
-          for line checks ·{" "}
-          <Link to="/" className="text-cyan-200/80 underline-offset-4 hover:underline">
-            Fleet runway
-          </Link>{" "}
-          for live bays
+        <footer
+          id="ai101-footer"
+          className="ai101-page__footer mt-16 scroll-mt-28 border-t border-white/10 pt-10 text-center sm:scroll-mt-32"
+        >
+          <p className="mx-auto mb-6 max-w-lg text-balance text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
+            End of curriculum — one control, no briefing on purpose. Tap it anyway.
+          </p>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <FleetCommand variant="ceremony" />
+          </div>
+          <p className="mx-auto mt-8 max-w-md text-xs leading-relaxed text-white/35">
+            <Link to="/sos" className="text-cyan-200/80 underline-offset-4 hover:underline">
+              /sos
+            </Link>{" "}
+            for line checks ·{" "}
+            <Link to="/" className="text-cyan-200/80 underline-offset-4 hover:underline">
+              Fleet runway
+            </Link>{" "}
+            for live bays
+          </p>
         </footer>
       </div>
     </div>

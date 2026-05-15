@@ -14,12 +14,10 @@ type VitalCellProps = {
 };
 
 function VitalCell({ label, value, mono = false, accent = false }: VitalCellProps) {
-  return (
-    <motionVitalRow label={label} value={value} mono={mono} accent={accent} />
-  );
+  return <MotionVitalRow label={label} value={value} mono={mono} accent={accent} />;
 }
 
-function motionVitalRow({ label, value, mono, accent }: VitalCellProps) {
+function MotionVitalRow({ label, value, mono, accent }: VitalCellProps) {
   return (
     <div className="member-vitals__cell">
       <dt className="member-vitals__label">{label}</dt>

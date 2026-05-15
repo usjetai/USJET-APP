@@ -6,6 +6,8 @@ import { useMemberPortalUsageTimer } from "../../hooks/useMemberPortalUsageTimer
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { MEMBER_ASSIGNMENT_HOLD_MESSAGE } from "../../lib/usjetContact";
+import { useMemberAuth } from "../../context/MemberAuthContext";
+import { computeFreeTierUsage } from "../../lib/memberPortalTelemetry";
 import {
   addFleetUnitToProject,
   createMemberProject,
@@ -588,6 +590,9 @@ function AssignmentHead({
   onToggleUsageDetail,
   onPinTimer,
 }: AssignmentHeadProps) {
+  const { session } = useMemberAuth();
+  const freeTier = computeFreeTierUsage(session, assignment.sessionForks, assignment.activeTimeMs);
+
   return (
     <div className="member-projects__assignment-head-wrap">
       <div className="member-projects__assignment-head">
@@ -595,23 +600,27 @@ function AssignmentHead({
           <p className="member-projects__callsign">{assignment.callsign}</p>
           <p className="member-projects__unit-name">{assignment.name}</p>
         </div>
-        <div className="member-projects__head-metrics">
-          <div className="member-projects__usage" aria-label="Portal focus time for this assignment on this device">
-            <span className="member-projects__usage-label">Portal focus</span>
+        <div className="member-projects__head-metrics member-projects__head-metrics--browser">
+          <div className="member-projects__forks" aria-label="Browser launches for this assignment">
+            <span className="member-projects__forks-label">Browser launches</span>
+            <SessionForksBadge count={assignment.sessionForks} />
+          </div>
+          <div className="member-projects__usage" aria-label="Time in browser for this assignment on this device">
+            <span className="member-projects__usage-label">Time in browser</span>
             <span className="member-projects__usage-count">{formatPortalUsageDuration(assignment.activeTimeMs)}</span>
           </div>
-          <div className="member-projects__usage member-projects__usage--last">
-            <span className="member-projects__usage-label">Last activity</span>
-            <time className="member-projects__usage-count" dateTime={assignment.lastActiveAt || undefined}>
-              {formatPortalUsageTimestamp(assignment.lastActiveAt)}
-            </time>
-          </div>
-          <div className="member-projects__forks">
-            <span className="member-projects__forks-label">Session forks</span>
-            <SessionForksBadge count={assignment.sessionForks} />
+          <div className="member-projects__usage member-projects__usage--tier" aria-label="Free tier remaining">
+            <span className="member-projects__usage-label">Free tier</span>
+            <span className="member-projects__usage-count member-projects__usage-count--tier">{freeTier.label}</span>
           </div>
         </div>
       </div>
+      {assignment.lastActiveAt ? (
+        <p className="member-projects__last-activity">
+          Last activity{" "}
+          <time dateTime={assignment.lastActiveAt}>{formatPortalUsageTimestamp(assignment.lastActiveAt)}</time>
+        </p>
+      ) : null}
       <div className="member-projects__assignment-usage-actions">
         <button
           type="button"

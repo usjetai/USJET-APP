@@ -7,6 +7,7 @@ export const STRIPE_METADATA_KEYS = {
 } as const;
 
 const TIER_METADATA = [
+  { tier: "MEMBER", access_level: "LVL_00_MEMBER" },
   { tier: "RECRUIT", access_level: "LVL_01" },
   { tier: "OPERATOR", access_level: "LVL_02" },
   { tier: "COMMANDER", access_level: "LVL_03_SOVEREIGN", legacy_id: "AM_KARIM_SUCCESSION" },
@@ -14,15 +15,17 @@ const TIER_METADATA = [
 
 /** Server-only — maps Stripe Dashboard product IDs to tier metadata (see .env.example). */
 export const STRIPE_PRODUCT_ENV_KEYS = {
+  memberDeck: "STRIPE_PRODUCT_MEMBER_DECK",
   flightPass: "STRIPE_PRODUCT_FLIGHT_PASS",
   hangarPro: "STRIPE_PRODUCT_HANGAR_PRO",
   enterprise: "STRIPE_PRODUCT_ENTERPRISE",
 } as const;
 
 const CONFIGURED_PRODUCT_SLOTS = [
-  { envKey: STRIPE_PRODUCT_ENV_KEYS.flightPass, meta: TIER_METADATA[0] },
-  { envKey: STRIPE_PRODUCT_ENV_KEYS.hangarPro, meta: TIER_METADATA[1] },
-  { envKey: STRIPE_PRODUCT_ENV_KEYS.enterprise, meta: TIER_METADATA[2] },
+  { envKey: STRIPE_PRODUCT_ENV_KEYS.memberDeck, meta: TIER_METADATA[0] },
+  { envKey: STRIPE_PRODUCT_ENV_KEYS.flightPass, meta: TIER_METADATA[1] },
+  { envKey: STRIPE_PRODUCT_ENV_KEYS.hangarPro, meta: TIER_METADATA[2] },
+  { envKey: STRIPE_PRODUCT_ENV_KEYS.enterprise, meta: TIER_METADATA[3] },
 ] as const;
 
 function tierMetadataRecord(meta: (typeof TIER_METADATA)[number]): Record<string, string> {

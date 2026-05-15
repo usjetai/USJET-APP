@@ -17,13 +17,25 @@ function PulseVitalMetric({ slot }: { slot: number }) {
   const [changePct, setChangePct] = useState(0);
 
   useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      const drift = (Math.random() - 0.48) * config.step;
-      const next = Math.max(config.basePrice * 0.82, config.basePrice + drift);
-      setChangePct(((next - config.basePrice) / config.basePrice) * 100);
-    }, 2000);
+    let cancelled = false;
+    let tid = 0;
 
-    return () => window.clearInterval(intervalId);
+    const schedule = () => {
+      if (cancelled) return;
+      const nextMs = 1100 + Math.random() * 2200;
+      tid = window.setTimeout(() => {
+        const drift = (Math.random() - 0.48) * config.step;
+        const next = Math.max(config.basePrice * 0.82, config.basePrice + drift);
+        setChangePct(((next - config.basePrice) / config.basePrice) * 100);
+        schedule();
+      }, nextMs);
+    };
+
+    schedule();
+    return () => {
+      cancelled = true;
+      window.clearTimeout(tid);
+    };
   }, [config.basePrice, config.step]);
 
   return (

@@ -1,12 +1,13 @@
-import { useState, type CSSProperties, type MouseEvent } from "react";
+import { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import EkgPulseLine from "./EkgPulseLine";
+import IntelScanLine from "./IntelScanLine";
 import ReservedBayLiveMock from "./ReservedBayLiveMock";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import { usePartnershipBayAnalytics } from "../../hooks/usePartnershipBayAnalytics";
 import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
-import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
+import { type FleetUnit } from "../../types/fleet";
 
 export type IntelReservedVariant = "market" | "crypto";
 
@@ -24,7 +25,7 @@ type IntelReservedBayProps = {
  * Intel grid Slot 01 (market) and Slot 02 (crypto) — partnership bays.
  * Protect Ameer Karim's vision: reserved seats, not dead cells.
  */
-export default function IntelReservedBay({ variant, unit, index, style }: IntelReservedBayProps) {
+export default function IntelReservedBay({ variant, unit, index: _index, style }: IntelReservedBayProps) {
   const isMarket = variant === "market";
   const bayId = isMarket ? "slot-01-market" : "slot-02-titans";
   const label = isMarket ? "INSTITUTIONAL FEED: STATUS PENDING" : "RESERVED FOR TITANS";
@@ -32,6 +33,15 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
   const { session } = useMemberAuth();
   const authorized = Boolean(session?.active);
   const [pitchOpen, setPitchOpen] = useState(false);
+
+  const engineMotion = useMemo(
+    () =>
+      ({
+        "--intel-bay-engine-period": `${1.05 + Math.random() * 1.42}s`,
+        "--intel-bay-engine-delay": `-${Math.random() * 2.25}s`,
+      }) as CSSProperties,
+    [],
+  );
 
   const stopBubble = (event: MouseEvent) => {
     event.stopPropagation();
@@ -54,7 +64,8 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
         .filter(Boolean)
         .join(" ")}
       style={{
-        animationDelay: `${(index % HANGAR_COLUMNS) * 0.08}s`,
+        animationDelay: `${Math.random() * 1.7}s`,
+        ...engineMotion,
         ...fleetBayAccentStyle(unit.slot),
         ...style,
       }}
@@ -78,7 +89,7 @@ export default function IntelReservedBay({ variant, unit, index, style }: IntelR
           <EkgPulseLine variant="monitor" seed={unit.slot + (isMarket ? 0 : 17)} />
         </div>
         <div className="intel-monitor__grid" aria-hidden />
-        <div className="intel-monitor__scan intel-reserved-bay__scan" aria-hidden />
+        <IntelScanLine className="intel-reserved-bay__scan" />
 
         {authorized ? <ReservedBayLiveMock variant={variant} /> : null}
 

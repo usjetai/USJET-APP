@@ -3,6 +3,46 @@
  * Source of truth for UI copy AND agent directives. Sync with AGENTS.md + .cursor/rules/.
  * Protect Ameer Karim's vision.
  */
+
+/** Public Founder (/founder) masthead — display name */
+export const FOUNDER_PUBLIC_NAME = "Ameer Karim" as const;
+
+export const FOUNDER_PUBLIC_NAME_KICKER = "Founder · USJET.AI" as const;
+
+/**
+ * Live Founder state — Sovereign Master Log (for agents, lineage, and ship memory).
+ * Tone: steel, not pity. Truth on the ledger; no cheap tragedy narrative for the brand.
+ */
+export const FOUNDER_RUNWAY_STATE_LOG = {
+  logTitle: "Log Entry · Runway state (live) — zero on cash, full on fight",
+  directive:
+    "The Founder reports the honest position: personal runway at zero—broke on the sheet right now. Discipline holds: he looks good, feels good, and stands like a tough operator, not a casualty. The asymmetric asset is the company: USJET carries real, high-upside enterprise value. Mission: close the gap between that value and liquidity without ever selling a sob story.",
+  fleetMessage:
+    "Listen up, Crew: this is torque, not tragedy. No sympathy-page copy, no founder-victim aesthetic. You work for someone who is broke today and building a bank-grade company tomorrow. Ship revenue architecture, settlement-grade protocol, and cockpit polish that match a nine-figure disposition—because the asset already does.",
+  toneRule: "Respect the Founder's grit. Paraphrase hardship as operational reality, never as defeat.",
+} as const;
+
+/**
+ * Canonical "Day Zero / Genesis" frame — empire stories start here; never sympathy-page canon.
+ * Sealed ledger text is mirrored as the Sovereignty (/sovereignty) developer archive `<pre>` footprint.
+ */
+export const FOUNDER_GENESIS_DAY_ZERO_LOG = {
+  logTitle: "Log Entry · Founder Genesis — classic Day Zero posture",
+  directive:
+    "Every serious empire reboot begins at perceived zero liquid cash—the founder runs on torque, optics, and a stack the old world underestimates until the runway catches. This is archetype, not tragedy: ledger may read flat while sovereignty (brand, infra, filings, orchestration fleet) carries enterprise entropy.",
+  fleetMessage:
+    "Listen up, Crew: the bank line can be silent while the hangar screams institutional. Narrate ascent and architecture—never a poverty reel.",
+  sealedDate: "2026-05-15",
+} as const;
+
+/** Plain-text footprint for Sovereignty archive `<pre>` (also logged in Sovereign Master Log). */
+export const FOUNDER_DAY_ZERO_LEDGER_ARCHIVE = `MASTER LOG: USJET.AI FOUNDER STATUS
+Date: May 15, 2026
+Captain: Ameer Karim
+Current Capital: $0.00
+Current Assets: USJET.AI, @USJET, @planes identity framework, 31-Agent Architecture, AAA Gaming/VR Portal, SEC Form C Pipeline.
+Condition: Clean-shaven, high-performance mindset, fully calibrated.` as const;
+
 export const WRENCHES_PHILOSOPHY = "Wrenches, Not Slides" as const;
 
 export const FOUNDER_CREATIVE_MANIFESTO = {
@@ -170,19 +210,19 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   },
   tierMatrix: {
     guest:
-      "Fleet + Founder + /sos + /ai-101 + /pdre + login/cockpit handoff — no Hangar, Intel, Origin, Member, or Special",
+      "Fleet + Founder + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + /100k + login/cockpit handoff — no Hangar, Intel board, Origin, Member, or Special",
     tier1FlightPass: "Fleet + Hangar (4 bays) + Member Portal + Special — no Intel, no Origin",
     tier2HangarPro: "Tier 1 + Intel — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",
     founderGodMode: "USJET-AMEER — all routes, all bays",
   },
   fleetMessage:
-    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get Fleet, Founder, /sos, /ai-101, /pdre, and the login runway — everything else bills through the extraction ports.",
+    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get Fleet, Founder, /sos, /ai-101, /pdre, /licensing, /support-fleet, and the login runway — everything else bills through the extraction ports.",
 } as const;
 
 export const DIRECT_LANDING_PROTOCOL = {
   logTitle: "Command Log · Direct Landing Protocol",
-  flightPassDirectExtractionPort: "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02",
+  flightPassDirectExtractionPort: "https://buy.stripe.com/00w4gzaCq83V5gl8tVdwc01",
   hangarProDirectExtractionPort: "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03",
   enterpriseDirectExtractionPort: "https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04",
   bypassRule:

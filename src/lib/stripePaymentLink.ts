@@ -1,5 +1,8 @@
+/** Member Deck ($5/mo) — paste your live Payment Link after creating the product in Stripe. */
+export const MEMBER_DECK_DIRECT_URL = "";
+
 /** Flight Pass ($19.90/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
-export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02";
+export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/00w4gzaCq83V5gl8tVdwc01";
 
 /** Hangar Pro ($49.95/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
 export const HANGAR_PRO_DIRECT_URL = "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03";
@@ -7,7 +10,48 @@ export const HANGAR_PRO_DIRECT_URL = "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFd
 /** Enterprise Fleet Commander ($199.99/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
 export const ENTERPRISE_DIRECT_URL = "https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04";
 
+/** Sovereign Fleet Protocol Volume I ($100,000) — hard-wired Stripe Payment Link. */
+export const BLUEPRINT_100K_DIRECT_URL = "https://buy.stripe.com/bJeeVd39Y2JBaAF9xZdwc05";
+
+/** USJET Code Kit ($499) — paste live Payment Link from Stripe Dashboard. */
+export const CODE_KIT_DIRECT_URL = "";
+
+/** Fleet Manual Professional ($2,500) — hard-wired Stripe Payment Link. */
+export const FLEET_MANUAL_DIRECT_URL = "https://buy.stripe.com/14AaEX7qefwn8sxh0rdwc06";
+
+/** USJET Code Kit ($499) — env override when set, else CODE_KIT_DIRECT_URL when configured. */
+export function resolveCodeKitPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_CODE_KIT_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : CODE_KIT_DIRECT_URL.trim();
+}
+
+/** Fleet Manual Professional ($2,500) — env override when set, else FLEET_MANUAL_DIRECT_URL. */
+export function resolveFleetManualPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_FLEET_MANUAL_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : FLEET_MANUAL_DIRECT_URL;
+}
+
+/** Sovereign Fleet Blueprint ($100,000) — env override when set, else BLUEPRINT_100K_DIRECT_URL. */
+export function resolve100kPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_100K_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : BLUEPRINT_100K_DIRECT_URL;
+}
+
 export type StripeTierPaymentId = "founder" | "hangar-pro" | "fleet-command";
+
+/** Gamer-Founder Kit ($99) — env override when set. */
+export const GAMER_FOUNDER_KIT_DIRECT_URL = "";
+
+export function resolveGamerFounderKitPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_GAMER_FOUNDER_KIT_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : GAMER_FOUNDER_KIT_DIRECT_URL.trim();
+}
+
+/** Member Deck ($5/mo) — env override when set, else MEMBER_DECK_DIRECT_URL. */
+export function resolveMemberDeckPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_MEMBER_DECK_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : MEMBER_DECK_DIRECT_URL.trim();
+}
 
 /** Flight Pass ($19.90/mo) — env override when set, else FLIGHT_PASS_DIRECT_URL. */
 export function resolveFounderPaymentLink(): string {
@@ -37,6 +81,15 @@ export function resolvePaymentLinkForTier(tierId: StripeTierPaymentId): string {
     case "fleet-command":
       return resolveEnterprisePaymentLink();
   }
+}
+
+/** Digital Sovereignty playbook ($49) — Stripe Payment Link when published. */
+export const DIGITAL_SOVEREIGNTY_BOOK_DIRECT_URL = "";
+
+/** Digital Sovereignty playbook ($49) — env override when set. */
+export function resolveDigitalSovereigntyBookPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_DIGITAL_SOVEREIGNTY_BOOK_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : DIGITAL_SOVEREIGNTY_BOOK_DIRECT_URL.trim();
 }
 
 /** Returns true when a Stripe Payment Link URL is configured and safe to navigate to. */

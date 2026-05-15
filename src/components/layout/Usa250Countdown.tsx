@@ -5,9 +5,10 @@ import { getDaysUntilUsa250 } from "../../lib/usa250Countdown";
 type Usa250CountdownProps = {
   /** When set, day count gets footer strip blink / glow styles. */
   variant?: "default" | "footerStrip";
+  className?: string;
 };
 
-export default function Usa250Countdown({ variant = "default" }: Usa250CountdownProps) {
+export default function Usa250Countdown({ variant = "default", className }: Usa250CountdownProps) {
   const [days, setDays] = useState(() => getDaysUntilUsa250());
 
   useEffect(() => {
@@ -17,10 +18,14 @@ export default function Usa250Countdown({ variant = "default" }: Usa250Countdown
     return () => window.clearInterval(id);
   }, []);
 
-  const rootClass =
+  const rootClass = [
     variant === "footerStrip"
       ? "usjet-global-contact-bar__usa250 whitespace-nowrap font-mono text-[7px] font-semibold uppercase leading-tight tracking-[0.22em] text-cyan-300/70 sm:text-[8px] sm:tracking-[0.26em]"
-      : "whitespace-nowrap font-mono text-[7px] font-semibold uppercase leading-tight tracking-[0.28em] text-cyan-300/55 sm:text-[8px] sm:tracking-[0.32em]";
+      : "whitespace-nowrap font-mono text-[7px] font-semibold uppercase leading-tight tracking-[0.28em] text-cyan-300/55 sm:text-[8px] sm:tracking-[0.32em]",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const daysClass = variant === "footerStrip" ? "usjet-global-contact-bar__usa250-days tabular-nums" : "tabular-nums text-cyan-100/85";
 

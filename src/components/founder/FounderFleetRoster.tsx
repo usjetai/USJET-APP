@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Link } from "react-router-dom";
+import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { fleetBayAccentStyle, getFleetBayAccent } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
@@ -24,13 +24,10 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
   const isCommandBay = unit.slot === 29;
   const bayAccent = getFleetBayAccent(unit.slot);
   const bay = fleetBayLabel(unit.slot);
-  const Tag = launchUrl.startsWith("/") ? Link : "a";
-  const linkProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
-
   return (
     <li>
-      <Tag
-        {...linkProps}
+      <FleetLaunchLink
+        launchUrl={launchUrl}
         className={[
           "founder-fleet-roster__cell",
           "glass-effect-interactive",
@@ -54,7 +51,7 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
           <span className="founder-fleet-roster__callsign">{unit.callsign}</span>
           <span className="founder-fleet-roster__name">{unit.name}</span>
         </span>
-      </Tag>
+      </FleetLaunchLink>
     </li>
   );
 }

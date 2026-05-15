@@ -1,6 +1,9 @@
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BookOpen } from "lucide-react";
+import Ai101AntiCloneProtocol from "../components/ai101/Ai101AntiCloneProtocol";
+import Ai101CockpitCalibration from "../components/ai101/Ai101CockpitCalibration";
+import Ai101EngineRoom, { Ai101CodeAccessButton } from "../components/ai101/Ai101EngineRoom";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import FleetCommand from "../components/fleet/FleetCommand";
 import { AI101_CANONICAL_CURRICULUM } from "../data/ai101Curriculum";
@@ -86,11 +89,21 @@ export default function Ai101() {
               into line checks.
             </p>
           ) : null}
+          <div className="ai101-page__code-nav mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Ai101CodeAccessButton />
+          </div>
         </header>
 
         <GlassEffectContainer className="ai101-page__toc glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mb-10 px-5 py-5 sm:px-6">
           <p className="text-[10px] font-black uppercase tracking-[0.28em] text-cyan-200/70">Jump links</p>
           <nav className="mt-3 flex flex-wrap gap-2" aria-label="AI 101 glossary sections">
+            <Ai101CodeAccessButton className="ai101-code-access-btn--compact" />
+            <Link
+              to={{ pathname: "/ai-101", hash: "#ai101-partner-protocol" }}
+              className="btn-glass glass-effect-interactive rounded-full border border-amber-400/35 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-amber-100/85 hover:text-amber-50"
+            >
+              Partner
+            </Link>
             {rows.map((row) => (
               <Link
                 key={row.code}
@@ -128,6 +141,12 @@ export default function Ai101() {
             </section>
           ))}
         </div>
+
+        <Ai101AntiCloneProtocol />
+
+        <Ai101EngineRoom />
+
+        <Ai101CockpitCalibration />
 
         <footer
           id="ai101-footer"

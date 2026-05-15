@@ -3,11 +3,11 @@ import { CreditCard, ShieldCheck } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
-import {
-  resolveEnterprisePaymentLink,
-  resolveFounderPaymentLink,
-  resolveHangarProPaymentLink,
-} from "../../lib/stripePaymentLink";
+import { MEMBER_DECK_PRICE_DISPLAY, MEMBER_DECK_PERIOD } from "../../data/memberDeckStripe";
+import { MEMBER_PORTAL_UPGRADE_TIERS } from "../../data/stripeProducts";
+import { SITE_PREVIEW_MEMBER_NOTE } from "../../data/sitePreviewPromo";
+import { isSitePreviewPromoActive } from "../../lib/sitePreviewPromo";
+import { isUsableStripePaymentLink, resolveMemberDeckPaymentLink, resolvePaymentLinkForTier } from "../../lib/stripePaymentLink";
 
 type MemberLoginPanelProps = {
   onSuccess?: () => void;
@@ -18,6 +18,8 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
   const [email, setEmail] = useState("");
   const [accessSentence, setAccessSentence] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const memberDeckLink = resolveMemberDeckPaymentLink();
+  const memberDeckReady = isUsableStripePaymentLink(memberDeckLink);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -38,6 +40,9 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
           <strong>Email alone does not unlock the Member Portal.</strong> Complete Stripe checkout, then log in with
           billing email and your founder-issued access sentence (or Stripe <code>cus_…</code> Member ID).
         </p>
+        {isSitePreviewPromoActive() ? (
+          <p className="member-login-panel__preview-note">{SITE_PREVIEW_MEMBER_NOTE}</p>
+        ) : null}
 
         <div className="member-login-panel__body">
           <section className="member-login-panel__login" aria-label="Member login">
@@ -82,28 +87,41 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
           <div className="member-login-panel__divider" aria-hidden />
 
           <section className="member-login-panel__signup" aria-label="Create account via Stripe">
-            <p className="member-login-panel__section-kicker">Create account</p>
+            <p className="member-login-panel__section-kicker">Member Portal entry</p>
             <p className="member-login-panel__signup-copy">
-              Flight Pass is the minimum clearance for the Member Portal — <strong>$19.90/mo</strong> through Stripe.
+              <strong>Member Deck {MEMBER_DECK_PRICE_DISPLAY}{MEMBER_DECK_PERIOD}</strong> unlocks the Member Portal and
+              member tools. Three upgrade tiers inside the ship add Hangar, Intel, and Origin clearance.
             </p>
-            <a
-              href={resolveFounderPaymentLink()}
-              className="member-login-panel__create btn-glass-prominent glass-effect-interactive"
-            >
-              <CreditCard size={16} aria-hidden />
-              Flight Pass — $19.90/mo
-            </a>
+            {memberDeckReady ? (
+              <a
+                href={memberDeckLink}
+                className="member-login-panel__create btn-glass-prominent glass-effect-interactive"
+              >
+                <CreditCard size={16} aria-hidden />
+                Member Deck — {MEMBER_DECK_PRICE_DISPLAY}
+                {MEMBER_DECK_PERIOD}
+              </a>
+            ) : (
+              <p className="member-login-panel__signup-note">
+                Add your $5 Stripe Payment Link to <code>VITE_STRIPE_MEMBER_DECK_PAYMENT_LINK</code> in{" "}
+                <code>.env.local</code> or Vercel, then redeploy.
+              </p>
+            )}
             <p className="member-login-panel__signup-note">After checkout, return here and log in with your billing email.</p>
 
             <div className="member-login-panel__upsell">
-              <p className="member-login-panel__upsell-kicker">Higher clearance</p>
+              <p className="member-login-panel__upsell-kicker">Upgrade tiers (inside Member Portal)</p>
               <div className="member-login-panel__upsell-actions">
-                <a href={resolveHangarProPaymentLink()} className="member-login-panel__upsell-btn btn-glass glass-effect-interactive">
-                  Hangar Pro $49.95
-                </a>
-                <a href={resolveEnterprisePaymentLink()} className="member-login-panel__upsell-btn btn-glass glass-effect-interactive">
-                  Enterprise $199.99
-                </a>
+                {MEMBER_PORTAL_UPGRADE_TIERS.map((tier) => (
+                  <a
+                    key={tier.id}
+                    href={resolvePaymentLinkForTier(tier.id)}
+                    className="member-login-panel__upsell-btn btn-glass glass-effect-interactive"
+                  >
+                    {tier.name} {tier.priceDisplay}
+                    {tier.period}
+                  </a>
+                ))}
               </div>
             </div>
           </section>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useSilentHangarOptional } from "../../context/SilentHangarContext";
 
 /** AA-VFX warp tunnel — https://youtu.be/UQgBVsbbKRs */
 const YOUTUBE_ID = "UQgBVsbbKRs";
@@ -26,6 +27,14 @@ const YOUTUBE_EMBED = [
 
 type VideoMode = "checking" | "local" | "youtube" | "canvas";
 
+function prefersLightweightAtmosphere(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  return window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
+}
+
 function WarpStreakLayers() {
   return (
     <>
@@ -39,8 +48,14 @@ function WarpStreakLayers() {
 export default function GlobalVideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mode, setMode] = useState<VideoMode>("checking");
+  const { audioArmed } = useSilentHangarOptional();
 
   useEffect(() => {
+    if (prefersLightweightAtmosphere()) {
+      setMode("canvas");
+      return;
+    }
+
     let cancelled = false;
 
     fetch(LOCAL_VIDEO, { method: "HEAD" })
@@ -95,6 +110,17 @@ export default function GlobalVideoBackground() {
       video.removeEventListener("timeupdate", onTimeUpdate);
     };
   }, [mode]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || mode !== "local") {
+      return;
+    }
+    video.muted = !audioArmed;
+    if (audioArmed) {
+      video.volume = 0.35;
+    }
+  }, [audioArmed, mode]);
 
   if (mode === "checking") {
     return (

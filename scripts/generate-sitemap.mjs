@@ -55,12 +55,32 @@ function parseBlogPosts() {
   return out;
 }
 
+function slugifyFleetCallsign(callsign) {
+  return callsign
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function parseFleetCallsignPages() {
+  const src = readFileSync(join(ROOT, "src/data/fleetManifest.ts"), "utf8");
+  const re = /callsign:\s*"([^"]+)"/g;
+  const out = [];
+  let m;
+  while ((m = re.exec(src)) !== null) {
+    out.push({ path: `/fleet-directory/${slugifyFleetCallsign(m[1])}` });
+  }
+  return out;
+}
+
 function escapeXml(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 const today = new Date().toISOString().slice(0, 10);
 const blogPosts = parseBlogPosts();
+const fleetCallsignPages = parseFleetCallsignPages();
 
 const urlRows = [];
 
@@ -68,6 +88,13 @@ for (const row of STATIC_ENTRIES) {
   const loc = `${SITE}${row.path === "/" ? "/" : row.path}`;
   urlRows.push(
     `  <url>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${row.changefreq}</changefreq>\n    <priority>${row.priority}</priority>\n  </url>`,
+  );
+}
+
+for (const page of fleetCallsignPages) {
+  const loc = `${SITE}${page.path}`;
+  urlRows.push(
+    `  <url>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.72</priority>\n  </url>`,
   );
 }
 

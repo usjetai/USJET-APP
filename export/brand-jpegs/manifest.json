@@ -1,0 +1,142 @@
+{
+  "generatedAt": "2026-05-20T18:18:57.938Z",
+  "count": 34,
+  "files": [
+    {
+      "file": "usjet-star-emblem-default.jpg",
+      "source": "generated:usjet-star-emblem-default.svg"
+    },
+    {
+      "file": "usjet-star-emblem-steel.jpg",
+      "source": "generated:usjet-star-emblem-steel.svg"
+    },
+    {
+      "file": "ai101-partner-stars.jpg",
+      "source": "generated:ai101-partner-stars.svg"
+    },
+    {
+      "file": "aircraft-sr71.jpg",
+      "source": "generated:aircraft-sr71.svg"
+    },
+    {
+      "file": "aircraft-f22.jpg",
+      "source": "generated:aircraft-f22.svg"
+    },
+    {
+      "file": "aircraft-f35.jpg",
+      "source": "generated:aircraft-f35.svg"
+    },
+    {
+      "file": "aircraft-b2.jpg",
+      "source": "generated:aircraft-b2.svg"
+    },
+    {
+      "file": "aircraft-b52.jpg",
+      "source": "generated:aircraft-b52.svg"
+    },
+    {
+      "file": "aircraft-c130.jpg",
+      "source": "generated:aircraft-c130.svg"
+    },
+    {
+      "file": "aircraft-global-hawk.jpg",
+      "source": "generated:aircraft-global-hawk.svg"
+    },
+    {
+      "file": "aircraft-v22.jpg",
+      "source": "generated:aircraft-v22.svg"
+    },
+    {
+      "file": "aircraft-cessna.jpg",
+      "source": "generated:aircraft-cessna.svg"
+    },
+    {
+      "file": "aircraft-bizjet.jpg",
+      "source": "generated:aircraft-bizjet.svg"
+    },
+    {
+      "file": "founder-worker-origin.jpg",
+      "source": "generated:founder-worker-origin.svg"
+    },
+    {
+      "file": "founder-worker-wrenches.jpg",
+      "source": "generated:founder-worker-wrenches.svg"
+    },
+    {
+      "file": "founder-worker-industry-first.jpg",
+      "source": "generated:founder-worker-industry-first.svg"
+    },
+    {
+      "file": "public-favicon.jpg",
+      "source": "public/favicon.svg"
+    },
+    {
+      "file": "public-favicon-32.jpg",
+      "source": "public/favicon-32x32.png"
+    },
+    {
+      "file": "public-apple-touch-icon.jpg",
+      "source": "public/apple-touch-icon.png"
+    },
+    {
+      "file": "public-mobile-rotate-phones.jpg",
+      "source": "public/mobile-rotate-phones.svg"
+    },
+    {
+      "file": "public-mobile-rotate-cue.jpg",
+      "source": "public/mobile-rotate-cue.png"
+    },
+    {
+      "file": "public-mobile-rotate-cue-sprite.jpg",
+      "source": "public/mobile-rotate-cue-sprite.png"
+    },
+    {
+      "file": "public-gaming-vr-headset-icon.jpg",
+      "source": "public/gaming/vr-headset-icon.svg"
+    },
+    {
+      "file": "public-founder-hero-logo.jpg",
+      "source": "public/founder/usjet-hero-logo.png"
+    },
+    {
+      "file": "wordmark-nav.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "wordmark-hero.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "btn-glass.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "btn-glass-prominent.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "member-prime-badge-locked.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "member-prime-badge-active.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "fleet-cap-badges-both-web.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "gaming-founder-key-emblem.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "gaming-vr-icon-hero.jpg",
+      "source": "capture"
+    },
+    {
+      "file": "zelle-logo-mark.jpg",
+      "source": "capture"
+    }
+  ]
+}

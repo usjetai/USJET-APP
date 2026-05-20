@@ -42,12 +42,17 @@ export default function FleetDirectory() {
                 <p className="fleet-directory-card__bay">
                   Bay {String(entry.slot + 1).padStart(2, "0")} · {entry.callsign}
                 </p>
-                <h2 className="fleet-directory-card__name">{entry.seoTitle.replace(" | USJET Fleet Directory", "")}</h2>
+                <h2 className="fleet-directory-card__name">
+                  <Link to={entry.pagePath}>{entry.seoTitle.replace(" | USJET Fleet Directory", "")}</Link>
+                </h2>
                 <p className="fleet-directory-card__category">{entry.category}</p>
                 <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                 <p className="fleet-directory-card__keywords">
                   {entry.keywords.join(" · ")}
                 </p>
+                <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">
+                  View {entry.callsign} page
+                </Link>
                 <a
                   href={integratedLaunchUrl(entry.domain, entry.href, entry.slot, { label: entry.name, returnTo: "/" })}
                   className="fleet-directory-card__launch glass-effect-interactive"

@@ -11,6 +11,9 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "export:brand-jpegs": "node scripts/export-brand-jpegs.mjs",
+    "export:developer-pages-jpegs": "node scripts/export-developer-pages-jpegs.mjs",
+    "export:hired-developer-jpegs": "node scripts/export-hired-developer-jpegs.mjs",
+    "export:jetfighter-pages-jpegs": "node scripts/export-jetfighter-pages-jpegs.mjs",
     "lint": "node -e \"process.exit(0)\""
   },
   "engines": {

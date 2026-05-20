@@ -1,18 +1,32 @@
 import { fleetManifest } from "./fleetManifest";
+import {
+  getFleetRosterMeta,
+  isFleetBayAvailable,
+  isFleetBayHired,
+  type FleetRosterStatus,
+} from "./fleetRoster";
+import type { FleetAircraftType } from "../types/fleet";
 
 export type FleetDirectoryEntry = {
   slot: number;
   unitId: string;
+  /** Partner / AI workstation name from manifest. */
   name: string;
+  /** Jet Fighter call sign (always manifest callsign). */
   callsign: string;
   slug: string;
+  /** Canonical Jet Fighter profile URL. */
   pagePath: string;
+  jetFighterPagePath: string;
   domain: string;
   href: string;
   seoTitle: string;
   seoDescription: string;
   keywords: string[];
   category: string;
+  rosterStatus: FleetRosterStatus;
+  aircraftOfficialName: string;
+  aircraftType: FleetAircraftType;
 };
 
 const CATEGORY_BY_SLOT: Record<number, string> = {
@@ -48,8 +62,18 @@ const CATEGORY_BY_SLOT: Record<number, string> = {
   29: "AI command node — sovereign fleet orchestration",
 };
 
-function buildDescription(name: string, category: string, callsign: string, domain: string): string {
-  return `${name} (${callsign}) — ${category}. Launch from the USJET sovereign cockpit at usjet.ai with integrated navigation to ${domain}. Built for blue-collar operators, maintainers, and founders who need one hangar for thirty elite AI workstations—not thirty forgotten bookmarks.`;
+function buildDescription(
+  name: string,
+  category: string,
+  callsign: string,
+  domain: string,
+  aircraftOfficialName: string,
+  rosterStatus: FleetRosterStatus,
+): string {
+  if (rosterStatus === "available") {
+    return `Bay open for recruiting — ${aircraftOfficialName}. ${category}. Join the USJET sovereign fleet runway at usjet.ai when this position clears.`;
+  }
+  return `${name} (${callsign}) — ${aircraftOfficialName}. ${category}. Launch from the USJET sovereign cockpit at usjet.ai with integrated navigation to ${domain}. Hired developer bay with a US fighter jet vector on the runway.`;
 }
 
 export function slugifyFleetCallsign(callsign: string): string {
@@ -60,35 +84,78 @@ export function slugifyFleetCallsign(callsign: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+/** Every manifest call sign gets a Jet Fighter page at `/fleet-directory/:slug`. */
+export function getFleetJetFighterPagePath(callsign: string): string {
+  return `/fleet-directory/${slugifyFleetCallsign(callsign)}`;
+}
+
+export const FLEET_JETFIGHTER_PAGE_COUNT = fleetManifest.length;
+
 export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
   .sort((a, b) => a.slot - b.slot)
   .map((unit) => {
     const category = CATEGORY_BY_SLOT[unit.slot] ?? "AI for professional work";
+    const roster = getFleetRosterMeta(unit.slot);
+    const available = isFleetBayAvailable(unit.slot);
     const slug = slugifyFleetCallsign(unit.callsign);
+    const pagePath = getFleetJetFighterPagePath(unit.callsign);
     return {
       slot: unit.slot,
       unitId: unit.id,
       name: unit.name,
       callsign: unit.callsign,
       slug,
-      pagePath: `/fleet-directory/${slug}`,
+      pagePath,
+      jetFighterPagePath: pagePath,
       domain: unit.domain,
       href: unit.href,
       category,
-      seoTitle: `${unit.name} — ${category} | USJET Fleet Directory`,
-      seoDescription: buildDescription(unit.name, category, unit.callsign, unit.domain),
-      keywords: [
-        category,
+      rosterStatus: roster.rosterStatus,
+      aircraftOfficialName: roster.aircraftOfficialName,
+      aircraftType: roster.aircraftType,
+      seoTitle: available
+        ? `${unit.callsign} — ${unit.name} · Available Position | USJET Jet Fighter`
+        : `${unit.callsign} — ${unit.name} · ${roster.aircraftOfficialName} | USJET Jet Fighter`,
+      seoDescription: buildDescription(
         unit.name,
+        category,
         unit.callsign,
-        "USJET fleet",
-        "sovereign AI hangar",
         unit.domain,
-      ],
+        roster.aircraftOfficialName,
+        roster.rosterStatus,
+      ),
+      keywords: available
+        ? [unit.callsign, unit.name, category, "USJET jet fighter", "available position", "sovereign AI hangar"]
+        : [
+            unit.callsign,
+            unit.name,
+            category,
+            roster.aircraftOfficialName,
+            "USJET jet fighter",
+            "hired developer",
+            "sovereign AI hangar",
+            unit.domain,
+          ],
     };
   });
 
+/** Seventeen hired developers — indexed call-sign pages and runway launches. */
+export const FLEET_DIRECTORY_HIRED_ENTRIES = FLEET_DIRECTORY_ENTRIES.filter((entry) =>
+  isFleetBayHired(entry.slot),
+);
+
+/** Thirteen open recruiting bays only. */
+export const FLEET_DIRECTORY_AVAILABLE_ENTRIES = FLEET_DIRECTORY_ENTRIES.filter((entry) =>
+  isFleetBayAvailable(entry.slot),
+);
+
 export function getFleetDirectoryEntryBySlug(slug: string): FleetDirectoryEntry | undefined {
+  const raw = slug.trim().toLowerCase();
   const normalizedSlug = slugifyFleetCallsign(slug);
+  return FLEET_DIRECTORY_ENTRIES.find((entry) => entry.slug === raw || entry.slug === normalizedSlug);
+}
+
+export function getFleetDirectoryEntryByCallsign(callsign: string): FleetDirectoryEntry | undefined {
+  const normalizedSlug = slugifyFleetCallsign(callsign);
   return FLEET_DIRECTORY_ENTRIES.find((entry) => entry.slug === normalizedSlug);
 }

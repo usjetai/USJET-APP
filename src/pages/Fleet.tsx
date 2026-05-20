@@ -1,6 +1,14 @@
 import { motion } from "framer-motion";
 import { Plane } from "lucide-react";
 import { fleetManifest } from "../data/fleetManifest";
+import { getFleetJetFighterPagePath } from "../data/fleetDirectorySeo";
+import {
+  FLEET_AVAILABLE_COUNT,
+  FLEET_HIRED_COUNT,
+  getFleetDisplayAircraftType,
+  getFleetRosterMeta,
+  isFleetBayAvailable,
+} from "../data/fleetRoster";
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import FleetCard from "../components/fleet/FleetCard";
 import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
@@ -8,7 +16,7 @@ import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
 const FLEET_RUNWAY_DESCRIPTION =
-  "Runway clearance: thirty partner jets in formation. Each bay launches through sovereign handoff—same window, cockpit return bar, zero external leaks.";
+  "Runway clearance: seventeen hired developers on US fighter vectors, thirteen open positions recruiting. Hired bays launch through sovereign handoff—same window, cockpit return bar, zero external leaks.";
 
 const Fleet = () => (
   <motion.div
@@ -41,7 +49,7 @@ const Fleet = () => (
             {FLEET_RUNWAY_DESCRIPTION}
           </p>
           <p className="mt-4 text-sm font-medium uppercase tracking-[0.28em] text-cyan-200/45">
-            {FLEET_UNIT_COUNT} units · landscape runway bays · sovereign handoff launch
+            {FLEET_HIRED_COUNT} hired · {FLEET_AVAILABLE_COUNT} available · {FLEET_UNIT_COUNT} bays · sovereign handoff
           </p>
         </div>
       </header>
@@ -54,21 +62,28 @@ const Fleet = () => (
         role="region"
         aria-label="USJET fleet runway: partner bays with sovereign handoff"
       >
-        {fleetManifest.map((unit) => (
-          <FleetCard
-            key={unit.id}
-            domain={unit.domain}
-            aircraftType={unit.aircraftType}
-            name={unit.name}
-            callsign={unit.callsign}
-            href={resolveFleetUnitHref(unit)}
-            slot={unit.slot}
-            systemPrompt={unit.systemPrompt}
-            returnTo="/"
-            surface="fleet"
-            isCommandBay={unit.href === "/origin" || unit.slot === 29}
-          />
-        ))}
+        {fleetManifest.map((unit) => {
+          const roster = getFleetRosterMeta(unit.slot);
+          const available = isFleetBayAvailable(unit.slot);
+          return (
+            <FleetCard
+              key={unit.id}
+              domain={unit.domain}
+              aircraftType={getFleetDisplayAircraftType(unit.slot, unit.aircraftType)}
+              aircraftOfficialName={roster.aircraftOfficialName}
+              name={unit.name}
+              callsign={unit.callsign}
+              href={resolveFleetUnitHref(unit)}
+              slot={unit.slot}
+              systemPrompt={unit.systemPrompt}
+              returnTo="/"
+              surface="fleet"
+              isCommandBay={unit.href === "/origin" || unit.slot === 29}
+              isAvailableBay={available}
+              jetFighterPagePath={getFleetJetFighterPagePath(unit.callsign)}
+            />
+          );
+        })}
       </div>
     </div>
   </motion.div>

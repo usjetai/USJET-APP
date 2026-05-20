@@ -37,6 +37,7 @@ const BrandLicensing = lazy(() => import("./pages/BrandLicensing"));
 const SupportFleet = lazy(() => import("./pages/SupportFleet"));
 const FoundersFuel = lazy(() => import("./pages/FoundersFuel"));
 const FleetDirectory = lazy(() => import("./pages/FleetDirectory"));
+const FleetCallsignPage = lazy(() => import("./pages/FleetCallsignPage"));
 const FleetManual = lazy(() => import("./pages/FleetManual"));
 const IntelligenceAssets = lazy(() => import("./pages/IntelligenceAssets"));
 const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
@@ -113,6 +114,7 @@ function AnimatedRoutes() {
             <Route path="/protocol-proof" element={<ProtocolSessionProof />} />
             <Route path="/fleet-manual" element={<FleetManual />} />
             <Route path="/fleet-directory" element={<FleetDirectory />} />
+            <Route path="/fleet-directory/:callsign" element={<FleetCallsignPage />} />
             <Route path="/100k" element={<SovereignBlueprint100k />} />
             <Route
               path="/origin"

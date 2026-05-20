@@ -5,6 +5,8 @@ export type FleetDirectoryEntry = {
   unitId: string;
   name: string;
   callsign: string;
+  slug: string;
+  pagePath: string;
   domain: string;
   href: string;
   seoTitle: string;
@@ -50,15 +52,26 @@ function buildDescription(name: string, category: string, callsign: string, doma
   return `${name} (${callsign}) — ${category}. Launch from the USJET sovereign cockpit at usjet.ai with integrated navigation to ${domain}. Built for blue-collar operators, maintainers, and founders who need one hangar for thirty elite AI workstations—not thirty forgotten bookmarks.`;
 }
 
+export function slugifyFleetCallsign(callsign: string): string {
+  return callsign
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
   .sort((a, b) => a.slot - b.slot)
   .map((unit) => {
     const category = CATEGORY_BY_SLOT[unit.slot] ?? "AI for professional work";
+    const slug = slugifyFleetCallsign(unit.callsign);
     return {
       slot: unit.slot,
       unitId: unit.id,
       name: unit.name,
       callsign: unit.callsign,
+      slug,
+      pagePath: `/fleet-directory/${slug}`,
       domain: unit.domain,
       href: unit.href,
       category,
@@ -74,3 +87,8 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
       ],
     };
   });
+
+export function getFleetDirectoryEntryBySlug(slug: string): FleetDirectoryEntry | undefined {
+  const normalizedSlug = slugifyFleetCallsign(slug);
+  return FLEET_DIRECTORY_ENTRIES.find((entry) => entry.slug === normalizedSlug);
+}

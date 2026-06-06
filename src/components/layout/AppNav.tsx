@@ -18,6 +18,14 @@ const US_NEWS_AIR_COCKPIT = wrapExternalInCockpit("https://www.facebook.com/usne
   returnTo: "/",
 });
 
+const BLUE_IVY_TIKTOK_COCKPIT = wrapExternalInCockpit(
+  "https://www.tiktok.com/@blueivyc4?is_from_webapp=1&sender_device=pc",
+  {
+    label: "Blue Ivy C4",
+    returnTo: "/",
+  },
+);
+
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
   { to: "/hangar", label: "Hangar" },
@@ -103,6 +111,20 @@ const AppNav = () => {
           aria-label="US — US News Air on Facebook"
         >
           <span className="app-nav-us__label">US</span>
+        </Link>
+
+        <Link
+          to={BLUE_IVY_TIKTOK_COCKPIT}
+          className="app-nav-blue btn-glass glass-effect-interactive shrink-0"
+          title="Blue Ivy C4 — TikTok"
+          aria-label="Blue — Blue Ivy C4 on TikTok"
+        >
+          <span className="app-nav-blue__ring" aria-hidden />
+          <span className="app-nav-blue__shine" aria-hidden />
+          <span className="app-nav-blue__spark app-nav-blue__spark--1" aria-hidden />
+          <span className="app-nav-blue__spark app-nav-blue__spark--2" aria-hidden />
+          <span className="app-nav-blue__spark app-nav-blue__spark--3" aria-hidden />
+          <span className="app-nav-blue__label">Blue</span>
         </Link>
 
         <AppNavHangarLive />

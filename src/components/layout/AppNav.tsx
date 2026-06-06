@@ -11,6 +11,12 @@ import { BLOG_ROUTE } from "../../data/usjetBlog";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import OriginGateLink from "../origin/OriginGateLink";
 import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
+import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
+
+const US_NEWS_AIR_COCKPIT = wrapExternalInCockpit("https://www.facebook.com/usnewsair", {
+  label: "US News Air",
+  returnTo: "/",
+});
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
@@ -89,6 +95,15 @@ const AppNav = () => {
           <Newspaper className="app-nav-blog__icon" size={13} strokeWidth={2.4} aria-hidden />
           <span className="app-nav-blog__label">Blog</span>
         </NavLink>
+
+        <Link
+          to={US_NEWS_AIR_COCKPIT}
+          className="app-nav-us btn-glass glass-effect-interactive shrink-0"
+          title="US News Air — Facebook"
+          aria-label="US — US News Air on Facebook"
+        >
+          <span className="app-nav-us__label">US</span>
+        </Link>
 
         <AppNavHangarLive />
 

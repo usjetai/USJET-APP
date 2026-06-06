@@ -22842,6 +22842,107 @@ html.b2b-page-root #usjet-app-shell {
   }
 }
 
+/* ─── US News Air — header blink (3× red, 1× blue) ─── */
+.app-nav-us {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.15rem;
+  min-height: 2rem;
+  padding: 0.38rem 0.62rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(2, 8, 23, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.app-nav-us__label {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.95);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-nav-us {
+    animation: app-nav-us-blink 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes app-nav-us-blink {
+  0%,
+  2% {
+    background: rgba(220, 38, 38, 0.95);
+    border-color: rgba(252, 165, 165, 0.95);
+    color: #fff;
+    box-shadow:
+      0 0 16px rgba(239, 68, 68, 0.9),
+      inset 0 0 10px rgba(254, 202, 202, 0.35);
+  }
+
+  4%,
+  23% {
+    background: rgba(2, 8, 23, 0.45);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  25%,
+  27% {
+    background: rgba(220, 38, 38, 0.95);
+    border-color: rgba(252, 165, 165, 0.95);
+    box-shadow:
+      0 0 16px rgba(239, 68, 68, 0.9),
+      inset 0 0 10px rgba(254, 202, 202, 0.35);
+  }
+
+  29%,
+  48% {
+    background: rgba(2, 8, 23, 0.45);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  50%,
+  52% {
+    background: rgba(220, 38, 38, 0.95);
+    border-color: rgba(252, 165, 165, 0.95);
+    box-shadow:
+      0 0 16px rgba(239, 68, 68, 0.9),
+      inset 0 0 10px rgba(254, 202, 202, 0.35);
+  }
+
+  54%,
+  73% {
+    background: rgba(2, 8, 23, 0.45);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  75%,
+  77% {
+    background: rgba(37, 99, 235, 0.95);
+    border-color: rgba(147, 197, 253, 0.95);
+    box-shadow:
+      0 0 16px rgba(59, 130, 246, 0.9),
+      inset 0 0 10px rgba(191, 219, 254, 0.35);
+  }
+
+  79%,
+  100% {
+    background: rgba(2, 8, 23, 0.45);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+
+.app-nav-us:hover,
+.app-nav-us:focus-visible {
+  border-color: rgba(103, 232, 249, 0.55);
+}
+
 /* ─── B2B silver flip + shine (header + footer) ─── */
 .app-nav-b2b,
 .usjet-global-contact-bar__b2b {

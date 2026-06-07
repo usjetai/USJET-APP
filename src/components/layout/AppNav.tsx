@@ -110,7 +110,19 @@ const AppNav = () => {
           title="US News Air — Facebook"
           aria-label="US — US News Air on Facebook"
         >
-          <span className="app-nav-us__label">US</span>
+          <span className="app-nav-us__push">
+            <span className="app-nav-us__nozzle" aria-hidden />
+            <span className="app-nav-us__spray" aria-hidden>
+              <span className="app-nav-us__mist" />
+              <span className="app-nav-us__droplet app-nav-us__droplet--1" />
+              <span className="app-nav-us__droplet app-nav-us__droplet--2" />
+              <span className="app-nav-us__droplet app-nav-us__droplet--3" />
+              <span className="app-nav-us__droplet app-nav-us__droplet--4" />
+              <span className="app-nav-us__droplet app-nav-us__droplet--5" />
+              <span className="app-nav-us__droplet app-nav-us__droplet--6" />
+            </span>
+            <span className="app-nav-us__label">US</span>
+          </span>
         </Link>
 
         <Link

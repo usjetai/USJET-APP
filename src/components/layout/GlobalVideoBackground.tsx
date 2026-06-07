@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useSilentHangarOptional } from "../../context/SilentHangarContext";
 
 /** AA-VFX warp tunnel — https://youtu.be/UQgBVsbbKRs */
 const YOUTUBE_ID = "UQgBVsbbKRs";
@@ -48,7 +47,6 @@ function WarpStreakLayers() {
 export default function GlobalVideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mode, setMode] = useState<VideoMode>("checking");
-  const { audioArmed } = useSilentHangarOptional();
 
   useEffect(() => {
     if (prefersLightweightAtmosphere()) {
@@ -116,11 +114,9 @@ export default function GlobalVideoBackground() {
     if (!video || mode !== "local") {
       return;
     }
-    video.muted = !audioArmed;
-    if (audioArmed) {
-      video.volume = 0.35;
-    }
-  }, [audioArmed, mode]);
+    // Warp tunnel stays visual-only — site beat lives in GlobalBackgroundBeat.
+    video.muted = true;
+  }, [mode]);
 
   if (mode === "checking") {
     return (

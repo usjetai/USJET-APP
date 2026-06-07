@@ -12,7 +12,9 @@ import SovereignVaultGlobalDownload from "./components/growth/SovereignVaultGlob
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
 import UsjetProtocolBootOverlay from "./components/layout/UsjetProtocolBootOverlay";
 import WarpBackground from "./components/layout/WarpBackground";
+import GlobalBackgroundBeat from "./components/layout/GlobalBackgroundBeat";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
+import SiteAudioPrime from "./components/layout/SiteAudioPrime";
 import TierRouteGate from "./components/member/TierRouteGate";
 import CanonicalHead from "./components/layout/CanonicalHead";
 
@@ -174,6 +176,8 @@ function AppChrome() {
     <>
       <WarpBackground />
       <GlobalVideoBackground />
+      <GlobalBackgroundBeat />
+      <SiteAudioPrime />
       <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
       <AppNav />
       <SitePreviewBanner />

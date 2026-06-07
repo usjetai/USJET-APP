@@ -6,7 +6,10 @@ export function readSilentHangarPref(): SilentHangarAudioPref {
   }
   try {
     const raw = window.localStorage.getItem(SILENT_HANGAR_STORAGE_KEY);
-    return raw === "armed" ? "armed" : SILENT_HANGAR_DEFAULT;
+    if (raw === "armed" || raw === "muted") {
+      return raw;
+    }
+    return SILENT_HANGAR_DEFAULT;
   } catch {
     return SILENT_HANGAR_DEFAULT;
   }

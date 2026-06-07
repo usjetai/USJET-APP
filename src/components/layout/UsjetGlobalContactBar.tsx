@@ -12,6 +12,7 @@ import ZelleFuelChip from "../fuel/ZelleFuelChip";
 import GamingVrNavButton from "../gaming/GamingVrNavButton";
 import { USJET_CASH_APP_CASHTAG } from "../../lib/usjetContact";
 import UsjetOpsMailEnvelope from "./UsjetOpsMailEnvelope";
+import SilentHangarAudioToggle from "../media/SilentHangarAudioToggle";
 
 /** Fixed bottom strip — home, jet, status, USA 250, SOS (emergency blink), CS/OPS (periodic shine). */
 export default function UsjetGlobalContactBar() {
@@ -39,6 +40,9 @@ export default function UsjetGlobalContactBar() {
             <span className="usjet-global-contact-bar__status-label">USJET System Active</span>
             <span className="usjet-global-contact-bar__ping" aria-hidden />
           </div>
+          <FooterSurpriseWrap chipId="background-beat">
+            <SilentHangarAudioToggle className="usjet-global-contact-bar__beat-audio" />
+          </FooterSurpriseWrap>
           <FooterSurpriseWrap chipId="usa250">
             <Usa250Countdown variant="footerStrip" />
           </FooterSurpriseWrap>

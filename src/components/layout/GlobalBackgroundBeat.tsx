@@ -1,33 +1,63 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useSilentHangarOptional } from "../../context/SilentHangarContext";
-import { GLOBAL_BACKGROUND_BEAT_LABEL, GLOBAL_BACKGROUND_BEAT_VIDEO_ID } from "../../data/globalBackgroundBeat";
+import {
+  getGlobalBackgroundBeatVideoId,
+  GLOBAL_BACKGROUND_BEAT_LABEL,
+  GLOBAL_BACKGROUND_BEAT_PLAYLIST,
+} from "../../data/globalBackgroundBeat";
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
 import { USJET_PRIME_AUDIO_EVENT } from "./SiteAudioPrime";
 
 const BEAT_VOLUME = 58;
+const YT_ENDED = 0;
 
-/** Hidden looping YouTube beat — arms through Silent Hangar site-wide audio toggle. */
+/** Hidden YouTube beat queue — beat I, then beat II, then repeat. */
 export default function GlobalBackgroundBeat() {
   const reactId = useId().replace(/:/g, "");
   const mountId = `global-beat-${reactId}`;
   const playerRef = useRef<YoutubePlayer | null>(null);
+  const beatIndexRef = useRef(0);
+  const audioArmedRef = useRef(false);
   const { audioArmed } = useSilentHangarOptional();
   const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    audioArmedRef.current = audioArmed;
+  }, [audioArmed]);
+
+  const syncPlayerAudio = useCallback((player: YoutubePlayer, armed: boolean) => {
+    player.setVolume(BEAT_VOLUME);
+    if (armed) {
+      player.unMute();
+      player.playVideo();
+    } else {
+      player.mute();
+    }
+  }, []);
 
   const playArmedBeat = useCallback(() => {
     const player = playerRef.current;
     if (!player || !ready) {
       return;
     }
-    player.unMute();
-    player.setVolume(BEAT_VOLUME);
-    player.playVideo();
-  }, [ready]);
+    syncPlayerAudio(player, true);
+  }, [ready, syncPlayerAudio]);
+
+  const advanceBeat = useCallback(
+    (player: YoutubePlayer) => {
+      const nextIndex = (beatIndexRef.current + 1) % GLOBAL_BACKGROUND_BEAT_PLAYLIST.length;
+      beatIndexRef.current = nextIndex;
+      player.loadVideoById(getGlobalBackgroundBeatVideoId(nextIndex));
+      syncPlayerAudio(player, audioArmedRef.current);
+    },
+    [syncPlayerAudio],
+  );
 
   useEffect(() => {
     let cancelled = false;
     setReady(false);
+    beatIndexRef.current = 0;
     playerRef.current?.destroy();
     playerRef.current = null;
 
@@ -39,12 +69,10 @@ export default function GlobalBackgroundBeat() {
         }
 
         const player = new window.YT.Player(mountId, {
-          videoId: GLOBAL_BACKGROUND_BEAT_VIDEO_ID,
+          videoId: getGlobalBackgroundBeatVideoId(0),
           playerVars: {
             autoplay: 1,
             mute: 1,
-            loop: 1,
-            playlist: GLOBAL_BACKGROUND_BEAT_VIDEO_ID,
             controls: 0,
             playsinline: 1,
             rel: 0,
@@ -58,14 +86,13 @@ export default function GlobalBackgroundBeat() {
               if (cancelled) {
                 return;
               }
-              event.target.mute();
-              event.target.setVolume(BEAT_VOLUME);
+              syncPlayerAudio(event.target, false);
               event.target.playVideo();
               setReady(true);
             },
             onStateChange: (event: { data: number; target: YoutubePlayer }) => {
-              if (event.data === 0) {
-                event.target.playVideo();
+              if (event.data === YT_ENDED) {
+                advanceBeat(event.target);
               }
             },
           },
@@ -84,7 +111,7 @@ export default function GlobalBackgroundBeat() {
       playerRef.current?.destroy();
       playerRef.current = null;
     };
-  }, [mountId]);
+  }, [advanceBeat, mountId, syncPlayerAudio]);
 
   useEffect(() => {
     const player = playerRef.current;
@@ -92,12 +119,8 @@ export default function GlobalBackgroundBeat() {
       return;
     }
 
-    if (audioArmed) {
-      playArmedBeat();
-    } else {
-      player.mute();
-    }
-  }, [audioArmed, ready, playArmedBeat]);
+    syncPlayerAudio(player, audioArmed);
+  }, [audioArmed, ready, syncPlayerAudio]);
 
   useEffect(() => {
     if (!ready || !audioArmed) {

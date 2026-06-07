@@ -22842,7 +22842,7 @@ html.b2b-page-root #usjet-app-shell {
   }
 }
 
-/* ─── US News Air — header blink (3× red, 1× blue) ─── */
+/* ─── US News Air — header blink (3× red, 1× blue) + water squirt ─── */
 .app-nav-us {
   position: relative;
   display: inline-flex;
@@ -22850,14 +22850,25 @@ html.b2b-page-root #usjet-app-shell {
   justify-content: center;
   min-width: 2.15rem;
   min-height: 2rem;
-  padding: 0.38rem 0.62rem;
+  padding: 0.38rem 0.62rem 0.5rem;
+  overflow: visible;
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(2, 8, 23, 0.45);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
+.app-nav-us__push {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
 .app-nav-us__label {
+  position: relative;
+  z-index: 2;
   font-size: 0.62rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -22865,9 +22876,104 @@ html.b2b-page-root #usjet-app-shell {
   color: rgba(248, 250, 252, 0.95);
 }
 
+.app-nav-us__nozzle {
+  position: absolute;
+  bottom: -0.08rem;
+  left: 50%;
+  z-index: 3;
+  width: 0.34rem;
+  height: 0.28rem;
+  transform: translateX(-50%) scaleY(0.35);
+  transform-origin: top center;
+  border-radius: 0 0 0.2rem 0.2rem;
+  background: linear-gradient(180deg, #94a3b8 0%, #64748b 55%, #334155 100%);
+  border: 1px solid rgba(203, 213, 225, 0.55);
+  box-shadow: 0 0 6px rgba(148, 163, 184, 0.45);
+  pointer-events: none;
+}
+
+.app-nav-us__spray {
+  position: absolute;
+  top: calc(100% - 0.05rem);
+  left: 50%;
+  z-index: 4;
+  width: 2.8rem;
+  height: 2.4rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.app-nav-us__mist {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1.45rem;
+  height: 1.65rem;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top center;
+  background: linear-gradient(
+    180deg,
+    rgba(224, 242, 254, 0.92) 0%,
+    rgba(125, 211, 252, 0.55) 42%,
+    rgba(56, 189, 248, 0.08) 100%
+  );
+  clip-path: polygon(50% 0%, 8% 100%, 92% 100%);
+  filter: blur(0.4px);
+  opacity: 0;
+}
+
+.app-nav-us__droplet {
+  position: absolute;
+  top: 0.12rem;
+  left: 50%;
+  width: 0.22rem;
+  height: 0.22rem;
+  margin-left: -0.11rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0%, #7dd3fc 45%, #0ea5e9 100%);
+  box-shadow: 0 0 5px rgba(56, 189, 248, 0.85);
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .app-nav-us {
     animation: app-nav-us-blink 2.8s ease-in-out infinite;
+  }
+
+  .app-nav-us__push {
+    animation: app-nav-us-squirt-push 5s ease-in-out infinite;
+  }
+
+  .app-nav-us__nozzle {
+    animation: app-nav-us-nozzle-out 5s ease-in-out infinite;
+  }
+
+  .app-nav-us__mist {
+    animation: app-nav-us-mist-spray 5s ease-out infinite;
+  }
+
+  .app-nav-us__droplet--1 {
+    animation: app-nav-us-droplet-1 5s ease-out infinite;
+  }
+
+  .app-nav-us__droplet--2 {
+    animation: app-nav-us-droplet-2 5s ease-out infinite;
+  }
+
+  .app-nav-us__droplet--3 {
+    animation: app-nav-us-droplet-3 5s ease-out infinite;
+  }
+
+  .app-nav-us__droplet--4 {
+    animation: app-nav-us-droplet-4 5s ease-out infinite;
+  }
+
+  .app-nav-us__droplet--5 {
+    animation: app-nav-us-droplet-5 5s ease-out infinite;
+  }
+
+  .app-nav-us__droplet--6 {
+    animation: app-nav-us-droplet-6 5s ease-out infinite;
   }
 }
 
@@ -22941,6 +23047,179 @@ html.b2b-page-root #usjet-app-shell {
 .app-nav-us:hover,
 .app-nav-us:focus-visible {
   border-color: rgba(103, 232, 249, 0.55);
+}
+
+/* Every 5s: button pushes out and sprays water toward you */
+@keyframes app-nav-us-squirt-push {
+  0%,
+  72%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  76%,
+  84% {
+    transform: translateY(0.22rem) scale(1.14);
+  }
+
+  88% {
+    transform: translateY(0.1rem) scale(1.05);
+  }
+}
+
+@keyframes app-nav-us-nozzle-out {
+  0%,
+  72%,
+  100% {
+    transform: translateX(-50%) scaleY(0.35);
+  }
+
+  76%,
+  84% {
+    transform: translateX(-50%) scaleY(1.15) translateY(0.12rem);
+  }
+
+  88% {
+    transform: translateX(-50%) scaleY(0.6);
+  }
+}
+
+@keyframes app-nav-us-mist-spray {
+  0%,
+  74%,
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(0);
+  }
+
+  78% {
+    opacity: 0.95;
+    transform: translateX(-50%) scaleY(0.55);
+  }
+
+  84% {
+    opacity: 0.75;
+    transform: translateX(-50%) scaleY(1.05) translateY(0.35rem);
+  }
+
+  90% {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(1.2) translateY(0.65rem);
+  }
+}
+
+@keyframes app-nav-us-droplet-1 {
+  0%,
+  75%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  79% {
+    opacity: 1;
+    transform: translate(-0.05rem, 0.55rem) scale(1);
+  }
+
+  88% {
+    opacity: 0;
+    transform: translate(-0.12rem, 1.35rem) scale(0.7);
+  }
+}
+
+@keyframes app-nav-us-droplet-2 {
+  0%,
+  75%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  79% {
+    opacity: 1;
+    transform: translate(0.18rem, 0.62rem) scale(1);
+  }
+
+  88% {
+    opacity: 0;
+    transform: translate(0.28rem, 1.45rem) scale(0.7);
+  }
+}
+
+@keyframes app-nav-us-droplet-3 {
+  0%,
+  75%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  79% {
+    opacity: 1;
+    transform: translate(-0.22rem, 0.68rem) scale(1);
+  }
+
+  88% {
+    opacity: 0;
+    transform: translate(-0.38rem, 1.55rem) scale(0.7);
+  }
+}
+
+@keyframes app-nav-us-droplet-4 {
+  0%,
+  76%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translate(0.05rem, 0.78rem) scale(1.05);
+  }
+
+  89% {
+    opacity: 0;
+    transform: translate(0.08rem, 1.75rem) scale(0.65);
+  }
+}
+
+@keyframes app-nav-us-droplet-5 {
+  0%,
+  76%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translate(-0.14rem, 0.82rem) scale(1);
+  }
+
+  89% {
+    opacity: 0;
+    transform: translate(-0.22rem, 1.82rem) scale(0.65);
+  }
+}
+
+@keyframes app-nav-us-droplet-6 {
+  0%,
+  77%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+
+  81% {
+    opacity: 1;
+    transform: translate(0.32rem, 0.88rem) scale(0.95);
+  }
+
+  90% {
+    opacity: 0;
+    transform: translate(0.48rem, 1.9rem) scale(0.6);
+  }
 }
 
 /* ─── Blue — flash, shine, sparkle, spin (header) ─── */

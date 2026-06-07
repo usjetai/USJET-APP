@@ -124,6 +124,10 @@ const AppNav = () => {
           <span className="app-nav-blue__spark app-nav-blue__spark--1" aria-hidden />
           <span className="app-nav-blue__spark app-nav-blue__spark--2" aria-hidden />
           <span className="app-nav-blue__spark app-nav-blue__spark--3" aria-hidden />
+          <span className="app-nav-blue__face" aria-hidden>
+            <span className="app-nav-blue__mouth" />
+            <span className="app-nav-blue__tongue" />
+          </span>
           <span className="app-nav-blue__label">Blue</span>
         </Link>
 

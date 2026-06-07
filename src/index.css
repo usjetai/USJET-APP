@@ -22951,8 +22951,8 @@ html.b2b-page-root #usjet-app-shell {
   justify-content: center;
   min-width: 2.55rem;
   min-height: 2rem;
-  padding: 0.38rem 0.72rem;
-  overflow: hidden;
+  padding: 0.38rem 0.72rem 0.48rem;
+  overflow: visible;
   isolation: isolate;
   text-decoration: none;
   border: 1px solid rgba(96, 165, 250, 0.55);
@@ -22978,6 +22978,45 @@ html.b2b-page-root #usjet-app-shell {
   text-shadow:
     0 0 8px rgba(147, 197, 253, 0.95),
     0 0 16px rgba(59, 130, 246, 0.65);
+}
+
+.app-nav-blue__face {
+  position: absolute;
+  bottom: 0.12rem;
+  left: 50%;
+  z-index: 3;
+  width: 0.72rem;
+  height: 0.42rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.app-nav-blue__mouth {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0.62rem;
+  height: 0.2rem;
+  transform: translateX(-50%);
+  border-radius: 0 0 0.42rem 0.42rem;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(147, 197, 253, 0.45);
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.45);
+}
+
+.app-nav-blue__tongue {
+  position: absolute;
+  bottom: 0.02rem;
+  left: 50%;
+  width: 0.34rem;
+  height: 0.46rem;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top center;
+  border-radius: 45% 45% 50% 50%;
+  background: linear-gradient(180deg, #fda4af 0%, #f472b6 55%, #ec4899 100%);
+  box-shadow:
+    0 0 6px rgba(244, 114, 182, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .app-nav-blue__ring {
@@ -23057,6 +23096,10 @@ html.b2b-page-root #usjet-app-shell {
 
   .app-nav-blue__spark--3 {
     animation-delay: 0.7s;
+  }
+
+  .app-nav-blue__tongue {
+    animation: app-nav-blue-tongue 5s ease-in-out infinite;
   }
 }
 
@@ -23154,6 +23197,40 @@ html.b2b-page-root #usjet-app-shell {
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Every 5s: tongue out → in → out → rest */
+@keyframes app-nav-blue-tongue {
+  0%,
+  52%,
+  100% {
+    transform: translateX(-50%) scaleY(0) translateY(0);
+    opacity: 0;
+  }
+
+  56%,
+  60% {
+    transform: translateX(-50%) scaleY(1) translateY(0.34rem);
+    opacity: 1;
+  }
+
+  64%,
+  68% {
+    transform: translateX(-50%) scaleY(0) translateY(0);
+    opacity: 0;
+  }
+
+  72%,
+  76% {
+    transform: translateX(-50%) scaleY(1) translateY(0.34rem);
+    opacity: 1;
+  }
+
+  80%,
+  100% {
+    transform: translateX(-50%) scaleY(0) translateY(0);
+    opacity: 0;
   }
 }
 

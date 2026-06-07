@@ -71,6 +71,38 @@ const AppNav = () => {
                   "text-white/45 hover:text-white",
                 ].join(" ")}
               />
+            ) : link.to === "/founder" ? (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  [
+                    "app-nav-founder btn-glass glass-effect-interactive shrink-0 px-3 py-1.5 text-[10px] font-black uppercase italic tracking-widest sm:text-[11px]",
+                    "relative inline-flex items-center gap-1.5 overflow-visible",
+                    isActive ? "text-white ring-1 ring-cyan-400/35" : "text-white/45 hover:text-white",
+                  ].join(" ")
+                }
+              >
+                <span className="app-nav-founder__hand" aria-hidden>
+                  <svg
+                    className="app-nav-founder__hand-svg"
+                    viewBox="0 0 24 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden
+                  >
+                    <rect x="9.5" y="1" width="5" height="21" rx="2.4" fill="#e8c4a8" />
+                    <path
+                      d="M3 15 Q3 27 12 29 Q21 27 21 15 L21 12 Q12 10 3 12 Z"
+                      fill="#e8c4a8"
+                    />
+                    <rect x="4" y="11" width="2.8" height="6" rx="1.4" fill="#c9a27a" transform="rotate(-18 5.4 14)" />
+                    <rect x="7" y="12" width="2.6" height="5" rx="1.3" fill="#c9a27a" />
+                    <rect x="15.5" y="12" width="2.6" height="5" rx="1.3" fill="#c9a27a" />
+                    <rect x="18.2" y="11" width="2.8" height="6" rx="1.4" fill="#c9a27a" transform="rotate(18 19.6 14)" />
+                  </svg>
+                </span>
+                {link.label}
+              </NavLink>
             ) : (
               <NavLink
                 key={link.to}

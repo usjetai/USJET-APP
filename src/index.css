@@ -88,6 +88,33 @@
   }
 }
 
+/* Hidden site-wide background beat — YouTube audio only */
+.global-background-beat {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -2;
+  inset: auto auto 0 0;
+}
+
+.global-background-beat__mount,
+.global-background-beat__mount iframe {
+  width: 1px;
+  height: 1px;
+  border: 0;
+}
+
+.usjet-global-contact-bar__beat-audio {
+  flex-shrink: 0;
+  width: 1.85rem;
+  height: 1.85rem;
+  min-width: 1.85rem;
+  padding: 0;
+}
+
 /* Global warp tunnel — radial streak layers only (no video/veil/wash) */
 .global-video-bg {
   pointer-events: none;
@@ -22839,6 +22866,61 @@ html.b2b-page-root #usjet-app-shell {
 
   50% {
     filter: brightness(1.12);
+  }
+}
+
+/* ─── Founder nav — hand gesture every 5s ─── */
+.app-nav-founder {
+  z-index: 2;
+}
+
+.app-nav-founder__hand {
+  position: absolute;
+  bottom: -0.15rem;
+  left: 50%;
+  z-index: 6;
+  width: 1.05rem;
+  height: 1.35rem;
+  transform: translateX(-50%) translateY(110%) scale(0.5);
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+}
+
+.app-nav-founder__hand-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-nav-founder__hand {
+    animation: app-nav-founder-hand 5s ease-in-out infinite;
+  }
+}
+
+@keyframes app-nav-founder-hand {
+  0%,
+  76%,
+  100% {
+    transform: translateX(-50%) translateY(110%) scale(0.45);
+    opacity: 0;
+  }
+
+  80% {
+    transform: translateX(-50%) translateY(-0.75rem) scale(1.05);
+    opacity: 1;
+  }
+
+  86%,
+  90% {
+    transform: translateX(-50%) translateY(-0.85rem) scale(1.12);
+    opacity: 1;
+  }
+
+  94% {
+    transform: translateX(-50%) translateY(-0.35rem) scale(0.95);
+    opacity: 0.7;
   }
 }
 

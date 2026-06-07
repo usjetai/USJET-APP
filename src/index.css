@@ -651,6 +651,124 @@
   isolation: isolate;
 }
 
+.app-nav-shell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.55rem;
+  max-width: 100%;
+  padding: 0.65rem 0.85rem;
+  pointer-events: auto;
+}
+
+@media (min-width: 640px) {
+  .app-nav-shell {
+    gap: 0.5rem 0.7rem;
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-nav-shell {
+    flex-wrap: nowrap;
+    gap: 0.55rem 0.75rem;
+    padding: 0.8rem 1.25rem;
+  }
+}
+
+.app-nav-zone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.app-nav-zone--routes {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 1px;
+}
+
+.app-nav-zone--routes::-webkit-scrollbar {
+  display: none;
+}
+
+.app-nav-zone--media {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 1px;
+}
+
+.app-nav-zone--media::-webkit-scrollbar {
+  display: none;
+}
+
+.app-nav-zone--tail {
+  margin-left: auto;
+  gap: 0.45rem;
+}
+
+.app-nav-divider {
+  display: none;
+  width: 1px;
+  height: 1.65rem;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .app-nav-divider {
+    display: block;
+  }
+}
+
+.app-nav-divider--media {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .app-nav-divider--media {
+    display: block;
+  }
+}
+
+.app-nav-pill {
+  padding: 0.38rem 0.72rem;
+  font-size: 0.625rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .app-nav-pill {
+    padding: 0.42rem 0.82rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+  }
+}
+
+.app-nav-pill--active,
+.app-nav-pill:hover,
+.app-nav-pill:focus-visible {
+  color: #fff;
+}
+
+.app-nav-pill--active {
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.35);
+}
+
 /* Full-viewport crucifix crown — green laser left, red laser right, slow spin */
 .crucifix-laser-crown {
   position: fixed;

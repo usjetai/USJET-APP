@@ -1406,6 +1406,292 @@
   }
 }
 
+/* ─── Side latch — full flight deck menu (every route) ─── */
+.site-latch-menu {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  z-index: 255;
+  display: flex;
+  align-items: stretch;
+  max-height: min(78vh, 40rem);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.site-latch-menu__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  border: 0;
+  background: rgba(2, 8, 23, 0.42);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.site-latch-menu__latch {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  width: 1.85rem;
+  min-height: 4.75rem;
+  padding: 0.55rem 0.2rem;
+  border-radius: 0 0.55rem 0.55rem 0;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-left: none;
+  background: rgba(2, 8, 23, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    4px 0 18px rgba(34, 211, 238, 0.12);
+  pointer-events: auto;
+  cursor: pointer;
+  color: rgba(165, 243, 252, 0.92);
+}
+
+.site-latch-menu__latch-hook {
+  display: block;
+  width: 0.55rem;
+  height: 1.15rem;
+  border: 2px solid rgba(103, 232, 249, 0.85);
+  border-radius: 0.2rem 0.2rem 0.45rem 0.45rem;
+  border-top: none;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.35);
+}
+
+.site-latch-menu__latch-hook::before {
+  content: "";
+  display: block;
+  width: 0.28rem;
+  height: 0.55rem;
+  margin: -0.42rem auto 0;
+  border-radius: 999px;
+  background: rgba(103, 232, 249, 0.9);
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+}
+
+.site-latch-menu__latch-label {
+  font-size: 0.48rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.site-latch-menu--open .site-latch-menu__latch {
+  border-color: rgba(34, 211, 238, 0.55);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 20px rgba(34, 211, 238, 0.28);
+}
+
+.site-latch-menu__panel {
+  overflow: hidden;
+  flex: 0 0 auto;
+  width: 0;
+  max-width: 0;
+  opacity: 0;
+  margin-left: -0.15rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none;
+  transform: translateX(-0.75rem);
+  pointer-events: none;
+  transition:
+    width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    max-width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-latch-menu--open .site-latch-menu__panel {
+  width: min(19.5rem, 84vw);
+  max-width: min(19.5rem, 84vw);
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.site-latch-menu__head {
+  padding: 1rem 1rem 0.65rem;
+  border-bottom: 1px solid rgba(34, 211, 238, 0.14);
+}
+
+.site-latch-menu__eyebrow {
+  margin: 0;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.7);
+}
+
+.site-latch-menu__title {
+  margin: 0.35rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f8fafc;
+}
+
+.site-latch-menu__meta {
+  margin: 0.3rem 0 0;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.site-latch-menu__scroll {
+  overflow-y: auto;
+  max-height: min(62vh, 34rem);
+  padding: 0.65rem 0.75rem 0.9rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 211, 238, 0.35) transparent;
+}
+
+.site-latch-menu__group + .site-latch-menu__group {
+  margin-top: 0.85rem;
+}
+
+.site-latch-menu__group-title {
+  margin: 0 0 0.4rem;
+  padding: 0 0.25rem;
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.82);
+}
+
+.site-latch-menu__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.site-latch-menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.48rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(2, 8, 23, 0.35);
+  text-decoration: none;
+  color: rgba(248, 250, 252, 0.92);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.site-latch-menu__link:hover,
+.site-latch-menu__link:focus-visible {
+  border-color: rgba(34, 211, 238, 0.42);
+  background: rgba(8, 47, 73, 0.45);
+  color: #fff;
+}
+
+.site-latch-menu__link--active {
+  border-color: rgba(34, 211, 238, 0.55);
+  background: rgba(8, 47, 73, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.12);
+}
+
+.site-latch-menu__link--locked {
+  opacity: 0.78;
+}
+
+.site-latch-menu__link-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.site-latch-menu__link-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-latch-menu__link-hint {
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.site-latch-menu__chip {
+  flex-shrink: 0;
+  padding: 0.14rem 0.34rem;
+  border-radius: 999px;
+  font-size: 0.46rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.site-latch-menu__chip--public {
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  color: rgba(103, 232, 249, 0.85);
+  background: rgba(8, 47, 73, 0.35);
+}
+
+.site-latch-menu__chip--cleared {
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  color: rgba(167, 243, 208, 0.95);
+  background: rgba(6, 78, 59, 0.35);
+}
+
+.site-latch-menu__chip--locked {
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  color: rgba(253, 230, 138, 0.95);
+  background: rgba(120, 53, 15, 0.35);
+}
+
+@media (max-width: 640px) {
+  .site-latch-menu {
+    top: auto;
+    bottom: max(5.5rem, calc(env(safe-area-inset-bottom, 0px) + 5rem));
+    transform: none;
+    max-height: min(58vh, 28rem);
+  }
+
+  .site-latch-menu__latch {
+    min-height: 3.85rem;
+    width: 1.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-latch-menu__panel {
+    transition: none;
+    transform: none;
+  }
+
+  .site-latch-menu--open .site-latch-menu__panel {
+    opacity: 1;
+    width: min(19.5rem, 84vw);
+    max-width: min(19.5rem, 84vw);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fleet-command,
   .fleet-command--standby,

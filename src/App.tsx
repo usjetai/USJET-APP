@@ -16,6 +16,7 @@ import GlobalBackgroundBeat from "./components/layout/GlobalBackgroundBeat";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
 import SiteAudioPrime from "./components/layout/SiteAudioPrime";
 import CrucifixLaserCrown from "./components/layout/CrucifixLaserCrown";
+import SiteLatchMenu from "./components/layout/SiteLatchMenu";
 import TierRouteGate from "./components/member/TierRouteGate";
 import CanonicalHead from "./components/layout/CanonicalHead";
 
@@ -181,6 +182,7 @@ function AppChrome() {
       <SiteAudioPrime />
       <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
       <CrucifixLaserCrown />
+      <SiteLatchMenu />
       <AppNav />
       <SitePreviewBanner />
       <Sovereign100kDeadlineBanner />

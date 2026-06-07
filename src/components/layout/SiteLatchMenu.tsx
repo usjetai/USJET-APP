@@ -104,25 +104,26 @@ export default function SiteLatchMenu() {
         />
       ) : null}
 
-      <button
-        type="button"
-        className="site-latch-menu__latch btn-glass glass-effect-interactive"
-        aria-expanded={open}
-        aria-controls="site-latch-menu-panel"
-        aria-label={open ? "Close full flight deck menu" : "Open full flight deck menu"}
-        title="Full flight deck — every page"
-        onClick={toggle}
-      >
-        <span className="site-latch-menu__latch-hook" aria-hidden />
-        <span className="site-latch-menu__latch-label">Deck</span>
-      </button>
+      <div className="site-latch-menu__anchor">
+        <button
+          type="button"
+          className="site-latch-menu__latch"
+          aria-expanded={open}
+          aria-controls="site-latch-menu-panel"
+          aria-label={open ? "Close full flight deck menu" : "Open full flight deck menu"}
+          title="Full flight deck — every page"
+          onClick={toggle}
+        >
+          <span className="site-latch-menu__latch-hook" aria-hidden />
+        </button>
+      </div>
 
-      <GlassEffectContainer
-        id="site-latch-menu-panel"
-        className="site-latch-menu__panel glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-        aria-label="USJET full site menu"
-        aria-hidden={!open}
-      >
+      <div className="site-latch-menu__panel-wrap" aria-hidden={!open}>
+        <GlassEffectContainer
+          id="site-latch-menu-panel"
+          className="site-latch-menu__panel glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+          aria-label="USJET full site menu"
+        >
         <header className="site-latch-menu__head">
           <p className="site-latch-menu__eyebrow">Latch clearance · full index</p>
           <h2 className="site-latch-menu__title">Flight Deck</h2>
@@ -190,7 +191,8 @@ export default function SiteLatchMenu() {
             </section>
           ))}
         </div>
-      </GlassEffectContainer>
+        </GlassEffectContainer>
+      </div>
     </div>
   );
 }

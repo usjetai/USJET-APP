@@ -10,6 +10,7 @@ export interface YoutubePlayer {
   setVolume(volume: number): void;
   playVideo(): void;
   pauseVideo(): void;
+  loadVideoById(videoId: string): void;
 }
 
 declare global {

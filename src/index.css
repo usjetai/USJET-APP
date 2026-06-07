@@ -651,6 +651,152 @@
   isolation: isolate;
 }
 
+/* Full-viewport crucifix crown — green laser left, red laser right, slow spin */
+.crucifix-laser-crown {
+  position: fixed;
+  top: 2.35rem;
+  left: 50%;
+  z-index: 48;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.crucifix-laser-crown__spin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+
+.crucifix-laser-crown__cross {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.65rem;
+  background: rgba(2, 8, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 18px rgba(34, 197, 94, 0.28),
+    0 0 18px rgba(239, 68, 68, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.crucifix-laser-crown__icon {
+  display: block;
+  width: 4.25rem;
+  height: 2.55rem;
+}
+
+.crucifix-laser-crown__beam {
+  position: absolute;
+  top: 0;
+  height: 5px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.crucifix-laser-crown__beam--green {
+  right: 0;
+  width: 50vw;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    to left,
+    rgba(187, 247, 208, 1) 0%,
+    rgba(74, 222, 128, 0.95) 12%,
+    rgba(34, 197, 94, 0.75) 45%,
+    rgba(34, 197, 94, 0.15) 88%,
+    rgba(34, 197, 94, 0) 100%
+  );
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.95), 0 0 22px rgba(34, 197, 94, 0.55);
+  animation: crucifix-laser-pulse-green 2.2s ease-in-out infinite;
+}
+
+.crucifix-laser-crown__beam--red {
+  left: 0;
+  width: 50vw;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    to right,
+    rgba(254, 202, 202, 1) 0%,
+    rgba(248, 113, 113, 0.95) 12%,
+    rgba(239, 68, 68, 0.75) 45%,
+    rgba(239, 68, 68, 0.15) 88%,
+    rgba(239, 68, 68, 0) 100%
+  );
+  box-shadow: 0 0 10px rgba(248, 113, 113, 0.95), 0 0 22px rgba(239, 68, 68, 0.55);
+  animation: crucifix-laser-pulse-red 2.2s ease-in-out infinite;
+}
+
+.crucifix-laser-crown__beam--glow {
+  height: 14px;
+  filter: blur(5px);
+  opacity: 0.65;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .crucifix-laser-crown__spin {
+    animation: crucifix-laser-crown-spin 20s linear infinite;
+  }
+}
+
+@keyframes crucifix-laser-crown-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes crucifix-laser-pulse-green {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes crucifix-laser-pulse-red {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .crucifix-laser-crown {
+    top: 2rem;
+  }
+
+  .crucifix-laser-crown__icon {
+    width: 3.35rem;
+    height: 2rem;
+  }
+
+  .crucifix-laser-crown__beam {
+    height: 4px;
+  }
+
+  .crucifix-laser-crown__beam--glow {
+    height: 11px;
+  }
+}
+
 .liquid-glass-nav .glass-effect-container {
   pointer-events: auto;
   flex-wrap: wrap;

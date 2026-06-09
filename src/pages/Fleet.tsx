@@ -11,6 +11,7 @@ import {
 } from "../data/fleetRoster";
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import FleetCard from "../components/fleet/FleetCard";
+import FleetKnicksF22Hero from "../components/fleet/FleetKnicksF22Hero";
 import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
@@ -32,6 +33,15 @@ const Fleet = () => (
           className="flex justify-center"
         >
           <UsjetWordmark size="hero" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.12, duration: 0.55 }}
+          className="w-full max-w-3xl"
+        >
+          <FleetKnicksF22Hero />
         </motion.div>
 
         <div className="max-w-3xl">

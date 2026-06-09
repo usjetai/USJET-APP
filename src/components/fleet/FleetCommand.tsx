@@ -202,7 +202,9 @@ export default function FleetCommand({
 
   const title =
     state === "synced"
-      ? "Fleet online — tap to open or close the live cursor terminal"
+      ? ceremony
+        ? "Fleet online — session synced"
+        : "Fleet online — secure session synced"
       : armedGreen
         ? PROTOCOL_ARMED_HOVER
         : standby
@@ -235,7 +237,7 @@ export default function FleetCommand({
         ceremony
           ? "USJET Protocol — tap to copy the Master Lock text"
           : state === "synced"
-            ? "Fleet online — activate live cursor terminal"
+            ? "Fleet online — secure session synced"
             : "USJET Protocol — tap to start secure boot sequence"
       }
     >

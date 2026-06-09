@@ -7,12 +7,11 @@ import FooterSurpriseWrap from "./FooterSurpriseWrap";
 import Usa250Countdown from "./Usa250Countdown";
 import WefunderCovenantBridge from "../campaign/WefunderCovenantBridge";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
-import { DIRECT_FUEL_ROUTE } from "../../data/directFuelCash";
 import ZelleFuelChip from "../fuel/ZelleFuelChip";
 import GamingVrNavButton from "../gaming/GamingVrNavButton";
-import { USJET_CASH_APP_CASHTAG } from "../../lib/usjetContact";
 import UsjetOpsMailEnvelope from "./UsjetOpsMailEnvelope";
 import SilentHangarAudioToggle from "../media/SilentHangarAudioToggle";
+import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "../../data/globalBackgroundBeat";
 
 /** Fixed bottom strip — home, jet, status, USA 250, SOS (emergency blink), CS/OPS (periodic shine). */
 export default function UsjetGlobalContactBar() {
@@ -40,9 +39,11 @@ export default function UsjetGlobalContactBar() {
             <span className="usjet-global-contact-bar__status-label">USJET System Active</span>
             <span className="usjet-global-contact-bar__ping" aria-hidden />
           </div>
-          <FooterSurpriseWrap chipId="background-beat">
-            <SilentHangarAudioToggle className="usjet-global-contact-bar__beat-audio" />
-          </FooterSurpriseWrap>
+          {GLOBAL_BACKGROUND_BEAT_ENABLED ? (
+            <FooterSurpriseWrap chipId="background-beat">
+              <SilentHangarAudioToggle className="usjet-global-contact-bar__beat-audio" />
+            </FooterSurpriseWrap>
+          ) : null}
           <FooterSurpriseWrap chipId="usa250">
             <Usa250Countdown variant="footerStrip" />
           </FooterSurpriseWrap>
@@ -142,22 +143,6 @@ export default function UsjetGlobalContactBar() {
               title="Founder's Fuel — $19.90/mo"
             >
               Fuel
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="cashapp">
-            <Link
-              to={DIRECT_FUEL_ROUTE}
-              className="usjet-global-contact-bar__cashapp btn-glass glass-effect-interactive"
-              title={`Direct Fuel — Cash App ${USJET_CASH_APP_CASHTAG}`}
-              aria-label={`Direct Fuel ${USJET_CASH_APP_CASHTAG}`}
-            >
-              <span className="usjet-global-contact-bar__cashapp-glow" aria-hidden />
-              <span className="usjet-global-contact-bar__cashapp-shine" aria-hidden />
-              <span className="usjet-global-contact-bar__cashapp-flash" aria-hidden />
-              <span className="usjet-global-contact-bar__cashapp-icon" aria-hidden>
-                <span className="usjet-global-contact-bar__cashapp-icon-inner">$</span>
-              </span>
-              <span className="usjet-global-contact-bar__cashapp-label">{USJET_CASH_APP_CASHTAG}</span>
             </Link>
           </FooterSurpriseWrap>
           <FooterSurpriseWrap chipId="zelle">

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useSilentHangarOptional } from "../../context/SilentHangarContext";
 import {
+  getActiveGlobalBackgroundBeatVideoId,
   getGlobalBackgroundBeatVideoId,
   GLOBAL_BACKGROUND_BEAT_LABEL,
-  GLOBAL_BACKGROUND_BEAT_PLAYLIST,
+  GLOBAL_BACKGROUND_BEAT_START_INDEX,
 } from "../../data/globalBackgroundBeat";
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
@@ -12,7 +13,7 @@ import { USJET_PRIME_AUDIO_EVENT } from "./SiteAudioPrime";
 const BEAT_VOLUME = 58;
 const YT_ENDED = 0;
 
-/** Hidden YouTube beat queue — beat I, then beat II, then repeat. */
+/** Hidden YouTube beat — loops the active playlist slot (beat II only). */
 export default function GlobalBackgroundBeat() {
   const reactId = useId().replace(/:/g, "");
   const mountId = `global-beat-${reactId}`;
@@ -46,9 +47,9 @@ export default function GlobalBackgroundBeat() {
 
   const advanceBeat = useCallback(
     (player: YoutubePlayer) => {
-      const nextIndex = (beatIndexRef.current + 1) % GLOBAL_BACKGROUND_BEAT_PLAYLIST.length;
-      beatIndexRef.current = nextIndex;
-      player.loadVideoById(getGlobalBackgroundBeatVideoId(nextIndex));
+      const loopIndex = GLOBAL_BACKGROUND_BEAT_START_INDEX;
+      beatIndexRef.current = loopIndex;
+      player.loadVideoById(getGlobalBackgroundBeatVideoId(loopIndex));
       syncPlayerAudio(player, audioArmedRef.current);
     },
     [syncPlayerAudio],
@@ -57,7 +58,7 @@ export default function GlobalBackgroundBeat() {
   useEffect(() => {
     let cancelled = false;
     setReady(false);
-    beatIndexRef.current = 0;
+    beatIndexRef.current = GLOBAL_BACKGROUND_BEAT_START_INDEX;
     playerRef.current?.destroy();
     playerRef.current = null;
 
@@ -68,8 +69,9 @@ export default function GlobalBackgroundBeat() {
           return;
         }
 
+        const videoId = getActiveGlobalBackgroundBeatVideoId();
         const player = new window.YT.Player(mountId, {
-          videoId: getGlobalBackgroundBeatVideoId(0),
+          videoId,
           playerVars: {
             autoplay: 1,
             mute: 1,
@@ -80,6 +82,8 @@ export default function GlobalBackgroundBeat() {
             disablekb: 1,
             fs: 0,
             iv_load_policy: 3,
+            loop: 1,
+            playlist: videoId,
           },
           events: {
             onReady: (event: { target: YoutubePlayer }) => {

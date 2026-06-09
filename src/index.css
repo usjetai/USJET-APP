@@ -769,6 +769,200 @@
   box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.35);
 }
 
+/* Cash App — header chip, green glow + blink */
+.app-nav-cashapp {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0.28rem 0.55rem 0.28rem 0.42rem;
+  text-decoration: none;
+  border: 1px solid rgba(0, 214, 50, 0.55);
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(0, 180, 45, 0.55), rgba(0, 90, 32, 0.82));
+  box-shadow:
+    0 0 12px rgba(0, 214, 50, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transform: none;
+}
+
+.app-nav-cashapp:hover,
+.app-nav-cashapp:focus-visible {
+  transform: none;
+  border-color: rgba(110, 255, 150, 0.9);
+}
+
+.app-nav-cashapp:active {
+  transform: none;
+}
+
+.app-nav-cashapp__halo,
+.app-nav-cashapp__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.app-nav-cashapp__halo {
+  background: radial-gradient(circle at 35% 50%, rgba(0, 255, 90, 0.55), transparent 72%);
+}
+
+.app-nav-cashapp__shine {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.7) 46%,
+    rgba(180, 255, 200, 0.5) 52%,
+    transparent 68%
+  );
+  transform: translateX(-140%) skewX(-14deg);
+}
+
+.app-nav-cashapp__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0.24rem;
+  background: #00d632;
+  box-shadow:
+    0 0 10px rgba(0, 214, 50, 0.85),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.app-nav-cashapp__icon-inner {
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #0a0a0a;
+}
+
+.app-nav-cashapp__label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #ecfdf5;
+  text-shadow: 0 0 8px rgba(0, 214, 50, 0.45);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-nav-cashapp {
+    animation: app-nav-cashapp-blink 1.6s ease-in-out infinite;
+  }
+
+  .app-nav-cashapp__halo {
+    animation: app-nav-cashapp-halo 1.6s ease-in-out infinite;
+  }
+
+  .app-nav-cashapp__shine {
+    animation: app-nav-cashapp-shine 3.2s ease-in-out infinite;
+  }
+
+  .app-nav-cashapp__icon {
+    animation: app-nav-cashapp-icon-blink 1.6s ease-in-out infinite;
+  }
+
+  .app-nav-cashapp__label {
+    animation: app-nav-cashapp-label-blink 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes app-nav-cashapp-blink {
+  0%,
+  100% {
+    border-color: rgba(0, 140, 40, 0.55);
+    background: linear-gradient(145deg, rgba(0, 120, 35, 0.5), rgba(0, 70, 28, 0.78));
+    box-shadow:
+      0 0 6px rgba(0, 180, 50, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  50% {
+    border-color: rgba(120, 255, 160, 0.95);
+    background: linear-gradient(145deg, rgba(0, 230, 60, 0.72), rgba(0, 130, 45, 0.92));
+    box-shadow:
+      0 0 18px rgba(0, 255, 90, 0.75),
+      0 0 32px rgba(0, 214, 50, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+}
+
+@keyframes app-nav-cashapp-halo {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes app-nav-cashapp-shine {
+  0%,
+  58%,
+  100% {
+    transform: translateX(-150%) skewX(-14deg);
+    opacity: 0;
+  }
+
+  64% {
+    opacity: 1;
+  }
+
+  74% {
+    transform: translateX(150%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes app-nav-cashapp-icon-blink {
+  0%,
+  100% {
+    background: #00b82e;
+    box-shadow: 0 0 6px rgba(0, 180, 50, 0.45);
+  }
+
+  50% {
+    background: #00ff40;
+    box-shadow:
+      0 0 14px rgba(0, 255, 90, 1),
+      0 0 24px rgba(0, 214, 50, 0.65);
+  }
+}
+
+@keyframes app-nav-cashapp-label-blink {
+  0%,
+  100% {
+    color: rgba(220, 252, 231, 0.82);
+    text-shadow: 0 0 4px rgba(0, 180, 50, 0.25);
+  }
+
+  50% {
+    color: #fff;
+    text-shadow:
+      0 0 12px rgba(0, 255, 90, 0.9),
+      0 0 20px rgba(0, 214, 50, 0.55);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-nav-cashapp,
+  .app-nav-cashapp__halo,
+  .app-nav-cashapp__shine,
+  .app-nav-cashapp__icon,
+  .app-nav-cashapp__label {
+    animation: none;
+  }
+}
+
 /* Full-viewport crucifix crown — green laser left, red laser right, slow spin */
 .crucifix-laser-crown {
   position: fixed;
@@ -5362,6 +5556,143 @@
 
 .fleet-page--runway {
   position: relative;
+}
+
+/* Fleet landing — F-22 mesh wireframe + Knicks logo hero */
+.fleet-knicks-f22 {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.fleet-knicks-f22__frame {
+  position: relative;
+  overflow: hidden;
+  padding: 1.1rem 1rem 0.85rem;
+  border-radius: 1.35rem;
+}
+
+.fleet-knicks-f22__glow {
+  position: absolute;
+  inset: -20% -10%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 70% at 72% 42%, rgba(245, 132, 38, 0.22), transparent 62%),
+    radial-gradient(ellipse 50% 65% at 28% 58%, rgba(0, 107, 182, 0.2), transparent 58%);
+  animation: fleet-knicks-f22-glow-pulse 4.5s ease-in-out infinite;
+}
+
+@keyframes fleet-knicks-f22-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+.fleet-knicks-f22__stage {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 16rem);
+  margin: 0 auto;
+}
+
+.fleet-knicks-f22__badge {
+  position: relative;
+  width: 100%;
+}
+
+.fleet-knicks-f22__logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
+}
+
+.fleet-knicks-f22__jet-inset {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 58%;
+  width: 28%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  clip-path: polygon(50% 4%, 90% 96%, 10% 96%);
+}
+
+.fleet-knicks-f22__wireframe {
+  display: block;
+  width: 108%;
+  height: 108%;
+  object-fit: contain;
+  transform: rotate(180deg);
+  animation: fleet-knicks-f22-drift 7s ease-in-out infinite;
+  transform-origin: 50% 50%;
+  opacity: 0.92;
+}
+
+@keyframes fleet-knicks-f22-drift {
+  0%,
+  100% {
+    transform: rotate(180deg) translateX(0);
+  }
+  50% {
+    transform: rotate(180deg) translateX(3px);
+  }
+}
+
+.fleet-knicks-f22__caption {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem 0.85rem;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(0, 107, 182, 0.22);
+}
+
+.fleet-knicks-f22__callsign {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #f58426;
+}
+
+.fleet-knicks-f22__tag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+@media (min-width: 640px) {
+  .fleet-knicks-f22__frame {
+    padding: 1.35rem 1.25rem 1rem;
+  }
+
+  .fleet-knicks-f22__stage {
+    width: min(100%, 20rem);
+  }
+
+  .fleet-knicks-f22__jet-inset {
+    width: 26%;
+    top: 57%;
+  }
 }
 
 .fleet-page--runway::before {

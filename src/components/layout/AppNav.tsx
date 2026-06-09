@@ -6,6 +6,7 @@ import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
 import FleetOnlineCursorCluster from "./FleetOnlineCursorCluster";
 import MobileRotateCue from "./MobileRotateCue";
+import AppNavCashAppButton from "./AppNavCashAppButton";
 import { BLOG_ROUTE } from "../../data/usjetBlog";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import OriginGateLink from "../origin/OriginGateLink";
@@ -112,6 +113,8 @@ const AppNav = () => {
         <span className="app-nav-divider app-nav-divider--media" aria-hidden />
 
         <div className="app-nav-zone app-nav-zone--media">
+          <AppNavCashAppButton />
+
           <NavLink
             to={BLOG_ROUTE}
             className={({ isActive }) =>

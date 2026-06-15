@@ -168,7 +168,7 @@ export default function FleetCard({
         onKeyDown={handleKeyDown}
       >
       <div className="fleet-card__glass flex h-full flex-col p-5">
-        <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-4">
+        <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4">
           <AircraftIcon
             aircraftType={aircraftType}
             accentId={accentId}

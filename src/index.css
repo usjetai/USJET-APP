@@ -7268,9 +7268,9 @@ html.code-kit-page-root #usjet-app-shell {
   margin-bottom: 0;
   flex-shrink: 0;
   width: 9.5rem;
-  border-radius: 9999px;
-  border-color: rgba(34, 211, 238, 0.22);
-  background: rgba(34, 211, 238, 0.06);
+  border: none;
+  border-radius: 0;
+  background: transparent;
   padding: 0.65rem;
 }
 
@@ -7480,8 +7480,8 @@ html.code-kit-page-root #usjet-app-shell {
 }
 
 .fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent .fleet-card__aircraft-wrap {
-  border-color: color-mix(in srgb, var(--fleet-accent) 28%, transparent);
-  background: color-mix(in srgb, var(--fleet-accent) 7%, transparent);
+  border: none;
+  background: transparent;
 }
 
 .fleet-page--runway .fleet-card--surface-runway.fleet-card--bay-accent:hover h3,
@@ -7591,9 +7591,9 @@ html.code-kit-page-root #usjet-app-shell {
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar .fleet-card__aircraft-wrap {
-  border-radius: 0.75rem;
-  border-color: rgba(251, 191, 36, 0.22);
-  background: rgba(251, 191, 36, 0.05);
+  border: none;
+  border-radius: 0;
+  background: transparent;
 }
 
 .hangar-page--workbench .fleet-card--hangar-expand:hover .fleet-card__glass,
@@ -7641,8 +7641,8 @@ html.code-kit-page-root #usjet-app-shell {
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar.fleet-card--bay-accent .fleet-card__aircraft-wrap {
-  border-color: color-mix(in srgb, var(--fleet-accent) 30%, transparent);
-  background: color-mix(in srgb, var(--fleet-accent) 8%, transparent);
+  border: none;
+  background: transparent;
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar.fleet-card--bay-accent.fleet-card--hangar-expand:hover .fleet-card__glass,
@@ -7971,7 +7971,6 @@ html.code-kit-page-root #usjet-app-shell {
   object-fit: contain;
   object-position: center;
   filter: var(--aircraft-logo-glow);
-  border-radius: 0.45rem;
 }
 
 .aircraft-icon__vector {
@@ -9596,8 +9595,8 @@ button.fleet-card {
 }
 
 .fleet-card--command .fleet-card__aircraft-wrap {
-  border-color: rgba(251, 191, 36, 0.22);
-  background: rgba(120, 53, 15, 0.12);
+  border: none;
+  background: transparent;
 }
 
 .fleet-card--available .fleet-card__glass {
@@ -9606,8 +9605,8 @@ button.fleet-card {
 }
 
 .fleet-card--available .fleet-card__aircraft-wrap {
-  border-color: rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
+  border: none;
+  background: transparent;
 }
 
 .fleet-card--available .fleet-card__aircraft {
@@ -9675,9 +9674,9 @@ button.fleet-card {
   justify-content: center;
   width: 4.8rem;
   height: 4.8rem;
-  border-radius: 18px;
-  background: rgba(2, 12, 35, 0.7);
-  border: 1px solid rgba(103, 232, 249, 0.18);
+  border: none;
+  border-radius: 0;
+  background: transparent;
 }
 
 .fleet-directory-card__icon {
@@ -9686,7 +9685,7 @@ button.fleet-card {
 }
 
 .fleet-directory-card--available .fleet-directory-card__icon-wrap {
-  background: rgba(255, 255, 255, 0.05);
+  background: transparent;
 }
 
 .fleet-directory-card--available .fleet-directory-card__icon {
@@ -21253,14 +21252,10 @@ html.direct-fuel-page-root #usjet-app-shell {
   display: grid;
   min-height: 30rem;
   place-items: center;
-  border: 1px solid rgba(var(--callsign-accent-rgb), 0.22);
-  border-radius: 2rem;
-  background:
-    radial-gradient(circle, rgba(var(--callsign-accent-rgb), 0.18), transparent 58%),
-    rgba(2, 6, 23, 0.34);
-  box-shadow:
-    0 0 44px rgba(var(--callsign-accent-rgb), 0.14),
-    inset 0 0 36px rgba(255, 255, 255, 0.04);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .fleet-callsign-hero__icon {

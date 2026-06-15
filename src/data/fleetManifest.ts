@@ -132,7 +132,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://runway.com",
     status: "active",
     aura: "idle",
-    aircraftType: "b21",
+    aircraftType: "b1",
   },
   {
     id: "12",
@@ -143,7 +143,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://firefly.adobe.com",
     status: "active",
     aura: "idle",
-    aircraftType: "mq25",
+    aircraftType: "a12",
   },
   {
     id: "13",
@@ -154,7 +154,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.canva.com/ai",
     status: "active",
     aura: "idle",
-    aircraftType: "fa18",
+    aircraftType: "darkstar",
   },
   {
     id: "14",
@@ -165,7 +165,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://bfl.ai",
     status: "staging",
     aura: "idle",
-    aircraftType: "b2",
+    aircraftType: "fb22",
   },
   {
     id: "15",
@@ -176,7 +176,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://suno.com",
     status: "active",
     aura: "idle",
-    aircraftType: "fa18",
+    aircraftType: "f15ex",
   },
   {
     id: "16",
@@ -187,7 +187,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://elevenlabs.io",
     status: "active",
     aura: "idle",
-    aircraftType: "fa18",
+    aircraftType: "f16v",
   },
   {
     id: "17",

@@ -11,7 +11,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://gemini.google.com/app",
     status: "active",
     aura: "idle",
-    aircraftType: "f35",
+    aircraftType: "f22",
   },
   {
     id: "1",
@@ -44,7 +44,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.perplexity.ai",
     status: "active",
     aura: "idle",
-    aircraftType: "f86",
+    aircraftType: "j36",
   },
   {
     id: "4",
@@ -55,7 +55,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://grok.com",
     status: "active",
     aura: "idle",
-    aircraftType: "f22",
+    aircraftType: "ngad",
   },
   {
     id: "5",
@@ -66,7 +66,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://cursor.com",
     status: "active",
     aura: "idle",
-    aircraftType: "b2",
+    aircraftType: "yf23",
   },
   {
     id: "6",
@@ -77,7 +77,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.midjourney.com",
     status: "active",
     aura: "idle",
-    aircraftType: "b2",
+    aircraftType: "x47b",
   },
   {
     id: "7",
@@ -110,7 +110,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://higgsfield.ai",
     status: "staging",
     aura: "idle",
-    aircraftType: "b1",
+    aircraftType: "pca",
   },
   {
     id: "10",

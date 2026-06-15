@@ -1,0 +1,185 @@
+{
+  "sourceSheet": "usjet-fleet-sheet-source.png",
+  "assets": [
+    {
+      "file": "f22_raptor.png",
+      "aircraftType": "f22",
+      "slot": 0,
+      "area": 1439
+    },
+    {
+      "file": "f35_lightning_ii.png",
+      "aircraftType": "f35",
+      "slot": 1,
+      "area": 1384
+    },
+    {
+      "file": "b21_raider.png",
+      "aircraftType": "b21",
+      "slot": 2,
+      "area": 149
+    },
+    {
+      "file": "j36_fighter.png",
+      "aircraftType": "j36",
+      "slot": 3,
+      "area": 1211
+    },
+    {
+      "file": "ngad_platform.png",
+      "aircraftType": "ngad",
+      "slot": 4,
+      "area": 477
+    },
+    {
+      "file": "yf23_black_widow_ii.png",
+      "aircraftType": "yf23",
+      "slot": 5,
+      "area": 1152
+    },
+    {
+      "file": "x47b.png",
+      "aircraftType": "x47b",
+      "slot": 6,
+      "area": 1353
+    },
+    {
+      "file": "x37b.png",
+      "aircraftType": "x37b",
+      "slot": 7,
+      "area": 1392
+    },
+    {
+      "file": "x51_waverider.png",
+      "aircraftType": "x51",
+      "slot": 8,
+      "area": 1018
+    },
+    {
+      "file": "pca_aircraft.png",
+      "aircraftType": "pca",
+      "slot": 9,
+      "area": 1959
+    },
+    {
+      "file": "b2_spirit.png",
+      "aircraftType": "b2",
+      "slot": 10,
+      "area": 1001
+    },
+    {
+      "file": "b1_lancer.png",
+      "aircraftType": "b1",
+      "slot": 11,
+      "area": 1108
+    },
+    {
+      "file": "a12_avenger_ii.png",
+      "aircraftType": "a12",
+      "slot": 12,
+      "area": 1798
+    },
+    {
+      "file": "sr72_darkstar.png",
+      "aircraftType": "darkstar",
+      "slot": 13,
+      "area": 1981
+    },
+    {
+      "file": "fb22.png",
+      "aircraftType": "fb22",
+      "slot": 14,
+      "area": 1972
+    },
+    {
+      "file": "f15ex_eagle_ii.png",
+      "aircraftType": "f15ex",
+      "slot": 15,
+      "area": 1602
+    },
+    {
+      "file": "f16v_viper.png",
+      "aircraftType": "f16v",
+      "slot": 16,
+      "area": 642
+    },
+    {
+      "file": "fa18_super_hornet.png",
+      "aircraftType": "fa18",
+      "slot": 17,
+      "area": 1482
+    },
+    {
+      "file": "a10_warthog.png",
+      "aircraftType": "a10",
+      "slot": 18,
+      "area": 1494
+    },
+    {
+      "file": "f117_nighthawk.png",
+      "aircraftType": "f117",
+      "slot": 19,
+      "area": 1860
+    },
+    {
+      "file": "mq25_stingray.png",
+      "aircraftType": "mq25",
+      "slot": 20,
+      "area": 1393
+    },
+    {
+      "file": "mq28_ghost_bat.png",
+      "aircraftType": "mq28",
+      "slot": 21,
+      "area": 1457
+    },
+    {
+      "file": "xq58_valkyrie.png",
+      "aircraftType": "xq58",
+      "slot": 22,
+      "area": 1030
+    },
+    {
+      "file": "rq180.png",
+      "aircraftType": "rq180",
+      "slot": 23,
+      "area": 1176
+    },
+    {
+      "file": "rq4_global_hawk.png",
+      "aircraftType": "globalHawk",
+      "slot": 24,
+      "area": 993
+    },
+    {
+      "file": "f14_tomcat.png",
+      "aircraftType": "f14",
+      "slot": 25,
+      "area": 1865
+    },
+    {
+      "file": "f4_phantom_ii.png",
+      "aircraftType": "f4",
+      "slot": 26,
+      "area": 1450
+    },
+    {
+      "file": "f104_starfighter.png",
+      "aircraftType": "f104",
+      "slot": 27,
+      "area": 1257
+    },
+    {
+      "file": "f86_sabre.png",
+      "aircraftType": "f86",
+      "slot": 28,
+      "area": 296
+    },
+    {
+      "file": "x59_quesst.png",
+      "aircraftType": "x59",
+      "slot": 29,
+      "area": 1113
+    }
+  ]
+}

@@ -172,7 +172,7 @@ export default function FleetCard({
           <AircraftIcon
             aircraftType={aircraftType}
             accentId={accentId}
-            className="fleet-card__aircraft h-16 w-16"
+            className="fleet-card__aircraft h-32 w-32"
           />
         </div>
 

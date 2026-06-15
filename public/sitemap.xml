@@ -205,7 +205,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.usjet.ai/fleet-directory/raptor-01</loc>
+    <loc>https://www.usjet.ai/fleet-directory/blackbird-01</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
@@ -283,7 +283,7 @@
     <priority>0.72</priority>
   </url>
   <url>
-    <loc>https://www.usjet.ai/fleet-directory/darkstar-14</loc>
+    <loc>https://www.usjet.ai/fleet-directory/raptor-01</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>

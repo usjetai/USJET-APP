@@ -17,7 +17,7 @@ export const FLEET_AVAILABLE_SLOTS: readonly number[] = [] as const;
 /** All thirty fleet bays — 30 distinct US military aircraft. */
 export const FLEET_HIRED_BY_SLOT: Record<number, FleetRosterMeta> = {
   // Stealth & Gen 6
-  0: { rosterStatus: "hired", aircraftOfficialName: "F-22 Raptor", aircraftType: "f22" },
+  0: { rosterStatus: "hired", aircraftOfficialName: "SR-71 Blackbird", aircraftType: "darkstar" },
   1: { rosterStatus: "hired", aircraftOfficialName: "F-35 Lightning II", aircraftType: "f35" },
   2: { rosterStatus: "hired", aircraftOfficialName: "B-21 Raider", aircraftType: "b21" },
   3: { rosterStatus: "hired", aircraftOfficialName: "J-36 (US JET Concept)", aircraftType: "j36" },
@@ -32,7 +32,7 @@ export const FLEET_HIRED_BY_SLOT: Record<number, FleetRosterMeta> = {
   10: { rosterStatus: "hired", aircraftOfficialName: "B-2 Spirit", aircraftType: "b2" },
   11: { rosterStatus: "hired", aircraftOfficialName: "B-1 Lancer", aircraftType: "b1" },
   12: { rosterStatus: "hired", aircraftOfficialName: "A-12 Avenger II", aircraftType: "a12" },
-  13: { rosterStatus: "hired", aircraftOfficialName: "DarkStar (SR-72 Concept)", aircraftType: "darkstar" },
+  13: { rosterStatus: "hired", aircraftOfficialName: "F-22 Raptor", aircraftType: "f22" },
   14: { rosterStatus: "hired", aircraftOfficialName: "FB-22", aircraftType: "fb22" },
   // Tactical/Combat
   15: { rosterStatus: "hired", aircraftOfficialName: "F-15EX Eagle II", aircraftType: "f15ex" },

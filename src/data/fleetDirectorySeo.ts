@@ -30,7 +30,7 @@ export type FleetDirectoryEntry = {
 };
 
 const CATEGORY_BY_SLOT: Record<number, string> = {
-  0: "AI for research & multimodal reasoning",
+  0: "AI for creative & social presence",
   1: "AI for operators & field teams",
   2: "AI for long-form analysis & compliance",
   3: "AI for logistics & cited web research",
@@ -43,7 +43,7 @@ const CATEGORY_BY_SLOT: Record<number, string> = {
   10: "AI for game & asset pipelines",
   11: "AI for professional video editing",
   12: "AI for brand & design systems",
-  13: "AI for small business marketing",
+  13: "AI for research & multimodal reasoning",
   14: "AI for photoreal imaging",
   15: "AI for audio & soundtrack",
   16: "AI for voice & dubbing",

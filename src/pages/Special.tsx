@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { Check, ShieldCheck, Sparkles, Wrench, Zap } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout/StripeSecureCheckout";
-import OriginTierLockInAd from "../components/origin/OriginTierLockInAd";
 import { WRENCHES_PHILOSOPHY } from "../data/founderManifesto";
 import {
   FLIGHT_PASS_STRIPE,
@@ -177,8 +176,6 @@ const Special = () => {
           );
         })}
       </div>
-
-      {selectedTierId === "fleet-command" ? <OriginTierLockInAd /> : null}
 
       <section className="special-checkout" aria-labelledby="special-checkout-heading">
         <GlassEffectContainer className="special-checkout__shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan flex-col items-stretch gap-0 p-0">

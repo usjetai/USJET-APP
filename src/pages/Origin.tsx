@@ -6,7 +6,6 @@ import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import OriginBrowserConnectModal from "../components/origin/OriginBrowserConnectModal";
 import OriginMemberStrip from "../components/origin/OriginMemberStrip";
-import OriginTierLockInAd from "../components/origin/OriginTierLockInAd";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
@@ -1072,8 +1071,6 @@ export default function Origin() {
             ))}
           </nav>
         </GlassEffectContainer>
-
-        {!isCustomerServiceEntry ? <OriginTierLockInAd /> : null}
 
         <section className="origin-page__fleet w-full max-w-5xl" aria-labelledby="origin-fleet-heading">
           <div className="origin-page__fleet-head">

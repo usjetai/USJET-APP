@@ -31,6 +31,7 @@ export default function Cockpit() {
   const bay = params.get("bay");
   const partnerLabel = params.get("label");
   const handoffParam = params.get("handoff");
+  const isHangarEmbed = params.get("embed") === "hangar";
   const baySlot = useMemo(() => slotFromBayId(bay), [bay]);
   const bayAccentStyle = useMemo(
     () => (baySlot !== null ? fleetBayAccentStyle(baySlot) : undefined),
@@ -56,9 +57,11 @@ export default function Cockpit() {
   }, [bay, partnerLabel]);
 
   const launchPartnerDirect = useCallback(() => {
-    if (src) {
-      window.location.assign(src);
+    if (!src) {
+      return;
     }
+
+    (window.top ?? window).location.assign(src);
   }, [src]);
 
   useEffect(() => {
@@ -97,9 +100,10 @@ export default function Cockpit() {
     if (!handoffComplete || !src) {
       return;
     }
-    const id = window.setTimeout(() => setEmbedAssist(true), 6000);
+    const assistDelayMs = isHangarEmbed ? 2500 : 6000;
+    const id = window.setTimeout(() => setEmbedAssist(true), assistDelayMs);
     return () => window.clearTimeout(id);
-  }, [handoffComplete, src]);
+  }, [handoffComplete, isHangarEmbed, src]);
 
   if (!src) {
     return null;
@@ -195,7 +199,13 @@ export default function Cockpit() {
         ) : null}
       </div>
 
-      <Link to={returnTo} className="cockpit-ghost-btn" aria-label={RETURN_ARIA[returnTo] ?? "Return to USJET"}>
+      <Link
+        to={returnTo}
+        className="cockpit-ghost-btn"
+        aria-label={RETURN_ARIA[returnTo] ?? "Return to USJET"}
+        target={isHangarEmbed ? "_top" : undefined}
+        rel={isHangarEmbed ? "noopener noreferrer" : undefined}
+      >
         USJET
       </Link>
     </div>

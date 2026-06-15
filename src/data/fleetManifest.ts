@@ -27,7 +27,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
   {
     id: "2",
     slot: 2,
-    name: "Claude 3.5 Developer",
+    name: "Chop",
     callsign: "RAIDER-03",
     domain: "claude.ai",
     href: "https://claude.ai",
@@ -38,7 +38,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
   {
     id: "3",
     slot: 3,
-    name: "Perplexity Developer",
+    name: "Stick",
     callsign: "J36-04",
     domain: "perplexity.ai",
     href: "https://www.perplexity.ai",

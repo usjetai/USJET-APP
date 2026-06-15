@@ -242,7 +242,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://replit.com/ai",
     status: "staging",
     aura: "idle",
-    aircraftType: "f22",
+    aircraftType: "mq28",
   },
   {
     id: "22",
@@ -253,7 +253,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://github.com/features/copilot",
     status: "active",
     aura: "idle",
-    aircraftType: "b2",
+    aircraftType: "xq58",
   },
   {
     id: "23",

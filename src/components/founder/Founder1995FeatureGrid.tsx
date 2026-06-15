@@ -31,7 +31,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     blurb: "Grease, torque, and Queens hustle — the armored vault of origin.",
     imageSrc: "/founder/IMG_0516.jpeg",
     imageAlt: "1995 Origin — cinematic grit panel",
-    silhouetteType: "c130",
+    silhouetteType: "f15ex",
     to: "/founder-special-1995",
     hash: "#grit-story",
     tintClass: "glass-tint-gold",

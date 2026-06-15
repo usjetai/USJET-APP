@@ -11,28 +11,47 @@ export type FleetRosterMeta = {
   aircraftType: FleetAircraftType;
 };
 
-/** Thirteen open bays — available positions only. */
-export const FLEET_AVAILABLE_SLOTS: readonly number[] = [3, 6, 9, 13, 14, 15, 16, 17, 18, 21, 25, 26, 28] as const;
+/** All 30 bays are now assigned specific aircraft — no available positions in this roster update. */
+export const FLEET_AVAILABLE_SLOTS: readonly number[] = [] as const;
 
-/** Seventeen hired developers (16 partner bays + command node), each with a US fighter vector. */
+/** All thirty fleet bays — 30 distinct US military aircraft. */
 export const FLEET_HIRED_BY_SLOT: Record<number, FleetRosterMeta> = {
-  0: { rosterStatus: "hired", aircraftOfficialName: "SR-71 Blackbird", aircraftType: "sr71" },
-  1: { rosterStatus: "hired", aircraftOfficialName: "F-22 Raptor", aircraftType: "f22" },
-  2: { rosterStatus: "hired", aircraftOfficialName: "F-35 Lightning II", aircraftType: "f35" },
-  4: { rosterStatus: "hired", aircraftOfficialName: "F-15 Eagle", aircraftType: "f22" },
-  5: { rosterStatus: "hired", aircraftOfficialName: "F/A-18 Super Hornet", aircraftType: "f35" },
-  7: { rosterStatus: "hired", aircraftOfficialName: "X-15 Experimental", aircraftType: "sr71" },
-  8: { rosterStatus: "hired", aircraftOfficialName: "SR-71B Trainer", aircraftType: "sr71" },
-  10: { rosterStatus: "hired", aircraftOfficialName: "F-35A Lightning II", aircraftType: "f35" },
-  11: { rosterStatus: "hired", aircraftOfficialName: "F-16 Fighting Falcon", aircraftType: "f35" },
-  12: { rosterStatus: "hired", aircraftOfficialName: "F/A-18E Super Hornet", aircraftType: "f35" },
-  19: { rosterStatus: "hired", aircraftOfficialName: "F-35C Carrier", aircraftType: "f35" },
-  20: { rosterStatus: "hired", aircraftOfficialName: "A-10 Thunderbolt II", aircraftType: "f22" },
-  22: { rosterStatus: "hired", aircraftOfficialName: "F-22 Raptor", aircraftType: "f22" },
-  23: { rosterStatus: "hired", aircraftOfficialName: "YF-12 Interceptor", aircraftType: "sr71" },
-  24: { rosterStatus: "hired", aircraftOfficialName: "F-35B STOVL", aircraftType: "f35" },
-  27: { rosterStatus: "hired", aircraftOfficialName: "F-4 Phantom II", aircraftType: "f22" },
-  29: { rosterStatus: "command", aircraftOfficialName: "F-22 Raptor · Command", aircraftType: "f22" },
+  // Stealth & Gen 6
+  0: { rosterStatus: "hired", aircraftOfficialName: "F-22 Raptor", aircraftType: "f22" },
+  1: { rosterStatus: "hired", aircraftOfficialName: "F-35 Lightning II", aircraftType: "f35" },
+  2: { rosterStatus: "hired", aircraftOfficialName: "B-21 Raider", aircraftType: "b21" },
+  3: { rosterStatus: "hired", aircraftOfficialName: "J-36 (US JET Concept)", aircraftType: "j36" },
+  4: { rosterStatus: "hired", aircraftOfficialName: "NGAD Platform", aircraftType: "ngad" },
+  // Experimental/Advanced
+  5: { rosterStatus: "hired", aircraftOfficialName: "YF-23 Black Widow II", aircraftType: "yf23" },
+  6: { rosterStatus: "hired", aircraftOfficialName: "X-47B", aircraftType: "x47b" },
+  7: { rosterStatus: "hired", aircraftOfficialName: "X-37B", aircraftType: "x37b" },
+  8: { rosterStatus: "hired", aircraftOfficialName: "X-51 Waverider", aircraftType: "x51" },
+  9: { rosterStatus: "hired", aircraftOfficialName: "PCA (Penetrating Counter Air)", aircraftType: "pca" },
+  // Strategic/Strike
+  10: { rosterStatus: "hired", aircraftOfficialName: "B-2 Spirit", aircraftType: "b2" },
+  11: { rosterStatus: "hired", aircraftOfficialName: "B-1 Lancer", aircraftType: "b1" },
+  12: { rosterStatus: "hired", aircraftOfficialName: "A-12 Avenger II", aircraftType: "a12" },
+  13: { rosterStatus: "hired", aircraftOfficialName: "DarkStar (SR-72 Concept)", aircraftType: "darkstar" },
+  14: { rosterStatus: "hired", aircraftOfficialName: "FB-22", aircraftType: "fb22" },
+  // Tactical/Combat
+  15: { rosterStatus: "hired", aircraftOfficialName: "F-15EX Eagle II", aircraftType: "f15ex" },
+  16: { rosterStatus: "hired", aircraftOfficialName: "F-16V Viper", aircraftType: "f16v" },
+  17: { rosterStatus: "hired", aircraftOfficialName: "F/A-18 Block III", aircraftType: "fa18" },
+  18: { rosterStatus: "hired", aircraftOfficialName: "A-10 Warthog", aircraftType: "a10" },
+  19: { rosterStatus: "hired", aircraftOfficialName: "F-117 Nighthawk", aircraftType: "f117" },
+  // Unmanned/Wingman
+  20: { rosterStatus: "hired", aircraftOfficialName: "MQ-25 Stingray", aircraftType: "mq25" },
+  21: { rosterStatus: "hired", aircraftOfficialName: "MQ-28 Ghost Bat", aircraftType: "mq28" },
+  22: { rosterStatus: "hired", aircraftOfficialName: "XQ-58 Valkyrie", aircraftType: "xq58" },
+  23: { rosterStatus: "hired", aircraftOfficialName: "RQ-180", aircraftType: "rq180" },
+  24: { rosterStatus: "hired", aircraftOfficialName: "RQ-4 Global Hawk", aircraftType: "globalHawk" },
+  // Legacy/Heritage
+  25: { rosterStatus: "hired", aircraftOfficialName: "F-14 Tomcat", aircraftType: "f14" },
+  26: { rosterStatus: "hired", aircraftOfficialName: "F-4 Phantom II", aircraftType: "f4" },
+  27: { rosterStatus: "hired", aircraftOfficialName: "F-104 Starfighter", aircraftType: "f104" },
+  28: { rosterStatus: "hired", aircraftOfficialName: "F-86 Sabre", aircraftType: "f86" },
+  29: { rosterStatus: "command", aircraftOfficialName: "X-59 QueSST · Command", aircraftType: "x59" },
 };
 
 export const FLEET_HIRED_SLOTS: readonly number[] = Object.keys(FLEET_HIRED_BY_SLOT).map(Number).sort(
@@ -52,13 +71,13 @@ export function getFleetRosterMeta(slot: number): FleetRosterMeta {
     return {
       rosterStatus: "available",
       aircraftOfficialName: "Available Position",
-      aircraftType: "cessna",
+      aircraftType: "f4",
     };
   }
   return {
     rosterStatus: "available",
     aircraftOfficialName: "Available Position",
-    aircraftType: "cessna",
+    aircraftType: "f4",
   };
 }
 

@@ -41,7 +41,7 @@ const GRIT_1995_STORY: GritSection[] = [
     imageSrc: "/founder/IMG_0516.jpeg",
     imageAlt: "1995 Origin — shop floor grit panel",
     imageLabel: "Archive · 1995 Origin",
-    silhouetteType: "c130",
+    silhouetteType: "f15ex",
   },
   {
     heading: "Wrenches, Not Slides",

@@ -19,7 +19,7 @@ const unitBySlot = new Map<number, FleetUnit>(intelUnits.map((u) => [u.slot, u])
 
 const BORDER_FORMATION = [
   { accentId: "intel-border-l-1", aircraftType: "f22" as const, slotClass: "intel-page__escort-slot--wing", slot: 0 },
-  { accentId: "intel-border-l-2", aircraftType: "sr71" as const, slotClass: "intel-page__escort-slot--lead", slot: 1 },
+  { accentId: "intel-border-l-2", aircraftType: "darkstar" as const, slotClass: "intel-page__escort-slot--lead", slot: 1 },
   { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing", slot: 2 },
 ];
 

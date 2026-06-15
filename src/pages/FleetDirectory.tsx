@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import {
   FLEET_DIRECTORY_AVAILABLE_ENTRIES,
@@ -47,6 +48,9 @@ export default function FleetDirectory() {
             to={entry.pagePath}
             className="fleet-directory-page__callsign-chip glass-effect-interactive"
           >
+            <span className="fleet-directory-page__callsign-chip-icon" aria-hidden>
+              <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-chip-${entry.slug}`} className="fleet-directory-page__callsign-icon" />
+            </span>
             {entry.callsign}
           </Link>
         ))}
@@ -61,9 +65,14 @@ export default function FleetDirectory() {
             <li key={entry.unitId}>
               <GlassEffectContainer className="fleet-directory-card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
                 <article className="fleet-directory-card__inner">
-                  <p className="fleet-directory-card__bay">
-                    Bay {String(entry.slot + 1).padStart(2, "0")} · {entry.callsign} · {entry.aircraftOfficialName}
-                  </p>
+                  <div className="fleet-directory-card__media">
+                    <span className="fleet-directory-card__icon-wrap" aria-hidden>
+                      <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-hired-${entry.slug}`} className="fleet-directory-card__icon" />
+                    </span>
+                    <p className="fleet-directory-card__bay">
+                      Bay {String(entry.slot + 1).padStart(2, "0")} · {entry.callsign} · {entry.aircraftOfficialName}
+                    </p>
+                  </div>
                   <h3 className="fleet-directory-card__name">
                     <Link to={entry.pagePath}>{entry.seoTitle.replace(" | USJET Fleet Directory", "")}</Link>
                   </h3>
@@ -97,9 +106,14 @@ export default function FleetDirectory() {
             <li key={entry.unitId}>
               <GlassEffectContainer className="fleet-directory-card fleet-directory-card--available glass-effect glass-effect--rounded-rect liquid-glass-background">
                 <article className="fleet-directory-card__inner">
-                  <p className="fleet-directory-card__bay">
-                    Bay {String(entry.slot + 1).padStart(2, "0")} · {entry.callsign}
-                  </p>
+                  <div className="fleet-directory-card__media">
+                    <span className="fleet-directory-card__icon-wrap" aria-hidden>
+                      <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-available-${entry.slug}`} className="fleet-directory-card__icon" />
+                    </span>
+                    <p className="fleet-directory-card__bay">
+                      Bay {String(entry.slot + 1).padStart(2, "0")} · {entry.callsign}
+                    </p>
+                  </div>
                   <h3 className="fleet-directory-card__name">
                     <Link to={entry.pagePath}>
                       {entry.callsign} · {entry.name}

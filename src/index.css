@@ -1194,26 +1194,6 @@
   min-width: 0;
 }
 
-.usjet-global-contact-bar__jet {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding-left: 0.05rem;
-}
-
-.usjet-global-contact-bar__jet-icon {
-  width: 0.62rem;
-  height: 0.62rem;
-  filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.75)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.35));
-}
-
-.usjet-global-contact-bar__jet-icon .aircraft-icon__vector path,
-.usjet-global-contact-bar__jet-icon .aircraft-icon__vector ellipse,
-.usjet-global-contact-bar__jet-icon .aircraft-icon__vector circle {
-  stroke: rgba(165, 243, 252, 0.95);
-}
-
 .usjet-global-contact-bar__brand {
   display: inline-flex;
   align-items: center;
@@ -1722,7 +1702,7 @@
 .site-latch-menu {
   position: fixed;
   inset: 0;
-  z-index: 255;
+  z-index: 265;
   pointer-events: none;
 }
 
@@ -1740,7 +1720,7 @@
 
 .site-latch-menu__anchor {
   position: fixed;
-  left: 0;
+  left: max(0px, env(safe-area-inset-left, 0px));
   top: 50%;
   z-index: 3;
   transform: translateY(-50%);
@@ -1750,29 +1730,49 @@
 .site-latch-menu__latch {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 1.15rem;
-  height: 2.65rem;
-  padding: 0;
+  gap: 0.2rem;
+  width: 1.65rem;
+  height: 4.25rem;
+  padding: 0.35rem 0.15rem;
   margin: 0;
-  border: 1px solid rgba(34, 211, 238, 0.28);
+  border: 1px solid rgba(34, 211, 238, 0.55);
   border-left: none;
-  border-radius: 0 0.4rem 0.4rem 0;
-  background: rgba(2, 8, 23, 0.78);
+  border-radius: 0 0.55rem 0.55rem 0;
+  background: linear-gradient(90deg, rgba(2, 8, 23, 0.95), rgba(8, 47, 73, 0.88));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    2px 0 10px rgba(34, 211, 238, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 18px rgba(34, 211, 238, 0.28),
+    2px 0 14px rgba(34, 211, 238, 0.2);
   pointer-events: auto;
   cursor: pointer;
-  color: rgba(165, 243, 252, 0.92);
+  color: rgba(165, 243, 252, 0.98);
   font: inherit;
   touch-action: manipulation;
   transform: none;
+  animation: site-latch-menu-pulse 2.8s ease-in-out infinite;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     background 0.2s ease;
+}
+
+@keyframes site-latch-menu-pulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 12px rgba(34, 211, 238, 0.22),
+      2px 0 10px rgba(34, 211, 238, 0.16);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      0 0 22px rgba(34, 211, 238, 0.42),
+      2px 0 16px rgba(34, 211, 238, 0.3);
+  }
 }
 
 .site-latch-menu__latch::before {
@@ -1794,14 +1794,28 @@
   transform: none;
 }
 
+.site-latch-menu__latch-label {
+  display: block;
+  font-size: 0.42rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  color: rgba(103, 232, 249, 0.95);
+  text-shadow: 0 0 8px rgba(34, 211, 238, 0.45);
+}
+
 .site-latch-menu__latch-hook {
   display: block;
-  width: 0.38rem;
-  height: 0.82rem;
-  border: 1.5px solid rgba(103, 232, 249, 0.85);
+  width: 0.48rem;
+  height: 0.95rem;
+  border: 1.5px solid rgba(103, 232, 249, 0.9);
   border-radius: 0.14rem 0.14rem 0.32rem 0.32rem;
   border-top: none;
-  box-shadow: 0 0 6px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.4);
 }
 
 .site-latch-menu__latch-hook::before {
@@ -1825,7 +1839,7 @@
 
 .site-latch-menu__panel-wrap {
   position: fixed;
-  left: 1.15rem;
+  left: max(1.65rem, calc(env(safe-area-inset-left, 0px) + 1.65rem));
   top: 50%;
   z-index: 2;
   max-height: min(78vh, 40rem);
@@ -2022,6 +2036,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-latch-menu__latch {
+    animation: none;
+  }
+
   .site-latch-menu__panel-wrap {
     transition: none;
   }
@@ -2968,7 +2986,7 @@
   width: 1.55rem;
   height: 1.55rem;
   opacity: 0.9;
-  filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.32));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 5px rgba(34, 211, 238, 0.32));
   transform: rotate(-90deg);
 }
 
@@ -5558,143 +5576,6 @@
   position: relative;
 }
 
-/* Fleet landing — F-22 mesh wireframe + Knicks logo hero */
-.fleet-knicks-f22 {
-  margin: 0 auto;
-  width: 100%;
-}
-
-.fleet-knicks-f22__frame {
-  position: relative;
-  overflow: hidden;
-  padding: 1.1rem 1rem 0.85rem;
-  border-radius: 1.35rem;
-}
-
-.fleet-knicks-f22__glow {
-  position: absolute;
-  inset: -20% -10%;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 55% 70% at 72% 42%, rgba(245, 132, 38, 0.22), transparent 62%),
-    radial-gradient(ellipse 50% 65% at 28% 58%, rgba(0, 107, 182, 0.2), transparent 58%);
-  animation: fleet-knicks-f22-glow-pulse 4.5s ease-in-out infinite;
-}
-
-@keyframes fleet-knicks-f22-glow-pulse {
-  0%,
-  100% {
-    opacity: 0.72;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.03);
-  }
-}
-
-.fleet-knicks-f22__stage {
-  position: relative;
-  z-index: 1;
-  width: min(100%, 16rem);
-  margin: 0 auto;
-}
-
-.fleet-knicks-f22__badge {
-  position: relative;
-  width: 100%;
-}
-
-.fleet-knicks-f22__logo {
-  display: block;
-  width: 100%;
-  height: auto;
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
-}
-
-.fleet-knicks-f22__jet-inset {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  top: 58%;
-  width: 28%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  clip-path: polygon(50% 4%, 90% 96%, 10% 96%);
-}
-
-.fleet-knicks-f22__wireframe {
-  display: block;
-  width: 108%;
-  height: 108%;
-  object-fit: contain;
-  transform: rotate(180deg);
-  animation: fleet-knicks-f22-drift 7s ease-in-out infinite;
-  transform-origin: 50% 50%;
-  opacity: 0.92;
-}
-
-@keyframes fleet-knicks-f22-drift {
-  0%,
-  100% {
-    transform: rotate(180deg) translateX(0);
-  }
-  50% {
-    transform: rotate(180deg) translateX(3px);
-  }
-}
-
-.fleet-knicks-f22__caption {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem 0.85rem;
-  margin-top: 0.55rem;
-  padding-top: 0.55rem;
-  border-top: 1px solid rgba(0, 107, 182, 0.22);
-}
-
-.fleet-knicks-f22__callsign {
-  font-size: 0.62rem;
-  font-weight: 900;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: #f58426;
-}
-
-.fleet-knicks-f22__tag {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(148, 163, 184, 0.85);
-}
-
-@media (min-width: 640px) {
-  .fleet-knicks-f22__frame {
-    padding: 1.35rem 1.25rem 1rem;
-  }
-
-  .fleet-knicks-f22__stage {
-    width: min(100%, 20rem);
-  }
-
-  .fleet-knicks-f22__jet-inset {
-    width: 26%;
-    top: 57%;
-  }
-}
-
 .fleet-page--runway::before {
   content: "";
   position: fixed;
@@ -8074,12 +7955,19 @@ html.code-kit-page-root #usjet-app-shell {
 
 .fleet-card--bay-accent:hover .fleet-card__aircraft,
 .fleet-card--bay-accent:focus-visible .fleet-card__aircraft {
-  filter: drop-shadow(0 0 8px rgba(var(--fleet-accent-rgb), 0.45));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 8px rgba(var(--fleet-accent-rgb), 0.45));
 }
 
 .aircraft-icon {
+  --aircraft-wireframe-filter: brightness(0) invert(1);
   display: block;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
 }
 
 .aircraft-icon__vector {
@@ -8119,7 +8007,7 @@ html.code-kit-page-root #usjet-app-shell {
 .fleet-card:hover .fleet-card__aircraft,
 .fleet-card:focus-visible .fleet-card__aircraft {
   transform: translate3d(3px, -5px, 0) scale(1.05) rotate(-4deg);
-  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.45));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 8px rgba(96, 165, 250, 0.45));
 }
 
 button.fleet-card {
@@ -8136,7 +8024,7 @@ button.fleet-card {
 
 /* Legacy / sunset bays (e.g. discontinued product) */
 .fleet-card--legacy .aircraft-icon {
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
   opacity: 0.78;
 }
 
@@ -9756,6 +9644,51 @@ button.fleet-card {
   color: rgba(165, 243, 252, 0.98);
 }
 
+.fleet-directory-page__callsign-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-right: 0.35rem;
+}
+
+.fleet-directory-page__callsign-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.fleet-directory-card__media {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.65rem;
+}
+
+.fleet-directory-card__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 18px;
+  background: rgba(2, 12, 35, 0.7);
+  border: 1px solid rgba(103, 232, 249, 0.18);
+}
+
+.fleet-directory-card__icon {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+.fleet-directory-card--available .fleet-directory-card__icon-wrap {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.fleet-directory-card--available .fleet-directory-card__icon {
+  opacity: 0.85;
+}
+
 .fleet-directory-card--available {
   opacity: 0.92;
 }
@@ -9937,7 +9870,7 @@ button.fleet-card {
 .founder-jet-wing__jet:hover .founder-jet-wing__icon,
 .founder-jet-wing__jet:focus-visible .founder-jet-wing__icon {
   opacity: 1;
-  filter: drop-shadow(0 0 7px color-mix(in srgb, var(--founder-jet-accent) 55%, transparent));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 7px color-mix(in srgb, var(--founder-jet-accent) 55%, transparent));
 }
 
 @media (min-width: 1080px) {
@@ -9960,7 +9893,7 @@ button.fleet-card {
 
 .founder-jet-wing__jet--command:hover .founder-jet-wing__icon,
 .founder-jet-wing__jet--command:focus-visible .founder-jet-wing__icon {
-  filter: drop-shadow(0 0 9px rgba(251, 191, 36, 0.45));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 9px rgba(251, 191, 36, 0.45));
 }
 
 .founder-jet-wing__callsign {
@@ -10542,7 +10475,7 @@ button.fleet-card {
 }
 
 .founder-story__vector-silhouette.aircraft-icon {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
 }
 
 .founder-story__worker-silhouette {
@@ -10657,7 +10590,7 @@ button.fleet-card {
   width: 1.65rem;
   height: 1.65rem;
   opacity: 0.92;
-  filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.35));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 3px rgba(34, 211, 238, 0.35));
 }
 
 .founder-escort-jet .aircraft-icon__vector path,
@@ -21309,7 +21242,7 @@ html.direct-fuel-page-root #usjet-app-shell {
   width: min(72vw, 17rem);
   height: min(72vw, 17rem);
   color: var(--callsign-accent);
-  filter: drop-shadow(0 0 24px rgba(var(--callsign-accent-rgb), 0.52));
+  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 24px rgba(var(--callsign-accent-rgb), 0.52));
 }
 
 .fleet-callsign-page__intel {
@@ -24232,16 +24165,17 @@ html.b2b-page-root #usjet-app-shell {
   overflow: visible;
   isolation: isolate;
   text-decoration: none;
-  border: 1px solid rgba(96, 165, 250, 0.55);
+  border: 1px solid rgba(59, 130, 246, 0.75);
   background: linear-gradient(
     145deg,
-    rgba(30, 64, 175, 0.55) 0%,
-    rgba(37, 99, 235, 0.75) 45%,
-    rgba(2, 8, 23, 0.92) 100%
+    rgba(37, 99, 235, 0.85) 0%,
+    rgba(59, 130, 246, 0.95) 45%,
+    rgba(15, 45, 120, 0.88) 100%
   );
   box-shadow:
-    0 0 14px rgba(59, 130, 246, 0.45),
-    inset 0 0 12px rgba(191, 219, 254, 0.18);
+    0 0 18px rgba(59, 130, 246, 0.65),
+    0 0 32px rgba(96, 165, 250, 0.35),
+    inset 0 0 14px rgba(147, 197, 253, 0.25);
 }
 
 .app-nav-blue__label {
@@ -24312,11 +24246,11 @@ html.b2b-page-root #usjet-app-shell {
   z-index: 1;
   background: linear-gradient(
     105deg,
-    transparent 38%,
-    rgba(191, 219, 254, 0.15) 44%,
-    rgba(255, 255, 255, 0.75) 50%,
-    rgba(191, 219, 254, 0.15) 56%,
-    transparent 62%
+    transparent 30%,
+    rgba(59, 130, 246, 0.35) 40%,
+    rgba(96, 165, 250, 0.9) 50%,
+    rgba(59, 130, 246, 0.35) 60%,
+    transparent 70%
   );
   pointer-events: none;
 }
@@ -24327,10 +24261,11 @@ html.b2b-page-root #usjet-app-shell {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fff;
+  background: rgba(96, 165, 250, 1);
   box-shadow:
-    0 0 6px rgba(191, 219, 254, 1),
-    0 0 12px rgba(59, 130, 246, 0.95);
+    0 0 8px rgba(96, 165, 250, 1),
+    0 0 16px rgba(59, 130, 246, 0.95),
+    0 0 24px rgba(59, 130, 246, 0.65);
   pointer-events: none;
 }
 
@@ -24385,28 +24320,30 @@ html.b2b-page-root #usjet-app-shell {
   100% {
     background: linear-gradient(
       145deg,
-      rgba(30, 64, 175, 0.55) 0%,
-      rgba(37, 99, 235, 0.75) 45%,
-      rgba(2, 8, 23, 0.92) 100%
+      rgba(37, 99, 235, 0.75) 0%,
+      rgba(59, 130, 246, 0.85) 45%,
+      rgba(15, 45, 120, 0.8) 100%
     );
-    border-color: rgba(96, 165, 250, 0.55);
+    border-color: rgba(59, 130, 246, 0.65);
     box-shadow:
       0 0 14px rgba(59, 130, 246, 0.45),
-      inset 0 0 12px rgba(191, 219, 254, 0.18);
+      0 0 24px rgba(96, 165, 250, 0.2),
+      inset 0 0 12px rgba(147, 197, 253, 0.18);
   }
 
   50% {
     background: linear-gradient(
       145deg,
-      rgba(37, 99, 235, 0.95) 0%,
-      rgba(59, 130, 246, 1) 50%,
-      rgba(29, 78, 216, 0.95) 100%
+      rgba(59, 130, 246, 0.98) 0%,
+      rgba(96, 165, 250, 1) 50%,
+      rgba(37, 99, 235, 0.98) 100%
     );
-    border-color: rgba(191, 219, 254, 0.95);
+    border-color: rgba(147, 197, 253, 0.95);
     box-shadow:
-      0 0 22px rgba(59, 130, 246, 0.95),
-      0 0 36px rgba(37, 99, 235, 0.75),
-      inset 0 0 18px rgba(219, 234, 254, 0.45);
+      0 0 28px rgba(96, 165, 250, 0.95),
+      0 0 52px rgba(59, 130, 246, 0.65),
+      0 0 80px rgba(59, 130, 246, 0.35),
+      inset 0 0 20px rgba(147, 197, 253, 0.55);
   }
 }
 

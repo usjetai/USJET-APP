@@ -1,0 +1,65 @@
+{
+  "generatedAt": "2026-06-15T15:14:25.846Z",
+  "assets": [
+    {
+      "file": "sr71.svg",
+      "commons": "Lockheed SR-71A 3view.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Lockheed_SR-71A_3view.svg",
+      "note": "USAF public domain — SR-71 Blackbird top plan (cropped from 3-view)"
+    },
+    {
+      "file": "f22.svg",
+      "commons": "Lockheed YF-22 Lightning II 3-view.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Lockheed_YF-22_Lightning_II_3-view.svg",
+      "note": "F-22 Raptor prototype top plan (cropped from YF-22 3-view)"
+    },
+    {
+      "file": "f35.svg",
+      "commons": "F16 drawing.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/f/ff/F16_drawing.svg",
+      "note": "US Government — F-16 top plan (cropped from 3-view; F-35 tier)"
+    },
+    {
+      "file": "b2.svg",
+      "commons": "B-2 Sprit template.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a3/B-2_Sprit_template.svg",
+      "note": "B-2 Spirit plan template"
+    },
+    {
+      "file": "b52.svg",
+      "commons": "Boeing B-52 Stratofortress evolution, part 1.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Boeing_B-52_Stratofortress_evolution%2C_part_1.svg",
+      "note": "B-52 Stratofortress evolution silhouette"
+    },
+    {
+      "file": "c130.svg",
+      "commons": "Lockheed C-130H Hercules Line Drawing.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Lockheed_C-130H_Hercules_Line_Drawing.svg",
+      "note": "C-130H Hercules top plan (cropped from line drawing)"
+    },
+    {
+      "file": "globalHawk.svg",
+      "commons": "General Atomics MQ-1 Predator miniature profile silhouette.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/6/63/General_Atomics_MQ-1_Predator_miniature_profile_silhouette.svg",
+      "note": "UAV silhouette (Global Hawk tier — MQ-1 Predator PD SVG)"
+    },
+    {
+      "file": "v22.svg",
+      "commons": "Bell Boeing MV-22 Osprey line drawing.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Bell_Boeing_MV-22_Osprey_line_drawing.svg",
+      "note": "MV-22 Osprey top plan (cropped from line drawing)"
+    },
+    {
+      "file": "cessna.svg",
+      "commons": "Robin DR400 silhouette.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Robin_DR400_silhouette.svg",
+      "note": "Light GA silhouette (open bay placeholder)"
+    },
+    {
+      "file": "bizjet.svg",
+      "commons": "Generic turbofan airplane.svg",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Generic_turbofan_airplane.svg",
+      "note": "Generic turbofan plan view"
+    }
+  ]
+}

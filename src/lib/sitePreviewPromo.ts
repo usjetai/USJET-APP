@@ -1,6 +1,6 @@
-/** Full-site preview window — open through USA 250 (July 4, 2026), then tier gates return. */
+/** Full-site preview window — ENDED. All pages now require membership tier. */
 
-export const SITE_PREVIEW_END_MS = Date.parse("2026-07-05T03:59:59.999Z");
+export const SITE_PREVIEW_END_MS = Date.parse("2026-06-13T00:00:00.000Z");
 
 export function isSitePreviewPromoActive(nowMs = Date.now()): boolean {
   return nowMs < SITE_PREVIEW_END_MS;

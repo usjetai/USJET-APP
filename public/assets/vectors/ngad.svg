@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+  <defs><style>.aircraft-stroke { fill: none; stroke: #fff; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }</style></defs>
+  <path class="aircraft-stroke" d="M40 5 L20 35 L40 32 L60 35 L40 5 Z" />
+  <path class="aircraft-stroke" d="M40 32 Q25 42 12 54 Q40 58 68 54 Q55 42 40 32 Z" />
+  <path class="aircraft-stroke" d="M40 32 L40 64" />
+  <path class="aircraft-stroke" d="M12 52 L6 58 M68 52 L74 58" />
+  <circle class="aircraft-stroke" cx="40" cy="10" r="2" />
+</svg>

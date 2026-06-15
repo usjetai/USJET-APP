@@ -11,7 +11,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://gemini.google.com/app",
     status: "active",
     aura: "idle",
-    aircraftType: "sr71",
+    aircraftType: "f35",
   },
   {
     id: "1",
@@ -44,7 +44,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.perplexity.ai",
     status: "active",
     aura: "idle",
-    aircraftType: "cessna",
+    aircraftType: "f86",
   },
   {
     id: "4",
@@ -88,7 +88,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://lumalabs.ai/dream-machine",
     status: "active",
     aura: "idle",
-    aircraftType: "sr71",
+    aircraftType: "x37b",
   },
   {
     id: "8",
@@ -99,7 +99,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://chatgpt.com",
     status: "active",
     aura: "idle",
-    aircraftType: "sr71",
+    aircraftType: "x51",
   },
   {
     id: "9",
@@ -110,7 +110,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://higgsfield.ai",
     status: "staging",
     aura: "idle",
-    aircraftType: "b52",
+    aircraftType: "b1",
   },
   {
     id: "10",
@@ -132,7 +132,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://runway.com",
     status: "active",
     aura: "idle",
-    aircraftType: "b52",
+    aircraftType: "b21",
   },
   {
     id: "12",
@@ -143,7 +143,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://firefly.adobe.com",
     status: "active",
     aura: "idle",
-    aircraftType: "v22",
+    aircraftType: "mq25",
   },
   {
     id: "13",
@@ -154,7 +154,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.canva.com/ai",
     status: "active",
     aura: "idle",
-    aircraftType: "bizjet",
+    aircraftType: "fa18",
   },
   {
     id: "14",
@@ -176,7 +176,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://suno.com",
     status: "active",
     aura: "idle",
-    aircraftType: "bizjet",
+    aircraftType: "fa18",
   },
   {
     id: "16",
@@ -187,7 +187,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://elevenlabs.io",
     status: "active",
     aura: "idle",
-    aircraftType: "bizjet",
+    aircraftType: "fa18",
   },
   {
     id: "17",
@@ -198,7 +198,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://play.ht",
     status: "staging",
     aura: "idle",
-    aircraftType: "bizjet",
+    aircraftType: "fa18",
   },
   {
     id: "18",
@@ -209,7 +209,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://synthesia.io",
     status: "staging",
     aura: "idle",
-    aircraftType: "bizjet",
+    aircraftType: "fa18",
   },
   {
     id: "19",
@@ -231,7 +231,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://v0.dev",
     status: "active",
     aura: "idle",
-    aircraftType: "v22",
+    aircraftType: "mq28",
   },
   {
     id: "21",
@@ -264,7 +264,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://consensus.app",
     status: "active",
     aura: "idle",
-    aircraftType: "sr71",
+    aircraftType: "darkstar",
   },
   {
     id: "24",
@@ -275,7 +275,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://gamma.app",
     status: "active",
     aura: "idle",
-    aircraftType: "b52",
+    aircraftType: "a12",
   },
   {
     id: "25",
@@ -286,7 +286,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.notion.so/product/ai",
     status: "active",
     aura: "idle",
-    aircraftType: "c130",
+    aircraftType: "f16v",
   },
   {
     id: "26",
@@ -297,7 +297,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://jasper.ai",
     status: "active",
     aura: "idle",
-    aircraftType: "c130",
+    aircraftType: "f4",
   },
   {
     id: "27",

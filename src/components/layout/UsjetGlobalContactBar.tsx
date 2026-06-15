@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Gem } from "lucide-react";
 import UsjetWordmark from "../brand/UsjetWordmark";
-import AircraftIcon from "../icons/AircraftIcons";
 import GlassEffectContainer from "./GlassEffectContainer";
 import FooterSurpriseWrap from "./FooterSurpriseWrap";
 import WefunderCovenantBridge from "../campaign/WefunderCovenantBridge";
@@ -18,9 +17,6 @@ export default function UsjetGlobalContactBar() {
     <footer className="usjet-global-contact-bar" aria-label="USJET site status and quick links">
       <GlassEffectContainer className="usjet-global-contact-bar__shell liquid-glass-background glass-effect glass-effect--capsule glass-tint-cyan">
         <div className="usjet-global-contact-bar__start">
-          <span className="usjet-global-contact-bar__jet" aria-hidden>
-            <AircraftIcon aircraftType="f22" accentId="footer-corner-f22" className="usjet-global-contact-bar__jet-icon" />
-          </span>
           <Link
             to="/"
             className="usjet-global-contact-bar__brand btn-glass glass-effect-interactive"

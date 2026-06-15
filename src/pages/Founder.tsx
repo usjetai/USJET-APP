@@ -180,7 +180,7 @@ const Founder = () => {
                     <AircraftIcon aircraftType="f22" accentId="escort-1" className="founder-escort-jet" />
                   </span>
                   <span className="founder-social__escort-slot founder-social__escort-slot--lead">
-                    <AircraftIcon aircraftType="sr71" accentId="escort-2" className="founder-escort-jet" />
+                    <AircraftIcon aircraftType="darkstar" accentId="escort-2" className="founder-escort-jet" />
                   </span>
                   <span className="founder-social__escort-slot founder-social__escort-slot--wing">
                     <AircraftIcon aircraftType="f35" accentId="escort-3" className="founder-escort-jet" />

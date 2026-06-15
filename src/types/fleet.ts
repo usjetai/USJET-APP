@@ -3,16 +3,42 @@ export type FleetUnitStatus = "active" | "unlocking" | "locked" | "staging";
 export type FleetAuraMode = "idle" | "listening" | "processing" | "talking";
 
 export type FleetAircraftType =
-  | "sr71"
+  // Stealth & Gen 6
   | "f22"
   | "f35"
+  | "b21"
+  | "j36"
+  | "ngad"
+  // Experimental/Advanced
+  | "yf23"
+  | "x47b"
+  | "x37b"
+  | "x51"
+  | "pca"
+  // Strategic/Strike
   | "b2"
-  | "b52"
-  | "c130"
+  | "b1"
+  | "a12"
+  | "darkstar"
+  | "fb22"
+  // Tactical/Combat
+  | "f15ex"
+  | "f16v"
+  | "fa18"
+  | "a10"
+  | "f117"
+  // Unmanned/Wingman
+  | "mq25"
+  | "mq28"
+  | "xq58"
+  | "rq180"
   | "globalHawk"
-  | "v22"
-  | "cessna"
-  | "bizjet";
+  // Legacy/Heritage
+  | "f14"
+  | "f4"
+  | "f104"
+  | "f86"
+  | "x59";
 
 export type FleetInputMode = "text" | "voice" | "both";
 

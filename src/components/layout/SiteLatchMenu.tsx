@@ -114,6 +114,9 @@ export default function SiteLatchMenu() {
           title="Full flight deck — every page"
           onClick={toggle}
         >
+          <span className="site-latch-menu__latch-label" aria-hidden>
+            Deck
+          </span>
           <span className="site-latch-menu__latch-hook" aria-hidden />
         </button>
       </div>

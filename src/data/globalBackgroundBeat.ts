@@ -1,5 +1,5 @@
 /** Flip to `false` to kill site-wide YouTube background beat. */
-export const GLOBAL_BACKGROUND_BEAT_ENABLED = true;
+export const GLOBAL_BACKGROUND_BEAT_ENABLED = false;
 
 /** Active beat slot — `1` = background beat II only. */
 export const GLOBAL_BACKGROUND_BEAT_START_INDEX = 1;

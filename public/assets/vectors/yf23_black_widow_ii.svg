@@ -1,0 +1,150 @@
+<svg preserveAspectRatio="xMidYMid meet"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="268.53897mm"
+   height="186.91217mm"
+   viewBox="134.0328993 -5.6073651 140.1134358 198.1269002"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="YF-22 et YF-23.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path905"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-4"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path905-4"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.47"
+     inkscape:cx="620.46009"
+     inkscape:cy="355.2226"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:snap-global="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="716"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid834"
+       originx="329.85422"
+       originy="-54.180687" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(329.85422,-55.907143)">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.34999228;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect5094"
+       width="268.53897"
+       height="186.91217"
+       x="-329.85422"
+       y="55.907143" />
+    <g
+       id="g5092">
+      <path
+         sodipodi:nodetypes="ccccccccccccccccccccccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="path826"
+         d="m -289.98333,199.36875 8.46667,0.26458 22.75417,-19.84375 11.64166,41.275 15.08125,0.52917 53.18125,-47.625 32.01458,-3.70417 11.64167,-11.1125 c 17.65465,-1.82056 35.401332,-3.45705 50.799998,-9.78958 -11.558135,-5.72077 -32.269198,-7.37356 -51.858328,-9.525 l -11.64167,-12.96458 -31.22083,-1.85209 -53.975,-47.88958 -13.75834,-0.264583 -12.43541,42.068753 -23.28334,-19.57917 -8.20208,-0.529167 -7.40833,28.310417 13.22916,0.52917 8.46667,9.525 4.49792,-0.52917 -3.43959,5.29167 3.70417,4.7625 h -4.7625 l -3.43958,2.11666 2.91041,2.91042 5.55625,0.26458 -4.23333,4.23334 4.23333,5.02708 -4.23333,-0.26458 -10.05417,10.05416 h -12.17083 z"
+         style="opacity:1;fill:#cccccc;fill-rule:evenodd;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccccccccccccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="path828"
+         d="m -282.83958,205.71875 23.8125,-29.10417 38.1,46.0375 11.37708,-0.52916 48.94792,-58.7375 c 25.40064,-2.24079 57.54972,-3.70933 76.2,-14.02292 -11.044831,-8.31153 -41.37351,-11.27337 -76.99375,-14.55208 L -209.28541,76.072917 -220.6625,76.3375 -259.55625,122.90417 -282.575,93.8 h -8.46666 l -15.875,19.84375 8.99583,10.58333 -5.02708,3.43959 7.9375,9.78958 -10.05417,12.17083 10.05417,12.7 -7.67292,9.78959 4.23333,3.70416 -8.20208,9.26042 16.13958,20.6375 z"
+         style="opacity:0.50700001;fill:#ffaaaa;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <text
+         id="text832"
+         y="94.858337"
+         x="-116.94582"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-size:7.05555534px;fill:#ff0000;stroke-width:0.26458332px"
+           y="94.858337"
+           x="-116.94582"
+           id="tspan830"
+           sodipodi:role="line">Northrop YF-23</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path836"
+         d="m -148.64258,93.321038 h -52.44114"
+         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.36335632;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#DotS)" />
+      <text
+         id="text832-2"
+         y="116.025"
+         x="-115.87785"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:125%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-size:7.05555534px;fill:#000000;stroke-width:0.26458332px"
+           y="116.025"
+           x="-115.87785"
+           id="tspan830-4"
+           sodipodi:role="line">Lockheed YF 22</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path836-2"
+         d="m -148.64258,114.35911 h -52.44114"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.36335632;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#DotS-4)" />
+    </g>
+  </g>
+</svg>

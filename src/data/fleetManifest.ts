@@ -330,7 +330,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "/origin",
     status: "active",
     aura: "listening",
-    aircraftType: "f22",
+    aircraftType: "x59",
   },
 ];
 

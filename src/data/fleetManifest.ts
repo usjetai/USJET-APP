@@ -209,7 +209,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://synthesia.io",
     status: "staging",
     aura: "idle",
-    aircraftType: "fa18",
+    aircraftType: "a10",
   },
   {
     id: "19",

@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "export:brand-jpegs": "node scripts/export-brand-jpegs.mjs",
     "fetch:fleet-vectors": "node scripts/fetch-fleet-vector-assets.mjs",
+    "fetch:master-fleet-vectors": "node scripts/fetch-master-fleet-registry-vectors.mjs",
     "export:developer-pages-jpegs": "node scripts/export-developer-pages-jpegs.mjs",
     "export:hired-developer-jpegs": "node scripts/export-hired-developer-jpegs.mjs",
     "export:jetfighter-pages-jpegs": "node scripts/export-jetfighter-pages-jpegs.mjs",

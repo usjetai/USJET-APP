@@ -7,6 +7,7 @@ import GlassEffectContainer from "./GlassEffectContainer";
 import FleetOnlineCursorCluster from "./FleetOnlineCursorCluster";
 import MobileRotateCue from "./MobileRotateCue";
 import AppNavCashAppButton from "./AppNavCashAppButton";
+import UsjetOpsMailEnvelope from "./UsjetOpsMailEnvelope";
 import { BLOG_ROUTE } from "../../data/usjetBlog";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import OriginGateLink from "../origin/OriginGateLink";
@@ -113,6 +114,7 @@ const AppNav = () => {
         <span className="app-nav-divider app-nav-divider--media" aria-hidden />
 
         <div className="app-nav-zone app-nav-zone--media">
+          <UsjetOpsMailEnvelope className="app-nav-mail__envelope" />
           <AppNavCashAppButton />
 
           <NavLink

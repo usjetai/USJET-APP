@@ -7,33 +7,50 @@ import WefunderCovenantBridge from "../campaign/WefunderCovenantBridge";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
 import ZelleFuelChip from "../fuel/ZelleFuelChip";
 import GamingVrNavButton from "../gaming/GamingVrNavButton";
-import UsjetOpsMailEnvelope from "./UsjetOpsMailEnvelope";
 import SilentHangarAudioToggle from "../media/SilentHangarAudioToggle";
 import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "../../data/globalBackgroundBeat";
 
-/** Fixed bottom strip — home, jet, status, USA 250, SOS (emergency blink), CS/OPS (periodic shine). */
+/** Fixed bottom strip — brand, status, revenue lanes, SOS / Customer Service. */
 export default function UsjetGlobalContactBar() {
   return (
     <footer className="usjet-global-contact-bar" aria-label="USJET site status and quick links">
       <GlassEffectContainer className="usjet-global-contact-bar__shell liquid-glass-background glass-effect glass-effect--capsule glass-tint-cyan">
-        <div className="usjet-global-contact-bar__start">
-          <Link
-            to="/"
-            className="usjet-global-contact-bar__brand btn-glass glass-effect-interactive"
-            aria-label="USJet.ai home"
-          >
-            <UsjetWordmark size="nav" glow />
-          </Link>
-          <FooterSurpriseWrap chipId="ops-mail">
-            <UsjetOpsMailEnvelope className="usjet-global-contact-bar__ops-mail" />
-          </FooterSurpriseWrap>
+        <div className="usjet-global-contact-bar__row usjet-global-contact-bar__row--head">
+          <div className="usjet-global-contact-bar__lead">
+            <Link
+              to="/"
+              className="usjet-global-contact-bar__brand btn-glass glass-effect-interactive"
+              aria-label="USJet.ai home"
+            >
+              <UsjetWordmark size="nav" glow />
+            </Link>
+            <div className="usjet-global-contact-bar__status">
+              <span className="usjet-global-contact-bar__status-label">USJET System Active</span>
+              <span className="usjet-global-contact-bar__ping" aria-hidden />
+            </div>
+          </div>
+
+          <div className="usjet-global-contact-bar__support">
+            <FooterSurpriseWrap chipId="sos">
+              <Link to="/sos" className="usjet-global-contact-bar__sos btn-glass glass-effect-interactive">
+                SOS
+              </Link>
+            </FooterSurpriseWrap>
+            <FooterSurpriseWrap chipId="cs">
+              <Link
+                to={ORIGIN_CS_ROUTE}
+                className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
+              >
+                <span className="usjet-global-contact-bar__cs-label">Customer Service</span>
+              </Link>
+            </FooterSurpriseWrap>
+          </div>
         </div>
 
-        <div className="usjet-global-contact-bar__tail">
-          <div className="usjet-global-contact-bar__status">
-            <span className="usjet-global-contact-bar__status-label">USJET System Active</span>
-            <span className="usjet-global-contact-bar__ping" aria-hidden />
-          </div>
+        <nav
+          className="usjet-global-contact-bar__row usjet-global-contact-bar__row--lanes"
+          aria-label="USJET quick links"
+        >
           {GLOBAL_BACKGROUND_BEAT_ENABLED ? (
             <FooterSurpriseWrap chipId="background-beat">
               <SilentHangarAudioToggle className="usjet-global-contact-bar__beat-audio" />
@@ -151,20 +168,7 @@ export default function UsjetGlobalContactBar() {
               <span className="usjet-global-contact-bar__licensing-full">Brand Licensing</span>
             </Link>
           </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="sos">
-            <Link to="/sos" className="usjet-global-contact-bar__sos btn-glass glass-effect-interactive">
-              SOS
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="cs">
-            <Link
-              to={ORIGIN_CS_ROUTE}
-              className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
-            >
-              <span className="usjet-global-contact-bar__cs-label">Customer Service</span>
-            </Link>
-          </FooterSurpriseWrap>
-        </div>
+        </nav>
       </GlassEffectContainer>
     </footer>
   );

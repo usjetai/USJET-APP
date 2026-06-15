@@ -1157,12 +1157,10 @@
   pointer-events: auto;
   margin: 0 auto;
   max-width: min(72rem, 100%);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.18rem 0.32rem;
-  padding: 0.11rem 0.22rem;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 0.28rem;
+  padding: 0.3rem 0.48rem;
   font-size: 0.5rem;
   font-weight: 800;
   font-style: italic;
@@ -1171,27 +1169,51 @@
   color: rgba(255, 255, 255, 0.38);
 }
 
-.usjet-global-contact-bar__start {
+.usjet-global-contact-bar__row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.usjet-global-contact-bar__row--head {
+  justify-content: space-between;
+  gap: 0.45rem;
+}
+
+.usjet-global-contact-bar__row--lanes {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 0.22rem 0.28rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.usjet-global-contact-bar__row--lanes::-webkit-scrollbar {
+  display: none;
+}
+
+.usjet-global-contact-bar__lead {
   display: inline-flex;
   align-items: center;
-  gap: 0.18rem;
+  gap: 0.42rem;
   flex-shrink: 0;
+  min-width: 0;
 }
 
-.usjet-global-contact-bar__ops-mail.usjet-app-envelope {
-  width: 2rem;
-  height: 2rem;
-  flex-shrink: 0;
+.usjet-global-contact-bar__row--lanes .btn-glass,
+.usjet-global-contact-bar__support .btn-glass {
+  line-height: 1;
+  white-space: nowrap;
 }
 
-.usjet-global-contact-bar__tail {
+.usjet-global-contact-bar__support {
   display: inline-flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.2rem 0.32rem;
-  flex: 1 1 auto;
-  min-width: 0;
+  gap: 0.22rem;
+  flex-shrink: 0;
 }
 
 .usjet-global-contact-bar__brand {
@@ -1399,7 +1421,8 @@
   }
 
   .usjet-global-contact-bar__shell {
-    padding: 0.24rem 0.55rem;
+    padding: 0.34rem 0.62rem;
+    gap: 0.32rem;
   }
 
   .usjet-global-contact-bar__brand .usjet-logo-stone--nav {
@@ -1415,6 +1438,30 @@
   .usjet-global-contact-bar__cs,
   .usjet-global-contact-bar__ops {
     font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .usjet-global-contact-bar__shell {
+    padding: 0.28rem 0.38rem;
+    gap: 0.24rem;
+  }
+
+  .usjet-global-contact-bar__row--head {
+    gap: 0.32rem;
+  }
+
+  .usjet-global-contact-bar__row--lanes {
+    justify-content: flex-start;
+  }
+
+  .usjet-global-contact-bar__status-label {
+    font-size: 0.46rem;
+    letter-spacing: 0.16em;
+  }
+
+  .usjet-global-contact-bar__cs-label {
+    font-size: 0.44rem;
   }
 }
 

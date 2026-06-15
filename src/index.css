@@ -2986,7 +2986,7 @@
   width: 3.1rem;
   height: 3.1rem;
   opacity: 0.9;
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 5px rgba(34, 211, 238, 0.32));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 5px rgba(34, 211, 238, 0.32));
   transform: rotate(-90deg);
 }
 
@@ -7955,12 +7955,14 @@ html.code-kit-page-root #usjet-app-shell {
 
 .fleet-card--bay-accent:hover .fleet-card__aircraft,
 .fleet-card--bay-accent:focus-visible .fleet-card__aircraft {
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 8px rgba(var(--fleet-accent-rgb), 0.45));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 8px rgba(var(--fleet-accent-rgb), 0.45));
 }
 
 .aircraft-icon {
   --aircraft-logo-mult: 2;
-  --aircraft-wireframe-filter: brightness(0) invert(1);
+  --aircraft-sheet-bg: #cfc4a6;
+  --aircraft-wireframe-filter: none;
+  --aircraft-logo-glow: drop-shadow(0 0 8px rgba(207, 196, 166, 0.35));
   display: block;
   width: auto;
   height: auto;
@@ -7968,7 +7970,8 @@ html.code-kit-page-root #usjet-app-shell {
   max-height: 100%;
   object-fit: contain;
   object-position: center;
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+  filter: var(--aircraft-logo-glow);
+  border-radius: 0.45rem;
 }
 
 .aircraft-icon__vector {
@@ -8008,7 +8011,7 @@ html.code-kit-page-root #usjet-app-shell {
 .fleet-card:hover .fleet-card__aircraft,
 .fleet-card:focus-visible .fleet-card__aircraft {
   transform: translate3d(3px, -5px, 0) scale(1.05) rotate(-4deg);
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 8px rgba(96, 165, 250, 0.45));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 8px rgba(96, 165, 250, 0.45));
 }
 
 button.fleet-card {
@@ -8025,7 +8028,7 @@ button.fleet-card {
 
 /* Legacy / sunset bays (e.g. discontinued product) */
 .fleet-card--legacy .aircraft-icon {
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
   opacity: 0.78;
 }
 
@@ -9871,7 +9874,7 @@ button.fleet-card {
 .founder-jet-wing__jet:hover .founder-jet-wing__icon,
 .founder-jet-wing__jet:focus-visible .founder-jet-wing__icon {
   opacity: 1;
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 7px color-mix(in srgb, var(--founder-jet-accent) 55%, transparent));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 7px color-mix(in srgb, var(--founder-jet-accent) 55%, transparent));
 }
 
 @media (min-width: 1080px) {
@@ -9894,7 +9897,7 @@ button.fleet-card {
 
 .founder-jet-wing__jet--command:hover .founder-jet-wing__icon,
 .founder-jet-wing__jet--command:focus-visible .founder-jet-wing__icon {
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 9px rgba(251, 191, 36, 0.45));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 9px rgba(251, 191, 36, 0.45));
 }
 
 .founder-jet-wing__callsign {
@@ -10476,7 +10479,7 @@ button.fleet-card {
 }
 
 .founder-story__vector-silhouette.aircraft-icon {
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
 }
 
 .founder-story__worker-silhouette {
@@ -10591,7 +10594,7 @@ button.fleet-card {
   width: 3.3rem;
   height: 3.3rem;
   opacity: 0.92;
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 3px rgba(34, 211, 238, 0.35));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 3px rgba(34, 211, 238, 0.35));
 }
 
 .founder-escort-jet .aircraft-icon__vector path,
@@ -13100,6 +13103,16 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   margin-bottom: 0.35rem;
 }
 
+.member-usage__callsign {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(96, 165, 250, 0.92);
+  line-height: 1.2;
+}
+
 .member-usage__rank {
   font-size: 0.62rem;
   font-weight: 900;
@@ -13108,9 +13121,11 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 }
 
 .member-usage__name {
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: #f8fafc;
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(248, 250, 252, 0.72);
 }
 
 .member-usage__count {
@@ -21078,6 +21093,15 @@ html.direct-fuel-page-root #usjet-app-shell {
   color: rgba(103, 232, 249, 0.95);
 }
 
+.fleet-directory-card__developer {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.88);
+}
+
 .fleet-directory-card__category {
   margin: 0 0 0.45rem;
   font-size: 0.68rem;
@@ -21243,7 +21267,7 @@ html.direct-fuel-page-root #usjet-app-shell {
   width: min(72vw, 34rem);
   height: min(72vw, 34rem);
   color: var(--callsign-accent);
-  filter: var(--aircraft-wireframe-filter) drop-shadow(0 0 24px rgba(var(--callsign-accent-rgb), 0.52));
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 24px rgba(var(--callsign-accent-rgb), 0.52));
 }
 
 .fleet-callsign-page__intel {

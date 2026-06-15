@@ -115,7 +115,7 @@ export default function FleetCallsignPage() {
                     Fuel the fleet
                   </Link>
                   <Link to="/fleet-directory" className="fleet-callsign-page__secondary btn-glass glass-effect-interactive">
-                    All call signs
+                    All call names
                   </Link>
                 </>
               ) : (
@@ -147,10 +147,10 @@ export default function FleetCallsignPage() {
 
       <section className="fleet-callsign-page__intel" aria-label={`${entry.callsign} Jet Fighter profile`}>
         <GlassEffectContainer className="fleet-callsign-panel glass-effect glass-effect--rounded-rect liquid-glass-background">
-          <p className="fleet-callsign-panel__label">Call sign</p>
+          <p className="fleet-callsign-panel__label">Jet Fighter profile</p>
           <h2>{entry.callsign}</h2>
           <p>
-            Canonical Jet Fighter page for {entry.name}. Operators search and share this call sign—not a generic bay
+            Canonical Jet Fighter page for {entry.callsign}. Developer: {entry.name}. Operators search and share this call name—not a generic bay
             number.
           </p>
         </GlassEffectContainer>

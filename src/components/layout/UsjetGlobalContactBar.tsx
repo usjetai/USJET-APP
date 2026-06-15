@@ -4,7 +4,6 @@ import UsjetWordmark from "../brand/UsjetWordmark";
 import AircraftIcon from "../icons/AircraftIcons";
 import GlassEffectContainer from "./GlassEffectContainer";
 import FooterSurpriseWrap from "./FooterSurpriseWrap";
-import Usa250Countdown from "./Usa250Countdown";
 import WefunderCovenantBridge from "../campaign/WefunderCovenantBridge";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
 import ZelleFuelChip from "../fuel/ZelleFuelChip";
@@ -44,9 +43,6 @@ export default function UsjetGlobalContactBar() {
               <SilentHangarAudioToggle className="usjet-global-contact-bar__beat-audio" />
             </FooterSurpriseWrap>
           ) : null}
-          <FooterSurpriseWrap chipId="usa250">
-            <Usa250Countdown variant="footerStrip" />
-          </FooterSurpriseWrap>
           <FooterSurpriseWrap chipId="covenant">
             <span className="footer-surprise-wrap--covenant">
               <WefunderCovenantBridge variant="footer" />
@@ -92,7 +88,7 @@ export default function UsjetGlobalContactBar() {
             <Link
               to="/blog"
               className="usjet-global-contact-bar__blog btn-glass glass-effect-interactive glass-tint-cyan"
-              title="USJET Operator Log — daily blog to USA 250"
+              title="USJET Operator Log"
               aria-label="USJET blog and operator log"
             >
               Blog

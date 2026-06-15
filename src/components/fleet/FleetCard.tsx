@@ -161,8 +161,8 @@ export default function FleetCard({
           isAvailableBay && jetFighterPagePath
             ? `Open Jet Fighter page for ${callsign} (${name})`
             : expandInteractive
-              ? `Bring ${name} into its USJET cockpit — expand hangar bay ${typeof slot === "number" ? String(slot + 1).padStart(2, "0") : ""} (${callsign})`
-              : `Launch ${name} at ${domain}`
+              ? `Bring ${callsign} into its USJET cockpit — expand hangar bay ${typeof slot === "number" ? String(slot + 1).padStart(2, "0") : ""} (${name})`
+              : `Launch ${callsign} (${name}) at ${domain}`
         }
         onClick={handleClick}
         onKeyDown={handleKeyDown}
@@ -177,18 +177,21 @@ export default function FleetCard({
         </div>
 
         <div className="fleet-card__meta mt-auto text-left">
+          <h3 className="text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
+            {callsign}
+          </h3>
           {isAvailableBay ? (
-            <p className="text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">Available position</p>
+            <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">Available position</p>
           ) : isCommandBay ? (
-            <p className="text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
+            <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
           ) : expandInteractive ? (
-            <p className="text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/50">USJET fleet · consensus bay</p>
+            <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/50">USJET fleet · consensus bay</p>
           ) : (
-            <p className="text-[8px] font-black uppercase tracking-[0.28em] text-emerald-300/75">Hired developer</p>
+            <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-emerald-300/75">Hired developer</p>
           )}
           {typeof slot === "number" ? (
             <p
-              className={`fleet-card__bay-label text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}
+              className={`fleet-card__bay-label mt-1 text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}
             >
               Bay {String(slot + 1).padStart(2, "0")}
               {bayAccent ? (
@@ -196,9 +199,9 @@ export default function FleetCard({
               ) : null}
             </p>
           ) : null}
-          <h3 className="mt-2 text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
-            {name}
-          </h3>
+          {!isAvailableBay ? (
+            <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">{name}</p>
+          ) : null}
           {isAvailableBay ? (
             <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.2em] text-amber-200/65">Open position</p>
           ) : null}
@@ -208,11 +211,6 @@ export default function FleetCard({
             </p>
           ) : null}
           {capabilities && !isAvailableBay ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
-          <p
-            className={`mt-1 text-[10px] font-bold uppercase tracking-widest ${bayAccent ? "fleet-card__callsign" : "text-blue-400/90"}`}
-          >
-            {callsign}
-          </p>
           {!isAvailableBay ? (
             <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
           ) : (

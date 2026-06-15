@@ -34,8 +34,8 @@ export function buildFleetTileTerminalFeed(opts: {
     parts.push(opts.personality.toUpperCase());
   }
 
-  parts.push(opts.name.toUpperCase());
   parts.push(opts.callsign);
+  parts.push(opts.name.toUpperCase());
   parts.push(opts.domain.toUpperCase());
 
   if (opts.capabilities) {

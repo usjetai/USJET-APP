@@ -14,12 +14,12 @@ import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 export default function FleetDirectory() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "USJET Jet Fighter Directory — 30 AI Call Signs | USJet.ai";
+    document.title = "USJET Jet Fighter Directory — 30 Call Names | USJet.ai";
     const meta = document.querySelector('meta[name="description"]');
     const prevDesc = meta?.getAttribute("content") ?? "";
     meta?.setAttribute(
       "content",
-      "Thirty AI jet fighter call signs — each with its own USJET profile page. Seventeen hired developers on US fighter vectors, thirteen open positions recruiting.",
+      "Thirty AI jet fighter call names — each with its own USJET profile page. Seventeen hired developers on US fighter vectors, thirteen open positions recruiting.",
     );
     return () => {
       document.title = prev;
@@ -30,10 +30,10 @@ export default function FleetDirectory() {
   return (
     <div className="fleet-directory-page page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-32 pt-2 sm:px-6 lg:px-8">
       <header className="fleet-directory-page__hero mb-10">
-        <p className="fleet-directory-page__eyebrow">Jet Fighter index · {FLEET_JETFIGHTER_PAGE_COUNT} call signs</p>
+        <p className="fleet-directory-page__eyebrow">Jet Fighter index · {FLEET_JETFIGHTER_PAGE_COUNT} call names</p>
         <h1 className="fleet-directory-page__title">USJET Jet Fighter Directory</h1>
         <p className="fleet-directory-page__lede max-w-3xl">
-          Every AI jet has a call sign and its own page — {FLEET_JETFIGHTER_PAGE_COUNT} Jet Fighter profiles indexed for
+          Every AI jet has a call name and its own page — {FLEET_JETFIGHTER_PAGE_COUNT} Jet Fighter profiles indexed for
           search. {FLEET_HIRED_COUNT} hired on US fighter vectors, {FLEET_AVAILABLE_COUNT} open positions recruiting.
         </p>
         <Link to="/founders-fuel" className="fleet-directory-page__fuel-cta btn-glass-prominent glass-effect-interactive">
@@ -41,7 +41,7 @@ export default function FleetDirectory() {
         </Link>
       </header>
 
-      <nav className="fleet-directory-page__callsign-index mb-12" aria-label="All Jet Fighter call signs">
+      <nav className="fleet-directory-page__callsign-index mb-12" aria-label="All Jet Fighter call names">
         {FLEET_DIRECTORY_ENTRIES.map((entry) => (
           <Link
             key={entry.slug}
@@ -74,8 +74,9 @@ export default function FleetDirectory() {
                     </p>
                   </div>
                   <h3 className="fleet-directory-card__name">
-                    <Link to={entry.pagePath}>{entry.seoTitle.replace(" | USJET Fleet Directory", "")}</Link>
+                    <Link to={entry.pagePath}>{entry.callsign}</Link>
                   </h3>
+                  <p className="fleet-directory-card__developer">{entry.name}</p>
                   <p className="fleet-directory-card__category">{entry.category}</p>
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                   <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">
@@ -115,10 +116,9 @@ export default function FleetDirectory() {
                     </p>
                   </div>
                   <h3 className="fleet-directory-card__name">
-                    <Link to={entry.pagePath}>
-                      {entry.callsign} · {entry.name}
-                    </Link>
+                    <Link to={entry.pagePath}>{entry.callsign}</Link>
                   </h3>
+                  <p className="fleet-directory-card__developer">{entry.name}</p>
                   <p className="fleet-directory-card__category">{entry.category}</p>
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                   <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">

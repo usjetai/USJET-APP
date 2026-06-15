@@ -1168,7 +1168,7 @@ export default function Origin() {
                 Dismiss
               </button>
             </div>
-            <p className="origin-troubleshoot-panel__mono">Origin / Bay 30 / COMMAND-01</p>
+            <p className="origin-troubleshoot-panel__mono">Origin / Bay 30 / SOVEREIGN-30</p>
           </div>
         </>
       ) : null}

@@ -44,7 +44,7 @@ export default function MemberFleetControlBoard() {
                 href={launchUrl}
                 className="member-control-board__cell fleet-card member-control-board__cell--bay-accent glass-effect-interactive"
                 style={fleetBayAccentStyle(unit.slot)}
-                aria-label={`Launch ${unit.name} — ${unit.callsign}`}
+                aria-label={`Launch ${unit.callsign} — ${unit.name}`}
                 onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
                 onMouseEnter={() => publishLiveTerminalTile(terminalFeed)}
                 onMouseLeave={() => clearLiveTerminalTile()}

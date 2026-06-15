@@ -12,7 +12,7 @@ export type FleetDirectoryEntry = {
   unitId: string;
   /** Partner / AI workstation name from manifest. */
   name: string;
-  /** Jet Fighter call sign (always manifest callsign). */
+  /** Jet Fighter call name from manifest callsign. */
   callsign: string;
   slug: string;
   /** Canonical Jet Fighter profile URL. */
@@ -73,7 +73,7 @@ function buildDescription(
   if (rosterStatus === "available") {
     return `Bay open for recruiting — ${aircraftOfficialName}. ${category}. Join the USJET sovereign fleet runway at usjet.ai when this position clears.`;
   }
-  return `${name} (${callsign}) — ${aircraftOfficialName}. ${category}. Launch from the USJET sovereign cockpit at usjet.ai with integrated navigation to ${domain}. Hired developer bay with a US fighter jet vector on the runway.`;
+  return `${callsign} (${name}) — ${aircraftOfficialName}. ${category}. Launch from the USJET sovereign cockpit at usjet.ai with integrated navigation to ${domain}. Hired developer bay with a US fighter jet vector on the runway.`;
 }
 
 export function slugifyFleetCallsign(callsign: string): string {
@@ -114,8 +114,8 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
       aircraftOfficialName: roster.aircraftOfficialName,
       aircraftType: roster.aircraftType,
       seoTitle: available
-        ? `${unit.callsign} — ${unit.name} · Available Position | USJET Jet Fighter`
-        : `${unit.callsign} — ${unit.name} · ${roster.aircraftOfficialName} | USJET Jet Fighter`,
+        ? `${unit.callsign} · Available Position | USJET Jet Fighter`
+        : `${unit.callsign} · ${roster.aircraftOfficialName} | USJET Jet Fighter`,
       seoDescription: buildDescription(
         unit.name,
         category,

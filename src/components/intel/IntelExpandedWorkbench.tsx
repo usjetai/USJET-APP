@@ -34,7 +34,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
           <a
             className="intel-expanded__external"
             href={launchHref}
-            aria-label={`Launch ${unit.name} — integrated navigation`}
+            aria-label={`Launch ${unit.callsign} — integrated navigation`}
             onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
           >
             <ExternalLink size={16} strokeWidth={2} />

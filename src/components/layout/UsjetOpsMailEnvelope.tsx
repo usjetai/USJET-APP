@@ -5,7 +5,7 @@ type UsjetOpsMailEnvelopeProps = {
   className?: string;
 };
 
-/** Footer-only mailbox — opens mail to ops@usjet.ai (all USJET contact routes here). */
+/** Site-wide mailbox — opens mail to ops@usjet.ai (all USJET contact routes here). */
 export default function UsjetOpsMailEnvelope({ className = "" }: UsjetOpsMailEnvelopeProps) {
   return (
     <a

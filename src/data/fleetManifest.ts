@@ -220,7 +220,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.heygen.com",
     status: "active",
     aura: "idle",
-    aircraftType: "globalHawk",
+    aircraftType: "f117",
   },
   {
     id: "20",
@@ -231,7 +231,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://v0.dev",
     status: "active",
     aura: "idle",
-    aircraftType: "mq28",
+    aircraftType: "mq25",
   },
   {
     id: "21",

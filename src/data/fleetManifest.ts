@@ -264,7 +264,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://consensus.app",
     status: "active",
     aura: "idle",
-    aircraftType: "darkstar",
+    aircraftType: "rq180",
   },
   {
     id: "24",
@@ -275,7 +275,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://gamma.app",
     status: "active",
     aura: "idle",
-    aircraftType: "a12",
+    aircraftType: "globalHawk",
   },
   {
     id: "25",
@@ -286,7 +286,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://www.notion.so/product/ai",
     status: "active",
     aura: "idle",
-    aircraftType: "f16v",
+    aircraftType: "f14",
   },
   {
     id: "26",
@@ -308,7 +308,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://otter.ai",
     status: "active",
     aura: "idle",
-    aircraftType: "globalHawk",
+    aircraftType: "f104",
   },
   {
     id: "28",
@@ -319,7 +319,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://chat.deepseek.com",
     status: "staging",
     aura: "idle",
-    aircraftType: "f22",
+    aircraftType: "f86",
   },
   {
     id: "29",

@@ -22,7 +22,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
     href: "https://chatgpt.com",
     status: "active",
     aura: "idle",
-    aircraftType: "f22",
+    aircraftType: "f35",
   },
   {
     id: "2",

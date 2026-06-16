@@ -2796,6 +2796,16 @@
   text-decoration: none;
 }
 
+.fleet-card__free-shipping {
+  margin: 0;
+  text-align: center;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.88);
+}
+
 .fleet-card:focus-visible {
   outline: 2px solid rgba(56, 189, 248, 0.75);
   outline-offset: 4px;
@@ -21452,9 +21462,20 @@ html.direct-fuel-page-root #usjet-app-shell {
   text-align: center;
 }
 
+.product-page .glass-effect-container {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.product-page .glass-effect-container > * {
+  width: 100%;
+}
+
 .product-page__backlink {
   display: inline-flex;
-  margin: 0 0 1rem;
+  margin: 0 auto 1rem;
   font-size: 0.62rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -21493,6 +21514,7 @@ html.direct-fuel-page-root #usjet-app-shell {
   width: 100%;
   max-width: 42rem;
   margin-inline: auto;
+  text-align: center;
 }
 
 .product-page__eyebrow,
@@ -21548,6 +21570,17 @@ html.direct-fuel-page-root #usjet-app-shell {
   font-weight: 900;
   color: rgba(251, 191, 36, 0.95);
   text-shadow: 0 0 24px rgba(var(--product-accent-rgb), 0.35);
+}
+
+.product-page__shipping {
+  margin: 0.4rem 0 0;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(251, 191, 36, 0.88);
+  text-shadow: 0 0 16px rgba(var(--product-accent-rgb), 0.25);
 }
 
 .product-page__actions {
@@ -21620,21 +21653,18 @@ html.direct-fuel-page-root #usjet-app-shell {
 }
 
 .product-page__details {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 0.85rem;
   margin-top: 0.85rem;
-  justify-items: center;
-}
-
-@media (min-width: 900px) {
-  .product-page__details {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 .product-page__panel,
 .product-page__missing {
   width: 100%;
+  max-width: 48rem;
+  margin-inline: auto;
   padding: 1rem;
   border-color: rgba(var(--product-accent-rgb), 0.2);
   text-align: center;
@@ -21656,9 +21686,7 @@ html.direct-fuel-page-root #usjet-app-shell {
 }
 
 .product-page__panel--specs {
-  grid-column: 1 / -1;
   max-width: 48rem;
-  margin-inline: auto;
 }
 
 .product-page__spec-list {
@@ -21735,13 +21763,16 @@ html.direct-fuel-page-root #usjet-app-shell {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  width: 100%;
   padding: clamp(1.1rem, 3vw, 1.75rem);
+  text-align: center;
 }
 
 .product-page__lineup-copy {
   width: 100%;
   max-width: 36rem;
   margin-inline: auto;
+  text-align: center;
 }
 
 .product-page__lineup-item-title {

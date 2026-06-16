@@ -162,9 +162,14 @@ export default function FleetProductPage() {
             <p className="product-page__lede">{productLede}</p>
 
             {productPrice ? (
-              <p className="product-page__price" aria-label={`Price ${productPrice}`}>
-                {productPrice}
-              </p>
+              <>
+                <p className="product-page__price" aria-label={`Price ${productPrice}`}>
+                  {productPrice}
+                </p>
+                <p className="product-page__shipping" aria-label="Free shipping">
+                  Free shipping
+                </p>
+              </>
             ) : null}
 
             <div className="product-page__actions">
@@ -269,7 +274,9 @@ export default function FleetProductPage() {
           <p className="product-page__label">Product lineup</p>
           <h2 className="product-page__lineup-title">More from {entry.aircraftOfficialName}</h2>
           <div className="product-page__lineup-grid">
-            {productLineup.map((item) => (
+            {productLineup.map((item) => {
+              const lineupStripeLink = item.resolveStripePaymentLink?.();
+              return (
               <GlassEffectContainer
                 key={item.id}
                 className="product-page__lineup-item glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
@@ -280,20 +287,36 @@ export default function FleetProductPage() {
                     <h3 className="product-page__lineup-item-title">{item.title}</h3>
                     <p className="product-page__lede">{item.description}</p>
                     {item.price ? (
-                      <p className="product-page__price" aria-label={`Price ${item.price}`}>
-                        {item.price}
-                      </p>
+                      <>
+                        <p className="product-page__price" aria-label={`Price ${item.price}`}>
+                          {item.price}
+                        </p>
+                        <p className="product-page__shipping" aria-label="Free shipping">
+                          Free shipping
+                        </p>
+                      </>
                     ) : null}
                     <div className="product-page__actions">
-                      <button
-                        type="button"
-                        disabled
-                        aria-disabled="true"
-                        title="Buy link coming soon"
-                        className="product-page__buy product-page__buy--coming-soon btn-glass opacity-60 cursor-not-allowed"
-                      >
-                        Buy {item.title} · Coming soon
-                      </button>
+                      {lineupStripeLink ? (
+                        <a
+                          href={lineupStripeLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="product-page__buy btn-glass-prominent glass-effect-interactive"
+                        >
+                          Buy {item.title}
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled
+                          aria-disabled="true"
+                          title="Buy link coming soon"
+                          className="product-page__buy product-page__buy--coming-soon btn-glass opacity-60 cursor-not-allowed"
+                        >
+                          Buy {item.title} · Coming soon
+                        </button>
+                      )}
                     </div>
                   </div>
                   <div className="product-page__media" aria-label={`${item.title} product media`}>
@@ -309,7 +332,8 @@ export default function FleetProductPage() {
                   </div>
                 </div>
               </GlassEffectContainer>
-            ))}
+            );
+            })}
           </div>
         </section>
       ) : null}

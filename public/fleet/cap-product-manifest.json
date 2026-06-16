@@ -1,0 +1,152 @@
+[
+  {
+    "slug": "sr-71-blackbird",
+    "name": "SR-71 Blackbird",
+    "outPath": "public/fleet/sr-71-blackbird-cap-product.webp"
+  },
+  {
+    "slug": "f-35-lightning-ii",
+    "name": "F-35 Lightning II",
+    "outPath": "public/fleet/f-35-lightning-ii-cap-product.webp"
+  },
+  {
+    "slug": "b-21-raider",
+    "name": "B-21 Raider",
+    "outPath": "public/fleet/b-21-raider-cap-product.webp"
+  },
+  {
+    "slug": "j-36",
+    "name": "J-36",
+    "outPath": "public/fleet/j-36-cap-product.webp"
+  },
+  {
+    "slug": "ngad-platform",
+    "name": "NGAD Platform",
+    "outPath": "public/fleet/ngad-platform-cap-product.webp"
+  },
+  {
+    "slug": "yf-23-black-widow-ii",
+    "name": "YF-23 Black Widow II",
+    "outPath": "public/fleet/yf-23-black-widow-ii-cap-product.webp"
+  },
+  {
+    "slug": "x-47b",
+    "name": "X-47B",
+    "outPath": "public/fleet/x-47b-cap-product.webp"
+  },
+  {
+    "slug": "x-37b",
+    "name": "X-37B",
+    "outPath": "public/fleet/x-37b-cap-product.webp"
+  },
+  {
+    "slug": "x-51-waverider",
+    "name": "X-51 Waverider",
+    "outPath": "public/fleet/x-51-waverider-cap-product.webp"
+  },
+  {
+    "slug": "pca",
+    "name": "PCA",
+    "outPath": "public/fleet/pca-cap-product.webp"
+  },
+  {
+    "slug": "b-2-spirit",
+    "name": "B-2 Spirit",
+    "outPath": "public/fleet/b-2-spirit-cap-product.webp"
+  },
+  {
+    "slug": "b-1-lancer",
+    "name": "B-1 Lancer",
+    "outPath": "public/fleet/b-1-lancer-cap-product.webp"
+  },
+  {
+    "slug": "a-12-avenger-ii",
+    "name": "A-12 Avenger II",
+    "outPath": "public/fleet/a-12-avenger-ii-cap-product.webp"
+  },
+  {
+    "slug": "f-22-raptor",
+    "name": "F-22 Raptor",
+    "outPath": "public/fleet/f-22-raptor-cap-product.webp"
+  },
+  {
+    "slug": "fb-22",
+    "name": "FB-22",
+    "outPath": "public/fleet/fb-22-cap-product.webp"
+  },
+  {
+    "slug": "f-15ex-eagle-ii",
+    "name": "F-15EX Eagle II",
+    "outPath": "public/fleet/f-15ex-eagle-ii-cap-product.webp"
+  },
+  {
+    "slug": "f-16v-viper",
+    "name": "F-16V Viper",
+    "outPath": "public/fleet/f-16v-viper-cap-product.webp"
+  },
+  {
+    "slug": "f-a-18-block-iii",
+    "name": "F/A-18 Block III",
+    "outPath": "public/fleet/f-a-18-block-iii-cap-product.webp"
+  },
+  {
+    "slug": "a-10-warthog",
+    "name": "A-10 Warthog",
+    "outPath": "public/fleet/a-10-warthog-cap-product.webp"
+  },
+  {
+    "slug": "f-117-nighthawk",
+    "name": "F-117 Nighthawk",
+    "outPath": "public/fleet/f-117-nighthawk-cap-product.webp"
+  },
+  {
+    "slug": "mq-25-stingray",
+    "name": "MQ-25 Stingray",
+    "outPath": "public/fleet/mq-25-stingray-cap-product.webp"
+  },
+  {
+    "slug": "mq-28-ghost-bat",
+    "name": "MQ-28 Ghost Bat",
+    "outPath": "public/fleet/mq-28-ghost-bat-cap-product.webp"
+  },
+  {
+    "slug": "xq-58-valkyrie",
+    "name": "XQ-58 Valkyrie",
+    "outPath": "public/fleet/xq-58-valkyrie-cap-product.webp"
+  },
+  {
+    "slug": "rq-180",
+    "name": "RQ-180",
+    "outPath": "public/fleet/rq-180-cap-product.webp"
+  },
+  {
+    "slug": "rq-4-global-hawk",
+    "name": "RQ-4 Global Hawk",
+    "outPath": "public/fleet/rq-4-global-hawk-cap-product.webp"
+  },
+  {
+    "slug": "f-14-tomcat",
+    "name": "F-14 Tomcat",
+    "outPath": "public/fleet/f-14-tomcat-cap-product.webp"
+  },
+  {
+    "slug": "f-4-phantom-ii",
+    "name": "F-4 Phantom II",
+    "outPath": "public/fleet/f-4-phantom-ii-cap-product.webp"
+  },
+  {
+    "slug": "f-104-starfighter",
+    "name": "F-104 Starfighter",
+    "outPath": "public/fleet/f-104-starfighter-cap-product.webp"
+  },
+  {
+    "slug": "f-86-sabre",
+    "name": "F-86 Sabre",
+    "outPath": "public/fleet/f-86-sabre-cap-product.webp"
+  },
+  {
+    "slug": "x-59-quesst",
+    "name": "X-59 QueSST",
+    "outPath": "public/fleet/x-59-quesst-cap-product.webp"
+  }
+]

@@ -1,5 +1,6 @@
-import { useState, type MouseEvent } from "react";
+import { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import EkgPulseLine from "./EkgPulseLine";
+import IntelScanLine from "./IntelScanLine";
 import { getTop10TierPitch, type IntelTop10Tier } from "../../data/intelTop10Tiers";
 import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
 
@@ -8,8 +9,17 @@ type IntelTop10BayProps = {
   index: number;
 };
 
-export default function IntelTop10Bay({ tier, index }: IntelTop10BayProps) {
+export default function IntelTop10Bay({ tier, index: _index }: IntelTop10BayProps) {
   const [pitchOpen, setPitchOpen] = useState(false);
+
+  const engineMotion = useMemo(
+    () =>
+      ({
+        "--intel-bay-engine-period": `${1.02 + Math.random() * 1.48}s`,
+        "--intel-bay-engine-delay": `-${Math.random() * 2.4}s`,
+      }) as CSSProperties,
+    [],
+  );
 
   const stopBubble = (event: MouseEvent) => {
     event.stopPropagation();
@@ -28,7 +38,8 @@ export default function IntelTop10Bay({ tier, index }: IntelTop10BayProps) {
         tier.tintClass,
       ].join(" ")}
       style={{
-        animationDelay: `${(index % 5) * 0.09}s`,
+        animationDelay: `${Math.random() * 2}s`,
+        ...engineMotion,
         ["--intel-tier-accent" as string]: tier.accent,
         ["--intel-tier-bright" as string]: tier.accentBright,
       }}
@@ -49,7 +60,7 @@ export default function IntelTop10Bay({ tier, index }: IntelTop10BayProps) {
           <EkgPulseLine variant="monitor" seed={tier.ekgSeed} />
         </div>
         <div className="intel-monitor__grid" aria-hidden />
-        <div className="intel-monitor__scan intel-reserved-bay__scan" aria-hidden />
+        <IntelScanLine className="intel-reserved-bay__scan" />
 
         <div className="intel-reserved-bay__overlay intel-top10-bay__overlay">
           <h2 className="intel-top10-bay__tier-name">{tier.status}</h2>

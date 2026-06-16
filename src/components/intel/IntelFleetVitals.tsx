@@ -79,7 +79,7 @@ export default function IntelFleetVitals() {
               .filter(Boolean)
               .join(" ")}
             style={fleetBayAccentStyle(unit.slot)}
-            title={`Bay ${unit.slot + 1} · ${unit.name}`}
+            title={unit.name}
           />
         ))}
       </div>

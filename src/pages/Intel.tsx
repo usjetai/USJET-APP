@@ -5,6 +5,7 @@ import IntelMonitor from "../components/intel/IntelMonitor";
 import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
+import IntelPartnershipInvite from "../components/intel/IntelPartnershipInvite";
 import IntelTop10Section from "../components/intel/IntelTop10Section";
 import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
@@ -18,7 +19,7 @@ const unitBySlot = new Map<number, FleetUnit>(intelUnits.map((u) => [u.slot, u])
 
 const BORDER_FORMATION = [
   { accentId: "intel-border-l-1", aircraftType: "f22" as const, slotClass: "intel-page__escort-slot--wing", slot: 0 },
-  { accentId: "intel-border-l-2", aircraftType: "sr71" as const, slotClass: "intel-page__escort-slot--lead", slot: 1 },
+  { accentId: "intel-border-l-2", aircraftType: "darkstar" as const, slotClass: "intel-page__escort-slot--lead", slot: 1 },
   { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing", slot: 2 },
 ];
 
@@ -147,6 +148,8 @@ const Intel = () => {
         <div className="intel-grid-wrap">
           <div className="intel-grid grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6">{gridCells}</div>
         </div>
+
+        <IntelPartnershipInvite />
       </div>
     </div>
   );

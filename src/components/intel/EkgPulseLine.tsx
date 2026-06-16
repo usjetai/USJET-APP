@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import type { CSSProperties } from "react";
 
 type EkgPulseLineProps = {
   /** Visual density — dashboard uses full width; monitors use compact. */
@@ -13,6 +14,15 @@ const VIEW_WIDTH = 100;
 const VIEW_HEIGHT = 40;
 const BASELINE = 20;
 const BEAT_CYCLE = 28;
+
+function initialLayerOffsets(traceCount: number): number[] {
+  return Array.from({ length: traceCount }, () => (Math.random() - 0.5) * BEAT_CYCLE * 9);
+}
+
+function scrollRatesPerLayer(traceCount: number, variant: "hero" | "monitor"): number[] {
+  const scale = variant === "hero" ? 1.15 : 1;
+  return Array.from({ length: traceCount }, () => scale * (4.8 + Math.random() * 10.8));
+}
 
 /** Classic monitor P–QRS–T silhouette for one cardiac cycle (x in cycle units). */
 function ekgSample(cycleX: number): number {
@@ -55,31 +65,72 @@ export default function EkgPulseLine({
   seed = 0,
   traces = 2,
 }: EkgPulseLineProps) {
-  const [scroll, setScroll] = useState(0);
+  const activeLayers = useMemo(() => TRACE_LAYERS.slice(3 - traces), [traces]);
+  const traceCount = activeLayers.length;
   const pointCount = variant === "hero" ? 140 : 72;
-  const activeLayers = TRACE_LAYERS.slice(3 - traces);
+
+  const [layerScrolls, setLayerScrolls] = useState(() => initialLayerOffsets(traceCount));
 
   useEffect(() => {
+    setLayerScrolls(initialLayerOffsets(traceCount));
+  }, [traceCount, variant]);
+
+  const scrollRates = useMemo(() => scrollRatesPerLayer(traceCount, variant), [traceCount, variant]);
+
+  useEffect(() => {
+    let cancelled = false;
+    let timeoutId = 0;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const intervalMs = reducedMotion ? 900 : variant === "hero" ? 48 : 70;
 
-    const intervalId = window.setInterval(() => {
-      setScroll((current) => current + (reducedMotion ? 0.15 : 0.55));
-    }, intervalMs);
+    const schedule = (): void => {
+      if (cancelled) return;
 
-    return () => window.clearInterval(intervalId);
-  }, [variant]);
+      const nextGapMs = reducedMotion
+        ? 640 + Math.random() * 900
+        : variant === "hero"
+          ? 26 + Math.random() * 52
+          : 34 + Math.random() * 64;
+
+      timeoutId = window.setTimeout(() => {
+        setLayerScrolls((prev) =>
+          prev.map((scroll, layerIndex) => {
+            const rate = scrollRates[layerIndex] ?? 8;
+            const jitter = reducedMotion ? 0.22 + Math.random() * 0.35 : 0.55 + Math.random() * 0.92;
+            const stepScale = variant === "hero" ? 0.052 : 0.046;
+            return scroll + rate * jitter * stepScale * (reducedMotion ? 0.14 : 1);
+          }),
+        );
+        schedule();
+      }, nextGapMs);
+    };
+
+    schedule();
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [variant, scrollRates]);
+
+  const pulseStyle = useMemo(
+    () =>
+      ({
+        "--intel-beacon-period": `${0.62 + Math.random() * 1.12}s`,
+        "--intel-beacon-delay": `-${Math.random() * 1.85}s`,
+      }) as CSSProperties,
+    [],
+  );
 
   const paths = useMemo(
     () =>
-      activeLayers.map((layer) =>
-        buildEkgPath(scroll + layer.scrollOffset, pointCount, seed + layer.seedOffset),
+      activeLayers.map((layer, index) =>
+        buildEkgPath(layerScrolls[index] + layer.scrollOffset, pointCount, seed + layer.seedOffset),
       ),
-    [activeLayers, pointCount, scroll, seed],
+    [activeLayers, layerScrolls, pointCount, seed],
   );
 
   return (
     <svg
+      style={pulseStyle}
       className={["intel-ekg", variant === "hero" ? "intel-ekg--hero" : "intel-ekg--monitor", className]
         .filter(Boolean)
         .join(" ")}

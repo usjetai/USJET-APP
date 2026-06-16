@@ -12,9 +12,9 @@
     background: transparent !important;
   }
 
-  /* Clears fixed liquid-glass nav — pt-28 (7rem) + iOS safe-area */
+  /* Clears fixed liquid-glass nav — two-row header + iOS safe-area */
   .page-nav-offset {
-    padding-top: calc(7rem + env(safe-area-inset-top, 24px));
+    padding-top: calc(8.5rem + env(safe-area-inset-top, 24px));
   }
 
   .moving-clouds {
@@ -665,6 +665,42 @@
   pointer-events: auto;
 }
 
+.app-nav-shell--two-row {
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0.55rem 0.65rem;
+}
+
+.app-nav-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.app-nav-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem 0.55rem;
+  min-width: 0;
+}
+
+.app-nav-row--secondary {
+  flex-wrap: wrap;
+}
+
+.app-nav-zone--download {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  padding-left: 0.55rem;
+  margin-left: 0.1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 @media (min-width: 640px) {
   .app-nav-shell {
     gap: 0.5rem 0.7rem;
@@ -677,6 +713,10 @@
     flex-wrap: nowrap;
     gap: 0.55rem 0.75rem;
     padding: 0.7rem 1.25rem;
+  }
+
+  .app-nav-shell--two-row {
+    flex-wrap: nowrap;
   }
 }
 
@@ -1124,6 +1164,11 @@
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.liquid-glass-nav .app-nav-shell--two-row {
+  flex-wrap: nowrap;
+  row-gap: 0;
 }
 
 /* Top nav + bottom bar: tighter radius than full pill (avoids corner clip on phone / rotate) */
@@ -23177,6 +23222,14 @@ html.fleet-manual-page-root #usjet-app-shell {
   animation:
     vault-100k-dl-glow 4s ease-in-out infinite,
     vault-100k-dl-blink 5s ease-in-out infinite;
+}
+
+.vault-100k-stripe-dl--embedded {
+  position: static;
+  top: auto;
+  right: auto;
+  z-index: auto;
+  flex-shrink: 0;
 }
 
 .vault-100k-stripe-dl__icon {

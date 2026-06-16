@@ -6,7 +6,6 @@ import { SilentHangarProvider } from "./context/SilentHangarContext";
 import AppNav from "./components/layout/AppNav";
 import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
-import SovereignVaultGlobalDownload from "./components/growth/SovereignVaultGlobalDownload";
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
 import UsjetProtocolBootOverlay from "./components/layout/UsjetProtocolBootOverlay";
 import WarpBackground from "./components/layout/WarpBackground";
@@ -187,7 +186,6 @@ function AppChrome() {
       <CrucifixLaserCrown />
       <SiteLatchMenu />
       <AppNav />
-      <SovereignVaultGlobalDownload />
       <main className="relative z-10">
         <AnimatedRoutes />
       </main>

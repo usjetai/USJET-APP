@@ -6,6 +6,7 @@ import {
   type FleetRosterStatus,
 } from "./fleetRoster";
 import type { FleetAircraftType } from "../types/fleet";
+import { resolveFleetProductMedia, type FleetProductMediaAsset } from "../lib/fleetProductMedia";
 
 export type FleetDirectoryEntry = {
   slot: number;
@@ -31,6 +32,10 @@ export type FleetDirectoryEntry = {
   rosterStatus: FleetRosterStatus;
   aircraftOfficialName: string;
   aircraftType: FleetAircraftType;
+  /** Partner / aircraft logo for the product page hero. */
+  productLogo: FleetProductMediaAsset;
+  /** Merchandise or product photo for the product page hero. */
+  productPhoto: FleetProductMediaAsset;
 };
 
 const CATEGORY_BY_SLOT: Record<number, string> = {
@@ -129,6 +134,7 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
       : slugifyAircraftOfficialName(roster.aircraftOfficialName) || slug;
     const pagePath = getFleetJetFighterPagePath(unit.callsign);
     const productPagePath = `/product/${aircraftSlug}`;
+    const productMedia = resolveFleetProductMedia(aircraftSlug, roster.aircraftOfficialName, roster.aircraftType);
     return {
       slot: unit.slot,
       unitId: unit.id,
@@ -145,6 +151,8 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
       rosterStatus: roster.rosterStatus,
       aircraftOfficialName: roster.aircraftOfficialName,
       aircraftType: roster.aircraftType,
+      productLogo: productMedia.logo,
+      productPhoto: productMedia.productPhoto,
       seoTitle: available
         ? `${unit.callsign} · Available Position | USJET Jet Fighter`
         : `${unit.callsign} · ${roster.aircraftOfficialName} | USJET Jet Fighter`,

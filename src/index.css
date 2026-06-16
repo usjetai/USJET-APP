@@ -21562,13 +21562,40 @@ html.direct-fuel-page-root #usjet-app-shell {
   text-decoration: none;
 }
 
-.product-page__aircraft {
-  display: grid;
+.product-page__media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
   width: 100%;
   max-width: 28rem;
   margin-inline: auto;
-  min-height: auto;
+}
+
+.product-page__logo-wrap {
+  display: grid;
   place-items: center;
+  width: 100%;
+}
+
+.product-page__logo {
+  width: min(42vw, 9rem);
+  height: auto;
+  object-fit: contain;
+  filter: var(--aircraft-logo-glow) drop-shadow(0 0 18px rgba(var(--product-accent-rgb), 0.45));
+}
+
+.product-page__photo-wrap {
+  display: grid;
+  width: 100%;
+  place-items: center;
+}
+
+.product-page__photo-wrap--fallback {
+  padding: 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(var(--product-accent-rgb), 0.18);
+  background: rgba(2, 6, 23, 0.35);
 }
 
 .product-page__product-image {
@@ -21579,10 +21606,8 @@ html.direct-fuel-page-root #usjet-app-shell {
   border-radius: 1rem;
 }
 
-.product-page__icon {
-  width: min(72vw, 22rem);
-  height: min(72vw, 22rem);
-  color: var(--product-accent);
+.product-page__product-image--fallback {
+  width: min(72vw, 18rem);
   filter: var(--aircraft-logo-glow) drop-shadow(0 0 24px rgba(var(--product-accent-rgb), 0.52));
 }
 

@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react";
 import Ai101AntiCloneProtocol from "../components/ai101/Ai101AntiCloneProtocol";
 import Ai101CockpitCalibration from "../components/ai101/Ai101CockpitCalibration";
 import Ai101EngineRoom, { Ai101CodeAccessButton } from "../components/ai101/Ai101EngineRoom";
+import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import FleetCommand from "../components/fleet/FleetCommand";
 import { AI101_CANONICAL_CURRICULUM } from "../data/ai101Curriculum";
@@ -49,7 +50,9 @@ function Ai101LessonCard({ row, index }: { row: Ai101CurriculumRow; index: numbe
             <span className="fleet-card__callsign text-[11px] font-bold tracking-[0.2em] text-cyan-200/90">
               {unit.callsign}
             </span>
-            <span className="mt-1 block text-white">{unit.name}</span>
+            <span className="mt-1 block text-white">
+              <DeveloperRedBlinkName name={unit.name} />
+            </span>
           </h3>
         </header>
         <p className="text-sm font-medium leading-relaxed text-white/75">{row.lesson}</p>

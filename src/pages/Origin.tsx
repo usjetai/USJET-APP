@@ -7,6 +7,7 @@ import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import OriginBrowserConnectModal from "../components/origin/OriginBrowserConnectModal";
 import OriginMemberStrip from "../components/origin/OriginMemberStrip";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
+import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import { fleetManifest } from "../data/fleetManifest";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 import {
@@ -1095,7 +1096,7 @@ export default function Origin() {
                     aria-current="page"
                   >
                     <span className="origin-page__fleet-slot">30</span>
-                    {unit.name}
+                    <DeveloperRedBlinkName name={unit.name} />
                   </span>
                 );
               }
@@ -1107,7 +1108,7 @@ export default function Origin() {
                   className="origin-page__fleet-chip"
                 >
                   <span className="origin-page__fleet-slot">{String(unit.slot + 1).padStart(2, "0")}</span>
-                  {unit.name}
+                  <DeveloperRedBlinkName name={unit.name} />
                 </a>
               );
             })}

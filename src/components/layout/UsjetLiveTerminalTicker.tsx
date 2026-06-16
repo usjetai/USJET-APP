@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import DeveloperRedBlinkText from "../DeveloperRedBlinkText";
 import { LIVE_TERMINAL_SEGMENTS } from "../../data/liveTerminalFeed";
 import {
   isLiveTerminalArmed,
@@ -121,12 +122,12 @@ export default function UsjetLiveTerminalTicker({
             className="usjet-live-terminal__stream"
             style={{ ["--terminal-scroll-duration" as string]: `${scrollSeconds}s` }}
           >
-            {streamText}
+            <DeveloperRedBlinkText text={streamText} />
             <span className="usjet-live-terminal__stream-gap" aria-hidden>
               {" "}
               ·{" "}
             </span>
-            {streamText}
+            <DeveloperRedBlinkText text={streamText} />
           </span>
         </div>
       </div>

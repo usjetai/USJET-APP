@@ -11,6 +11,7 @@ import {
   isFleetBayAvailable,
   isFleetBayHired,
 } from "../data/fleetRoster";
+import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 import { FleetLaunchLink } from "../lib/fleetLaunchLink";
 import { logFleetUsageIfMember } from "../lib/fleetUsageHistory";
@@ -95,7 +96,9 @@ export default function FleetCallsignPage() {
               {available ? " · Available position" : hired ? ` · ${entry.aircraftOfficialName}` : ""}
             </p>
             <h1 className="fleet-callsign-page__title">{entry.callsign}</h1>
-            <p className="fleet-callsign-page__name">{entry.name}</p>
+            <p className="fleet-callsign-page__name">
+              <DeveloperRedBlinkName name={entry.name} />
+            </p>
             {!available ? (
               <p className="fleet-callsign-page__aircraft-type">{entry.aircraftOfficialName}</p>
             ) : (
@@ -150,7 +153,8 @@ export default function FleetCallsignPage() {
           <p className="fleet-callsign-panel__label">Jet Fighter profile</p>
           <h2>{entry.callsign}</h2>
           <p>
-            Canonical Jet Fighter page for {entry.callsign}. Developer: {entry.name}. Operators search and share this call name—not a generic bay
+            Canonical Jet Fighter page for {entry.callsign}. Developer:{" "}
+            <DeveloperRedBlinkName name={entry.name} />. Operators search and share this call name—not a generic bay
             number.
           </p>
         </GlassEffectContainer>

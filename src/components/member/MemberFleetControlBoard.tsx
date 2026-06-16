@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import AircraftIcon from "../icons/AircraftIcons";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
@@ -59,7 +60,9 @@ export default function MemberFleetControlBoard() {
                   />
                 </span>
                 <span className="member-control-board__callsign">{unit.callsign}</span>
-                <span className="member-control-board__name">{unit.name}</span>
+                <span className="member-control-board__name">
+                  <DeveloperRedBlinkName name={unit.name} />
+                </span>
               </a>
             </li>
           );

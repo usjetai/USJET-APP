@@ -19,6 +19,15 @@ export const CODE_KIT_DIRECT_URL = "";
 /** Fleet Manual Professional ($2,500) — hard-wired Stripe Payment Link. */
 export const FLEET_MANUAL_DIRECT_URL = "https://buy.stripe.com/14AaEX7qefwn8sxh0rdwc06";
 
+/** SR-71 Blackbird diecast model — hard-wired Stripe Payment Link for the product page. */
+export const SR71_BLACKBIRD_PRODUCT_DIRECT_URL = "https://buy.stripe.com/8x2aEX39YfwndMRbG7dwc0r";
+
+/** SR-71 Blackbird diecast model — env override when set, else SR71_BLACKBIRD_PRODUCT_DIRECT_URL. */
+export function resolveSr71BlackbirdProductPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_SR71_BLACKBIRD_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : SR71_BLACKBIRD_PRODUCT_DIRECT_URL;
+}
+
 /** USJET Code Kit ($499) — env override when set, else CODE_KIT_DIRECT_URL when configured. */
 export function resolveCodeKitPaymentLink(): string {
   const url = import.meta.env.VITE_STRIPE_CODE_KIT_PAYMENT_LINK?.trim();

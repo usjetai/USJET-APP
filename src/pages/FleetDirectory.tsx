@@ -6,9 +6,11 @@ import {
   FLEET_DIRECTORY_AVAILABLE_ENTRIES,
   FLEET_DIRECTORY_ENTRIES,
   FLEET_DIRECTORY_HIRED_ENTRIES,
+  getFleetProductPagePath,
+  FLEET_JETFIGHTER_PAGE_COUNT,
 } from "../data/fleetDirectorySeo";
-import { FLEET_JETFIGHTER_PAGE_COUNT } from "../data/fleetDirectorySeo";
 import { FLEET_AVAILABLE_COUNT, FLEET_HIRED_COUNT } from "../data/fleetRoster";
+import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 
 export default function FleetDirectory() {
@@ -76,11 +78,16 @@ export default function FleetDirectory() {
                   <h3 className="fleet-directory-card__name">
                     <Link to={entry.pagePath}>{entry.callsign}</Link>
                   </h3>
-                  <p className="fleet-directory-card__developer">{entry.name}</p>
+                  <p className="fleet-directory-card__developer">
+                    <DeveloperRedBlinkName name={entry.name} />
+                  </p>
                   <p className="fleet-directory-card__category">{entry.category}</p>
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                   <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">
                     {entry.callsign} Jet Fighter page →
+                  </Link>
+                  <Link to={getFleetProductPagePath(entry.callsign)} className="fleet-directory-card__profile fleet-directory-card__product glass-effect-interactive">
+                    {entry.callsign} Product page →
                   </Link>
                   <a
                     href={integratedLaunchUrl(entry.domain, entry.href, entry.slot, {
@@ -118,7 +125,9 @@ export default function FleetDirectory() {
                   <h3 className="fleet-directory-card__name">
                     <Link to={entry.pagePath}>{entry.callsign}</Link>
                   </h3>
-                  <p className="fleet-directory-card__developer">{entry.name}</p>
+                  <p className="fleet-directory-card__developer">
+                    <DeveloperRedBlinkName name={entry.name} />
+                  </p>
                   <p className="fleet-directory-card__category">{entry.category}</p>
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                   <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">

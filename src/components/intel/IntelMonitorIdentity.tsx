@@ -1,3 +1,4 @@
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetUnit } from "../../types/fleet";
 
 type IntelMonitorIdentityProps = {
@@ -8,7 +9,9 @@ export default function IntelMonitorIdentity({ unit }: IntelMonitorIdentityProps
   return (
     <div className="intel-monitor__identity">
       <p className="intel-monitor__callsign">{unit.callsign}</p>
-      <p className="intel-monitor__unit">{unit.name}</p>
+      <p className="intel-monitor__unit">
+        <DeveloperRedBlinkName name={unit.name} />
+      </p>
     </div>
   );
 }

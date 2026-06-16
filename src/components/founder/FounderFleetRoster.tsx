@@ -6,6 +6,7 @@ import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import type { FleetUnit } from "../../types/fleet";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 
 const SORTED_UNITS = [...fleetManifest].sort((a, b) => a.slot - b.slot);
@@ -49,7 +50,9 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
         </span>
         <span className="founder-fleet-roster__text">
           <span className="founder-fleet-roster__callsign">{unit.callsign}</span>
-          <span className="founder-fleet-roster__name">{unit.name}</span>
+          <span className="founder-fleet-roster__name">
+            <DeveloperRedBlinkName name={unit.name} />
+          </span>
         </span>
       </FleetLaunchLink>
     </li>

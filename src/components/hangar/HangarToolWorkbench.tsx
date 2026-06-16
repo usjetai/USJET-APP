@@ -13,7 +13,7 @@ type HangarToolWorkbenchProps = {
 
 /**
  * Hangar active cockpit: external partners load through /cockpit (same-origin handoff);
- * internal routes (e.g. /origin) embed directly. Integrated navigation exits via launch controls.
+ * internal routes (e.g. /origin) embed directly in the expanded bay iframe.
  */
 export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkbenchProps) {
   const rawHref = unit.href?.trim() || unit.domain?.trim() || "";

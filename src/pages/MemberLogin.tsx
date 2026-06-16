@@ -3,6 +3,8 @@ import { ShieldCheck } from "lucide-react";
 import MemberLoginPanel from "../components/member/MemberLoginPanel";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { canMemberAccessRoute } from "../lib/memberAccessLevel";
+import { isSitePreviewPromoActive } from "../lib/sitePreviewPromo";
+import { SITE_PREVIEW_MEMBER_NOTE } from "../data/sitePreviewPromo";
 
 export default function MemberLogin() {
   const navigate = useNavigate();
@@ -24,8 +26,8 @@ export default function MemberLogin() {
     <div className="member-login-page page-atmosphere page-nav-offset mx-auto max-w-4xl px-6 pb-28 sm:px-8">
       {blockedRoute ? (
         <p className="member-login-page__blocked-banner" role="status">
-          <strong>{blockedRoute}</strong> requires paid Stripe clearance. Pay below or log in after checkout — guests
-          may browse Fleet and Founder only.
+          <strong>{blockedRoute}</strong> requires paid Stripe clearance. Pay below or log in after checkout.
+          {isSitePreviewPromoActive() ? ` ${SITE_PREVIEW_MEMBER_NOTE}` : " Guests may browse Fleet and Founder only."}
         </p>
       ) : null}
 

@@ -1,11 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import AircraftIcon from "../icons/AircraftIcons";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
+import { getFleetBayAccent } from "../../data/fleetBayAccents";
+import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
+import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
 
 const controlBoardUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 
@@ -15,7 +19,7 @@ export default function MemberFleetControlBoard() {
       <div className="member-control-board__header">
         <p className="member-control-board__kicker">Personal control board</p>
         <h2 className="member-control-board__title">Fleet manifest · 30 units</h2>
-        <p className="member-control-board__copy">Your sovereign hangar — smallest aircraft icons, full callsign roster.</p>
+        <p className="member-control-board__copy">Your sovereign hangar — smallest aircraft icons, full developer roster.</p>
       </div>
 
       <ul className="member-control-board__grid">
@@ -25,15 +29,28 @@ export default function MemberFleetControlBoard() {
             label: unit.name,
           });
           const accentId = `member-board-${unit.slot}`;
+          const bayAccent = getFleetBayAccent(unit.slot);
+          const terminalFeed = buildFleetTileTerminalFeed({
+            name: unit.name,
+            callsign: unit.callsign,
+            domain: unit.domain,
+            slot: unit.slot,
+            personality: bayAccent.personality,
+            capabilities: getFleetCapabilities(unit.slot),
+          });
 
           return (
             <li key={unit.id}>
               <a
                 href={launchUrl}
-                className="member-control-board__cell member-control-board__cell--bay-accent glass-effect-interactive"
+                className="member-control-board__cell fleet-card member-control-board__cell--bay-accent glass-effect-interactive"
                 style={fleetBayAccentStyle(unit.slot)}
-                aria-label={`Launch ${unit.name} — ${unit.callsign}`}
+                aria-label={`Launch ${unit.name}`}
                 onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
+                onMouseEnter={() => publishLiveTerminalTile(terminalFeed)}
+                onMouseLeave={() => clearLiveTerminalTile()}
+                onFocus={() => publishLiveTerminalTile(terminalFeed)}
+                onBlur={() => clearLiveTerminalTile()}
               >
                 <span className="member-control-board__icon-wrap">
                   <AircraftIcon
@@ -42,8 +59,10 @@ export default function MemberFleetControlBoard() {
                     className="member-control-board__icon"
                   />
                 </span>
-                <span className="member-control-board__callsign">{unit.callsign}</span>
-                <span className="member-control-board__name">{unit.name}</span>
+                <span className="member-control-board__callsign">{unit.name}</span>
+                <span className="member-control-board__name">
+                  <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
+                </span>
               </a>
             </li>
           );

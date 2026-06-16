@@ -1,11 +1,39 @@
 import type { MemberSession } from "../types/member";
+import { MEMBER_DECK_STRIPE_METADATA } from "../data/memberDeckStripe";
+import { isSitePreviewPromoActive } from "./sitePreviewPromo";
 import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey";
 
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
 /** Guest-only surface — Fleet, Founder, Stripe login, fleet cockpit handoff. */
-export const GUEST_PUBLIC_ROUTES = ["/", "/founder", "/member/login", "/login", "/cockpit"] as const;
+export const GUEST_PUBLIC_ROUTES = [
+  "/",
+  "/founder",
+  "/member/login",
+  "/login",
+  "/cockpit",
+  "/sos",
+  "/ai-101",
+  "/code-kit",
+  "/b2b",
+  "/b2k",
+  "/blog",
+  "/cash",
+  "/pdre",
+  "/licensing",
+  "/support-fleet",
+  "/intelligence",
+  "/strategic-assets",
+  "/sovereignty",
+  "/founders-fuel",
+  "/fleet-manual",
+  "/fleet-directory",
+  "/100k",
+  "/gamers",
+  "/gaming",
+  "/vr",
+] as const;
 
 /**
  * Minimum clearance rank per route.
@@ -17,6 +45,26 @@ export const GUEST_PUBLIC_ROUTES = ["/", "/founder", "/member/login", "/login", 
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
   "/founder": 0,
+  "/sos": 0,
+  "/ai-101": 0,
+  "/code-kit": 0,
+  "/b2b": 0,
+  "/b2k": 0,
+  "/blog": 0,
+  "/cash": 0,
+  "/pdre": 0,
+  "/licensing": 0,
+  "/support-fleet": 0,
+  "/intelligence": 0,
+  "/strategic-assets": 0,
+  "/sovereignty": 0,
+  "/founders-fuel": 0,
+  "/fleet-manual": 0,
+  "/fleet-directory": 0,
+  "/100k": 0,
+  "/gamers": 0,
+  "/gaming": 0,
+  "/vr": 0,
   "/member/login": 0,
   "/login": 0,
   "/cockpit": 0,
@@ -104,8 +152,9 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
 
   if (normalized === "/member") {
     return {
-      title: "Member Portal — paid clearance only",
-      body: `Verify your Stripe-issued Member ID here. ${tierLabel} (${tierPrice}) or higher unlocks the portal — no OAuth, one sovereign gate.`,
+      title: "Member Portal — $5 Member Deck required",
+      body:
+        "The Member Portal is the only paid room during the full-site preview. Pay $5.00/mo for Member Deck clearance on Stripe, then verify with billing email and your access sentence. Flight Pass ($19.90/mo) and higher tiers include the portal plus Hangar, Intel, and more.",
     };
   }
   if (normalized === "/hangar") {
@@ -156,6 +205,9 @@ export function accessLevelRank(accessLevel?: string): number {
   if (normalized.includes("OPERATOR")) {
     return 2;
   }
+  if (normalized.includes("LVL_00") || normalized.includes("MEMBER_DECK")) {
+    return 0;
+  }
   if (normalized.includes("RECRUIT")) {
     return 1;
   }
@@ -175,11 +227,37 @@ export function stripeTierRank(stripeTier?: string): number {
   if (tier === "OPERATOR") {
     return 2;
   }
+  if (tier === "MEMBER" || tier === "MEMBER_DECK") {
+    return 0;
+  }
   if (tier === "RECRUIT") {
     return 1;
   }
 
   return 0;
+}
+
+/** $5 Member Deck — unlocks /member only (Flight Pass+ also includes the portal). */
+export function hasMemberDeckAccess(session: MemberSession | null | undefined): boolean {
+  if (!session?.active) {
+    return false;
+  }
+  if (isFounderGodMode(session)) {
+    return true;
+  }
+  if (memberClearanceRank(session) >= 1) {
+    return true;
+  }
+
+  const access = session.accessLevel?.trim().toUpperCase() ?? "";
+  const tier = session.stripeTier?.trim().toUpperCase() ?? "";
+  const memberMeta = MEMBER_DECK_STRIPE_METADATA;
+
+  return (
+    access === memberMeta.access_level.toUpperCase() ||
+    access.includes("LVL_00") ||
+    tier === memberMeta.tier.toUpperCase()
+  );
 }
 
 /** Human tier label for strips, Aura, and member-facing copy. */
@@ -252,6 +330,9 @@ export function memberClearanceRank(session: MemberSession | null | undefined): 
 }
 
 export function hasIntelTop10Clearance(session: MemberSession | null | undefined): boolean {
+  if (isSitePreviewPromoActive()) {
+    return true;
+  }
   if (isFounderGodMode(session)) {
     return true;
   }
@@ -262,9 +343,24 @@ export function canMemberAccessRoute(
   path: string,
   session: MemberSession | null | undefined,
 ): boolean {
+  const normalized = normalizeRoutePath(path);
+
+  if (normalized === "/member") {
+    return hasMemberDeckAccess(session);
+  }
+
+  if (isSitePreviewPromoActive() && routeMinClearanceRank(path) > 0) {
+    return true;
+  }
+
   const godMode = isFounderGodMode(session);
   const rank = memberClearanceRank(session);
   return canAccessRoute(path, rank, godMode);
+}
+
+/** Nav always shows Member — route may still gate at /member. */
+export function showMemberNavLink(_session: MemberSession | null | undefined): boolean {
+  return true;
 }
 
 /** Customer Service treasure path — guests land on Origin in limited CS mode. */
@@ -289,6 +385,9 @@ export const HANGAR_BAY_LIMIT_HANGAR_PRO = 6;
 export const HANGAR_BAY_LIMIT_ENTERPRISE = 10;
 
 export function getHangarBayLimit(session: MemberSession | null | undefined): number {
+  if (isSitePreviewPromoActive()) {
+    return HANGAR_BAY_LIMIT_ENTERPRISE;
+  }
   const rank = memberClearanceRank(session);
   if (rank >= 3) {
     return HANGAR_BAY_LIMIT_ENTERPRISE;
@@ -341,8 +440,13 @@ export function hangarBayLimitToast(session: MemberSession | null | undefined): 
 }
 
 export function hangarBayHeroBadge(session: MemberSession | null | undefined): string {
-  const rank = memberClearanceRank(session);
   const limit = getHangarBayLimit(session);
+
+  if (isSitePreviewPromoActive()) {
+    return `${limit} bays · full site preview`;
+  }
+
+  const rank = memberClearanceRank(session);
 
   if (rank === 0) {
     return `${limit} bays · preview access`;

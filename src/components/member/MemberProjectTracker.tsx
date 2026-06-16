@@ -1,11 +1,17 @@
 import { ChevronDown, FolderKanban, Minus, Pencil, Plus, Save, Timer, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
+import DeveloperRedBlinkName, {
+  getVisibleDeveloperName,
+  highlightDeveloperCoPilotName,
+} from "../DeveloperRedBlinkName";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberPortalUsageTimer } from "../../hooks/useMemberPortalUsageTimer";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { MEMBER_ASSIGNMENT_HOLD_MESSAGE } from "../../lib/usjetContact";
+import { useMemberAuth } from "../../context/MemberAuthContext";
+import { computeFreeTierUsage } from "../../lib/memberPortalTelemetry";
 import {
   addFleetUnitToProject,
   createMemberProject,
@@ -251,7 +257,7 @@ function SavedRecordsPanel({ records, onSelectProject }: SavedRecordsPanelProps)
             >
               <span className="member-projects__saved-log-project">{record.projectName}</span>
               <span className="member-projects__saved-log-unit">
-                {record.assignment.callsign} — {record.assignment.name}
+                {record.assignment.name} — <DeveloperRedBlinkName name={record.assignment.name} />
               </span>
               <span className="member-projects__saved-log-intent">{record.assignment.searchIntent}</span>
               <time className="member-projects__saved-log-time" dateTime={record.assignment.savedAt}>
@@ -323,7 +329,7 @@ function ProjectWorkspace({
           <span className="member-projects__portal-timer-label">Visible Portal time credits to</span>{" "}
           {pinnedAssignment ? (
             <strong className="member-projects__portal-timer-target">
-              {pinnedAssignment.callsign} — {pinnedAssignment.name}
+              {pinnedAssignment.name} — <DeveloperRedBlinkName name={pinnedAssignment.name} />
             </strong>
           ) : (
             <strong className="member-projects__portal-timer-target">this project (no pinned unit)</strong>
@@ -360,11 +366,11 @@ function ProjectWorkspace({
             disabled={availableUnits.length === 0}
           >
             <option value="">
-              {availableUnits.length === 0 ? "All 30 units assigned" : "Select callsign…"}
+              {availableUnits.length === 0 ? "All 30 units assigned" : "Select developer…"}
             </option>
             {availableUnits.map((unit) => (
               <option key={unit.id} value={unit.id}>
-                {unit.callsign} — {unit.name}
+                {getVisibleDeveloperName(unit.name, unit.slot)}
               </option>
             ))}
           </select>
@@ -588,30 +594,39 @@ function AssignmentHead({
   onToggleUsageDetail,
   onPinTimer,
 }: AssignmentHeadProps) {
+  const { session } = useMemberAuth();
+  const freeTier = computeFreeTierUsage(session, assignment.sessionForks, assignment.activeTimeMs);
+
   return (
     <div className="member-projects__assignment-head-wrap">
       <div className="member-projects__assignment-head">
         <div>
-          <p className="member-projects__callsign">{assignment.callsign}</p>
-          <p className="member-projects__unit-name">{assignment.name}</p>
+          <p className="member-projects__callsign">{assignment.name}</p>
+          <p className="member-projects__unit-name">
+            <DeveloperRedBlinkName name={assignment.name} />
+          </p>
         </div>
-        <div className="member-projects__head-metrics">
-          <div className="member-projects__usage" aria-label="Portal focus time for this assignment on this device">
-            <span className="member-projects__usage-label">Portal focus</span>
+        <div className="member-projects__head-metrics member-projects__head-metrics--browser">
+          <div className="member-projects__forks" aria-label="Browser launches for this assignment">
+            <span className="member-projects__forks-label">Browser launches</span>
+            <SessionForksBadge count={assignment.sessionForks} />
+          </div>
+          <div className="member-projects__usage" aria-label="Time in browser for this assignment on this device">
+            <span className="member-projects__usage-label">Time in browser</span>
             <span className="member-projects__usage-count">{formatPortalUsageDuration(assignment.activeTimeMs)}</span>
           </div>
-          <div className="member-projects__usage member-projects__usage--last">
-            <span className="member-projects__usage-label">Last activity</span>
-            <time className="member-projects__usage-count" dateTime={assignment.lastActiveAt || undefined}>
-              {formatPortalUsageTimestamp(assignment.lastActiveAt)}
-            </time>
-          </div>
-          <div className="member-projects__forks">
-            <span className="member-projects__forks-label">Session forks</span>
-            <SessionForksBadge count={assignment.sessionForks} />
+          <div className="member-projects__usage member-projects__usage--tier" aria-label="Free tier remaining">
+            <span className="member-projects__usage-label">Free tier</span>
+            <span className="member-projects__usage-count member-projects__usage-count--tier">{freeTier.label}</span>
           </div>
         </div>
       </div>
+      {assignment.lastActiveAt ? (
+        <p className="member-projects__last-activity">
+          Last activity{" "}
+          <time dateTime={assignment.lastActiveAt}>{formatPortalUsageTimestamp(assignment.lastActiveAt)}</time>
+        </p>
+      ) : null}
       <div className="member-projects__assignment-usage-actions">
         <button
           type="button"
@@ -653,12 +668,12 @@ function SavedRecord({ assignment, onEdit, onRemove }: SavedRecordProps) {
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">Fleet unit</span>
           <p className="member-projects__saved-value">
-            {assignment.callsign} — {assignment.name}
+            {assignment.name} — <DeveloperRedBlinkName name={assignment.name} />
           </p>
         </div>
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">Prompt call sign</span>
-          <p className="member-projects__saved-value">{assignment.copilotName}</p>
+          <p className="member-projects__saved-value">{highlightDeveloperCoPilotName(assignment.copilotName)}</p>
         </div>
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">What you are searching</span>
@@ -702,7 +717,7 @@ function EditForm({ assignment, draftSearch, onDraftChange, onSave, onRemove }: 
       <div className="member-projects__field">
         <span className="member-projects__field-label">Co-Pilot name</span>
         <p className="member-projects__copilot-preview" aria-readonly="true">
-          {assignment.copilotName}
+          {highlightDeveloperCoPilotName(assignment.copilotName)}
         </p>
       </div>
 

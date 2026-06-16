@@ -28,7 +28,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>
           <p className="intel-expanded__unit-name">
-            <DeveloperRedBlinkName name={unit.name} />
+            <DeveloperRedBlinkName name={unit.name} slot={unit.slot} />
           </p>
           <p className="intel-expanded__domain">{unit.domain}</p>
           <p className="intel-expanded__tagline">Market workstation · BTC spot · NYSE composite</p>

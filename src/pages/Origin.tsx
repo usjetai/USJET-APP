@@ -1096,7 +1096,7 @@ export default function Origin() {
                     aria-current="page"
                   >
                     <span className="origin-page__fleet-slot">30</span>
-                    <DeveloperRedBlinkName name={unit.name} />
+                    <DeveloperRedBlinkName name={unit.name} slot={unit.slot} />
                   </span>
                 );
               }
@@ -1108,7 +1108,7 @@ export default function Origin() {
                   className="origin-page__fleet-chip"
                 >
                   <span className="origin-page__fleet-slot">{String(unit.slot + 1).padStart(2, "0")}</span>
-                  <DeveloperRedBlinkName name={unit.name} />
+                  <DeveloperRedBlinkName name={unit.name} slot={unit.slot} />
                 </a>
               );
             })}

@@ -1,38 +1,63 @@
-/** Hired developers whose name renders with the sovereign red-blink treatment. */
-const DEVELOPER_RED_BLINK_NAMES = new Set([
-  "blue ivy",
-  "mary stealth",
-  "chop",
-  "stick",
-  "little mama",
-  "rumi",
-  "kitkat",
-  "glass",
-  "lear",
-  "light speed",
-  "lightspeed",
-]);
+import { fleetManifest } from "../data/fleetManifest";
+import { isFleetBayHired } from "../data/fleetRoster";
+
+/** Manual display variants for inline highlighting where copy may differ from manifest names. */
+const DEVELOPER_RED_BLINK_ALIAS_MAP: Record<string, readonly string[]> = {
+  kitkat: ["KitKat"],
+  "light speed": ["LightSpeed"],
+};
 
 /** Display variants for inline text highlighting — longest first to avoid partial matches. */
-export const DEVELOPER_RED_BLINK_TEXT_ALIASES = [
-  "Light Speed",
-  "LightSpeed",
-  "Little Mama",
-  "little Mama",
-  "Blue Ivy",
-  "Mary Stealth",
-  "Kitkat",
-  "KitKat",
-  "Stick",
-  "Chop",
-  "Rumi",
-  "Glass",
-  "Lear",
-] as const;
+const HIRED_DEVELOPER_NAMES = fleetManifest
+  .filter((unit) => isFleetBayHired(unit.slot))
+  .map((unit) => unit.name);
 
 function normalizeDeveloperName(name: string): string {
   return name.trim().toLowerCase().replace(/\s+/g, " ");
 }
+
+function buildRedBlinkNameSet(): Set<string> {
+  const names = new Set<string>();
+
+  for (const name of HIRED_DEVELOPER_NAMES) {
+    const normalized = normalizeDeveloperName(name);
+    names.add(normalized);
+    names.add(normalized.replace(/\s/g, ""));
+  }
+
+  for (const [canonical, aliases] of Object.entries(DEVELOPER_RED_BLINK_ALIAS_MAP)) {
+    names.add(canonical);
+    names.add(canonical.replace(/\s/g, ""));
+    for (const alias of aliases) {
+      const normalizedAlias = normalizeDeveloperName(alias);
+      names.add(normalizedAlias);
+      names.add(normalizedAlias.replace(/\s/g, ""));
+    }
+  }
+
+  return names;
+}
+
+function buildRedBlinkTextAliases(): readonly string[] {
+  const aliases = new Set<string>();
+
+  for (const name of HIRED_DEVELOPER_NAMES) {
+    aliases.add(name);
+  }
+
+  for (const [canonical, manualAliases] of Object.entries(DEVELOPER_RED_BLINK_ALIAS_MAP)) {
+    aliases.add(canonical);
+    for (const alias of manualAliases) aliases.add(alias);
+  }
+
+  return [...aliases].sort((a, b) => b.length - a.length);
+}
+
+/** Hired roster names and approved variants for red-blink matching. */
+const DEVELOPER_RED_BLINK_NAMES = buildRedBlinkNameSet();
+
+/** Display variants for inline text highlighting — longest first to avoid partial matches. */
+export const DEVELOPER_RED_BLINK_TEXT_ALIASES = buildRedBlinkTextAliases();
 
 export function isDeveloperRedBlinkName(name: string): boolean {
   const normalized = normalizeDeveloperName(name);

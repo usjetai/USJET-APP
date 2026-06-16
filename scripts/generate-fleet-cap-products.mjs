@@ -1,9 +1,9 @@
 /**
- * Generate USJET.AI fleet tee product mockups for every aircraft product page.
- * Flat-lay tee base (scripts/assets/tee-base.png), black letterbox, USJET.AI chest text,
- * aircraft logo centered below.
+ * Generate USJET.AI fleet trucker cap product mockups for every aircraft product page.
+ * Foam-front cap base (scripts/assets/cap-base.png), black letterbox, USJET.AI crown text,
+ * aircraft logo centered below on the white front panel.
  *
- * Run: node scripts/generate-fleet-tee-products.mjs
+ * Run: node scripts/generate-fleet-cap-products.mjs
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
@@ -13,19 +13,19 @@ import sharp from "sharp";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const OUT_DIR = join(ROOT, "public/fleet");
-const TEE_BASE = join(__dirname, "assets/tee-base.png");
+const CAP_BASE = join(__dirname, "assets/cap-base.png");
 
 const CANVAS = 1024;
 const SHEET_BG = { r: 207, g: 196, b: 166 };
 
-/** Chest branding placement on the 1024×1024 tee canvas (flat-lay base, black letterbox). */
-const BRAND_TEXT_Y = 340;
-const LOGO_TOP = 395;
-const LOGO_MAX_WIDTH = 280;
-const LOGO_MAX_HEIGHT = 190;
+/** Crown branding on the white foam front panel (1024×1024 letterboxed cap base). */
+const BRAND_TEXT_Y = 252;
+const LOGO_TOP = 300;
+const LOGO_MAX_WIDTH = 200;
+const LOGO_MAX_HEIGHT = 130;
 
 /** Slug, display name (for logs), logo file relative to public/ */
-const FLEET_TEE_AIRCRAFT = [
+const FLEET_CAP_AIRCRAFT = [
   { slug: "sr-71-blackbird", name: "SR-71 Blackbird", logo: "/fleet/sr71-blackbird-logo.png" },
   { slug: "f-35-lightning-ii", name: "F-35 Lightning II", logo: "/assets/fleet-logos/f35_lightning_ii.png" },
   { slug: "b-21-raider", name: "B-21 Raider", logo: "/assets/fleet-logos/b21_raider.png" },
@@ -61,13 +61,13 @@ const FLEET_TEE_AIRCRAFT = [
 function createBrandingSvg() {
   return Buffer.from(`<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${CANVAS}" height="${CANVAS}" viewBox="0 0 ${CANVAS} ${CANVAS}">
-  <text x="512" y="${BRAND_TEXT_Y}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" letter-spacing="3" fill="#111111">USJET.AI</text>
+  <text x="512" y="${BRAND_TEXT_Y}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" letter-spacing="2.5" fill="#111111">USJET.AI</text>
 </svg>`);
 }
 
-/** Flat-lay white tee on textured black — letterboxed to square; matches dark product page. */
-async function loadTeeBase() {
-  return sharp(TEE_BASE)
+/** Trucker cap mockup — letterboxed to square on black; matches dark product page. */
+async function loadCapBase() {
+  return sharp(CAP_BASE)
     .resize(CANVAS, CANVAS, {
       fit: "contain",
       background: { r: 0, g: 0, b: 0 },
@@ -109,9 +109,9 @@ async function loadLogoPipeline(logo) {
   return removeTanBackground(logo);
 }
 
-async function generateTee({ slug, name, logo }) {
-  const outPath = join(OUT_DIR, `${slug}-tee-product.webp`);
-  const base = await loadTeeBase();
+async function generateCap({ slug, name, logo }) {
+  const outPath = join(OUT_DIR, `${slug}-cap-product.webp`);
+  const base = await loadCapBase();
   const branding = await sharp(createBrandingSvg()).png().toBuffer();
 
   const logoPipeline = await loadLogoPipeline(logo);
@@ -135,16 +135,16 @@ async function generateTee({ slug, name, logo }) {
     .webp({ quality: 90 })
     .toFile(outPath);
 
-  return { slug, name, outPath: `public/fleet/${slug}-tee-product.webp` };
+  return { slug, name, outPath: `public/fleet/${slug}-cap-product.webp` };
 }
 
 await mkdir(OUT_DIR, { recursive: true });
 const results = [];
-for (const aircraft of FLEET_TEE_AIRCRAFT) {
-  results.push(await generateTee(aircraft));
+for (const aircraft of FLEET_CAP_AIRCRAFT) {
+  results.push(await generateCap(aircraft));
   console.log(`✓ ${aircraft.slug}`);
 }
 
-const manifestPath = join(OUT_DIR, "tee-product-manifest.json");
+const manifestPath = join(OUT_DIR, "cap-product-manifest.json");
 await writeFile(manifestPath, JSON.stringify(results, null, 2));
-console.log(`\nGenerated ${results.length} tee product images.`);
+console.log(`\nGenerated ${results.length} cap product images.`);

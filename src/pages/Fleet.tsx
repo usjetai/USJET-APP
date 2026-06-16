@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Plane } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetJetFighterPagePath } from "../data/fleetDirectorySeo";
 import {
@@ -18,8 +19,11 @@ import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 const FLEET_RUNWAY_DESCRIPTION =
   "Runway clearance: seventeen hired developers on US fighter vectors, thirteen open positions recruiting. Hired bays launch through sovereign handoff—same window, cockpit return bar, zero external leaks.";
 
-const Fleet = () => (
-  <motion.div
+const Fleet = () => {
+  const navigate = useNavigate();
+
+  return (
+    <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     className="fleet-page fleet-page--runway relative"
@@ -84,12 +88,25 @@ const Fleet = () => (
               isCommandBay={unit.href === "/origin" || unit.slot === 29}
               isAvailableBay={available}
               jetFighterPagePath={getFleetJetFighterPagePath(unit.callsign)}
+              onExpandBay={
+                available
+                  ? undefined
+                  : () => {
+                      navigate("/hangar", {
+                        state: {
+                          expandSlot: unit.slot,
+                          source: "fleet",
+                        },
+                      });
+                    }
+              }
             />
           );
         })}
       </div>
     </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 export default Fleet;

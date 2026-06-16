@@ -52,6 +52,8 @@ export type FleetCapabilities = {
 export type FleetUnit = {
   id: string;
   slot: number;
+  /** Unified identity key: agent Call Name == assigned developer name. */
+  callName: string;
   name: string;
   callsign: string;
   domain: string;

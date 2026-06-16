@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { fleetBayAccentStyle, slotFromBayId } from "../data/fleetBayAccents";
+import { verifyFleetCallName } from "../data/fleetManifest";
 import { markFleetBayTrusted, sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
 import { logFleetLaunchHandoff } from "../lib/fleetUsageHistory";
 
@@ -26,6 +27,7 @@ export default function Cockpit() {
   }, [params]);
   const bay = params.get("bay");
   const partnerLabel = params.get("label");
+  const callName = params.get("callName")?.trim() ?? "";
   const isHangarEmbed = params.get("embed") === "hangar";
   const baySlot = useMemo(() => slotFromBayId(bay), [bay]);
   const bayAccentStyle = useMemo(
@@ -46,6 +48,10 @@ export default function Cockpit() {
       navigate("/", { replace: true });
       return;
     }
+    if (callName && !verifyFleetCallName(callName)) {
+      navigate("/", { replace: true });
+      return;
+    }
 
     try {
       const host = new URL(src).hostname.replace(/^www\./, "");
@@ -53,7 +59,7 @@ export default function Cockpit() {
     } catch {
       document.title = "USJET Cockpit";
     }
-  }, [navigate, src]);
+  }, [callName, navigate, src]);
 
   // Integrated Navigation: authorize partner iframe immediately — no Launch click required.
   useLayoutEffect(() => {

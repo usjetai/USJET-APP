@@ -1,7 +1,7 @@
 import type { FleetUnit } from "../types/fleet";
 import { buildUnitSystemPrompt } from "./usjetProtocol";
 
-const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
+const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
@@ -336,6 +336,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
 
 export const fleetManifest: FleetUnit[] = FLEET_MANIFEST_CORE.map((unit) => ({
   ...unit,
+  callName: unit.name.trim(),
   systemPrompt: buildUnitSystemPrompt(unit),
 }));
 
@@ -347,4 +348,15 @@ export function getHangarUnits(): FleetUnit[] {
 
 export function getFleetUnitById(id: string): FleetUnit | undefined {
   return fleetManifest.find((unit) => unit.id === id);
+}
+
+/** Unified identity lookup: developer login/verification resolves by Call Name. */
+export function getFleetUnitByCallName(callName: string): FleetUnit | undefined {
+  const normalized = callName.trim().toLowerCase();
+  if (!normalized) return undefined;
+  return fleetManifest.find((unit) => unit.callName.trim().toLowerCase() === normalized);
+}
+
+export function verifyFleetCallName(callName: string): boolean {
+  return Boolean(getFleetUnitByCallName(callName));
 }

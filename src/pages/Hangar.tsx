@@ -1,6 +1,6 @@
 import { ShieldCheck } from "lucide-react";
-import { useEffect, useMemo, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
+import { Link, useLocation } from "react-router-dom";
 import FleetCard from "../components/fleet/FleetCard";
 import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
@@ -27,6 +27,7 @@ const HANGAR_VISION_RIBBON =
   "Expand a bay and that AI steps straight into its glass cockpit—smooth, frictionless, with the Hangar as home base.";
 
 const Hangar = () => {
+  const location = useLocation();
   const { session } = useMemberAuth();
   const bayLimit = getHangarBayLimit(session);
   const bayToast = hangarBayLimitToast(session);
@@ -36,6 +37,7 @@ const Hangar = () => {
     unitBySlot,
     bayLimit,
   );
+  const autoExpandedSlotRef = useRef<number | null>(null);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -52,6 +54,19 @@ const Hangar = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const state = location.state as { expandSlot?: number } | null;
+    const slot = state?.expandSlot;
+    if (typeof slot !== "number") return;
+    if (autoExpandedSlotRef.current === slot) return;
+
+    const targetUnit = unitBySlot.get(slot);
+    if (!targetUnit) return;
+
+    autoExpandedSlotRef.current = slot;
+    tryExpand(targetUnit);
+  }, [location.state, tryExpand]);
 
   const gridCells = useMemo(() => {
     const out: ReactNode[] = [];

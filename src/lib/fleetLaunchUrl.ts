@@ -8,6 +8,26 @@
 import { FLEET_PARTNER_HREFS } from "./fleetManifestAudit";
 
 export const FLEET_TRUSTED_STORAGE_PREFIX = "usjet-fleet-trusted-" as const;
+const FLEET_ALLOWED_EMBED_HOSTS = new Set(
+  Object.values(FLEET_PARTNER_HREFS)
+    .filter((href) => href.startsWith("http://") || href.startsWith("https://"))
+    .map((href) => {
+      try {
+        return new URL(href).hostname.replace(/^www\./i, "");
+      } catch {
+        return "";
+      }
+    })
+    .filter(Boolean),
+);
+
+function isAllowedFleetEmbedHost(hostname: string): boolean {
+  const normalized = hostname.replace(/^www\./i, "").toLowerCase();
+  if (FLEET_ALLOWED_EMBED_HOSTS.has(normalized)) {
+    return true;
+  }
+  return [...FLEET_ALLOWED_EMBED_HOSTS].some((base) => normalized.endsWith(`.${base}`));
+}
 
 export function fleetBayIdFromSlot(slot?: number): string | null {
   if (typeof slot !== "number") {
@@ -77,6 +97,9 @@ export function sanitizeCockpitSrc(raw: string | null): string | null {
     if (url.protocol !== "https:") {
       return null;
     }
+    if (!isAllowedFleetEmbedHost(url.hostname)) {
+      return null;
+    }
     return url.toString();
   } catch {
     return null;
@@ -87,6 +110,7 @@ type CockpitWrapOptions = {
   slot?: number;
   returnTo?: string;
   label?: string;
+  callName?: string;
 };
 
 /** Route external partner URLs through /cockpit so the USJET return bar stays mounted. */
@@ -97,10 +121,12 @@ export function integratedLaunchUrl(
   options?: CockpitWrapOptions,
 ): string {
   const raw = fleetLaunchUrl(domain, href, slot);
+  const unifiedCallName = options?.callName ?? options?.label;
   return wrapExternalInCockpit(raw, {
     slot,
     returnTo: options?.returnTo,
     label: options?.label ?? domain,
+    callName: unifiedCallName,
   });
 }
 
@@ -128,6 +154,9 @@ export function wrapExternalInCockpit(rawUrl: string, options?: CockpitWrapOptio
 
   if (options?.label) {
     params.set("label", options.label);
+  }
+  if (options?.callName?.trim()) {
+    params.set("callName", options.callName.trim());
   }
 
   return `/cockpit?${params.toString()}`;

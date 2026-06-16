@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import { getFleetBayAccent, fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { getFleetDirectoryEntryBySlug } from "../data/fleetDirectorySeo";
@@ -10,17 +9,6 @@ import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 import { FleetLaunchLink } from "../lib/fleetLaunchLink";
 import { logFleetUsageIfMember } from "../lib/fleetUsageHistory";
 import { resolveSr71BlackbirdProductPaymentLink } from "../lib/stripePaymentLink";
-
-/**
- * Optional product display imagery, keyed by the aircraft slug used in `/product/:slug`.
- * Add another entry here to surface a product photo in the hero for that fleet bay.
- */
-const PRODUCT_IMAGE_BY_AIRCRAFT_SLUG: Record<string, { src: string; alt: string }> = {
-  "sr-71-blackbird": {
-    src: "/fleet/sr-71-blackbird-product.webp",
-    alt: "SR-71 Blackbird alloy pull-back model — white and black variants on a blue sky backdrop.",
-  },
-};
 
 /**
  * Optional merchandise / model specifications, keyed by aircraft slug.
@@ -98,8 +86,6 @@ export default function FleetProductPage() {
         label: entry.name,
         returnTo: `/product/${entry.aircraftSlug}`,
       });
-  const displayAircraftType = unit.aircraftType;
-  const productImage = PRODUCT_IMAGE_BY_AIRCRAFT_SLUG[entry.aircraftSlug];
   const productSpecs = PRODUCT_SPECS_BY_AIRCRAFT_SLUG[entry.aircraftSlug];
   const productStripeLink = PRODUCT_STRIPE_LINK_BY_AIRCRAFT_SLUG[entry.aircraftSlug]?.();
 
@@ -173,22 +159,27 @@ export default function FleetProductPage() {
             </div>
           </div>
 
-          <div className="product-page__aircraft" aria-hidden={productImage ? undefined : true}>
-            {productImage ? (
+          <div className="product-page__media" aria-label={`${entry.aircraftOfficialName} product media`}>
+            <div className="product-page__logo-wrap">
               <img
-                src={productImage.src}
-                alt={productImage.alt}
-                className="product-page__product-image"
+                src={entry.productLogo.src}
+                alt={entry.productLogo.alt}
+                className="product-page__logo"
                 loading="lazy"
                 decoding="async"
               />
-            ) : (
-              <AircraftIcon
-                aircraftType={displayAircraftType}
-                accentId={`${displayAircraftType}-${entry.slug}`}
-                className="product-page__icon"
+            </div>
+            <div
+              className={`product-page__photo-wrap${entry.productPhoto.isDedicatedProductPhoto ? "" : " product-page__photo-wrap--fallback"}`}
+            >
+              <img
+                src={entry.productPhoto.src}
+                alt={entry.productPhoto.alt}
+                className={`product-page__product-image${entry.productPhoto.isDedicatedProductPhoto ? "" : " product-page__product-image--fallback"}`}
+                loading="lazy"
+                decoding="async"
               />
-            )}
+            </div>
           </div>
         </section>
       </GlassEffectContainer>

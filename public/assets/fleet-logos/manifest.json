@@ -1,0 +1,733 @@
+{
+  "generatedAt": "2026-06-15T17:29:40.016Z",
+  "sourceSheet": "usjet-fleet-sheet-source.png",
+  "sheetSize": "616x1024 portrait",
+  "background": {
+    "r": 207,
+    "g": 196,
+    "b": 166,
+    "alpha": 255
+  },
+  "assets": [
+    {
+      "file": "f22_raptor.png",
+      "aircraftType": "f22",
+      "slot": 0,
+      "rect": [
+        42,
+        190,
+        158,
+        285
+      ],
+      "silhouetteRect": [
+        42,
+        190,
+        158,
+        245
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f35_lightning_ii.png",
+      "aircraftType": "f35",
+      "slot": 1,
+      "rect": [
+        410,
+        190,
+        574,
+        285
+      ],
+      "silhouetteRect": [
+        410,
+        190,
+        574,
+        245
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "b21_raider.png",
+      "aircraftType": "b21",
+      "slot": 2,
+      "rect": [
+        158,
+        190,
+        274,
+        285
+      ],
+      "silhouetteRect": [
+        158,
+        190,
+        274,
+        245
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "j36_fighter.png",
+      "aircraftType": "j36",
+      "slot": 3,
+      "rect": [
+        274,
+        880,
+        390,
+        998
+      ],
+      "silhouetteRect": [
+        274,
+        880,
+        390,
+        948
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "ngad_platform.png",
+      "aircraftType": "ngad",
+      "slot": 4,
+      "rect": [
+        42,
+        620,
+        158,
+        700
+      ],
+      "silhouetteRect": [
+        42,
+        620,
+        158,
+        666
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": "Proxy crop — matched sibling on reference sheet"
+    },
+    {
+      "file": "yf23_black_widow_ii.png",
+      "aircraftType": "yf23",
+      "slot": 5,
+      "rect": [
+        274,
+        190,
+        390,
+        285
+      ],
+      "silhouetteRect": [
+        274,
+        190,
+        390,
+        245
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "x47b.png",
+      "aircraftType": "x47b",
+      "slot": 6,
+      "rect": [
+        42,
+        418,
+        158,
+        534
+      ],
+      "silhouetteRect": [
+        42,
+        418,
+        158,
+        485
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "x37b.png",
+      "aircraftType": "x37b",
+      "slot": 7,
+      "rect": [
+        158,
+        418,
+        274,
+        534
+      ],
+      "silhouetteRect": [
+        158,
+        418,
+        274,
+        485
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "x51_waverider.png",
+      "aircraftType": "x51",
+      "slot": 8,
+      "rect": [
+        158,
+        418,
+        274,
+        534
+      ],
+      "silhouetteRect": [
+        158,
+        418,
+        274,
+        485
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": "Proxy crop — matched sibling on reference sheet"
+    },
+    {
+      "file": "pca_aircraft.png",
+      "aircraftType": "pca",
+      "slot": 9,
+      "rect": [
+        410,
+        534,
+        574,
+        620
+      ],
+      "silhouetteRect": [
+        410,
+        534,
+        574,
+        584
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "b2_spirit.png",
+      "aircraftType": "b2",
+      "slot": 10,
+      "rect": [
+        42,
+        304,
+        158,
+        405
+      ],
+      "silhouetteRect": [
+        42,
+        304,
+        158,
+        363
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "b1_lancer.png",
+      "aircraftType": "b1",
+      "slot": 11,
+      "rect": [
+        158,
+        304,
+        274,
+        405
+      ],
+      "silhouetteRect": [
+        158,
+        304,
+        274,
+        363
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "a12_avenger_ii.png",
+      "aircraftType": "a12",
+      "slot": 12,
+      "rect": [
+        42,
+        534,
+        158,
+        620
+      ],
+      "silhouetteRect": [
+        42,
+        534,
+        158,
+        584
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "sr72_darkstar.png",
+      "aircraftType": "darkstar",
+      "slot": 13,
+      "rect": [
+        42,
+        775,
+        158,
+        850
+      ],
+      "silhouetteRect": [
+        42,
+        775,
+        158,
+        819
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": "Proxy crop — matched sibling on reference sheet"
+    },
+    {
+      "file": "fb22.png",
+      "aircraftType": "fb22",
+      "slot": 14,
+      "rect": [
+        274,
+        304,
+        390,
+        405
+      ],
+      "silhouetteRect": [
+        274,
+        304,
+        390,
+        363
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f15ex_eagle_ii.png",
+      "aircraftType": "f15ex",
+      "slot": 15,
+      "rect": [
+        410,
+        304,
+        574,
+        405
+      ],
+      "silhouetteRect": [
+        410,
+        304,
+        574,
+        363
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f16v_viper.png",
+      "aircraftType": "f16v",
+      "slot": 16,
+      "rect": [
+        410,
+        620,
+        574,
+        700
+      ],
+      "silhouetteRect": [
+        410,
+        620,
+        574,
+        666
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "fa18_super_hornet.png",
+      "aircraftType": "fa18",
+      "slot": 17,
+      "rect": [
+        410,
+        880,
+        574,
+        998
+      ],
+      "silhouetteRect": [
+        410,
+        880,
+        574,
+        948
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "a10_warthog.png",
+      "aircraftType": "a10",
+      "slot": 18,
+      "rect": [
+        42,
+        700,
+        158,
+        775
+      ],
+      "silhouetteRect": [
+        42,
+        700,
+        158,
+        744
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f117_nighthawk.png",
+      "aircraftType": "f117",
+      "slot": 19,
+      "rect": [
+        158,
+        700,
+        274,
+        775
+      ],
+      "silhouetteRect": [
+        158,
+        700,
+        274,
+        744
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "mq25_stingray.png",
+      "aircraftType": "mq25",
+      "slot": 20,
+      "rect": [
+        274,
+        700,
+        390,
+        775
+      ],
+      "silhouetteRect": [
+        274,
+        700,
+        390,
+        744
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "mq28_ghost_bat.png",
+      "aircraftType": "mq28",
+      "slot": 21,
+      "rect": [
+        410,
+        700,
+        574,
+        775
+      ],
+      "silhouetteRect": [
+        410,
+        700,
+        574,
+        744
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "xq58_valkyrie.png",
+      "aircraftType": "xq58",
+      "slot": 22,
+      "rect": [
+        165,
+        300,
+        450,
+        595
+      ],
+      "silhouetteRect": [
+        165,
+        300,
+        450,
+        471
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": "Proxy crop — matched sibling on reference sheet"
+    },
+    {
+      "file": "rq180.png",
+      "aircraftType": "rq180",
+      "slot": 23,
+      "rect": [
+        158,
+        775,
+        274,
+        850
+      ],
+      "silhouetteRect": [
+        158,
+        775,
+        274,
+        819
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "rq4_global_hawk.png",
+      "aircraftType": "globalHawk",
+      "slot": 24,
+      "rect": [
+        274,
+        775,
+        390,
+        850
+      ],
+      "silhouetteRect": [
+        274,
+        775,
+        390,
+        819
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f14_tomcat.png",
+      "aircraftType": "f14",
+      "slot": 25,
+      "rect": [
+        410,
+        775,
+        574,
+        850
+      ],
+      "silhouetteRect": [
+        410,
+        775,
+        574,
+        819
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f4_phantom_ii.png",
+      "aircraftType": "f4",
+      "slot": 26,
+      "rect": [
+        42,
+        880,
+        158,
+        998
+      ],
+      "silhouetteRect": [
+        42,
+        880,
+        158,
+        948
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f104_starfighter.png",
+      "aircraftType": "f104",
+      "slot": 27,
+      "rect": [
+        158,
+        880,
+        274,
+        998
+      ],
+      "silhouetteRect": [
+        158,
+        880,
+        274,
+        948
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": null
+    },
+    {
+      "file": "f86_sabre.png",
+      "aircraftType": "f86",
+      "slot": 28,
+      "rect": [
+        158,
+        880,
+        274,
+        998
+      ],
+      "silhouetteRect": [
+        158,
+        880,
+        274,
+        948
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": "Proxy crop — matched sibling on reference sheet"
+    },
+    {
+      "file": "x59_quesst.png",
+      "aircraftType": "x59",
+      "slot": 29,
+      "rect": [
+        410,
+        620,
+        574,
+        700
+      ],
+      "silhouetteRect": [
+        410,
+        620,
+        574,
+        666
+      ],
+      "background": {
+        "r": 207,
+        "g": 196,
+        "b": 166,
+        "alpha": 255
+      },
+      "note": "Proxy crop — matched sibling on reference sheet"
+    }
+  ]
+}

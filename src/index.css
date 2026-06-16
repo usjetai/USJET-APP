@@ -27122,7 +27122,35 @@ html.blog-page-root #usjet-app-shell {
   border-bottom: 1px solid rgb(34 211 238 / 0.16);
 }
 
+.hired-hud__hub {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1rem;
+  padding: 0.85rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgb(56 189 248 / 0.24);
+  background: linear-gradient(180deg, rgb(4 18 34 / 0.78), rgb(8 28 48 / 0.92));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 0 28px rgb(34 211 238 / 0.08);
+}
+
+.hired-hud__hub .hired-hud__ekg-monitor {
+  margin-bottom: 0.85rem;
+}
+
+.hired-hud__hub .hired-hud__crew {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .hired-hud__ekg-monitor-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
   font-size: 0.62rem;
   font-weight: 900;
   letter-spacing: 0.18em;
@@ -27141,12 +27169,12 @@ html.blog-page-root #usjet-app-shell {
 
 .hired-hud__ekg {
   position: relative;
-  min-height: 4.25rem;
-  padding: 0.45rem 0.55rem 0.55rem;
+  min-height: 5rem;
+  padding: 0.55rem 0.65rem 0.65rem;
 }
 
 .hired-hud__ekg .intel-ekg {
-  min-height: 3.35rem;
+  min-height: 4rem;
 }
 
 .hired-hud__list {
@@ -27164,7 +27192,7 @@ html.blog-page-root #usjet-app-shell {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 12.5rem;
+  min-height: 22rem;
   border: 1px solid rgb(56 189 248 / 0.22);
   border-radius: 0.9rem;
   overflow: hidden;
@@ -27424,13 +27452,13 @@ html.blog-page-root #usjet-app-shell {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(3.6rem, 4.35rem) minmax(0, 1fr);
-  grid-template-rows: auto auto auto;
+  grid-template-columns: minmax(7.2rem, 8.7rem) minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto;
   align-items: center;
-  gap: 0.45rem 0.55rem;
+  gap: 0.45rem 0.65rem;
   margin-top: auto;
-  min-height: 5.5rem;
-  padding: 0.62rem 0.7rem 0.68rem;
+  min-height: 11rem;
+  padding: 0.72rem 0.75rem 0.78rem;
   background: linear-gradient(
     180deg,
     rgb(8 24 44 / 0.72) 0%,
@@ -27439,7 +27467,7 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__tile-profile {
-  grid-row: 1 / span 2;
+  grid-row: 1 / span 3;
   grid-column: 1;
   align-self: center;
   justify-self: center;
@@ -27455,13 +27483,13 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__avatar--tile {
-  width: 3.55rem;
-  height: 3.55rem;
+  width: 7.1rem;
+  height: 7.1rem;
 }
 
 .hired-hud__avatar--crew {
-  width: 3.1rem;
-  height: 3.1rem;
+  width: 6.2rem;
+  height: 6.2rem;
 }
 
 .hired-hud__avatar-img {
@@ -27519,8 +27547,8 @@ html.blog-page-root #usjet-app-shell {
 
 .hired-hud__crew-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(5.4rem, 1fr));
-  gap: 0.55rem 0.45rem;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.7rem 0.55rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -27529,9 +27557,9 @@ html.blog-page-root #usjet-app-shell {
 .hired-hud__crew-item {
   display: grid;
   justify-items: center;
-  gap: 0.28rem;
+  gap: 0.38rem;
   min-width: 0;
-  padding: 0.42rem 0.28rem 0.48rem;
+  padding: 0.55rem 0.35rem 0.62rem;
   border-radius: 0.72rem;
   border: 1px solid rgb(56 189 248 / 0.14);
   background: rgb(2 12 24 / 0.55);
@@ -27691,10 +27719,9 @@ html.blog-page-root #usjet-app-shell {
 
 .hired-hud__row-monitor {
   position: relative;
-  flex: 1;
-  min-width: 5.5rem;
-  max-width: 8rem;
-  height: 2.35rem;
+  flex: 1 1 100%;
+  min-width: 100%;
+  height: 2.75rem;
   border-radius: 0.42rem;
   border: 1px solid rgb(56 189 248 / 0.32);
   background:

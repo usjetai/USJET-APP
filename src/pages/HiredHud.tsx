@@ -274,31 +274,36 @@ export default function HiredHud() {
             </article>
           </div>
 
-          <div className="hired-hud__crew" aria-label="Hired developer profile crew">
-            <div className="hired-hud__crew-head">
-              <span className="hired-hud__crew-title">Hired crew profiles</span>
-              <span className="hired-hud__crew-count">{hiredUnits.length} sovereign hired crew profiles</span>
+          <div className="hired-hud__hub" aria-label="Hired developer hub">
+            <div className="hired-hud__ekg-monitor" aria-label="Fleet heart monitor">
+              <div className="hired-hud__ekg-monitor-head">
+                <span className="hired-hud__ekg-monitor-title">
+                  <HeartPulse size={13} aria-hidden />
+                  Heart Monitor
+                </span>
+                <span className="hired-hud__ekg-monitor-tag">Trace live</span>
+              </div>
+              <div className="hired-hud__ekg" aria-hidden>
+                <EkgPulseLine variant="hero" traces={3} seed={17} />
+              </div>
             </div>
-            <ul className="hired-hud__crew-list">
-              {hiredUnits.map((unit) => (
-                <li key={`crew-${unit.id}`} className="hired-hud__crew-item">
-                  <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="crew" />
-                  <span className="hired-hud__crew-name">
-                    <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
-                  </span>
-                  <span className="hired-hud__crew-bay">Bay {String(unit.slot + 1).padStart(2, "0")}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
 
-          <div className="hired-hud__ekg-monitor" aria-label="Fleet EKG monitor">
-            <div className="hired-hud__ekg-monitor-head">
-              <span className="hired-hud__ekg-monitor-title">EKG Monitor</span>
-              <span className="hired-hud__ekg-monitor-tag">Trace live</span>
-            </div>
-            <div className="hired-hud__ekg" aria-hidden>
-              <EkgPulseLine variant="hero" traces={3} seed={17} />
+            <div className="hired-hud__crew" aria-label="Hired developer profile crew">
+              <div className="hired-hud__crew-head">
+                <span className="hired-hud__crew-title">Hired crew profiles</span>
+                <span className="hired-hud__crew-count">{hiredUnits.length} sovereign hired crew profiles</span>
+              </div>
+              <ul className="hired-hud__crew-list">
+                {hiredUnits.map((unit) => (
+                  <li key={`crew-${unit.id}`} className="hired-hud__crew-item">
+                    <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="crew" />
+                    <span className="hired-hud__crew-name">
+                      <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
+                    </span>
+                    <span className="hired-hud__crew-bay">Bay {String(unit.slot + 1).padStart(2, "0")}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 

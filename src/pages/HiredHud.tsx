@@ -7,7 +7,7 @@ import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_GAUGE_MASK_POSITION, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
+import { HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -266,17 +266,7 @@ export default function HiredHud() {
                 <div className="hired-hud__tile-hud" aria-hidden>
                   <div
                     className="hired-hud__tile-hud-bg"
-                    style={{
-                      backgroundImage: `url("${HIRED_HUD_TILE_BG}")`,
-                      backgroundPosition: HIRED_HUD_GAUGE_MASK_POSITION.backgroundPosition,
-                    }}
-                  />
-                  <span
-                    className="hired-hud__tile-hud-gauge-mask"
-                    style={{
-                      left: HIRED_HUD_GAUGE_MASK_POSITION.maskLeft,
-                      top: HIRED_HUD_GAUGE_MASK_POSITION.maskTop,
-                    }}
+                    style={{ backgroundImage: `url("${HIRED_HUD_TILE_BG}")` }}
                   />
                   <span
                     className="hired-hud__tile-scanline"

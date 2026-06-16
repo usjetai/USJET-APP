@@ -26724,6 +26724,27 @@ html.blog-page-root #usjet-app-shell {
   background: linear-gradient(180deg, rgb(49 46 129 / 0.24), rgb(8 47 73 / 0.22));
 }
 
+.hired-hud__metric-value--fuel {
+  color: rgb(250 204 21 / 0.98);
+  text-shadow: 0 0 10px rgb(234 179 8 / 0.35);
+  font-variant-numeric: tabular-nums;
+}
+
+.hired-hud__metric--fuel {
+  border-color: rgb(234 179 8 / 0.28);
+  background: linear-gradient(180deg, rgb(113 63 18 / 0.24), rgb(8 47 73 / 0.22));
+}
+
+.hired-hud__metric-subvalue {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(252 211 77 / 0.72);
+}
+
 .hired-hud__ekg-monitor {
   position: relative;
   z-index: 1;
@@ -26870,7 +26891,8 @@ html.blog-page-root #usjet-app-shell {
 .hired-hud__tile-hud-spo2,
 .hired-hud__tile-hud-pressure,
 .hired-hud__tile-hud-steps,
-.hired-hud__tile-hud-sleep {
+.hired-hud__tile-hud-sleep,
+.hired-hud__tile-hud-fuel {
   font-size: 0.54rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -26898,6 +26920,31 @@ html.blog-page-root #usjet-app-shell {
 .hired-hud__tile-hud-sleep {
   grid-column: 1 / -1;
   color: rgb(199 210 254 / 0.95);
+}
+
+.hired-hud__tile-hud-fuel {
+  grid-column: 1 / -1;
+  color: rgb(252 211 77 / 0.95);
+}
+
+.hired-hud__tile-hud-fuel-meter {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 0.28rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgb(2 10 22 / 0.88);
+  border: 1px solid rgb(234 179 8 / 0.28);
+  box-shadow: inset 0 0 8px rgb(2 8 18 / 0.9);
+}
+
+.hired-hud__tile-hud-fuel-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgb(220 38 38 / 0.95), rgb(250 204 21 / 0.98));
+  box-shadow: 0 0 10px rgb(250 204 21 / 0.45);
+  transition: width 1.1s ease;
 }
 
 .hired-hud__tile-hud-ekg {
@@ -27091,7 +27138,8 @@ html.blog-page-root #usjet-app-shell {
 .hired-hud__tile--active-love .hired-hud__tile-hud-spo2,
 .hired-hud__tile--active-love .hired-hud__tile-hud-pressure,
 .hired-hud__tile--active-love .hired-hud__tile-hud-steps,
-.hired-hud__tile--active-love .hired-hud__tile-hud-sleep {
+.hired-hud__tile--active-love .hired-hud__tile-hud-sleep,
+.hired-hud__tile--active-love .hired-hud__tile-hud-fuel {
   color: rgb(251 113 133 / 0.98);
   text-shadow: 0 0 10px rgb(244 63 94 / 0.45);
 }
@@ -27292,6 +27340,73 @@ html.blog-page-root #usjet-app-shell {
   text-transform: uppercase;
   color: rgb(199 210 254 / 0.96);
   font-variant-numeric: tabular-nums;
+}
+
+.hired-hud__row-fuel {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0.14rem 0.32rem;
+  flex: 1 1 7.5rem;
+  min-width: 6.5rem;
+  max-width: 10rem;
+  padding: 0.18rem 0.42rem 0.16rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgb(234 179 8 / 0.42);
+  background: linear-gradient(180deg, rgb(69 26 3 / 0.42), rgb(15 23 42 / 0.88));
+  color: rgb(253 224 71 / 0.98);
+  box-shadow:
+    inset 0 0 0 1px rgb(250 204 21 / 0.08),
+    0 0 12px rgb(234 179 8 / 0.14);
+}
+
+.hired-hud__row-fuel > svg {
+  grid-row: 1 / span 2;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.hired-hud__row-fuel-copy {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.hired-hud__row-fuel-amount {
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hired-hud__row-fuel-percent {
+  font-size: 0.5rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(252 211 77 / 0.78);
+}
+
+.hired-hud__row-fuel-track {
+  grid-column: 2;
+  display: block;
+  height: 0.24rem;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgb(2 10 22 / 0.92);
+  border: 1px solid rgb(180 83 9 / 0.35);
+}
+
+.hired-hud__row-fuel-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgb(220 38 38 / 0.95), rgb(250 204 21 / 0.98));
+  box-shadow: 0 0 8px rgb(250 204 21 / 0.42);
+  transition: width 1.1s ease;
 }
 
 @keyframes hired-hud-sleep-glow {

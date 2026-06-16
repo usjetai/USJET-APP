@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Activity, Footprints, Heart, HeartPulse, Moon, Radar } from "lucide-react";
+import { Activity, Footprints, Fuel, Heart, HeartPulse, Moon, Radar } from "lucide-react";
 import { motion } from "framer-motion";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
@@ -21,6 +21,14 @@ import {
   formatSleepTime,
   loadHiredHudSleepTime,
 } from "../lib/hiredHudSleepTime";
+import {
+  averageFuelPercent,
+  driftLowFuelReading,
+  formatFuelDollars,
+  randomLowFuelReading,
+  totalFuelDollars,
+  type DeveloperFuelReading,
+} from "../lib/hiredHudFuelMeter";
 
 function formatHudPercent(value: number): string {
   return `${value >= 0 ? "+" : "-"}${Math.abs(value).toFixed(2)}%`;
@@ -69,6 +77,11 @@ export default function HiredHud() {
   const [developerSleep] = useState<Record<number, number>>(() =>
     loadHiredHudSleepTime(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
   );
+  const [developerFuel, setDeveloperFuel] = useState<Record<number, DeveloperFuelReading>>(() =>
+    Object.fromEntries(
+      getHiredDeveloperUnits(fleetManifest).map((unit) => [unit.slot, randomLowFuelReading(unit.slot)]),
+    ),
+  );
   const [activeLove, setActiveLove] = useState(false);
 
   const fleetDailySteps = useMemo(
@@ -78,6 +91,14 @@ export default function HiredHud() {
   const fleetAvgSleep = useMemo(
     () => formatSleepTime(averageSleepMinutes(developerSleep, hiredUnits.map((unit) => unit.slot))),
     [developerSleep, hiredUnits],
+  );
+  const fleetFuelReserve = useMemo(
+    () => totalFuelDollars(developerFuel, hiredUnits.map((unit) => unit.slot)),
+    [developerFuel, hiredUnits],
+  );
+  const fleetFuelPercent = useMemo(
+    () => averageFuelPercent(developerFuel, hiredUnits.map((unit) => unit.slot)),
+    [developerFuel, hiredUnits],
   );
 
   useEffect(() => {
@@ -132,6 +153,14 @@ export default function HiredHud() {
           next[unit.slot] = driftDailySteps(current);
         }
         saveHiredHudDailySteps(next);
+        return next;
+      });
+      setDeveloperFuel((prev) => {
+        const next = { ...prev };
+        for (const unit of hiredUnits) {
+          const current = next[unit.slot] ?? randomLowFuelReading(unit.slot);
+          next[unit.slot] = driftLowFuelReading(current);
+        }
         return next;
       });
     }, 1600);
@@ -232,6 +261,16 @@ export default function HiredHud() {
               </span>
               <strong className="hired-hud__metric-value hired-hud__metric-value--sleep">{fleetAvgSleep}</strong>
             </article>
+            <article className="hired-hud__metric hired-hud__metric--fuel">
+              <span className="hired-hud__metric-label">
+                <Fuel size={11} aria-hidden />
+                Fleet Fuel Reserve
+              </span>
+              <strong className="hired-hud__metric-value hired-hud__metric-value--fuel">
+                {formatFuelDollars(fleetFuelReserve)}
+              </strong>
+              <span className="hired-hud__metric-subvalue">{fleetFuelPercent.toFixed(1)}% avg</span>
+            </article>
           </div>
 
           <div className="hired-hud__ekg-monitor" aria-label="Fleet EKG monitor">
@@ -252,6 +291,8 @@ export default function HiredHud() {
               const steps = developerSteps[unit.slot] ?? 0;
               const sleepMinutes = developerSleep[unit.slot] ?? 0;
               const sleepLabel = formatSleepTime(sleepMinutes);
+              const fuel = developerFuel[unit.slot] ?? randomLowFuelReading(unit.slot);
+              const fuelLabel = formatFuelDollars(fuel.dollars);
               const aircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
               const tileScan = (scanPhase + unit.slot * 13) % 100;
 
@@ -279,6 +320,13 @@ export default function HiredHud() {
                     <span className="hired-hud__tile-hud-pressure">Pressure {pressure}%</span>
                     <span className="hired-hud__tile-hud-steps">{formatDailySteps(steps)} steps</span>
                     <span className="hired-hud__tile-hud-sleep">Sleep {sleepLabel}</span>
+                    <span className="hired-hud__tile-hud-fuel">Fuel {fuelLabel}</span>
+                    <div className="hired-hud__tile-hud-fuel-meter" aria-hidden>
+                      <span
+                        className="hired-hud__tile-hud-fuel-meter-fill"
+                        style={{ width: `${fuel.percent}%` }}
+                      />
+                    </div>
                     <div className="hired-hud__tile-hud-ekg">
                       <EkgPulseLine
                         variant="monitor"
@@ -326,6 +374,22 @@ export default function HiredHud() {
                       <Moon size={11} aria-hidden />
                       {sleepLabel}
                     </span>
+                    <div
+                      className="hired-hud__row-fuel"
+                      aria-label={`Fuel reserve ${fuelLabel}, ${fuel.percent} percent`}
+                    >
+                      <Fuel size={11} aria-hidden />
+                      <span className="hired-hud__row-fuel-copy">
+                        <span className="hired-hud__row-fuel-amount">{fuelLabel}</span>
+                        <span className="hired-hud__row-fuel-percent">{fuel.percent}%</span>
+                      </span>
+                      <span className="hired-hud__row-fuel-track" aria-hidden>
+                        <span
+                          className="hired-hud__row-fuel-fill"
+                          style={{ width: `${fuel.percent}%` }}
+                        />
+                      </span>
+                    </div>
                     <div className="hired-hud__row-monitor" aria-label={`EKG monitor for ${unit.name}`}>
                       <span className="hired-hud__row-monitor-label" aria-hidden>
                         EKG
@@ -366,6 +430,8 @@ export default function HiredHud() {
             <span>Daily steps {formatDailySteps(fleetDailySteps)}</span>
             <span>·</span>
             <span>Avg sleep {fleetAvgSleep}</span>
+            <span>·</span>
+            <span>Fleet fuel {formatFuelDollars(fleetFuelReserve)}</span>
             {activeLove ? (
               <>
                 <span>·</span>

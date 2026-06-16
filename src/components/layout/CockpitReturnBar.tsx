@@ -46,10 +46,8 @@ export default function CockpitReturnBar({
           </span>
         </Link>
 
-        {bay || partnerLabel ? (
+        {partnerLabel ? (
           <p className="cockpit-return-bar__meta">
-            {bay ? <span>Bay {bay}</span> : null}
-            {bay && partnerLabel ? <span className="cockpit-return-bar__sep" aria-hidden>·</span> : null}
             {partnerLabel ? <span>{partnerLabel}</span> : null}
           </p>
         ) : null}

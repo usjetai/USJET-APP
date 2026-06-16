@@ -1,20 +1,17 @@
 import type { CSSProperties } from "react";
-import { Link } from "react-router-dom";
+import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { fleetBayAccentStyle, getFleetBayAccent } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import type { FleetUnit } from "../../types/fleet";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 
 const SORTED_UNITS = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const LEFT_COLUMN = SORTED_UNITS.slice(0, 15);
 const RIGHT_COLUMN = SORTED_UNITS.slice(15, 30);
-
-function fleetBayLabel(slot: number): string {
-  return String(slot + 1).padStart(2, "0");
-}
 
 function FounderFleetCell({ unit }: { unit: FleetUnit }) {
   const launchUrl = integratedLaunchUrl(unit.domain, resolveFleetUnitHref(unit), unit.slot, {
@@ -23,14 +20,11 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
   });
   const isCommandBay = unit.slot === 29;
   const bayAccent = getFleetBayAccent(unit.slot);
-  const bay = fleetBayLabel(unit.slot);
-  const Tag = launchUrl.startsWith("/") ? Link : "a";
-  const linkProps = launchUrl.startsWith("/") ? { to: launchUrl } : { href: launchUrl };
-
+  const bay = String(unit.slot + 1).padStart(2, "0");
   return (
     <li>
-      <Tag
-        {...linkProps}
+      <FleetLaunchLink
+        launchUrl={launchUrl}
         className={[
           "founder-fleet-roster__cell",
           "glass-effect-interactive",
@@ -44,17 +38,16 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
             "--founder-fleet-accent": bayAccent.accent,
           } as CSSProperties
         }
-        aria-label={`Bay ${bay} — ${unit.callsign}, ${unit.name}`}
+        aria-label={`Bay ${bay} — ${unit.name}`}
         onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
       >
-        <span className="founder-fleet-roster__bay" aria-hidden>
-          {bay}
-        </span>
         <span className="founder-fleet-roster__text">
-          <span className="founder-fleet-roster__callsign">{unit.callsign}</span>
-          <span className="founder-fleet-roster__name">{unit.name}</span>
+          <span className="founder-fleet-roster__callsign">{unit.name}</span>
+          <span className="founder-fleet-roster__name">
+            <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
+          </span>
         </span>
-      </Tag>
+      </FleetLaunchLink>
     </li>
   );
 }
@@ -81,8 +74,8 @@ export default function FounderFleetRoster() {
           <h2 className="founder-fleet-roster__title">Thirty units · one hangar</h2>
         </header>
         <div className="founder-fleet-roster__columns">
-          <FounderFleetColumn units={LEFT_COLUMN} label="Bays 01–15" />
-          <FounderFleetColumn units={RIGHT_COLUMN} label="Bays 16–30" />
+          <FounderFleetColumn units={LEFT_COLUMN} label="Units 01-15" />
+          <FounderFleetColumn units={RIGHT_COLUMN} label="Units 16-30" />
         </div>
       </GlassEffectContainer>
     </section>

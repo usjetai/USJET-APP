@@ -5,7 +5,9 @@ import FounderWorkerSilhouette, {
   type FounderWorkerSilhouetteType,
 } from "../components/founder/FounderWorkerSilhouettes";
 import AircraftIcon from "../components/icons/AircraftIcons";
+import FounderLinkedInBeacon from "../components/founder/FounderLinkedInBeacon";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import { FOUNDER_PUBLIC_NAME, FOUNDER_PUBLIC_NAME_KICKER } from "../data/founderManifesto";
 
 const USJET_SOCIAL = {
   instagram: "https://www.instagram.com/usjet/",
@@ -94,17 +96,26 @@ const Founder = () => {
         <div className="founder-page__center">
           <article className="founder-story founder-page__main">
             <header className="founder-story__hero">
-              <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect--rounded-rect">
-                <img
-                  className="founder-story__hero-logo"
-                  src="/founder/usjet-hero-logo.png"
-                  alt="USJET.AI — liquid glass star emblem"
-                  width={1200}
-                  height={675}
-                  decoding="async"
-                  fetchPriority="high"
-                />
-              </GlassEffectContainer>
+              <div className="founder-story__hero-top">
+                <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect--rounded-rect">
+                  <img
+                    className="founder-story__hero-logo logo-rounded"
+                    src="/founder/usjet-hero-logo.png"
+                    alt="USJET.AI — liquid glass star emblem"
+                    width={1200}
+                    height={675}
+                    decoding="async"
+                    fetchPriority="high"
+                  />
+                </GlassEffectContainer>
+              </div>
+              <div className="founder-story__founder-name-wrap">
+                <p className="founder-story__founder-kicker">{FOUNDER_PUBLIC_NAME_KICKER}</p>
+                <h1 className="founder-story__founder-name">{FOUNDER_PUBLIC_NAME}</h1>
+              </div>
+              <div className="founder-story__hero-linkedin">
+                <FounderLinkedInBeacon variant="hero" />
+              </div>
               <p className="founder-story__lede founder-story__lede--centered">
                 Queens hustle, the digital hive, and the first AI platform built for blue-collar
                 America — from someone who turned wrenches before slides.
@@ -169,7 +180,7 @@ const Founder = () => {
                     <AircraftIcon aircraftType="f22" accentId="escort-1" className="founder-escort-jet" />
                   </span>
                   <span className="founder-social__escort-slot founder-social__escort-slot--lead">
-                    <AircraftIcon aircraftType="sr71" accentId="escort-2" className="founder-escort-jet" />
+                    <AircraftIcon aircraftType="darkstar" accentId="escort-2" className="founder-escort-jet" />
                   </span>
                   <span className="founder-social__escort-slot founder-social__escort-slot--wing">
                     <AircraftIcon aircraftType="f35" accentId="escort-3" className="founder-escort-jet" />
@@ -177,27 +188,32 @@ const Founder = () => {
                 </div>
 
                 <nav className="founder-social__nav" aria-label="USJet on social media">
-                  <a
-                    href={USJET_SOCIAL.instagram}
-                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                    aria-label="USJet on Instagram (usjet)"
-                  >
-                    <Instagram size={26} strokeWidth={1.35} className="founder-social__icon" />
-                  </a>
-                  <a
-                    href={USJET_SOCIAL.facebook}
-                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                    aria-label="USJet on Facebook (usjets)"
-                  >
-                    <Facebook size={26} strokeWidth={1.35} className="founder-social__icon" />
-                  </a>
-                  <a
-                    href={USJET_SOCIAL.x}
-                    className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
-                    aria-label="USJet on X (usajet)"
-                  >
-                    <XComIcon className="founder-social__x-icon founder-social__icon" />
-                  </a>
+                  <div className="founder-social__nav-flank">
+                    <a
+                      href={USJET_SOCIAL.instagram}
+                      className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                      aria-label="USJet on Instagram (usjet)"
+                    >
+                      <Instagram size={26} strokeWidth={1.35} className="founder-social__icon" />
+                    </a>
+                    <a
+                      href={USJET_SOCIAL.facebook}
+                      className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                      aria-label="USJet on Facebook (usjets)"
+                    >
+                      <Facebook size={26} strokeWidth={1.35} className="founder-social__icon" />
+                    </a>
+                  </div>
+                  <FounderLinkedInBeacon variant="social" />
+                  <div className="founder-social__nav-flank">
+                    <a
+                      href={USJET_SOCIAL.x}
+                      className="founder-social__link btn-glass glass-effect-interactive glass-tint-cyan"
+                      aria-label="USJet on X (usajet)"
+                    >
+                      <XComIcon className="founder-social__x-icon founder-social__icon" />
+                    </a>
+                  </div>
                 </nav>
               </div>
             </footer>

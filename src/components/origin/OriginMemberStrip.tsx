@@ -51,7 +51,7 @@ export default function OriginMemberStrip({ session }: OriginMemberStripProps) {
     <GlassEffectContainer className="origin-member-strip glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mb-6 w-full max-w-3xl">
       <div className="origin-member-strip__inner">
         <div className="origin-member-strip__header">
-          <motionStripHeader clearanceLabel={clearanceLabel} proudKicker={proudKicker} tenure={tenure} />
+          <MotionStripHeader clearanceLabel={clearanceLabel} proudKicker={proudKicker} tenure={tenure} />
         </div>
 
         <div className="origin-member-strip__ekg" aria-hidden>
@@ -80,7 +80,7 @@ export default function OriginMemberStrip({ session }: OriginMemberStripProps) {
   );
 }
 
-function motionStripHeader({
+function MotionStripHeader({
   clearanceLabel,
   proudKicker,
   tenure,

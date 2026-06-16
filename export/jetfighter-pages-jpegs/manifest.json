@@ -1,0 +1,216 @@
+{
+  "generatedAt": "2026-05-20T19:12:37.585Z",
+  "count": 30,
+  "callSigns": [
+    {
+      "callsign": "BLACKBIRD-01",
+      "slug": "blackbird-01",
+      "route": "/fleet-directory/blackbird-01",
+      "heroFile": "blackbird-01-hero.jpg",
+      "aircraftFile": "blackbird-01-aircraft.jpg"
+    },
+    {
+      "callsign": "RAPTOR-01",
+      "slug": "raptor-01",
+      "route": "/fleet-directory/raptor-01",
+      "heroFile": "raptor-01-hero.jpg",
+      "aircraftFile": "raptor-01-aircraft.jpg"
+    },
+    {
+      "callsign": "LIGHTNING-01",
+      "slug": "lightning-01",
+      "route": "/fleet-directory/lightning-01",
+      "heroFile": "lightning-01-hero.jpg",
+      "aircraftFile": "lightning-01-aircraft.jpg"
+    },
+    {
+      "callsign": "GROWLER-01",
+      "slug": "growler-01",
+      "route": "/fleet-directory/growler-01",
+      "heroFile": "growler-01-hero.jpg",
+      "aircraftFile": "growler-01-aircraft.jpg"
+    },
+    {
+      "callsign": "FELON-01",
+      "slug": "felon-01",
+      "route": "/fleet-directory/felon-01",
+      "heroFile": "felon-01-hero.jpg",
+      "aircraftFile": "felon-01-aircraft.jpg"
+    },
+    {
+      "callsign": "NIGHTHAWK-01",
+      "slug": "nighthawk-01",
+      "route": "/fleet-directory/nighthawk-01",
+      "heroFile": "nighthawk-01-hero.jpg",
+      "aircraftFile": "nighthawk-01-aircraft.jpg"
+    },
+    {
+      "callsign": "SPIRIT-01",
+      "slug": "spirit-01",
+      "route": "/fleet-directory/spirit-01",
+      "heroFile": "spirit-01-hero.jpg",
+      "aircraftFile": "spirit-01-aircraft.jpg"
+    },
+    {
+      "callsign": "X15-ALPHA",
+      "slug": "x15-alpha",
+      "route": "/fleet-directory/x15-alpha",
+      "heroFile": "x15-alpha-hero.jpg",
+      "aircraftFile": "x15-alpha-aircraft.jpg"
+    },
+    {
+      "callsign": "VEO-PRO",
+      "slug": "veo-pro",
+      "route": "/fleet-directory/veo-pro",
+      "heroFile": "veo-pro-hero.jpg",
+      "aircraftFile": "veo-pro-aircraft.jpg"
+    },
+    {
+      "callsign": "DIRECTOR-01",
+      "slug": "director-01",
+      "route": "/fleet-directory/director-01",
+      "heroFile": "director-01-hero.jpg",
+      "aircraftFile": "director-01-aircraft.jpg"
+    },
+    {
+      "callsign": "MIRAGE-01",
+      "slug": "mirage-01",
+      "route": "/fleet-directory/mirage-01",
+      "heroFile": "mirage-01-hero.jpg",
+      "aircraftFile": "mirage-01-aircraft.jpg"
+    },
+    {
+      "callsign": "STRATO-01",
+      "slug": "strato-01",
+      "route": "/fleet-directory/strato-01",
+      "heroFile": "strato-01-hero.jpg",
+      "aircraftFile": "strato-01-aircraft.jpg"
+    },
+    {
+      "callsign": "JUMPJET-01",
+      "slug": "jumpjet-01",
+      "route": "/fleet-directory/jumpjet-01",
+      "heroFile": "jumpjet-01-hero.jpg",
+      "aircraftFile": "jumpjet-01-aircraft.jpg"
+    },
+    {
+      "callsign": "PHENOM-01",
+      "slug": "phenom-01",
+      "route": "/fleet-directory/phenom-01",
+      "heroFile": "phenom-01-hero.jpg",
+      "aircraftFile": "phenom-01-aircraft.jpg"
+    },
+    {
+      "callsign": "HUSTLER-01",
+      "slug": "hustler-01",
+      "route": "/fleet-directory/hustler-01",
+      "heroFile": "hustler-01-hero.jpg",
+      "aircraftFile": "hustler-01-aircraft.jpg"
+    },
+    {
+      "callsign": "CONCORDE-01",
+      "slug": "concorde-01",
+      "route": "/fleet-directory/concorde-01",
+      "heroFile": "concorde-01-hero.jpg",
+      "aircraftFile": "concorde-01-aircraft.jpg"
+    },
+    {
+      "callsign": "G650-VOICE",
+      "slug": "g650-voice",
+      "route": "/fleet-directory/g650-voice",
+      "heroFile": "g650-voice-hero.jpg",
+      "aircraftFile": "g650-voice-aircraft.jpg"
+    },
+    {
+      "callsign": "VOCAL-01",
+      "slug": "vocal-01",
+      "route": "/fleet-directory/vocal-01",
+      "heroFile": "vocal-01-hero.jpg",
+      "aircraftFile": "vocal-01-aircraft.jpg"
+    },
+    {
+      "callsign": "AVATAR-01",
+      "slug": "avatar-01",
+      "route": "/fleet-directory/avatar-01",
+      "heroFile": "avatar-01-hero.jpg",
+      "aircraftFile": "avatar-01-aircraft.jpg"
+    },
+    {
+      "callsign": "HAWK-01",
+      "slug": "hawk-01",
+      "route": "/fleet-directory/hawk-01",
+      "heroFile": "hawk-01-hero.jpg",
+      "aircraftFile": "hawk-01-aircraft.jpg"
+    },
+    {
+      "callsign": "OSPREY-01",
+      "slug": "osprey-01",
+      "route": "/fleet-directory/osprey-01",
+      "heroFile": "osprey-01-hero.jpg",
+      "aircraftFile": "osprey-01-aircraft.jpg"
+    },
+    {
+      "callsign": "TALON-01",
+      "slug": "talon-01",
+      "route": "/fleet-directory/talon-01",
+      "heroFile": "talon-01-hero.jpg",
+      "aircraftFile": "talon-01-aircraft.jpg"
+    },
+    {
+      "callsign": "WARTHOG-01",
+      "slug": "warthog-01",
+      "route": "/fleet-directory/warthog-01",
+      "heroFile": "warthog-01-hero.jpg",
+      "aircraftFile": "warthog-01-aircraft.jpg"
+    },
+    {
+      "callsign": "DRAGON-01",
+      "slug": "dragon-01",
+      "route": "/fleet-directory/dragon-01",
+      "heroFile": "dragon-01-hero.jpg",
+      "aircraftFile": "dragon-01-aircraft.jpg"
+    },
+    {
+      "callsign": "GALAXY-01",
+      "slug": "galaxy-01",
+      "route": "/fleet-directory/galaxy-01",
+      "heroFile": "galaxy-01-hero.jpg",
+      "aircraftFile": "galaxy-01-aircraft.jpg"
+    },
+    {
+      "callsign": "PILATUS-01",
+      "slug": "pilatus-01",
+      "route": "/fleet-directory/pilatus-01",
+      "heroFile": "pilatus-01-hero.jpg",
+      "aircraftFile": "pilatus-01-aircraft.jpg"
+    },
+    {
+      "callsign": "HERCULES-01",
+      "slug": "hercules-01",
+      "route": "/fleet-directory/hercules-01",
+      "heroFile": "hercules-01-hero.jpg",
+      "aircraftFile": "hercules-01-aircraft.jpg"
+    },
+    {
+      "callsign": "SENTRY-01",
+      "slug": "sentry-01",
+      "route": "/fleet-directory/sentry-01",
+      "heroFile": "sentry-01-hero.jpg",
+      "aircraftFile": "sentry-01-aircraft.jpg"
+    },
+    {
+      "callsign": "DRAGON-02",
+      "slug": "dragon-02",
+      "route": "/fleet-directory/dragon-02",
+      "heroFile": "dragon-02-hero.jpg",
+      "aircraftFile": "dragon-02-aircraft.jpg"
+    },
+    {
+      "callsign": "COMMAND-01",
+      "slug": "command-01",
+      "route": "/fleet-directory/command-01",
+      "heroFile": "command-01-hero.jpg",
+      "aircraftFile": "command-01-aircraft.jpg"
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+{
+  "generatedAt": "2026-05-20T18:59:57.822Z",
+  "pages": [
+    "code-kit",
+    "landscape",
+    "sovereignty",
+    "ai-101",
+    "protocol-proof",
+    "b2k"
+  ],
+  "count": 29,
+  "items": [
+    {
+      "page": "code-kit",
+      "route": "/code-kit",
+      "kind": "badges",
+      "file": "code-kit/badges-page-badge.jpg",
+      "selector": ".code-kit-page__badge"
+    },
+    {
+      "page": "code-kit",
+      "route": "/code-kit",
+      "kind": "logos",
+      "file": "code-kit/logos-badge-icon-brackets.jpg",
+      "selector": ".code-kit-page__badge-icon"
+    },
+    {
+      "page": "code-kit",
+      "route": "/code-kit",
+      "kind": "badges",
+      "file": "code-kit/badges-checkout-badge-row.jpg",
+      "selector": ".code-kit-checkout__badge-row"
+    },
+    {
+      "page": "code-kit",
+      "route": "/code-kit",
+      "kind": "vectors",
+      "file": "code-kit/vectors-engine-package-icon-01.jpg",
+      "selector": ".ai101-engine-room__package-icon"
+    },
+    {
+      "page": "code-kit",
+      "route": "/code-kit",
+      "kind": "vectors",
+      "file": "code-kit/vectors-engine-package-icon-02.jpg",
+      "selector": ".ai101-engine-room__package-icon"
+    },
+    {
+      "page": "code-kit",
+      "route": "/code-kit",
+      "kind": "vectors",
+      "file": "code-kit/vectors-engine-package-icon-03.jpg",
+      "selector": ".ai101-engine-room__package-icon"
+    },
+    {
+      "page": "code-kit",
+      "route": "/code-kit",
+      "kind": "vectors",
+      "file": "code-kit/vectors-engine-guarantee-icon.jpg",
+      "selector": ".ai101-engine-room__guarantee-icon"
+    },
+    {
+      "page": "landscape",
+      "route": "/landscape",
+      "kind": "vectors",
+      "file": "landscape/vectors-rotate-phones-vector.jpg",
+      "selector": ".mobile-landscape-page__icon-hero"
+    },
+    {
+      "page": "landscape",
+      "route": "/landscape",
+      "kind": "badges",
+      "file": "landscape/badges-eyebrow-badge.jpg",
+      "selector": ".mobile-landscape-page__eyebrow"
+    },
+    {
+      "page": "sovereignty",
+      "route": "/sovereignty",
+      "kind": "vectors",
+      "file": "sovereignty/vectors-hero-airframe-vector.jpg",
+      "selector": ".strategic-assets-hero__airframe"
+    },
+    {
+      "page": "sovereignty",
+      "route": "/sovereignty",
+      "kind": "logos",
+      "file": "sovereignty/logos-framework-mark.jpg",
+      "selector": ".sovereignty-framework__mark"
+    },
+    {
+      "page": "sovereignty",
+      "route": "/sovereignty",
+      "kind": "logos",
+      "file": "sovereignty/logos-evidence-mark.jpg",
+      "selector": ".sovereignty-evidence__mark"
+    },
+    {
+      "page": "sovereignty",
+      "route": "/sovereignty",
+      "kind": "logos",
+      "file": "sovereignty/logos-book-mark.jpg",
+      "selector": ".sovereignty-book__mark"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "badges",
+      "file": "ai-101/badges-guest-curriculum-badge.jpg",
+      "selector": ".ai101-page__hero .rounded-full"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "logos",
+      "file": "ai-101/logos-code-access-logo-btn.jpg",
+      "selector": ".ai101-code-access-btn"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-partner-stars-vector.jpg",
+      "selector": ".ai101-partner__stars-svg"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-engine-package-icon-01.jpg",
+      "selector": ".ai101-engine-room__package-icon"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-engine-package-icon-02.jpg",
+      "selector": ".ai101-engine-room__package-icon"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-engine-package-icon-03.jpg",
+      "selector": ".ai101-engine-room__package-icon"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-calibration-step-icon-01.jpg",
+      "selector": ".ai101-calibration__trigger-icon"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-calibration-step-icon-02.jpg",
+      "selector": ".ai101-calibration__trigger-icon"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-calibration-step-icon-03.jpg",
+      "selector": ".ai101-calibration__trigger-icon"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "vectors",
+      "file": "ai-101/vectors-calibration-step-icon-04.jpg",
+      "selector": ".ai101-calibration__trigger-icon"
+    },
+    {
+      "page": "ai-101",
+      "route": "/ai-101",
+      "kind": "badges",
+      "file": "ai-101/badges-protocol-ceremony-badge.jpg",
+      "selector": ".fleet-command--ceremony"
+    },
+    {
+      "page": "protocol-proof",
+      "route": "/protocol-proof",
+      "kind": "badges",
+      "file": "protocol-proof/badges-session-swatch-01.jpg",
+      "selector": ".protocol-proof-page__swatch"
+    },
+    {
+      "page": "protocol-proof",
+      "route": "/protocol-proof",
+      "kind": "badges",
+      "file": "protocol-proof/badges-session-swatch-02.jpg",
+      "selector": ".protocol-proof-page__swatch"
+    },
+    {
+      "page": "protocol-proof",
+      "route": "/protocol-proof",
+      "kind": "badges",
+      "file": "protocol-proof/badges-eyebrow-badge.jpg",
+      "selector": ".protocol-proof-page__eyebrow"
+    },
+    {
+      "page": "b2k",
+      "route": "/b2k",
+      "kind": "badges",
+      "file": "b2k/badges-page-badge.jpg",
+      "selector": ".b2k-page__badge"
+    },
+    {
+      "page": "b2k",
+      "route": "/b2k",
+      "kind": "logos",
+      "file": "b2k/logos-app-crew-envelope-icon.jpg",
+      "selector": ".b2k-help-actions__envelope-icon"
+    }
+  ]
+}

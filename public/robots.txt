@@ -1,4 +1,11 @@
+# USJET.AI — allow full crawl; SPA + static paths on origin
 User-agent: *
 Allow: /
 
+Allow: /founder/
+Allow: /gaming/
+Allow: /favicon.svg
+Allow: /favicon-32x32.png
+
+# Sitemap (generated at build via scripts/generate-sitemap.mjs)
 Sitemap: https://www.usjet.ai/sitemap.xml

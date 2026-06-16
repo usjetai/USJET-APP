@@ -26708,7 +26708,6 @@ html.blog-page-root #usjet-app-shell {
 
 .hired-hud__metric-value--steps {
   font-variant-numeric: tabular-nums;
-  animation: hired-hud-step-tick 1.45s ease-in-out infinite;
 }
 
 .hired-hud__metric--steps {
@@ -26718,7 +26717,6 @@ html.blog-page-root #usjet-app-shell {
 
 .hired-hud__metric-value--sleep {
   font-variant-numeric: tabular-nums;
-  animation: hired-hud-sleep-glow 2.4s ease-in-out infinite;
 }
 
 .hired-hud__metric--sleep {
@@ -26817,7 +26815,7 @@ html.blog-page-root #usjet-app-shell {
   inset: -8%;
   background-size: cover;
   background-repeat: no-repeat;
-  opacity: 0.55;
+  opacity: 0.82;
   filter: saturate(1.15) contrast(1.08);
   animation: hired-hud-tile-bg-drift 14s ease-in-out infinite alternate;
 }
@@ -26834,6 +26832,55 @@ html.blog-page-root #usjet-app-shell {
     100% 14px,
     14px 100%,
     auto;
+}
+
+.hired-hud__tile-hud-hero-bpm {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(3 14 28 / 0.96);
+  border: 1px solid rgb(34 211 238 / 0.5);
+  box-shadow:
+    0 0 14px rgb(34 211 238 / 0.28),
+    inset 0 0 10px rgb(14 165 233 / 0.12);
+  pointer-events: none;
+}
+
+.hired-hud__tile-hud-hero-bpm-value {
+  font-size: 1.02rem;
+  font-weight: 900;
+  line-height: 1;
+  color: rgb(207 250 254);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.hired-hud__tile-hud-hero-bpm-label {
+  margin-top: 0.12rem;
+  font-size: 0.42rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(125 211 252 / 0.88);
+}
+
+.hired-hud__tile--active-love .hired-hud__tile-hud-hero-bpm {
+  border-color: rgb(244 63 94 / 0.55);
+  box-shadow:
+    0 0 16px rgb(244 63 94 / 0.35),
+    inset 0 0 10px rgb(251 113 133 / 0.16);
+}
+
+.hired-hud__tile--active-love .hired-hud__tile-hud-hero-bpm-value {
+  color: rgb(255 228 230 / 0.98);
+  text-shadow: 0 0 10px rgb(244 63 94 / 0.45);
 }
 
 .hired-hud__tile-scanline {
@@ -26876,7 +26923,6 @@ html.blog-page-root #usjet-app-shell {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
-  animation: hired-hud-bg-reading-flicker 0.82s steps(2, end) infinite;
 }
 
 .hired-hud__tile-hud-bpm {
@@ -27039,11 +27085,9 @@ html.blog-page-root #usjet-app-shell {
   padding: 0.62rem 0.7rem 0.68rem;
   background: linear-gradient(
     180deg,
-    rgb(6 18 36 / 0.02) 0%,
-    rgb(8 24 44 / 0.78) 28%,
-    rgb(10 30 52 / 0.94) 100%
+    rgb(8 24 44 / 0.72) 0%,
+    rgb(10 30 52 / 0.92) 100%
   );
-  backdrop-filter: blur(3px);
 }
 
 .hired-hud__tile-content .hired-hud__row-vitals {
@@ -27247,7 +27291,6 @@ html.blog-page-root #usjet-app-shell {
   text-transform: uppercase;
   color: rgb(254 202 202 / 0.95);
   font-variant-numeric: tabular-nums;
-  animation: hired-hud-bpm-flicker 1.6s ease-in-out infinite;
 }
 
 .hired-hud__row-spo2 {
@@ -27262,7 +27305,6 @@ html.blog-page-root #usjet-app-shell {
   text-transform: uppercase;
   color: rgb(165 243 252 / 0.96);
   font-variant-numeric: tabular-nums;
-  animation: hired-hud-spo2-flicker 2.1s ease-in-out infinite;
 }
 
 .hired-hud__row-steps {
@@ -27280,7 +27322,6 @@ html.blog-page-root #usjet-app-shell {
   text-transform: uppercase;
   color: rgb(187 247 208 / 0.96);
   font-variant-numeric: tabular-nums;
-  animation: hired-hud-step-tick 1.45s ease-in-out infinite;
 }
 
 .hired-hud__row-sleep {
@@ -27298,7 +27339,6 @@ html.blog-page-root #usjet-app-shell {
   text-transform: uppercase;
   color: rgb(199 210 254 / 0.96);
   font-variant-numeric: tabular-nums;
-  animation: hired-hud-sleep-glow 2.4s ease-in-out infinite;
 }
 
 @keyframes hired-hud-sleep-glow {

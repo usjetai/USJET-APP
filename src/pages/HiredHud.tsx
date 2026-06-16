@@ -7,7 +7,7 @@ import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
+import { HIRED_HUD_HERO_BPM_POSITION, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -21,11 +21,6 @@ import {
   formatSleepTime,
   loadHiredHudSleepTime,
 } from "../lib/hiredHudSleepTime";
-import {
-  createHiredHudTileReadings,
-  randomHiredHudTileReading,
-  type HiredHudTileReading,
-} from "../lib/hiredHudTileReadings";
 
 function formatHudPercent(value: number): string {
   return `${value >= 0 ? "+" : "-"}${Math.abs(value).toFixed(2)}%`;
@@ -36,15 +31,15 @@ function formatTickerClock(date: Date): string {
 }
 
 function randomDeveloperBpm(): number {
-  return Math.floor(62 + Math.random() * 26);
+  return Math.floor(68 + Math.random() * 12);
 }
 
 function randomDeveloperSpo2(): number {
-  return Math.round((94 + Math.random() * 5) * 10) / 10;
+  return Math.round((96 + Math.random() * 2.5) * 10) / 10;
 }
 
 function randomDeveloperPressure(): number {
-  return Math.floor(58 + Math.random() * 38);
+  return Math.floor(64 + Math.random() * 14);
 }
 
 export default function HiredHud() {
@@ -73,9 +68,6 @@ export default function HiredHud() {
   );
   const [developerSleep] = useState<Record<number, number>>(() =>
     loadHiredHudSleepTime(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
-  );
-  const [tileHudReadings, setTileHudReadings] = useState<Record<number, HiredHudTileReading>>(() =>
-    createHiredHudTileReadings(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
   );
   const [activeLove, setActiveLove] = useState(false);
 
@@ -110,8 +102,8 @@ export default function HiredHud() {
         const next = { ...prev };
         for (const unit of hiredUnits) {
           const current = next[unit.slot] ?? randomDeveloperBpm();
-          const drift = Math.round((Math.random() - 0.5) * 5);
-          next[unit.slot] = Math.max(58, Math.min(98, current + drift));
+          const drift = Math.round((Math.random() - 0.5) * 2);
+          next[unit.slot] = Math.max(62, Math.min(88, current + drift));
         }
         return next;
       });
@@ -119,8 +111,8 @@ export default function HiredHud() {
         const next = { ...prev };
         for (const unit of hiredUnits) {
           const current = next[unit.slot] ?? randomDeveloperSpo2();
-          const drift = (Math.random() - 0.5) * 0.6;
-          next[unit.slot] = Math.round(Math.max(93.5, Math.min(99.5, current + drift)) * 10) / 10;
+          const drift = (Math.random() - 0.5) * 0.3;
+          next[unit.slot] = Math.round(Math.max(95, Math.min(99, current + drift)) * 10) / 10;
         }
         return next;
       });
@@ -128,8 +120,8 @@ export default function HiredHud() {
         const next = { ...prev };
         for (const unit of hiredUnits) {
           const current = next[unit.slot] ?? randomDeveloperPressure();
-          const drift = Math.round((Math.random() - 0.5) * 6);
-          next[unit.slot] = Math.max(52, Math.min(96, current + drift));
+          const drift = Math.round((Math.random() - 0.5) * 3);
+          next[unit.slot] = Math.max(62, Math.min(82, current + drift));
         }
         return next;
       });
@@ -144,21 +136,10 @@ export default function HiredHud() {
       });
     }, 1600);
 
-    const hudBgId = window.setInterval(() => {
-      setTileHudReadings((prev) => {
-        const next = { ...prev };
-        for (const unit of hiredUnits) {
-          next[unit.slot] = randomHiredHudTileReading();
-        }
-        return next;
-      });
-    }, 820);
-
     return () => {
       window.clearInterval(tickerId);
       window.clearInterval(metricsId);
       window.clearInterval(bpmId);
-      window.clearInterval(hudBgId);
     };
   }, [hiredUnits]);
 
@@ -271,9 +252,6 @@ export default function HiredHud() {
               const steps = developerSteps[unit.slot] ?? 0;
               const sleepMinutes = developerSleep[unit.slot] ?? 0;
               const sleepLabel = formatSleepTime(sleepMinutes);
-              const hudBg = tileHudReadings[unit.slot] ?? randomHiredHudTileReading();
-              const hudSpo2 = hudBg.spo2.toFixed(1);
-              const hudSleepLabel = formatSleepTime(hudBg.sleepMinutes);
               const aircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
               const tileScan = (scanPhase + unit.slot * 13) % 100;
 
@@ -289,21 +267,31 @@ export default function HiredHud() {
                   <div
                     className="hired-hud__tile-hud-bg"
                     style={{
-                      backgroundImage: `linear-gradient(180deg, rgb(2 10 22 / 0.35), rgb(4 18 34 / 0.72)), url("${HIRED_HUD_TILE_BG}")`,
-                      backgroundPosition: `${12 + (unit.slot % 4) * 8}% 42%`,
+                      backgroundImage: `url("${HIRED_HUD_TILE_BG}")`,
+                      backgroundPosition: HIRED_HUD_HERO_BPM_POSITION.backgroundPosition,
                     }}
                   />
+                  <div
+                    className="hired-hud__tile-hud-hero-bpm"
+                    style={{
+                      left: HIRED_HUD_HERO_BPM_POSITION.overlayLeft,
+                      top: HIRED_HUD_HERO_BPM_POSITION.overlayTop,
+                    }}
+                  >
+                    <span className="hired-hud__tile-hud-hero-bpm-value">{bpm}</span>
+                    <span className="hired-hud__tile-hud-hero-bpm-label">BPM</span>
+                  </div>
                   <span
                     className="hired-hud__tile-scanline"
                     style={{ transform: `translateY(${tileScan}%)` }}
                   />
                   <div className="hired-hud__tile-hud-readings">
                     <span className="hired-hud__tile-hud-label">Cardio unit</span>
-                    <span className="hired-hud__tile-hud-bpm">{hudBg.bpm} BPM</span>
-                    <span className="hired-hud__tile-hud-spo2">SpO2 {hudSpo2}%</span>
-                    <span className="hired-hud__tile-hud-pressure">Pressure {hudBg.pressure}%</span>
-                    <span className="hired-hud__tile-hud-steps">{formatDailySteps(hudBg.steps)} steps</span>
-                    <span className="hired-hud__tile-hud-sleep">Sleep {hudSleepLabel}</span>
+                    <span className="hired-hud__tile-hud-bpm">{bpm} BPM</span>
+                    <span className="hired-hud__tile-hud-spo2">SpO2 {spo2}%</span>
+                    <span className="hired-hud__tile-hud-pressure">Pressure {pressure}%</span>
+                    <span className="hired-hud__tile-hud-steps">{formatDailySteps(steps)} steps</span>
+                    <span className="hired-hud__tile-hud-sleep">Sleep {sleepLabel}</span>
                     <div className="hired-hud__tile-hud-ekg">
                       <EkgPulseLine
                         variant="monitor"

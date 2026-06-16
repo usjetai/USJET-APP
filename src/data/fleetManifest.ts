@@ -60,7 +60,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
   {
     id: "5",
     slot: 5,
-    name: "Lear",
+    name: "Aaliyah",
     callsign: "WIDOW-06",
     domain: "cursor.com",
     href: "https://cursor.com",
@@ -280,7 +280,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt">[] = [
   {
     id: "25",
     slot: 25,
-    name: "Glass",
+    name: "Christal",
     callsign: "TOMCAT-26",
     domain: "notion.so",
     href: "https://www.notion.so/product/ai",

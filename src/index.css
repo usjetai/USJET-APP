@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:where(html) {
+  --usjet-logo-corner-radius-sm: 7px;
+}
+
 @layer utilities {
   .page-atmosphere {
     background: transparent !important;
@@ -8073,6 +8077,11 @@ html.code-kit-page-root #usjet-app-shell {
   filter: var(--aircraft-logo-glow);
 }
 
+/* Shared logo utility: subtle corner rounding for brand marks only. */
+.logo-rounded {
+  border-radius: 7px;
+}
+
 .aircraft-icon__vector {
   transform-origin: 42% 48%;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -10381,7 +10390,7 @@ button.fleet-card {
   object-fit: contain;
   object-position: center;
   background: #000000;
-  border-radius: 0;
+  border-radius: var(--usjet-logo-corner-radius-sm);
   vertical-align: top;
 }
 
@@ -19762,6 +19771,7 @@ body.usjet-site-lift {
   width: 2.05rem;
   height: 0.72rem;
   color: #6d1ed4;
+  border-radius: var(--usjet-logo-corner-radius-sm);
 }
 
 .usjet-global-contact-bar__zelle:hover {
@@ -19936,6 +19946,8 @@ body.usjet-site-lift {
   z-index: 1;
   width: 3.25rem;
   height: 1.1rem;
+  border-radius: var(--usjet-logo-corner-radius-sm);
+  overflow: hidden;
 }
 
 .zelle-fuel-hero-btn__label {
@@ -21624,6 +21636,7 @@ html.direct-fuel-page-root #usjet-app-shell {
   height: auto;
   object-fit: contain;
   filter: var(--aircraft-logo-glow) drop-shadow(0 0 18px rgba(var(--product-accent-rgb), 0.45));
+  border-radius: var(--usjet-logo-corner-radius-sm);
 }
 
 .product-page__photo-wrap {

@@ -6,7 +6,7 @@ type ZelleLogoMarkProps = {
 export default function ZelleLogoMark({ className = "" }: ZelleLogoMarkProps) {
   return (
     <svg
-      className={className}
+      className={`logo-rounded ${className}`.trim()}
       viewBox="0 0 56 18"
       role="img"
       aria-label="Zelle"

@@ -99,7 +99,7 @@ const Founder = () => {
               <div className="founder-story__hero-top">
                 <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo glass-effect--rounded-rect">
                   <img
-                    className="founder-story__hero-logo"
+                    className="founder-story__hero-logo logo-rounded"
                     src="/founder/usjet-hero-logo.png"
                     alt="USJET.AI — liquid glass star emblem"
                     width={1200}

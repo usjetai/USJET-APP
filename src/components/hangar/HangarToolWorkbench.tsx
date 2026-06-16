@@ -54,7 +54,7 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>
           <p className="intel-expanded__unit-name">
-            <DeveloperRedBlinkName name={unit.name} slot={unit.slot} />
+            <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
           </p>
           <p className="intel-expanded__domain">{unit.domain}</p>
           <p className="intel-expanded__tagline">USJET consensus bay</p>

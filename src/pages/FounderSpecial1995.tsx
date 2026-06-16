@@ -159,7 +159,7 @@ export default function FounderSpecial1995() {
             <header className="founder-story__hero">
               <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo founder-special-1995__vault-seal glass-effect glass-effect--rounded-rect glass-tint-gold">
                 <img
-                  className="founder-story__hero-logo"
+                  className="founder-story__hero-logo logo-rounded"
                   src="/founder/usjet-hero-logo.png"
                   alt="USJET.AI — Special Edition emblem"
                   width={1200}

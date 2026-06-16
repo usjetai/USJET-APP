@@ -8,7 +8,7 @@ import { isFleetBayHired } from "../data/fleetRoster";
 
 type DeveloperRedBlinkNameProps = HTMLAttributes<HTMLSpanElement> & {
   name: string;
-  slot?: number;
+  fleetSlot?: number;
   nonHiredLabel?: string;
 };
 
@@ -16,22 +16,23 @@ export const NON_HIRED_DEVELOPER_LABEL = "Available position";
 
 export function getVisibleDeveloperName(
   name: string,
-  slot?: number,
+  fleetSlot?: number,
   nonHiredLabel = NON_HIRED_DEVELOPER_LABEL,
 ): string {
-  const canShowRealName = typeof slot === "number" ? isFleetBayHired(slot) : isDeveloperRedBlinkName(name);
+  const canShowRealName =
+    typeof fleetSlot === "number" ? isFleetBayHired(fleetSlot) : isDeveloperRedBlinkName(name);
   return canShowRealName ? name : nonHiredLabel;
 }
 
 /** Renders a fleet developer name with `.developer-red-blink` when on the sovereign list. */
 export default function DeveloperRedBlinkName({
   name,
-  slot,
+  fleetSlot,
   className,
   nonHiredLabel = NON_HIRED_DEVELOPER_LABEL,
   ...rest
 }: DeveloperRedBlinkNameProps) {
-  const visibleName = getVisibleDeveloperName(name, slot, nonHiredLabel);
+  const visibleName = getVisibleDeveloperName(name, fleetSlot, nonHiredLabel);
   const merged = [className, developerRedBlinkClass(visibleName)].filter(Boolean).join(" ") || undefined;
 
   return (

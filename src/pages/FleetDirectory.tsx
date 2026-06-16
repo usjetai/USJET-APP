@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import FleetCapabilityBadges from "../components/fleet/FleetCapabilityBadges";
 import {
   FLEET_DIRECTORY_AVAILABLE_ENTRIES,
   FLEET_DIRECTORY_ENTRIES,
@@ -12,6 +13,7 @@ import {
 import { FLEET_AVAILABLE_COUNT, FLEET_HIRED_COUNT } from "../data/fleetRoster";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import { getFleetCapabilities } from "../data/fleetCapabilities";
 
 export default function FleetDirectory() {
   useEffect(() => {
@@ -71,9 +73,7 @@ export default function FleetDirectory() {
                     <span className="fleet-directory-card__icon-wrap" aria-hidden>
                       <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-hired-${entry.slug}`} className="fleet-directory-card__icon" />
                     </span>
-                    <p className="fleet-directory-card__bay">
-                      Bay {String(entry.slot + 1).padStart(2, "0")} · {entry.callsign} · {entry.aircraftOfficialName}
-                    </p>
+                    <p className="fleet-directory-card__bay">{entry.callsign} · {entry.aircraftOfficialName}</p>
                   </div>
                   <h3 className="fleet-directory-card__name">
                     <Link to={entry.pagePath}>{entry.callsign}</Link>
@@ -118,9 +118,7 @@ export default function FleetDirectory() {
                     <span className="fleet-directory-card__icon-wrap" aria-hidden>
                       <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-available-${entry.slug}`} className="fleet-directory-card__icon" />
                     </span>
-                    <p className="fleet-directory-card__bay">
-                      Bay {String(entry.slot + 1).padStart(2, "0")} · {entry.callsign}
-                    </p>
+                    <p className="fleet-directory-card__bay">{entry.callsign}</p>
                   </div>
                   <h3 className="fleet-directory-card__name">
                     <Link to={entry.pagePath}>{entry.callsign}</Link>
@@ -129,6 +127,7 @@ export default function FleetDirectory() {
                     <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
                   </p>
                   <p className="fleet-directory-card__category">{entry.category}</p>
+                  <FleetCapabilityBadges capabilities={getFleetCapabilities(entry.slot)} />
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                   <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">
                     {entry.callsign} Jet Fighter page →

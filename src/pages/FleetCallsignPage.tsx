@@ -67,7 +67,6 @@ export default function FleetCallsignPage() {
     );
   }
 
-  const bayLabel = String(entry.slot + 1).padStart(2, "0");
   const available = isFleetBayAvailable(entry.slot);
   const hired = isFleetBayHired(entry.slot);
   const launchUrl = available
@@ -92,8 +91,17 @@ export default function FleetCallsignPage() {
         <section className="fleet-callsign-hero__grid">
           <div className="fleet-callsign-hero__copy">
             <p className="fleet-callsign-page__eyebrow">
-              USJET Jet Fighter · Bay {bayLabel}
-              {available ? " · Available position" : hired ? ` · ${entry.aircraftOfficialName}` : ""}
+              USJET Jet Fighter
+              {available ? (
+                <>
+                  {" · "}
+                  <span className="developer-available-green-blink">Available position</span>
+                </>
+              ) : hired ? (
+                ` · ${entry.aircraftOfficialName}`
+              ) : (
+                ""
+              )}
             </p>
             <h1 className="fleet-callsign-page__title">{entry.callsign}</h1>
             <p className="fleet-callsign-page__name">

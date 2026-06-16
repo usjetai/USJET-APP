@@ -167,8 +167,6 @@ export default function Cockpit() {
                 </div>
               ) : (
                 <p className="cockpit-handoff-interstitial__meta">
-                  {bay ? `Bay ${bay}` : null}
-                  {bay && displayName ? " · " : null}
                   {displayName}
                 </p>
               )}

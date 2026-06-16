@@ -13,10 +13,6 @@ const SORTED_UNITS = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const LEFT_COLUMN = SORTED_UNITS.slice(0, 15);
 const RIGHT_COLUMN = SORTED_UNITS.slice(15, 30);
 
-function fleetBayLabel(slot: number): string {
-  return String(slot + 1).padStart(2, "0");
-}
-
 function FounderFleetCell({ unit }: { unit: FleetUnit }) {
   const launchUrl = integratedLaunchUrl(unit.domain, resolveFleetUnitHref(unit), unit.slot, {
     returnTo: "/founder",
@@ -24,7 +20,7 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
   });
   const isCommandBay = unit.slot === 29;
   const bayAccent = getFleetBayAccent(unit.slot);
-  const bay = fleetBayLabel(unit.slot);
+  const bay = String(unit.slot + 1).padStart(2, "0");
   return (
     <li>
       <FleetLaunchLink
@@ -45,9 +41,6 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
         aria-label={`Bay ${bay} — ${unit.callsign}, ${unit.name}`}
         onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
       >
-        <span className="founder-fleet-roster__bay" aria-hidden>
-          {bay}
-        </span>
         <span className="founder-fleet-roster__text">
           <span className="founder-fleet-roster__callsign">{unit.callsign}</span>
           <span className="founder-fleet-roster__name">
@@ -81,8 +74,8 @@ export default function FounderFleetRoster() {
           <h2 className="founder-fleet-roster__title">Thirty units · one hangar</h2>
         </header>
         <div className="founder-fleet-roster__columns">
-          <FounderFleetColumn units={LEFT_COLUMN} label="Bays 01–15" />
-          <FounderFleetColumn units={RIGHT_COLUMN} label="Bays 16–30" />
+          <FounderFleetColumn units={LEFT_COLUMN} label="Units 01-15" />
+          <FounderFleetColumn units={RIGHT_COLUMN} label="Units 16-30" />
         </div>
       </GlassEffectContainer>
     </section>

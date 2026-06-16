@@ -123,7 +123,6 @@ export default function FleetProductPage() {
     );
   }
 
-  const bayLabel = String(entry.slot + 1).padStart(2, "0");
   const available = entry.rosterStatus === "available";
   const launchUrl = available
     ? "#"
@@ -151,8 +150,15 @@ export default function FleetProductPage() {
         <section className="product-page__grid">
           <div className="product-page__copy">
             <p className="product-page__eyebrow">
-              USJET product page · Bay {bayLabel}
-              {available ? " · Available position" : ` · ${entry.aircraftOfficialName}`}
+              USJET product page
+              {available ? (
+                <>
+                  {" · "}
+                  <span className="developer-available-green-blink">Available position</span>
+                </>
+              ) : (
+                ` · ${entry.aircraftOfficialName}`
+              )}
             </p>
             <h1 className="product-page__title">{entry.callsign} Product</h1>
             <p className="product-page__name">

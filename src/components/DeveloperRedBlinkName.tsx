@@ -33,7 +33,9 @@ export default function DeveloperRedBlinkName({
   ...rest
 }: DeveloperRedBlinkNameProps) {
   const visibleName = getVisibleDeveloperName(name, fleetSlot, nonHiredLabel);
-  const merged = [className, developerRedBlinkClass(visibleName)].filter(Boolean).join(" ") || undefined;
+  const availablePositionClass = visibleName === nonHiredLabel ? "developer-available-green-blink" : "";
+  const merged =
+    [className, developerRedBlinkClass(visibleName), availablePositionClass].filter(Boolean).join(" ") || undefined;
 
   return (
     <span className={merged} {...rest}>

@@ -7420,6 +7420,11 @@ html.code-kit-page-root #usjet-app-shell {
   animation: developer-red-blink 1s steps(2, end) infinite;
 }
 
+.fleet-page--runway .fleet-card--surface-runway .developer-available-green-blink {
+  color: #d1fae5;
+  animation: developer-available-green-blink 1.6s ease-in-out infinite;
+}
+
 .fleet-page--runway .fleet-card--surface-runway h3 + p,
 .fleet-page--runway .fleet-card--surface-runway .fleet-cap-badges + p {
   color: rgba(96, 165, 250, 0.9);
@@ -21247,6 +21252,11 @@ html.direct-fuel-page-root #usjet-app-shell {
   animation: developer-red-blink 1s steps(2, end) infinite;
 }
 
+.developer-available-green-blink {
+  color: #d1fae5;
+  animation: developer-available-green-blink 1.6s ease-in-out infinite;
+}
+
 @keyframes developer-red-blink {
   0%,
   100% {
@@ -21261,6 +21271,23 @@ html.direct-fuel-page-root #usjet-app-shell {
       0 0 8px rgba(239, 68, 68, 0.9),
       0 0 18px rgba(220, 38, 38, 0.65);
     filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.85));
+  }
+}
+
+@keyframes developer-available-green-blink {
+  0%,
+  100% {
+    color: #d1fae5;
+    text-shadow: none;
+    filter: none;
+  }
+
+  50% {
+    color: #34d399;
+    text-shadow:
+      0 0 6px rgba(52, 211, 153, 0.55),
+      0 0 14px rgba(16, 185, 129, 0.35);
+    filter: drop-shadow(0 0 4px rgba(52, 211, 153, 0.45));
   }
 }
 

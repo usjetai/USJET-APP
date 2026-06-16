@@ -188,7 +188,9 @@ export default function FleetCard({
             {callsign}
           </h3>
           {isAvailableBay ? (
-            <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">Available position</p>
+            <p className="developer-available-green-blink mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">
+              Available position
+            </p>
           ) : isCommandBay ? (
             <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
           ) : expandInteractive ? (
@@ -196,14 +198,11 @@ export default function FleetCard({
           ) : (
             <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-emerald-300/75">Hired developer</p>
           )}
-          {typeof slot === "number" ? (
+          {typeof slot === "number" && bayAccent ? (
             <p
               className={`fleet-card__bay-label mt-1 text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}
             >
-              Bay {String(slot + 1).padStart(2, "0")}
-              {bayAccent ? (
-                <span className="fleet-card__personality"> · {bayAccent.personality}</span>
-              ) : null}
+              <span className="fleet-card__personality">{bayAccent.personality}</span>
             </p>
           ) : null}
           {!isAvailableBay ? (
@@ -220,7 +219,7 @@ export default function FleetCard({
               {aircraftOfficialName}
             </p>
           ) : null}
-          {capabilities && !isAvailableBay ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
+          {capabilities && isAvailableBay ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
           {!isAvailableBay ? (
             <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
           ) : (

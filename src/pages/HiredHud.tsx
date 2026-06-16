@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Activity, Footprints, Fuel, Heart, HeartPulse, Moon, Radar } from "lucide-react";
 import { motion } from "framer-motion";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
+import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAvatar";
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
@@ -273,6 +274,24 @@ export default function HiredHud() {
             </article>
           </div>
 
+          <div className="hired-hud__crew" aria-label="Hired developer profile crew">
+            <div className="hired-hud__crew-head">
+              <span className="hired-hud__crew-title">Hired crew profiles</span>
+              <span className="hired-hud__crew-count">{hiredUnits.length} naval crew profiles live</span>
+            </div>
+            <ul className="hired-hud__crew-list">
+              {hiredUnits.map((unit) => (
+                <li key={`crew-${unit.id}`} className="hired-hud__crew-item">
+                  <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="crew" />
+                  <span className="hired-hud__crew-name">
+                    <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
+                  </span>
+                  <span className="hired-hud__crew-bay">Bay {String(unit.slot + 1).padStart(2, "0")}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div className="hired-hud__ekg-monitor" aria-label="Fleet EKG monitor">
             <div className="hired-hud__ekg-monitor-head">
               <span className="hired-hud__ekg-monitor-title">EKG Monitor</span>
@@ -342,6 +361,9 @@ export default function HiredHud() {
                 </div>
 
                 <div className="hired-hud__tile-content">
+                  <div className="hired-hud__tile-profile">
+                    <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="tile" />
+                  </div>
                   <span className="hired-hud__row-bay">
                     <HiredHudDeveloperLogo slot={unit.slot} aircraftType={aircraftType} variant="badge" />
                     Bay {String(unit.slot + 1).padStart(2, "0")}

@@ -27383,7 +27383,7 @@ html.blog-page-root #usjet-app-shell {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(4rem, 4.8rem) minmax(0, 1fr);
+  grid-template-columns: minmax(3.6rem, 4.35rem) minmax(0, 1fr);
   grid-template-rows: auto auto auto;
   align-items: center;
   gap: 0.45rem 0.55rem;
@@ -27395,6 +27395,129 @@ html.blog-page-root #usjet-app-shell {
     rgb(8 24 44 / 0.72) 0%,
     rgb(10 30 52 / 0.92) 100%
   );
+}
+
+.hired-hud__tile-profile {
+  grid-row: 1 / span 2;
+  grid-column: 1;
+  align-self: center;
+  justify-self: center;
+}
+
+.hired-hud__avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hired-hud__avatar--tile {
+  width: 3.55rem;
+  height: 3.55rem;
+}
+
+.hired-hud__avatar--crew {
+  width: 3.1rem;
+  height: 3.1rem;
+}
+
+.hired-hud__avatar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.hired-hud__avatar-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid rgb(34 211 238 / 0.55);
+  box-shadow:
+    0 0 14px rgb(56 189 248 / 0.28),
+    inset 0 0 10px rgb(34 211 238 / 0.12);
+  pointer-events: none;
+}
+
+.hired-hud__crew {
+  margin: 0.35rem 0 0.85rem;
+  padding: 0.72rem 0.8rem 0.8rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgb(56 189 248 / 0.22);
+  background: linear-gradient(180deg, rgb(4 18 34 / 0.72), rgb(8 28 48 / 0.88));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+.hired-hud__crew-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.hired-hud__crew-title {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(165 243 252 / 0.92);
+}
+
+.hired-hud__crew-count {
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(244 114 182 / 0.88);
+}
+
+.hired-hud__crew-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.4rem, 1fr));
+  gap: 0.55rem 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hired-hud__crew-item {
+  display: grid;
+  justify-items: center;
+  gap: 0.28rem;
+  min-width: 0;
+  padding: 0.42rem 0.28rem 0.48rem;
+  border-radius: 0.72rem;
+  border: 1px solid rgb(56 189 248 / 0.14);
+  background: rgb(2 12 24 / 0.55);
+}
+
+.hired-hud__crew-name {
+  max-width: 100%;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.hired-hud__crew-bay {
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(147 197 253 / 0.72);
+}
+
+.hired-hud--active-love .hired-hud__avatar-ring {
+  border-color: rgb(251 113 133 / 0.72);
+  box-shadow:
+    0 0 16px rgb(244 63 94 / 0.42),
+    inset 0 0 12px rgb(251 113 133 / 0.18);
 }
 
 .hired-hud__tile-content .hired-hud__row-vitals {

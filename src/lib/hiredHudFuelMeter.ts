@@ -3,17 +3,22 @@ export type DeveloperFuelReading = {
   percent: number;
 };
 
+const FLEET_FUEL_PER_DEV_MIN = 0.2;
+const FLEET_FUEL_PER_DEV_SPAN = 0.34;
+const FLEET_FUEL_PER_DEV_MAX = 0.6;
+const FLEET_FUEL_PERCENT_CAP = 0.65;
+
 /** Low cash fuel reserve for a hired developer bay (money meter, not tank volume). */
 export function randomLowFuelReading(slot: number): DeveloperFuelReading {
-  const jitter = ((slot * 37) % 11) * 0.17;
-  const dollars = Math.round((6.4 + Math.random() * 28.6 + jitter) * 100) / 100;
+  const jitter = ((slot * 37) % 11) * 0.012;
+  const dollars =
+    Math.round((FLEET_FUEL_PER_DEV_MIN + Math.random() * FLEET_FUEL_PER_DEV_SPAN + jitter) * 100) / 100;
   const percent = fuelPercentFromDollars(dollars);
   return { dollars, percent };
 }
 
 export function fuelPercentFromDollars(dollars: number): number {
-  const maxReserve = 42;
-  return Math.max(4, Math.min(24, Math.round((dollars / maxReserve) * 100)));
+  return Math.max(4, Math.min(24, Math.round((dollars / FLEET_FUEL_PERCENT_CAP) * 100)));
 }
 
 export function formatFuelDollars(dollars: number): string {
@@ -26,9 +31,12 @@ export function formatFuelDollars(dollars: number): string {
 }
 
 export function driftLowFuelReading(current: DeveloperFuelReading): DeveloperFuelReading {
-  const drain = Math.random() < 0.35 ? Math.round(Math.random() * 90) / 100 : 0;
-  const bump = drain === 0 && Math.random() < 0.12 ? Math.round(Math.random() * 45) / 100 : 0;
-  const dollars = Math.max(3.2, Math.min(39.5, Math.round((current.dollars - drain + bump) * 100) / 100));
+  const drain = Math.random() < 0.35 ? Math.round(Math.random() * 4) / 100 : 0;
+  const bump = drain === 0 && Math.random() < 0.12 ? Math.round(Math.random() * 3) / 100 : 0;
+  const dollars = Math.max(
+    FLEET_FUEL_PER_DEV_MIN,
+    Math.min(FLEET_FUEL_PER_DEV_MAX, Math.round((current.dollars - drain + bump) * 100) / 100),
+  );
   return { dollars, percent: fuelPercentFromDollars(dollars) };
 }
 

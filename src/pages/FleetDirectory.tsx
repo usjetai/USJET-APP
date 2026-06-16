@@ -55,7 +55,7 @@ export default function FleetDirectory() {
             <span className="fleet-directory-page__callsign-chip-icon" aria-hidden>
               <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-chip-${entry.slug}`} className="fleet-directory-page__callsign-icon" />
             </span>
-            {entry.callsign}
+            {entry.name}
           </Link>
         ))}
       </nav>
@@ -73,10 +73,10 @@ export default function FleetDirectory() {
                     <span className="fleet-directory-card__icon-wrap" aria-hidden>
                       <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-hired-${entry.slug}`} className="fleet-directory-card__icon" />
                     </span>
-                    <p className="fleet-directory-card__bay">{entry.callsign} · {entry.aircraftOfficialName}</p>
+                    <p className="fleet-directory-card__bay">{entry.name} · {entry.aircraftOfficialName}</p>
                   </div>
                   <h3 className="fleet-directory-card__name">
-                    <Link to={entry.pagePath}>{entry.callsign}</Link>
+                    <Link to={entry.pagePath}>{entry.name}</Link>
                   </h3>
                   <p className="fleet-directory-card__developer">
                     <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
@@ -84,10 +84,10 @@ export default function FleetDirectory() {
                   <p className="fleet-directory-card__category">{entry.category}</p>
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                   <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">
-                    {entry.callsign} Jet Fighter page →
+                    {entry.name} Jet Fighter page →
                   </Link>
                   <Link to={getFleetProductPagePath(entry.callsign)} className="fleet-directory-card__profile fleet-directory-card__product glass-effect-interactive">
-                    {entry.callsign} Product page →
+                    {entry.name} Product page →
                   </Link>
                   <a
                     href={integratedLaunchUrl(entry.domain, entry.href, entry.slot, {
@@ -96,7 +96,7 @@ export default function FleetDirectory() {
                     })}
                     className="fleet-directory-card__launch glass-effect-interactive"
                   >
-                    Launch {entry.callsign} via USJET →
+                    Launch {entry.name} via USJET →
                   </a>
                 </article>
               </GlassEffectContainer>
@@ -118,10 +118,10 @@ export default function FleetDirectory() {
                     <span className="fleet-directory-card__icon-wrap" aria-hidden>
                       <AircraftIcon aircraftType={entry.aircraftType} accentId={`directory-available-${entry.slug}`} className="fleet-directory-card__icon" />
                     </span>
-                    <p className="fleet-directory-card__bay">{entry.callsign}</p>
+                    <p className="fleet-directory-card__bay">{entry.name}</p>
                   </div>
                   <h3 className="fleet-directory-card__name">
-                    <Link to={entry.pagePath}>{entry.callsign}</Link>
+                    <Link to={entry.pagePath}>{entry.name}</Link>
                   </h3>
                   <p className="fleet-directory-card__developer">
                     <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
@@ -130,7 +130,7 @@ export default function FleetDirectory() {
                   <FleetCapabilityBadges capabilities={getFleetCapabilities(entry.slot)} />
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
                   <Link to={entry.pagePath} className="fleet-directory-card__profile glass-effect-interactive">
-                    {entry.callsign} Jet Fighter page →
+                    {entry.name} Jet Fighter page →
                   </Link>
                 </article>
               </GlassEffectContainer>

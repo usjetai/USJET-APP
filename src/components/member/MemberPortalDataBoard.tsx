@@ -159,7 +159,7 @@ export default function MemberPortalDataBoard({ customerId, session }: MemberPor
                     >
                       <td>
                         <span className="member-data-board__rank">{String(index + 1).padStart(2, "0")}</span>
-                        <span className="member-data-board__unit-callsign">{row.callsign}</span>
+                        <span className="member-data-board__unit-callsign">{row.name}</span>
                         <span className="member-data-board__unit-name">
                           <DeveloperRedBlinkName name={row.name} />
                         </span>

@@ -36,7 +36,7 @@ export default function MemberFleetUsageChart() {
               <li key={entry.callsign} className="member-usage__row">
                 <div className="member-usage__row-head">
                   <span className="member-usage__rank">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="member-usage__callsign">{entry.callsign}</span>
+                  <span className="member-usage__callsign">{entry.name}</span>
                   <span className="member-usage__name">
                     <DeveloperRedBlinkName name={entry.name} />
                   </span>

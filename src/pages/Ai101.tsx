@@ -48,7 +48,7 @@ function Ai101LessonCard({ row, index }: { row: Ai101CurriculumRow; index: numbe
             className="mt-2 text-base font-black uppercase italic leading-tight tracking-tight text-white sm:text-lg"
           >
             <span className="fleet-card__callsign text-[11px] font-bold tracking-[0.2em] text-cyan-200/90">
-              {unit.callsign}
+              {unit.name}
             </span>
             <span className="mt-1 block text-white">
               <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />

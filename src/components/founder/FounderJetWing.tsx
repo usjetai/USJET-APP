@@ -42,7 +42,7 @@ function FounderJetCell({ unit, side }: { unit: FleetUnit; side: "left" | "right
             "--founder-jet-accent": bayAccent.accent,
           } as CSSProperties
         }
-        aria-label={`Bay ${bay} — ${unit.callsign}, ${unit.name}`}
+        aria-label={`Bay ${bay} — ${unit.name}`}
         onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
       >
         <AircraftIcon
@@ -51,7 +51,7 @@ function FounderJetCell({ unit, side }: { unit: FleetUnit; side: "left" | "right
           className="founder-jet-wing__icon"
         />
         <span className="founder-jet-wing__callsign" aria-hidden>
-          {unit.callsign}
+          {unit.name}
         </span>
       </FleetLaunchLink>
     </li>

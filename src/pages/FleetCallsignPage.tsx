@@ -103,7 +103,7 @@ export default function FleetCallsignPage() {
                 ""
               )}
             </p>
-            <h1 className="fleet-callsign-page__title">{entry.callsign}</h1>
+            <h1 className="fleet-callsign-page__title">{entry.name}</h1>
             <p className="fleet-callsign-page__name">
               <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
             </p>
@@ -136,7 +136,7 @@ export default function FleetCallsignPage() {
                     className="fleet-callsign-page__launch btn-glass-prominent glass-effect-interactive"
                     onClick={() => logFleetUsageIfMember(entry.callsign, entry.name)}
                   >
-                    Launch {entry.callsign}
+                    Launch {entry.name}
                   </FleetLaunchLink>
                   <Link to="/" className="fleet-callsign-page__secondary btn-glass glass-effect-interactive">
                     View runway
@@ -156,12 +156,12 @@ export default function FleetCallsignPage() {
         </section>
       </GlassEffectContainer>
 
-      <section className="fleet-callsign-page__intel" aria-label={`${entry.callsign} Jet Fighter profile`}>
+      <section className="fleet-callsign-page__intel" aria-label={`${entry.name} Jet Fighter profile`}>
         <GlassEffectContainer className="fleet-callsign-panel glass-effect glass-effect--rounded-rect liquid-glass-background">
           <p className="fleet-callsign-panel__label">Jet Fighter profile</p>
-          <h2>{entry.callsign}</h2>
+          <h2>{entry.name}</h2>
           <p>
-            Canonical Jet Fighter page for {entry.callsign}. Developer:{" "}
+            Canonical Jet Fighter page for {entry.name}. Developer:{" "}
             <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />. Operators search and share this call name—not a generic bay
             number.
           </p>

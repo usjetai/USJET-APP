@@ -93,8 +93,8 @@ export default function FleetProductPage() {
     const prevDesc = meta?.getAttribute("content") ?? "";
 
     if (entry) {
-      document.title = `${entry.callsign} Product · USJET`;
-      meta?.setAttribute("content", `Product page for ${entry.callsign} — ${entry.name}. ${entry.seoDescription}`);
+      document.title = `${entry.name} Product · USJET`;
+      meta?.setAttribute("content", `Product page for ${entry.name}. ${entry.seoDescription}`);
     } else {
       document.title = "Product page not found | USJET";
       meta?.setAttribute("content", "USJET product page not found.");
@@ -160,7 +160,7 @@ export default function FleetProductPage() {
                 ` · ${entry.aircraftOfficialName}`
               )}
             </p>
-            <h1 className="product-page__title">{entry.callsign} Product</h1>
+            <h1 className="product-page__title">{entry.name} Product</h1>
             <p className="product-page__name">
               <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
             </p>
@@ -186,7 +186,7 @@ export default function FleetProductPage() {
                     className="product-page__launch btn-glass-prominent glass-effect-interactive"
                     onClick={() => logFleetUsageIfMember(entry.callsign, entry.name)}
                   >
-                    Launch {entry.callsign}
+                    Launch {entry.name}
                   </FleetLaunchLink>
                   {productStripeLink ? (
                     <a
@@ -250,10 +250,10 @@ export default function FleetProductPage() {
         </section>
       </GlassEffectContainer>
 
-      <section className="product-page__details" aria-label={`${entry.callsign} product profile`}>
+      <section className="product-page__details" aria-label={`${entry.name} product profile`}>
         <GlassEffectContainer className="product-page__panel glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
           <p className="product-page__label">Product name</p>
-          <h2>{entry.callsign} · {entry.aircraftOfficialName}</h2>
+          <h2>{entry.name} · {entry.aircraftOfficialName}</h2>
           <p>
             <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} /> is available through the USJET product runway with integrated cockpit navigation.
           </p>
@@ -276,7 +276,7 @@ export default function FleetProductPage() {
       </section>
 
       {productLineup.length > 0 ? (
-        <section className="product-page__lineup" aria-label={`${entry.callsign} product lineup`}>
+        <section className="product-page__lineup" aria-label={`${entry.name} product lineup`}>
           <p className="product-page__label">Product lineup</p>
           <h2 className="product-page__lineup-title">More from {entry.aircraftOfficialName}</h2>
           <div className="product-page__lineup-grid">

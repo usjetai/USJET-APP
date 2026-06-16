@@ -161,15 +161,15 @@ export default function FleetCard({
           expandInteractive
             ? "Expand this jet into its 2×2 USJET cockpit—the hangar stays your home base."
             : isAvailableBay && jetFighterPagePath
-              ? `Open Jet Fighter page for ${callsign}`
+              ? `Open Jet Fighter page for ${name}`
               : undefined
         }
         aria-label={
           isAvailableBay && jetFighterPagePath
-            ? `Open Jet Fighter page for ${callsign} (${name})`
+            ? `Open Jet Fighter page for ${name}`
             : expandInteractive
-              ? `Bring ${callsign} into its USJET cockpit — expand hangar bay ${typeof slot === "number" ? String(slot + 1).padStart(2, "0") : ""} (${name})`
-              : `Launch ${callsign} (${name}) at ${domain}`
+              ? `Bring ${name} into its USJET cockpit — expand hangar bay ${typeof slot === "number" ? String(slot + 1).padStart(2, "0") : ""}`
+              : `Launch ${name} at ${domain}`
         }
         onClick={handleClick}
         onKeyDown={handleKeyDown}
@@ -185,7 +185,7 @@ export default function FleetCard({
 
         <div className="fleet-card__meta mt-auto text-left">
           <h3 className="text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
-            {callsign}
+            {name}
           </h3>
           {isAvailableBay ? (
             <p className="developer-available-green-blink mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">
@@ -238,7 +238,7 @@ export default function FleetCard({
           <Link
             to={productPagePath}
             className="fleet-card__product-cta btn-glass-prominent glass-effect-interactive"
-            aria-label={`View product page for ${callsign}`}
+            aria-label={`View product page for ${name}`}
             onClick={() => logFleetUsageIfMember(callsign, name)}
           >
             Product page →
@@ -248,7 +248,7 @@ export default function FleetCard({
               to={jetFighterPagePath}
               className="fleet-card__jet-fighter-link"
             >
-              {callsign} · Jet Fighter page →
+              {name} · Jet Fighter page →
             </Link>
           ) : null}
         </div>

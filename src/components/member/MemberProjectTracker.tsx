@@ -257,7 +257,7 @@ function SavedRecordsPanel({ records, onSelectProject }: SavedRecordsPanelProps)
             >
               <span className="member-projects__saved-log-project">{record.projectName}</span>
               <span className="member-projects__saved-log-unit">
-                {record.assignment.callsign} — <DeveloperRedBlinkName name={record.assignment.name} />
+                {record.assignment.name} — <DeveloperRedBlinkName name={record.assignment.name} />
               </span>
               <span className="member-projects__saved-log-intent">{record.assignment.searchIntent}</span>
               <time className="member-projects__saved-log-time" dateTime={record.assignment.savedAt}>
@@ -329,7 +329,7 @@ function ProjectWorkspace({
           <span className="member-projects__portal-timer-label">Visible Portal time credits to</span>{" "}
           {pinnedAssignment ? (
             <strong className="member-projects__portal-timer-target">
-              {pinnedAssignment.callsign} — <DeveloperRedBlinkName name={pinnedAssignment.name} />
+              {pinnedAssignment.name} — <DeveloperRedBlinkName name={pinnedAssignment.name} />
             </strong>
           ) : (
             <strong className="member-projects__portal-timer-target">this project (no pinned unit)</strong>
@@ -366,11 +366,11 @@ function ProjectWorkspace({
             disabled={availableUnits.length === 0}
           >
             <option value="">
-              {availableUnits.length === 0 ? "All 30 units assigned" : "Select callsign…"}
+              {availableUnits.length === 0 ? "All 30 units assigned" : "Select developer…"}
             </option>
             {availableUnits.map((unit) => (
               <option key={unit.id} value={unit.id}>
-                {unit.callsign} — {getVisibleDeveloperName(unit.name, unit.slot)}
+                {getVisibleDeveloperName(unit.name, unit.slot)}
               </option>
             ))}
           </select>
@@ -601,7 +601,7 @@ function AssignmentHead({
     <div className="member-projects__assignment-head-wrap">
       <div className="member-projects__assignment-head">
         <div>
-          <p className="member-projects__callsign">{assignment.callsign}</p>
+          <p className="member-projects__callsign">{assignment.name}</p>
           <p className="member-projects__unit-name">
             <DeveloperRedBlinkName name={assignment.name} />
           </p>
@@ -668,7 +668,7 @@ function SavedRecord({ assignment, onEdit, onRemove }: SavedRecordProps) {
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">Fleet unit</span>
           <p className="member-projects__saved-value">
-            {assignment.callsign} — <DeveloperRedBlinkName name={assignment.name} />
+            {assignment.name} — <DeveloperRedBlinkName name={assignment.name} />
           </p>
         </div>
         <div className="member-projects__saved-field">

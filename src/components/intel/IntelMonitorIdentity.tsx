@@ -8,7 +8,7 @@ type IntelMonitorIdentityProps = {
 export default function IntelMonitorIdentity({ unit }: IntelMonitorIdentityProps) {
   return (
     <div className="intel-monitor__identity">
-      <p className="intel-monitor__callsign">{unit.callsign}</p>
+      <p className="intel-monitor__callsign">{unit.name}</p>
       <p className="intel-monitor__unit">
         <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
       </p>

@@ -19,7 +19,7 @@ export default function MemberFleetControlBoard() {
       <div className="member-control-board__header">
         <p className="member-control-board__kicker">Personal control board</p>
         <h2 className="member-control-board__title">Fleet manifest · 30 units</h2>
-        <p className="member-control-board__copy">Your sovereign hangar — smallest aircraft icons, full callsign roster.</p>
+        <p className="member-control-board__copy">Your sovereign hangar — smallest aircraft icons, full developer roster.</p>
       </div>
 
       <ul className="member-control-board__grid">
@@ -45,7 +45,7 @@ export default function MemberFleetControlBoard() {
                 href={launchUrl}
                 className="member-control-board__cell fleet-card member-control-board__cell--bay-accent glass-effect-interactive"
                 style={fleetBayAccentStyle(unit.slot)}
-                aria-label={`Launch ${unit.callsign} — ${unit.name}`}
+                aria-label={`Launch ${unit.name}`}
                 onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
                 onMouseEnter={() => publishLiveTerminalTile(terminalFeed)}
                 onMouseLeave={() => clearLiveTerminalTile()}
@@ -59,7 +59,7 @@ export default function MemberFleetControlBoard() {
                     className="member-control-board__icon"
                   />
                 </span>
-                <span className="member-control-board__callsign">{unit.callsign}</span>
+                <span className="member-control-board__callsign">{unit.name}</span>
                 <span className="member-control-board__name">
                   <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
                 </span>

@@ -38,11 +38,11 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
             "--founder-fleet-accent": bayAccent.accent,
           } as CSSProperties
         }
-        aria-label={`Bay ${bay} — ${unit.callsign}, ${unit.name}`}
+        aria-label={`Bay ${bay} — ${unit.name}`}
         onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
       >
         <span className="founder-fleet-roster__text">
-          <span className="founder-fleet-roster__callsign">{unit.callsign}</span>
+          <span className="founder-fleet-roster__callsign">{unit.name}</span>
           <span className="founder-fleet-roster__name">
             <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
           </span>

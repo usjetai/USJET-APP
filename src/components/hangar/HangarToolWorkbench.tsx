@@ -52,7 +52,7 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
     >
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
-          <p className="intel-expanded__callsign">{unit.callsign}</p>
+          <p className="intel-expanded__callsign">{unit.name}</p>
           <p className="intel-expanded__unit-name">
             <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
           </p>
@@ -63,7 +63,7 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
           <a
             className="intel-expanded__external"
             href={launchHref}
-            aria-label={`Launch ${unit.callsign} — integrated navigation`}
+            aria-label={`Launch ${unit.name} — integrated navigation`}
           >
             <ExternalLink size={16} strokeWidth={2} />
           </a>
@@ -71,7 +71,7 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
             type="button"
             className="intel-expanded__tactical"
             onClick={launchIntegrated}
-            aria-label={`Launch ${unit.callsign} in the same window — USJET integrated navigation`}
+            aria-label={`Launch ${unit.name} in the same window — USJET integrated navigation`}
           >
             <Rocket size={15} strokeWidth={2.25} aria-hidden />
           </button>
@@ -89,7 +89,7 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
               "intel-expanded__frame",
               frameRevealed ? "hangar-iframe--ready" : "hangar-iframe--arming",
             ].join(" ")}
-            title={`${unit.callsign} · USJET cockpit`}
+            title={`${unit.name} · USJET cockpit`}
             src={iframeSrc}
             onLoad={() => setFrameRevealed(true)}
             onError={() => setEmbedAssist(true)}

@@ -26,7 +26,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
     <article className="intel-expanded intel-expanded--bay-accent" style={{ ...fleetBayAccentStyle(unit.slot), ...gridStyle }}>
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
-          <p className="intel-expanded__callsign">{unit.callsign}</p>
+          <p className="intel-expanded__callsign">{unit.name}</p>
           <p className="intel-expanded__unit-name">
             <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
           </p>
@@ -37,7 +37,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
           <a
             className="intel-expanded__external"
             href={launchHref}
-            aria-label={`Launch ${unit.callsign} — integrated navigation`}
+            aria-label={`Launch ${unit.name} — integrated navigation`}
             onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
           >
             <ExternalLink size={16} strokeWidth={2} />

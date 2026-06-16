@@ -65,7 +65,7 @@ export default function IntelMonitor({ unit, index: _index, style, onExpandReque
       }
       tabIndex={interactive ? 0 : undefined}
       role={interactive ? "button" : undefined}
-      aria-label={interactive ? `Expand ${unit.callsign} · ${unit.name} workstation` : undefined}
+      aria-label={interactive ? `Expand ${unit.name} workstation` : undefined}
     >
       <header className="intel-monitor__header">
         <IntelMonitorIdentity unit={unit} />

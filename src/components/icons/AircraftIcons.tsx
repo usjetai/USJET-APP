@@ -17,7 +17,7 @@ export default function AircraftIcon({
       src={FLEET_AIRCRAFT_LOGO_PATHS[aircraftType]}
       alt=""
       aria-hidden="true"
-      className={`aircraft-icon ${className}`.trim()}
+      className={`aircraft-icon logo-rounded ${className}`.trim()}
       data-accent-id={accentId}
       decoding="async"
       draggable={false}

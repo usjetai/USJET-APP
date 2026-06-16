@@ -79,7 +79,7 @@ export default function FleetDirectory() {
                     <Link to={entry.pagePath}>{entry.callsign}</Link>
                   </h3>
                   <p className="fleet-directory-card__developer">
-                    <DeveloperRedBlinkName name={entry.name} slot={entry.slot} />
+                    <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
                   </p>
                   <p className="fleet-directory-card__category">{entry.category}</p>
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>
@@ -126,7 +126,7 @@ export default function FleetDirectory() {
                     <Link to={entry.pagePath}>{entry.callsign}</Link>
                   </h3>
                   <p className="fleet-directory-card__developer">
-                    <DeveloperRedBlinkName name={entry.name} slot={entry.slot} />
+                    <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
                   </p>
                   <p className="fleet-directory-card__category">{entry.category}</p>
                   <p className="fleet-directory-card__desc">{entry.seoDescription}</p>

@@ -97,7 +97,7 @@ export default function FleetCallsignPage() {
             </p>
             <h1 className="fleet-callsign-page__title">{entry.callsign}</h1>
             <p className="fleet-callsign-page__name">
-              <DeveloperRedBlinkName name={entry.name} slot={entry.slot} />
+              <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
             </p>
             {!available ? (
               <p className="fleet-callsign-page__aircraft-type">{entry.aircraftOfficialName}</p>
@@ -154,7 +154,7 @@ export default function FleetCallsignPage() {
           <h2>{entry.callsign}</h2>
           <p>
             Canonical Jet Fighter page for {entry.callsign}. Developer:{" "}
-            <DeveloperRedBlinkName name={entry.name} slot={entry.slot} />. Operators search and share this call name-not a generic bay
+            <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />. Operators search and share this call name—not a generic bay
             number.
           </p>
         </GlassEffectContainer>

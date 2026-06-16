@@ -5,7 +5,8 @@ import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
 import { useMemo, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { getFleetProductPagePath } from "../../data/fleetDirectorySeo";
+import { getFleetProductPagePath, slugifyAircraftOfficialName } from "../../data/fleetDirectorySeo";
+import { hasFleetMerchandise } from "../../lib/fleetProductMedia";
 import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
@@ -70,6 +71,8 @@ export default function FleetCard({
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
   const productPagePath = getFleetProductPagePath(callsign);
+  const aircraftSlug = aircraftOfficialName ? slugifyAircraftOfficialName(aircraftOfficialName) : "";
+  const showMerchFreeShipping = surface === "fleet" && hasFleetMerchandise(aircraftSlug);
   const terminalFeed = useMemo(
     () =>
       buildFleetTileTerminalFeed({
@@ -206,7 +209,7 @@ export default function FleetCard({
           {!isAvailableBay ? (
             <p className="mt-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">
               <HeartPulse size={12} aria-hidden className={developerRedBlinkHeartClass(name) || undefined} />
-              <DeveloperRedBlinkName name={name} />
+              <DeveloperRedBlinkName name={name} fleetSlot={slot} />
             </p>
           ) : null}
           {isAvailableBay ? (
@@ -228,6 +231,11 @@ export default function FleetCard({
       </FleetLaunchLink>
       {!isAvailableBay ? (
         <div className="fleet-card__footer">
+          {showMerchFreeShipping ? (
+            <p className="fleet-card__free-shipping" aria-label="Free shipping">
+              Free shipping
+            </p>
+          ) : null}
           <Link
             to={productPagePath}
             className="fleet-card__product-cta btn-glass-prominent glass-effect-interactive"

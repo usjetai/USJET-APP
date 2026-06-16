@@ -156,7 +156,7 @@ export default function FleetProductPage() {
             </p>
             <h1 className="product-page__title">{entry.callsign} Product</h1>
             <p className="product-page__name">
-              <DeveloperRedBlinkName name={entry.name} />
+              <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
             </p>
             <p className="product-page__aircraft-type">{entry.aircraftOfficialName}</p>
             <p className="product-page__lede">{productLede}</p>
@@ -224,7 +224,7 @@ export default function FleetProductPage() {
               <img
                 src={entry.productLogo.src}
                 alt={entry.productLogo.alt}
-                className="product-page__logo"
+                className="product-page__logo logo-rounded"
                 loading="lazy"
                 decoding="async"
               />
@@ -249,7 +249,7 @@ export default function FleetProductPage() {
           <p className="product-page__label">Product name</p>
           <h2>{entry.callsign} · {entry.aircraftOfficialName}</h2>
           <p>
-            <DeveloperRedBlinkName name={entry.name} /> is available through the USJET product runway with integrated cockpit navigation.
+            <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} /> is available through the USJET product runway with integrated cockpit navigation.
           </p>
         </GlassEffectContainer>
 

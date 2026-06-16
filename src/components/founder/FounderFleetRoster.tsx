@@ -51,7 +51,7 @@ function FounderFleetCell({ unit }: { unit: FleetUnit }) {
         <span className="founder-fleet-roster__text">
           <span className="founder-fleet-roster__callsign">{unit.callsign}</span>
           <span className="founder-fleet-roster__name">
-            <DeveloperRedBlinkName name={unit.name} slot={unit.slot} />
+            <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
           </span>
         </span>
       </FleetLaunchLink>

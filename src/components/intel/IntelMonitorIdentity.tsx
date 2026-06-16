@@ -10,7 +10,7 @@ export default function IntelMonitorIdentity({ unit }: IntelMonitorIdentityProps
     <div className="intel-monitor__identity">
       <p className="intel-monitor__callsign">{unit.callsign}</p>
       <p className="intel-monitor__unit">
-        <DeveloperRedBlinkName name={unit.name} slot={unit.slot} />
+        <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
       </p>
     </div>
   );

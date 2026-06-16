@@ -1,11 +1,31 @@
 import { useEffect, useMemo, useState } from "react";
-import { Activity, HeartPulse, Radar } from "lucide-react";
+import { Activity, Footprints, Heart, HeartPulse, Moon, Radar } from "lucide-react";
 import { motion } from "framer-motion";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
+import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
+import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
+import { getFleetDisplayAircraftType } from "../data/fleetRoster";
+import { HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
+import {
+  driftDailySteps,
+  formatDailySteps,
+  loadHiredHudDailySteps,
+  saveHiredHudDailySteps,
+} from "../lib/hiredHudDailySteps";
+import {
+  averageSleepMinutes,
+  formatSleepTime,
+  loadHiredHudSleepTime,
+} from "../lib/hiredHudSleepTime";
+import {
+  createHiredHudTileReadings,
+  randomHiredHudTileReading,
+  type HiredHudTileReading,
+} from "../lib/hiredHudTileReadings";
 
 function formatHudPercent(value: number): string {
   return `${value >= 0 ? "+" : "-"}${Math.abs(value).toFixed(2)}%`;
@@ -15,12 +35,58 @@ function formatTickerClock(date: Date): string {
   return date.toLocaleTimeString([], { hour12: false });
 }
 
+function randomDeveloperBpm(): number {
+  return Math.floor(62 + Math.random() * 26);
+}
+
+function randomDeveloperSpo2(): number {
+  return Math.round((94 + Math.random() * 5) * 10) / 10;
+}
+
+function randomDeveloperPressure(): number {
+  return Math.floor(58 + Math.random() * 38);
+}
+
 export default function HiredHud() {
   const hiredUnits = useMemo(() => getHiredDeveloperUnits(fleetManifest), []);
   const [scanPhase, setScanPhase] = useState(0);
   const [pulseIndex, setPulseIndex] = useState(1.18);
   const [uptime, setUptime] = useState(99.62);
   const [clock, setClock] = useState(() => new Date());
+  const [developerBpm, setDeveloperBpm] = useState<Record<number, number>>(() =>
+    Object.fromEntries(
+      getHiredDeveloperUnits(fleetManifest).map((unit) => [unit.slot, randomDeveloperBpm()]),
+    ),
+  );
+  const [developerSpo2, setDeveloperSpo2] = useState<Record<number, number>>(() =>
+    Object.fromEntries(
+      getHiredDeveloperUnits(fleetManifest).map((unit) => [unit.slot, randomDeveloperSpo2()]),
+    ),
+  );
+  const [developerPressure, setDeveloperPressure] = useState<Record<number, number>>(() =>
+    Object.fromEntries(
+      getHiredDeveloperUnits(fleetManifest).map((unit) => [unit.slot, randomDeveloperPressure()]),
+    ),
+  );
+  const [developerSteps, setDeveloperSteps] = useState<Record<number, number>>(() =>
+    loadHiredHudDailySteps(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
+  );
+  const [developerSleep] = useState<Record<number, number>>(() =>
+    loadHiredHudSleepTime(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
+  );
+  const [tileHudReadings, setTileHudReadings] = useState<Record<number, HiredHudTileReading>>(() =>
+    createHiredHudTileReadings(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
+  );
+  const [activeLove, setActiveLove] = useState(false);
+
+  const fleetDailySteps = useMemo(
+    () => hiredUnits.reduce((total, unit) => total + (developerSteps[unit.slot] ?? 0), 0),
+    [developerSteps, hiredUnits],
+  );
+  const fleetAvgSleep = useMemo(
+    () => formatSleepTime(averageSleepMinutes(developerSleep, hiredUnits.map((unit) => unit.slot))),
+    [developerSleep, hiredUnits],
+  );
 
   useEffect(() => {
     const tickerId = window.setInterval(() => {
@@ -39,16 +105,74 @@ export default function HiredHud() {
       });
     }, 2200);
 
+    const bpmId = window.setInterval(() => {
+      setDeveloperBpm((prev) => {
+        const next = { ...prev };
+        for (const unit of hiredUnits) {
+          const current = next[unit.slot] ?? randomDeveloperBpm();
+          const drift = Math.round((Math.random() - 0.5) * 5);
+          next[unit.slot] = Math.max(58, Math.min(98, current + drift));
+        }
+        return next;
+      });
+      setDeveloperSpo2((prev) => {
+        const next = { ...prev };
+        for (const unit of hiredUnits) {
+          const current = next[unit.slot] ?? randomDeveloperSpo2();
+          const drift = (Math.random() - 0.5) * 0.6;
+          next[unit.slot] = Math.round(Math.max(93.5, Math.min(99.5, current + drift)) * 10) / 10;
+        }
+        return next;
+      });
+      setDeveloperPressure((prev) => {
+        const next = { ...prev };
+        for (const unit of hiredUnits) {
+          const current = next[unit.slot] ?? randomDeveloperPressure();
+          const drift = Math.round((Math.random() - 0.5) * 6);
+          next[unit.slot] = Math.max(52, Math.min(96, current + drift));
+        }
+        return next;
+      });
+      setDeveloperSteps((prev) => {
+        const next = { ...prev };
+        for (const unit of hiredUnits) {
+          const current = next[unit.slot] ?? 0;
+          next[unit.slot] = driftDailySteps(current);
+        }
+        saveHiredHudDailySteps(next);
+        return next;
+      });
+    }, 1600);
+
+    const hudBgId = window.setInterval(() => {
+      setTileHudReadings((prev) => {
+        const next = { ...prev };
+        for (const unit of hiredUnits) {
+          next[unit.slot] = randomHiredHudTileReading();
+        }
+        return next;
+      });
+    }, 820);
+
     return () => {
       window.clearInterval(tickerId);
       window.clearInterval(metricsId);
+      window.clearInterval(bpmId);
+      window.clearInterval(hudBgId);
     };
-  }, []);
+  }, [hiredUnits]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hired-hud-page relative">
       <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto w-full max-w-[94rem] px-4 pb-24 sm:px-6 lg:px-8">
-        <section className="hired-hud glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
+        <section
+          className={[
+            "hired-hud glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan",
+            activeLove ? "hired-hud--active-love" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
           <header className="hired-hud__header">
             <div>
               <p className="hired-hud__eyebrow">
@@ -61,6 +185,24 @@ export default function HiredHud() {
               </p>
             </div>
             <div className="hired-hud__meta">
+              <div className="hired-hud__fuel">
+                <DirectFuelCashButton variant="compact" />
+              </div>
+              <button
+                type="button"
+                className={[
+                  "hired-hud__love-toggle btn-glass glass-effect-interactive",
+                  activeLove ? "hired-hud__love-toggle--on" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                aria-pressed={activeLove}
+                aria-label={activeLove ? "Turn active love off" : "Turn active love on"}
+                onClick={() => setActiveLove((on) => !on)}
+              >
+                <Heart size={14} aria-hidden fill={activeLove ? "currentColor" : "none"} />
+                <span>{activeLove ? "Active love ON" : "Active love OFF"}</span>
+              </button>
               <span className="hired-hud__badge">
                 <Activity size={12} aria-hidden />
                 Live
@@ -93,27 +235,148 @@ export default function HiredHud() {
               <span className="hired-hud__metric-label">Hired Names</span>
               <strong className="hired-hud__metric-value">{hiredUnits.length}</strong>
             </article>
+            <article className="hired-hud__metric hired-hud__metric--steps">
+              <span className="hired-hud__metric-label">
+                <Footprints size={11} aria-hidden />
+                Daily Step Counter
+              </span>
+              <strong className="hired-hud__metric-value hired-hud__metric-value--steps">
+                {formatDailySteps(fleetDailySteps)}
+              </strong>
+            </article>
+            <article className="hired-hud__metric hired-hud__metric--sleep">
+              <span className="hired-hud__metric-label">
+                <Moon size={11} aria-hidden />
+                Sleep Time
+              </span>
+              <strong className="hired-hud__metric-value hired-hud__metric-value--sleep">{fleetAvgSleep}</strong>
+            </article>
           </div>
 
-          <div className="hired-hud__ekg" aria-hidden>
-            <EkgPulseLine variant="hero" traces={3} seed={17} />
+          <div className="hired-hud__ekg-monitor" aria-label="Fleet EKG monitor">
+            <div className="hired-hud__ekg-monitor-head">
+              <span className="hired-hud__ekg-monitor-title">EKG Monitor</span>
+              <span className="hired-hud__ekg-monitor-tag">Trace live</span>
+            </div>
+            <div className="hired-hud__ekg" aria-hidden>
+              <EkgPulseLine variant="hero" traces={3} seed={17} />
+            </div>
           </div>
 
           <ul className="hired-hud__list" aria-label="Hired developers live monitor list">
-            {hiredUnits.map((unit) => (
-              <li key={unit.id} className="hired-hud__row">
-                <span className="hired-hud__row-bay">Bay {String(unit.slot + 1).padStart(2, "0")}</span>
-                <span className="hired-hud__row-name">
-                  <HeartPulse
-                    size={13}
-                    aria-hidden
-                    className={developerRedBlinkHeartClass(unit.name) || "developer-red-blink-heart"}
+            {hiredUnits.map((unit, rosterIndex) => {
+              const bpm = developerBpm[unit.slot] ?? 72;
+              const spo2 = developerSpo2[unit.slot]?.toFixed(1) ?? "97.0";
+              const pressure = developerPressure[unit.slot] ?? 72;
+              const steps = developerSteps[unit.slot] ?? 0;
+              const sleepMinutes = developerSleep[unit.slot] ?? 0;
+              const sleepLabel = formatSleepTime(sleepMinutes);
+              const hudBg = tileHudReadings[unit.slot] ?? randomHiredHudTileReading();
+              const hudSpo2 = hudBg.spo2.toFixed(1);
+              const hudSleepLabel = formatSleepTime(hudBg.sleepMinutes);
+              const aircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
+              const tileScan = (scanPhase + unit.slot * 13) % 100;
+
+              return (
+              <li
+                key={unit.id}
+                className={["hired-hud__tile", activeLove ? "hired-hud__tile--active-love" : ""]
+                  .filter(Boolean)
+                  .join(" ")}
+                style={{ ["--hired-hud-logo-phase" as string]: `${rosterIndex * 0.35}s` }}
+              >
+                <div className="hired-hud__tile-hud" aria-hidden>
+                  <div
+                    className="hired-hud__tile-hud-bg"
+                    style={{
+                      backgroundImage: `linear-gradient(180deg, rgb(2 10 22 / 0.35), rgb(4 18 34 / 0.72)), url("${HIRED_HUD_TILE_BG}")`,
+                      backgroundPosition: `${12 + (unit.slot % 4) * 8}% 42%`,
+                    }}
                   />
-                  <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
-                </span>
-                <span className="hired-hud__row-status">Heartbeat stable</span>
+                  <span
+                    className="hired-hud__tile-scanline"
+                    style={{ transform: `translateY(${tileScan}%)` }}
+                  />
+                  <div className="hired-hud__tile-hud-readings">
+                    <span className="hired-hud__tile-hud-label">Cardio unit</span>
+                    <span className="hired-hud__tile-hud-bpm">{hudBg.bpm} BPM</span>
+                    <span className="hired-hud__tile-hud-spo2">SpO2 {hudSpo2}%</span>
+                    <span className="hired-hud__tile-hud-pressure">Pressure {hudBg.pressure}%</span>
+                    <span className="hired-hud__tile-hud-steps">{formatDailySteps(hudBg.steps)} steps</span>
+                    <span className="hired-hud__tile-hud-sleep">Sleep {hudSleepLabel}</span>
+                    <div className="hired-hud__tile-hud-ekg">
+                      <EkgPulseLine
+                        variant="monitor"
+                        traces={2}
+                        seed={unit.slot * 11 + 3}
+                        className="hired-hud__tile-hud-ekg-line"
+                      />
+                    </div>
+                  </div>
+                  <div className="hired-hud__tile-logo-wrap">
+                    <HiredHudDeveloperLogo slot={unit.slot} aircraftType={aircraftType} variant="hud" />
+                  </div>
+                </div>
+
+                <div className="hired-hud__tile-content">
+                  <span className="hired-hud__row-bay">
+                    <HiredHudDeveloperLogo slot={unit.slot} aircraftType={aircraftType} variant="badge" />
+                    Bay {String(unit.slot + 1).padStart(2, "0")}
+                  </span>
+                  <span className="hired-hud__row-name">
+                    <HeartPulse
+                      size={13}
+                      aria-hidden
+                      className={[
+                        developerRedBlinkHeartClass(unit.name) || "developer-red-blink-heart",
+                        activeLove ? "hired-hud__row-heart--love" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                    />
+                    <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
+                  </span>
+                  <div className="hired-hud__row-vitals">
+                    <span className="hired-hud__row-bpm" aria-label={`${bpm} beats per minute`}>
+                      {bpm} BPM
+                    </span>
+                    <span className="hired-hud__row-spo2" aria-label={`Blood oxygen ${spo2} percent`}>
+                      SpO2 {spo2}%
+                    </span>
+                    <span className="hired-hud__row-steps" aria-label={`${steps} daily steps`}>
+                      <Footprints size={11} aria-hidden />
+                      {formatDailySteps(steps)}
+                    </span>
+                    <span className="hired-hud__row-sleep" aria-label={`Sleep time ${sleepLabel}`}>
+                      <Moon size={11} aria-hidden />
+                      {sleepLabel}
+                    </span>
+                    <div className="hired-hud__row-monitor" aria-label={`EKG monitor for ${unit.name}`}>
+                      <span className="hired-hud__row-monitor-label" aria-hidden>
+                        EKG
+                      </span>
+                      <EkgPulseLine
+                        variant="monitor"
+                        traces={2}
+                        seed={unit.slot * 11 + 3}
+                        className="hired-hud__row-ekg"
+                      />
+                    </div>
+                  </div>
+                  <span className="hired-hud__row-status">
+                    {activeLove ? (
+                      <>
+                        <Heart size={11} aria-hidden className="hired-hud__row-love-icon" fill="currentColor" />
+                        Active love
+                      </>
+                    ) : (
+                      "Heartbeat stable"
+                    )}
+                  </span>
+                </div>
               </li>
-            ))}
+            );
+            })}
           </ul>
 
           <footer className="hired-hud__ticker" aria-live="polite">
@@ -124,6 +387,16 @@ export default function HiredHud() {
             <span>Pulse index {formatHudPercent(pulseIndex)}</span>
             <span>·</span>
             <span>Telemetry uptime {uptime.toFixed(2)}%</span>
+            <span>·</span>
+            <span>Daily steps {formatDailySteps(fleetDailySteps)}</span>
+            <span>·</span>
+            <span>Avg sleep {fleetAvgSleep}</span>
+            {activeLove ? (
+              <>
+                <span>·</span>
+                <span className="hired-hud__ticker-love">Active love signal engaged</span>
+              </>
+            ) : null}
           </footer>
         </section>
       </div>

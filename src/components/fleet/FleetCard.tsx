@@ -2,8 +2,10 @@ import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccen
 import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
+import { HeartPulse } from "lucide-react";
 import { useMemo, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
+import { getFleetProductPagePath } from "../../data/fleetDirectorySeo";
 import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
@@ -11,6 +13,8 @@ import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
 import { useOriginLimitedOfferOptional } from "../../context/OriginLimitedOfferContext";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
+import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type FleetCardProps = {
@@ -65,6 +69,7 @@ export default function FleetCard({
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
+  const productPagePath = getFleetProductPagePath(callsign);
   const terminalFeed = useMemo(
     () =>
       buildFleetTileTerminalFeed({
@@ -79,7 +84,6 @@ export default function FleetCard({
       }),
     [name, callsign, domain, slot, bayAccent?.personality, capabilities, isCommandBay, expandInteractive],
   );
-
   const syncProtocolToClipboard = () => {
     void copyUsjetProtocol(protocolText);
   };
@@ -118,8 +122,8 @@ export default function FleetCard({
   };
 
   const cardClassName = [
-    "fleet-card group block",
-    surface === "hangar" ? "fleet-card--surface-hangar h-full min-h-[13.5rem]" : "fleet-card--surface-runway min-h-[8rem]",
+    "fleet-card group flex flex-col",
+    surface === "hangar" ? "fleet-card--surface-hangar h-full min-h-[16rem]" : "fleet-card--surface-runway min-h-[10rem]",
     bayAccent ? "fleet-card--bay-accent" : "",
     expandInteractive ? "fleet-card--hangar-expand" : "",
     isCommandBay ? "fleet-card--command" : "",
@@ -149,7 +153,7 @@ export default function FleetCard({
     >
       <FleetLaunchLink
         launchUrl={launchUrl}
-        className="fleet-card__launch block h-full min-h-0"
+        className="fleet-card__launch block min-h-0 flex-1"
         title={
           expandInteractive
             ? "Expand this jet into its 2×2 USJET cockpit—the hangar stays your home base."
@@ -200,7 +204,10 @@ export default function FleetCard({
             </p>
           ) : null}
           {!isAvailableBay ? (
-            <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">{name}</p>
+            <p className="mt-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">
+              <HeartPulse size={12} aria-hidden className={developerRedBlinkHeartClass(name) || undefined} />
+              <DeveloperRedBlinkName name={name} />
+            </p>
           ) : null}
           {isAvailableBay ? (
             <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.2em] text-amber-200/65">Open position</p>
@@ -219,13 +226,25 @@ export default function FleetCard({
         </div>
       </div>
       </FleetLaunchLink>
-      {jetFighterPagePath && !isAvailableBay ? (
-        <Link
-          to={jetFighterPagePath}
-          className="fleet-card__jet-fighter-link block px-5 pb-4 text-[9px] font-black uppercase tracking-[0.2em] text-cyan-300/80 hover:text-cyan-200"
-        >
-          {callsign} · Jet Fighter page →
-        </Link>
+      {!isAvailableBay ? (
+        <div className="fleet-card__footer">
+          <Link
+            to={productPagePath}
+            className="fleet-card__product-cta btn-glass-prominent glass-effect-interactive"
+            aria-label={`View product page for ${callsign}`}
+            onClick={() => logFleetUsageIfMember(callsign, name)}
+          >
+            Product page →
+          </Link>
+          {jetFighterPagePath ? (
+            <Link
+              to={jetFighterPagePath}
+              className="fleet-card__jet-fighter-link"
+            >
+              {callsign} · Jet Fighter page →
+            </Link>
+          ) : null}
+        </div>
       ) : null}
     </div>
   );

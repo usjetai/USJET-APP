@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import DeveloperRedBlinkName, { highlightDeveloperCoPilotName, highlightDeveloperNamesInText } from "../DeveloperRedBlinkName";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import {
   formatLastUsed,
@@ -25,7 +26,7 @@ export default function MemberFleetUsageChart() {
         <p className="member-usage__kicker">AI usage history</p>
         <h2 className="member-usage__title">Fleet launch log</h2>
       </div>
-      <p className="member-usage__narrative">{narrative}</p>
+      <p className="member-usage__narrative">{highlightDeveloperNamesInText(narrative)}</p>
 
       {hasUsage ? (
         <ol className="member-usage__list" aria-label="AI usage history ranked by total launches">
@@ -36,7 +37,9 @@ export default function MemberFleetUsageChart() {
                 <div className="member-usage__row-head">
                   <span className="member-usage__rank">{String(index + 1).padStart(2, "0")}</span>
                   <span className="member-usage__callsign">{entry.callsign}</span>
-                  <span className="member-usage__name">{entry.name}</span>
+                  <span className="member-usage__name">
+                    <DeveloperRedBlinkName name={entry.name} />
+                  </span>
                   <span className="member-usage__count">{entry.count}</span>
                 </div>
                 <div className="member-usage__bar-track" aria-hidden>

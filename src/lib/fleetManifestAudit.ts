@@ -5,7 +5,7 @@ import type { FleetUnit } from "../types/fleet";
  * Protect Ameer Karim's vision: every external bay resolves to a live partner, never a dead deployment.
  */
 export const FLEET_PARTNER_HREFS: Record<number, string> = {
-  0: "https://www.tiktok.com/@blueivyc4?is_from_webapp=1&sender_device=pc",
+  0: "https://gemini.google.com/",
   1: "https://chatgpt.com",
   2: "https://claude.ai",
   3: "https://www.perplexity.ai",

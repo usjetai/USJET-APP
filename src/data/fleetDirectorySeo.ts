@@ -15,9 +15,13 @@ export type FleetDirectoryEntry = {
   /** Jet Fighter call name from manifest callsign. */
   callsign: string;
   slug: string;
+  /** Slug derived from the aircraft official name (e.g. "sr-71-blackbird"). Used for product page URLs. */
+  aircraftSlug: string;
   /** Canonical Jet Fighter profile URL. */
   pagePath: string;
   jetFighterPagePath: string;
+  /** Canonical product page URL keyed off the aircraft official name. */
+  productPagePath: string;
   domain: string;
   href: string;
   seoTitle: string;
@@ -84,9 +88,31 @@ export function slugifyFleetCallsign(callsign: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+/**
+ * Slug derived from the aircraft official name (e.g. "SR-71 Blackbird" → "sr-71-blackbird").
+ * Parenthetical qualifiers and the command suffix are stripped so the URL stays clean.
+ */
+export function slugifyAircraftOfficialName(aircraftOfficialName: string): string {
+  return aircraftOfficialName
+    .replace(/\([^)]*\)/g, " ") // drop parenthetical qualifiers like "(US JET Concept)"
+    .replace(/·.*$/, " ") // drop "· Command" style suffix
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 /** Every manifest call sign gets a Jet Fighter page at `/fleet-directory/:slug`. */
 export function getFleetJetFighterPagePath(callsign: string): string {
   return `/fleet-directory/${slugifyFleetCallsign(callsign)}`;
+}
+
+/** Every manifest call sign also gets a dedicated product page keyed off the aircraft name at `/product/:aircraftSlug`. */
+export function getFleetProductPagePath(callsign: string): string {
+  const entry = FLEET_DIRECTORY_ENTRIES.find((e) => e.callsign === callsign);
+  if (entry) return `/product/${entry.aircraftSlug}`;
+  // Fallback (entry not yet built or unknown callsign): use the callsign slug.
+  return `/product/${slugifyFleetCallsign(callsign)}`;
 }
 
 export const FLEET_JETFIGHTER_PAGE_COUNT = fleetManifest.length;
@@ -98,15 +124,21 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
     const roster = getFleetRosterMeta(unit.slot);
     const available = isFleetBayAvailable(unit.slot);
     const slug = slugifyFleetCallsign(unit.callsign);
+    const aircraftSlug = available
+      ? slug
+      : slugifyAircraftOfficialName(roster.aircraftOfficialName) || slug;
     const pagePath = getFleetJetFighterPagePath(unit.callsign);
+    const productPagePath = `/product/${aircraftSlug}`;
     return {
       slot: unit.slot,
       unitId: unit.id,
       name: unit.name,
       callsign: unit.callsign,
       slug,
+      aircraftSlug,
       pagePath,
       jetFighterPagePath: pagePath,
+      productPagePath,
       domain: unit.domain,
       href: unit.href,
       category,
@@ -152,7 +184,13 @@ export const FLEET_DIRECTORY_AVAILABLE_ENTRIES = FLEET_DIRECTORY_ENTRIES.filter(
 export function getFleetDirectoryEntryBySlug(slug: string): FleetDirectoryEntry | undefined {
   const raw = slug.trim().toLowerCase();
   const normalizedSlug = slugifyFleetCallsign(slug);
-  return FLEET_DIRECTORY_ENTRIES.find((entry) => entry.slug === raw || entry.slug === normalizedSlug);
+  return FLEET_DIRECTORY_ENTRIES.find(
+    (entry) =>
+      entry.slug === raw ||
+      entry.slug === normalizedSlug ||
+      entry.aircraftSlug === raw ||
+      entry.aircraftSlug === normalizedSlug,
+  );
 }
 
 export function getFleetDirectoryEntryByCallsign(callsign: string): FleetDirectoryEntry | undefined {

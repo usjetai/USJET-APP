@@ -1,6 +1,7 @@
 import { ExternalLink, Rocket, X } from "lucide-react";
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetUnit } from "../../types/fleet";
 import { hangarWorkbenchIframeSrc, iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
@@ -52,7 +53,9 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.callsign}</p>
-          <p className="intel-expanded__unit-name">{unit.name}</p>
+          <p className="intel-expanded__unit-name">
+            <DeveloperRedBlinkName name={unit.name} />
+          </p>
           <p className="intel-expanded__domain">{unit.domain}</p>
           <p className="intel-expanded__tagline">USJET consensus bay</p>
         </div>

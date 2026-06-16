@@ -1,6 +1,7 @@
 import { ChevronDown, FolderKanban, Minus, Pencil, Plus, Save, Timer, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
+import DeveloperRedBlinkName, { highlightDeveloperCoPilotName } from "../DeveloperRedBlinkName";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberPortalUsageTimer } from "../../hooks/useMemberPortalUsageTimer";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
@@ -253,7 +254,7 @@ function SavedRecordsPanel({ records, onSelectProject }: SavedRecordsPanelProps)
             >
               <span className="member-projects__saved-log-project">{record.projectName}</span>
               <span className="member-projects__saved-log-unit">
-                {record.assignment.callsign} — {record.assignment.name}
+                {record.assignment.callsign} — <DeveloperRedBlinkName name={record.assignment.name} />
               </span>
               <span className="member-projects__saved-log-intent">{record.assignment.searchIntent}</span>
               <time className="member-projects__saved-log-time" dateTime={record.assignment.savedAt}>
@@ -325,7 +326,7 @@ function ProjectWorkspace({
           <span className="member-projects__portal-timer-label">Visible Portal time credits to</span>{" "}
           {pinnedAssignment ? (
             <strong className="member-projects__portal-timer-target">
-              {pinnedAssignment.callsign} — {pinnedAssignment.name}
+              {pinnedAssignment.callsign} — <DeveloperRedBlinkName name={pinnedAssignment.name} />
             </strong>
           ) : (
             <strong className="member-projects__portal-timer-target">this project (no pinned unit)</strong>
@@ -598,7 +599,9 @@ function AssignmentHead({
       <div className="member-projects__assignment-head">
         <div>
           <p className="member-projects__callsign">{assignment.callsign}</p>
-          <p className="member-projects__unit-name">{assignment.name}</p>
+          <p className="member-projects__unit-name">
+            <DeveloperRedBlinkName name={assignment.name} />
+          </p>
         </div>
         <div className="member-projects__head-metrics member-projects__head-metrics--browser">
           <div className="member-projects__forks" aria-label="Browser launches for this assignment">
@@ -662,12 +665,12 @@ function SavedRecord({ assignment, onEdit, onRemove }: SavedRecordProps) {
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">Fleet unit</span>
           <p className="member-projects__saved-value">
-            {assignment.callsign} — {assignment.name}
+            {assignment.callsign} — <DeveloperRedBlinkName name={assignment.name} />
           </p>
         </div>
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">Prompt call sign</span>
-          <p className="member-projects__saved-value">{assignment.copilotName}</p>
+          <p className="member-projects__saved-value">{highlightDeveloperCoPilotName(assignment.copilotName)}</p>
         </div>
         <div className="member-projects__saved-field">
           <span className="member-projects__field-label">What you are searching</span>
@@ -711,7 +714,7 @@ function EditForm({ assignment, draftSearch, onDraftChange, onSave, onRemove }: 
       <div className="member-projects__field">
         <span className="member-projects__field-label">Co-Pilot name</span>
         <p className="member-projects__copilot-preview" aria-readonly="true">
-          {assignment.copilotName}
+          {highlightDeveloperCoPilotName(assignment.copilotName)}
         </p>
       </div>
 

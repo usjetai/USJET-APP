@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import {
   MEMBER_YOUR_AI_DATA_EMPTY,
@@ -159,7 +160,9 @@ export default function MemberPortalDataBoard({ customerId, session }: MemberPor
                       <td>
                         <span className="member-data-board__rank">{String(index + 1).padStart(2, "0")}</span>
                         <span className="member-data-board__unit-callsign">{row.callsign}</span>
-                        <span className="member-data-board__unit-name">{row.name}</span>
+                        <span className="member-data-board__unit-name">
+                          <DeveloperRedBlinkName name={row.name} />
+                        </span>
                       </td>
                       <td className="member-data-board__td-num">{row.browserLaunches}</td>
                       <td className="member-data-board__td-num">

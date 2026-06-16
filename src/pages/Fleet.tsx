@@ -64,7 +64,7 @@ const Fleet = () => {
       <FleetAuthChrome />
 
       <div
-        className="fleet-runway-grid grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
+        className="fleet-runway-grid grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6"
         style={{ gridTemplateRows: `repeat(${HANGAR_ROWS}, minmax(0, auto))` }}
         role="region"
         aria-label="USJET fleet runway: partner bays with sovereign handoff"

@@ -72,6 +72,8 @@ export default function FleetCard({
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
   const productPagePath = getFleetProductPagePath(callsign);
   const aircraftSlug = aircraftOfficialName ? slugifyAircraftOfficialName(aircraftOfficialName) : "";
+  const showProductFooter = surface === "fleet" || !isAvailableBay;
+  const isRunway = surface === "fleet";
   const showMerchFreeShipping = surface === "fleet" && hasFleetMerchandise(aircraftSlug);
   const terminalFeed = useMemo(
     () =>
@@ -198,20 +200,20 @@ export default function FleetCard({
           ) : (
             <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-emerald-300/75">Hired developer</p>
           )}
-          {typeof slot === "number" && bayAccent ? (
+          {typeof slot === "number" && bayAccent && !isRunway ? (
             <p
               className={`fleet-card__bay-label mt-1 text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}
             >
               <span className="fleet-card__personality">{bayAccent.personality}</span>
             </p>
           ) : null}
-          {!isAvailableBay ? (
+          {!isAvailableBay && !isRunway ? (
             <p className="mt-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">
               <HeartPulse size={12} aria-hidden className={developerRedBlinkHeartClass(name) || undefined} />
               <DeveloperRedBlinkName name={name} fleetSlot={slot} />
             </p>
           ) : null}
-          {isAvailableBay ? (
+          {isAvailableBay && !isRunway ? (
             <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.2em] text-amber-200/65">Open position</p>
           ) : null}
           {aircraftOfficialName ? (
@@ -220,15 +222,17 @@ export default function FleetCard({
             </p>
           ) : null}
           {capabilities && isAvailableBay ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
-          {!isAvailableBay ? (
-            <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
-          ) : (
-            <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/35">Recruiting clearance</p>
-          )}
+          {!isRunway ? (
+            !isAvailableBay ? (
+              <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
+            ) : (
+              <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/35">Recruiting clearance</p>
+            )
+          ) : null}
         </div>
       </div>
       </FleetLaunchLink>
-      {!isAvailableBay ? (
+      {showProductFooter ? (
         <div className="fleet-card__footer">
           {showMerchFreeShipping ? (
             <p className="fleet-card__free-shipping" aria-label="Free shipping">
@@ -243,7 +247,7 @@ export default function FleetCard({
           >
             Product page →
           </Link>
-          {jetFighterPagePath ? (
+          {jetFighterPagePath && !isRunway ? (
             <Link
               to={jetFighterPagePath}
               className="fleet-card__jet-fighter-link"

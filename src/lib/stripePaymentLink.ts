@@ -28,6 +28,15 @@ export function resolveSr71BlackbirdProductPaymentLink(): string {
   return isUsableStripePaymentLink(url) ? url : SR71_BLACKBIRD_PRODUCT_DIRECT_URL;
 }
 
+/** USJET.AI SR-71 Tee — hard-wired Stripe Payment Link for the product lineup. */
+export const SR71_BLACKBIRD_TEE_DIRECT_URL = "https://buy.stripe.com/aFa28r7qe0Bt38dbG7dwc0u";
+
+/** USJET.AI SR-71 Tee — env override when set, else SR71_BLACKBIRD_TEE_DIRECT_URL. */
+export function resolveSr71BlackbirdTeePaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_SR71_BLACKBIRD_TEE_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : SR71_BLACKBIRD_TEE_DIRECT_URL;
+}
+
 /** F-35 Lightning II plastic model kit — hard-wired Stripe Payment Link for the product page. */
 export const F35_LIGHTNING_II_PRODUCT_DIRECT_URL = "https://buy.stripe.com/dRm14n9ymbg738ddOfdwc0s";
 

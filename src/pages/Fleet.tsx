@@ -51,6 +51,9 @@ const Fleet = () => (
           <p className="mt-4 text-sm font-medium uppercase tracking-[0.28em] text-cyan-200/45">
             {FLEET_HIRED_COUNT} hired · {FLEET_AVAILABLE_COUNT} available · {FLEET_UNIT_COUNT} bays · sovereign handoff
           </p>
+          <p className="fleet-runway-free-shipping mt-5 rounded-full border border-amber-300/35 bg-amber-500/[0.08] px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.28em] text-amber-100/95 sm:text-[10px]">
+            Free shipping on all merchandise
+          </p>
         </div>
       </header>
 

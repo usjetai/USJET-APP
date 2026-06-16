@@ -1,5 +1,6 @@
 import type { FleetAircraftType } from "../types/fleet";
 import { getFleetAircraftLogoPath } from "./fleetAircraftLogos";
+import { resolveSr71BlackbirdTeePaymentLink } from "./stripePaymentLink";
 
 export type FleetProductMediaAsset = {
   src: string;
@@ -16,6 +17,8 @@ export type FleetProductLineupItem = {
   description: string;
   photo: FleetProductMediaAsset;
   price?: string;
+  /** When set, lineup Buy button uses this Stripe Payment Link (Direct Landing Protocol). */
+  resolveStripePaymentLink?: () => string;
 };
 
 /**
@@ -77,25 +80,94 @@ export function resolveFleetProductPhoto(
   };
 }
 
+type FleetTeeCatalogEntry = {
+  slug: string;
+  /** Short aircraft label for tee title (e.g. "F-35 Lightning II"). */
+  aircraftLabel: string;
+  resolveStripePaymentLink?: () => string;
+};
+
+/** USJET.AI lineup tee on every fleet product page — one per aircraft slug. */
+const FLEET_TEE_CATALOG: FleetTeeCatalogEntry[] = [
+  { slug: "sr-71-blackbird", aircraftLabel: "SR-71", resolveStripePaymentLink: resolveSr71BlackbirdTeePaymentLink },
+  { slug: "f-35-lightning-ii", aircraftLabel: "F-35 Lightning II" },
+  { slug: "b-21-raider", aircraftLabel: "B-21 Raider" },
+  { slug: "j-36", aircraftLabel: "J-36" },
+  { slug: "ngad-platform", aircraftLabel: "NGAD Platform" },
+  { slug: "yf-23-black-widow-ii", aircraftLabel: "YF-23 Black Widow II" },
+  { slug: "x-47b", aircraftLabel: "X-47B" },
+  { slug: "x-37b", aircraftLabel: "X-37B" },
+  { slug: "x-51-waverider", aircraftLabel: "X-51 Waverider" },
+  { slug: "pca", aircraftLabel: "PCA" },
+  { slug: "b-2-spirit", aircraftLabel: "B-2 Spirit" },
+  { slug: "b-1-lancer", aircraftLabel: "B-1 Lancer" },
+  { slug: "a-12-avenger-ii", aircraftLabel: "A-12 Avenger II" },
+  { slug: "f-22-raptor", aircraftLabel: "F-22 Raptor" },
+  { slug: "fb-22", aircraftLabel: "FB-22" },
+  { slug: "f-15ex-eagle-ii", aircraftLabel: "F-15EX Eagle II" },
+  { slug: "f-16v-viper", aircraftLabel: "F-16V Viper" },
+  { slug: "f-a-18-block-iii", aircraftLabel: "F/A-18 Block III" },
+  { slug: "a-10-warthog", aircraftLabel: "A-10 Warthog" },
+  { slug: "f-117-nighthawk", aircraftLabel: "F-117 Nighthawk" },
+  { slug: "mq-25-stingray", aircraftLabel: "MQ-25 Stingray" },
+  { slug: "mq-28-ghost-bat", aircraftLabel: "MQ-28 Ghost Bat" },
+  { slug: "xq-58-valkyrie", aircraftLabel: "XQ-58 Valkyrie" },
+  { slug: "rq-180", aircraftLabel: "RQ-180" },
+  { slug: "rq-4-global-hawk", aircraftLabel: "RQ-4 Global Hawk" },
+  { slug: "f-14-tomcat", aircraftLabel: "F-14 Tomcat" },
+  { slug: "f-4-phantom-ii", aircraftLabel: "F-4 Phantom II" },
+  { slug: "f-104-starfighter", aircraftLabel: "F-104 Starfighter" },
+  { slug: "f-86-sabre", aircraftLabel: "F-86 Sabre" },
+  { slug: "x-59-quesst", aircraftLabel: "X-59 QueSST" },
+];
+
+const FLEET_TEE_BY_SLUG = Object.fromEntries(FLEET_TEE_CATALOG.map((entry) => [entry.slug, entry]));
+
+function buildFleetTeeLineupItem(entry: FleetTeeCatalogEntry): FleetProductLineupItem {
+  return {
+    id: `${entry.slug}-tee`,
+    title: `USJET.AI ${entry.aircraftLabel} Tee`,
+    kind: "Apparel",
+    description: `White short-sleeve crew neck with ${entry.aircraftLabel} graphic and USJET.AI chest branding. Sovereign fleet merch for the hangar and the runway.`,
+    photo: {
+      src: `/fleet/${entry.slug}-tee-product.webp`,
+      alt: `White USJET.AI t-shirt with ${entry.aircraftLabel} graphic on chest.`,
+      isDedicatedProductPhoto: true,
+    },
+    price: "$25",
+    resolveStripePaymentLink: entry.resolveStripePaymentLink,
+  };
+}
+
+/** Extra lineup items beyond the standard fleet tee (e.g. SR-71 trucker cap). */
 const ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG: Record<string, FleetProductLineupItem[]> = {
   "sr-71-blackbird": [
     {
-      id: "sr-71-tee",
-      title: "USJET.AI SR-71 Tee",
-      kind: "Apparel",
+      id: "sr-71-trucker-cap",
+      title: "USJET.AI SR-71 Trucker Cap",
+      kind: "Headwear",
       description:
-        "White short-sleeve crew neck with SR-71 Blackbird silhouette and USJET.AI chest branding. Sovereign fleet merch for the hangar and the runway.",
+        "This trucker cap brings a crisp, vintage-roadside energy to everyday wear. The foam front displays a bold, slightly distressed logo and silhouette in high-contrast tones, while the nylon mesh back keeps you cool on long drives, outdoor meetups, or weekend projects. Lightweight and structured, it shapes up clean and comfortable",
       photo: {
-        src: "/fleet/sr-71-blackbird-tee-product.webp",
-        alt: "White USJET.AI t-shirt with SR-71 Blackbird silhouette on chest.",
+        src: "/fleet/sr-71-blackbird-cap-product.webp",
+        alt: "White and black USJET.AI trucker cap with SR-71 Blackbird silhouette on the front panel.",
         isDedicatedProductPhoto: true,
       },
+      price: "$25",
     },
   ],
 };
 
 export function resolveFleetProductLineup(aircraftSlug: string): FleetProductLineupItem[] {
-  return ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG[aircraftSlug] ?? [];
+  const teeEntry = FLEET_TEE_BY_SLUG[aircraftSlug];
+  const tee = teeEntry ? [buildFleetTeeLineupItem(teeEntry)] : [];
+  const extras = ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG[aircraftSlug] ?? [];
+  return [...tee, ...extras];
+}
+
+/** Aircraft slugs with live merchandise on the product runway (model kits, apparel, etc.). */
+export function hasFleetMerchandise(aircraftSlug: string): boolean {
+  return aircraftSlug in PRODUCT_PHOTO_BY_AIRCRAFT_SLUG;
 }
 
 export function resolveFleetProductMedia(

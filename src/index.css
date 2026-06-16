@@ -21542,6 +21542,14 @@ html.direct-fuel-page-root #usjet-app-shell {
   color: rgba(226, 232, 240, 0.78);
 }
 
+.product-page__price {
+  margin: 1rem 0 0;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  font-weight: 900;
+  color: rgba(251, 191, 36, 0.95);
+  text-shadow: 0 0 24px rgba(var(--product-accent-rgb), 0.35);
+}
+
 .product-page__actions {
   display: flex;
   flex-wrap: wrap;
@@ -21695,6 +21703,69 @@ html.direct-fuel-page-root #usjet-app-shell {
 .product-page__spec-value {
   font-size: 0.82rem;
   font-weight: 600;
+}
+
+.product-page__lineup {
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+.product-page__lineup-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.1rem, 3.5vw, 1.55rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f8fafc;
+}
+
+.product-page__lineup-grid {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+}
+
+.product-page__lineup-item {
+  width: 100%;
+  border-color: rgba(var(--product-accent-rgb), 0.24);
+}
+
+.product-page__lineup-grid-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(1.1rem, 3vw, 1.75rem);
+}
+
+.product-page__lineup-copy {
+  width: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.product-page__lineup-item-title {
+  margin: 0;
+  font-size: clamp(1.15rem, 3.5vw, 1.65rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+}
+
+@media (min-width: 900px) {
+  .product-page__lineup-grid-inner {
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .product-page__lineup-copy,
+  .product-page__lineup-grid-inner .product-page__media {
+    flex: 1 1 0;
+    max-width: 28rem;
+  }
 }
 
 /* ─── 100K Sovereign Vault (Diamond anchor) ─── */

@@ -8,6 +8,16 @@ export type FleetProductMediaAsset = {
   isDedicatedProductPhoto?: boolean;
 };
 
+/** Additional merchandise on an aircraft product page (beyond the primary hero product). */
+export type FleetProductLineupItem = {
+  id: string;
+  title: string;
+  kind: string;
+  description: string;
+  photo: FleetProductMediaAsset;
+  price?: string;
+};
+
 /**
  * Optional product-logo overrides keyed by aircraft slug (`/product/:aircraftSlug`).
  * Defaults to the roster aircraft emblem in `/assets/fleet-logos/`.
@@ -23,7 +33,17 @@ const PRODUCT_LOGO_BY_AIRCRAFT_SLUG: Record<string, string> = {
 const PRODUCT_PHOTO_BY_AIRCRAFT_SLUG: Record<string, FleetProductMediaAsset> = {
   "sr-71-blackbird": {
     src: "/fleet/sr-71-blackbird-product.webp",
-    alt: "SR-71 Blackbird alloy pull-back model — white and black variants on a blue sky backdrop.",
+    alt: "Lockheed SR-71 Blackbird plastic model kit on display stand with full-color markings.",
+    isDedicatedProductPhoto: true,
+  },
+  "f-35-lightning-ii": {
+    src: "/fleet/f-35-lightning-ii-product.webp",
+    alt: "F-35 Lightning II plastic model kit on display stand with full-color Navy markings.",
+    isDedicatedProductPhoto: true,
+  },
+  "b-21-raider": {
+    src: "/fleet/b-21-raider-product.webp",
+    alt: "B-21 Raider 3D print model on display stand with B-21 Raider nameplate.",
     isDedicatedProductPhoto: true,
   },
 };
@@ -55,6 +75,27 @@ export function resolveFleetProductPhoto(
     alt: `${aircraftOfficialName} product photo — merchandise runway coming soon`,
     isDedicatedProductPhoto: false,
   };
+}
+
+const ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG: Record<string, FleetProductLineupItem[]> = {
+  "sr-71-blackbird": [
+    {
+      id: "sr-71-tee",
+      title: "USJET.AI SR-71 Tee",
+      kind: "Apparel",
+      description:
+        "White short-sleeve crew neck with SR-71 Blackbird silhouette and USJET.AI chest branding. Sovereign fleet merch for the hangar and the runway.",
+      photo: {
+        src: "/fleet/sr-71-blackbird-tee-product.webp",
+        alt: "White USJET.AI t-shirt with SR-71 Blackbird silhouette on chest.",
+        isDedicatedProductPhoto: true,
+      },
+    },
+  ],
+};
+
+export function resolveFleetProductLineup(aircraftSlug: string): FleetProductLineupItem[] {
+  return ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG[aircraftSlug] ?? [];
 }
 
 export function resolveFleetProductMedia(

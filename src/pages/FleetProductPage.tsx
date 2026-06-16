@@ -8,24 +8,67 @@ import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 import { FleetLaunchLink } from "../lib/fleetLaunchLink";
 import { logFleetUsageIfMember } from "../lib/fleetUsageHistory";
-import { resolveSr71BlackbirdProductPaymentLink } from "../lib/stripePaymentLink";
+import { resolveFleetProductLineup } from "../lib/fleetProductMedia";
+import {
+  resolveB21RaiderProductPaymentLink,
+  resolveF35LightningIiProductPaymentLink,
+  resolveSr71BlackbirdProductPaymentLink,
+} from "../lib/stripePaymentLink";
+
+/**
+ * Optional product lede copy, keyed by aircraft slug.
+ * Falls back to the directory seoDescription when absent.
+ */
+const PRODUCT_LEDE_BY_AIRCRAFT_SLUG: Record<string, string> = {
+  "f-35-lightning-ii":
+    "This realistic plastic model kit of the F-35 Lightning II has a 7\" wingspan, measures 8.5\" long, features fine detail including full-color markings and retractable landing gear. This model kit includes everything needed for assembly and can be easily assembled in about 10 minutes.",
+  "sr-71-blackbird":
+    "This realistic plastic model kit of the SR-71 Blackbird has a 5.5\" wingspan, measures 10.5\" in length, features full-color markings and retractable landing gear. Model kit includes everything needed for assembly and can be easily assembled in about 10 minutes.",
+  "b-21-raider":
+    "Bring next-generation aerospace engineering to your workspace with this B-21 Raider stealth bomber 3D print model. Inspired by the U.S. Air Force's most advanced long-range strike aircraft, this model captures the Raider's sleek, flying-wing design and low-observable geometry with precision and realism. Includes a display stand showcasing \"B-21 Raider\". Dimensions: roughly L 14\" × W 6\" × H 5\". A great piece for aerospace enthusiasts — this model is very accurate to the real aircraft.",
+};
+
+/**
+ * Optional model kind label for the specs panel heading (e.g. "Diecast model").
+ */
+const PRODUCT_MODEL_KIND_BY_AIRCRAFT_SLUG: Record<string, string> = {
+  "sr-71-blackbird": "Plastic model kit",
+  "f-35-lightning-ii": "Plastic model kit",
+  "b-21-raider": "3D print model",
+};
 
 /**
  * Optional merchandise / model specifications, keyed by aircraft slug.
  * Rendered as a spec panel on the product page when present.
  */
 const PRODUCT_SPECS_BY_AIRCRAFT_SLUG: Record<string, { label: string; value: string }[]> = {
-  "sr-71-blackbird": [
-    { label: "Brand name", value: "MINI AUTO" },
-    { label: "Choice", value: "Yes" },
-    { label: "Features", value: "Diecast" },
-    { label: "High-concerned chemical", value: "None" },
-    { label: "Is electric", value: "Button battery" },
-    { label: "Material", value: "Metal" },
-    { label: "Origin", value: "Mainland China" },
-    { label: "Recommended age", value: "14+ yrs" },
-    { label: "Type", value: "Fighter" },
+  "f-35-lightning-ii": [
+    { label: "Detail", value: "Highly detailed plastic model (assembly required)" },
+    { label: "Scale", value: "1:72" },
+    { label: "Includes", value: "Display stand" },
   ],
+  "sr-71-blackbird": [
+    { label: "Detail", value: "Highly detailed plastic model (assembly required)" },
+    { label: "Scale", value: "1:72" },
+    { label: "Includes", value: "Display stand" },
+  ],
+  "b-21-raider": [
+    { label: "Maker", value: "21coinDesign" },
+    { label: "Materials", value: "3D print" },
+    { label: "Includes", value: "Display stand (\"B-21 Raider\")" },
+    { label: "Dimensions", value: "~L 14\" × W 6\" × H 5\"" },
+    { label: "Detail", value: "Highly accurate to the real aircraft" },
+  ],
+};
+
+/**
+ * Optional product price display, keyed by aircraft slug.
+ * Shown in the hero above the action buttons when present.
+ */
+const PRODUCT_PRICE_BY_AIRCRAFT_SLUG: Record<string, string> = {
+  "b-21-raider": "$90",
+  "f-35-lightning-ii": "$40",
+  "sr-71-blackbird": "$45",
 };
 
 /**
@@ -33,6 +76,8 @@ const PRODUCT_SPECS_BY_AIRCRAFT_SLUG: Record<string, { label: string; value: str
  * When present, a "Buy" button appears in the hero alongside the launch action.
  */
 const PRODUCT_STRIPE_LINK_BY_AIRCRAFT_SLUG: Record<string, () => string> = {
+  "b-21-raider": resolveB21RaiderProductPaymentLink,
+  "f-35-lightning-ii": resolveF35LightningIiProductPaymentLink,
   "sr-71-blackbird": resolveSr71BlackbirdProductPaymentLink,
 };
 
@@ -86,8 +131,12 @@ export default function FleetProductPage() {
         label: entry.name,
         returnTo: `/product/${entry.aircraftSlug}`,
       });
+  const productLede = PRODUCT_LEDE_BY_AIRCRAFT_SLUG[entry.aircraftSlug] ?? entry.seoDescription;
   const productSpecs = PRODUCT_SPECS_BY_AIRCRAFT_SLUG[entry.aircraftSlug];
+  const productModelKind = PRODUCT_MODEL_KIND_BY_AIRCRAFT_SLUG[entry.aircraftSlug] ?? "Model";
+  const productPrice = PRODUCT_PRICE_BY_AIRCRAFT_SLUG[entry.aircraftSlug];
   const productStripeLink = PRODUCT_STRIPE_LINK_BY_AIRCRAFT_SLUG[entry.aircraftSlug]?.();
+  const productLineup = resolveFleetProductLineup(entry.aircraftSlug);
 
   return (
     <div
@@ -110,7 +159,13 @@ export default function FleetProductPage() {
               <DeveloperRedBlinkName name={entry.name} />
             </p>
             <p className="product-page__aircraft-type">{entry.aircraftOfficialName}</p>
-            <p className="product-page__lede">{entry.seoDescription}</p>
+            <p className="product-page__lede">{productLede}</p>
+
+            {productPrice ? (
+              <p className="product-page__price" aria-label={`Price ${productPrice}`}>
+                {productPrice}
+              </p>
+            ) : null}
 
             <div className="product-page__actions">
               {!available ? (
@@ -196,7 +251,7 @@ export default function FleetProductPage() {
         {productSpecs ? (
           <GlassEffectContainer className="product-page__panel product-page__panel--specs glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
             <p className="product-page__label">Model specifications</p>
-            <h2>{entry.aircraftOfficialName} · Diecast model</h2>
+            <h2>{entry.aircraftOfficialName} · {productModelKind}</h2>
             <dl className="product-page__spec-list">
               {productSpecs.map((spec) => (
                 <div key={spec.label} className="product-page__spec">
@@ -208,6 +263,56 @@ export default function FleetProductPage() {
           </GlassEffectContainer>
         ) : null}
       </section>
+
+      {productLineup.length > 0 ? (
+        <section className="product-page__lineup" aria-label={`${entry.callsign} product lineup`}>
+          <p className="product-page__label">Product lineup</p>
+          <h2 className="product-page__lineup-title">More from {entry.aircraftOfficialName}</h2>
+          <div className="product-page__lineup-grid">
+            {productLineup.map((item) => (
+              <GlassEffectContainer
+                key={item.id}
+                className="product-page__lineup-item glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+              >
+                <div className="product-page__lineup-grid-inner">
+                  <div className="product-page__lineup-copy">
+                    <p className="product-page__label">{item.kind}</p>
+                    <h3 className="product-page__lineup-item-title">{item.title}</h3>
+                    <p className="product-page__lede">{item.description}</p>
+                    {item.price ? (
+                      <p className="product-page__price" aria-label={`Price ${item.price}`}>
+                        {item.price}
+                      </p>
+                    ) : null}
+                    <div className="product-page__actions">
+                      <button
+                        type="button"
+                        disabled
+                        aria-disabled="true"
+                        title="Buy link coming soon"
+                        className="product-page__buy product-page__buy--coming-soon btn-glass opacity-60 cursor-not-allowed"
+                      >
+                        Buy {item.title} · Coming soon
+                      </button>
+                    </div>
+                  </div>
+                  <div className="product-page__media" aria-label={`${item.title} product media`}>
+                    <div className="product-page__photo-wrap">
+                      <img
+                        src={item.photo.src}
+                        alt={item.photo.alt}
+                        className="product-page__product-image"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </GlassEffectContainer>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

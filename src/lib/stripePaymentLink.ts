@@ -28,6 +28,24 @@ export function resolveSr71BlackbirdProductPaymentLink(): string {
   return isUsableStripePaymentLink(url) ? url : SR71_BLACKBIRD_PRODUCT_DIRECT_URL;
 }
 
+/** F-35 Lightning II plastic model kit — hard-wired Stripe Payment Link for the product page. */
+export const F35_LIGHTNING_II_PRODUCT_DIRECT_URL = "https://buy.stripe.com/dRm14n9ymbg738ddOfdwc0s";
+
+/** F-35 Lightning II plastic model kit — env override when set, else F35_LIGHTNING_II_PRODUCT_DIRECT_URL. */
+export function resolveF35LightningIiProductPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_F35_LIGHTNING_II_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : F35_LIGHTNING_II_PRODUCT_DIRECT_URL;
+}
+
+/** B-21 Raider 3D print model — hard-wired Stripe Payment Link for the product page. */
+export const B21_RAIDER_PRODUCT_DIRECT_URL = "https://buy.stripe.com/fZu6oH4e283VaAF8tVdwc0t";
+
+/** B-21 Raider 3D print model — env override when set, else B21_RAIDER_PRODUCT_DIRECT_URL. */
+export function resolveB21RaiderProductPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_B21_RAIDER_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : B21_RAIDER_PRODUCT_DIRECT_URL;
+}
+
 /** USJET Code Kit ($499) — env override when set, else CODE_KIT_DIRECT_URL when configured. */
 export function resolveCodeKitPaymentLink(): string {
   const url = import.meta.env.VITE_STRIPE_CODE_KIT_PAYMENT_LINK?.trim();

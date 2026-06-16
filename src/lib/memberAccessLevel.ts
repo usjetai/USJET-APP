@@ -9,6 +9,7 @@ export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 /** Guest-only surface — Fleet, Founder, Stripe login, fleet cockpit handoff. */
 export const GUEST_PUBLIC_ROUTES = [
   "/",
+  "/hired-hud",
   "/founder",
   "/member/login",
   "/login",
@@ -44,6 +45,7 @@ export const GUEST_PUBLIC_ROUTES = [
  */
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
+  "/hired-hud": 0,
   "/founder": 0,
   "/sos": 0,
   "/ai-101": 0,

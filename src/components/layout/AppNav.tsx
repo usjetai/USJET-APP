@@ -29,6 +29,7 @@ const BLUE_IVY_TIKTOK_COCKPIT = wrapExternalInCockpit(
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
+  { to: "/hired-hud", label: "Hired HUD" },
   { to: "/hangar", label: "Hangar" },
   { to: "/intel", label: "Intel" },
   { to: "/founder", label: "Founder" },

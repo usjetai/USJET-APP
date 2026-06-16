@@ -54,6 +54,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
 const Gamers = lazy(() => import("./pages/Gamers"));
 const Gaming = lazy(() => import("./pages/Gaming"));
+const HiredHud = lazy(() => import("./pages/HiredHud"));
 
 function RouteFallback() {
   return (
@@ -120,6 +121,7 @@ function AnimatedRoutes() {
             <Route path="/fleet-directory" element={<FleetDirectory />} />
             <Route path="/fleet-directory/:callsign" element={<FleetCallsignPage />} />
             <Route path="/product/:callsign" element={<FleetProductPage />} />
+            <Route path="/hired-hud" element={<HiredHud />} />
             <Route path="/100k" element={<SovereignBlueprint100k />} />
             <Route
               path="/origin"

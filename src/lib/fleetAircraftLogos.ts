@@ -34,6 +34,21 @@ export const FLEET_AIRCRAFT_LOGO_PATHS: Record<FleetAircraftType, string> = {
   x59: "/assets/fleet-logos/x59_quesst.png",
 };
 
+/** Slot-specific emblem overrides (e.g. SR-71 bay uses dedicated Blackbird art). */
+const FLEET_SLOT_LOGO_OVERRIDES: Partial<Record<number, string>> = {
+  0: "/fleet/sr71-blackbird-logo.png",
+};
+
 export function getFleetAircraftLogoPath(aircraftType: FleetAircraftType): string {
   return FLEET_AIRCRAFT_LOGO_PATHS[aircraftType];
+}
+
+export function getFleetAircraftLogoPathForSlot(
+  slot: number | undefined,
+  aircraftType: FleetAircraftType,
+): string {
+  if (typeof slot === "number" && FLEET_SLOT_LOGO_OVERRIDES[slot]) {
+    return FLEET_SLOT_LOGO_OVERRIDES[slot]!;
+  }
+  return getFleetAircraftLogoPath(aircraftType);
 }

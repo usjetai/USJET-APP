@@ -1,12 +1,11 @@
 import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccents";
-import { getFleetCapabilities } from "../../data/fleetCapabilities";
+import { getFleetCapabilities, getFleetPartnerLabel } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
 import { useMemo, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { getFleetProductPagePath, slugifyAircraftOfficialName } from "../../data/fleetDirectorySeo";
-import { hasFleetMerchandise } from "../../lib/fleetProductMedia";
+import { getFleetProductPagePath } from "../../data/fleetDirectorySeo";
 import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
@@ -71,10 +70,8 @@ export default function FleetCard({
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
   const productPagePath = getFleetProductPagePath(callsign);
-  const aircraftSlug = aircraftOfficialName ? slugifyAircraftOfficialName(aircraftOfficialName) : "";
   const showProductFooter = surface === "fleet" || !isAvailableBay;
   const isRunway = surface === "fleet";
-  const showMerchFreeShipping = surface === "fleet" && hasFleetMerchandise(aircraftSlug);
   const terminalFeed = useMemo(
     () =>
       buildFleetTileTerminalFeed({
@@ -180,6 +177,7 @@ export default function FleetCard({
         <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4">
           <AircraftIcon
             aircraftType={aircraftType}
+            slot={slot}
             accentId={accentId}
             className="fleet-card__aircraft h-32 w-32"
           />
@@ -189,6 +187,11 @@ export default function FleetCard({
           <h3 className="text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
             {name}
           </h3>
+          {isRunway && typeof slot === "number" ? (
+            <p className="fleet-card__partner-label mt-0.5 text-[9px] font-bold uppercase tracking-[0.16em] text-cyan-200/90">
+              {getFleetPartnerLabel(slot)}
+            </p>
+          ) : null}
           {isAvailableBay ? (
             <p className="developer-available-green-blink mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">
               Available position
@@ -234,11 +237,6 @@ export default function FleetCard({
       </FleetLaunchLink>
       {showProductFooter ? (
         <div className="fleet-card__footer">
-          {showMerchFreeShipping ? (
-            <p className="fleet-card__free-shipping" aria-label="Free shipping">
-              Free shipping
-            </p>
-          ) : null}
           <Link
             to={productPagePath}
             className="fleet-card__product-cta btn-glass-prominent glass-effect-interactive"

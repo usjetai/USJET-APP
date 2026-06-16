@@ -7,7 +7,8 @@ import { fleetManifest } from "../../data/fleetManifest";
 import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
 import { getFleetBayAccent } from "../../data/fleetBayAccents";
-import { getFleetCapabilities } from "../../data/fleetCapabilities";
+import { getFleetCapabilities, getFleetPartnerLabel } from "../../data/fleetCapabilities";
+import { getFleetDisplayAircraftType } from "../../data/fleetRoster";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
 
@@ -24,6 +25,7 @@ export default function MemberFleetControlBoard() {
 
       <ul className="member-control-board__grid">
         {controlBoardUnits.map((unit) => {
+          const displayAircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
           const launchUrl = integratedLaunchUrl(unit.domain, resolveFleetUnitHref(unit), unit.slot, {
             returnTo: "/member",
             label: unit.name,
@@ -54,15 +56,17 @@ export default function MemberFleetControlBoard() {
               >
                 <span className="member-control-board__icon-wrap">
                   <AircraftIcon
-                    aircraftType={unit.aircraftType}
+                    aircraftType={displayAircraftType}
+                    slot={unit.slot}
                     accentId={accentId}
                     className="member-control-board__icon"
                   />
                 </span>
-                <span className="member-control-board__callsign">{unit.name}</span>
+                <span className="member-control-board__callsign">{unit.callsign}</span>
                 <span className="member-control-board__name">
                   <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
                 </span>
+                <span className="member-control-board__partner">{getFleetPartnerLabel(unit.slot)}</span>
               </a>
             </li>
           );

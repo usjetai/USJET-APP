@@ -20,9 +20,9 @@ const SHEET_BG = { r: 207, g: 196, b: 166 };
 
 /** Crown branding on the white foam front panel (1024×1024 letterboxed cap base). */
 const BRAND_TEXT_Y = 252;
-const LOGO_TOP = 300;
-const LOGO_MAX_WIDTH = 200;
-const LOGO_MAX_HEIGHT = 130;
+const LOGO_TOP = 288;
+const LOGO_MAX_WIDTH = 290;
+const LOGO_MAX_HEIGHT = 185;
 
 /** Slug, display name (for logs), logo file relative to public/ */
 const FLEET_CAP_AIRCRAFT = [
@@ -116,7 +116,7 @@ async function generateCap({ slug, name, logo }) {
 
   const logoPipeline = await loadLogoPipeline(logo);
   const logoMeta = await logoPipeline.metadata();
-  const scale = Math.min(LOGO_MAX_WIDTH / logoMeta.width, LOGO_MAX_HEIGHT / logoMeta.height, 1);
+  const scale = Math.min(LOGO_MAX_WIDTH / logoMeta.width, LOGO_MAX_HEIGHT / logoMeta.height);
   const logoWidth = Math.round(logoMeta.width * scale);
   const logoHeight = Math.round(logoMeta.height * scale);
 

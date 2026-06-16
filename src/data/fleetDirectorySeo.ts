@@ -1,5 +1,7 @@
 import { fleetManifest } from "./fleetManifest";
 import {
+  getFleetDisplayAircraftName,
+  getFleetDisplayAircraftType,
   getFleetRosterMeta,
   isFleetBayAvailable,
   isFleetBayHired,
@@ -128,13 +130,15 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
     const category = CATEGORY_BY_SLOT[unit.slot] ?? "AI for professional work";
     const roster = getFleetRosterMeta(unit.slot);
     const available = isFleetBayAvailable(unit.slot);
+    const displayAircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
+    const displayAircraftName = getFleetDisplayAircraftName(unit.slot, unit.aircraftType);
     const slug = slugifyFleetCallsign(unit.callsign);
     const aircraftSlug = available
       ? slug
-      : slugifyAircraftOfficialName(roster.aircraftOfficialName) || slug;
+      : slugifyAircraftOfficialName(displayAircraftName) || slug;
     const pagePath = getFleetJetFighterPagePath(unit.callsign);
     const productPagePath = `/product/${aircraftSlug}`;
-    const productMedia = resolveFleetProductMedia(aircraftSlug, roster.aircraftOfficialName, roster.aircraftType);
+    const productMedia = resolveFleetProductMedia(aircraftSlug, displayAircraftName, displayAircraftType);
     return {
       slot: unit.slot,
       unitId: unit.id,
@@ -149,28 +153,28 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
       href: unit.href,
       category,
       rosterStatus: roster.rosterStatus,
-      aircraftOfficialName: roster.aircraftOfficialName,
-      aircraftType: roster.aircraftType,
+      aircraftOfficialName: displayAircraftName,
+      aircraftType: displayAircraftType,
       productLogo: productMedia.logo,
       productPhoto: productMedia.productPhoto,
       seoTitle: available
         ? `${unit.callsign} · Available Position | USJET Jet Fighter`
-        : `${unit.callsign} · ${roster.aircraftOfficialName} | USJET Jet Fighter`,
+        : `${unit.callsign} · ${displayAircraftName} | USJET Jet Fighter`,
       seoDescription: buildDescription(
         unit.name,
         category,
         unit.callsign,
         unit.domain,
-        roster.aircraftOfficialName,
+        displayAircraftName,
         roster.rosterStatus,
       ),
       keywords: available
-        ? [unit.callsign, unit.name, category, "USJET jet fighter", "available position", "sovereign AI hangar"]
+        ? [unit.callsign, unit.name, category, displayAircraftName, "USJET jet fighter", "available position", "sovereign AI hangar"]
         : [
             unit.callsign,
             unit.name,
             category,
-            roster.aircraftOfficialName,
+            displayAircraftName,
             "USJET jet fighter",
             "hired developer",
             "sovereign AI hangar",

@@ -20,9 +20,9 @@ const SHEET_BG = { r: 207, g: 196, b: 166 };
 
 /** Chest branding placement on the 1024×1024 tee canvas (flat-lay base, black letterbox). */
 const BRAND_TEXT_Y = 340;
-const LOGO_TOP = 395;
-const LOGO_MAX_WIDTH = 280;
-const LOGO_MAX_HEIGHT = 190;
+const LOGO_TOP = 378;
+const LOGO_MAX_WIDTH = 400;
+const LOGO_MAX_HEIGHT = 270;
 
 /** Slug, display name (for logs), logo file relative to public/ */
 const FLEET_TEE_AIRCRAFT = [
@@ -116,7 +116,7 @@ async function generateTee({ slug, name, logo }) {
 
   const logoPipeline = await loadLogoPipeline(logo);
   const logoMeta = await logoPipeline.metadata();
-  const scale = Math.min(LOGO_MAX_WIDTH / logoMeta.width, LOGO_MAX_HEIGHT / logoMeta.height, 1);
+  const scale = Math.min(LOGO_MAX_WIDTH / logoMeta.width, LOGO_MAX_HEIGHT / logoMeta.height);
   const logoWidth = Math.round(logoMeta.width * scale);
   const logoHeight = Math.round(logoMeta.height * scale);
 

@@ -28,7 +28,17 @@ export default function TierRouteGate({ path, pageLabel: _pageLabel, children }:
   const customerServiceEntry =
     normalizeRoutePath(path) === "/origin" && isOriginCustomerServiceEntry(location.search);
 
-  if (loading || customerServiceEntry || canMemberAccessRoute(path, session)) {
+  if (loading) {
+    return (
+      <div className="tier-route-gate tier-route-gate--loading page-atmosphere page-nav-offset mx-auto max-w-6xl px-6 pb-28 pt-8 sm:px-8">
+        <p className="tier-route-gate__loading" role="status" aria-live="polite">
+          Checking clearance…
+        </p>
+      </div>
+    );
+  }
+
+  if (customerServiceEntry || canMemberAccessRoute(path, session)) {
     return <>{children}</>;
   }
 

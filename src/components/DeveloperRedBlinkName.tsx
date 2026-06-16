@@ -4,7 +4,7 @@ import {
   developerRedBlinkClass,
   isDeveloperRedBlinkName,
 } from "../lib/developerRedBlink";
-import { isFleetBayHired } from "../data/fleetRoster";
+import { isFleetBayCleared } from "../data/fleetRoster";
 
 type DeveloperRedBlinkNameProps = HTMLAttributes<HTMLSpanElement> & {
   name: string;
@@ -20,7 +20,7 @@ export function getVisibleDeveloperName(
   nonHiredLabel = NON_HIRED_DEVELOPER_LABEL,
 ): string {
   const canShowRealName =
-    typeof fleetSlot === "number" ? isFleetBayHired(fleetSlot) : isDeveloperRedBlinkName(name);
+    typeof fleetSlot === "number" ? isFleetBayCleared(fleetSlot) : isDeveloperRedBlinkName(name);
   return canShowRealName ? name : nonHiredLabel;
 }
 

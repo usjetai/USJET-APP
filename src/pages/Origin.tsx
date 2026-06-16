@@ -13,12 +13,10 @@ import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 import {
   isConnectGuideIntent,
   ORIGIN_CONNECT_ACK,
-  ORIGIN_CONNECT_PROMPT,
 } from "../lib/originConnectGuide";
 import {
   buildOpenRouterMessages,
-  completeChat,
-  OPENROUTER_API_KEY,
+  completeOriginChat,
 } from "../lib/openrouter";
 import {
   buildOriginMemberContext,
@@ -92,9 +90,6 @@ const ORIGIN_LOAD_GREET = ORIGIN_SPOKEN_LOAD_GREET;
 const UTTERANCE_SILENCE_MS = 700;
 /** Shorter dead-air when the recognizer marks a final segment */
 const UTTERANCE_FINAL_MS = 450;
-
-/** Spoken when Aura link is not live — no deployment jargon in TTS */
-const ORIGIN_OFFLINE_PROMPT = ORIGIN_CONNECT_PROMPT;
 
 const ORIGIN_AURA_LINK_LOST =
   "Origin online. Aura link is quiet right now — mic is still live. Try again in a moment, Commander.";
@@ -429,16 +424,6 @@ export default function Origin() {
         return;
       }
 
-      if (!OPENROUTER_API_KEY) {
-        const offlineReply = ORIGIN_OFFLINE_PROMPT;
-        setStatusLine("Origin online — standby briefing");
-        speakOriginReply(offlineReply, () => {
-          openBrowserConnectModal();
-          finishTranscriptCycle();
-        });
-        return;
-      }
-
       enterProcessing();
 
       const turns = [...chatTurnsRef.current, { role: "user" as const, content: text }];
@@ -483,8 +468,7 @@ export default function Origin() {
         : memberContext;
 
       try {
-        const reply = await completeChat(
-          OPENROUTER_API_KEY,
+        const reply = await completeOriginChat(
           buildOpenRouterMessages(turns, {
             entry: isCustomerServiceEntry ? "customer-service" : undefined,
             memberContext: augmentedMemberContext,
@@ -764,11 +748,12 @@ export default function Origin() {
   }, [enterListening, stopSpeaking]);
 
   const resumeAutoplayVoice = useCallback(() => {
+    setShowAutoplayBanner(false);
     setSiteMutedState(false);
     speakWelcomeGreet(() => {
-      enterIdle();
+      void enterListening();
     });
-  }, [enterIdle, setSiteMutedState, speakWelcomeGreet]);
+  }, [enterListening, setSiteMutedState, speakWelcomeGreet]);
 
   const startSpeak = useCallback(() => {
     disableMic();

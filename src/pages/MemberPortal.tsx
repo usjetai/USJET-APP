@@ -1,17 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { LogOut, Wrench } from "lucide-react";
 import MemberFleetControlBoard from "../components/member/MemberFleetControlBoard";
 import MemberPortalDataBoard from "../components/member/MemberPortalDataBoard";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import MemberProjectTracker from "../components/member/MemberProjectTracker";
+import MemberShippingAddressForm from "../components/member/MemberShippingAddressForm";
 import MemberVitalsPanel from "../components/member/MemberVitalsPanel";
 import { useMemberAuth } from "../context/MemberAuthContext";
 
 export default function MemberPortal() {
-  const { session, logout } = useMemberAuth();
+  const { session, loading, logout } = useMemberAuth();
+
+  if (loading) {
+    return (
+      <div className="member-portal member-portal--boot page-atmosphere page-nav-offset mx-auto max-w-6xl px-6 pb-28 sm:px-8">
+        <p className="member-portal__loading" role="status" aria-live="polite">
+          Verifying Member clearance…
+        </p>
+      </div>
+    );
+  }
 
   if (!session?.active) {
-    return null;
+    return <Navigate to="/member/login" replace state={{ blockedRoute: "/member" }} />;
   }
 
   return (
@@ -44,6 +55,8 @@ export default function MemberPortal() {
         </div>
 
         <MemberProjectTracker customerId={session.customerId} />
+
+        <MemberShippingAddressForm customerId={session.customerId} />
 
         <MemberFleetControlBoard />
 

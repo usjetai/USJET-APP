@@ -52,6 +52,48 @@ function openRouterReferer(): string {
   return "https://www.usjet.ai";
 }
 
+type OriginChatApiPayload = {
+  reply?: string;
+  error?: string;
+};
+
+/** Origin Aura — server proxy first, then client VITE key for local dev. */
+export async function completeOriginChat(messages: ApiChatMessage[]): Promise<string> {
+  try {
+    const response = await fetch("/api/origin-chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages }),
+    });
+
+    let payload: OriginChatApiPayload = {};
+    try {
+      payload = (await response.json()) as OriginChatApiPayload;
+    } catch {
+      /* non-JSON */
+    }
+
+    if (response.ok && typeof payload.reply === "string" && payload.reply.trim()) {
+      return payload.reply.trim();
+    }
+
+    if (response.status !== 503 && response.status !== 404) {
+      throw new Error(payload.error ?? `Origin chat failed (${response.status})`);
+    }
+  } catch (error) {
+    if (OPENROUTER_API_KEY) {
+      return completeChat(OPENROUTER_API_KEY, messages);
+    }
+    throw error instanceof Error ? error : new Error("Aura link unavailable");
+  }
+
+  if (OPENROUTER_API_KEY) {
+    return completeChat(OPENROUTER_API_KEY, messages);
+  }
+
+  throw new Error("Aura link not configured");
+}
+
 export async function completeChat(
   apiKey: string,
   messages: ApiChatMessage[]

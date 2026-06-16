@@ -33,7 +33,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     href: "https://claude.ai",
     status: "active",
     aura: "idle",
-    aircraftType: "f35",
+    aircraftType: "b21",
   },
   {
     id: "3",

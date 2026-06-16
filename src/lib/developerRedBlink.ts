@@ -1,5 +1,5 @@
 import { fleetManifest } from "../data/fleetManifest";
-import { isFleetBayHired } from "../data/fleetRoster";
+import { isFleetBayCleared } from "../data/fleetRoster";
 
 /** Manual display variants for inline highlighting where copy may differ from manifest names. */
 const DEVELOPER_RED_BLINK_ALIAS_MAP: Record<string, readonly string[]> = {
@@ -9,7 +9,7 @@ const DEVELOPER_RED_BLINK_ALIAS_MAP: Record<string, readonly string[]> = {
 
 /** Display variants for inline text highlighting — longest first to avoid partial matches. */
 const HIRED_DEVELOPER_NAMES = fleetManifest
-  .filter((unit) => isFleetBayHired(unit.slot))
+  .filter((unit) => isFleetBayCleared(unit.slot))
   .map((unit) => unit.name);
 
 function normalizeDeveloperName(name: string): string {

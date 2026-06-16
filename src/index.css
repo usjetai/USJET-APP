@@ -4,6 +4,7 @@
 
 :where(html) {
   --usjet-logo-corner-radius-sm: 7px;
+  --usjet-chip-height: 1.75rem;
 }
 
 @layer utilities {
@@ -113,9 +114,8 @@
 
 .usjet-global-contact-bar__beat-audio {
   flex-shrink: 0;
-  width: 1.85rem;
-  height: 1.85rem;
-  min-width: 1.85rem;
+  width: var(--usjet-chip-height);
+  min-width: var(--usjet-chip-height);
   padding: 0;
 }
 
@@ -661,14 +661,14 @@
   align-items: center;
   gap: 0.45rem 0.55rem;
   max-width: 100%;
-  padding: 0.65rem 0.85rem;
+  padding: 0.55rem 0.85rem;
   pointer-events: auto;
 }
 
 @media (min-width: 640px) {
   .app-nav-shell {
     gap: 0.5rem 0.7rem;
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 1rem;
   }
 }
 
@@ -676,7 +676,7 @@
   .app-nav-shell {
     flex-wrap: nowrap;
     gap: 0.55rem 0.75rem;
-    padding: 0.8rem 1.25rem;
+    padding: 0.7rem 1.25rem;
   }
 }
 
@@ -723,7 +723,7 @@
 .app-nav-divider {
   display: none;
   width: 1px;
-  height: 1.65rem;
+  height: var(--usjet-chip-height);
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.1);
 }
@@ -745,7 +745,7 @@
 }
 
 .app-nav-pill {
-  padding: 0.38rem 0.72rem;
+  padding: 0 0.72rem;
   font-size: 0.625rem;
   font-weight: 900;
   font-style: italic;
@@ -753,11 +753,12 @@
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.45);
   text-decoration: none;
+  line-height: 1;
 }
 
 @media (min-width: 640px) {
   .app-nav-pill {
-    padding: 0.42rem 0.82rem;
+    padding: 0 0.82rem;
     font-size: 0.6875rem;
     letter-spacing: 0.16em;
   }
@@ -781,7 +782,7 @@
   gap: 0.32rem;
   overflow: hidden;
   isolation: isolate;
-  padding: 0.28rem 0.55rem 0.28rem 0.42rem;
+  padding: 0 0.55rem 0 0.42rem;
   text-decoration: none;
   border: 1px solid rgba(0, 214, 50, 0.55);
   border-radius: 999px;
@@ -1147,6 +1148,7 @@
 
 /* Global ops contact strip — bottom bar: brand, live status, USA 250, SOS */
 .usjet-global-contact-bar {
+  --usjet-footer-chip-height: var(--usjet-chip-height);
   position: fixed;
   right: max(0.75rem, env(safe-area-inset-right, 0px));
   bottom: max(0.33rem, env(safe-area-inset-bottom, 0px));
@@ -1212,6 +1214,19 @@
   white-space: nowrap;
 }
 
+/* Footer chip height lock — every lane + support button matches */
+.usjet-global-contact-bar .btn-glass,
+.usjet-global-contact-bar .usjet-global-contact-bar__zelle,
+.usjet-global-contact-bar .usjet-global-contact-bar__beat-audio {
+  box-sizing: border-box;
+  height: var(--usjet-chip-height);
+  min-height: var(--usjet-chip-height);
+  max-height: var(--usjet-chip-height);
+  padding-top: 0;
+  padding-bottom: 0;
+  align-self: center;
+}
+
 .usjet-global-contact-bar__support {
   display: inline-flex;
   align-items: center;
@@ -1224,7 +1239,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.12rem 0.35rem 0.12rem 0.3rem;
+  padding: 0 0.35rem 0 0.3rem;
   text-decoration: none;
   line-height: 1;
 }
@@ -1300,7 +1315,7 @@
 }
 
 .usjet-global-contact-bar__pdre {
-  padding: 0.07rem 0.21rem;
+  padding: 0 0.21rem;
   font-size: 0.5rem;
   font-style: normal;
   font-weight: 900;
@@ -1330,7 +1345,7 @@
 }
 
 .usjet-global-contact-bar__sos {
-  padding: 0.07rem 0.2rem;
+  padding: 0 0.2rem;
   font-size: 0.5rem;
   font-style: normal;
   font-weight: 900;
@@ -1355,7 +1370,7 @@
 .usjet-global-contact-bar__ops {
   position: relative;
   overflow: hidden;
-  padding: 0.07rem 0.19rem;
+  padding: 0 0.19rem;
   font-size: 0.48rem;
   font-style: normal;
   font-weight: 700;
@@ -7390,8 +7405,21 @@ html.code-kit-page-root #usjet-app-shell {
   font-size: 0.82rem;
   line-height: 1.15;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+}
+
+.fleet-page--runway .fleet-card--surface-runway .fleet-card__partner-label {
+  margin: 0 !important;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  color: rgba(103, 232, 249, 0.92);
 }
 
 .fleet-page--runway .fleet-card--surface-runway:hover h3,
@@ -12571,6 +12599,22 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   min-height: 60vh;
 }
 
+.tier-route-gate--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+}
+
+.tier-route-gate__loading {
+  margin: 0;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.72);
+}
+
 .tier-route-gate__preview {
   pointer-events: none;
   user-select: none;
@@ -12718,6 +12762,17 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   font-size: 0.95rem;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.58);
+}
+
+.member-portal__loading {
+  margin: 4rem auto 0;
+  max-width: 24rem;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.72);
 }
 
 .member-portal__grid {
@@ -13178,6 +13233,20 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   line-height: 1.2;
 }
 
+.member-control-board__partner {
+  font-size: 0.4rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(34, 211, 238, 0.78);
+  line-height: 1.15;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* ─── Member fleet usage chart ─── */
 .member-usage {
   overflow: hidden;
@@ -13300,6 +13369,133 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   font-size: 0.82rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.45);
+}
+
+/* ─── Member shipping address ─── */
+.member-shipping {
+  overflow: hidden;
+  border: 1px solid rgba(251, 191, 36, 0.22);
+}
+
+.member-shipping__header {
+  padding: 1.1rem 1.25rem 0.35rem;
+}
+
+.member-shipping__kicker {
+  margin: 0;
+  font-size: 0.56rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.78);
+}
+
+.member-shipping__title {
+  margin: 0.35rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.member-shipping__copy {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.member-shipping__saved-at {
+  margin: 0.5rem 0 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: rgba(167, 243, 208, 0.82);
+}
+
+.member-shipping__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem 1.1rem;
+}
+
+.member-shipping__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .member-shipping__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.member-shipping__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.member-shipping__field--full {
+  grid-column: 1 / -1;
+}
+
+.member-shipping__label {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.member-shipping__input {
+  border-radius: 0.65rem;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  background: rgba(2, 8, 23, 0.5);
+  padding: 0.65rem 0.75rem;
+  font-size: 0.84rem;
+  color: #fff;
+  outline: none;
+}
+
+.member-shipping__input:focus-visible {
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.18);
+}
+
+.member-shipping__error {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #fca5a5;
+}
+
+.member-shipping__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  align-self: flex-start;
+  margin-top: 0.15rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.member-shipping__note {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0 1.25rem 1.1rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.42);
 }
 
 /* ─── Member portal data board ─── */
@@ -15646,7 +15842,7 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.35rem 0.55rem;
+  padding: 0 0.55rem;
   text-decoration: none;
   color: rgba(103, 232, 249, 0.95);
   border-color: rgba(34, 211, 238, 0.5);
@@ -17829,11 +18025,11 @@ html.gaming-page-root .global-video-bg__yt {
 
 .gaming-vr-nav--header {
   flex-shrink: 0;
-  padding: 0.3rem 0.6rem 0.3rem 0.45rem;
+  padding: 0 0.6rem 0 0.45rem;
 }
 
 .gaming-vr-nav--footer {
-  padding: 0.28rem 0.5rem 0.28rem 0.38rem;
+  padding: 0 0.5rem 0 0.38rem;
   color: rgba(233, 213, 255, 0.95);
 }
 
@@ -17871,7 +18067,11 @@ html.gaming-page-root .global-video-bg__yt {
 }
 
 .gaming-vr-nav--footer .gaming-vr-nav__icon {
-  width: 1.35rem;
+  width: 1.05rem;
+}
+
+.gaming-vr-nav--header .gaming-vr-nav__icon {
+  width: 1.15rem;
 }
 
 .gaming-vr-nav__label {
@@ -18701,7 +18901,7 @@ html.gaming-page-root .global-video-bg__yt {
 }
 
 .usjet-global-contact-bar__licensing {
-  padding: 0.14rem 0.38rem;
+  padding: 0 0.38rem;
   font-size: 0.52rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -19512,7 +19712,7 @@ body.usjet-site-lift {
 
 /* ─── Founder's Fuel growth engine ─── */
 .usjet-global-contact-bar__fuel {
-  padding: 0.07rem 0.19rem;
+  padding: 0 0.19rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.18em;
@@ -19531,7 +19731,7 @@ body.usjet-site-lift {
   gap: 0.28rem;
   overflow: hidden;
   isolation: isolate;
-  padding: 0.08rem 0.28rem 0.08rem 0.2rem;
+  padding: 0 0.28rem 0 0.2rem;
   text-decoration: none;
   border: 1px solid rgba(0, 214, 50, 0.65);
   background: linear-gradient(145deg, rgba(0, 214, 50, 0.42), rgba(0, 100, 35, 0.72));
@@ -19743,8 +19943,7 @@ body.usjet-site-lift {
   overflow: hidden;
   isolation: isolate;
   min-width: 2.15rem;
-  min-height: 1.15rem;
-  padding: 0.1rem 0.38rem;
+  padding: 0 0.38rem;
   border: 1px solid rgba(109, 30, 212, 0.55);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(245, 240, 255, 0.92));
   box-shadow:
@@ -21852,7 +22051,7 @@ html.vault-100k-page-root #usjet-app-shell {
   gap: 0.28rem;
   overflow: hidden;
   isolation: isolate;
-  padding: 0.08rem 0.21rem;
+  padding: 0 0.21rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -21972,7 +22171,7 @@ html.fleet-manual-page-root #usjet-app-shell {
   gap: 0.28rem;
   overflow: hidden;
   isolation: isolate;
-  padding: 0.08rem 0.21rem;
+  padding: 0 0.21rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -23434,7 +23633,7 @@ html.fleet-manual-page-root #usjet-app-shell {
 
 /* USJET Intelligence — revenue architecture hub */
 .usjet-global-contact-bar__intel {
-  padding: 0.08rem 0.21rem;
+  padding: 0 0.21rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -24207,11 +24406,11 @@ html.b2b-page-root #usjet-app-shell {
 }
 
 .app-nav-blog {
-  padding: 0.38rem 0.68rem;
+  padding: 0 0.68rem;
 }
 
 .usjet-global-contact-bar__blog {
-  padding: 0.07rem 0.2rem;
+  padding: 0 0.2rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -24335,8 +24534,7 @@ html.b2b-page-root #usjet-app-shell {
   align-items: center;
   justify-content: center;
   min-width: 2.15rem;
-  min-height: 2rem;
-  padding: 0.38rem 0.62rem 0.5rem;
+  padding: 0 0.62rem;
   overflow: hidden;
   text-decoration: none;
   border: 1px solid rgba(248, 113, 113, 0.72);
@@ -24407,8 +24605,7 @@ html.b2b-page-root #usjet-app-shell {
   align-items: center;
   justify-content: center;
   min-width: 2.55rem;
-  min-height: 2rem;
-  padding: 0.38rem 0.72rem 0.48rem;
+  padding: 0 0.72rem;
   overflow: hidden;
   text-decoration: none;
   border: 1px solid rgba(59, 130, 246, 0.75);
@@ -24486,14 +24683,12 @@ html.b2b-page-root #usjet-app-shell {
 }
 
 .app-nav-b2b {
-  padding: 0.38rem 0.72rem;
-  min-height: 2rem;
+  padding: 0 0.72rem;
 }
 
 .usjet-global-contact-bar__b2b {
-  padding: 0.1rem 0.28rem;
+  padding: 0 0.28rem;
   min-width: 2.35rem;
-  height: 1.35rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -24796,15 +24991,41 @@ html.b2k-page-root #usjet-app-shell {
 }
 
 .app-nav-mail__envelope.usjet-app-envelope {
-  width: 2rem;
-  height: 2rem;
+  width: var(--usjet-chip-height);
+  height: var(--usjet-chip-height);
+  min-width: var(--usjet-chip-height);
+  max-width: var(--usjet-chip-height);
   border-radius: 0.5rem;
   flex-shrink: 0;
+  padding: 0;
 }
 
 .app-nav-mail__envelope .usjet-app-envelope__icon {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
+}
+
+/* Header chip height lock — final pass after per-chip styles */
+.app-nav-shell .btn-glass,
+.app-nav-shell .app-nav-cashapp {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--usjet-chip-height);
+  min-height: var(--usjet-chip-height);
+  max-height: var(--usjet-chip-height);
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1;
+}
+
+.app-nav-shell .app-nav-mail__envelope.usjet-app-envelope {
+  width: var(--usjet-chip-height);
+  min-width: var(--usjet-chip-height);
+  max-width: var(--usjet-chip-height);
+  height: var(--usjet-chip-height);
+  padding: 0;
 }
 
 .usjet-app-envelope {
@@ -24894,7 +25115,7 @@ html.b2k-page-root #usjet-app-shell {
   gap: 0.2rem;
   overflow: hidden;
   isolation: isolate;
-  padding: 0.08rem 0.22rem;
+  padding: 0 0.22rem;
   text-decoration: none;
   color: rgba(233, 213, 255, 0.98);
   border: 1px solid rgba(168, 85, 247, 0.5);
@@ -25301,7 +25522,7 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .usjet-global-contact-bar__blog {
-  padding: 0.1rem 0.32rem;
+  padding: 0 0.32rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -25935,7 +26156,7 @@ html.blog-page-root #usjet-app-shell {
   align-items: center;
   overflow: hidden;
   isolation: isolate;
-  padding: 0.08rem 0.28rem;
+  padding: 0 0.28rem;
   font-size: 0.5rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -26017,6 +26238,39 @@ html.blog-page-root #usjet-app-shell {
 
 .blog-institutional-hangar__bridge .wefunder-covenant-bridge__cta {
   max-width: 100%;
+}
+
+/* Footer chip height lock — final pass after per-lane styles */
+.usjet-global-contact-bar .btn-glass,
+.usjet-global-contact-bar .usjet-global-contact-bar__zelle,
+.usjet-global-contact-bar .usjet-global-contact-bar__beat-audio,
+.usjet-global-contact-bar .silent-hangar-audio-toggle {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--usjet-chip-height);
+  min-height: var(--usjet-chip-height);
+  max-height: var(--usjet-chip-height);
+  padding-top: 0;
+  padding-bottom: 0;
+  align-self: center;
+  line-height: 1;
+}
+
+.usjet-global-contact-bar .silent-hangar-audio-toggle {
+  position: static;
+  right: auto;
+  bottom: auto;
+  width: var(--usjet-chip-height);
+  min-width: var(--usjet-chip-height);
+  max-width: var(--usjet-chip-height);
+  padding: 0;
+}
+
+.usjet-global-contact-bar .silent-hangar-audio-toggle__glyph {
+  width: 0.95rem;
+  height: 0.95rem;
 }
 
 /* ─── Footer chip surprise — 4th process (3 random lanes per button) ─── */

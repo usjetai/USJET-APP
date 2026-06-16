@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
 import { Plane } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetJetFighterPagePath } from "../data/fleetDirectorySeo";
 import {
   FLEET_AVAILABLE_COUNT,
   FLEET_HIRED_COUNT,
+  getFleetDisplayAircraftName,
   getFleetDisplayAircraftType,
-  getFleetRosterMeta,
   isFleetBayAvailable,
 } from "../data/fleetRoster";
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
@@ -20,8 +19,6 @@ const FLEET_RUNWAY_DESCRIPTION =
   "Runway clearance: seventeen hired developers on US fighter vectors, thirteen open positions recruiting. Hired bays launch through sovereign handoff—same window, cockpit return bar, zero external leaks.";
 
 const Fleet = () => {
-  const navigate = useNavigate();
-
   return (
     <motion.div
     initial={{ opacity: 0 }}
@@ -70,14 +67,14 @@ const Fleet = () => {
         aria-label="USJET fleet runway: partner bays with sovereign handoff"
       >
         {fleetManifest.map((unit) => {
-          const roster = getFleetRosterMeta(unit.slot);
           const available = isFleetBayAvailable(unit.slot);
+          const displayAircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
           return (
             <FleetCard
               key={unit.id}
               domain={unit.domain}
-              aircraftType={getFleetDisplayAircraftType(unit.slot, unit.aircraftType)}
-              aircraftOfficialName={roster.aircraftOfficialName}
+              aircraftType={displayAircraftType}
+              aircraftOfficialName={getFleetDisplayAircraftName(unit.slot, unit.aircraftType)}
               name={unit.name}
               callsign={unit.callsign}
               href={resolveFleetUnitHref(unit)}
@@ -88,18 +85,6 @@ const Fleet = () => {
               isCommandBay={unit.href === "/origin" || unit.slot === 29}
               isAvailableBay={available}
               jetFighterPagePath={getFleetJetFighterPagePath(unit.callsign)}
-              onExpandBay={
-                available
-                  ? undefined
-                  : () => {
-                      navigate("/hangar", {
-                        state: {
-                          expandSlot: unit.slot,
-                          source: "fleet",
-                        },
-                      });
-                    }
-              }
             />
           );
         })}

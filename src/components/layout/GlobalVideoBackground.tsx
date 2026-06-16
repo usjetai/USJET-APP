@@ -26,6 +26,14 @@ const YOUTUBE_EMBED = [
 
 type VideoMode = "checking" | "local" | "youtube" | "canvas";
 
+function prefersLightweightAtmosphere(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  return window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
+}
+
 function WarpStreakLayers() {
   return (
     <>
@@ -41,6 +49,11 @@ export default function GlobalVideoBackground() {
   const [mode, setMode] = useState<VideoMode>("checking");
 
   useEffect(() => {
+    if (prefersLightweightAtmosphere()) {
+      setMode("canvas");
+      return;
+    }
+
     let cancelled = false;
 
     fetch(LOCAL_VIDEO, { method: "HEAD" })
@@ -94,6 +107,15 @@ export default function GlobalVideoBackground() {
       video.removeEventListener("error", onError);
       video.removeEventListener("timeupdate", onTimeUpdate);
     };
+  }, [mode]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || mode !== "local") {
+      return;
+    }
+    // Warp tunnel stays visual-only — site beat lives in GlobalBackgroundBeat.
+    video.muted = true;
   }, [mode]);
 
   if (mode === "checking") {

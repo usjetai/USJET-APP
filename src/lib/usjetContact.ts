@@ -1,5 +1,13 @@
-/** Public ops inbox — mailto on site; requires MX at registrar (see .env.example). */
+/** Single USJET inbox — all site contact mailto links use this address. */
 export const USJET_OPS_EMAIL = "ops@usjet.ai";
+
+/** @deprecated All routes consolidated to ops@usjet.ai — forward at Porkbun → iCloud. */
+export const USJET_APP_EMAIL = USJET_OPS_EMAIL;
+
+/** Cash App cashtag — peer payments / tips / manual settlement. */
+export const USJET_CASH_APP_CASHTAG = "$USJET" as const;
+
+export const USJET_CASH_APP_URL = "https://cash.app/$USJET" as const;
 
 /** Institutional identity — founder grit: eight years in the trade (est. 2018). */
 export const USJET_ENTITY_FOOTER = "USJET LLC · Established in 2018" as const;
@@ -18,6 +26,11 @@ export const USJET_BILLING_EMAIL = "billing@usjet.ai";
 
 export function mailtoUsjetOps(subject?: string): string {
   const base = `mailto:${USJET_OPS_EMAIL}`;
+  return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base;
+}
+
+export function mailtoUsjetApp(subject?: string): string {
+  const base = `mailto:${USJET_APP_EMAIL}`;
   return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base;
 }
 

@@ -3,6 +3,9 @@ import { useEffect, useRef } from "react";
 const NUM_STARS = 1100;
 const STAR_SPEED = 0.22;
 
+/** Width must change by this many px before we rebuild the starfield (rotation / breakpoint). */
+const WIDTH_REBUILD_DELTA_PX = 48;
+
 type StarTone = "white" | "cyan" | "gold";
 
 const TONE_RGB: Record<StarTone, [number, number, number]> = {
@@ -65,9 +68,18 @@ class Star {
   }
 }
 
+function readViewportSize() {
+  const vv = window.visualViewport;
+  return {
+    width: Math.round(window.innerWidth),
+    height: Math.round(Math.max(window.innerHeight, vv?.height ?? 0)),
+  };
+}
+
 /** Canvas starfield warp — AA-VFX UQgBVsbbKRs hyperspace tunnel (radial streaks toward viewer). */
 export default function WarpBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const layoutWidthRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -79,16 +91,17 @@ export default function WarpBackground() {
     const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
     let animationFrameId = 0;
     let stars: Star[] = [];
+    let resizeTimer: number | null = null;
 
-    const resize = () => {
+    const resizeCanvas = () => {
+      const { width, height } = readViewportSize();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { width, height };
     };
 
     const initStars = () => {
@@ -110,8 +123,7 @@ export default function WarpBackground() {
     };
 
     const animate = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const { width: w, height: h } = readViewportSize();
       ctx.fillStyle = "rgba(1, 4, 12, 0.16)";
       ctx.fillRect(0, 0, w, h);
       for (const star of stars) {
@@ -121,26 +133,62 @@ export default function WarpBackground() {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    const start = () => {
+    const startWarp = () => {
       cancelAnimationFrame(animationFrameId);
-      resize();
+      const { width, height } = resizeCanvas();
+      layoutWidthRef.current = width;
+
       if (motionMq.matches) {
-        paintVoid(window.innerWidth, window.innerHeight);
+        paintVoid(width, height);
         return;
       }
+
       initStars();
-      paintVoid(window.innerWidth, window.innerHeight);
+      paintVoid(width, height);
       animate();
     };
 
-    start();
-    window.addEventListener("resize", start);
-    motionMq.addEventListener("change", start);
+    const handleLayoutChange = () => {
+      const { width } = readViewportSize();
+      const prevWidth = layoutWidthRef.current;
+      const widthDelta = Math.abs(width - prevWidth);
+
+      if (prevWidth === 0 || widthDelta >= WIDTH_REBUILD_DELTA_PX) {
+        startWarp();
+        return;
+      }
+
+      resizeCanvas();
+    };
+
+    const scheduleLayoutChange = () => {
+      if (resizeTimer !== null) {
+        window.clearTimeout(resizeTimer);
+      }
+      resizeTimer = window.setTimeout(() => {
+        resizeTimer = null;
+        handleLayoutChange();
+      }, 180);
+    };
+
+    startWarp();
+
+    window.addEventListener("resize", scheduleLayoutChange);
+    window.visualViewport?.addEventListener("resize", scheduleLayoutChange);
+
+    const onMotionChange = () => {
+      startWarp();
+    };
+    motionMq.addEventListener("change", onMotionChange);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", start);
-      motionMq.removeEventListener("change", start);
+      if (resizeTimer !== null) {
+        window.clearTimeout(resizeTimer);
+      }
+      window.removeEventListener("resize", scheduleLayoutChange);
+      window.visualViewport?.removeEventListener("resize", scheduleLayoutChange);
+      motionMq.removeEventListener("change", onMotionChange);
     };
   }, []);
 

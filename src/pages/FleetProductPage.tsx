@@ -5,7 +5,9 @@ import { getFleetBayAccent, fleetBayAccentStyle } from "../data/fleetBayAccents"
 import { getFleetDirectoryEntryBySlug } from "../data/fleetDirectorySeo";
 import { getFleetUnitById } from "../data/fleetManifest";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
+import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAvatar";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import { getHiredDeveloperProductAvatarPath } from "../lib/hiredHudDeveloperAvatars";
 import { FleetLaunchLink } from "../lib/fleetLaunchLink";
 import { logFleetUsageIfMember } from "../lib/fleetUsageHistory";
 import { resolveFleetProductLineup } from "../lib/fleetProductMedia";
@@ -136,6 +138,7 @@ export default function FleetProductPage() {
   const productPrice = PRODUCT_PRICE_BY_AIRCRAFT_SLUG[entry.aircraftSlug];
   const productStripeLink = PRODUCT_STRIPE_LINK_BY_AIRCRAFT_SLUG[entry.aircraftSlug]?.();
   const productLineup = resolveFleetProductLineup(entry.aircraftSlug);
+  const developerAvatarPath = getHiredDeveloperProductAvatarPath(entry.slot);
 
   return (
     <div
@@ -164,6 +167,12 @@ export default function FleetProductPage() {
             <p className="product-page__name">
               <DeveloperRedBlinkName name={entry.name} fleetSlot={entry.slot} />
             </p>
+            {developerAvatarPath ? (
+              <div className="product-page__developer-profile">
+                <HiredHudDeveloperAvatar slot={entry.slot} name={entry.name} variant="product" />
+                <p className="product-page__developer-caption">Hired developer profile</p>
+              </div>
+            ) : null}
             <p className="product-page__aircraft-type">{entry.aircraftOfficialName}</p>
             <p className="product-page__lede">{productLede}</p>
 
@@ -226,6 +235,17 @@ export default function FleetProductPage() {
           </div>
 
           <div className="product-page__media" aria-label={`${entry.aircraftOfficialName} product media`}>
+            {developerAvatarPath ? (
+              <div className="product-page__media-avatar" aria-hidden>
+                <img
+                  src={developerAvatarPath}
+                  alt=""
+                  className="product-page__media-avatar-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ) : null}
             <div className="product-page__logo-wrap">
               <img
                 src={entry.productLogo.src}

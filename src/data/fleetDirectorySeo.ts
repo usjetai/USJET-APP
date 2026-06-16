@@ -183,12 +183,12 @@ export const FLEET_DIRECTORY_ENTRIES: FleetDirectoryEntry[] = [...fleetManifest]
     };
   });
 
-/** Seventeen hired developers — indexed call-sign pages and runway launches. */
+/** Hired developers — indexed call-sign pages and runway launches. */
 export const FLEET_DIRECTORY_HIRED_ENTRIES = FLEET_DIRECTORY_ENTRIES.filter((entry) =>
   isFleetBayHired(entry.slot),
 );
 
-/** Thirteen open recruiting bays only. */
+/** Open recruiting bays only. */
 export const FLEET_DIRECTORY_AVAILABLE_ENTRIES = FLEET_DIRECTORY_ENTRIES.filter((entry) =>
   isFleetBayAvailable(entry.slot),
 );

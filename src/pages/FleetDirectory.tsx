@@ -23,7 +23,7 @@ export default function FleetDirectory() {
     const prevDesc = meta?.getAttribute("content") ?? "";
     meta?.setAttribute(
       "content",
-      "Thirty AI jet fighter call names — each with its own USJET profile page. Seventeen hired developers on US fighter vectors, thirteen open positions recruiting.",
+      `Thirty AI jet fighter call names — each with its own USJET profile page. ${FLEET_HIRED_COUNT} hired developers on US fighter vectors, ${FLEET_AVAILABLE_COUNT} open positions recruiting.`,
     );
     return () => {
       document.title = prev;

@@ -45,30 +45,24 @@ export const AIRCRAFT_OFFICIAL_NAME_BY_TYPE: Record<FleetAircraftType, string> =
   x59: "X-59 QueSST",
 };
 
-/** Seventeen hired developer bays — partner AIs live on the runway. */
+/** Ten sovereign hired developers + Origin command bay. */
 export const FLEET_HIRED_BY_SLOT: Record<number, FleetRosterMeta> = {
   0: { rosterStatus: "hired", aircraftOfficialName: "SR-71 Blackbird", aircraftType: "darkstar" },
   1: { rosterStatus: "hired", aircraftOfficialName: "F-35 Lightning II", aircraftType: "f35" },
   2: { rosterStatus: "hired", aircraftOfficialName: "B-21 Raider", aircraftType: "b21" },
-  4: { rosterStatus: "hired", aircraftOfficialName: "NGAD Platform", aircraftType: "ngad" },
+  3: { rosterStatus: "hired", aircraftOfficialName: "J-36 (US JET Concept)", aircraftType: "j36" },
   5: { rosterStatus: "hired", aircraftOfficialName: "YF-23 Black Widow II", aircraftType: "yf23" },
-  7: { rosterStatus: "hired", aircraftOfficialName: "X-37B", aircraftType: "x37b" },
-  8: { rosterStatus: "hired", aircraftOfficialName: "X-51 Waverider", aircraftType: "x51" },
+  6: { rosterStatus: "hired", aircraftOfficialName: "X-47B", aircraftType: "x47b" },
   10: { rosterStatus: "hired", aircraftOfficialName: "B-2 Spirit", aircraftType: "b2" },
   11: { rosterStatus: "hired", aircraftOfficialName: "B-1 Lancer", aircraftType: "b1" },
-  12: { rosterStatus: "hired", aircraftOfficialName: "A-12 Avenger II", aircraftType: "a12" },
-  19: { rosterStatus: "hired", aircraftOfficialName: "F-117 Nighthawk", aircraftType: "f117" },
-  20: { rosterStatus: "hired", aircraftOfficialName: "MQ-25 Stingray", aircraftType: "mq25" },
-  22: { rosterStatus: "hired", aircraftOfficialName: "XQ-58 Valkyrie", aircraftType: "xq58" },
-  23: { rosterStatus: "hired", aircraftOfficialName: "RQ-180", aircraftType: "rq180" },
-  24: { rosterStatus: "hired", aircraftOfficialName: "RQ-4 Global Hawk", aircraftType: "globalHawk" },
-  27: { rosterStatus: "hired", aircraftOfficialName: "F-104 Starfighter", aircraftType: "f104" },
+  13: { rosterStatus: "hired", aircraftOfficialName: "F-22 Raptor", aircraftType: "f22" },
+  25: { rosterStatus: "hired", aircraftOfficialName: "F-14 Tomcat", aircraftType: "f14" },
   29: { rosterStatus: "command", aircraftOfficialName: "X-59 QueSST · Command", aircraftType: "x59" },
 };
 
-/** Thirteen open recruiting bays — each still carries a manifest aircraft vector. */
+/** Open recruiting bays — every slot not hired or command. */
 export const FLEET_AVAILABLE_SLOTS: readonly number[] = [
-  3, 6, 9, 13, 14, 15, 16, 17, 18, 21, 25, 26, 28,
+  4, 7, 8, 9, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28,
 ] as const;
 
 export const FLEET_HIRED_SLOTS: readonly number[] = Object.keys(FLEET_HIRED_BY_SLOT)
@@ -76,7 +70,7 @@ export const FLEET_HIRED_SLOTS: readonly number[] = Object.keys(FLEET_HIRED_BY_S
   .filter((slot) => FLEET_HIRED_BY_SLOT[slot]?.rosterStatus === "hired")
   .sort((a, b) => a - b);
 
-/** Runway stat — seventeen cleared bays (sixteen hired + Origin command). */
+/** Runway stat — cleared hired bays plus Origin command. */
 export const FLEET_RUNWAY_CLEARED_COUNT = Object.keys(FLEET_HIRED_BY_SLOT).length;
 
 const AVAILABLE_SET = new Set<number>(FLEET_AVAILABLE_SLOTS);
@@ -133,7 +127,7 @@ export function getFleetDisplayAircraftName(slot: number, fallbackType: FleetAir
   return AIRCRAFT_OFFICIAL_NAME_BY_TYPE[fallbackType] ?? meta.aircraftOfficialName;
 }
 
-export const FLEET_HIRED_COUNT = FLEET_RUNWAY_CLEARED_COUNT;
+export const FLEET_HIRED_COUNT = FLEET_HIRED_SLOTS.length;
 export const FLEET_AVAILABLE_COUNT = FLEET_AVAILABLE_SLOTS.length;
 
 export type HiredDeveloperRecord = {

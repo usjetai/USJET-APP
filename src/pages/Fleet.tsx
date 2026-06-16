@@ -15,8 +15,7 @@ import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
-const FLEET_RUNWAY_DESCRIPTION =
-  "Runway clearance: seventeen hired developers on US fighter vectors, thirteen open positions recruiting. Hired bays launch through sovereign handoff—same window, cockpit return bar, zero external leaks.";
+const FLEET_RUNWAY_DESCRIPTION = `Runway clearance: ${FLEET_HIRED_COUNT} hired developers on US fighter vectors, ${FLEET_AVAILABLE_COUNT} open positions recruiting. Hired bays launch through sovereign handoff—same window, cockpit return bar, zero external leaks.`;
 
 const Fleet = () => {
   return (

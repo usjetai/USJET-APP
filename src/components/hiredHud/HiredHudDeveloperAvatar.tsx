@@ -1,10 +1,10 @@
-import { getHiredDeveloperAvatarPath } from "../../lib/hiredHudDeveloperAvatars";
+import { getHiredDeveloperAvatarPath, getHiredDeveloperProductAvatarPath } from "../../lib/hiredHudDeveloperAvatars";
 
 type HiredHudDeveloperAvatarProps = {
   slot: number;
   name: string;
-  /** Tile portrait vs compact hub crew strip. */
-  variant?: "tile" | "crew";
+  /** Tile portrait, hub crew strip, or product page hero. */
+  variant?: "tile" | "crew" | "product";
 };
 
 export default function HiredHudDeveloperAvatar({
@@ -12,7 +12,8 @@ export default function HiredHudDeveloperAvatar({
   name,
   variant = "tile",
 }: HiredHudDeveloperAvatarProps) {
-  const src = getHiredDeveloperAvatarPath(slot, name);
+  const src =
+    variant === "product" ? getHiredDeveloperProductAvatarPath(slot) : getHiredDeveloperAvatarPath(slot);
   if (!src) {
     return null;
   }
@@ -21,8 +22,11 @@ export default function HiredHudDeveloperAvatar({
     <div
       className={[
         "hired-hud__avatar",
-        variant === "crew" ? "hired-hud__avatar--crew" : "hired-hud__avatar--tile",
-      ].join(" ")}
+        variant === "crew" ? "hired-hud__avatar--crew" : "",
+        variant === "product" ? "hired-hud__avatar--product" : "hired-hud__avatar--tile",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <img
         src={src}

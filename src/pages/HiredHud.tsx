@@ -277,7 +277,7 @@ export default function HiredHud() {
           <div className="hired-hud__crew" aria-label="Hired developer profile crew">
             <div className="hired-hud__crew-head">
               <span className="hired-hud__crew-title">Hired crew profiles</span>
-              <span className="hired-hud__crew-count">{hiredUnits.length} naval crew profiles live</span>
+              <span className="hired-hud__crew-count">{hiredUnits.length} sovereign hired crew profiles</span>
             </div>
             <ul className="hired-hud__crew-list">
               {hiredUnits.map((unit) => (

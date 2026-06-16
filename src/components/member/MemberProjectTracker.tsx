@@ -1,7 +1,10 @@
 import { ChevronDown, FolderKanban, Minus, Pencil, Plus, Save, Timer, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { useLocation } from "react-router-dom";
-import DeveloperRedBlinkName, { highlightDeveloperCoPilotName } from "../DeveloperRedBlinkName";
+import DeveloperRedBlinkName, {
+  getVisibleDeveloperName,
+  highlightDeveloperCoPilotName,
+} from "../DeveloperRedBlinkName";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberPortalUsageTimer } from "../../hooks/useMemberPortalUsageTimer";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
@@ -367,7 +370,7 @@ function ProjectWorkspace({
             </option>
             {availableUnits.map((unit) => (
               <option key={unit.id} value={unit.id}>
-                {unit.callsign} — {unit.name}
+                {unit.callsign} — {getVisibleDeveloperName(unit.name, unit.slot)}
               </option>
             ))}
           </select>

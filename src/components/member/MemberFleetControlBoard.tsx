@@ -61,7 +61,7 @@ export default function MemberFleetControlBoard() {
                 </span>
                 <span className="member-control-board__callsign">{unit.callsign}</span>
                 <span className="member-control-board__name">
-                  <DeveloperRedBlinkName name={unit.name} />
+                  <DeveloperRedBlinkName name={unit.name} slot={unit.slot} />
                 </span>
               </a>
             </li>

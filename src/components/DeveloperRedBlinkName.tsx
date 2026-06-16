@@ -4,18 +4,39 @@ import {
   developerRedBlinkClass,
   isDeveloperRedBlinkName,
 } from "../lib/developerRedBlink";
+import { isFleetBayHired } from "../data/fleetRoster";
 
 type DeveloperRedBlinkNameProps = HTMLAttributes<HTMLSpanElement> & {
   name: string;
+  slot?: number;
+  nonHiredLabel?: string;
 };
 
+export const NON_HIRED_DEVELOPER_LABEL = "Available position";
+
+export function getVisibleDeveloperName(
+  name: string,
+  slot?: number,
+  nonHiredLabel = NON_HIRED_DEVELOPER_LABEL,
+): string {
+  const canShowRealName = typeof slot === "number" ? isFleetBayHired(slot) : isDeveloperRedBlinkName(name);
+  return canShowRealName ? name : nonHiredLabel;
+}
+
 /** Renders a fleet developer name with `.developer-red-blink` when on the sovereign list. */
-export default function DeveloperRedBlinkName({ name, className, ...rest }: DeveloperRedBlinkNameProps) {
-  const merged = [className, developerRedBlinkClass(name)].filter(Boolean).join(" ") || undefined;
+export default function DeveloperRedBlinkName({
+  name,
+  slot,
+  className,
+  nonHiredLabel = NON_HIRED_DEVELOPER_LABEL,
+  ...rest
+}: DeveloperRedBlinkNameProps) {
+  const visibleName = getVisibleDeveloperName(name, slot, nonHiredLabel);
+  const merged = [className, developerRedBlinkClass(visibleName)].filter(Boolean).join(" ") || undefined;
 
   return (
     <span className={merged} {...rest}>
-      {name}
+      {visibleName}
     </span>
   );
 }
@@ -49,12 +70,12 @@ export function highlightDeveloperCoPilotName(copilotName: string): ReactNode {
   const trimmed = copilotName.trim();
   const suffix = " Co-Pilot";
   if (!trimmed.endsWith(suffix)) {
-    return highlightDeveloperNamesInText(trimmed);
+    return isDeveloperRedBlinkName(trimmed) ? highlightDeveloperNamesInText(trimmed) : NON_HIRED_DEVELOPER_LABEL;
   }
 
   const fleetName = trimmed.slice(0, -suffix.length);
   if (!isDeveloperRedBlinkName(fleetName)) {
-    return copilotName;
+    return `${NON_HIRED_DEVELOPER_LABEL}${suffix}`;
   }
 
   return (

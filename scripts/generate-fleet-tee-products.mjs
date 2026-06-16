@@ -1,6 +1,7 @@
 /**
  * Generate USJET.AI fleet tee product mockups for every aircraft product page.
- * White crew neck tee, black USJET.AI chest text, aircraft logo centered below.
+ * Photo base tee (scripts/assets/tee-base.png), black letterbox, USJET.AI chest text,
+ * aircraft logo centered below.
  *
  * Run: node scripts/generate-fleet-tee-products.mjs
  */
@@ -12,10 +13,16 @@ import sharp from "sharp";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const OUT_DIR = join(ROOT, "public/fleet");
-const LOGO_DIR = join(ROOT, "public/assets/fleet-logos");
+const TEE_BASE = join(__dirname, "assets/tee-base.png");
 
 const CANVAS = 1024;
 const SHEET_BG = { r: 207, g: 196, b: 166 };
+
+/** Chest branding placement on the 1024×1024 tee canvas (photo base, black letterbox). */
+const BRAND_TEXT_Y = 340;
+const LOGO_TOP = 395;
+const LOGO_MAX_WIDTH = 280;
+const LOGO_MAX_HEIGHT = 190;
 
 /** Slug, display name (for logs), logo file relative to public/ */
 const FLEET_TEE_AIRCRAFT = [
@@ -51,28 +58,22 @@ const FLEET_TEE_AIRCRAFT = [
   { slug: "x-59-quesst", name: "X-59 QueSST", logo: "/assets/fleet-logos/x59_quesst.png" },
 ];
 
-function createTeeMockupSvg() {
+function createBrandingSvg() {
   return Buffer.from(`<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${CANVAS}" height="${CANVAS}" viewBox="0 0 ${CANVAS} ${CANVAS}">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#e8e8e8"/>
-      <stop offset="100%" stop-color="#c8c8c8"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity="0.18"/>
-    </filter>
-  </defs>
-  <rect width="${CANVAS}" height="${CANVAS}" fill="url(#bg)"/>
-  <g filter="url(#shadow)">
-    <path fill="#ffffff" d="M 220 260 L 310 210 L 400 250 L 512 230 L 624 250 L 714 210 L 804 260 L 770 340 L 790 920 L 234 920 L 254 340 Z"/>
-    <path fill="#f0f0f0" d="M 430 250 Q 512 270 594 250 Q 560 310 512 315 Q 464 310 430 250 Z"/>
-    <path fill="#ffffff" d="M 220 260 L 180 340 L 210 380 L 254 340 Z"/>
-    <path fill="#ffffff" d="M 804 260 L 844 340 L 814 380 L 770 340 Z"/>
-    <path fill="#f5f5f5" d="M 234 920 L 254 340 L 770 340 L 790 920 Z" opacity="0.35"/>
-  </g>
-  <text x="512" y="430" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700" letter-spacing="3" fill="#111111">USJET.AI</text>
+  <text x="512" y="${BRAND_TEXT_Y}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" letter-spacing="3" fill="#111111">USJET.AI</text>
 </svg>`);
+}
+
+/** Plain white tee photo on black — letterboxed to square; matches dark product page. */
+async function loadTeeBase() {
+  return sharp(TEE_BASE)
+    .resize(CANVAS, CANVAS, {
+      fit: "contain",
+      background: { r: 0, g: 0, b: 0 },
+    })
+    .png()
+    .toBuffer();
 }
 
 async function removeTanBackground(inputPath) {
@@ -110,13 +111,12 @@ async function loadLogoPipeline(logo) {
 
 async function generateTee({ slug, name, logo }) {
   const outPath = join(OUT_DIR, `${slug}-tee-product.webp`);
-  const base = await sharp(createTeeMockupSvg()).png().toBuffer();
+  const base = await loadTeeBase();
+  const branding = await sharp(createBrandingSvg()).png().toBuffer();
 
   const logoPipeline = await loadLogoPipeline(logo);
   const logoMeta = await logoPipeline.metadata();
-  const logoMaxWidth = 300;
-  const logoMaxHeight = 200;
-  const scale = Math.min(logoMaxWidth / logoMeta.width, logoMaxHeight / logoMeta.height, 1);
+  const scale = Math.min(LOGO_MAX_WIDTH / logoMeta.width, LOGO_MAX_HEIGHT / logoMeta.height, 1);
   const logoWidth = Math.round(logoMeta.width * scale);
   const logoHeight = Math.round(logoMeta.height * scale);
 
@@ -126,10 +126,12 @@ async function generateTee({ slug, name, logo }) {
     .toBuffer();
 
   const left = Math.round((CANVAS - logoWidth) / 2);
-  const top = 470;
 
   await sharp(base)
-    .composite([{ input: logoBuffer, left, top }])
+    .composite([
+      { input: branding, left: 0, top: 0 },
+      { input: logoBuffer, left, top: LOGO_TOP },
+    ])
     .webp({ quality: 90 })
     .toFile(outPath);
 

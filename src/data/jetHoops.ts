@@ -4,6 +4,8 @@ import { getFleetRosterMeta } from "./fleetRoster";
 import { getFleetAircraftRadarLogoPathForSlot } from "../lib/fleetAircraftLogos";
 
 export const JET_HOOPS_ROUTE = "/hoops" as const;
+export const JET_HOOPS_LOGO_MP4_SRC = "/hoops/usjet-hoops-logo.mp4" as const;
+export const JET_HOOPS_LOGO_POSTER_SRC = "/hoops/usjet-hoops-logo-poster.jpg" as const;
 
 export const JET_HOOPS_COURT_WIDTH = 940;
 export const JET_HOOPS_COURT_HEIGHT = 500;

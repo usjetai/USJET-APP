@@ -18,12 +18,18 @@ const FLEET_ALLOWED_EMBED_HOSTS = new Set(
     .filter(Boolean),
 );
 
+/** Header media chips (US / Blue / B / J) — cockpit handoff, not fleet bays. */
+const COCKPIT_MEDIA_ALLOWED_HOSTS = new Set(
+  ["facebook.com", "tiktok.com", "beyonce.com", "jay-z.com"].map((host) => host.toLowerCase()),
+);
+
 function isAllowedFleetEmbedHost(hostname: string): boolean {
   const normalized = hostname.replace(/^www\./i, "").toLowerCase();
-  if (FLEET_ALLOWED_EMBED_HOSTS.has(normalized)) {
+  if (FLEET_ALLOWED_EMBED_HOSTS.has(normalized) || COCKPIT_MEDIA_ALLOWED_HOSTS.has(normalized)) {
     return true;
   }
-  return [...FLEET_ALLOWED_EMBED_HOSTS].some((base) => normalized.endsWith(`.${base}`));
+  const allowedBases = [...FLEET_ALLOWED_EMBED_HOSTS, ...COCKPIT_MEDIA_ALLOWED_HOSTS];
+  return allowedBases.some((base) => normalized.endsWith(`.${base}`));
 }
 
 export function fleetBayIdFromSlot(slot?: number): string | null {
@@ -108,6 +114,8 @@ type CockpitWrapOptions = {
   returnTo?: string;
   label?: string;
   callName?: string;
+  /** Same-window redirect when partner blocks iframe embed (header media chips). */
+  directHandoff?: boolean;
 };
 
 /** Fleet tiles and directory — external URLs open in `/cockpit` with USJET return. */
@@ -153,6 +161,9 @@ export function wrapExternalInCockpit(rawUrl: string, options?: CockpitWrapOptio
   }
   if (options?.callName?.trim()) {
     params.set("callName", options.callName.trim());
+  }
+  if (options?.directHandoff) {
+    params.set("handoff", "direct");
   }
 
   return `/cockpit?${params.toString()}`;

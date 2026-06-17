@@ -19,6 +19,7 @@ import SovereignVaultGlobalDownload from "../growth/SovereignVaultGlobalDownload
 const US_NEWS_AIR_COCKPIT = wrapExternalInCockpit("https://www.facebook.com/usnewsair", {
   label: "US News Air",
   returnTo: "/",
+  directHandoff: true,
 });
 
 const BLUE_IVY_TIKTOK_COCKPIT = wrapExternalInCockpit(
@@ -26,8 +27,21 @@ const BLUE_IVY_TIKTOK_COCKPIT = wrapExternalInCockpit(
   {
     label: "Blue Ivy C4",
     returnTo: "/",
+    directHandoff: true,
   },
 );
+
+const BEYONCE_COCKPIT = wrapExternalInCockpit("https://beyonce.com/", {
+  label: "Beyoncé",
+  returnTo: "/",
+  directHandoff: true,
+});
+
+const JAYZ_COCKPIT = wrapExternalInCockpit("https://www.jay-z.com/", {
+  label: "JAY-Z",
+  returnTo: "/",
+  directHandoff: true,
+});
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
@@ -174,6 +188,26 @@ const AppNav = () => {
                   <span className="app-nav-blue__tongue" />
                 </span>
                 <span className="app-nav-blue__label">Blue</span>
+              </Link>
+
+              <Link
+                to={BEYONCE_COCKPIT}
+                className="app-nav-b btn-glass glass-effect-interactive shrink-0"
+                title="Beyoncé — beyonce.com"
+                aria-label="B — Beyoncé official site"
+              >
+                <span className="app-nav-b__glow" aria-hidden />
+                <span className="app-nav-b__label">B</span>
+              </Link>
+
+              <Link
+                to={JAYZ_COCKPIT}
+                className="app-nav-j btn-glass glass-effect-interactive shrink-0"
+                title="JAY-Z — jay-z.com"
+                aria-label="J — JAY-Z official site"
+              >
+                <span className="app-nav-j__glow" aria-hidden />
+                <span className="app-nav-j__label">J</span>
               </Link>
 
               <AppNavHangarLive />

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import JetGame from "../components/hoops/JetGame";
+import JetHoopsHeroMedia from "../components/hoops/JetHoopsHeroMedia";
 import {
   JET_HOOPS_COPY,
   JET_HOOPS_KICKER,
@@ -16,6 +17,7 @@ export default function Hoops() {
       document.title = prev;
     };
   }, []);
+
   return (
     <main className="jet-hoops-page page-atmosphere">
       <div className="jet-hoops-page__inner">
@@ -25,6 +27,7 @@ export default function Hoops() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
+          <JetHoopsHeroMedia />
           <p className="jet-hoops-page__kicker">{JET_HOOPS_KICKER}</p>
           <h1 className="jet-hoops-page__title">{JET_HOOPS_TITLE}</h1>
           <p className="jet-hoops-page__copy">{JET_HOOPS_COPY}</p>

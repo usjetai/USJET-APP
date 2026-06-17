@@ -30,6 +30,7 @@ export default function Cockpit() {
   const partnerLabel = params.get("label");
   const callName = params.get("callName")?.trim() ?? "";
   const isHangarEmbed = params.get("embed") === "hangar";
+  const directHandoff = params.get("handoff") === "direct";
   const baySlot = useMemo(() => slotFromBayId(bay), [bay]);
   const bayAccentStyle = useMemo(
     () => (baySlot !== null ? fleetBayAccentStyle(baySlot) : undefined),
@@ -64,6 +65,13 @@ export default function Cockpit() {
     }
     logFleetLaunchHandoff(partnerLabel, bay);
   }, [bay, partnerLabel, src]);
+
+  useEffect(() => {
+    if (!src || !directHandoff || !iframeBlocked || isHangarEmbed) {
+      return;
+    }
+    window.location.assign(src);
+  }, [directHandoff, iframeBlocked, isHangarEmbed, src]);
 
   if (!src) {
     return null;

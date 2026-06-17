@@ -6,6 +6,19 @@ export type FounderProduct = {
   imageAlt: string;
 };
 
+export const FOUNDER_PRODUCT_CALL_FOR_PRICE = "Call for price" as const;
+
+export const FOUNDER_PRODUCT_ORDER_PHONE = "5163053396" as const;
+
+export const FOUNDER_PRODUCT_ORDER_PHONE_DISPLAY = "516-305-3396" as const;
+
+export const FOUNDER_PRODUCT_ORDER_POLICY = {
+  pricing: FOUNDER_PRODUCT_CALL_FOR_PRICE,
+  delivery: "All orders require 2–4 weeks delivery.",
+  payment: "Cash App payment required to complete your order.",
+  phoneLabel: `Call ${FOUNDER_PRODUCT_ORDER_PHONE_DISPLAY}`,
+} as const;
+
 export const FOUNDER_PRODUCTS: FounderProduct[] = [
   {
     id: "lv-drip-canvas",

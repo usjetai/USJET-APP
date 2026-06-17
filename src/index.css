@@ -10958,6 +10958,60 @@ button.fleet-card {
   color: rgba(226, 232, 240, 0.88);
 }
 
+.founder-products__order-panel {
+  width: min(100%, 34rem);
+  margin-top: 0.35rem;
+  padding: 1rem 1.1rem;
+  text-align: center;
+}
+
+.founder-products__order-eyebrow {
+  margin: 0 0 0.55rem;
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.85);
+}
+
+.founder-products__order-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.founder-products__order-list li {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(241, 245, 249, 0.92);
+}
+
+.founder-products__order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+.founder-products__order-phone,
+.founder-products__order-cash {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
 .founder-products__back {
   margin-top: 0.35rem;
   padding: 0.55rem 1rem;
@@ -10993,11 +11047,31 @@ button.fleet-card {
   margin: 0;
 }
 
+.founder-products__image-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  border-radius: 0.85rem;
+}
+
+.founder-products__image-button:focus-visible {
+  outline: 2px solid rgba(34, 211, 238, 0.85);
+  outline-offset: 3px;
+}
+
 .founder-products__image-frame {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   min-height: 11rem;
+  height: 11rem;
   padding: 0.65rem;
   border-radius: 0.85rem;
   background: rgba(15, 23, 42, 0.45);
@@ -11006,9 +11080,13 @@ button.fleet-card {
 
 .founder-products__image {
   display: block;
-  width: 100%;
-  max-height: 14rem;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
   object-fit: contain;
+  object-position: center;
 }
 
 .founder-products__caption {
@@ -11032,6 +11110,136 @@ button.fleet-card {
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #f8fafc;
+}
+
+.founder-products__item-price {
+  margin-top: 0.15rem;
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+.founder-product-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 340;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}
+
+.founder-product-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(2, 6, 14, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: zoom-out;
+}
+
+.founder-product-lightbox__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(56rem, 100%);
+  max-height: calc(100dvh - 2rem);
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  background: rgba(8, 15, 30, 0.96);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+  overflow: auto;
+}
+
+.founder-product-lightbox__close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.founder-product-lightbox__close-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.founder-product-lightbox__figure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.founder-product-lightbox__image-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: min(68vh, 42rem);
+  padding: 0.5rem;
+}
+
+.founder-product-lightbox__image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(68vh, 42rem);
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.founder-product-lightbox__caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-align: center;
+}
+
+.founder-product-lightbox__kicker {
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.85);
+}
+
+.founder-product-lightbox__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+}
+
+.founder-product-lightbox__price {
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.95);
 }
 
 .founder-story__hero-frame {

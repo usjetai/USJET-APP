@@ -4,11 +4,31 @@ import { JET_HOOPS_ROUTE, JET_HOOPS_TITLE } from "../../data/jetHoops";
 
 type JetHoopsNavButtonProps = {
   surface?: "header" | "footer";
+  variant?: "pill" | "chip";
 };
 
 /** Hardwood pickup — routes to /hoops (5-on-5 jet court). */
-export default function JetHoopsNavButton({ surface = "header" }: JetHoopsNavButtonProps) {
+export default function JetHoopsNavButton({ surface = "header", variant = "pill" }: JetHoopsNavButtonProps) {
   const isFooter = surface === "footer";
+
+  if (variant === "chip") {
+    return (
+      <NavLink
+        to={JET_HOOPS_ROUTE}
+        className={({ isActive }) =>
+          ["app-nav-h btn-glass glass-effect-interactive shrink-0", isActive ? "app-nav-h--active" : ""]
+            .filter(Boolean)
+            .join(" ")
+        }
+        title={`${JET_HOOPS_TITLE} — 5-on-5 fleet pickup court`}
+        aria-label={`H — ${JET_HOOPS_TITLE} hardwood`}
+      >
+        <span className="app-nav-h__glow" aria-hidden />
+        <span className="app-nav-h__ball" aria-hidden />
+        <span className="app-nav-h__label">H</span>
+      </NavLink>
+    );
+  }
 
   return (
     <NavLink

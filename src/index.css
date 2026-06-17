@@ -25195,6 +25195,97 @@ html.b2b-page-root #usjet-app-shell {
     inset 0 0 0 1px rgb(255 251 235 / 0.38);
 }
 
+/* ─── H — hardwood glow (Jet Hoops) ─── */
+.app-nav-h {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  min-height: 2rem;
+  padding: 0 0.62rem;
+  overflow: hidden;
+  text-decoration: none;
+  border: 1px solid rgb(251 146 60 / 0.88);
+  background: rgb(154 52 18 / 0.94);
+  box-shadow:
+    0 0 14px rgb(249 115 22 / 0.55),
+    inset 0 0 0 1px rgb(254 215 170 / 0.24);
+  animation: app-nav-h-glow 1.2s ease-in-out infinite;
+}
+
+.app-nav-h__glow {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle, rgb(251 146 60 / 0.48), transparent 68%);
+  pointer-events: none;
+  animation: app-nav-h-glow-pulse 1.2s ease-in-out infinite;
+}
+
+.app-nav-h__ball {
+  position: absolute;
+  top: 0.18rem;
+  right: 0.2rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 28%, rgb(254 240 138), rgb(234 88 12));
+  box-shadow: 0 0 8px rgb(250 204 21 / 0.75);
+  pointer-events: none;
+}
+
+.app-nav-h__label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: rgb(255 247 237);
+  text-shadow: 0 0 10px rgb(251 146 60 / 0.95);
+}
+
+@keyframes app-nav-h-glow {
+  0%,
+  100% {
+    background: rgb(124 45 18 / 0.94);
+    border-color: rgb(234 88 12 / 0.72);
+    box-shadow:
+      0 0 10px rgb(249 115 22 / 0.38),
+      inset 0 0 0 1px rgb(254 215 170 / 0.18);
+  }
+
+  50% {
+    background: rgb(194 65 12);
+    border-color: rgb(253 186 116 / 0.98);
+    box-shadow:
+      0 0 24px rgb(251 146 60 / 0.95),
+      0 0 42px rgb(249 115 22 / 0.5),
+      inset 0 0 0 1px rgb(255 237 213 / 0.42);
+  }
+}
+
+@keyframes app-nav-h-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.app-nav-h:hover,
+.app-nav-h:focus-visible,
+.app-nav-h--active {
+  border-color: rgb(253 186 116);
+  box-shadow:
+    0 0 22px rgb(251 146 60 / 0.9),
+    inset 0 0 0 1px rgb(255 237 213 / 0.38);
+}
+
 /* ─── B2B silver flip + shine (header + footer) ─── */
 .app-nav-b2b,
 .usjet-global-contact-bar__b2b {
@@ -27584,6 +27675,76 @@ html.blog-page-root #usjet-app-shell {
     0 0 28px rgb(34 211 238 / 0.08);
 }
 
+.hired-hud__hub-videos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+.hired-hud__hub-video {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(56 189 248 / 0.28);
+  background: rgb(2 8 18 / 0.92);
+  box-shadow:
+    inset 0 0 0 1px rgb(103 232 249 / 0.08),
+    0 12px 32px rgb(2 6 23 / 0.45);
+}
+
+.hired-hud__hub-video-player {
+  display: block;
+  width: 100%;
+  min-height: 12rem;
+  max-height: min(52vh, 22rem);
+  object-fit: cover;
+  background: rgb(2 8 18);
+}
+
+.hired-hud__hub-video-play {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
+  border: 0;
+  border-radius: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(240 253 244);
+  background: rgb(2 8 18 / 0.62);
+  cursor: pointer;
+}
+
+.hired-hud__hub-video-play:hover,
+.hired-hud__hub-video-play:focus-visible {
+  background: rgb(6 24 16 / 0.72);
+  box-shadow: inset 0 0 0 1px rgb(74 222 128 / 0.35);
+}
+
+.hired-hud__hub-video-tag {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(240 253 244);
+  border: 1px solid rgb(74 222 128 / 0.45);
+  background: rgb(6 24 16 / 0.82);
+  box-shadow: 0 0 12px rgb(34 197 94 / 0.28);
+}
+
 .hired-hud__hub .hired-hud__ekg-monitor {
   margin-bottom: 0.85rem;
 }
@@ -29406,6 +29567,9 @@ html.blog-page-root #usjet-app-shell {
   isolation: isolate;
   min-height: 100vh;
   padding: clamp(5.5rem, 9vw, 7rem) clamp(1rem, 3vw, 2rem) clamp(2.5rem, 5vw, 4rem);
+  background:
+    linear-gradient(180deg, rgb(4 10 22 / 0.88), rgb(2 6 23 / 0.94)),
+    url("/hoops/nba-court-topdown.jpg") center / cover no-repeat fixed;
 }
 
 .jet-hoops-page__inner {
@@ -29524,6 +29688,8 @@ html.blog-page-root #usjet-app-shell {
   display: block;
   width: 100%;
   height: auto;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 .jet-hoops__layer {

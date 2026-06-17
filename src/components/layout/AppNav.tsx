@@ -210,6 +210,8 @@ const AppNav = () => {
                 <span className="app-nav-j__label">J</span>
               </Link>
 
+              <JetHoopsNavButton surface="header" variant="chip" />
+
               <AppNavHangarLive />
 
               <NavLink
@@ -230,7 +232,6 @@ const AppNav = () => {
               </NavLink>
 
               <GamingVrNavButton surface="header" />
-              <JetHoopsNavButton surface="header" />
             </div>
 
             <div className="app-nav-zone app-nav-zone--tail">

@@ -15,6 +15,7 @@ import {
   HIRED_HUD_PLAYER_SPRINT_MS,
   HIRED_HUD_PLAYER_WALK_MS,
 } from "../../data/hiredHudCourtBounce";
+import { JET_HOOPS_COURT_IMAGE_SRC } from "../../data/jetHoops";
 import { getFleetAircraftRadarLogoPathForSlot } from "../../lib/fleetAircraftLogos";
 
 type HiredHudCourtBounceProps = {
@@ -139,52 +140,23 @@ function courtScale(width: number, height: number): number {
   return Math.min(innerW / HIRED_HUD_COURT_LENGTH_M, innerH / HIRED_HUD_COURT_WIDTH_M);
 }
 
-function drawCourt(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+function drawCourt(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  courtImage?: HTMLImageElement | null,
+): void {
   const pad = COURT_PAD;
   const courtW = width - pad * 2;
   const courtH = height - pad * 2;
-  const cx = width / 2;
-  const cy = height / 2;
+
+  if (courtImage?.complete && courtImage.naturalWidth > 0) {
+    ctx.drawImage(courtImage, pad, pad, courtW, courtH);
+    return;
+  }
 
   ctx.fillStyle = "#8b5e34";
   ctx.fillRect(pad, pad, courtW, courtH);
-
-  ctx.fillStyle = "#b7793f";
-  ctx.fillRect(pad + 8, pad + 8, courtW - 16, courtH - 16);
-
-  ctx.strokeStyle = "rgb(255 255 255 / 0.82)";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(pad + 8, pad + 8, courtW - 16, courtH - 16);
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, Math.min(courtW, courtH) * 0.11, 0, Math.PI * 2);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(cx, pad + 8);
-  ctx.lineTo(cx, pad + courtH - 8);
-  ctx.stroke();
-
-  const keyW = courtW * 0.17;
-  const keyH = courtH * 0.34;
-  ctx.strokeRect(pad + 8, cy - keyH / 2, keyW, keyH);
-  ctx.strokeRect(pad + courtW - 8 - keyW, cy - keyH / 2, keyW, keyH);
-
-  ctx.beginPath();
-  ctx.arc(pad + 8 + keyW, cy, keyH * 0.42, -Math.PI / 2, Math.PI / 2);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(pad + courtW - 8 - keyW, cy, keyH * 0.42, Math.PI / 2, (Math.PI * 3) / 2);
-  ctx.stroke();
-
-  const arcR = courtW * 0.34;
-  ctx.beginPath();
-  ctx.arc(pad + 8 + keyW, cy, arcR, -Math.PI / 3, Math.PI / 3);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(pad + courtW - 8 - keyW, cy, arcR, (Math.PI * 2) / 3, (Math.PI * 4) / 3);
-  ctx.stroke();
 }
 
 function drawBasketball(ctx: CanvasRenderingContext2D, ball: Body, spin: number): void {
@@ -328,7 +300,19 @@ export default function HiredHudCourtBounce({ units }: HiredHudCourtBounceProps)
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<ReturnType<typeof initSimulation> | null>(null);
   const imagesRef = useRef<Map<number, HTMLImageElement>>(new Map());
+  const courtImageRef = useRef<HTMLImageElement | null>(null);
   const rngRef = useRef(createSeededRandom(314159));
+
+  useEffect(() => {
+    const courtImage = new Image();
+    courtImage.src = JET_HOOPS_COURT_IMAGE_SRC;
+    courtImage.onload = () => {
+      courtImageRef.current = courtImage;
+    };
+    return () => {
+      courtImageRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const nextImages = new Map<number, HTMLImageElement>();
@@ -428,7 +412,7 @@ export default function HiredHudCourtBounce({ units }: HiredHudCourtBounceProps)
       sim.ballSpin += ballSpeed * pxPerMeter * stepDt * 0.018;
 
       ctx.clearRect(0, 0, width, height);
-      drawCourt(ctx, width, height);
+      drawCourt(ctx, width, height, courtImageRef.current);
       for (const jet of jets) {
         drawJet(ctx, jet, imagesRef.current.get(jet.slot));
       }

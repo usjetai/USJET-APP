@@ -7,12 +7,13 @@ import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo"
 import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
 import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
 import HiredHudCourtBounce from "../components/hiredHud/HiredHudCourtBounce";
+import HiredHudHubVideo from "../components/hiredHud/HiredHudHubVideo";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
+import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -289,6 +290,27 @@ export default function HiredHud() {
           </div>
 
           <div className="hired-hud__hub" aria-label="Hired developer hub">
+            <div className="hired-hud__hub-videos">
+              <HiredHudHubVideo
+                src={HIRED_HUD_HUB_VIDEO_SRC}
+                ariaLabel="Hired developer hub live feed"
+                playLabel="Play hub feed"
+                feedTag="Live"
+              />
+              <HiredHudHubVideo
+                src={HIRED_HUD_HUB_EVERYONE_VIDEO_SRC}
+                ariaLabel="Hired developer hub everyone feed"
+                playLabel="Play everyone feed"
+                feedTag="Everyone"
+              />
+              <HiredHudHubVideo
+                src={HIRED_HUD_HUB_SECOND_VIDEO_SRC}
+                ariaLabel="Hired developer hub second feed"
+                playLabel="Play second feed"
+                feedTag="Second"
+              />
+            </div>
+
             <div className="hired-hud__ekg-monitor" aria-label="Fleet heart monitor">
               <div className="hired-hud__ekg-monitor-head">
                 <span className="hired-hud__ekg-monitor-title">

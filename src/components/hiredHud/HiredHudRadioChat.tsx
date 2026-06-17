@@ -37,8 +37,15 @@ type HiredHudRadioChatProps = {
 };
 
 const MAX_VISIBLE_MESSAGES = 14;
-const MESSAGE_INTERVAL_MS = 1800;
+/** Slower net — each transmission waits a random beat before the next. */
+const MESSAGE_DELAY_MIN_MS = 4200;
+const MESSAGE_DELAY_MAX_MS = 9800;
 const FOUNDER_SPEAKER_WEIGHT = 0.22;
+
+function randomResponseDelayMs(rng: () => number): number {
+  const spread = MESSAGE_DELAY_MAX_MS - MESSAGE_DELAY_MIN_MS;
+  return MESSAGE_DELAY_MIN_MS + Math.floor(rng() * (spread + 1));
+}
 
 function createSeededRandom(seed: number): () => number {
   let state = seed >>> 0;
@@ -126,8 +133,14 @@ function seedMessages(units: FleetUnit[], rng: () => number): RadioMessage[] {
   }
 
   const now = Date.now();
+  const offsets = [0];
+  for (let i = 1; i < speakers.length; i += 1) {
+    offsets.push(offsets[i - 1] + randomResponseDelayMs(rng));
+  }
+  const totalBackMs = offsets[offsets.length - 1];
+
   return speakers.map((speakerId, index) => {
-    const stamp = new Date(now - (speakers.length - index) * 1600);
+    const stamp = new Date(now - (totalBackMs - offsets[index]));
     return buildMessage(units, speakerId, rng, stamp);
   });
 }
@@ -153,13 +166,20 @@ export default function HiredHudRadioChat({ units }: HiredHudRadioChatProps) {
   }, [rng, units]);
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      if (document.hidden) return;
-      pushMessage();
-    }, MESSAGE_INTERVAL_MS);
+    let timeoutId = 0;
 
-    return () => window.clearInterval(id);
-  }, [pushMessage]);
+    const scheduleNext = () => {
+      timeoutId = window.setTimeout(() => {
+        if (!document.hidden) {
+          pushMessage();
+        }
+        scheduleNext();
+      }, randomResponseDelayMs(rng));
+    };
+
+    scheduleNext();
+    return () => window.clearTimeout(timeoutId);
+  }, [pushMessage, rng]);
 
   useEffect(() => {
     const node = logRef.current;

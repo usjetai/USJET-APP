@@ -29691,7 +29691,17 @@ html.blog-page-root #usjet-app-shell {
   will-change: transform;
 }
 
-.jet-hoops__hud {
+@media (max-width: 720px) {
+  .jet-hoops-scoreboard {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .jet-hoops-scoreboard__panel--blue,
+  .jet-hoops-scoreboard__panel--red {
+    align-items: center;
+  }
+
   .jet-hoops-page__stage {
     justify-content: flex-start;
   }

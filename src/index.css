@@ -5749,6 +5749,83 @@ button.fleet-card__launch--button {
   display: none;
 }
 
+/* Hangar bay isolation — portaled full-bleed partner view above global chrome */
+html.hangar-bay-isolated .liquid-glass-nav,
+html.hangar-bay-isolated .usjet-global-contact-bar,
+html.hangar-bay-isolated .site-latch-menu,
+html.hangar-bay-isolated .warp-bg-canvas,
+html.hangar-bay-isolated .global-video-bg,
+html.hangar-bay-isolated .aviation-pulse,
+html.hangar-bay-isolated .global-background-beat,
+html.hangar-bay-isolated .usjet-protocol-boot {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.hangar-bay-isolation {
+  position: fixed;
+  inset: 0;
+  z-index: 520;
+  display: flex;
+  flex-direction: column;
+  background: rgb(2 6 14);
+  isolation: isolate;
+}
+
+.hangar-bay-isolation__grid {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
+  gap: 0;
+}
+
+.hangar-bay-isolation__grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.hangar-bay-isolation__grid--dual {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.hangar-bay-isolation__grid--multi {
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+}
+
+.hangar-tool-workbench--isolated {
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+}
+
+.hangar-tool-workbench--isolated .hangar-tool-workbench__frame {
+  min-height: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.hangar-tool-workbench--isolated .hangar-tile-close {
+  top: max(0.65rem, env(safe-area-inset-top, 0px));
+  right: max(0.65rem, env(safe-area-inset-right, 0px));
+}
+
+.hangar-page--bay-open {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .hangar-bay-isolation__grid--dual,
+  .hangar-bay-isolation__grid--multi {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(0, 1fr);
+  }
+}
+
 /* Hangar shell stays open—aviation-pulse and mesh read through bay gaps & glass negative space */
 .hangar-page {
   position: relative;
@@ -26350,7 +26427,7 @@ html.blog-page-root #usjet-app-shell {
   color: #f8fafc;
 }
 
-/* ─── Wefunder pre-launch covenant bridge ─── */
+/* ─── Wefunder relaunch covenant bridge ─── */
 .wefunder-covenant-modal.pdre-overlay {
   z-index: 320;
 }
@@ -27400,7 +27477,7 @@ html.blog-page-root #usjet-app-shell {
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
   gap: 0.75rem;
 }
 
@@ -27408,7 +27485,7 @@ html.blog-page-root #usjet-app-shell {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 26rem;
+  min-height: 30rem;
   border: 1px solid rgb(56 189 248 / 0.22);
   border-radius: 0.9rem;
   overflow: hidden;
@@ -27668,12 +27745,12 @@ html.blog-page-root #usjet-app-shell {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(11.5rem, 13.5rem) minmax(0, 1fr);
+  grid-template-columns: minmax(16rem, 24rem) minmax(0, 1fr);
   grid-template-rows: auto auto auto auto;
   align-items: start;
   gap: 0.45rem 0.65rem;
   margin-top: auto;
-  min-height: 14rem;
+  min-height: 18.5rem;
   padding: 0.72rem 0.75rem 0.78rem;
   background: linear-gradient(
     180deg,
@@ -27686,22 +27763,132 @@ html.blog-page-root #usjet-app-shell {
   margin-top: 0.85rem;
 }
 
+.hired-hud__tile--scene-mosaic {
+  grid-column: 1 / -1;
+  min-height: auto;
+  border-color: rgb(251 191 36 / 0.28);
+  background: linear-gradient(180deg, rgb(8 20 36 / 0.94), rgb(12 30 52 / 0.98));
+}
+
+.hired-hud__scene-tile {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0.85rem 0.9rem 0.95rem;
+}
+
+.hired-hud__scene-tile-head {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.hired-hud__scene-tile-kicker {
+  margin: 0;
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(253 224 71 / 0.88);
+}
+
+.hired-hud__scene-tile-title {
+  margin: 0;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: rgb(224 242 254 / 0.98);
+}
+
+.hired-hud__scene-tile-copy {
+  margin: 0;
+  max-width: 52rem;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: rgb(148 163 184 / 0.92);
+}
+
+.hired-hud__scene-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.72rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hired-hud__scene-panel {
+  display: grid;
+  gap: 0.38rem;
+  min-width: 0;
+}
+
+.hired-hud__scene-panel-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.72rem;
+  aspect-ratio: 16 / 9;
+  box-shadow:
+    0 0 0 1px rgb(56 189 248 / 0.22),
+    0 12px 28px rgb(2 8 23 / 0.45);
+}
+
+.hired-hud__scene-panel-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hired-hud__scene-panel-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgb(34 211 238 / 0.35);
+  box-shadow: inset 0 0 18px rgb(34 211 238 / 0.08);
+  pointer-events: none;
+}
+
+.hired-hud__scene-panel-label {
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(165 243 252 / 0.95);
+}
+
+.hired-hud__scene-panel-caption {
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(148 163 184 / 0.82);
+}
+
+@media (max-width: 720px) {
+  .hired-hud__scene-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .hired-hud__tile-profile {
   grid-row: 1 / span 3;
   grid-column: 1;
   align-self: center;
-  justify-self: center;
+  justify-self: stretch;
+  width: 100%;
+  max-width: 24rem;
 }
 
 .hired-hud__tile-radar-wrap {
   position: absolute;
-  left: 50%;
-  top: 46%;
+  left: auto;
+  right: 0.72rem;
+  top: 40%;
   z-index: 3;
-  width: 39%;
-  max-width: 10.5rem;
+  width: 34%;
+  max-width: 9.5rem;
   aspect-ratio: 1;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   pointer-events: none;
 }
 
@@ -27722,7 +27909,7 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__avatar--tile {
-  width: 7.1rem;
+  width: 100%;
   height: auto;
 }
 
@@ -27732,6 +27919,19 @@ html.blog-page-root #usjet-app-shell {
   gap: 0.28rem;
   width: 100%;
   max-width: 12.8rem;
+}
+
+.hired-hud__avatar--triple-tile {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.32rem;
+  width: 100%;
+  max-width: 24rem;
+}
+
+.hired-hud__avatar--triple-tile .hired-hud__avatar-img {
+  object-fit: cover;
+  object-position: top center;
 }
 
 .hired-hud__avatar-panel {
@@ -27753,6 +27953,7 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__avatar--crew {
+  position: relative;
   width: 6.2rem;
   height: auto;
 }

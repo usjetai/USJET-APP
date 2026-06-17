@@ -8,6 +8,8 @@ export type HangarWorkbenchCell =
 
 type Expansion = { slot: number; unit: FleetUnit };
 
+export type HangarBayExpansion = Expansion;
+
 const WORKBENCH_FULL_TOAST_MS = 3400;
 const WORKBENCH_TOAST_DEBOUNCE_MS = 750;
 
@@ -100,6 +102,7 @@ export function useHangarGridExpansions(
     tryExpand,
     closeExpansion,
     cellPlan,
+    expansions,
     workbenchFullToast,
   };
 }

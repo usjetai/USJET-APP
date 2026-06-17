@@ -1,22 +1,22 @@
-/** Wefunder pre-launch bridge — teaser copy & social proof (Form C queue). */
+/** Wefunder relaunch bridge — live campaign copy & social proof (Form C). */
 
-export const WEFUNDER_COVENANT_BUTTON_LABEL = "Reserve Your Spot in the 5% Covenant" as const;
+export const WEFUNDER_COVENANT_BUTTON_LABEL = "Join the 5% Covenant Relaunch" as const;
 
 export const WEFUNDER_COVENANT_FOOTER_LABEL = "5% Covenant" as const;
 
 export const WEFUNDER_FLEET_TICKER =
-  "Join the 31-member Fleet. Public reservations opening soon." as const;
+  "Community round relaunch live on Wefunder. Join the 31-member Fleet." as const;
 
-export const WEFUNDER_PRELAUNCH_MODAL_KICKER = "Hangar · Pre-Launch" as const;
+export const WEFUNDER_RELAUNCH_MODAL_KICKER = "Hangar · Relaunch Live" as const;
 
-export const WEFUNDER_PRELAUNCH_MODAL_TITLE = "Private reservation queue" as const;
+export const WEFUNDER_RELAUNCH_MODAL_TITLE = "5% Covenant — campaign open" as const;
 
-export const WEFUNDER_PRELAUNCH_MODAL_BODY =
-  "The Hangar is currently in Pre-Launch. By clicking below, you are entering the private USJET LLC reservation queue. This is the only way to be notified the second the $50k Community Round goes live." as const;
+export const WEFUNDER_RELAUNCH_MODAL_BODY =
+  "USJET LLC is relaunching its community round on Wefunder. Click below to open the live campaign and reserve your place in the 5% Covenant before the window closes." as const;
 
-export const WEFUNDER_PRELAUNCH_MODAL_PROCEED = "Enter Wefunder reservation queue →" as const;
+export const WEFUNDER_RELAUNCH_MODAL_PROCEED = "Open live campaign on Wefunder →" as const;
 
-export const WEFUNDER_PRELAUNCH_MODAL_STAY = "Stay on USJET.AI" as const;
+export const WEFUNDER_RELAUNCH_MODAL_STAY = "Stay on USJET.AI" as const;
 
-export const WEFUNDER_PRELAUNCH_MODAL_NOTE =
-  "SEC-regulated community round · Form C · Not an offer until qualified on Wefunder" as const;
+export const WEFUNDER_RELAUNCH_MODAL_NOTE =
+  "SEC-regulated community round · Form C · Review offering terms on Wefunder before investing" as const;

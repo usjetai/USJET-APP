@@ -8,8 +8,8 @@ export function hasIndiegogoCampaign(): boolean {
 /** Wefunder Form C reservation page — set VITE_WEFUNDER_RESERVATION_URL when live. */
 export const WEFUNDER_RESERVATION_URL = import.meta.env.VITE_WEFUNDER_RESERVATION_URL?.trim() ?? "";
 
-/** Live campaign slug — used when env is unset (pre-launch bridge still routes here). */
-export const WEFUNDER_CAMPAIGN_DEFAULT_URL = "https://wefunder.com/usjetllc" as const;
+/** Live campaign slug — used when env is unset (covenant bridge routes here). */
+export const WEFUNDER_CAMPAIGN_DEFAULT_URL = "https://wefunder.com/usjet.llc" as const;
 
 export function hasWefunderReservation(): boolean {
   return WEFUNDER_RESERVATION_URL.length > 0 && /^https?:\/\//i.test(WEFUNDER_RESERVATION_URL);

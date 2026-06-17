@@ -169,12 +169,12 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
       },
     ],
     institutional: {
-      preSecLabel: "Final pre-SEC window",
-      equityCarveout: "5% community equity reserved · Form C in progress",
-      hangarTitle: "The Hangar is Opening",
+      preSecLabel: "Community round · Relaunch live",
+      equityCarveout: "5% community equity · Live on Wefunder",
+      hangarTitle: "The Hangar Relaunch Is Live",
       hangarCopy:
-        "We are currently seeking the first $50,000 in reservations. This is not just an investment—it is a vote for the American worker. Help us hit the Live button.",
-      goalMeterLabel: "$0 of $50,000 reserved",
+        "The community round is back on Wefunder. Help us hit the $50,000 goal—a vote for the American worker and the 5% Covenant.",
+      goalMeterLabel: "Relaunch in progress · $50,000 goal",
       useOfFunds: [
         { label: "App development", amount: "$10,000" },
         { label: "AI API & fleet compute", amount: "$20,000" },

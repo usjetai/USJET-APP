@@ -6,12 +6,12 @@ import {
   WEFUNDER_COVENANT_BUTTON_LABEL,
   WEFUNDER_COVENANT_FOOTER_LABEL,
   WEFUNDER_FLEET_TICKER,
-  WEFUNDER_PRELAUNCH_MODAL_BODY,
-  WEFUNDER_PRELAUNCH_MODAL_KICKER,
-  WEFUNDER_PRELAUNCH_MODAL_NOTE,
-  WEFUNDER_PRELAUNCH_MODAL_PROCEED,
-  WEFUNDER_PRELAUNCH_MODAL_STAY,
-  WEFUNDER_PRELAUNCH_MODAL_TITLE,
+  WEFUNDER_RELAUNCH_MODAL_BODY,
+  WEFUNDER_RELAUNCH_MODAL_KICKER,
+  WEFUNDER_RELAUNCH_MODAL_NOTE,
+  WEFUNDER_RELAUNCH_MODAL_PROCEED,
+  WEFUNDER_RELAUNCH_MODAL_STAY,
+  WEFUNDER_RELAUNCH_MODAL_TITLE,
 } from "../../data/wefunderBridge";
 import { getWefunderReservationUrl } from "../../lib/usjetCampaigns";
 
@@ -32,7 +32,7 @@ export function WefunderFleetTicker({ className = "" }: { className?: string }) 
   );
 }
 
-function WefunderPreLaunchModal({
+function WefunderRelaunchModal({
   open,
   onClose,
   onProceed,
@@ -59,7 +59,7 @@ function WefunderPreLaunchModal({
       <button
         type="button"
         className="wefunder-covenant-modal__backdrop"
-        aria-label="Close reservation briefing"
+        aria-label="Close relaunch briefing"
         onClick={onClose}
       />
       <GlassEffectContainer
@@ -71,26 +71,26 @@ function WefunderPreLaunchModal({
         <div className="wefunder-covenant-modal__icon" aria-hidden>
           <Shield size={22} strokeWidth={2} />
         </div>
-        <p className="wefunder-covenant-modal__kicker">{WEFUNDER_PRELAUNCH_MODAL_KICKER}</p>
+        <p className="wefunder-covenant-modal__kicker">{WEFUNDER_RELAUNCH_MODAL_KICKER}</p>
         <h2 id={titleId} className="wefunder-covenant-modal__title">
-          {WEFUNDER_PRELAUNCH_MODAL_TITLE}
+          {WEFUNDER_RELAUNCH_MODAL_TITLE}
         </h2>
-        <p className="wefunder-covenant-modal__body">{WEFUNDER_PRELAUNCH_MODAL_BODY}</p>
-        <p className="wefunder-covenant-modal__note">{WEFUNDER_PRELAUNCH_MODAL_NOTE}</p>
+        <p className="wefunder-covenant-modal__body">{WEFUNDER_RELAUNCH_MODAL_BODY}</p>
+        <p className="wefunder-covenant-modal__note">{WEFUNDER_RELAUNCH_MODAL_NOTE}</p>
         <div className="wefunder-covenant-modal__actions">
           <button
             type="button"
             className="wefunder-covenant-modal__stay btn-glass glass-effect-interactive"
             onClick={onClose}
           >
-            {WEFUNDER_PRELAUNCH_MODAL_STAY}
+            {WEFUNDER_RELAUNCH_MODAL_STAY}
           </button>
           <button
             type="button"
             className="wefunder-covenant-modal__proceed btn-glass-prominent glass-effect-interactive"
             onClick={onProceed}
           >
-            {WEFUNDER_PRELAUNCH_MODAL_PROCEED}
+            {WEFUNDER_RELAUNCH_MODAL_PROCEED}
           </button>
         </div>
       </GlassEffectContainer>
@@ -99,7 +99,7 @@ function WefunderPreLaunchModal({
   );
 }
 
-/** Pre-launch modal → opens Wefunder reservation slug in a new tab. */
+/** Relaunch briefing modal → opens live Wefunder campaign in a new tab. */
 export default function WefunderCovenantBridge({
   variant = "prominent",
   className = "",
@@ -142,7 +142,7 @@ export default function WefunderCovenantBridge({
           label
         )}
       </button>
-      <WefunderPreLaunchModal open={open} onClose={closeModal} onProceed={proceed} />
+      <WefunderRelaunchModal open={open} onClose={closeModal} onProceed={proceed} />
     </div>
   );
 }

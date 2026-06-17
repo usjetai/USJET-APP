@@ -1,5 +1,5 @@
 /**
- * Slice the motorcycle pilot sheet into hired-developer ride tiles (second photo per HUD tile).
+ * Slice the supercar pilot sheet into hired-developer ride tiles (second photo per HUD tile + hub crew).
  * Does not touch existing `-hub.webp` portraits — run `generate-hired-developer-avatars.mjs` for those.
  * Source: scripts/assets/hired-developer-hub-sheet.png (2×5 grid, portraits 1–10).
  *

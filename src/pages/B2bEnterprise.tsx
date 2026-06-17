@@ -125,13 +125,13 @@ export default function B2bEnterprise() {
       <section className="b2b-page__covenant" aria-labelledby="b2b-covenant-heading">
         <GlassEffectContainer className="b2b-covenant glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
           <div className="b2b-covenant__inner">
-            <p className="b2b-covenant__kicker">Community round · Pre-launch</p>
+            <p className="b2b-covenant__kicker">Community round · Relaunch live</p>
             <h2 id="b2b-covenant-heading" className="b2b-covenant__title">
-              Reserve the 5% Covenant
+              Join the 5% Covenant
             </h2>
             <p className="b2b-covenant__copy">
-              The Hangar is planted on Wefunder. Enterprise briefings run on this page—but the community equity lane
-              opens through the private reservation queue first.
+              The Hangar campaign is live on Wefunder again. Enterprise briefings run on this page—the community equity
+              lane opens through the relaunch link below.
             </p>
             <WefunderCovenantBridge variant="prominent" showTicker />
           </div>

@@ -3,8 +3,8 @@ import { useEffect, useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
+import HangarIsolatedBayPortal from "../components/hangar/HangarIsolatedBayPortal";
 import HangarPageHeader, { HANGAR_META_DESCRIPTION } from "../components/hangar/HangarPageHeader";
-import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
 import { useHangarGridExpansions } from "../hooks/useHangarGridExpansions";
@@ -14,7 +14,7 @@ import {
   hangarBayHeroBadge,
   hangarBayLimitToast,
 } from "../lib/memberAccessLevel";
-import { type FleetUnit, FLEET_UNIT_COUNT } from "../types/fleet";
+import { type FleetUnit } from "../types/fleet";
 
 const hangarUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 const unitBySlot = new Map<number, FleetUnit>(hangarUnits.map((unit) => [unit.slot, unit]));
@@ -26,7 +26,7 @@ export default function Hangar() {
   const bayToast = hangarBayLimitToast(session);
   const bayBadge = hangarBayHeroBadge(session);
   const { columns, setColumnLayout } = useHangarColumnLayout();
-  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useHangarGridExpansions(
+  const { tryExpand, closeExpansion, expansions, workbenchFullToast } = useHangarGridExpansions(
     unitBySlot,
     bayLimit,
   );
@@ -61,38 +61,26 @@ export default function Hangar() {
     tryExpand(targetUnit);
   }, [location.state, tryExpand]);
 
-  const bayCells = useMemo(() => {
-    const cells = [];
+  const bayCells = useMemo(
+    () =>
+      hangarUnits.map((unit) => (
+        <HangarBayTile key={`hangar-bay-${unit.slot}`} unit={unit} onOpenBay={() => tryExpand(unit)} />
+      )),
+    [tryExpand],
+  );
 
-    for (let slot = 0; slot < FLEET_UNIT_COUNT; slot++) {
-      const cell = cellPlan.get(slot);
-      if (!cell) continue;
-
-      if (cell.mode === "expanded") {
-        cells.push(
-          <HangarToolWorkbench
-            key={`hangar-wb-${cell.unit.id}-slot-${slot}`}
-            unit={cell.unit}
-            onClose={() => closeExpansion(slot)}
-          />,
-        );
-        continue;
-      }
-
-      const unit = cell.unit;
-      cells.push(
-        <HangarBayTile key={`hangar-bay-${slot}`} unit={unit} onOpenBay={() => tryExpand(unit)} />,
-      );
-    }
-
-    return cells;
-  }, [cellPlan, closeExpansion, tryExpand]);
+  const expandedSlots = useMemo(() => new Set(expansions.map((entry) => entry.slot)), [expansions]);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="hangar-page hangar-page--workbench relative"
+      className={[
+        "hangar-page hangar-page--workbench relative",
+        expandedSlots.size > 0 ? "hangar-page--bay-open" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       {workbenchFullToast ? (
         <div
@@ -132,6 +120,8 @@ export default function Hangar() {
 
         <HangarBayGrid columns={columns}>{bayCells}</HangarBayGrid>
       </div>
+
+      <HangarIsolatedBayPortal expansions={expansions} onClose={closeExpansion} />
     </motion.div>
   );
 }

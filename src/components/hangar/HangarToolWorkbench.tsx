@@ -10,10 +10,12 @@ import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
 type HangarToolWorkbenchProps = {
   unit: FleetUnit;
   onClose: () => void;
+  /** Portaled full-bleed shell — edge-to-edge iframe, no in-grid chrome. */
+  isolated?: boolean;
 };
 
 /** Expanded hangar bay — partner fills the tile; floating close only. */
-export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkbenchProps) {
+export default function HangarToolWorkbench({ unit, onClose, isolated = false }: HangarToolWorkbenchProps) {
   const partnerUrl = iframeSrcFromUnitHref(
     fleetLaunchUrl(unit.domain, resolveFleetUnitHref(unit), unit.slot),
   );
@@ -26,7 +28,12 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
 
   return (
     <article
-      className="intel-expanded hangar-tool-workbench hangar-tool-workbench--bay-accent hangar-tool-workbench--tile-only"
+      className={[
+        "intel-expanded hangar-tool-workbench hangar-tool-workbench--bay-accent hangar-tool-workbench--tile-only",
+        isolated ? "hangar-tool-workbench--isolated" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={fleetBayAccentStyle(unit.slot) as CSSProperties}
     >
       <button

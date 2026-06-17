@@ -3,6 +3,7 @@ import {
   getHiredDeveloperHubAvatarPath,
   getHiredDeveloperProductAvatarPath,
   getHiredDeveloperRideAvatarPath,
+  getHiredDeveloperSuperAvatarPath,
   HIRED_HUD_COMMANDER_SLOT,
 } from "../../lib/hiredHudDeveloperAvatars";
 
@@ -54,48 +55,40 @@ export default function HiredHudDeveloperAvatar({
 }: HiredHudDeveloperAvatarProps) {
   const hubSrc = getHiredDeveloperHubAvatarPath(slot);
   const rideSrc = getHiredDeveloperRideAvatarPath(slot);
+  const superSrc = getHiredDeveloperSuperAvatarPath(slot);
   const productSrc = getHiredDeveloperProductAvatarPath(slot);
   const isCommander = slot === HIRED_HUD_COMMANDER_SLOT;
 
   if (variant === "tile") {
-    if (!hubSrc && !rideSrc) {
+    if (!hubSrc && !rideSrc && !superSrc) {
       return null;
     }
 
     return (
-      <div className="hired-hud__avatar hired-hud__avatar--tile hired-hud__avatar--dual-tile">
+      <div className="hired-hud__avatar hired-hud__avatar--tile hired-hud__avatar--triple-tile">
         {hubSrc ? <AvatarPanel src={hubSrc} name={name} label="profile" /> : null}
         {rideSrc ? <AvatarPanel src={rideSrc} name={name} label="ride" /> : null}
+        {superSrc ? <AvatarPanel src={superSrc} name={name} label="super" /> : null}
       </div>
     );
   }
 
-  const src = variant === "product" ? productSrc : hubSrc;
-  if (!src) {
-    return null;
-  }
+  if (variant === "crew") {
+    if (!hubSrc) {
+      return null;
+    }
 
-  return (
-    <div
-      className={[
-        "hired-hud__avatar",
-        variant === "crew" ? "hired-hud__avatar--crew" : "",
-        variant === "product" ? "hired-hud__avatar--product" : "hired-hud__avatar--tile",
-        variant === "product" ? "" : "hired-hud__avatar--hub-rect",
-      ]
-        .filter(Boolean)
-        .join(" ")}
-    >
-      <img
-        src={src}
-        alt={`${name} profile`}
-        className="hired-hud__avatar-img"
-        width={variant === "product" ? 256 : 512}
-        height={variant === "product" ? 256 : 854}
-        decoding="async"
-        draggable={false}
-      />
-      {variant === "crew" ? (
+    return (
+      <div className="hired-hud__avatar hired-hud__avatar--crew hired-hud__avatar--hub-rect">
+        <img
+          src={hubSrc}
+          alt={`${name} profile`}
+          className="hired-hud__avatar-img"
+          width={512}
+          height={854}
+          decoding="async"
+          draggable={false}
+        />
         <div className="hired-hud__hub-badges">
           {isCommander ? (
             <span
@@ -111,7 +104,35 @@ export default function HiredHudDeveloperAvatar({
             Developer
           </span>
         </div>
-      ) : null}
+        <span className="hired-hud__avatar-ring" aria-hidden />
+      </div>
+    );
+  }
+
+  const src = variant === "product" ? productSrc : hubSrc;
+  if (!src) {
+    return null;
+  }
+
+  return (
+    <div
+      className={[
+        "hired-hud__avatar",
+        variant === "product" ? "hired-hud__avatar--product" : "hired-hud__avatar--tile",
+        variant === "product" ? "" : "hired-hud__avatar--hub-rect",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <img
+        src={src}
+        alt={`${name} profile`}
+        className="hired-hud__avatar-img"
+        width={variant === "product" ? 256 : 512}
+        height={variant === "product" ? 256 : 854}
+        decoding="async"
+        draggable={false}
+      />
       <span className="hired-hud__avatar-ring" aria-hidden />
     </div>
   );

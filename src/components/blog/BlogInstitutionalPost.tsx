@@ -79,7 +79,7 @@ export default function BlogInstitutionalPost({ post }: BlogInstitutionalPostPro
             </div>
             <WefunderCovenantBridge variant="prominent" showTicker className="blog-institutional-hangar__bridge" />
             <p className="blog-institutional-hangar__note">
-              SEC-regulated community round · Form C · Pre-launch reservation queue on Wefunder
+              SEC-regulated community round · Form C · Live relaunch on Wefunder
             </p>
           </div>
         </GlassEffectContainer>

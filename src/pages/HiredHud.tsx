@@ -5,6 +5,7 @@ import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAvatar";
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
 import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
+import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
@@ -318,6 +319,7 @@ export default function HiredHud() {
             </div>
 
             <ul className="hired-hud__list" aria-label="Hired developers live monitor list">
+            <HiredHudSceneTile />
             {hiredUnits.map((unit, rosterIndex) => {
               const bpm = developerBpm[unit.slot] ?? 72;
               const spo2 = developerSpo2[unit.slot]?.toFixed(1) ?? "97.0";

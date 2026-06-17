@@ -12,7 +12,7 @@ import {
 } from "../data/fleetDirectorySeo";
 import { FLEET_AVAILABLE_COUNT, FLEET_HIRED_COUNT } from "../data/fleetRoster";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
-import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import { fleetLaunchUrl } from "../lib/fleetLaunchUrl";
 import { getFleetCapabilities } from "../data/fleetCapabilities";
 
 export default function FleetDirectory() {
@@ -90,10 +90,7 @@ export default function FleetDirectory() {
                     {entry.name} Product page →
                   </Link>
                   <a
-                    href={integratedLaunchUrl(entry.domain, entry.href, entry.slot, {
-                      label: entry.name,
-                      returnTo: "/",
-                    })}
+                    href={fleetLaunchUrl(entry.domain, entry.href, entry.slot)}
                     className="fleet-directory-card__launch glass-effect-interactive"
                   >
                     Launch {entry.name} via USJET →

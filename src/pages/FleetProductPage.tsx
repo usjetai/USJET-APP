@@ -6,7 +6,7 @@ import { getFleetDirectoryEntryBySlug } from "../data/fleetDirectorySeo";
 import { getFleetUnitById } from "../data/fleetManifest";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAvatar";
-import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import { fleetLaunchUrl } from "../lib/fleetLaunchUrl";
 import { getHiredDeveloperProductAvatarPath } from "../lib/hiredHudDeveloperAvatars";
 import { FleetLaunchLink } from "../lib/fleetLaunchLink";
 import { logFleetUsageIfMember } from "../lib/fleetUsageHistory";
@@ -139,10 +139,7 @@ export default function FleetProductPage() {
   const available = entry.rosterStatus === "available";
   const launchUrl = available
     ? "#"
-    : integratedLaunchUrl(entry.domain, entry.href, entry.slot, {
-        label: entry.name,
-        returnTo: `/product/${entry.aircraftSlug}`,
-      });
+    : fleetLaunchUrl(entry.domain, entry.href, entry.slot);
   const productLede = PRODUCT_LEDE_BY_AIRCRAFT_SLUG[entry.aircraftSlug] ?? entry.seoDescription;
   const productSpecs = PRODUCT_SPECS_BY_AIRCRAFT_SLUG[entry.aircraftSlug];
   const productModelKind = PRODUCT_MODEL_KIND_BY_AIRCRAFT_SLUG[entry.aircraftSlug] ?? "Model";

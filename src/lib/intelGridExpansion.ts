@@ -1,3 +1,4 @@
+import { fleetBayIdFromSlot, sanitizeCockpitSrc } from "./fleetLaunchUrl";
 import { HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
 
 /** Max simultaneous 2×2 workbenches on Intel or Hangar fleet grids (triple bay). */
@@ -43,7 +44,39 @@ export function iframeSrcFromUnitHref(href: string): string {
   return `https://${h}`;
 }
 
-/** Hangar bay iframe source — internal USJET routes only. */
-export function hangarWorkbenchIframeSrc(rawSrc: string, _cockpitLaunchHref?: string): string {
-  return rawSrc;
+export type HangarWorkbenchEmbedOptions = {
+  slot?: number;
+  label?: string;
+};
+
+/**
+ * Hangar bay iframe `src`: internal USJET routes load directly; external partners route
+ * through same-origin `/cockpit?embed=hangar` so the module stays inside the 2×2 tile.
+ */
+export function hangarWorkbenchIframeSrc(rawSrc: string, options?: HangarWorkbenchEmbedOptions): string {
+  if (rawSrc.startsWith("/")) {
+    return rawSrc;
+  }
+
+  const safe = sanitizeCockpitSrc(rawSrc);
+  if (!safe) {
+    return "/hangar";
+  }
+
+  const params = new URLSearchParams({
+    src: safe,
+    return: "/hangar",
+    embed: "hangar",
+  });
+
+  if (options?.label) {
+    params.set("label", options.label);
+  }
+
+  const bayId = fleetBayIdFromSlot(options?.slot);
+  if (bayId) {
+    params.set("bay", bayId);
+  }
+
+  return `/cockpit?${params.toString()}`;
 }

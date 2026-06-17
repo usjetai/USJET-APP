@@ -13,7 +13,7 @@ import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
 import { useOriginLimitedOfferOptional } from "../../context/OriginLimitedOfferContext";
-import { integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
+import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
@@ -63,7 +63,7 @@ export default function FleetCard({
   const originOffer = useOriginLimitedOfferOptional();
   const resolvedHref = href?.trim() ?? "";
   const hasExternalPartner = /^https?:\/\//i.test(resolvedHref);
-  const partnerLaunchUrl = integratedLaunchUrl(domain, href, slot, { label: name, returnTo });
+  const partnerLaunchUrl = fleetLaunchUrl(domain, href, slot);
   const launchUrl = onExpandBay
     ? "#"
     : isAvailableBay && !hasExternalPartner

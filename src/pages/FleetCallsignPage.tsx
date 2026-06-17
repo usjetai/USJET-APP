@@ -12,7 +12,7 @@ import {
   isFleetBayHired,
 } from "../data/fleetRoster";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
-import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
+import { fleetLaunchUrl } from "../lib/fleetLaunchUrl";
 import { FleetLaunchLink } from "../lib/fleetLaunchLink";
 import { logFleetUsageIfMember } from "../lib/fleetUsageHistory";
 import type { FleetPlatform } from "../types/fleet";
@@ -71,10 +71,7 @@ export default function FleetCallsignPage() {
   const hired = isFleetBayHired(entry.slot);
   const launchUrl = available
     ? "#"
-    : integratedLaunchUrl(entry.domain, entry.href, entry.slot, {
-        label: entry.name,
-        returnTo: entry.pagePath,
-      });
+    : fleetLaunchUrl(entry.domain, entry.href, entry.slot);
   const displayAircraftType = getFleetDisplayAircraftType(entry.slot, unit.aircraftType);
   const platformNames = capabilities.platforms.map((platform: FleetPlatform) => PLATFORM_LABELS[platform]);
 

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { fleetBayAccentStyle, slotFromBayId } from "../data/fleetBayAccents";
 import { verifyFleetCallName } from "../data/fleetManifest";
 import UsjetReturnButton from "../components/layout/UsjetReturnButton";
+import { isHangarIframeBlocked } from "../lib/hangarEmbedPolicy";
 import { markFleetBayTrusted, sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
 import { logFleetLaunchHandoff } from "../lib/fleetUsageHistory";
 
@@ -15,7 +16,7 @@ const RETURN_ARIA: Record<string, string> = {
   "/origin": "Return to USJET Origin",
 };
 
-/** Minimal partner shell — partner iframe + floating USJET return only. */
+/** Full-page cockpit handoffs; Hangar tiles use `embed=hangar` for in-tile partner frames. */
 export default function Cockpit() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
@@ -28,11 +29,13 @@ export default function Cockpit() {
   const bay = params.get("bay");
   const partnerLabel = params.get("label");
   const callName = params.get("callName")?.trim() ?? "";
+  const isHangarEmbed = params.get("embed") === "hangar";
   const baySlot = useMemo(() => slotFromBayId(bay), [bay]);
   const bayAccentStyle = useMemo(
     () => (baySlot !== null ? fleetBayAccentStyle(baySlot) : undefined),
     [baySlot],
   );
+  const iframeBlocked = src ? isHangarIframeBlocked(src) : false;
 
   useEffect(() => {
     if (!src) {
@@ -46,11 +49,11 @@ export default function Cockpit() {
 
     try {
       const host = new URL(src).hostname.replace(/^www\./, "");
-      document.title = `USJET Cockpit · ${host}`;
+      document.title = isHangarEmbed ? `${partnerLabel ?? host} · USJET Hangar` : `USJET Cockpit · ${host}`;
     } catch {
-      document.title = "USJET Cockpit";
+      document.title = isHangarEmbed ? "USJET Hangar bay" : "USJET Cockpit";
     }
-  }, [callName, navigate, src]);
+  }, [callName, isHangarEmbed, navigate, partnerLabel, src]);
 
   useLayoutEffect(() => {
     if (!src) {
@@ -67,6 +70,44 @@ export default function Cockpit() {
   }
 
   const displayName = partnerLabel ?? "partner module";
+
+  if (isHangarEmbed) {
+    return (
+      <div className="cockpit-shell cockpit-shell--hangar-embed" style={bayAccentStyle}>
+        <iframe
+          className="cockpit-shell__frame"
+          title={`${displayName} · USJET hangar module`}
+          src={src}
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+    );
+  }
+
+  if (iframeBlocked) {
+    return (
+      <div className="cockpit-shell cockpit-shell--handoff" style={bayAccentStyle}>
+        <div className="cockpit-handoff-interstitial cockpit-handoff-interstitial--bay-accent">
+          <div className="cockpit-handoff-interstitial__glow" aria-hidden />
+          <div className="cockpit-handoff-interstitial__inner">
+            <p className="cockpit-handoff-interstitial__kicker">USJET handoff</p>
+            <h1 className="cockpit-handoff-interstitial__title">{displayName}</h1>
+            <p className="cockpit-handoff-interstitial__body">
+              This partner blocks in-page embedding. Open the live site in this window — use your browser back button
+              or the USJET control to return.
+            </p>
+            <div className="cockpit-handoff-interstitial__actions">
+              <a className="cockpit-handoff-interstitial__cta" href={src}>
+                Open {displayName}
+              </a>
+            </div>
+          </div>
+        </div>
+        <UsjetReturnButton to={returnTo} ariaLabel={RETURN_ARIA[returnTo] ?? "Return to USJET"} />
+      </div>
+    );
+  }
 
   return (
     <div className="cockpit-shell" style={bayAccentStyle}>

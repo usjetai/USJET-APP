@@ -5700,6 +5700,10 @@
 .hangar-tool-workbench .intel-expanded__frame {
   background: rgb(3 10 22 / 0.96);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  flex: 1;
+  width: 100%;
+  min-height: min(52vh, 28rem);
+  border: 0;
 }
 
 /* Hangar shell stays open—aviation-pulse and mesh read through bay gaps & glass negative space */
@@ -15050,6 +15054,22 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   display: flex;
   flex-direction: column;
   background: #020617;
+}
+
+.cockpit-shell--hangar-embed {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  min-height: 100%;
+  background: #030a16;
+}
+
+.cockpit-shell--hangar-embed .cockpit-shell__frame {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
 }
 
 .cockpit-return-bar {

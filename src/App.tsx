@@ -21,6 +21,7 @@ const Fleet = lazy(() => import("./pages/Fleet"));
 const Hangar = lazy(() => import("./pages/Hangar"));
 const Intel = lazy(() => import("./pages/Intel"));
 const Founder = lazy(() => import("./pages/Founder"));
+const FounderProducts = lazy(() => import("./pages/FounderProducts"));
 const Origin = lazy(() => import("./pages/Origin"));
 const FounderSpecial1995 = lazy(() => import("./pages/FounderSpecial1995"));
 const Special = lazy(() => import("./pages/Special"));
@@ -95,6 +96,7 @@ function AnimatedRoutes() {
               }
             />
             <Route path="/founder" element={<Founder />} />
+            <Route path="/founder/products" element={<FounderProducts />} />
             <Route path="/gaming" element={<Gaming />} />
             <Route path="/vr" element={<Gaming />} />
             <Route path="/gamers" element={<Gamers />} />

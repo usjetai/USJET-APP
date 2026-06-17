@@ -6,6 +6,7 @@ import FounderWorkerSilhouette, {
 } from "../components/founder/FounderWorkerSilhouettes";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import FounderLinkedInBeacon from "../components/founder/FounderLinkedInBeacon";
+import FounderProductsBeacon from "../components/founder/FounderProductsBeacon";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import { FOUNDER_PUBLIC_NAME, FOUNDER_PUBLIC_NAME_KICKER } from "../data/founderManifesto";
 
@@ -113,8 +114,9 @@ const Founder = () => {
                 <p className="founder-story__founder-kicker">{FOUNDER_PUBLIC_NAME_KICKER}</p>
                 <h1 className="founder-story__founder-name">{FOUNDER_PUBLIC_NAME}</h1>
               </div>
-              <div className="founder-story__hero-linkedin">
+              <div className="founder-story__hero-actions">
                 <FounderLinkedInBeacon variant="hero" />
+                <FounderProductsBeacon variant="hero" />
               </div>
               <p className="founder-story__lede founder-story__lede--centered">
                 Queens hustle, the digital hive, and the first AI platform built for blue-collar

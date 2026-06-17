@@ -10476,6 +10476,15 @@ button.fleet-card {
     0 2px 0 rgba(15, 23, 42, 0.9);
 }
 
+.founder-story__hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.85rem;
+  margin: 0.85rem 0 0.35rem;
+}
+
 .founder-story__hero-linkedin {
   display: flex;
   justify-content: center;
@@ -10671,6 +10680,11 @@ button.fleet-card {
 }
 
 @media (max-width: 720px) {
+  .founder-story__hero-actions {
+    margin-top: 0.65rem;
+    gap: 0.7rem;
+  }
+
   .founder-story__hero-linkedin {
     margin-top: 0.65rem;
   }
@@ -10699,6 +10713,325 @@ button.fleet-card {
   .founder-linkedin-beacon:focus-visible {
     transform: none;
   }
+}
+
+/* ─── Founder Products beacon (hero + social) ─── */
+.founder-products-beacon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  text-decoration: none;
+  color: #f8fafc;
+  border-radius: 1rem;
+  border: 1px solid rgba(250, 204, 21, 0.55);
+  background: linear-gradient(
+    155deg,
+    rgba(180, 83, 9, 0.92) 0%,
+    rgba(202, 138, 4, 0.88) 42%,
+    rgba(15, 23, 42, 0.95) 100%
+  );
+  box-shadow:
+    0 0 24px rgba(202, 138, 4, 0.55),
+    0 0 48px rgba(34, 211, 238, 0.22),
+    inset 0 0 16px rgba(254, 240, 138, 0.2);
+  animation: founder-products-glow 3.6s ease-in-out infinite;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.founder-products-beacon--hero {
+  flex-shrink: 0;
+  flex-direction: column;
+  align-self: center;
+  gap: 0.35rem;
+  min-width: 5.5rem;
+  padding: 0.85rem 0.7rem 0.75rem;
+}
+
+.founder-products-beacon--social {
+  flex-direction: column;
+  gap: 0;
+  min-width: 3.1rem;
+  padding: 0.55rem 0.5rem 0.5rem;
+  border-radius: 0.85rem;
+}
+
+.founder-products-beacon__halo {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.45), transparent 62%);
+  animation: founder-products-halo 4.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.founder-products-beacon__orbit {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  background: linear-gradient(120deg, rgba(254, 240, 138, 0.9), transparent 40%, rgba(202, 138, 4, 0.85))
+    border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: founder-products-orbit 5.5s linear infinite;
+  pointer-events: none;
+}
+
+.founder-products-beacon__shine {
+  position: absolute;
+  inset: -120% -60%;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(254, 240, 138, 0.35) 52%,
+    transparent 64%
+  );
+  transform: translateX(-120%) skewX(-14deg);
+  animation: b2b-btn-shine 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.founder-products-beacon__icon-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 18px rgba(254, 240, 138, 0.55),
+    inset 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.founder-products-beacon--social .founder-products-beacon__icon-wrap {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.55rem;
+}
+
+.founder-products-beacon__icon {
+  color: #fffbeb;
+  filter: drop-shadow(0 0 8px rgba(254, 240, 138, 0.95));
+}
+
+.founder-products-beacon__copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.08rem;
+  text-align: center;
+}
+
+.founder-products-beacon__label {
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.52rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(254, 249, 195, 0.95);
+}
+
+.founder-products-beacon__handle {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fde68a;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.75);
+}
+
+.founder-products-beacon:hover,
+.founder-products-beacon:focus-visible {
+  transform: translateY(-3px) scale(1.04);
+  border-color: rgba(254, 240, 138, 0.85);
+  box-shadow:
+    0 0 32px rgba(202, 138, 4, 0.75),
+    0 0 56px rgba(250, 204, 21, 0.45),
+    0 0 80px rgba(34, 211, 238, 0.2),
+    inset 0 0 20px rgba(254, 240, 138, 0.28);
+  outline: none;
+}
+
+@keyframes founder-products-glow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.14);
+  }
+}
+
+@keyframes founder-products-halo {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes founder-products-orbit {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-products-beacon,
+  .founder-products-beacon__halo,
+  .founder-products-beacon__orbit,
+  .founder-products-beacon__shine {
+    animation: none;
+  }
+
+  .founder-products-beacon:hover,
+  .founder-products-beacon:focus-visible {
+    transform: none;
+  }
+}
+
+/* ─── Founder products page ─── */
+.founder-products {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.founder-products__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.65rem;
+}
+
+.founder-products__kicker {
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.85);
+}
+
+.founder-products__title {
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f8fafc;
+  text-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+}
+
+.founder-products__lede {
+  max-width: 38rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.founder-products__back {
+  margin-top: 0.35rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
+.founder-products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 1.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.founder-products__card-wrap {
+  min-width: 0;
+}
+
+.founder-products__card {
+  height: 100%;
+  padding: 0.85rem;
+}
+
+.founder-products__figure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.founder-products__image-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  padding: 0.65rem;
+  border-radius: 0.85rem;
+  background: rgba(15, 23, 42, 0.45);
+  overflow: hidden;
+}
+
+.founder-products__image {
+  display: block;
+  width: 100%;
+  max-height: 14rem;
+  object-fit: contain;
+}
+
+.founder-products__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: center;
+}
+
+.founder-products__item-kicker {
+  font-family: theme("fontFamily.aviation");
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.8);
+}
+
+.founder-products__item-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
 }
 
 .founder-story__hero-frame {
@@ -25195,56 +25528,58 @@ html.b2b-page-root #usjet-app-shell {
     inset 0 0 0 1px rgb(255 251 235 / 0.38);
 }
 
-/* ─── H — hardwood glow (Jet Hoops) ─── */
-.app-nav-h {
+/* ─── Hoops — hardwood glow (Jet Hoops header chip) ─── */
+.app-nav-hoops {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 2.1rem;
+  gap: 0.28rem;
+  min-width: 4.4rem;
   min-height: 2rem;
-  padding: 0 0.62rem;
-  overflow: hidden;
+  padding: 0 0.78rem 0 0.68rem;
+  overflow: visible;
   text-decoration: none;
+  white-space: nowrap;
   border: 1px solid rgb(251 146 60 / 0.88);
   background: rgb(154 52 18 / 0.94);
   box-shadow:
     0 0 14px rgb(249 115 22 / 0.55),
     inset 0 0 0 1px rgb(254 215 170 / 0.24);
-  animation: app-nav-h-glow 1.2s ease-in-out infinite;
+  animation: app-nav-hoops-glow 1.2s ease-in-out infinite;
 }
 
-.app-nav-h__glow {
+.app-nav-hoops__glow {
   position: absolute;
   inset: -30%;
   background: radial-gradient(circle, rgb(251 146 60 / 0.48), transparent 68%);
   pointer-events: none;
-  animation: app-nav-h-glow-pulse 1.2s ease-in-out infinite;
+  animation: app-nav-hoops-glow-pulse 1.2s ease-in-out infinite;
 }
 
-.app-nav-h__ball {
-  position: absolute;
-  top: 0.18rem;
-  right: 0.2rem;
-  width: 0.42rem;
-  height: 0.42rem;
+.app-nav-hoops__ball {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  width: 0.48rem;
+  height: 0.48rem;
   border-radius: 999px;
   background: radial-gradient(circle at 32% 28%, rgb(254 240 138), rgb(234 88 12));
   box-shadow: 0 0 8px rgb(250 204 21 / 0.75);
   pointer-events: none;
 }
 
-.app-nav-h__label {
+.app-nav-hoops__label {
   position: relative;
   z-index: 1;
-  font-size: 0.78rem;
+  font-size: 0.64rem;
   font-weight: 900;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: rgb(255 247 237);
   text-shadow: 0 0 10px rgb(251 146 60 / 0.95);
 }
 
-@keyframes app-nav-h-glow {
+@keyframes app-nav-hoops-glow {
   0%,
   100% {
     background: rgb(124 45 18 / 0.94);
@@ -25264,7 +25599,7 @@ html.b2b-page-root #usjet-app-shell {
   }
 }
 
-@keyframes app-nav-h-glow-pulse {
+@keyframes app-nav-hoops-glow-pulse {
   0%,
   100% {
     opacity: 0.5;
@@ -25277,9 +25612,9 @@ html.b2b-page-root #usjet-app-shell {
   }
 }
 
-.app-nav-h:hover,
-.app-nav-h:focus-visible,
-.app-nav-h--active {
+.app-nav-hoops:hover,
+.app-nav-hoops:focus-visible,
+.app-nav-hoops--active {
   border-color: rgb(253 186 116);
   box-shadow:
     0 0 22px rgb(251 146 60 / 0.9),
@@ -29607,6 +29942,18 @@ html.blog-page-root #usjet-app-shell {
 
 .jet-hoops-page__logo--video {
   pointer-events: none;
+}
+
+.jet-hoops-page__flight-wordmark {
+  display: block;
+  width: min(100%, 20rem);
+  height: auto;
+  margin: 0.35rem auto 0.65rem;
+  object-fit: contain;
+  filter:
+    invert(1)
+    brightness(1.12)
+    drop-shadow(0 0 20px rgb(14 165 233 / 0.28));
 }
 
 .jet-hoops-page__kicker {

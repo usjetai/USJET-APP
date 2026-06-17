@@ -7,6 +7,7 @@ export const JET_HOOPS_ROUTE = "/hoops" as const;
 export const JET_HOOPS_LOGO_MP4_SRC = "/hoops/usjet-hoops-logo.mp4" as const;
 export const JET_HOOPS_LOGO_POSTER_SRC = "/hoops/usjet-hoops-logo-poster.jpg" as const;
 export const JET_HOOPS_COURT_IMAGE_SRC = "/hoops/nba-court-topdown.jpg" as const;
+export const JET_HOOPS_FLIGHT_WORDMARK_SRC = "/hoops/flight-wordmark.png" as const;
 
 export const JET_HOOPS_COURT_WIDTH = 940;
 export const JET_HOOPS_COURT_HEIGHT = 500;

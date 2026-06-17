@@ -1,9 +1,6 @@
 /**
- * Resolves fleet launch URLs and wraps external partners in the USJET cockpit shell
- * so the return bar stays visible — Integrated Navigation without leaving the ship.
- *
- * Trusted Fleet Launch: first visit = sovereign handoff interstitial; repeat visits
- * carry handoff=trusted and skip embed wait (partners control X-Frame-Options).
+ * Resolves fleet partner URLs. External partners route through `/cockpit` with a
+ * floating USJET return control — same window, no Launch step, no new browser tab.
  */
 import { FLEET_PARTNER_HREFS } from "./fleetManifestAudit";
 
@@ -113,7 +110,7 @@ type CockpitWrapOptions = {
   callName?: string;
 };
 
-/** Route external partner URLs through /cockpit so the USJET return bar stays mounted. */
+/** Fleet tiles and directory — external URLs open in `/cockpit` with USJET return. */
 export function integratedLaunchUrl(
   domain: string,
   href?: string,
@@ -121,12 +118,11 @@ export function integratedLaunchUrl(
   options?: CockpitWrapOptions,
 ): string {
   const raw = fleetLaunchUrl(domain, href, slot);
-  const unifiedCallName = options?.callName ?? options?.label;
   return wrapExternalInCockpit(raw, {
     slot,
     returnTo: options?.returnTo,
     label: options?.label ?? domain,
-    callName: unifiedCallName,
+    callName: options?.callName ?? options?.label,
   });
 }
 
@@ -137,7 +133,7 @@ export function wrapExternalInCockpit(rawUrl: string, options?: CockpitWrapOptio
 
   const safe = sanitizeCockpitSrc(rawUrl);
   if (!safe) {
-    return "/hangar";
+    return options?.returnTo ?? "/";
   }
 
   const params = new URLSearchParams({ src: safe });

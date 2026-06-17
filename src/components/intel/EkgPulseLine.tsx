@@ -83,7 +83,10 @@ export default function EkgPulseLine({
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const schedule = (): void => {
-      if (cancelled) return;
+      if (cancelled || document.hidden) {
+        timeoutId = window.setTimeout(schedule, 480);
+        return;
+      }
 
       const nextGapMs = reducedMotion
         ? 640 + Math.random() * 900

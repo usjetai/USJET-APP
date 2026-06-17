@@ -104,12 +104,16 @@ export default function HiredHud() {
   );
 
   useEffect(() => {
-    const tickerId = window.setInterval(() => {
+    const tick = () => {
+      if (document.hidden) return;
+
       setClock(new Date());
       setScanPhase((phase) => (phase + 1) % 100);
-    }, 1000);
+    };
 
-    const metricsId = window.setInterval(() => {
+    const metricsTick = () => {
+      if (document.hidden) return;
+
       setPulseIndex((value) => {
         const drift = (Math.random() - 0.47) * 0.24;
         return Math.max(-3.75, Math.min(5.9, value + drift));
@@ -118,9 +122,11 @@ export default function HiredHud() {
         const drift = (Math.random() - 0.5) * 0.08;
         return Math.max(97.8, Math.min(100, value + drift));
       });
-    }, 2200);
+    };
 
-    const bpmId = window.setInterval(() => {
+    const bpmTick = () => {
+      if (document.hidden) return;
+
       setDeveloperBpm((prev) => {
         const next = { ...prev };
         for (const unit of hiredUnits) {
@@ -165,7 +171,11 @@ export default function HiredHud() {
         }
         return next;
       });
-    }, 1600);
+    };
+
+    const tickerId = window.setInterval(tick, 1000);
+    const metricsId = window.setInterval(metricsTick, 2200);
+    const bpmId = window.setInterval(bpmTick, 1600);
 
     return () => {
       window.clearInterval(tickerId);
@@ -349,14 +359,6 @@ export default function HiredHud() {
                       <span
                         className="hired-hud__tile-hud-fuel-meter-fill"
                         style={{ width: `${fuel.percent}%` }}
-                      />
-                    </div>
-                    <div className="hired-hud__tile-hud-ekg">
-                      <EkgPulseLine
-                        variant="monitor"
-                        traces={2}
-                        seed={unit.slot * 11 + 3}
-                        className="hired-hud__tile-hud-ekg-line"
                       />
                     </div>
                   </div>

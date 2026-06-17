@@ -8096,6 +8096,78 @@ html.code-kit-page-root #usjet-app-shell {
   }
 }
 
+.hangar-direct-launch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 12rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.hangar-direct-launch__copy {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgb(186 230 253 / 0.88);
+}
+
+.hangar-direct-launch__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.hangar-embed-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  min-height: 14rem;
+  padding: 1.35rem 1rem;
+  text-align: center;
+  border-radius: 0.55rem;
+  border: 1px solid rgb(34 211 238 / 0.28);
+  background: linear-gradient(165deg, rgb(2 12 28 / 0.72) 0%, rgb(2 8 20 / 0.94) 100%);
+}
+
+.hangar-embed-gate__text {
+  margin: 0;
+  max-width: 30rem;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: rgb(186 230 253 / 0.9);
+}
+
+.hangar-embed-gate__reload {
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgb(34 211 238 / 0.35);
+  background: rgb(2 12 28 / 0.55);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(186 230 253 / 0.88);
+  cursor: pointer;
+}
+
+.hangar-embed-gate__reload:hover,
+.hangar-embed-gate__reload:focus-visible {
+  border-color: rgb(56 189 248 / 0.65);
+  color: rgb(224 242 254);
+}
+
 .hangar-embed-shield {
   position: absolute;
   right: 0;
@@ -15320,11 +15392,20 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   animation: cockpit-bar-pulse 2.4s ease-in-out infinite;
+  cursor: pointer;
 }
 
 .cockpit-ghost-btn:hover {
   color: #fff;
   border-color: rgba(34, 211, 238, 0.65);
+}
+
+.usjet-return-btn--in-tile {
+  position: absolute;
+  right: 0.55rem;
+  bottom: 0.55rem;
+  z-index: 12;
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

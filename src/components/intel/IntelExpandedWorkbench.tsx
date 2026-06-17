@@ -5,7 +5,7 @@ import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
-import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
+import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
 import MarketDualFeed from "./market/MarketDualFeed";
 
 type IntelExpandedWorkbenchProps = {
@@ -16,11 +16,7 @@ type IntelExpandedWorkbenchProps = {
 
 export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: IntelExpandedWorkbenchProps) {
   const src = iframeSrcFromUnitHref(unit.href);
-  const launchHref = wrapExternalInCockpit(src, {
-    slot: unit.slot,
-    returnTo: "/intel",
-    label: unit.name,
-  });
+  const launchHref = fleetLaunchUrl(unit.domain, unit.href, unit.slot);
 
   return (
     <article className="intel-expanded intel-expanded--bay-accent" style={{ ...fleetBayAccentStyle(unit.slot), ...gridStyle }}>

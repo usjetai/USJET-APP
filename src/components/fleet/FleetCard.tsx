@@ -61,9 +61,14 @@ export default function FleetCard({
   style,
 }: FleetCardProps) {
   const originOffer = useOriginLimitedOfferOptional();
-  const launchUrl = isAvailableBay
-    ? jetFighterPagePath ?? "#"
-    : integratedLaunchUrl(domain, href, slot, { label: name, returnTo });
+  const resolvedHref = href?.trim() ?? "";
+  const hasExternalPartner = /^https?:\/\//i.test(resolvedHref);
+  const partnerLaunchUrl = integratedLaunchUrl(domain, href, slot, { label: name, returnTo });
+  const launchUrl = onExpandBay
+    ? "#"
+    : isAvailableBay && !hasExternalPartner
+      ? jetFighterPagePath ?? "#"
+      : partnerLaunchUrl;
   const isOriginLaunch = launchUrl === "/origin" || launchUrl.startsWith("/origin?");
   const accentId = `${aircraftType}-${slot ?? domain}`.replace(/[^a-z0-9-]/gi, "-");
   const bayAccent = typeof slot === "number" ? getFleetBayAccent(slot) : null;
@@ -92,7 +97,7 @@ export default function FleetCard({
   };
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (isAvailableBay && !jetFighterPagePath) {
+    if (isAvailableBay && !hasExternalPartner && !jetFighterPagePath) {
       e.preventDefault();
       return;
     }
@@ -104,12 +109,9 @@ export default function FleetCard({
     }
 
     if (onExpandBay) {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
-        syncProtocolToClipboard();
-        return;
-      }
       e.preventDefault();
       onExpandBay();
+      syncProtocolToClipboard();
       return;
     }
     syncProtocolToClipboard();
@@ -165,7 +167,7 @@ export default function FleetCard({
               : undefined
         }
         aria-label={
-          isAvailableBay && jetFighterPagePath
+          isAvailableBay && !hasExternalPartner && jetFighterPagePath
             ? `Open Jet Fighter page for ${name}`
             : expandInteractive
               ? `Bring ${name} into its USJET cockpit — expand hangar bay ${typeof slot === "number" ? String(slot + 1).padStart(2, "0") : ""}`

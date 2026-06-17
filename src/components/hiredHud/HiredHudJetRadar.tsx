@@ -58,6 +58,7 @@ export default function HiredHudJetRadar({ slot, aircraftType, variant }: HiredH
   useEffect(() => {
     const intervalMs = 720 + (slot % 7) * 95;
     const id = window.setInterval(() => {
+      if (document.hidden) return;
       setTrack((current) => driftTrack(current, rng));
     }, intervalMs);
 

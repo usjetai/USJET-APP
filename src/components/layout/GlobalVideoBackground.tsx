@@ -59,12 +59,13 @@ export default function GlobalVideoBackground() {
     fetch(LOCAL_VIDEO, { method: "HEAD" })
       .then((response) => {
         if (!cancelled) {
-          setMode(response.ok ? "local" : "youtube");
+          // Canvas streaks only — YouTube embed + warp canvas was crashing tabs on desktop.
+          setMode(response.ok ? "local" : "canvas");
         }
       })
       .catch(() => {
         if (!cancelled) {
-          setMode("youtube");
+          setMode("canvas");
         }
       });
 

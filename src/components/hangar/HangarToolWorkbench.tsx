@@ -1,10 +1,12 @@
-import { ExternalLink, Rocket, X } from "lucide-react";
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { X } from "lucide-react";
+import { useCallback, useState, type CSSProperties } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetUnit } from "../../types/fleet";
-import { hangarWorkbenchIframeSrc, iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
-import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
+import UsjetReturnButton from "../layout/UsjetReturnButton";
+import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
+import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
+import { isHangarIframeBlocked } from "../../lib/hangarEmbedPolicy";
 
 type HangarToolWorkbenchProps = {
   unit: FleetUnit;
@@ -12,38 +14,23 @@ type HangarToolWorkbenchProps = {
 };
 
 /**
- * Hangar active cockpit: external partners load through /cockpit (same-origin handoff);
- * internal routes (e.g. /origin) embed directly in the expanded bay iframe.
+ * Expanded hangar bay — partner loads inside the 2×2 tile iframe.
+ * Blocked partners show Launch first; tap sets iframe src in-place (no new browser tab).
  */
 export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkbenchProps) {
-  const rawHref = unit.href?.trim() || unit.domain?.trim() || "";
-  const src = iframeSrcFromUnitHref(rawHref);
-  const launchHref = wrapExternalInCockpit(src, {
-    slot: unit.slot,
-    returnTo: "/hangar",
-    label: unit.name,
-  });
-  const iframeSrc = hangarWorkbenchIframeSrc(src, launchHref);
-  const isExternalPartner = !src.startsWith("/");
+  const partnerUrl = iframeSrcFromUnitHref(fleetLaunchUrl(unit.domain, unit.href, unit.slot));
+  const isInternalRoute = partnerUrl.startsWith("/");
+  const needsLaunchGate = !isInternalRoute && isHangarIframeBlocked(partnerUrl);
 
-  const [embedAssist, setEmbedAssist] = useState(false);
-  const [assistDismissed, setAssistDismissed] = useState(false);
-  const [frameRevealed, setFrameRevealed] = useState(false);
+  const [launched, setLaunched] = useState(!needsLaunchGate);
+  const [frameReady, setFrameReady] = useState(false);
+  const [frameKey, setFrameKey] = useState(0);
 
-  const launchIntegrated = useCallback(() => {
-    window.location.assign(launchHref);
-  }, [launchHref]);
-
-  useEffect(() => {
-    setEmbedAssist(false);
-    setAssistDismissed(false);
-    setFrameRevealed(false);
-    const assistDelayMs = isExternalPartner ? 2500 : 6000;
-    const id = window.setTimeout(() => setEmbedAssist(true), assistDelayMs);
-    return () => window.clearTimeout(id);
-  }, [iframeSrc, isExternalPartner, unit.id]);
-
-  const showShieldPanel = embedAssist && !assistDismissed;
+  const launchInTile = useCallback(() => {
+    setFrameReady(false);
+    setLaunched(true);
+    setFrameKey((key) => key + 1);
+  }, []);
 
   return (
     <article
@@ -57,24 +44,19 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
             <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
           </p>
           <p className="intel-expanded__domain">{unit.domain}</p>
-          <p className="intel-expanded__tagline">USJET consensus bay</p>
+          <p className="intel-expanded__tagline">USJET consensus bay · in-tile module</p>
         </div>
         <div className="intel-expanded__actions">
-          <a
-            className="intel-expanded__external"
-            href={launchHref}
-            aria-label={`Launch ${unit.name} — integrated navigation`}
-          >
-            <ExternalLink size={16} strokeWidth={2} />
-          </a>
-          <button
-            type="button"
-            className="intel-expanded__tactical"
-            onClick={launchIntegrated}
-            aria-label={`Launch ${unit.name} in the same window — USJET integrated navigation`}
-          >
-            <Rocket size={15} strokeWidth={2.25} aria-hidden />
-          </button>
+          {launched && needsLaunchGate ? (
+            <button
+              type="button"
+              className="hangar-embed-gate__reload"
+              onClick={launchInTile}
+              aria-label={`Reload ${unit.name} inside this bay`}
+            >
+              Reload
+            </button>
+          ) : null}
           <button type="button" className="intel-expanded__close" onClick={onClose} aria-label="Minimize bay">
             <X size={18} strokeWidth={2.25} />
           </button>
@@ -83,48 +65,48 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
 
       <div className="intel-expanded__body">
         <div className="hangar-cockpit-frame">
-          <iframe
-            key={`hangar-iframe-${unit.id}-slot-${unit.slot}`}
-            className={[
-              "intel-expanded__frame",
-              frameRevealed ? "hangar-iframe--ready" : "hangar-iframe--arming",
-            ].join(" ")}
-            title={`${unit.name} · USJET cockpit`}
-            src={iframeSrc}
-            onLoad={() => setFrameRevealed(true)}
-            onError={() => setEmbedAssist(true)}
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals"
-            referrerPolicy="no-referrer-when-downgrade"
+          <UsjetReturnButton
+            placement="tile"
+            onClick={onClose}
+            ariaLabel="Return to USJET Hangar grid"
           />
-          {showShieldPanel ? (
-            <div className="hangar-embed-shield" role="region" aria-label="Integrated launch fallback">
-              <div className="hangar-embed-shield__row">
-                <p className="hangar-embed-shield__text">
-                  Partner security shields may block in-hangar embedding. Launch the live module with integrated
-                  navigation—your session continues in the USJET fleet.
-                </p>
-                <button
-                  type="button"
-                  className="hangar-embed-shield__dismiss"
-                  onClick={() => setAssistDismissed(true)}
-                  aria-label="Dismiss embedding notice"
-                >
-                  ×
-                </button>
-              </div>
-              <button type="button" className="hangar-embed-shield__cta" onClick={launchIntegrated}>
-                Launch integrated interface
+          {!launched ? (
+            <div className="hangar-embed-gate" role="region" aria-label={`Launch ${unit.name} in this bay`}>
+              <p className="hangar-embed-gate__text">
+                <strong>{unit.name}</strong> blocks background embeds on <strong>{unit.domain}</strong>. Tap Launch to
+                load the live module inside this bay — same window, no new browser tab.
+              </p>
+              <button type="button" className="hangar-embed-gate__cta hangar-embed-shield__cta" onClick={launchInTile}>
+                Launch {unit.name}
               </button>
             </div>
-          ) : null}
+          ) : (
+            <iframe
+              key={`hangar-iframe-${unit.id}-slot-${unit.slot}-${frameKey}`}
+              className={[
+                "intel-expanded__frame",
+                frameReady ? "hangar-iframe--ready" : "hangar-iframe--arming",
+              ].join(" ")}
+              title={`${unit.name} · USJET hangar bay`}
+              src={partnerUrl}
+              onLoad={() => setFrameReady(true)}
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          )}
         </div>
 
         <p className="intel-expanded__hint">
-          Official partner URL, flown in-network by USJET. Integrated navigation:{" "}
-          <a className="intel-expanded__hint-link" href={launchHref}>
-            launch module
-          </a>
-          .
+          {launched
+            ? (
+              <>
+                {unit.name} is running inside this bay at{" "}
+                <span className="intel-expanded__hint-domain">{unit.domain}</span>.
+              </>
+            )
+            : (
+              <>Waiting for Launch — module stays inside the expanded hangar tile.</>
+            )}
         </p>
       </div>
     </article>

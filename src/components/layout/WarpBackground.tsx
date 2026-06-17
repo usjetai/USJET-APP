@@ -1,7 +1,15 @@
 import { useEffect, useRef } from "react";
 
-const NUM_STARS = 1100;
+const NUM_STARS_DESKTOP = 1100;
+const NUM_STARS_MOBILE = 420;
 const STAR_SPEED = 0.22;
+
+function prefersLightweightWarp(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+  return window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
+}
 
 /** Width must change by this many px before we rebuild the starfield (rotation / breakpoint). */
 const WIDTH_REBUILD_DELTA_PX = 48;
@@ -105,7 +113,8 @@ export default function WarpBackground() {
     };
 
     const initStars = () => {
-      stars = Array.from({ length: NUM_STARS }, () => new Star());
+      const count = prefersLightweightWarp() ? NUM_STARS_MOBILE : NUM_STARS_DESKTOP;
+      stars = Array.from({ length: count }, () => new Star());
     };
 
     const paintVoid = (w: number, h: number) => {
@@ -123,6 +132,11 @@ export default function WarpBackground() {
     };
 
     const animate = () => {
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
       const { width: w, height: h } = readViewportSize();
       ctx.fillStyle = "rgba(1, 4, 12, 0.16)";
       ctx.fillRect(0, 0, w, h);

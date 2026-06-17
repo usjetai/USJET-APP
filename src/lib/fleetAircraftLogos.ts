@@ -52,3 +52,13 @@ export function getFleetAircraftLogoPathForSlot(
   }
   return getFleetAircraftLogoPath(aircraftType);
 }
+
+/** Transparent-background emblem for the Hired HUD radar scope blip. */
+export function getFleetAircraftRadarLogoPathForSlot(
+  slot: number | undefined,
+  aircraftType: FleetAircraftType,
+): string {
+  const base = getFleetAircraftLogoPathForSlot(slot, aircraftType);
+  const filename = base.split("/").pop();
+  return filename ? `/assets/fleet-logos/radar-transparent/${filename}` : base;
+}

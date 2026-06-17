@@ -76,7 +76,7 @@ export default function FleetCard({
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
   const productPagePath = getFleetProductPagePath(callsign);
-  const showProductFooter = surface === "fleet" || !isAvailableBay;
+  const showProductFooter = surface === "fleet";
   const isRunway = surface === "fleet";
   const terminalFeed = useMemo(
     () =>

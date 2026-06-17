@@ -1,6 +1,7 @@
 {
-  "generated": "2026-06-16T22:25:33.586Z",
+  "generated": "2026-06-17T15:08:32.433Z",
   "source": "scripts/assets/hired-developer-avatar-sheet.png",
+  "hubSource": "scripts/assets/hired-developer-hub-sheet.png",
   "grid": "2x5",
   "avatars": [
     {
@@ -11,6 +12,7 @@
       "aircraftSlug": "sr-71-blackbird",
       "path": "/hired-hud/avatars/bay-01-blue-ivy.webp",
       "hubPath": "/hired-hud/avatars/bay-01-blue-ivy-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-01-blue-ivy-ride.webp",
       "productPath": "/fleet/developer-avatars/sr-71-blackbird.webp"
     },
     {
@@ -21,6 +23,7 @@
       "aircraftSlug": "f-35-lightning-ii",
       "path": "/hired-hud/avatars/bay-02-mary-stealth.webp",
       "hubPath": "/hired-hud/avatars/bay-02-mary-stealth-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-02-mary-stealth-ride.webp",
       "productPath": "/fleet/developer-avatars/f-35-lightning-ii.webp"
     },
     {
@@ -31,6 +34,7 @@
       "aircraftSlug": "b-21-raider",
       "path": "/hired-hud/avatars/bay-03-chop.webp",
       "hubPath": "/hired-hud/avatars/bay-03-chop-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-03-chop-ride.webp",
       "productPath": "/fleet/developer-avatars/b-21-raider.webp"
     },
     {
@@ -41,6 +45,7 @@
       "aircraftSlug": "j-36",
       "path": "/hired-hud/avatars/bay-04-stick.webp",
       "hubPath": "/hired-hud/avatars/bay-04-stick-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-04-stick-ride.webp",
       "productPath": "/fleet/developer-avatars/j-36.webp"
     },
     {
@@ -51,6 +56,7 @@
       "aircraftSlug": "f-14-tomcat",
       "path": "/hired-hud/avatars/bay-26-christal.webp",
       "hubPath": "/hired-hud/avatars/bay-26-christal-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-26-christal-ride.webp",
       "productPath": "/fleet/developer-avatars/f-14-tomcat.webp"
     },
     {
@@ -61,6 +67,7 @@
       "aircraftSlug": "yf-23-black-widow-ii",
       "path": "/hired-hud/avatars/bay-06-aaliyah.webp",
       "hubPath": "/hired-hud/avatars/bay-06-aaliyah-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-06-aaliyah-ride.webp",
       "productPath": "/fleet/developer-avatars/yf-23-black-widow-ii.webp"
     },
     {
@@ -71,6 +78,7 @@
       "aircraftSlug": "x-47b",
       "path": "/hired-hud/avatars/bay-07-little-mama.webp",
       "hubPath": "/hired-hud/avatars/bay-07-little-mama-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-07-little-mama-ride.webp",
       "productPath": "/fleet/developer-avatars/x-47b.webp"
     },
     {
@@ -81,6 +89,7 @@
       "aircraftSlug": "f-22-raptor",
       "path": "/hired-hud/avatars/bay-14-light-speed.webp",
       "hubPath": "/hired-hud/avatars/bay-14-light-speed-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-14-light-speed-ride.webp",
       "productPath": "/fleet/developer-avatars/f-22-raptor.webp"
     },
     {
@@ -91,6 +100,7 @@
       "aircraftSlug": "b-1-lancer",
       "path": "/hired-hud/avatars/bay-12-kitkat.webp",
       "hubPath": "/hired-hud/avatars/bay-12-kitkat-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-12-kitkat-ride.webp",
       "productPath": "/fleet/developer-avatars/b-1-lancer.webp"
     },
     {
@@ -101,6 +111,7 @@
       "aircraftSlug": "b-2-spirit",
       "path": "/hired-hud/avatars/bay-11-rumi.webp",
       "hubPath": "/hired-hud/avatars/bay-11-rumi-hub.webp",
+      "ridePath": "/hired-hud/avatars/bay-11-rumi-ride.webp",
       "productPath": "/fleet/developer-avatars/b-2-spirit.webp"
     }
   ]

@@ -2,6 +2,7 @@ import { Code2, Star } from "lucide-react";
 import {
   getHiredDeveloperHubAvatarPath,
   getHiredDeveloperProductAvatarPath,
+  getHiredDeveloperRideAvatarPath,
   HIRED_HUD_COMMANDER_SLOT,
 } from "../../lib/hiredHudDeveloperAvatars";
 
@@ -12,20 +13,67 @@ type HiredHudDeveloperAvatarProps = {
   variant?: "tile" | "crew" | "product";
 };
 
+function AvatarPanel({
+  src,
+  name,
+  label,
+  rounded,
+}: {
+  src: string;
+  name: string;
+  label: string;
+  rounded?: boolean;
+}) {
+  return (
+    <div
+      className={[
+        "hired-hud__avatar-panel",
+        rounded ? "" : "hired-hud__avatar-panel--hub-rect",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <img
+        src={src}
+        alt={`${name} ${label}`}
+        className="hired-hud__avatar-img"
+        width={256}
+        height={427}
+        decoding="async"
+        draggable={false}
+      />
+      <span className="hired-hud__avatar-ring" aria-hidden />
+    </div>
+  );
+}
+
 export default function HiredHudDeveloperAvatar({
   slot,
   name,
   variant = "tile",
 }: HiredHudDeveloperAvatarProps) {
-  const src =
-    variant === "product"
-      ? getHiredDeveloperProductAvatarPath(slot)
-      : getHiredDeveloperHubAvatarPath(slot);
+  const hubSrc = getHiredDeveloperHubAvatarPath(slot);
+  const rideSrc = getHiredDeveloperRideAvatarPath(slot);
+  const productSrc = getHiredDeveloperProductAvatarPath(slot);
+  const isCommander = slot === HIRED_HUD_COMMANDER_SLOT;
+
+  if (variant === "tile") {
+    if (!hubSrc && !rideSrc) {
+      return null;
+    }
+
+    return (
+      <div className="hired-hud__avatar hired-hud__avatar--tile hired-hud__avatar--dual-tile">
+        {hubSrc ? <AvatarPanel src={hubSrc} name={name} label="profile" /> : null}
+        {rideSrc ? <AvatarPanel src={rideSrc} name={name} label="ride" /> : null}
+      </div>
+    );
+  }
+
+  const src = variant === "product" ? productSrc : hubSrc;
   if (!src) {
     return null;
   }
-
-  const isCommander = slot === HIRED_HUD_COMMANDER_SLOT;
 
   return (
     <div

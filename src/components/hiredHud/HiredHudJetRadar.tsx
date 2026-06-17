@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Radar } from "lucide-react";
-import { getFleetAircraftLogoPathForSlot } from "../../lib/fleetAircraftLogos";
+import { getFleetAircraftRadarLogoPathForSlot } from "../../lib/fleetAircraftLogos";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type HiredHudJetRadarProps = {
@@ -52,7 +52,7 @@ function trackToPosition(track: JetTrack): { x: number; y: number } {
 export default function HiredHudJetRadar({ slot, aircraftType, variant }: HiredHudJetRadarProps) {
   const [track, setTrack] = useState<JetTrack>(() => initialTrack(slot));
   const rng = useMemo(() => createSeededRandom(slot * 3571 + 90210), [slot]);
-  const logoSrc = getFleetAircraftLogoPathForSlot(slot, aircraftType);
+  const logoSrc = getFleetAircraftRadarLogoPathForSlot(slot, aircraftType);
   const position = trackToPosition(track);
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function HiredHudJetRadar({ slot, aircraftType, variant }: HiredH
           transform: `translate(-50%, -50%) rotate(${track.headingDeg}deg)`,
         }}
       >
-        <img src={logoSrc} alt="" className="hired-hud__jet-radar-jet logo-rounded" decoding="async" draggable={false} />
+        <img src={logoSrc} alt="" className="hired-hud__jet-radar-jet" decoding="async" draggable={false} />
       </span>
       <span className="hired-hud__jet-radar-label">
         <Radar size={8} aria-hidden />

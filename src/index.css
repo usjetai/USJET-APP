@@ -5706,6 +5706,36 @@
   border: 0;
 }
 
+/* Hangar expanded tile — iframe-only shell (no header/footer chrome) */
+.hangar-tool-workbench--tile-only {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.hangar-tool-workbench--tile-only .hangar-tile-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 6;
+}
+
+.hangar-tool-workbench--tile-only .hangar-tool-workbench__frame {
+  flex: 1;
+  width: 100%;
+  min-height: min(56vh, 32rem);
+  border: 0;
+  border-radius: inherit;
+  background: rgb(3 10 22 / 0.96);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+#usjet-app-shell:has(.hangar-tool-workbench) .usjet-global-contact-bar {
+  display: none;
+}
+
 /* Hangar shell stays open—aviation-pulse and mesh read through bay gaps & glass negative space */
 .hangar-page {
   position: relative;
@@ -7969,7 +7999,8 @@ html.code-kit-page-root #usjet-app-shell {
 
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__external,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__tactical,
-.hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close {
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close,
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-close {
   border-color: color-mix(in srgb, var(--fleet-accent) 32%, transparent);
   color: color-mix(in srgb, var(--fleet-accent-bright) 88%, white);
 }
@@ -7979,7 +8010,9 @@ html.code-kit-page-root #usjet-app-shell {
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__tactical:hover,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__tactical:focus-visible,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close:hover,
-.hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close:focus-visible {
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close:focus-visible,
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-close:hover,
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-close:focus-visible {
   border-color: color-mix(in srgb, var(--fleet-accent) 55%, transparent);
   background: color-mix(in srgb, var(--fleet-accent) 12%, rgba(2, 10, 24, 0.55));
   box-shadow: 0 0 14px rgba(var(--fleet-accent-rgb), 0.28);
@@ -8026,7 +8059,7 @@ html.code-kit-page-root #usjet-app-shell {
   min-height: 14rem;
 }
 
-.hangar-page--workbench .hangar-tool-workbench .intel-expanded__frame {
+.hangar-page--workbench .hangar-tool-workbench .hangar-tool-workbench__frame {
   min-height: 14rem;
 }
 
@@ -27622,7 +27655,7 @@ html.blog-page-root #usjet-app-shell {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(7.2rem, 8.7rem) minmax(0, 1fr);
+  grid-template-columns: minmax(11.5rem, 13.5rem) minmax(0, 1fr);
   grid-template-rows: auto auto auto auto;
   align-items: start;
   gap: 0.45rem 0.65rem;
@@ -27678,6 +27711,32 @@ html.blog-page-root #usjet-app-shell {
 .hired-hud__avatar--tile {
   width: 7.1rem;
   height: auto;
+}
+
+.hired-hud__avatar--dual-tile {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.28rem;
+  width: 100%;
+  max-width: 12.8rem;
+}
+
+.hired-hud__avatar-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.hired-hud__avatar-panel--hub-rect {
+  border-radius: 0.45rem;
+  aspect-ratio: 512 / 854;
+  box-shadow:
+    0 0 0 1px rgb(34 211 238 / 0.28),
+    0 8px 18px rgb(2 8 23 / 0.5);
+}
+
+.hired-hud__avatar--dual-tile .hired-hud__avatar-img {
+  object-fit: cover;
+  object-position: top center;
 }
 
 .hired-hud__avatar--crew {
@@ -27956,6 +28015,8 @@ html.blog-page-root #usjet-app-shell {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  background: transparent;
+  filter: drop-shadow(0 0 4px rgb(74 222 128 / 0.55));
 }
 
 .hired-hud__jet-radar-label {

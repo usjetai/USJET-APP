@@ -16,6 +16,8 @@
     "extract:fleet-logos": "node scripts/extract-fleet-logo-sheet.mjs",
     "export:developer-pages-jpegs": "node scripts/export-developer-pages-jpegs.mjs",
     "export:hired-developer-jpegs": "node scripts/export-hired-developer-jpegs.mjs",
+    "generate:hired-developer-hub-avatars": "node scripts/generate-hired-developer-hub-avatars.mjs",
+    "generate:fleet-radar-logos": "node scripts/generate-fleet-radar-logos.mjs",
     "export:jetfighter-pages-jpegs": "node scripts/export-jetfighter-pages-jpegs.mjs",
     "lint": "node -e \"process.exit(0)\""
   },

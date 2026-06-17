@@ -207,7 +207,7 @@ async function cropPortrait(sheet, width, height, portraitNumber, brownSkin = tr
 async function pruneStaleWebps(dir, keepNames) {
   const keep = new Set(keepNames);
   for (const name of await readdir(dir)) {
-    if (name.endsWith(".webp") && !keep.has(name)) {
+    if (name.endsWith(".webp") && !keep.has(name) && !name.endsWith("-ride.webp")) {
       await unlink(join(dir, name));
       console.log(`removed stale ${name}`);
     }
@@ -265,6 +265,7 @@ async function main() {
       aircraftSlug: dev.aircraftSlug,
       path: `/hired-hud/avatars/${hudFilename}`,
       hubPath: `/hired-hud/avatars/${hubFilename}`,
+      ridePath: `/hired-hud/avatars/bay-${String(dev.slot + 1).padStart(2, "0")}-${dev.slug}-ride.webp`,
       productPath: `/fleet/developer-avatars/${productFilename}`,
     });
     console.log(

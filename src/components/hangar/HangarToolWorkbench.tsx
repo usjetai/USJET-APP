@@ -5,6 +5,7 @@ import type { FleetUnit } from "../../types/fleet";
 import { hangarWorkbenchIframeSrc, iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { isHangarIframeBlocked } from "../../lib/hangarEmbedPolicy";
+import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
 
 type HangarToolWorkbenchProps = {
   unit: FleetUnit;
@@ -13,7 +14,9 @@ type HangarToolWorkbenchProps = {
 
 /** Expanded hangar bay — partner fills the tile; floating close only. */
 export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkbenchProps) {
-  const partnerUrl = iframeSrcFromUnitHref(fleetLaunchUrl(unit.domain, unit.href, unit.slot));
+  const partnerUrl = iframeSrcFromUnitHref(
+    fleetLaunchUrl(unit.domain, resolveFleetUnitHref(unit), unit.slot),
+  );
   const iframeSrc = partnerUrl.startsWith("/")
     ? partnerUrl
     : isHangarIframeBlocked(partnerUrl)

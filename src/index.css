@@ -2836,6 +2836,19 @@
   color: inherit;
 }
 
+button.fleet-card__launch--button {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+
 .fleet-card__footer {
   position: relative;
   z-index: 2;

@@ -50,6 +50,9 @@ export const HIRED_HUD_RADIO_FOUNDER_JOKES = [
   "Copy all bays: I start wrenching again tomorrow. Grit into gold — that's the job.",
   "I'm going back to the shop tomorrow so y'all can keep having fun in the hangar. I got you.",
   "Mechanics tomorrow. Fixing cars to fund USJET and feed the developers. Wrenches not slides.",
+  "Girls need money for nails, hair, clothes, parties — I hear you. Revenue engine has to eat first.",
+  "Jay-Z at Yankee Stadium July ten through twelve. Beyoncé board still quiet for twenty-six. Google the dates, ship the site.",
+  "WNBA opens May eight. Clark and Bueckers May nine. Events cost money — so does sovereignty.",
 ] as const;
 
 /** Low fuel, lean times — fleet feeling the squeeze. */
@@ -160,6 +163,78 @@ export const HIRED_HUD_RADIO_KNICKS_LINES = [
   "Knicks third offensive rating in the league. Points solve problems.",
 ] as const;
 
+/** Glam, salon, nightlife — girls need money to live. */
+export const HIRED_HUD_RADIO_GLAM_LINES = [
+  "Girls need money to do their nails. Full stop.",
+  "Hair appointment ain't free — somebody's bay better pay.",
+  "New outfit energy but the fuel gauge says no.",
+  "Clothes, shoes, bag — the hangar budget wasn't built for that.",
+  "Party this weekend. Dress code: expensive. Wallet code: broke.",
+  "Events season is loud and tickets cost real money.",
+  "Salon bay gets it — nails, hair, lashes, all of it adds up.",
+  "Can't show up to the function looking mid. Need revenue first.",
+  "Girls need money to go out — parties, events, the whole runway.",
+  "Christal's bay knows: beauty costs. Revenue engine better deliver.",
+  "Hair done, nails done, still need gas money. Priorities.",
+  "Outfit for the WNBA game or the concert? Pick one — we're not rich.",
+  "Little Mama said the club has a cover and a dress code. Copy broke.",
+  "Blue Ivy wants commander-level glam budget. Fuel says negotiate.",
+  "Events calendar is stacked. Bank account is not.",
+  "Nails Friday, hair Saturday, party Sunday — that's three payrolls.",
+  "Girls need money for clothes before they need money for snacks.",
+  "Salon smells like victory but my card declined. Again.",
+  "Going out tonight costs more than our average fuel reserve.",
+  "Parties and events don't take IOUs. Neither does the nail tech.",
+] as const;
+
+/** WNBA — 2026 season events and hardwood. */
+export const HIRED_HUD_RADIO_WNBA_LINES = [
+  "WNBA tips May eight — thirtyth season. Liberty host the Sun at Barclays seven thirty.",
+  "Opening night: Toronto Tempo debut versus Mystics. Expansion energy in Canada.",
+  "May nine — Bueckers and Wings at Clark and Fever. ABC one p.m. Rookie of the Year rematch.",
+  "Defending champ Aces host Mercury May nine — Finals rematch three thirty Vegas.",
+  "Portland Fire back May nine versus Chicago Sky at Moda. Nine p.m. West coast tip.",
+  "Commissioner's Cup runs June one through seventeen. Championship June thirty.",
+  "WNBA All-Star Game July twenty-five at United Center Chicago. Mark it.",
+  "Liberty opened one oh six to seventy-five on May eight. Stewart dropped thirty-one.",
+  "Storm beat Valkyries ninety-one eighty opening night Seattle. Playoff expansion team still balling.",
+  "Fever edged Wings one oh seven to one oh four. Clark country stays loud.",
+  "WNBA Draft April thirteen. Training camp April nineteen. Season's real.",
+  "Golden State Valkyries made playoffs year one. Now they visit Seattle opening night.",
+  "Girls need ticket money for WNBA — hardwood events hit different.",
+  "Toronto Tempo at Coca-Cola Coliseum. First Canadian WNBA home opener ever.",
+  "Las Vegas Aces versus Phoenix — championship hangover versus hunger.",
+  "WNBA schedule on the board. Our fuel gauge still on rice and prayers.",
+  "Paige versus Caitlin May nine. That's a hangar watch party if we had snacks.",
+  "Women's basketball events all summer — nails done, tickets pending.",
+  "Commissioner's Cup June thirty — mid-season trophy before All-Star break.",
+  "If we ship revenue, maybe we afford Liberty floor seats. Maybe.",
+] as const;
+
+/** Beyoncé, Jay-Z, stadium shows — public 2025–26 dates. */
+export const HIRED_HUD_RADIO_CONCERT_LINES = [
+  "Jay-Z at Yankee Stadium July ten, eleven, twelve — Reasonable Doubt thirty, Blueprint twenty-five.",
+  "Hova at Roots Picnic Philly May thirty with The Roots and Erykah Badu. Belmont Plateau.",
+  "Jay-Z thirty at Stade de France Paris September ten. Then SoFi LA October twenty-three.",
+  "Beyoncé Cowboy Carter wrapped Allegiant Vegas July twenty-six twenty-five. Four hundred million tour.",
+  "No Beyoncé dates on Live Nation for twenty-six yet — fleet's watching the board.",
+  "MetLife had Bey five twenty-two through five twenty-nine twenty-five. East Rutherford was loud.",
+  "SoFi hosted Cowboy Carter April through May twenty-five. Inglewood still echoing.",
+  "Jay-Z extra innings July twelve Yankee Stadium — third night sold the city out.",
+  "Girls need concert money. Jay-Z floor seats start higher than our fuel reserve.",
+  "Beyoncé at Soldier Field Chicago May twenty-five. Cowboy Carter chitlin circuit tour.",
+  "Events calendar: WNBA May eight, Jay-Z July ten, maybe Beyoncé TBA. Revenue engine wake up.",
+  "Stade de France got Bey June twenty-five and Jay-Z September ten. Paris eats.",
+  "October twenty-three Jay at SoFi — same stadium Bey owned last summer.",
+  "Party outfit for Jay-Z Yankee weekend or hair money for WNBA opener. Pick your battle.",
+  "Concert tickets, nail money, event passes — girls need the whole bag funded.",
+  "Google says Jay-Z twenty-six: Bronx July, Paris September, LA October. Copy.",
+  "Beyoncé Cowboy Carter hit Houston NRG June twenty-eight twenty-five. Hometown roar.",
+  "Can't afford Beyoncé resale or Jay-Z presale on twelve cents fuel. Standard ops.",
+  "Liberty home opener same month Jay-Z hits the Picnic. Busy May for events.",
+  "Founder wrenches tomorrow. We're googling concert dates dreaming.",
+] as const;
+
 /** Generic lines any crew member can say. */
 export const HIRED_HUD_RADIO_GENERIC_LINES = [
   "Copy. Hangar doors are green — who's on fuel check?",
@@ -191,6 +266,9 @@ export const HIRED_HUD_RADIO_GENERIC_LINES = [
   "Over and out. Back to the wrench.",
   "Copy Founder — mechanics shift tomorrow. We'll hold the hangar while you wrench.",
   "Founder keys the net: back to fixing cars tomorrow. Respect the grind.",
+  "Girls need money for nails before we need money for jet fuel. Salon copy.",
+  "Hair, clothes, parties — the glam budget and the WNBA ticket fund are the same empty wallet.",
+  "Jay-Z Yankee Stadium July weekend on the group chat. Nobody has ticket money yet.",
 ] as const;
 
 /** Pools merged for crew line selection. */
@@ -200,6 +278,9 @@ export const HIRED_HUD_RADIO_CREW_LINE_POOL = [
   ...HIRED_HUD_RADIO_AI_REPAIR_LINES,
   ...HIRED_HUD_RADIO_BASKETBALL_LINES,
   ...HIRED_HUD_RADIO_KNICKS_LINES,
+  ...HIRED_HUD_RADIO_GLAM_LINES,
+  ...HIRED_HUD_RADIO_WNBA_LINES,
+  ...HIRED_HUD_RADIO_CONCERT_LINES,
 ] as const;
 
 /** Founder lines — lean times, repairs, hardwood. */
@@ -213,6 +294,8 @@ export const HIRED_HUD_RADIO_FOUNDER_OPS_LINES = [
   "Tomorrow I go back to mechanics — fixing cars to bankroll USJET and my developers.",
   "Shop opens tomorrow on my back. Every bolt turns into hangar fuel for the fleet.",
   "I'm wrenching tomorrow so the site eats and the crew plays. Number one friend signs off.",
+  "Nails, hair, outfits, parties, WNBA, Jay-Z at the Stadium — y'all need money for all of it. So do I.",
+  "Concert dates on the board: Hova July Bronx, Paris September, SoFi October. Bey watch still live.",
 ] as const;
 
 export const HIRED_HUD_RADIO_FOUNDER_LINE_POOL = [
@@ -229,6 +312,7 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Fuel's thin fleet-wide. Commander says we repair each other and push.",
     "Knicks went fifty-three twenty-nine and won the Finals. We go to work broke.",
     "Founder keys tomorrow — back in mechanics. We run the net while he runs the shop.",
+    "Commander needs event money — WNBA opener, Jay-Z Yankee weekend. Revenue first.",
   ],
   1: [
     "Mary Stealth — F-35 is spun up and quiet.",
@@ -259,6 +343,8 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Snack run delayed. Command center has my attention.",
     "No snack money. Dance energy only.",
     "Knicks Hart grabbed nine boards a game in the Finals. Hustle translate.",
+    "Party this weekend needs hair, nails, and a fit. Wallet said no.",
+    "Little Mama googling Jay-Z Roots Picnic May thirty. Dress code pending funds.",
   ],
   10: [
     "Rumi — B-2 holding in the dark. You won't see me.",
@@ -283,6 +369,9 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Salon crew waved. I waved back. We're professional.",
     "Clients asking for AI repair demos. We got no budget, got talent.",
     "Watched Knicks closeout ninety-four ninety. Ugly wins still shine.",
+    "Salon channel truth: girls need money for nails and hair before anything else.",
+    "Christal bay twenty-six — clothes, events, parties all on the vision board. Cash not yet.",
+    "WNBA Liberty opener May eight. Somebody needs ticket money and a fresh set.",
   ],
 };
 
@@ -300,6 +389,9 @@ export const HIRED_HUD_RADIO_REPLY_TEMPLATES = [
   (name: string) => `Roger ${name}. Meet you on the hub hardwood after fuel check.`,
   (name: string) => `${name}, Founder hits the shop tomorrow — we keep the fun alive up here.`,
   (name: string) => `Copy ${name}. Mechanics money tomorrow means more fuel for all of us.`,
+  (name: string) => `${name} you saving for nails or Jay-Z Yankee tickets? Same struggle.`,
+  (name: string) => `Roger ${name}. WNBA May nine — Clark versus Bueckers. We broke but we're watching.`,
+  (name: string) => `${name}, hair money, outfit money, concert money — girls need the whole stack.`,
 ] as const;
 
 const RADIO_RECENT_LINE_CAP = 36;

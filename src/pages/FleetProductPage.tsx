@@ -14,6 +14,7 @@ import { resolveFleetProductLineup } from "../lib/fleetProductMedia";
 import {
   resolveB21RaiderProductPaymentLink,
   resolveF35LightningIiProductPaymentLink,
+  resolveJ36ProductPaymentLink,
   resolveSr71BlackbirdProductPaymentLink,
 } from "../lib/stripePaymentLink";
 
@@ -28,6 +29,8 @@ const PRODUCT_LEDE_BY_AIRCRAFT_SLUG: Record<string, string> = {
     "This realistic plastic model kit of the SR-71 Blackbird has a 5.5\" wingspan, measures 10.5\" in length, features full-color markings and retractable landing gear. Model kit includes everything needed for assembly and can be easily assembled in about 10 minutes.",
   "b-21-raider":
     "Bring next-generation aerospace engineering to your workspace with this B-21 Raider stealth bomber 3D print model. Inspired by the U.S. Air Force's most advanced long-range strike aircraft, this model captures the Raider's sleek, flying-wing design and low-observable geometry with precision and realism. Includes a display stand showcasing \"B-21 Raider\". Dimensions: roughly L 14\" × W 6\" × H 5\". A great piece for aerospace enthusiasts — this model is very accurate to the real aircraft.",
+  "j-36":
+    "This realistic J-36 sixth-generation concept fighter model features a tailless delta-wing stealth profile, splinter camouflage finish, full-color 36011 markings, and a clear canopy with pilot figure. Includes a display stand for desk or shelf presentation — a sharp piece for US next-gen fighter enthusiasts and sovereign fleet collectors.",
 };
 
 /**
@@ -37,6 +40,7 @@ const PRODUCT_MODEL_KIND_BY_AIRCRAFT_SLUG: Record<string, string> = {
   "sr-71-blackbird": "Plastic model kit",
   "f-35-lightning-ii": "Plastic model kit",
   "b-21-raider": "3D print model",
+  "j-36": "Concept fighter model",
 };
 
 /**
@@ -61,6 +65,11 @@ const PRODUCT_SPECS_BY_AIRCRAFT_SLUG: Record<string, { label: string; value: str
     { label: "Dimensions", value: "~L 14\" × W 6\" × H 5\"" },
     { label: "Detail", value: "Highly accurate to the real aircraft" },
   ],
+  "j-36": [
+    { label: "Detail", value: "Sixth-gen concept fighter with splinter camo and 36011 markings" },
+    { label: "Includes", value: "Display stand and clear canopy with pilot figure" },
+    { label: "Finish", value: "Full-color camouflage and roundel detail" },
+  ],
 };
 
 /**
@@ -70,6 +79,7 @@ const PRODUCT_SPECS_BY_AIRCRAFT_SLUG: Record<string, { label: string; value: str
 const PRODUCT_PRICE_BY_AIRCRAFT_SLUG: Record<string, string> = {
   "b-21-raider": "$90",
   "f-35-lightning-ii": "$40",
+  "j-36": "$65",
   "sr-71-blackbird": "$45",
 };
 
@@ -80,6 +90,7 @@ const PRODUCT_PRICE_BY_AIRCRAFT_SLUG: Record<string, string> = {
 const PRODUCT_STRIPE_LINK_BY_AIRCRAFT_SLUG: Record<string, () => string> = {
   "b-21-raider": resolveB21RaiderProductPaymentLink,
   "f-35-lightning-ii": resolveF35LightningIiProductPaymentLink,
+  "j-36": resolveJ36ProductPaymentLink,
   "sr-71-blackbird": resolveSr71BlackbirdProductPaymentLink,
 };
 

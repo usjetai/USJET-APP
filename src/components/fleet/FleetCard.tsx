@@ -1,6 +1,7 @@
 import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { getFleetCapabilities, getFleetPartnerLabel } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
+import FleetHiredDeveloperCockpit from "./FleetHiredDeveloperCockpit";
 import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
 import { useMemo, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
@@ -174,6 +175,19 @@ export default function FleetCard({
         onKeyDown={handleKeyDown}
       >
       <div className="fleet-card__glass flex h-full flex-col p-5">
+        {isRunway && !isAvailableBay && typeof slot === "number" ? (
+          <div className="fleet-card__runway-visual">
+            <FleetHiredDeveloperCockpit slot={slot} name={name} />
+            <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4">
+              <AircraftIcon
+                aircraftType={aircraftType}
+                slot={slot}
+                accentId={accentId}
+                className="fleet-card__aircraft h-32 w-32"
+              />
+            </div>
+          </div>
+        ) : (
         <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4">
           <AircraftIcon
             aircraftType={aircraftType}
@@ -182,6 +196,7 @@ export default function FleetCard({
             className="fleet-card__aircraft h-32 w-32"
           />
         </div>
+        )}
 
         <div className="fleet-card__meta mt-auto text-left">
           <h3 className="text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">

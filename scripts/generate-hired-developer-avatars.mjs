@@ -130,7 +130,7 @@ function portraitCell(portraitNumber) {
   return { col, row };
 }
 
-async function cropPortrait(sheet, width, height, portraitNumber, brownSkin = true) {
+function cellBounds(width, height, portraitNumber) {
   const { col, row } = portraitCell(portraitNumber);
   const cellWidth = Math.floor(width / COLS);
   const cellHeight = Math.floor(height / ROWS);
@@ -138,6 +138,45 @@ async function cropPortrait(sheet, width, height, portraitNumber, brownSkin = tr
   const top = row * cellHeight;
   const rawWidth = col === COLS - 1 ? width - left : cellWidth;
   const rawHeight = row === ROWS - 1 ? height - top : cellHeight;
+  return { left, top, rawWidth, rawHeight };
+}
+
+/** Full numbered rectangle from the 2×5 sheet — for hub crew + monitor tiles. */
+async function cropHubRectangle(sheet, width, height, portraitNumber, brownSkin = true) {
+  const { left, top, rawWidth, rawHeight } = cellBounds(width, height, portraitNumber);
+  const insetX = Math.round(rawWidth * 0.02);
+  const insetY = Math.round(rawHeight * 0.02);
+
+  const extractWidth = Math.max(1, rawWidth - insetX * 2);
+  const extractHeight = Math.max(1, rawHeight - insetY * 2);
+  const targetWidth = 512;
+  const targetHeight = Math.max(1, Math.round(targetWidth * (extractHeight / extractWidth)));
+
+  const resized = sharp(sheet)
+    .extract({
+      left: left + insetX,
+      top: top + insetY,
+      width: extractWidth,
+      height: extractHeight,
+    })
+    .resize(targetWidth, targetHeight, { fit: "fill" });
+
+  if (!brownSkin) {
+    return resized.webp({ quality: 90 }).toBuffer();
+  }
+
+  const { data, info } = await resized.removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  applyBrownSkinTone(data, info.channels);
+  return sharp(data, {
+    raw: { width: info.width, height: info.height, channels: info.channels },
+  })
+    .webp({ quality: 90 })
+    .toBuffer();
+}
+
+/** Tighter face crop for product pages and circular fallbacks. */
+async function cropPortrait(sheet, width, height, portraitNumber, brownSkin = true) {
+  const { left, top, rawWidth, rawHeight } = cellBounds(width, height, portraitNumber);
 
   const insetX = Math.round(rawWidth * 0.08);
   const insetTop = Math.round(rawHeight * 0.05);
@@ -185,6 +224,7 @@ async function main() {
   }
 
   const portraitCache = new Map();
+  const hubCache = new Map();
   const manifest = [];
   const hudKeep = [];
   const productKeep = [];
@@ -194,21 +234,27 @@ async function main() {
       throw new Error(`Portrait ${dev.portrait} out of range for ${dev.label}`);
     }
 
+    const brownSkin = dev.portrait !== FAIR_SKIN_PORTRAIT;
+
     if (!portraitCache.has(dev.portrait)) {
-      const brownSkin = dev.portrait !== FAIR_SKIN_PORTRAIT;
-      portraitCache.set(
-        dev.portrait,
-        await cropPortrait(sheet, width, height, dev.portrait, brownSkin),
-      );
+      portraitCache.set(dev.portrait, await cropPortrait(sheet, width, height, dev.portrait, brownSkin));
+    }
+
+    if (!hubCache.has(dev.portrait)) {
+      hubCache.set(dev.portrait, await cropHubRectangle(sheet, width, height, dev.portrait, brownSkin));
     }
 
     const buffer = portraitCache.get(dev.portrait);
+    const hubBuffer = hubCache.get(dev.portrait);
     const hudFilename = `bay-${String(dev.slot + 1).padStart(2, "0")}-${dev.slug}.webp`;
+    const hubFilename = `bay-${String(dev.slot + 1).padStart(2, "0")}-${dev.slug}-hub.webp`;
     const productFilename = `${dev.aircraftSlug}.webp`;
 
     await writeFile(join(HUD_OUT_DIR, hudFilename), buffer);
+    await writeFile(join(HUD_OUT_DIR, hubFilename), hubBuffer);
     await writeFile(join(PRODUCT_OUT_DIR, productFilename), buffer);
     hudKeep.push(hudFilename);
+    hudKeep.push(hubFilename);
     productKeep.push(productFilename);
 
     manifest.push({
@@ -218,10 +264,11 @@ async function main() {
       portrait: dev.portrait,
       aircraftSlug: dev.aircraftSlug,
       path: `/hired-hud/avatars/${hudFilename}`,
+      hubPath: `/hired-hud/avatars/${hubFilename}`,
       productPath: `/fleet/developer-avatars/${productFilename}`,
     });
     console.log(
-      `wrote ${hudFilename} + ${productFilename} ← portrait ${dev.portrait}${dev.portrait === FAIR_SKIN_PORTRAIT ? " (fair skin)" : " (brown skin)"}`,
+      `wrote ${hubFilename} + ${hudFilename} + ${productFilename} ← portrait ${dev.portrait}${dev.portrait === FAIR_SKIN_PORTRAIT ? " (fair skin)" : " (brown skin)"}`,
     );
   }
 

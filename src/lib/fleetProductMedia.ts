@@ -1,6 +1,6 @@
 import type { FleetAircraftType } from "../types/fleet";
 import { getFleetAircraftLogoPath } from "./fleetAircraftLogos";
-import { resolveSr71BlackbirdTeePaymentLink } from "./stripePaymentLink";
+import { resolveJ36ProductPaymentLink, resolveSr71BlackbirdTeePaymentLink } from "./stripePaymentLink";
 
 export type FleetProductMediaAsset = {
   src: string;
@@ -47,6 +47,11 @@ const PRODUCT_PHOTO_BY_AIRCRAFT_SLUG: Record<string, FleetProductMediaAsset> = {
   "b-21-raider": {
     src: "/fleet/b-21-raider-product.webp",
     alt: "B-21 Raider 3D print model on display stand with B-21 Raider nameplate.",
+    isDedicatedProductPhoto: true,
+  },
+  "j-36": {
+    src: "/fleet/j-36-product.webp",
+    alt: "J-36 sixth-generation concept fighter model in splinter camouflage on a display stand with 36011 markings.",
     isDedicatedProductPhoto: true,
   },
 };
@@ -207,7 +212,23 @@ function buildFleetCapLineupItem(entry: FleetCapCatalogEntry): FleetProductLineu
 }
 
 /** Extra lineup items beyond the standard fleet tee and cap. */
-const ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG: Record<string, FleetProductLineupItem[]> = {};
+const ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG: Record<string, FleetProductLineupItem[]> = {
+  "j-36": [
+    {
+      id: "j-36-underside",
+      title: "J-36 Underside View",
+      kind: "Model gallery",
+      description:
+        "Same J-36 concept fighter model shown from below with weapons-bay detail, 36011 markings, and display stand — companion angle for collectors.",
+      photo: {
+        src: "/fleet/j-36-product-underside.webp",
+        alt: "J-36 concept fighter model underside view with open weapons bays and display stand.",
+        isDedicatedProductPhoto: true,
+      },
+      resolveStripePaymentLink: resolveJ36ProductPaymentLink,
+    },
+  ],
+};
 
 export function resolveFleetProductLineup(aircraftSlug: string): FleetProductLineupItem[] {
   const teeEntry = FLEET_TEE_BY_SLUG[aircraftSlug];

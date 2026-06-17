@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAvatar";
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
+import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
@@ -305,9 +306,8 @@ export default function HiredHud() {
                 ))}
               </ul>
             </div>
-          </div>
 
-          <ul className="hired-hud__list" aria-label="Hired developers live monitor list">
+            <ul className="hired-hud__list" aria-label="Hired developers live monitor list">
             {hiredUnits.map((unit, rosterIndex) => {
               const bpm = developerBpm[unit.slot] ?? 72;
               const spo2 = developerSpo2[unit.slot]?.toFixed(1) ?? "97.0";
@@ -363,6 +363,10 @@ export default function HiredHud() {
                   <div className="hired-hud__tile-logo-wrap">
                     <HiredHudDeveloperLogo slot={unit.slot} aircraftType={aircraftType} variant="hud" />
                   </div>
+                </div>
+
+                <div className="hired-hud__tile-radar-wrap" aria-hidden>
+                  <HiredHudJetRadar slot={unit.slot} aircraftType={aircraftType} variant="hub-tile" />
                 </div>
 
                 <div className="hired-hud__tile-content">
@@ -444,6 +448,7 @@ export default function HiredHud() {
             );
             })}
           </ul>
+          </div>
 
           <footer className="hired-hud__ticker" aria-live="polite">
             <span>LIVE FEED</span>

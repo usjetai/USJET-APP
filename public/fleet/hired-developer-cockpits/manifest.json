@@ -1,0 +1,77 @@
+{
+  "generated": "2026-06-17T00:57:28.071Z",
+  "source": "scripts/assets/hired-developer-cockpit-sheet.png",
+  "grid": "2x5",
+  "avatars": [
+    {
+      "slot": 0,
+      "slug": "blue-ivy",
+      "label": "Blue Ivy",
+      "portrait": 1,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-01-blue-ivy.webp"
+    },
+    {
+      "slot": 1,
+      "slug": "mary-stealth",
+      "label": "Mary Stealth",
+      "portrait": 2,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-02-mary-stealth.webp"
+    },
+    {
+      "slot": 2,
+      "slug": "chop",
+      "label": "Chop",
+      "portrait": 3,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-03-chop.webp"
+    },
+    {
+      "slot": 3,
+      "slug": "stick",
+      "label": "Stick",
+      "portrait": 4,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-04-stick.webp"
+    },
+    {
+      "slot": 25,
+      "slug": "christal",
+      "label": "Christal",
+      "portrait": 5,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-26-christal.webp"
+    },
+    {
+      "slot": 5,
+      "slug": "aaliyah",
+      "label": "Aaliyah",
+      "portrait": 6,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-06-aaliyah.webp"
+    },
+    {
+      "slot": 6,
+      "slug": "little-mama",
+      "label": "Little Mama",
+      "portrait": 7,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-07-little-mama.webp"
+    },
+    {
+      "slot": 13,
+      "slug": "light-speed",
+      "label": "Light Speed",
+      "portrait": 8,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-14-light-speed.webp"
+    },
+    {
+      "slot": 11,
+      "slug": "kitkat",
+      "label": "Kitkat",
+      "portrait": 9,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-12-kitkat.webp"
+    },
+    {
+      "slot": 10,
+      "slug": "rumi",
+      "label": "Rumi",
+      "portrait": 10,
+      "fleetCockpitPath": "/fleet/hired-developer-cockpits/bay-11-rumi.webp"
+    }
+  ]
+}

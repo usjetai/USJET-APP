@@ -55,6 +55,15 @@ export function resolveB21RaiderProductPaymentLink(): string {
   return isUsableStripePaymentLink(url) ? url : B21_RAIDER_PRODUCT_DIRECT_URL;
 }
 
+/** J-36 (US JET Concept) model kit — hard-wired Stripe Payment Link for the product page. */
+export const J36_PRODUCT_DIRECT_URL = "https://buy.stripe.com/8x214n25UfwncIN9xZdwc0v";
+
+/** J-36 model kit — env override when set, else J36_PRODUCT_DIRECT_URL. */
+export function resolveJ36ProductPaymentLink(): string {
+  const url = import.meta.env.VITE_STRIPE_J36_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : J36_PRODUCT_DIRECT_URL;
+}
+
 /** USJET Code Kit ($499) — env override when set, else CODE_KIT_DIRECT_URL when configured. */
 export function resolveCodeKitPaymentLink(): string {
   const url = import.meta.env.VITE_STRIPE_CODE_KIT_PAYMENT_LINK?.trim();

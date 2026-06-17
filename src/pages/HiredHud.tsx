@@ -6,14 +6,13 @@ import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAva
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
 import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
 import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
-import HiredHudCourtBounce from "../components/hiredHud/HiredHudCourtBounce";
 import HiredHudHubVideo from "../components/hiredHud/HiredHudHubVideo";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
+import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -292,6 +291,18 @@ export default function HiredHud() {
           <div className="hired-hud__hub" aria-label="Hired developer hub">
             <div className="hired-hud__hub-videos">
               <HiredHudHubVideo
+                src={HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC}
+                ariaLabel="Hired developer hub Firefly 5-on-5 hoops feed"
+                playLabel="Play hoops feed"
+                feedTag="Hoops"
+              />
+              <HiredHudHubVideo
+                src={HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC}
+                ariaLabel="Hired developer hub Firefly superbike feed"
+                playLabel="Play superbike feed"
+                feedTag="Superbike"
+              />
+              <HiredHudHubVideo
                 src={HIRED_HUD_HUB_VIDEO_SRC}
                 ariaLabel="Hired developer hub live feed"
                 playLabel="Play hub feed"
@@ -343,8 +354,6 @@ export default function HiredHud() {
             </div>
 
             <HiredHudRadioChat units={hiredUnits} />
-
-            <HiredHudCourtBounce units={hiredUnits} />
 
             <ul className="hired-hud__list" aria-label="Hired developers live monitor list">
             <HiredHudSceneTile />

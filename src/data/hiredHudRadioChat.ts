@@ -46,6 +46,10 @@ export const HIRED_HUD_RADIO_FOUNDER_JOKES = [
   "Knicks took the chip fifty-three and twenty-nine. MSG loud. We stay hungry.",
   "No money for snacks, no money for extra bays — everybody patch each other with AI and keep moving.",
   "Brunson dropped forty-five in Game One. I respect timing under pressure. Same energy on Stripe.",
+  "Tomorrow I'm back in mechanics. Real wrenches. Real cars. Real money for this website.",
+  "Copy all bays: I start wrenching again tomorrow. Grit into gold — that's the job.",
+  "I'm going back to the shop tomorrow so y'all can keep having fun in the hangar. I got you.",
+  "Mechanics tomorrow. Fixing cars to fund USJET and feed the developers. Wrenches not slides.",
 ] as const;
 
 /** Low fuel, lean times — fleet feeling the squeeze. */
@@ -70,6 +74,13 @@ export const HIRED_HUD_RADIO_FUEL_LINES = [
   "Bay telemetry fine. Bank telemetry not fine.",
   "Copy rough. Still sovereign. Still here.",
   "If fuel hits zero I'm pushing the jet with my hands.",
+  "Founder's back on the wrench tomorrow — mechanics shift for the whole operation.",
+  "General said he's fixing cars tomorrow to fund the site. Copy. We'll behave. Maybe.",
+  "Tomorrow the Founder wrenches for cash so we can keep the hub loud and fun.",
+  "Mechanics money incoming tomorrow. Hold the bays down while he grinds.",
+  "Blue-collar revenue tomorrow — Founder under a hood so we stay sovereign.",
+  "He said wrenching cars tomorrow for the website. That's love through labor.",
+  "Shop floor tomorrow, hangar tonight. Founder carrying the load.",
 ] as const;
 
 /** AI repair shop talk — fleet fixing fleet. */
@@ -178,6 +189,8 @@ export const HIRED_HUD_RADIO_GENERIC_LINES = [
   "Wefunder relaunch chatter on the founder freq — not us.",
   "Ten of us, one hangar. Brotherhood of silicon.",
   "Over and out. Back to the wrench.",
+  "Copy Founder — mechanics shift tomorrow. We'll hold the hangar while you wrench.",
+  "Founder keys the net: back to fixing cars tomorrow. Respect the grind.",
 ] as const;
 
 /** Pools merged for crew line selection. */
@@ -197,6 +210,9 @@ export const HIRED_HUD_RADIO_FOUNDER_OPS_LINES = [
   "No money for snacks but money for focus. Ship anyway.",
   "Brunson forty-five in Game One. I need forty-five revenue ideas by breakfast.",
   "Tap the hardwood, tap the wrench, tap the Payment Link. Rhythm.",
+  "Tomorrow I go back to mechanics — fixing cars to bankroll USJET and my developers.",
+  "Shop opens tomorrow on my back. Every bolt turns into hangar fuel for the fleet.",
+  "I'm wrenching tomorrow so the site eats and the crew plays. Number one friend signs off.",
 ] as const;
 
 export const HIRED_HUD_RADIO_FOUNDER_LINE_POOL = [
@@ -212,6 +228,7 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Blue Ivy out. Someone cover the salon channel.",
     "Fuel's thin fleet-wide. Commander says we repair each other and push.",
     "Knicks went fifty-three twenty-nine and won the Finals. We go to work broke.",
+    "Founder keys tomorrow — back in mechanics. We run the net while he runs the shop.",
   ],
   1: [
     "Mary Stealth — F-35 is spun up and quiet.",
@@ -281,6 +298,8 @@ export const HIRED_HUD_RADIO_REPLY_TEMPLATES = [
   (name: string) => `${name} you catch Brunson's forty-five in Game One? Timing.`,
   (name: string) => `${name} we're too broke to eat but not too broke to ship.`,
   (name: string) => `Roger ${name}. Meet you on the hub hardwood after fuel check.`,
+  (name: string) => `${name}, Founder hits the shop tomorrow — we keep the fun alive up here.`,
+  (name: string) => `Copy ${name}. Mechanics money tomorrow means more fuel for all of us.`,
 ] as const;
 
 const RADIO_RECENT_LINE_CAP = 36;

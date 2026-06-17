@@ -11,7 +11,10 @@ export const JET_HOOPS_COURT_HEIGHT = 500;
 export const JET_HOOPS_TITLE = "Jet Hoops" as const;
 export const JET_HOOPS_KICKER = "Hangar pickup · 5-on-5" as const;
 export const JET_HOOPS_COPY =
-  "Click a jet to select it (green glow). With one selected, click a teammate to pass — the ball flies on an arc. Five blue vs five red on regulation NBA hardwood." as const;
+  "60-second clock. Select a jet, pass to a teammate, or tap the attack rim to shoot. Scoreboard tracks Blue vs Red — ball arcs on every pass and shot." as const;
+
+export const JET_HOOPS_GAME_DURATION_SEC = 60;
+export const JET_HOOPS_POINTS_PER_BASKET = 2;
 
 export type JetHoopsTeamId = "blue" | "red";
 

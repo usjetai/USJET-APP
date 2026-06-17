@@ -46,26 +46,34 @@ export default function JetHoopsCourtSvg() {
       aria-hidden
     >
       <defs>
-        <linearGradient id="jet-hoops-hardwood" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#7a4a28" />
-          <stop offset="48%" stopColor="#8f5a32" />
-          <stop offset="100%" stopColor="#6d3f22" />
+        <linearGradient id="jet-hoops-hardwood-base" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#9a5e34" />
+          <stop offset="22%" stopColor="#8b522f" />
+          <stop offset="55%" stopColor="#7a4628" />
+          <stop offset="100%" stopColor="#6a3b22" />
         </linearGradient>
-        <pattern id="jet-hoops-plank" width={NBA_PX_PER_FT * 2} height={NBA_PX_PER_FT * 2} patternUnits="userSpaceOnUse">
-          <rect width={NBA_PX_PER_FT * 2} height={NBA_PX_PER_FT * 2} fill="transparent" />
-          <line
-            x1={0}
-            y1={NBA_PX_PER_FT * 2}
-            x2={NBA_PX_PER_FT * 2}
-            y2={NBA_PX_PER_FT * 2}
-            stroke="rgb(0 0 0 / 0.07)"
-            strokeWidth={1}
-          />
+        <linearGradient id="jet-hoops-hardwood-sheen" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="rgb(255 220 170 / 0.08)" />
+          <stop offset="35%" stopColor="rgb(255 220 170 / 0)" />
+          <stop offset="65%" stopColor="rgb(0 0 0 / 0.06)" />
+          <stop offset="100%" stopColor="rgb(255 220 170 / 0.05)" />
+        </linearGradient>
+        <pattern id="jet-hoops-plank" width={NBA_PX_PER_FT * 4.7} height={NBA_PX_PER_FT * 2} patternUnits="userSpaceOnUse">
+          <rect width={NBA_PX_PER_FT * 4.7} height={NBA_PX_PER_FT * 2} fill="transparent" />
+          <line x1={0} y1={NBA_PX_PER_FT * 2 - 0.5} x2={NBA_PX_PER_FT * 4.7} y2={NBA_PX_PER_FT * 2 - 0.5} stroke="rgb(20 10 4 / 0.16)" strokeWidth={1.2} />
+          <line x1={NBA_PX_PER_FT * 2.35} y1={0} x2={NBA_PX_PER_FT * 2.35} y2={NBA_PX_PER_FT * 2} stroke="rgb(255 210 150 / 0.05)" strokeWidth={0.8} />
         </pattern>
+        <filter id="jet-hoops-floor-grain" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} stitchTiles="stitch" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.15  0 0 0 0 0.08  0 0 0 0 0.03  0 0 0 0.12 0" />
+          <feBlend in="SourceGraphic" mode="multiply" />
+        </filter>
       </defs>
 
-      <rect x={0} y={0} width={w} height={h} rx={12} fill="url(#jet-hoops-hardwood)" />
-      <rect x={0} y={0} width={w} height={h} rx={12} fill="url(#jet-hoops-plank)" opacity={0.32} />
+      <rect x={0} y={0} width={w} height={h} rx={12} fill="url(#jet-hoops-hardwood-base)" />
+      <rect x={0} y={0} width={w} height={h} rx={12} fill="url(#jet-hoops-plank)" opacity={0.55} />
+      <rect x={0} y={0} width={w} height={h} rx={12} fill="url(#jet-hoops-hardwood-sheen)" />
+      <rect x={0} y={0} width={w} height={h} rx={12} fill="rgb(0 0 0 / 0.06)" filter="url(#jet-hoops-floor-grain)" />
 
       {/* Boundary */}
       <rect

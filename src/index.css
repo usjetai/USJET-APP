@@ -29358,6 +29358,243 @@ html.blog-page-root #usjet-app-shell {
   flex-direction: column;
   align-items: center;
   gap: 0.85rem;
+  width: 100%;
+}
+
+.jet-hoops-scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 0.65rem;
+  width: min(100%, 940px);
+  padding: 0.65rem 0.85rem;
+  border-radius: 1rem;
+  border: 1px solid rgb(56 189 248 / 0.28);
+  background:
+    linear-gradient(180deg, rgb(8 20 38 / 0.92), rgb(4 12 26 / 0.88)),
+    radial-gradient(circle at 50% 0%, rgb(14 165 233 / 0.14), transparent 62%);
+  box-shadow:
+    0 0 0 1px rgb(103 232 249 / 0.08) inset,
+    0 12px 36px rgb(2 6 23 / 0.45);
+  font-family: Audiowide, "Segoe UI", system-ui, sans-serif;
+}
+
+.jet-hoops-scoreboard--final {
+  border-color: rgb(250 204 21 / 0.45);
+}
+
+.jet-hoops-scoreboard__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-width: 5.5rem;
+}
+
+.jet-hoops-scoreboard__panel--blue {
+  align-items: flex-start;
+}
+
+.jet-hoops-scoreboard__panel--red {
+  align-items: flex-end;
+}
+
+.jet-hoops-scoreboard__label {
+  font-size: 0.52rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(148 163 184 / 0.82);
+}
+
+.jet-hoops-scoreboard__panel--blue .jet-hoops-scoreboard__label {
+  color: rgb(125 211 252 / 0.88);
+}
+
+.jet-hoops-scoreboard__panel--red .jet-hoops-scoreboard__label {
+  color: rgb(252 165 165 / 0.88);
+}
+
+.jet-hoops-scoreboard__score {
+  font-size: clamp(1.8rem, 4vw, 2.45rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 18px rgb(56 189 248 / 0.25);
+}
+
+.jet-hoops-scoreboard__panel--red .jet-hoops-scoreboard__score {
+  text-shadow: 0 0 18px rgb(248 113 113 / 0.28);
+}
+
+.jet-hoops-scoreboard__clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.12rem;
+  min-width: 6.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(56 189 248 / 0.22);
+  background: rgb(2 8 18 / 0.72);
+}
+
+.jet-hoops-scoreboard__clock--urgent {
+  border-color: rgb(248 113 113 / 0.55);
+  animation: jet-hoops-clock-urgent 0.85s ease-in-out infinite;
+}
+
+@keyframes jet-hoops-clock-urgent {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgb(248 113 113 / 0);
+  }
+  50% {
+    box-shadow: 0 0 22px rgb(248 113 113 / 0.35);
+  }
+}
+
+.jet-hoops-scoreboard__clock-label {
+  font-size: 0.48rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(148 163 184 / 0.75);
+}
+
+.jet-hoops-scoreboard__clock-value {
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  color: rgb(224 242 254);
+  font-variant-numeric: tabular-nums;
+}
+
+.jet-hoops-scoreboard__flash {
+  font-size: 0.48rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(250 204 21);
+}
+
+.jet-hoops__player-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.jet-hoops__player-bob {
+  position: relative;
+  pointer-events: auto;
+  margin-left: -22px;
+  margin-top: -22px;
+}
+
+.jet-hoops__player-shadow {
+  position: absolute;
+  left: -16px;
+  top: 14px;
+  width: 32px;
+  height: 12px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse, rgb(0 0 0 / 0.48), rgb(0 0 0 / 0));
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.jet-hoops__ball-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.jet-hoops__ball-shadow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 7px;
+  margin-left: -9px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse, rgb(0 0 0 / 0.5), transparent);
+  filter: blur(0.5px);
+}
+
+.jet-hoops__ball-shadow--flight {
+  opacity: 0.38;
+  transform: scale(0.85);
+}
+
+.jet-hoops__rim-zone {
+  position: absolute;
+  z-index: 2;
+  border: 2px dashed rgb(250 204 21 / 0.55);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(250 204 21 / 0.16), transparent 70%);
+  cursor: crosshair;
+  pointer-events: auto;
+  animation: jet-hoops-rim-pulse 1.6s ease-in-out infinite;
+}
+
+.jet-hoops__rim-zone:hover {
+  border-color: rgb(253 224 71 / 0.9);
+  background: radial-gradient(circle, rgb(250 204 21 / 0.28), transparent 72%);
+}
+
+@keyframes jet-hoops-rim-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgb(250 204 21 / 0);
+  }
+  50% {
+    box-shadow: 0 0 16px rgb(250 204 21 / 0.35);
+  }
+}
+
+.jet-hoops__game-over {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: rgb(2 6 23 / 0.62);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+}
+
+.jet-hoops__game-over-title {
+  margin: 0;
+  font-family: Audiowide, "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(254 240 138);
+}
+
+.jet-hoops__game-over-copy {
+  margin: 0;
+  font-size: 0.82rem;
+  color: rgb(226 232 240 / 0.88);
+}
+
+.jet-hoops__player {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 2px var(--jet-hoops-ring),
+    0 0 18px var(--jet-hoops-glow),
+    0 10px 18px rgb(0 0 0 / 0.35);
+  will-change: transform;
 }
 
 .jet-hoops__hud {
@@ -29394,23 +29631,8 @@ html.blog-page-root #usjet-app-shell {
   border-color: rgb(74 222 128 / 0.55);
 }
 
-.jet-hoops__player {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  border-radius: 999px;
-  box-shadow:
-    0 0 0 2px var(--jet-hoops-ring),
-    0 0 18px var(--jet-hoops-glow);
-  will-change: transform;
-}
-
 .jet-hoops__player--selectable {
   cursor: pointer;
-  pointer-events: auto;
 }
 
 .jet-hoops__player--selectable:disabled {
@@ -29458,18 +29680,18 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .jet-hoops__ball {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  display: block;
   border-radius: 999px;
   background: radial-gradient(circle at 32% 28%, rgb(254 240 138), rgb(234 179 8) 58%, rgb(180 83 9));
   box-shadow:
     0 0 0 1px rgb(254 240 138 / 0.5),
-    0 0 14px rgb(250 204 21 / 0.65);
+    0 0 14px rgb(250 204 21 / 0.65),
+    0 8px 14px rgb(0 0 0 / 0.38);
   will-change: transform;
 }
 
-@media (max-width: 720px) {
+.jet-hoops__hud {
   .jet-hoops-page__stage {
     justify-content: flex-start;
   }
@@ -29477,8 +29699,11 @@ html.blog-page-root #usjet-app-shell {
 
 @media (prefers-reduced-motion: reduce) {
   .jet-hoops__player,
-  .jet-hoops__ball {
+  .jet-hoops__ball,
+  .jet-hoops__rim-zone,
+  .jet-hoops-scoreboard__clock--urgent {
     will-change: auto;
+    animation: none !important;
   }
 }
 

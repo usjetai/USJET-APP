@@ -7,12 +7,13 @@ import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo"
 import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
 import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
 import HiredHudHubVideo from "../components/hiredHud/HiredHudHubVideo";
+import HiredHudHubYouTube from "../components/hiredHud/HiredHudHubYouTube";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
+import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_START_SEC, HIRED_HUD_HUB_YOUTUBE_TITLE, HIRED_HUD_HUB_YOUTUBE_VIDEO_ID, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -319,6 +320,14 @@ export default function HiredHud() {
                 ariaLabel="Hired developer hub second feed"
                 playLabel="Play second feed"
                 feedTag="Second"
+              />
+              <HiredHudHubYouTube
+                videoId={HIRED_HUD_HUB_YOUTUBE_VIDEO_ID}
+                startSeconds={HIRED_HUD_HUB_YOUTUBE_START_SEC}
+                title={HIRED_HUD_HUB_YOUTUBE_TITLE}
+                ariaLabel="Hired developer hub YouTube feed"
+                playLabel="Play with sound"
+                feedTag="YouTube"
               />
             </div>
 

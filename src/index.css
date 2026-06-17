@@ -27502,6 +27502,17 @@ html.blog-page-root #usjet-app-shell {
   color: rgb(148 163 184 / 0.82);
 }
 
+.hired-hud__radio-comms-god {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(253 224 71 / 0.95);
+}
+
 .hired-hud__radio-comms-live {
   display: inline-flex;
   align-items: center;
@@ -27589,6 +27600,34 @@ html.blog-page-root #usjet-app-shell {
   box-shadow: inset 0 0 0 1px rgb(74 222 128 / 0.18);
 }
 
+.hired-hud__radio-line--founder-god {
+  border-color: rgb(251 191 36 / 0.42);
+  background: linear-gradient(90deg, rgb(69 26 3 / 0.55), rgb(4 20 16 / 0.62));
+  box-shadow:
+    inset 0 0 0 1px rgb(251 191 36 / 0.22),
+    0 0 18px rgb(251 191 36 / 0.08);
+}
+
+.hired-hud__radio-line--founder-god .hired-hud__radio-callsign {
+  color: rgb(253 224 71 / 0.98);
+}
+
+.hired-hud__radio-line--founder-god .hired-hud__radio-text {
+  color: rgb(255 251 235 / 0.98);
+}
+
+.hired-hud__radio-avatar-wrap--founder-god {
+  box-shadow:
+    0 0 0 1px rgb(251 191 36 / 0.55),
+    0 0 14px rgb(251 191 36 / 0.22);
+}
+
+.hired-hud__radio-avatar-wrap--founder-god .hired-hud__radio-avatar {
+  object-fit: contain;
+  background: rgb(15 23 42 / 0.9);
+  padding: 0.12rem;
+}
+
 .hired-hud__radio-time {
   font-size: 0.62rem;
   font-weight: 700;
@@ -27665,6 +27704,25 @@ html.blog-page-root #usjet-app-shell {
 .hired-hud__radio-roster-item--active {
   opacity: 1;
   transform: translateY(-1px);
+}
+
+.hired-hud__radio-roster-item--founder-god .hired-hud__radio-roster-name {
+  color: rgb(253 224 71 / 0.98);
+}
+
+.hired-hud__radio-roster-avatar--founder-god {
+  object-fit: contain;
+  background: rgb(15 23 42 / 0.92);
+  padding: 0.1rem;
+  box-shadow:
+    0 0 0 1px rgb(251 191 36 / 0.55),
+    0 0 12px rgb(251 191 36 / 0.28);
+}
+
+.hired-hud__radio-roster-item--founder-god.hired-hud__radio-roster-item--active .hired-hud__radio-roster-avatar--founder-god {
+  box-shadow:
+    0 0 0 1px rgb(251 191 36 / 0.75),
+    0 0 16px rgb(251 191 36 / 0.45);
 }
 
 .hired-hud__radio-roster-avatar,

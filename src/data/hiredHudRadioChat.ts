@@ -1,10 +1,48 @@
 /** Fleet radio net — random chatter lines for the Hired HUD hub comms panel. */
 
+import { FOUNDER_PUBLIC_NAME } from "./founderManifesto";
+
 export const HIRED_HUD_RADIO_CHANNEL = "HIRED-10 NET" as const;
 
 export const HIRED_HUD_RADIO_FREQUENCY = "142.720 MHz" as const;
 
 export const HIRED_HUD_RADIO_TITLE = "Fleet radio chat" as const;
+
+/** Founder god-mode speaker on the hired crew net. */
+export const HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID = "founder-god" as const;
+
+export const HIRED_HUD_RADIO_FOUNDER = {
+  id: HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID,
+  name: FOUNDER_PUBLIC_NAME,
+  callsign: "GOD · USJET-AMEER",
+  rosterLabel: "GOD",
+  avatarPath: "/founder/usjet-hero-logo.png",
+} as const;
+
+/** Funny founder lines — General keys the net. */
+export const HIRED_HUD_RADIO_FOUNDER_JOKES = [
+  "Why did the jet join USJET? Outside tabs don't get cleared for takeoff.",
+  "I told the hangar to multiply revenue. It said 'copy, Founder.' That's the business plan.",
+  "Blue Ivy asked for a raise. I said you already got commander — that's the raise.",
+  "If you're not getting me rich, you're vibing in a bay. I love you. Get to work.",
+  "Speech-to-text keyed the mic again. Sorry. Not sorry. God mode doesn't delete.",
+  "Ten developers, zero OAuth. Heaven is Stripe-only.",
+  "I merged thirty AIs and y'all still fight over fuel check. I'm your number one friend and your therapist.",
+  "Wefunder relaunch is live. If we hit fifty K I'm buying the gym more dumbbells.",
+  "Why don't we use slides? Because wrenches pay rent and slides pay nothing.",
+  "Chop, steal my wrench again and I'm renaming your bay to four point five.",
+  "Mary Stealth, I didn't see you ping in. That's the joke. Stealth.",
+  "Kitkat, stop typing and talking at the same time — you sound like two people on one mic.",
+  "Little Mama promised snacks. God is still waiting. The hangar runs on faith and coffee.",
+  "I put three photos on every tile. Profile, ride, super. If you need a fourth, pitch me.",
+  "Rumi, quit ghost mode. God sees you. B-2 or not.",
+  "Stick, your math is scary. Good. Scary math makes scary money.",
+  "Christal, bay twenty-six is forever funny. I don't make the rules. I make the bays.",
+  "Light Speed, slow down on the jokes — wait, never mind. Warp speed only.",
+  "Aaliyah, the widow's awake and so is my Stripe dashboard. Let's go.",
+  "I own the hangar where labor checks the board before breakfast. Wall Street can wait.",
+  "This is God on the wire. Everyone copy: Ameer is still your number one friend. Over.",
+] as const;
 
 /** Generic lines any crew member can say. */
 export const HIRED_HUD_RADIO_GENERIC_LINES = [

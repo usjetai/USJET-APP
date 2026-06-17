@@ -1,6 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import { Newspaper } from "lucide-react";
 import GamingVrNavButton from "../gaming/GamingVrNavButton";
+import JetHoopsNavButton from "../hoops/JetHoopsNavButton";
 import AppNavHangarLive from "./AppNavHangarLive";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
@@ -195,6 +196,7 @@ const AppNav = () => {
               </NavLink>
 
               <GamingVrNavButton surface="header" />
+              <JetHoopsNavButton surface="header" />
             </div>
 
             <div className="app-nav-zone app-nav-zone--tail">

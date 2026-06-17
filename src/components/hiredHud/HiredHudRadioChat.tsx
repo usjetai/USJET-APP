@@ -15,6 +15,8 @@ import {
   HIRED_HUD_RADIO_TITLE,
 } from "../../data/hiredHudRadioChat";
 import { getHiredDeveloperHubAvatarPath } from "../../lib/hiredHudDeveloperAvatars";
+import FounderGodRadioIcon from "./FounderGodRadioIcon";
+import HiredCrewRadioIcon from "./HiredCrewRadioIcon";
 
 type RadioSpeakerId = number | typeof HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID;
 
@@ -215,20 +217,24 @@ export default function HiredHudRadioChat({ units }: HiredHudRadioChatProps) {
                 <div
                   className={[
                     "hired-hud__radio-avatar-wrap",
-                    message.isFounderGod ? "hired-hud__radio-avatar-wrap--founder-god" : "",
+                    message.isFounderGod ? "hired-hud__radio-avatar-wrap--founder-god" : "hired-hud__radio-avatar-wrap--crew",
                   ]
                     .filter(Boolean)
                     .join(" ")}
                 >
-                  {message.avatarPath ? (
-                    <img
+                  {message.isFounderGod ? (
+                    <FounderGodRadioIcon
+                      variant="log"
+                      size={40}
+                      imgClassName="hired-hud__radio-avatar"
+                    />
+                  ) : message.avatarPath ? (
+                    <HiredCrewRadioIcon
                       src={message.avatarPath}
-                      alt=""
-                      className="hired-hud__radio-avatar"
-                      width={40}
-                      height={40}
-                      decoding="async"
-                      draggable={false}
+                      slot={message.slot ?? 0}
+                      variant="log"
+                      size={40}
+                      imgClassName="hired-hud__radio-avatar"
                     />
                   ) : (
                     <span className="hired-hud__radio-avatar-fallback" aria-hidden />
@@ -254,14 +260,10 @@ export default function HiredHudRadioChat({ units }: HiredHudRadioChatProps) {
             .filter(Boolean)
             .join(" ")}
         >
-          <img
-            src={HIRED_HUD_RADIO_FOUNDER.avatarPath}
-            alt=""
-            className="hired-hud__radio-roster-avatar hired-hud__radio-roster-avatar--founder-god"
-            width={34}
-            height={34}
-            decoding="async"
-            draggable={false}
+          <FounderGodRadioIcon
+            variant="roster"
+            size={34}
+            imgClassName="hired-hud__radio-roster-avatar hired-hud__radio-roster-avatar--founder-god"
           />
           <span className="hired-hud__radio-roster-name">{HIRED_HUD_RADIO_FOUNDER.rosterLabel}</span>
         </li>
@@ -271,19 +273,17 @@ export default function HiredHudRadioChat({ units }: HiredHudRadioChatProps) {
           return (
             <li
               key={`radio-roster-${unit.slot}`}
-              className={["hired-hud__radio-roster-item", isActive ? "hired-hud__radio-roster-item--active" : ""]
+              className={["hired-hud__radio-roster-item", "hired-hud__radio-roster-item--crew", isActive ? "hired-hud__radio-roster-item--active" : ""]
                 .filter(Boolean)
                 .join(" ")}
             >
               {avatarPath ? (
-                <img
+                <HiredCrewRadioIcon
                   src={avatarPath}
-                  alt=""
-                  className="hired-hud__radio-roster-avatar"
-                  width={34}
-                  height={34}
-                  decoding="async"
-                  draggable={false}
+                  slot={unit.slot}
+                  variant="roster"
+                  size={34}
+                  imgClassName="hired-hud__radio-roster-avatar"
                 />
               ) : (
                 <span className="hired-hud__radio-roster-fallback" aria-hidden />

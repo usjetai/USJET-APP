@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { CODE_KIT_ROUTE } from "../../data/codeKit499";
+import { JET_HOOPS_ROUTE } from "../../data/jetHoops";
 import {
   GAMING_PORTAL_JUMPS,
   GAMING_VR_ICON_SRC,
@@ -23,6 +24,9 @@ export default function GamingPortalJumps() {
         </Link>
         <Link to={CODE_KIT_ROUTE} className="gaming-portal-jumps__chip btn-glass glass-effect-interactive">
           Code Kit
+        </Link>
+        <Link to={JET_HOOPS_ROUTE} className="gaming-portal-jumps__chip btn-glass glass-effect-interactive">
+          Jet Hoops
         </Link>
         <a
           href={GAMING_X_URL}

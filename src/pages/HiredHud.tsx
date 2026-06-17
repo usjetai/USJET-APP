@@ -6,6 +6,7 @@ import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAva
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
 import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
 import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
+import HiredHudCourtBounce from "../components/hiredHud/HiredHudCourtBounce";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
@@ -320,6 +321,8 @@ export default function HiredHud() {
             </div>
 
             <HiredHudRadioChat units={hiredUnits} />
+
+            <HiredHudCourtBounce units={hiredUnits} />
 
             <ul className="hired-hud__list" aria-label="Hired developers live monitor list">
             <HiredHudSceneTile />

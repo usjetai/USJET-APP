@@ -86,6 +86,7 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     title: "Gaming",
     routes: [
       { path: "/gaming", label: "VR Gaming" },
+      { path: "/hoops", label: "Jet Hoops", hint: "5-on-5 pickup" },
       { path: "/gamers", label: "Gamers Hub" },
     ],
   },

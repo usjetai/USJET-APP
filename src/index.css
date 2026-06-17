@@ -27444,6 +27444,68 @@ html.blog-page-root #usjet-app-shell {
   margin: 1rem 0 1.1rem;
 }
 
+.hired-hud__hub .hired-hud__court-bounce {
+  margin: 0 0 1rem;
+}
+
+.hired-hud__court-bounce {
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgb(251 146 60 / 0.32);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgb(24 16 8 / 0.88), rgb(12 20 32 / 0.94));
+  box-shadow:
+    inset 0 0 0 1px rgb(251 146 60 / 0.14),
+    0 0 24px rgb(251 146 60 / 0.08);
+  overflow: hidden;
+}
+
+.hired-hud__court-bounce-head {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.72rem 0.95rem 0.62rem;
+  border-bottom: 1px solid rgb(251 146 60 / 0.18);
+}
+
+.hired-hud__court-bounce-kicker {
+  margin: 0;
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(253 186 116 / 0.9);
+}
+
+.hired-hud__court-bounce-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin: 0;
+  font-size: clamp(0.92rem, 2vw, 1.1rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: rgb(255 237 213 / 0.98);
+}
+
+.hired-hud__court-bounce-copy {
+  margin: 0;
+  font-size: 0.66rem;
+  line-height: 1.45;
+  color: rgb(148 163 184 / 0.9);
+}
+
+.hired-hud__court-bounce-frame {
+  position: relative;
+  min-height: clamp(16rem, 34vw, 22rem);
+  background: radial-gradient(circle at center, rgb(34 197 94 / 0.05), transparent 62%);
+}
+
+.hired-hud__court-bounce-canvas {
+  display: block;
+  width: 100%;
+  height: clamp(16rem, 34vw, 22rem);
+}
+
 .hired-hud__radio-comms {
   position: relative;
   z-index: 1;
@@ -27617,11 +27679,105 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__radio-avatar-wrap--founder-god {
+  overflow: visible;
   box-shadow:
     0 0 0 1px rgb(251 191 36 / 0.55),
     0 0 14px rgb(251 191 36 / 0.22);
 }
 
+.hired-hud__founder-god-icon {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hired-hud__founder-god-icon-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hired-hud__founder-god-crucifix {
+  position: absolute;
+  right: -0.1rem;
+  bottom: -0.18rem;
+  width: 0.92rem;
+  height: 1.22rem;
+  color: rgb(253 224 71 / 0.98);
+  filter: drop-shadow(0 0 5px rgb(251 191 36 / 0.65));
+  pointer-events: none;
+}
+
+.hired-hud__founder-god-icon--roster .hired-hud__founder-god-crucifix {
+  width: 0.78rem;
+  height: 1.02rem;
+  right: -0.08rem;
+  bottom: -0.14rem;
+}
+
+.hired-hud__founder-god-crucifix-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.hired-hud__radio-avatar-wrap--crew {
+  overflow: visible;
+}
+
+.hired-hud__crew-radio-icon {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hired-hud__crew-radio-icon-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hired-hud__crew-radio-kiss {
+  position: absolute;
+  right: -0.1rem;
+  bottom: -0.18rem;
+  width: 0.92rem;
+  height: 0.92rem;
+  pointer-events: none;
+}
+
+.hired-hud__crew-radio-icon--pink .hired-hud__crew-radio-kiss {
+  color: rgb(244 114 182 / 0.98);
+  filter: drop-shadow(0 0 5px rgb(244 114 182 / 0.6));
+}
+
+.hired-hud__crew-radio-icon--red .hired-hud__crew-radio-kiss {
+  color: rgb(248 113 113 / 0.98);
+  filter: drop-shadow(0 0 5px rgb(239 68 68 / 0.62));
+}
+
+.hired-hud__crew-radio-icon--roster .hired-hud__crew-radio-kiss {
+  width: 0.78rem;
+  height: 0.78rem;
+  right: -0.08rem;
+  bottom: -0.14rem;
+}
+
+.hired-hud__crew-radio-kiss-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.hired-hud__radio-roster-item--crew {
+  overflow: visible;
+}
+
+.hired-hud__radio-avatar-wrap--founder-god .hired-hud__founder-god-icon-img,
 .hired-hud__radio-avatar-wrap--founder-god .hired-hud__radio-avatar {
   object-fit: contain;
   background: rgb(15 23 42 / 0.9);
@@ -27710,7 +27866,12 @@ html.blog-page-root #usjet-app-shell {
   color: rgb(253 224 71 / 0.98);
 }
 
-.hired-hud__radio-roster-avatar--founder-god {
+.hired-hud__radio-roster-item--founder-god {
+  overflow: visible;
+}
+
+.hired-hud__radio-roster-avatar--founder-god,
+.hired-hud__founder-god-icon--roster .hired-hud__founder-god-icon-img {
   object-fit: contain;
   background: rgb(15 23 42 / 0.92);
   padding: 0.1rem;
@@ -27719,7 +27880,8 @@ html.blog-page-root #usjet-app-shell {
     0 0 12px rgb(251 191 36 / 0.28);
 }
 
-.hired-hud__radio-roster-item--founder-god.hired-hud__radio-roster-item--active .hired-hud__radio-roster-avatar--founder-god {
+.hired-hud__radio-roster-item--founder-god.hired-hud__radio-roster-item--active .hired-hud__radio-roster-avatar--founder-god,
+.hired-hud__radio-roster-item--founder-god.hired-hud__radio-roster-item--active .hired-hud__founder-god-icon-img {
   box-shadow:
     0 0 0 1px rgb(251 191 36 / 0.75),
     0 0 16px rgb(251 191 36 / 0.45);
@@ -29079,4 +29241,278 @@ html.blog-page-root #usjet-app-shell {
   .footer-surprise-l2--orbit {
     animation: none !important;
   }
+}
+
+/* ── Jet Hoops — 5-on-5 pickup court ─────────────────────────────────────── */
+
+.jet-hoops-page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  padding: clamp(5.5rem, 9vw, 7rem) clamp(1rem, 3vw, 2rem) clamp(2.5rem, 5vw, 4rem);
+}
+
+.jet-hoops-page__inner {
+  width: min(100%, 980px);
+  margin: 0 auto;
+}
+
+.jet-hoops-page__hero {
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+  text-align: center;
+}
+
+.jet-hoops-page__kicker {
+  margin: 0 0 0.45rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(125 211 252 / 0.88);
+}
+
+.jet-hoops-page__title {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: rgb(240 249 255);
+  text-shadow: 0 0 28px rgb(14 165 233 / 0.35);
+}
+
+.jet-hoops-page__copy {
+  margin: 0.75rem auto 0;
+  max-width: 38rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgb(186 230 253 / 0.82);
+}
+
+.jet-hoops-page__teams {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.jet-hoops-page__team--blue {
+  color: rgb(56 189 248);
+}
+
+.jet-hoops-page__team--red {
+  color: rgb(248 113 113);
+}
+
+.jet-hoops-page__versus {
+  color: rgb(148 163 184 / 0.75);
+}
+
+.jet-hoops-page__stage {
+  display: flex;
+  justify-content: center;
+  padding: clamp(0.5rem, 1.5vw, 1rem);
+  border-radius: 1.25rem;
+  border: 1px solid rgb(56 189 248 / 0.22);
+  background:
+    linear-gradient(180deg, rgb(8 18 34 / 0.72), rgb(4 10 22 / 0.55)),
+    radial-gradient(circle at 50% 0%, rgb(14 116 144 / 0.18), transparent 55%);
+  box-shadow:
+    0 0 0 1px rgb(103 232 249 / 0.06) inset,
+    0 24px 64px rgb(2 6 23 / 0.55);
+  overflow-x: auto;
+}
+
+.jet-hoops__arena {
+  position: relative;
+  flex: 0 0 auto;
+  max-width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 18px 48px rgb(0 0 0 / 0.45);
+}
+
+.jet-hoops__court-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.jet-hoops__layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.jet-hoops__layer--interactive {
+  pointer-events: auto;
+}
+
+.jet-hoops__game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.jet-hoops__hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  max-width: 38rem;
+  text-align: center;
+}
+
+.jet-hoops__hud-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(186 230 253 / 0.82);
+  border: 1px solid rgb(56 189 248 / 0.22);
+  background: rgb(8 18 34 / 0.72);
+}
+
+.jet-hoops__hud-pill--ball {
+  color: rgb(254 240 138);
+  border-color: rgb(250 204 21 / 0.45);
+}
+
+.jet-hoops__hud-pill--selected {
+  color: rgb(187 247 208);
+  border-color: rgb(74 222 128 / 0.55);
+}
+
+.jet-hoops__player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 2px var(--jet-hoops-ring),
+    0 0 18px var(--jet-hoops-glow);
+  will-change: transform;
+}
+
+.jet-hoops__player--selectable {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.jet-hoops__player--selectable:disabled {
+  cursor: wait;
+  opacity: 0.92;
+}
+
+.jet-hoops__player--selected {
+  box-shadow:
+    0 0 0 3px rgb(74 222 128 / 0.95),
+    0 0 0 5px rgb(74 222 128 / 0.35),
+    0 0 22px rgb(34 197 94 / 0.45);
+}
+
+.jet-hoops__player--with-ball {
+  box-shadow:
+    0 0 0 2px rgb(250 204 21 / 0.95),
+    0 0 0 5px rgb(250 204 21 / 0.28),
+    0 0 20px rgb(250 204 21 / 0.42),
+    0 0 18px var(--jet-hoops-glow);
+}
+
+.jet-hoops__player-sprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  object-fit: cover;
+  background: rgb(15 23 42 / 0.9);
+}
+
+.jet-hoops__player-tag {
+  position: absolute;
+  left: 50%;
+  bottom: -0.55rem;
+  transform: translateX(-50%);
+  padding: 0.08rem 0.35rem;
+  border-radius: 999px;
+  font-size: 0.45rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: rgb(248 250 252);
+  background: var(--jet-hoops-badge);
+  border: 1px solid var(--jet-hoops-ring);
+}
+
+.jet-hoops__ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 28%, rgb(254 240 138), rgb(234 179 8) 58%, rgb(180 83 9));
+  box-shadow:
+    0 0 0 1px rgb(254 240 138 / 0.5),
+    0 0 14px rgb(250 204 21 / 0.65);
+  will-change: transform;
+}
+
+@media (max-width: 720px) {
+  .jet-hoops-page__stage {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jet-hoops__player,
+  .jet-hoops__ball {
+    will-change: auto;
+  }
+}
+
+.jet-hoops-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(254 240 138);
+  border: 1px solid rgb(250 204 21 / 0.45);
+  background: linear-gradient(180deg, rgb(69 26 3 / 0.55), rgb(24 16 8 / 0.72));
+}
+
+.jet-hoops-nav--header {
+  min-height: 2rem;
+}
+
+.jet-hoops-nav--footer {
+  min-height: 1.85rem;
+}
+
+.jet-hoops-nav__ball {
+  color: rgb(250 204 21);
+  filter: drop-shadow(0 0 6px rgb(250 204 21 / 0.55));
+}
+
+.jet-hoops-nav--active,
+.jet-hoops-nav:hover {
+  color: rgb(255 251 235);
+  border-color: rgb(253 224 71 / 0.75);
+  box-shadow: 0 0 18px rgb(250 204 21 / 0.22);
 }

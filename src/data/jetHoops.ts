@@ -4,6 +4,8 @@ import { getFleetRosterMeta } from "./fleetRoster";
 import { getFleetAircraftRadarLogoPathForSlot } from "../lib/fleetAircraftLogos";
 
 export const JET_HOOPS_ROUTE = "/hoops" as const;
+export const JET_HOOPS_ARCADE_URL = "https://www.crazygames.com/t/basketball" as const;
+export const JET_HOOPS_ARCADE_LABEL = "CrazyGames Basketball" as const;
 export const JET_HOOPS_LOGO_MP4_SRC = "/hoops/usjet-hoops-logo.mp4" as const;
 export const JET_HOOPS_LOGO_POSTER_SRC = "/hoops/usjet-hoops-logo-poster.jpg" as const;
 export const JET_HOOPS_COURT_IMAGE_SRC = "/hoops/nba-court-topdown.jpg" as const;
@@ -13,9 +15,9 @@ export const JET_HOOPS_COURT_WIDTH = 940;
 export const JET_HOOPS_COURT_HEIGHT = 500;
 
 export const JET_HOOPS_TITLE = "Jet Hoops" as const;
-export const JET_HOOPS_KICKER = "Hangar pickup · 5-on-5" as const;
+export const JET_HOOPS_KICKER = "Hangar arcade · basketball portal" as const;
 export const JET_HOOPS_COPY =
-  "60-second clock. Select a jet, pass to a teammate, or tap the attack rim to shoot. Scoreboard tracks Blue vs Red — ball arcs on every pass and shot." as const;
+  "Arcade hardwood opens in the sovereign cockpit tile — same window, no external tab leak. Pick a game and run." as const;
 
 export const JET_HOOPS_GAME_DURATION_SEC = 60;
 export const JET_HOOPS_POINTS_PER_BASKET = 2;

@@ -7,7 +7,6 @@ import WefunderCovenantBridge from "../campaign/WefunderCovenantBridge";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
 import ZelleFuelChip from "../fuel/ZelleFuelChip";
 import GamingVrNavButton from "../gaming/GamingVrNavButton";
-import JetHoopsNavButton from "../hoops/JetHoopsNavButton";
 import SilentHangarAudioToggle from "../media/SilentHangarAudioToggle";
 import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "../../data/globalBackgroundBeat";
 
@@ -110,9 +109,6 @@ export default function UsjetGlobalContactBar() {
           </FooterSurpriseWrap>
           <FooterSurpriseWrap chipId="gamers">
             <GamingVrNavButton surface="footer" />
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="hoops">
-            <JetHoopsNavButton surface="footer" />
           </FooterSurpriseWrap>
           <FooterSurpriseWrap chipId="intel">
             <Link

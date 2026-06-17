@@ -47,6 +47,7 @@ export function iframeSrcFromUnitHref(href: string): string {
 export type HangarWorkbenchEmbedOptions = {
   slot?: number;
   label?: string;
+  returnTo?: string;
 };
 
 /**
@@ -65,7 +66,7 @@ export function hangarWorkbenchIframeSrc(rawSrc: string, options?: HangarWorkben
 
   const params = new URLSearchParams({
     src: safe,
-    return: "/hangar",
+    return: options?.returnTo ?? "/hangar",
     embed: "hangar",
   });
 

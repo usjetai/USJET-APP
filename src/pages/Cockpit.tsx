@@ -7,13 +7,14 @@ import { isHangarIframeBlocked } from "../lib/hangarEmbedPolicy";
 import { markFleetBayTrusted, sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
 import { logFleetLaunchHandoff } from "../lib/fleetUsageHistory";
 
-const ALLOWED_RETURN = new Set(["/hangar", "/intel", "/origin", "/"]);
+const ALLOWED_RETURN = new Set(["/hangar", "/intel", "/origin", "/hoops", "/"]);
 
 const RETURN_ARIA: Record<string, string> = {
   "/": "Return to USJET Fleet",
   "/hangar": "Return to USJET Hangar",
   "/intel": "Return to USJET Intel",
   "/origin": "Return to USJET Origin",
+  "/hoops": "Return to Jet Hoops",
 };
 
 /** Full-page cockpit handoffs; Hangar tiles use `embed=hangar` for in-tile partner frames. */

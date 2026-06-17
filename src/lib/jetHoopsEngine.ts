@@ -78,21 +78,25 @@ function accelerate(player: JetHoopsPlayer, tx: number, ty: number, maxSpeed: nu
   }
 }
 
-function resolveWalls(body: { x: number; y: number; vx: number; vy: number; r: number }, restitution = 0.84): void {
-  if (body.x - body.r < COURT_PAD) {
-    body.x = COURT_PAD + body.r;
+function resolveWalls(
+  body: { x: number; y: number; vx: number; vy: number },
+  radius: number,
+  restitution = 0.84,
+): void {
+  if (body.x - radius < COURT_PAD) {
+    body.x = COURT_PAD + radius;
     body.vx = Math.abs(body.vx) * restitution;
   }
-  if (body.x + body.r > JET_HOOPS_COURT_WIDTH - COURT_PAD) {
-    body.x = JET_HOOPS_COURT_WIDTH - COURT_PAD - body.r;
+  if (body.x + radius > JET_HOOPS_COURT_WIDTH - COURT_PAD) {
+    body.x = JET_HOOPS_COURT_WIDTH - COURT_PAD - radius;
     body.vx = -Math.abs(body.vx) * restitution;
   }
-  if (body.y - body.r < COURT_PAD) {
-    body.y = COURT_PAD + body.r;
+  if (body.y - radius < COURT_PAD) {
+    body.y = COURT_PAD + radius;
     body.vy = Math.abs(body.vy) * restitution;
   }
-  if (body.y + body.r > JET_HOOPS_COURT_HEIGHT - COURT_PAD) {
-    body.y = JET_HOOPS_COURT_HEIGHT - COURT_PAD - body.r;
+  if (body.y + radius > JET_HOOPS_COURT_HEIGHT - COURT_PAD) {
+    body.y = JET_HOOPS_COURT_HEIGHT - COURT_PAD - radius;
     body.vy = -Math.abs(body.vy) * restitution;
   }
 }
@@ -204,7 +208,7 @@ export function stepJetHoopsSim(sim: JetHoopsSim, dt: number, rng: () => number)
     player.x += player.vx * dt;
     player.y += player.vy * dt;
     player.angle = angleTo(player.x, player.y, ball.x, ball.y);
-    resolveWalls(player, 0.72);
+    resolveWalls(player, JET_HOOPS_PLAYER_RADIUS, 0.72);
   }
 
   if (ball.possessedBy != null) {
@@ -223,7 +227,7 @@ export function stepJetHoopsSim(sim: JetHoopsSim, dt: number, rng: () => number)
     ball.vy *= 0.992;
     ball.x += ball.vx * dt;
     ball.y += ball.vy * dt;
-    resolveWalls(ball, 0.86);
+    resolveWalls(ball, JET_HOOPS_BALL_RADIUS, 0.86);
 
     let catcher: JetHoopsPlayer | undefined;
     for (const player of players) {

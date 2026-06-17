@@ -28,7 +28,7 @@ export default function FounderProductLightbox({ product, onClose }: FounderProd
     };
   }, [product, handleKey]);
 
-  if (!product) return null;
+  if (!product || typeof document === "undefined") return null;
 
   return createPortal(
     <div

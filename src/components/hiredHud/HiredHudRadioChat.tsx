@@ -149,7 +149,7 @@ export default function HiredHudRadioChat({ units }: HiredHudRadioChatProps) {
   const rng = useMemo(() => createSeededRandom(104729), []);
   const [messages, setMessages] = useState<RadioMessage[]>(() => seedMessages(units, rng));
   const [activeSpeakerId, setActiveSpeakerId] = useState<RadioSpeakerId | null>(
-    () => messages.at(-1)?.speakerId ?? null,
+    () => messages[messages.length - 1]?.speakerId ?? null,
   );
   const [squelch, setSquelch] = useState(false);
   const logRef = useRef<HTMLDivElement>(null);

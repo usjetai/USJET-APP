@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FounderJetWing from "../components/founder/FounderJetWing";
 import FounderProductLightbox from "../components/founder/FounderProductLightbox";
@@ -15,6 +15,7 @@ import { DIRECT_FUEL_ROUTE } from "../data/directFuelCash";
 
 export default function FounderProducts() {
   const [expandedProduct, setExpandedProduct] = useState<FounderProduct | null>(null);
+  const closeExpandedProduct = useCallback(() => setExpandedProduct(null), []);
 
   useEffect(() => {
     const prev = document.title;
@@ -128,7 +129,7 @@ export default function FounderProducts() {
 
       <FounderProductLightbox
         product={expandedProduct}
-        onClose={() => setExpandedProduct(null)}
+        onClose={closeExpandedProduct}
       />
     </div>
   );

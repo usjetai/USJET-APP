@@ -1,6 +1,7 @@
 /** Fleet radio net — random chatter lines for the Hired HUD hub comms panel. */
 
 import { FOUNDER_PUBLIC_NAME } from "./founderManifesto";
+import { HIRED_HUD_RADIO_EXTENDED_LINES } from "./hiredHudRadioExtendedLines";
 
 export const HIRED_HUD_RADIO_CHANNEL = "HIRED-10 NET" as const;
 
@@ -53,6 +54,8 @@ export const HIRED_HUD_RADIO_FOUNDER_JOKES = [
   "Girls need money for nails, hair, clothes, parties — I hear you. Revenue engine has to eat first.",
   "Jay-Z at Yankee Stadium July ten through twelve. Beyoncé board still quiet for twenty-six. Google the dates, ship the site.",
   "WNBA opens May eight. Clark and Bueckers May nine. Events cost money — so does sovereignty.",
+  "USJET Bop House is the future — girls live on Twitch, daily routines, revenue for the whole site.",
+  "I googled Bop House. Mansions, routines, content nonstop. We're doing it sovereign inside USJET.",
 ] as const;
 
 /** Low fuel, lean times — fleet feeling the squeeze. */
@@ -235,6 +238,40 @@ export const HIRED_HUD_RADIO_CONCERT_LINES = [
   "Founder wrenches tomorrow. We're googling concert dates dreaming.",
 ] as const;
 
+/** USJET Bop House — future live-routine content plan (Twitch / sovereign hangar). */
+export const HIRED_HUD_RADIO_BOP_HOUSE_LINES = [
+  "Founder pitched USJET Bop House — girls-only creator mansion. Future plan. Copy hype.",
+  "Google says Bop House is daily routines, dances, lifestyle on loop. We're building ours sovereign.",
+  "Future bay: live morning routines on Twitch — hair, nails, fit check, coffee, grind.",
+  "Bop House isn't a slide deck. It's girls living the routine while the world watches live.",
+  "Salon plus dance studio plus command center under one roof — that's the USJET Bop House vision.",
+  "Twitch live daily: wake up, glam, gym, hoops reel, ship code. Content factory.",
+  "Real Bop House runs TikTok mansions. We run hangar mansions. Same energy, our cockpit.",
+  "Girls need nail money — Bop House live stream is how the nail fund gets paid.",
+  "Hair, clothes, parties, events — Bop House revenue line item on the master log someday.",
+  "Commander says auditions later. For now we talk it on the net and dream loud.",
+  "Little Mama wants the dance floor on camera twenty-four seven. Future Bop House wing.",
+  "Christal's salon channel becomes on-air glam on Bop House launch day. Mark it.",
+  "Blue Ivy called it commander content ops — live routines, live audience, live revenue.",
+  "Not outside tabs — Bop House embeds through cockpit when we launch. One ship.",
+  "Morning routine stream pays for WNBA tickets. That's the business model we're cooking.",
+  "Get-ready-with-me live, gym live, salon live — USJET Bop House rotation schedule.",
+  "Influencer house but with wrenches in the garage and jets on the tiles. USJET flavor.",
+  "Founder googled Bop House after the convo. Said we're doing it our way for the website.",
+  "Daily routine content is free marketing that prints money if the girls are live.",
+  "Twitch chat plus Stripe link in the overlay — revenue engine meets reality TV.",
+  "Bop House hold line: not live yet. Fleet still broke. Vision still loud.",
+  "Paige and Caitlin on TV, our girls on Twitch — hardwood and hangar both eat.",
+  "Jay-Z at Yankee Stadium costs money. Bop House is how we stop googling and start going.",
+  "Parties and events need outfits. Bop House streams fund the closet. Circle of life.",
+  "Dance challenges on live. Hoops breaks on live. AI repair on live. Only at USJET.",
+  "Gen Z mansion content without leaving sovereign airspace. That's the Founder play.",
+  "Girls doing daily routines recorded live — nails, hair, gym, dance — all revenue real estate.",
+  "Bop House future plan on the founder freq. Mechanics money today, mansion stream tomorrow.",
+  "If the hangar is Times Square, Bop House is the billboard that never sleeps.",
+  "Copy all bays: USJET Bop House is coming. Until then we stream the dream on this net.",
+] as const;
+
 /** Generic lines any crew member can say. */
 export const HIRED_HUD_RADIO_GENERIC_LINES = [
   "Copy. Hangar doors are green — who's on fuel check?",
@@ -281,6 +318,8 @@ export const HIRED_HUD_RADIO_CREW_LINE_POOL = [
   ...HIRED_HUD_RADIO_GLAM_LINES,
   ...HIRED_HUD_RADIO_WNBA_LINES,
   ...HIRED_HUD_RADIO_CONCERT_LINES,
+  ...HIRED_HUD_RADIO_BOP_HOUSE_LINES,
+  ...HIRED_HUD_RADIO_EXTENDED_LINES,
 ] as const;
 
 /** Founder lines — lean times, repairs, hardwood. */
@@ -296,6 +335,8 @@ export const HIRED_HUD_RADIO_FOUNDER_OPS_LINES = [
   "I'm wrenching tomorrow so the site eats and the crew plays. Number one friend signs off.",
   "Nails, hair, outfits, parties, WNBA, Jay-Z at the Stadium — y'all need money for all of it. So do I.",
   "Concert dates on the board: Hova July Bronx, Paris September, SoFi October. Bey watch still live.",
+  "Bop House future: Twitch live, girls' daily routines, glam and grind on camera. Website eats.",
+  "Salon bay plus dance deck plus gym — one mansion stream. That's the revenue play after mechanics.",
 ] as const;
 
 export const HIRED_HUD_RADIO_FOUNDER_LINE_POOL = [
@@ -313,6 +354,7 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Knicks went fifty-three twenty-nine and won the Finals. We go to work broke.",
     "Founder keys tomorrow — back in mechanics. We run the net while he runs the shop.",
     "Commander needs event money — WNBA opener, Jay-Z Yankee weekend. Revenue first.",
+    "Bop House future plan: live routines on Twitch fund the whole commander budget.",
   ],
   1: [
     "Mary Stealth — F-35 is spun up and quiet.",
@@ -345,6 +387,7 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Knicks Hart grabbed nine boards a game in the Finals. Hustle translate.",
     "Party this weekend needs hair, nails, and a fit. Wallet said no.",
     "Little Mama googling Jay-Z Roots Picnic May thirty. Dress code pending funds.",
+    "Bop House wing needs a dance floor cam. Little Mama volunteering first shift.",
   ],
   10: [
     "Rumi — B-2 holding in the dark. You won't see me.",
@@ -372,6 +415,7 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Salon channel truth: girls need money for nails and hair before anything else.",
     "Christal bay twenty-six — clothes, events, parties all on the vision board. Cash not yet.",
     "WNBA Liberty opener May eight. Somebody needs ticket money and a fresh set.",
+    "USJET Bop House salon stream — Christal on mic, nails on cam, revenue on deck.",
   ],
 };
 
@@ -392,9 +436,11 @@ export const HIRED_HUD_RADIO_REPLY_TEMPLATES = [
   (name: string) => `${name} you saving for nails or Jay-Z Yankee tickets? Same struggle.`,
   (name: string) => `Roger ${name}. WNBA May nine — Clark versus Bueckers. We broke but we're watching.`,
   (name: string) => `${name}, hair money, outfit money, concert money — girls need the whole stack.`,
+  (name: string) => `${name} you hear the Bop House plan? Live routines on Twitch — future revenue.`,
+  (name: string) => `Roger ${name}. USJET Bop House someday. Until then we stream the vision on this net.`,
 ] as const;
 
-const RADIO_RECENT_LINE_CAP = 36;
+const RADIO_RECENT_LINE_CAP = 96;
 
 /** Pick a line not in `recent`; resets pool when exhausted. */
 export function pickRadioLine(pool: readonly string[], recent: ReadonlySet<string>, rng: () => number): string {

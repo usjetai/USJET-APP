@@ -6,19 +6,17 @@ import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import OriginBrowserConnectModal from "../components/origin/OriginBrowserConnectModal";
 import OriginMemberStrip from "../components/origin/OriginMemberStrip";
-import OriginTierLockInAd from "../components/origin/OriginTierLockInAd";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
+import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
 import { fleetManifest } from "../data/fleetManifest";
 import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
 import {
   isConnectGuideIntent,
   ORIGIN_CONNECT_ACK,
-  ORIGIN_CONNECT_PROMPT,
 } from "../lib/originConnectGuide";
 import {
   buildOpenRouterMessages,
-  completeChat,
-  OPENROUTER_API_KEY,
+  completeOriginChat,
 } from "../lib/openrouter";
 import {
   buildOriginMemberContext,
@@ -92,9 +90,6 @@ const ORIGIN_LOAD_GREET = ORIGIN_SPOKEN_LOAD_GREET;
 const UTTERANCE_SILENCE_MS = 700;
 /** Shorter dead-air when the recognizer marks a final segment */
 const UTTERANCE_FINAL_MS = 450;
-
-/** Spoken when Aura link is not live — no deployment jargon in TTS */
-const ORIGIN_OFFLINE_PROMPT = ORIGIN_CONNECT_PROMPT;
 
 const ORIGIN_AURA_LINK_LOST =
   "Origin online. Aura link is quiet right now — mic is still live. Try again in a moment, Commander.";
@@ -429,16 +424,6 @@ export default function Origin() {
         return;
       }
 
-      if (!OPENROUTER_API_KEY) {
-        const offlineReply = ORIGIN_OFFLINE_PROMPT;
-        setStatusLine("Origin online — standby briefing");
-        speakOriginReply(offlineReply, () => {
-          openBrowserConnectModal();
-          finishTranscriptCycle();
-        });
-        return;
-      }
-
       enterProcessing();
 
       const turns = [...chatTurnsRef.current, { role: "user" as const, content: text }];
@@ -483,8 +468,7 @@ export default function Origin() {
         : memberContext;
 
       try {
-        const reply = await completeChat(
-          OPENROUTER_API_KEY,
+        const reply = await completeOriginChat(
           buildOpenRouterMessages(turns, {
             entry: isCustomerServiceEntry ? "customer-service" : undefined,
             memberContext: augmentedMemberContext,
@@ -578,12 +562,13 @@ export default function Origin() {
     recognition.onerror = (event) => {
       if (!micEnabledRef.current || listeningPausedRef.current) return;
 
-      if (event.error === "no-speech" || event.error === "aborted") {
+      const speechError = (event as SpeechRecognitionErrorEvent).error;
+      if (speechError === "no-speech" || speechError === "aborted") {
         window.setTimeout(() => restartRecognitionRef.current(), 120);
         return;
       }
 
-      if (event.error === "network") {
+      if (speechError === "network") {
         window.setTimeout(() => restartRecognitionRef.current(), 400);
         return;
       }
@@ -763,11 +748,12 @@ export default function Origin() {
   }, [enterListening, stopSpeaking]);
 
   const resumeAutoplayVoice = useCallback(() => {
+    setShowAutoplayBanner(false);
     setSiteMutedState(false);
     speakWelcomeGreet(() => {
-      enterIdle();
+      void enterListening();
     });
-  }, [enterIdle, setSiteMutedState, speakWelcomeGreet]);
+  }, [enterListening, setSiteMutedState, speakWelcomeGreet]);
 
   const startSpeak = useCallback(() => {
     disableMic();
@@ -1072,8 +1058,6 @@ export default function Origin() {
           </nav>
         </GlassEffectContainer>
 
-        {!isCustomerServiceEntry ? <OriginTierLockInAd /> : null}
-
         <section className="origin-page__fleet w-full max-w-5xl" aria-labelledby="origin-fleet-heading">
           <div className="origin-page__fleet-head">
             <h2 id="origin-fleet-heading" className="origin-page__fleet-title">
@@ -1097,7 +1081,7 @@ export default function Origin() {
                     aria-current="page"
                   >
                     <span className="origin-page__fleet-slot">30</span>
-                    {unit.name}
+                    <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
                   </span>
                 );
               }
@@ -1109,7 +1093,7 @@ export default function Origin() {
                   className="origin-page__fleet-chip"
                 >
                   <span className="origin-page__fleet-slot">{String(unit.slot + 1).padStart(2, "0")}</span>
-                  {unit.name}
+                  <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
                 </a>
               );
             })}
@@ -1170,7 +1154,7 @@ export default function Origin() {
                 Dismiss
               </button>
             </div>
-            <p className="origin-troubleshoot-panel__mono">Origin / Bay 30 / COMMAND-01</p>
+            <p className="origin-troubleshoot-panel__mono">Origin / Bay 30 / SOVEREIGN-30</p>
           </div>
         </>
       ) : null}

@@ -1,15 +1,23 @@
 import type { MemberTier } from "../types/member";
 import {
+  BLUEPRINT_100K_DIRECT_URL,
+  CODE_KIT_DIRECT_URL,
   ENTERPRISE_DIRECT_URL,
+  FLEET_MANUAL_DIRECT_URL,
   FLIGHT_PASS_DIRECT_URL,
   HANGAR_PRO_DIRECT_URL,
 } from "../lib/stripePaymentLink";
+import { STRIPE_DESCRIPTOR_CATALOG } from "./stripeStatementDescriptors";
+import { MEMBER_DECK_HOOK, MEMBER_DECK_PERIOD, MEMBER_DECK_PRICE_DISPLAY, MEMBER_DECK_STRIPE_METADATA } from "./memberDeckStripe";
 
 /** Direct Landing Protocol — hard-wired Stripe extraction ports (env overrides in stripePaymentLink.ts). */
 export const STRIPE_DIRECT_EXTRACTION_PORTS = {
   flightPass: FLIGHT_PASS_DIRECT_URL,
   hangarPro: HANGAR_PRO_DIRECT_URL,
   enterprise: ENTERPRISE_DIRECT_URL,
+  blueprint100k: BLUEPRINT_100K_DIRECT_URL,
+  fleetManual: FLEET_MANUAL_DIRECT_URL,
+  codeKit: CODE_KIT_DIRECT_URL,
 } as const;
 
 /** Stripe product metadata keys — paste identical keys in Stripe Dashboard. */
@@ -42,11 +50,41 @@ export type StripeTierProduct = {
   description: string;
   features: readonly string[];
   statementDescriptor: string;
+  /** Card-only — PaymentIntent statement_descriptor_suffix (prefix is STRIPE_CARD_PREFIX). */
+  cardDescriptorSuffix?: string;
   metadata: StripeProductMetadata;
   memberTier: MemberTier;
   paymentLinkEnvKey: string;
   highlighted?: boolean;
   badge?: string;
+};
+
+export type MemberDeckProduct = Omit<StripeTierProduct, "id"> & { id: "member-deck" };
+
+/** USJet Member Deck ($5/mo) — Member Portal + member tools only. */
+export const MEMBER_DECK_STRIPE: MemberDeckProduct = {
+  id: "member-deck",
+  name: "USJet Member Deck",
+  hook: MEMBER_DECK_HOOK,
+  priceCents: 500,
+  priceDisplay: MEMBER_DECK_PRICE_DISPLAY,
+  period: MEMBER_DECK_PERIOD,
+  description:
+    "Paid entry to the Member Portal — telemetry, project tracker, vitals, and your clearance ladder. Does not unlock Hangar, Intel, or Origin; upgrade to Flight Pass or higher inside the ship.",
+  features: [
+    "Member Portal + Your AI data board",
+    "Fleet usage telemetry",
+    "Project tracker & member vitals",
+  ],
+  statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.memberDeck.cardStatement,
+  cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.memberDeck.cardSuffix,
+  metadata: {
+    [STRIPE_METADATA_KEYS.tier]: MEMBER_DECK_STRIPE_METADATA.tier,
+    [STRIPE_METADATA_KEYS.accessLevel]: MEMBER_DECK_STRIPE_METADATA.access_level,
+  },
+  memberTier: "USJET-PRIME-ACTIVE",
+  paymentLinkEnvKey: "VITE_STRIPE_MEMBER_DECK_PAYMENT_LINK",
+  badge: "Portal entry",
 };
 
 /** USJet Flight Pass ($19.90/mo) — entry clearance tier. */
@@ -65,7 +103,8 @@ export const FLIGHT_PASS_STRIPE: StripeTierProduct = {
     "Unlimited Access to Captain Aura",
     "Standard Hangar Support",
   ],
-  statementDescriptor: "USJET.AI-FLIGHT-PASS",
+  statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.flightPass.cardStatement,
+  cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.flightPass.cardSuffix,
   metadata: {
     [STRIPE_METADATA_KEYS.tier]: "RECRUIT",
     [STRIPE_METADATA_KEYS.accessLevel]: "LVL_01",
@@ -92,7 +131,8 @@ export const HANGAR_PRO_STRIPE: StripeTierProduct = {
     'Priority "Wrenches, Not Slides" Toolset',
     "Integrated Multi-AI Networking",
   ],
-  statementDescriptor: "USJET.AI-HANGAR-PRO",
+  statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.hangarPro.cardStatement,
+  cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.hangarPro.cardSuffix,
   metadata: {
     [STRIPE_METADATA_KEYS.tier]: "OPERATOR",
     [STRIPE_METADATA_KEYS.accessLevel]: "LVL_02",
@@ -118,7 +158,8 @@ export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
     "Dedicated Fleet Command Channel",
     "Priority Revenue-Engine Support",
   ],
-  statementDescriptor: "USJET.AI-FLEET-CMD",
+  statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.fleetCommand.cardStatement,
+  cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.fleetCommand.cardSuffix,
   metadata: {
     [STRIPE_METADATA_KEYS.tier]: "COMMANDER",
     [STRIPE_METADATA_KEYS.accessLevel]: "LVL_03_SOVEREIGN",
@@ -129,11 +170,12 @@ export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
   badge: "USA 250 lock-in",
 };
 
-export const STRIPE_TIER_PRODUCTS = [
-  FLIGHT_PASS_STRIPE,
-  HANGAR_PRO_STRIPE,
-  FLEET_COMMANDER_STRIPE,
-] as const;
+export const STRIPE_TIER_PRODUCTS = [FLIGHT_PASS_STRIPE, HANGAR_PRO_STRIPE, FLEET_COMMANDER_STRIPE] as const;
+
+const STRIPE_ACCESS_PRODUCTS = [MEMBER_DECK_STRIPE, ...STRIPE_TIER_PRODUCTS] as const;
+
+/** Upgrade tiers shown inside Member Portal (excludes $5 deck). */
+export const MEMBER_PORTAL_UPGRADE_TIERS = [FLIGHT_PASS_STRIPE, HANGAR_PRO_STRIPE, FLEET_COMMANDER_STRIPE] as const;
 
 /** Dashboard paste sheet — Product → Description, Statement descriptor, Metadata. */
 export const HANGAR_PRO_STRIPE_DASHBOARD = {
@@ -164,7 +206,7 @@ export function memberAccessFromStripeMetadata(
   const normalizedTier = normalizeMetaValue(stripeTier);
   const normalizedAccess = normalizeMetaValue(accessLevel);
 
-  for (const product of STRIPE_TIER_PRODUCTS) {
+  for (const product of STRIPE_ACCESS_PRODUCTS) {
     const productTier = normalizeMetaValue(product.metadata[STRIPE_METADATA_KEYS.tier]);
     const productAccess = normalizeMetaValue(product.metadata[STRIPE_METADATA_KEYS.accessLevel]);
 

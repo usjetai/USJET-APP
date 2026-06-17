@@ -1,0 +1,342 @@
+{
+  "generatedAt": "2026-06-15T15:45:54.149Z",
+  "registryCount": 30,
+  "assets": [
+    {
+      "file": "f22_raptor.svg",
+      "aircraft": "F-22 Raptor",
+      "source": "commons",
+      "commons": "Lockheed Martin F-22 Raptor 3-view.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Lockheed_YF-22_Lightning_II_3-view.svg",
+      "note": "USAF PD — F-22 Raptor top plan (cropped from 3-view)",
+      "proxyOf": null,
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f35_lightning_ii.svg",
+      "aircraft": "F-35 Lightning II",
+      "source": "commons",
+      "commons": "F16 drawing.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/F16_drawing.svg",
+      "note": "US Government PD — F-16 top plan proxy for F-35 Lightning II tier",
+      "proxyOf": "F-35 Lightning II",
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "b21_raider.svg",
+      "aircraft": "B-21 Raider",
+      "source": "commons",
+      "commons": "B-2 Sprit template.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/B-2_Sprit_template.svg",
+      "note": "B-2 Spirit plan template proxy for B-21 flying-wing bomber",
+      "proxyOf": "B-21 Raider",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "j36_fighter.svg",
+      "aircraft": "J-36 Fighter",
+      "source": "commons",
+      "commons": "Lockheed YF-22 Lightning II 3-view.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Lockheed_YF-22_Lightning_II_3-view.svg",
+      "note": "YF-22 prototype top plan proxy for J-36 sixth-gen concept",
+      "proxyOf": "J-36 Fighter",
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "ngad_platform.svg",
+      "aircraft": "NGAD Platform",
+      "source": "commons",
+      "commons": "YF-22 et YF-23.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/YF-22_et_YF-23.svg",
+      "note": "YF-23 plan (right half of composite) proxy for NGAD sixth-gen platform",
+      "proxyOf": "NGAD Platform",
+      "threeView": false,
+      "viewBoxCrop": {
+        "xFraction": 0.52,
+        "wFraction": 0.48
+      }
+    },
+    {
+      "file": "yf23_black_widow_ii.svg",
+      "aircraft": "YF-23 Black Widow II",
+      "source": "commons",
+      "commons": "YF-22 et YF-23.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/YF-22_et_YF-23.svg",
+      "note": "YF-23 Black Widow II top plan (right half of YF-22/YF-23 composite)",
+      "proxyOf": null,
+      "threeView": false,
+      "viewBoxCrop": {
+        "xFraction": 0.52,
+        "wFraction": 0.48
+      }
+    },
+    {
+      "file": "x47b.svg",
+      "aircraft": "X-47B",
+      "source": "commons",
+      "commons": "X-47B.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Northrop_Grumman_X-47B_3-view.svg",
+      "note": "Northrop Grumman X-47B UCAS plan view",
+      "proxyOf": null,
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "x37b.svg",
+      "aircraft": "X-37B",
+      "source": "commons",
+      "commons": "Generic turbofan airplane.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Generic_turbofan_airplane.svg",
+      "note": "Generic turbofan plan proxy for X-37B orbital test vehicle",
+      "proxyOf": "X-37B",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "x51_waverider.svg",
+      "aircraft": "X-51 Waverider",
+      "source": "commons",
+      "commons": "Generic turbofan airplane.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Generic_turbofan_airplane.svg",
+      "note": "Generic plan proxy for X-51 hypersonic cruiser (no PD SVG found)",
+      "proxyOf": "X-51 Waverider",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "pca_aircraft.svg",
+      "aircraft": "PCA Aircraft",
+      "source": "commons",
+      "commons": "Lockheed YF-22 Lightning II 3-view.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Lockheed_YF-22_Lightning_II_3-view.svg",
+      "note": "YF-22 top plan proxy for PCA (Penetrating Counter Air) concept",
+      "proxyOf": "PCA Aircraft",
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "b2_spirit.svg",
+      "aircraft": "B-2 Spirit",
+      "source": "commons",
+      "commons": "B-2 Sprit template.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/B-2_Sprit_template.svg",
+      "note": "B-2 Spirit plan template",
+      "proxyOf": null,
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "b1_lancer.svg",
+      "aircraft": "B-1 Lancer",
+      "source": "commons",
+      "commons": "Boeing B-52 Stratofortress evolution, part 1.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Boeing_B-52_Stratofortress_evolution%2C_part_1.svg",
+      "note": "B-52 evolution silhouette proxy for B-1 Lancer swept-wing bomber",
+      "proxyOf": "B-1 Lancer",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "a12_avenger_ii.svg",
+      "aircraft": "A-12 Avenger II",
+      "source": "commons",
+      "commons": "Lockheed F-117A Nighthawk.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Lockheed_F-117A_Nighthawk.svg",
+      "note": "F-117 plan proxy for A-12 Avenger II stealth strike concept",
+      "proxyOf": "A-12 Avenger II",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "sr72_darkstar.svg",
+      "aircraft": "SR-72 DarkStar",
+      "source": "commons",
+      "commons": "Lockheed SR-71A 3view.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/Lockheed_SR-71A_3view.svg",
+      "note": "SR-71 Blackbird top plan proxy for SR-72 DarkStar concept",
+      "proxyOf": "SR-72 DarkStar",
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "fb22.svg",
+      "aircraft": "FB-22",
+      "source": "commons",
+      "commons": "Lockheed YF-22 Lightning II 3-view.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Lockheed_YF-22_Lightning_II_3-view.svg",
+      "note": "YF-22 top plan proxy for FB-22 regional bomber concept",
+      "proxyOf": "FB-22",
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f15ex_eagle_ii.svg",
+      "aircraft": "F-15EX Eagle II",
+      "source": "commons",
+      "commons": "McDonnell Douglas F-15 Eagle 3-view.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c2/McDonnell_Douglas_F-15_Eagle_3-view.svg",
+      "note": "F-15 Eagle top plan (cropped from 3-view)",
+      "proxyOf": null,
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f16v_viper.svg",
+      "aircraft": "F-16V Viper",
+      "source": "commons",
+      "commons": "F16 drawing.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/ff/F16_drawing.svg",
+      "note": "F-16 Fighting Falcon top plan (cropped from 3-view)",
+      "proxyOf": null,
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "fa18_super_hornet.svg",
+      "aircraft": "FA-18 Super Hornet",
+      "source": "openclipart",
+      "commons": null,
+      "url": "https://openclipart.org/download/325489/fa-18-hornet.svg",
+      "note": "OpenClipart CC0 — U.S. Navy F/A-18 Hornet (public domain source art)",
+      "proxyOf": null,
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "a10_warthog.svg",
+      "aircraft": "A-10 Warthog",
+      "source": "commons",
+      "commons": "Fairchild Republic A-10 Thunderbolt II 3-view.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Fairchild_Republic_A-10_Thunderbolt_II_3-view.svg",
+      "note": "A-10 Thunderbolt II top plan (cropped from 3-view)",
+      "proxyOf": null,
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f117_nighthawk.svg",
+      "aircraft": "F-117 Nighthawk",
+      "source": "commons",
+      "commons": "Lockheed F-117A Nighthawk.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Lockheed_F-117A_Nighthawk.svg",
+      "note": "F-117A Nighthawk plan view",
+      "proxyOf": null,
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "mq25_stingray.svg",
+      "aircraft": "MQ-25 Stingray",
+      "source": "commons",
+      "commons": "General Atomics MQ-1 Predator miniature profile silhouette.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/63/General_Atomics_MQ-1_Predator_miniature_profile_silhouette.svg",
+      "note": "MQ-1 Predator UAV silhouette proxy for MQ-25 Stingray tanker drone",
+      "proxyOf": "MQ-25 Stingray",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "mq28_ghost_bat.svg",
+      "aircraft": "MQ-28 Ghost Bat",
+      "source": "commons",
+      "commons": "General Atomics MQ-1 Predator miniature profile silhouette.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/63/General_Atomics_MQ-1_Predator_miniature_profile_silhouette.svg",
+      "note": "MQ-1 Predator UAV silhouette proxy for MQ-28 Ghost Bat",
+      "proxyOf": "MQ-28 Ghost Bat",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "xq58_valkyrie.svg",
+      "aircraft": "XQ-58 Valkyrie",
+      "source": "commons",
+      "commons": "Generic turbofan airplane.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Generic_turbofan_airplane.svg",
+      "note": "Generic plan proxy for XQ-58 Valkyrie loyal wingman (no PD SVG found)",
+      "proxyOf": "XQ-58 Valkyrie",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "rq180.svg",
+      "aircraft": "RQ-180",
+      "source": "commons",
+      "commons": "General Atomics MQ-1 Predator miniature profile silhouette.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/63/General_Atomics_MQ-1_Predator_miniature_profile_silhouette.svg",
+      "note": "MQ-1 Predator silhouette proxy for RQ-180 stealth ISR",
+      "proxyOf": "RQ-180",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "rq4_global_hawk.svg",
+      "aircraft": "RQ-4 Global Hawk",
+      "source": "commons",
+      "commons": "General Atomics MQ-1 Predator miniature profile silhouette.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/63/General_Atomics_MQ-1_Predator_miniature_profile_silhouette.svg",
+      "note": "MQ-1 Predator silhouette proxy for RQ-4 Global Hawk HALE UAV",
+      "proxyOf": "RQ-4 Global Hawk",
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f14_tomcat.svg",
+      "aircraft": "F-14 Tomcat",
+      "source": "generated",
+      "commons": null,
+      "url": null,
+      "note": "USJET wireframe paths derived from PD Grumman F-14 Tomcat.png plan proportions (Commons: no SVG line art)",
+      "proxyOf": null,
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f4_phantom_ii.svg",
+      "aircraft": "F-4 Phantom II",
+      "source": "commons",
+      "commons": "McDonnell Douglas F-4E Phantom II 3-view line drawing.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/79/McDonnell_Douglas_F-4E_Phantom_II_3-view_line_drawing.svg",
+      "note": "F-4E Phantom II top plan (cropped from 3-view)",
+      "proxyOf": null,
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f104_starfighter.svg",
+      "aircraft": "F-104 Starfighter",
+      "source": "commons",
+      "commons": "Lockheed F-104C Starfighter.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Lockheed_F-104C_Starfighter.svg",
+      "note": "F-104 Starfighter plan view",
+      "proxyOf": null,
+      "threeView": false,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "f86_sabre.svg",
+      "aircraft": "F-86 Sabre",
+      "source": "commons",
+      "commons": "North American F-86K Sabre line drawings.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/North_American_F-86K_Sabre_line_drawings.svg",
+      "note": "F-86 Sabre top plan (cropped from line drawings)",
+      "proxyOf": null,
+      "threeView": true,
+      "viewBoxCrop": null
+    },
+    {
+      "file": "x59_quesst.svg",
+      "aircraft": "X-59 QueSST",
+      "source": "commons",
+      "commons": "Generic turbofan airplane.svg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Generic_turbofan_airplane.svg",
+      "note": "Generic plan proxy for X-59 QueSST low-boom demonstrator",
+      "proxyOf": "X-59 QueSST",
+      "threeView": false,
+      "viewBoxCrop": null
+    }
+  ]
+}

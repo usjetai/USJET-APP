@@ -1,8 +1,9 @@
 import { ExternalLink, Rocket, X } from "lucide-react";
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
+import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetUnit } from "../../types/fleet";
-import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
+import { hangarWorkbenchIframeSrc, iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 
 type HangarToolWorkbenchProps = {
@@ -11,8 +12,8 @@ type HangarToolWorkbenchProps = {
 };
 
 /**
- * Hangar 2×2 active cockpit: embeds the fleet unit's real tool URL (`unit.href` → iframe `src`).
- * Integrated Navigation: partner launches stay in the same window when operators leave the embed.
+ * Hangar active cockpit: external partners load through /cockpit (same-origin handoff);
+ * internal routes (e.g. /origin) embed directly in the expanded bay iframe.
  */
 export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkbenchProps) {
   const rawHref = unit.href?.trim() || unit.domain?.trim() || "";
@@ -22,6 +23,8 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
     returnTo: "/hangar",
     label: unit.name,
   });
+  const iframeSrc = hangarWorkbenchIframeSrc(src, launchHref);
+  const isExternalPartner = !src.startsWith("/");
 
   const [embedAssist, setEmbedAssist] = useState(false);
   const [assistDismissed, setAssistDismissed] = useState(false);
@@ -35,9 +38,10 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
     setEmbedAssist(false);
     setAssistDismissed(false);
     setFrameRevealed(false);
-    const id = window.setTimeout(() => setEmbedAssist(true), 6000);
+    const assistDelayMs = isExternalPartner ? 2500 : 6000;
+    const id = window.setTimeout(() => setEmbedAssist(true), assistDelayMs);
     return () => window.clearTimeout(id);
-  }, [src, unit.id]);
+  }, [iframeSrc, isExternalPartner, unit.id]);
 
   const showShieldPanel = embedAssist && !assistDismissed;
 
@@ -48,9 +52,12 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
     >
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
-          <p className="intel-expanded__callsign">{unit.callsign}</p>
+          <p className="intel-expanded__callsign">{unit.name}</p>
+          <p className="intel-expanded__unit-name">
+            <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
+          </p>
           <p className="intel-expanded__domain">{unit.domain}</p>
-          <p className="intel-expanded__tagline">USJET consensus bay · {unit.name} cockpit</p>
+          <p className="intel-expanded__tagline">USJET consensus bay</p>
         </div>
         <div className="intel-expanded__actions">
           <a
@@ -83,7 +90,7 @@ export default function HangarToolWorkbench({ unit, onClose }: HangarToolWorkben
               frameRevealed ? "hangar-iframe--ready" : "hangar-iframe--arming",
             ].join(" ")}
             title={`${unit.name} · USJET cockpit`}
-            src={src}
+            src={iframeSrc}
             onLoad={() => setFrameRevealed(true)}
             onError={() => setEmbedAssist(true)}
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals"

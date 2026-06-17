@@ -1,5 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/fuel",
+      "destination": "/founders-fuel",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

@@ -5,8 +5,9 @@ import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import TickerDisplay from "./TickerDisplay";
 import EkgPulseLine from "./EkgPulseLine";
+import IntelScanLine from "./IntelScanLine";
 import MarketCandlesticks from "./MarketCandlesticks";
-import { type FleetUnit, HANGAR_COLUMNS } from "../../types/fleet";
+import { type FleetUnit } from "../../types/fleet";
 
 type IntelMonitorProps = {
   unit: FleetUnit;
@@ -21,7 +22,7 @@ const WING_VOLATILITY: Record<string, number> = {
   TSLA: 4.2,
 };
 
-export default function IntelMonitor({ unit, index, style, onExpandRequest }: IntelMonitorProps) {
+export default function IntelMonitor({ unit, index: _index, style, onExpandRequest }: IntelMonitorProps) {
   const interactive = Boolean(onExpandRequest);
   const wing = getWingForSlot(unit.slot);
   const volatility = WING_VOLATILITY[wing.symbol] ?? 12;
@@ -39,7 +40,7 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
         .filter(Boolean)
         .join(" ")}
       style={{
-        animationDelay: `${(index % HANGAR_COLUMNS) * 0.15}s`,
+        animationDelay: `${Math.random() * 1.9}s`,
         ...fleetBayAccentStyle(unit.slot),
         ...style,
       }}
@@ -64,7 +65,7 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
       }
       tabIndex={interactive ? 0 : undefined}
       role={interactive ? "button" : undefined}
-      aria-label={interactive ? `Expand ${unit.callsign} · ${unit.name} workstation` : undefined}
+      aria-label={interactive ? `Expand ${unit.name} workstation` : undefined}
     >
       <header className="intel-monitor__header">
         <IntelMonitorIdentity unit={unit} />
@@ -84,7 +85,7 @@ export default function IntelMonitor({ unit, index, style, onExpandRequest }: In
           <EkgPulseLine variant="monitor" seed={unit.slot} />
         </div>
         <div className="intel-monitor__grid" aria-hidden />
-        <div className="intel-monitor__scan" aria-hidden />
+        <IntelScanLine />
         <div className="intel-monitor__feed">
           <TickerDisplay slot={unit.slot} />
         </div>

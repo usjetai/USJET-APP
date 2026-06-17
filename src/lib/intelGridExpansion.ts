@@ -42,3 +42,16 @@ export function iframeSrcFromUnitHref(href: string): string {
   }
   return `https://${h}`;
 }
+
+/**
+ * Hangar bay iframe source: same-origin routes load directly; external partners route
+ * through /cockpit so X-Frame-Options blocks show USJET handoff instead of a blank frame.
+ */
+export function hangarWorkbenchIframeSrc(rawSrc: string, cockpitLaunchHref: string): string {
+  if (rawSrc.startsWith("/")) {
+    return rawSrc;
+  }
+
+  const separator = cockpitLaunchHref.includes("?") ? "&" : "?";
+  return `${cockpitLaunchHref}${separator}embed=hangar`;
+}

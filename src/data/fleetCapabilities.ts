@@ -47,6 +47,44 @@ export function getFleetCapabilities(slot: number): FleetCapabilities {
   return FLEET_CAPABILITIES_BY_SLOT[slot] ?? DEFAULT_CAPABILITIES;
 }
 
+/** Partner AI product label on runway tiles (slot 0–29). */
+export const FLEET_PARTNER_LABEL_BY_SLOT: Record<number, string> = {
+  0: "Gemini",
+  1: "ChatGPT",
+  2: "Claude",
+  3: "Perplexity",
+  4: "Grok",
+  5: "Cursor",
+  6: "Midjourney",
+  7: "Luma Dream Machine",
+  8: "Sora",
+  9: "Higgsfield",
+  10: "Runway",
+  11: "Leonardo.ai",
+  12: "Adobe Firefly",
+  13: "Canva Magic Studio",
+  14: "Flux.1 Pro",
+  15: "Suno",
+  16: "ElevenLabs",
+  17: "Play.ht",
+  18: "Synthesia",
+  19: "HeyGen",
+  20: "v0.dev",
+  21: "Replit Agent",
+  22: "GitHub Copilot",
+  23: "Consensus",
+  24: "Gamma",
+  25: "Notion AI",
+  26: "Jasper",
+  27: "Otter.ai",
+  28: "DeepSeek",
+  29: "Origin · Aura",
+};
+
+export function getFleetPartnerLabel(slot: number): string {
+  return FLEET_PARTNER_LABEL_BY_SLOT[slot] ?? "Partner AI";
+}
+
 export const PLATFORM_LABELS: Record<FleetPlatform, string> = {
   web: "Web",
   mac: "Mac app",

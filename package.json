@@ -5,8 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "vite build",
+    "seo:ping-indexing": "node scripts/google-indexing-notify.mjs",
+    "typecheck": "tsc --noEmit",
     "preview": "vite preview",
+    "export:brand-jpegs": "node scripts/export-brand-jpegs.mjs",
+    "fetch:fleet-vectors": "node scripts/fetch-fleet-vector-assets.mjs",
+    "fetch:master-fleet-vectors": "node scripts/fetch-master-fleet-registry-vectors.mjs",
+    "extract:fleet-logos": "node scripts/extract-fleet-logo-sheet.mjs",
+    "export:developer-pages-jpegs": "node scripts/export-developer-pages-jpegs.mjs",
+    "export:hired-developer-jpegs": "node scripts/export-hired-developer-jpegs.mjs",
+    "export:jetfighter-pages-jpegs": "node scripts/export-jetfighter-pages-jpegs.mjs",
     "lint": "node -e \"process.exit(0)\""
   },
   "engines": {
@@ -27,7 +37,10 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
+    "google-auth-library": "^9.14.0",
+    "playwright": "^1.60.0",
     "postcss": "^8.4.49",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.6.2",
     "vite": "^5.4.10"

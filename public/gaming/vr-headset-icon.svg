@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 72" fill="none" aria-hidden="true">
+  <path
+    d="M18 28 L18 44 Q18 52 26 54 L54 54 L60 62 L60 54 L88 54 Q96 52 96 44 L96 28 Q96 18 86 16 L34 16 Q24 18 24 28 Z"
+    stroke="currentColor"
+    stroke-width="4"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <rect x="52" y="8" width="12" height="6" rx="2" fill="currentColor" />
+  <rect x="8" y="30" width="6" height="12" rx="2" fill="currentColor" />
+  <rect x="106" y="30" width="6" height="12" rx="2" fill="currentColor" />
+  <text
+    x="57"
+    y="42"
+    text-anchor="middle"
+    font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    font-size="18"
+    font-weight="800"
+    fill="currentColor"
+  >
+    VR
+  </text>
+</svg>

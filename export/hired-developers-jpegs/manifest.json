@@ -1,0 +1,193 @@
+{
+  "generatedAt": "2026-05-20T19:05:18.996Z",
+  "count": 17,
+  "hiredDevelopers": [
+    {
+      "slot": 0,
+      "bay": "01",
+      "name": "Gemini 3.1",
+      "callsign": "BLACKBIRD-01",
+      "aircraftOfficialName": "SR-71 Blackbird",
+      "aircraftType": "sr71",
+      "rosterStatus": "hired",
+      "file": "bay-01-blackbird-01-sr-71-blackbird.jpg",
+      "path": "export/hired-developers-jpegs/bay-01-blackbird-01-sr-71-blackbird.jpg"
+    },
+    {
+      "slot": 1,
+      "bay": "02",
+      "name": "ChatGPT-5",
+      "callsign": "RAPTOR-01",
+      "aircraftOfficialName": "F-22 Raptor",
+      "aircraftType": "f22",
+      "rosterStatus": "hired",
+      "file": "bay-02-raptor-01-f-22-raptor.jpg",
+      "path": "export/hired-developers-jpegs/bay-02-raptor-01-f-22-raptor.jpg"
+    },
+    {
+      "slot": 2,
+      "bay": "03",
+      "name": "Claude 3.5",
+      "callsign": "LIGHTNING-01",
+      "aircraftOfficialName": "F-35 Lightning II",
+      "aircraftType": "f35",
+      "rosterStatus": "hired",
+      "file": "bay-03-lightning-01-f-35-lightning-ii.jpg",
+      "path": "export/hired-developers-jpegs/bay-03-lightning-01-f-35-lightning-ii.jpg"
+    },
+    {
+      "slot": 4,
+      "bay": "05",
+      "name": "Grok 4.1",
+      "callsign": "FELON-01",
+      "aircraftOfficialName": "F-15 Eagle",
+      "aircraftType": "f22",
+      "rosterStatus": "hired",
+      "file": "bay-05-felon-01-f-15-eagle.jpg",
+      "path": "export/hired-developers-jpegs/bay-05-felon-01-f-15-eagle.jpg"
+    },
+    {
+      "slot": 5,
+      "bay": "06",
+      "name": "Cursor",
+      "callsign": "NIGHTHAWK-01",
+      "aircraftOfficialName": "F/A-18 Super Hornet",
+      "aircraftType": "f35",
+      "rosterStatus": "hired",
+      "file": "bay-06-nighthawk-01-f-a-18-super-hornet.jpg",
+      "path": "export/hired-developers-jpegs/bay-06-nighthawk-01-f-a-18-super-hornet.jpg"
+    },
+    {
+      "slot": 7,
+      "bay": "08",
+      "name": "Luma Dream",
+      "callsign": "X15-ALPHA",
+      "aircraftOfficialName": "X-15 Experimental",
+      "aircraftType": "sr71",
+      "rosterStatus": "hired",
+      "file": "bay-08-x15-alpha-x-15-experimental.jpg",
+      "path": "export/hired-developers-jpegs/bay-08-x15-alpha-x-15-experimental.jpg"
+    },
+    {
+      "slot": 8,
+      "bay": "09",
+      "name": "Sora 2",
+      "callsign": "VEO-PRO",
+      "aircraftOfficialName": "SR-71B Trainer",
+      "aircraftType": "sr71",
+      "rosterStatus": "hired",
+      "file": "bay-09-veo-pro-sr-71b-trainer.jpg",
+      "path": "export/hired-developers-jpegs/bay-09-veo-pro-sr-71b-trainer.jpg"
+    },
+    {
+      "slot": 10,
+      "bay": "11",
+      "name": "Leonardo.ai",
+      "callsign": "MIRAGE-01",
+      "aircraftOfficialName": "F-35A Lightning II",
+      "aircraftType": "f35",
+      "rosterStatus": "hired",
+      "file": "bay-11-mirage-01-f-35a-lightning-ii.jpg",
+      "path": "export/hired-developers-jpegs/bay-11-mirage-01-f-35a-lightning-ii.jpg"
+    },
+    {
+      "slot": 11,
+      "bay": "12",
+      "name": "Runway",
+      "callsign": "STRATO-01",
+      "aircraftOfficialName": "F-16 Fighting Falcon",
+      "aircraftType": "f35",
+      "rosterStatus": "hired",
+      "file": "bay-12-strato-01-f-16-fighting-falcon.jpg",
+      "path": "export/hired-developers-jpegs/bay-12-strato-01-f-16-fighting-falcon.jpg"
+    },
+    {
+      "slot": 12,
+      "bay": "13",
+      "name": "Firefly",
+      "callsign": "JUMPJET-01",
+      "aircraftOfficialName": "F/A-18E Super Hornet",
+      "aircraftType": "f35",
+      "rosterStatus": "hired",
+      "file": "bay-13-jumpjet-01-f-a-18e-super-hornet.jpg",
+      "path": "export/hired-developers-jpegs/bay-13-jumpjet-01-f-a-18e-super-hornet.jpg"
+    },
+    {
+      "slot": 19,
+      "bay": "20",
+      "name": "HeyGen",
+      "callsign": "HAWK-01",
+      "aircraftOfficialName": "F-35C Carrier",
+      "aircraftType": "f35",
+      "rosterStatus": "hired",
+      "file": "bay-20-hawk-01-f-35c-carrier.jpg",
+      "path": "export/hired-developers-jpegs/bay-20-hawk-01-f-35c-carrier.jpg"
+    },
+    {
+      "slot": 20,
+      "bay": "21",
+      "name": "v0.dev",
+      "callsign": "OSPREY-01",
+      "aircraftOfficialName": "A-10 Thunderbolt II",
+      "aircraftType": "f22",
+      "rosterStatus": "hired",
+      "file": "bay-21-osprey-01-a-10-thunderbolt-ii.jpg",
+      "path": "export/hired-developers-jpegs/bay-21-osprey-01-a-10-thunderbolt-ii.jpg"
+    },
+    {
+      "slot": 22,
+      "bay": "23",
+      "name": "GitHub Copilot",
+      "callsign": "WARTHOG-01",
+      "aircraftOfficialName": "F-22 Raptor",
+      "aircraftType": "f22",
+      "rosterStatus": "hired",
+      "file": "bay-23-warthog-01-f-22-raptor.jpg",
+      "path": "export/hired-developers-jpegs/bay-23-warthog-01-f-22-raptor.jpg"
+    },
+    {
+      "slot": 23,
+      "bay": "24",
+      "name": "Consensus",
+      "callsign": "DRAGON-01",
+      "aircraftOfficialName": "YF-12 Interceptor",
+      "aircraftType": "sr71",
+      "rosterStatus": "hired",
+      "file": "bay-24-dragon-01-yf-12-interceptor.jpg",
+      "path": "export/hired-developers-jpegs/bay-24-dragon-01-yf-12-interceptor.jpg"
+    },
+    {
+      "slot": 24,
+      "bay": "25",
+      "name": "Gamma",
+      "callsign": "GALAXY-01",
+      "aircraftOfficialName": "F-35B STOVL",
+      "aircraftType": "f35",
+      "rosterStatus": "hired",
+      "file": "bay-25-galaxy-01-f-35b-stovl.jpg",
+      "path": "export/hired-developers-jpegs/bay-25-galaxy-01-f-35b-stovl.jpg"
+    },
+    {
+      "slot": 27,
+      "bay": "28",
+      "name": "Otter.ai",
+      "callsign": "SENTRY-01",
+      "aircraftOfficialName": "F-4 Phantom II",
+      "aircraftType": "f22",
+      "rosterStatus": "hired",
+      "file": "bay-28-sentry-01-f-4-phantom-ii.jpg",
+      "path": "export/hired-developers-jpegs/bay-28-sentry-01-f-4-phantom-ii.jpg"
+    },
+    {
+      "slot": 29,
+      "bay": "30",
+      "name": "USJet Origin",
+      "callsign": "COMMAND-01",
+      "aircraftOfficialName": "F-22 Raptor · Command",
+      "aircraftType": "f22",
+      "rosterStatus": "command",
+      "file": "bay-30-command-01-f-22-raptor-command.jpg",
+      "path": "export/hired-developers-jpegs/bay-30-command-01-f-22-raptor-command.jpg"
+    }
+  ]
+}

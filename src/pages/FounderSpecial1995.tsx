@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Shield, ShieldCheck, Sparkles, Target, Wrench } from "lucide-react";
-import { FLIGHT_PASS_DIRECT_URL } from "../lib/stripePaymentLink";
+import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 import { FOUNDER_CREATIVE_MANIFESTO, LINE_OF_SUCCESSION_LOG, PRIME_OBJECTIVE } from "../data/founderManifesto";
 import { LINE_OF_SUCCESSION } from "../data/lineOfSuccession";
 import Founder1995FeatureGrid from "../components/founder/Founder1995FeatureGrid";
@@ -17,7 +17,7 @@ const FLIGHT_PASS_PRICE_DISPLAY = "$19.90/mo";
 /**
  * Bottom CTA on /founder-special-1995:
  * - Guest / unpaid (clearance rank 0): Flight Pass paywall at FLIGHT_PASS_PRICE_DISPLAY.
- * - Stripe live test: same Flight Pass $19.90 link (FLIGHT_PASS_DIRECT_URL).
+ * - Stripe live test: same Flight Pass $19.90 link (resolveFounderPaymentLink).
  * - Founder god mode (USJET-AMEER): bypasses paywall display only — welcome, no purchase CTA.
  * - Paid tier ≥ 1 (Stripe verify): "Clearance active" — optional upgrade links only.
  */
@@ -41,7 +41,7 @@ const GRIT_1995_STORY: GritSection[] = [
     imageSrc: "/founder/IMG_0516.jpeg",
     imageAlt: "1995 Origin — shop floor grit panel",
     imageLabel: "Archive · 1995 Origin",
-    silhouetteType: "c130",
+    silhouetteType: "f15ex",
   },
   {
     heading: "Wrenches, Not Slides",
@@ -77,7 +77,7 @@ export default function FounderSpecial1995() {
   const tierLabel = clearanceTierLabel(clearanceRank);
 
   const handleFlightPassCheckout = useCallback(() => {
-    window.location.href = FLIGHT_PASS_DIRECT_URL;
+    window.location.href = resolveFounderPaymentLink();
   }, []);
 
   useEffect(() => {
@@ -159,7 +159,7 @@ export default function FounderSpecial1995() {
             <header className="founder-story__hero">
               <GlassEffectContainer className="founder-story__hero-frame founder-story__hero-frame--logo founder-special-1995__vault-seal glass-effect glass-effect--rounded-rect glass-tint-gold">
                 <img
-                  className="founder-story__hero-logo"
+                  className="founder-story__hero-logo logo-rounded"
                   src="/founder/usjet-hero-logo.png"
                   alt="USJET.AI — Special Edition emblem"
                   width={1200}

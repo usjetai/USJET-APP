@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { resetProtocolSession } from "../lib/protocolCeremony";
 import { clearMemberSession, readMemberSession, writeMemberSession } from "../lib/memberSession";
 import { verifyMemberAccess } from "../lib/verifyMember";
 import type { MemberSession } from "../types/member";
@@ -98,6 +99,7 @@ export function MemberAuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     clearMemberSession();
+    resetProtocolSession();
     setSession(null);
     setError(null);
   }, []);

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" role="img" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+  <g fill="none" stroke="#000" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 6 C44 10 18 34 14 46 L28 48 L42 40 L60 52 L78 40 L92 48 L106 46 C102 34 76 10 60 6 Z" />
+    <path d="M60 6 L60 52" />
+    <path d="M42 22 L78 22" />
+    <path d="M24 38 L8 46 M96 38 L112 46" />
+    <path d="M34 48 L22 56 M86 48 L98 56" />
+  </g>
+</svg>

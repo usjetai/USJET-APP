@@ -54,13 +54,25 @@ export default function MarketCandlesticks({
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const intervalMs = reducedMotion ? 2400 : 1100;
 
-    const intervalId = window.setInterval(() => {
-      setCandles((current) => tickLastCandle(current, volatility));
-    }, intervalMs);
+    let cancelled = false;
+    let timeoutId = 0;
 
-    return () => window.clearInterval(intervalId);
+    const nextDelayMs = () => (reducedMotion ? 2000 + Math.random() * 2200 : 760 + Math.random() * 1050);
+
+    const schedule = (): void => {
+      if (cancelled) return;
+      timeoutId = window.setTimeout(() => {
+        setCandles((current) => tickLastCandle(current, volatility));
+        schedule();
+      }, nextDelayMs());
+    };
+
+    schedule();
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
   }, [volatility]);
 
   const layout = useMemo(() => candleGeometry(candles, 100, 44), [candles]);

@@ -56,10 +56,28 @@ export function toSpeakableText(text: string): string {
     .replace(/\busjet\b/gi, USJET_SPOKEN);
 }
 
-function pickEnglishVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
+const AURA_VOICE_HINTS = [
+  /samantha/i,
+  /karen/i,
+  /victoria/i,
+  /zira/i,
+  /susan/i,
+  /allison/i,
+  /ava/i,
+  /serena/i,
+  /female/i,
+  /woman/i,
+];
+
+/** Aura (she/her) — prefer a feminine English voice when the browser exposes one. */
+function pickAuraVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
+  const english = voices.filter((voice) => voice.lang.startsWith("en"));
   return (
-    voices.find((voice) => voice.lang.startsWith("en") && voice.localService) ??
-    voices.find((voice) => voice.lang.startsWith("en")) ??
+    english.find((voice) => AURA_VOICE_HINTS.some((hint) => hint.test(voice.name))) ??
+    english.find((voice) => voice.lang.startsWith("en-US") && voice.localService) ??
+    english.find((voice) => voice.lang.startsWith("en-US")) ??
+    english.find((voice) => voice.localService) ??
+    english[0] ??
     voices[0]
   );
 }
@@ -132,10 +150,10 @@ export function speakWithBrandVoice(
     synth.cancel();
     const utterance = new SpeechSynthesisUtterance(toSpeakableText(text));
     utterance.rate = options?.rate ?? 0.95;
-    utterance.pitch = options?.pitch ?? 0.92;
+    utterance.pitch = options?.pitch ?? 1.02;
     utterance.lang = "en-US";
 
-    const voice = pickEnglishVoice(voices);
+    const voice = pickAuraVoice(voices);
     if (voice) {
       utterance.voice = voice;
     }

@@ -20,7 +20,7 @@ const FLEET_ALLOWED_EMBED_HOSTS = new Set(
 
 /** Header media chips (US / Blue / B / J) — cockpit handoff, not fleet bays. */
 const COCKPIT_MEDIA_ALLOWED_HOSTS = new Set(
-  ["facebook.com", "tiktok.com", "beyonce.com", "jay-z.com"].map((host) => host.toLowerCase()),
+  ["facebook.com", "tiktok.com", "beyonce.com", "jay-z.com", "lifeandtimes.com"].map((host) => host.toLowerCase()),
 );
 
 function isAllowedFleetEmbedHost(hostname: string): boolean {

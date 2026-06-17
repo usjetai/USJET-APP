@@ -37,8 +37,8 @@ const BEYONCE_COCKPIT = wrapExternalInCockpit("https://beyonce.com/", {
   directHandoff: true,
 });
 
-const JAYZ_COCKPIT = wrapExternalInCockpit("https://www.jay-z.com/", {
-  label: "JAY-Z",
+const JAYZ_COCKPIT = wrapExternalInCockpit("https://lifeandtimes.com/", {
+  label: "Life + Times",
   returnTo: "/",
   directHandoff: true,
 });
@@ -203,8 +203,8 @@ const AppNav = () => {
               <Link
                 to={JAYZ_COCKPIT}
                 className="app-nav-j btn-glass glass-effect-interactive shrink-0"
-                title="JAY-Z — jay-z.com"
-                aria-label="J — JAY-Z official site"
+                title="Life + Times — lifeandtimes.com"
+                aria-label="J — Life + Times official site"
               >
                 <span className="app-nav-j__glow" aria-hidden />
                 <span className="app-nav-j__label">J</span>

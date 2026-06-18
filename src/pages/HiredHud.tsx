@@ -11,6 +11,7 @@ import HiredHudHubYouTube from "../components/hiredHud/HiredHudHubYouTube";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
 import HiredHudTileFavoriteButton from "../components/hiredHud/HiredHudTileFavoriteButton";
 import HiredHudTileGlamFuelButton from "../components/hiredHud/HiredHudTileGlamFuelButton";
+import HiredHudTileDeveloperChat from "../components/hiredHud/HiredHudTileDeveloperChat";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
@@ -537,6 +538,7 @@ export default function HiredHud() {
                       "Heartbeat stable"
                     )}
                   </span>
+                  <HiredHudTileDeveloperChat unit={unit} />
                 </div>
               </li>
             );

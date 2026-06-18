@@ -41,6 +41,14 @@ function inputLabel(mode: "text" | "voice" | "both"): string {
   return mode;
 }
 
+/** Operational capability line for a fleet bay — shared by Aura and Hired HUD developer chat. */
+export function getFleetAbilityBySlot(slot: number): string {
+  return (
+    FLEET_ABILITY_BY_SLOT[slot] ??
+    `Operational face for bay ${String(slot + 1).padStart(2, "0")} within the USJET consensus grid`
+  );
+}
+
 /** Compact pipe-delimited roster for Aura's system context (all 30 slots). */
 export function buildOriginFleetKnowledgeBlock(): string {
   const rows = [...fleetManifest]

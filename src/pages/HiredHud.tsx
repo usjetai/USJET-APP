@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Activity, Footprints, Fuel, Heart, HeartPulse, Moon, Radar } from "lucide-react";
 import { motion } from "framer-motion";
 import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
@@ -6,6 +6,9 @@ import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAva
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
 import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
 import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
+import HiredHudHubBackgroundBeat, {
+  type HiredHudHubBackgroundBeatHandle,
+} from "../components/hiredHud/HiredHudHubBackgroundBeat";
 import HiredHudHubVideo from "../components/hiredHud/HiredHudHubVideo";
 import HiredHudHubYouTube from "../components/hiredHud/HiredHudHubYouTube";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
@@ -100,6 +103,11 @@ export default function HiredHud() {
   const [tileFavorites, setTileFavorites] = useState<Record<number, boolean>>(() =>
     loadHiredHudTileFavorites(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
   );
+  const hubBeatRef = useRef<HiredHudHubBackgroundBeatHandle>(null);
+
+  const primeHubAudio = useCallback(() => {
+    hubBeatRef.current?.armWithSound();
+  }, []);
 
   const toggleTileFavorite = (slot: number) => {
     setTileFavorites((current) => {
@@ -208,7 +216,13 @@ export default function HiredHud() {
   }, [hiredUnits]);
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hired-hud-page relative">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="hired-hud-page relative"
+      onPointerDownCapture={primeHubAudio}
+    >
+      <HiredHudHubBackgroundBeat ref={hubBeatRef} />
       <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto w-full max-w-[94rem] px-4 pb-24 sm:px-6 lg:px-8">
         <section
           className={[

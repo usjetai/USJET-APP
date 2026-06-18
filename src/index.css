@@ -27889,6 +27889,25 @@ html.blog-page-root #usjet-app-shell {
   isolation: isolate;
 }
 
+/* Hidden hub background mix — YouTube audio only */
+.hired-hud-hub-beat {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  inset: auto auto 0 0;
+}
+
+.hired-hud-hub-beat__mount,
+.hired-hud-hub-beat__mount iframe {
+  width: 1px;
+  height: 1px;
+  border: 0;
+}
+
 .hired-hud {
   position: relative;
   overflow: hidden;

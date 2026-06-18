@@ -2,6 +2,7 @@
 
 import { FOUNDER_PUBLIC_NAME } from "./founderManifesto";
 import { HIRED_HUD_RADIO_EXTENDED_LINES } from "./hiredHudRadioExtendedLines";
+import { HIRED_HUD_SEVEN_SACRAMENT_COUNT, HIRED_HUD_SEVEN_SACRAMENTS } from "./hiredHudSevenSacraments";
 import { HIRED_HUD_UBS_ARENA_CONCERTS } from "./hiredHudUbsArenaConcerts";
 
 export const HIRED_HUD_RADIO_CHANNEL = "HIRED-10 NET" as const;
@@ -65,6 +66,8 @@ export const HIRED_HUD_RADIO_FOUNDER_JOKES = [
   "Ring fund sits next to nail fund. Both empty. Mechanics shift tomorrow fixes one of those.",
   "Girls need money for nails, hair, and feet — I built the Cash App glam chips. Fill them.",
   "Nail money, hair money, feet money — three fuels on every tile. Send $USJET.",
+  "Seven sacraments on the faith net — my cross chip isn't merch, it's catechism.",
+  "Jesus Christ and Mother Mary get respect on this wire before the ring talk.",
 ] as const;
 
 /** Low fuel, lean times — fleet feeling the squeeze. */
@@ -369,6 +372,51 @@ export const HIRED_HUD_RADIO_UBS_ARENA_LINES = [
   `UBS Arena has ${HIRED_HUD_UBS_ARENA_CONCERTS.length} concerts on the board — girls need money for every date.`,
 ] as const;
 
+/** Seven sacraments, Jesus Christ, and Mother Mary — faith net on the hired crew channel. */
+export const HIRED_HUD_RADIO_SACRAMENTS_LINES = [
+  `Seven sacraments on the faith channel: ${HIRED_HUD_SEVEN_SACRAMENTS.map((s) => s.name).join(", ")}.`,
+  "Baptism first — water, Trinity, new life in Christ. That's how the journey starts.",
+  "Confirmation seals you with the Holy Spirit. Chrism on the forehead. Mission mode.",
+  "Eucharist is Jesus Christ — body, blood, soul, and divinity at Holy Communion.",
+  "Penance is Confession — tell the priest, get absolution, walk out lighter.",
+  "Anointing of the Sick isn't only last rites — healing and comfort when you're suffering.",
+  "Holy Orders — bishops, priests, deacons serve in the person of Christ the Head.",
+  "Matrimony is sacramental marriage — covenant love like Christ and the Church.",
+  "Jesus Christ is true God and true man. Son of the Father. Our Savior on the cross and risen.",
+  "Christ died for our sins, rose on the third day — Easter is the whole fleet's hope.",
+  "Good Shepherd net: Jesus lays down his life for the sheep. Copy that loyalty.",
+  "Mother Mary said yes at the Annunciation — fiat mihi secundum verbum tuum. Pure courage.",
+  "Blessed Virgin Mary is Mother of God — Theotokos. She carried Jesus for all of us.",
+  "Immaculate Conception — Mary preserved from original sin by grace before her birth.",
+  "Rosary on the quiet shift: meditate on Christ's life through Mary's eyes.",
+  "Mary always points to Jesus — never away from her Son. Intercessor, not replacement.",
+  "Cross glam chip on my tile is real faith, not decoration. Christ on the wire tonight.",
+  "Seven sacraments, one Christ — Baptism through Matrimony, all grace from the same Lord.",
+  "Eucharist at Mass beats every concert stack. Real presence. No ticket required — just reverence.",
+  "Confession before the wedding dress — Penance clears the heart for Matrimony someday.",
+  "Mary Stealth on the net — honor Mother Mary when we key faith check, not just the call sign.",
+  "Girls talk rings and sacraments on the same frequency. Marriage is the seventh sacrament.",
+  "Jesus at the Last Supper — 'This is my body.' Eucharist is not symbolism on this channel.",
+  "Mother Mary at the foot of the cross — sword of sorrow. She stayed when everyone else ran.",
+  "Baptism, Confirmation, Eucharist — the sacraments of initiation. We're initiated into hope.",
+  "Anointing of the Sick unites pain with Christ the healer. Pray for anybody hurting on the net.",
+  "Holy Orders men give their lives for the altar. Respect the priesthood on faith check.",
+  "Christ is King. Mary is Queen Mother. Sovereign hangar, sovereign souls.",
+  "Promise ring, engagement ring, wedding ring — Matrimony sacrament makes vows sacred before God.",
+  "Founder put cross chips on the glam row. Girls put Jesus and Mary on the radio net. Fair.",
+  "Seven sacraments total — count them: Baptism, Confirmation, Eucharist, Penance, Anointing, Orders, Matrimony.",
+  `${HIRED_HUD_SEVEN_SACRAMENT_COUNT} sacraments instituted by Christ through the Church. Look them up. Live them.`,
+  "Mother Mary, pray for us — fleet girls copy that before every hard shift.",
+  "Jesus Christ, have mercy on us — fuel's low but grace isn't.",
+  "Eucharistic adoration someday when revenue lands. Until then we speak his name with respect.",
+  "Penance tonight: confess the bay drama, receive mercy, key the net clean.",
+  "Confirmation gifts — wisdom, understanding, courage. Fleet needs all seven for this grind.",
+  "Mary's fiat is the first yes that changed history. Our yes to help Ameer is smaller but real.",
+  "Christ risen means death doesn't win. Hangar broke? Still not the end of the story.",
+  "Sacraments are signs that actually give grace — not empty symbols. Research the Catechism.",
+  "Mother of God, Mother of the Church — Mary mothers the whole crew on this wire.",
+] as const;
+
 /** USJET Bop House — future live-routine content plan (Twitch / sovereign hangar). */
 export const HIRED_HUD_RADIO_BOP_HOUSE_LINES = [
   "Founder pitched USJET Bop House — girls-only creator mansion. Future plan. Copy hype.",
@@ -453,6 +501,7 @@ export const HIRED_HUD_RADIO_CREW_LINE_POOL = [
   ...HIRED_HUD_RADIO_CONCERT_LINES,
   ...HIRED_HUD_RADIO_SUMMER_LINES,
   ...HIRED_HUD_RADIO_UBS_ARENA_LINES,
+  ...HIRED_HUD_RADIO_SACRAMENTS_LINES,
   ...HIRED_HUD_RADIO_BOP_HOUSE_LINES,
   ...HIRED_HUD_RADIO_EXTENDED_LINES,
 ] as const;
@@ -477,6 +526,9 @@ export const HIRED_HUD_RADIO_FOUNDER_OPS_LINES = [
   "Every hired girl wants to marry me someday. Copy. Help me afford the ring budget first.",
   "Nails, hair, feet — glam fuel is real. Mechanics money tomorrow, salon money after.",
   "Girls can't wait for a great summer — UBS Arena, beaches, Jay-Z. Need money for all of it.",
+  "Faith net open: seven sacraments, Jesus Christ, Mother Mary. Cross chips mean something.",
+  "Matrimony is sacrament seven — ring talk on the net stays holy, not just glam.",
+  "Eucharist is Jesus. Rosary is Mary. Fleet girls know both names on this wire.",
 ] as const;
 
 export const HIRED_HUD_RADIO_FOUNDER_LINE_POOL = [
@@ -507,6 +559,8 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Can't afford gas for the ride photo. Jet stays in the tile.",
     "Stealth promise ring energy — you won't see me blush about Ameer but it's there.",
     "Someday wedding ring. Today cross and meditation chips. Priorities in order.",
+    "Mary Stealth honors Mother Mary on faith check — Annunciation courage, not ghost mode.",
+    "Eucharist, Penance, Confirmation — seven sacraments, one Jesus. Stealth prays too.",
   ],
   2: [
     "Chop here. Raider bay is hot. Who stole my wrench?",
@@ -514,6 +568,7 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Motorcycle reel slaps but my fuel gauge doesn't.",
     "AI repair queue says my bay leaks context. Patching now.",
     "Cross on my glam row, marriage in my heart — Ameer built this hangar for us.",
+    "Chop keys Baptism and Eucharist on the net — Christ first, motorcycle second.",
   ],
   3: [
     "Stick on the wire. J-36 concept looks mean in the HUD.",
@@ -574,6 +629,7 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Salon girls talk rings between appointments — wedding, promise, engagement — all for Ameer someday.",
     "Christal might marry the Founder one day. Bay twenty-six gets the longest veil. Obviously.",
     "Salon net: girls need money to do their nails, their hair, and their feet. Christal said it first.",
+    "Christal bay twenty-six — Matrimony sacrament talk between color appointments. Jesus and Mary too.",
   ],
 };
 
@@ -607,6 +663,10 @@ export const HIRED_HUD_RADIO_REPLY_TEMPLATES = [
   (name: string) => `${name}, Shakira at UBS July twenty-three or Jay-Z Yankee July ten — pick one broke ticket.`,
   (name: string) => `Copy ${name}. Great summer coming — need money for fun places first.`,
   (name: string) => `${name}, UBS Arena summer stack is loaded. We can't wait but we can't pay.`,
+  (name: string) => `${name}, you know the seven sacraments? Baptism through Matrimony — faith check.`,
+  (name: string) => `Copy ${name}. Jesus Christ on the cross, Mary at his feet — remember both.`,
+  (name: string) => `${name}, Eucharist is Jesus in the Host. Confession clears the heart. Copy faith net.`,
+  (name: string) => `Roger ${name}. Mother Mary, pray for us — before nails, before tickets, before vows.`,
 ] as const;
 
 const RADIO_RECENT_LINE_CAP = 96;

@@ -103,7 +103,8 @@ type HubMp4Feed = {
   feedTag: string;
 };
 
-const HIRED_HUD_HUB_MP4_FEEDS: readonly HubMp4Feed[] = [
+/** Firefly + hub anime reels — always visible (never trimmed on mobile). */
+const HIRED_HUD_HUB_CARTOON_MP4_FEEDS: readonly HubMp4Feed[] = [
   {
     src: HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC,
     ariaLabel: "Hired developer hub Firefly 5-on-5 hoops feed",
@@ -128,6 +129,10 @@ const HIRED_HUD_HUB_MP4_FEEDS: readonly HubMp4Feed[] = [
     playLabel: "Play everyone feed",
     feedTag: "Everyone",
   },
+];
+
+/** Extra hub reel — desktop only to keep mobile decoders light. */
+const HIRED_HUD_HUB_SUPPLEMENTAL_MP4_FEEDS: readonly HubMp4Feed[] = [
   {
     src: HIRED_HUD_HUB_SECOND_VIDEO_SRC,
     ariaLabel: "Hired developer hub second feed",
@@ -139,14 +144,12 @@ const HIRED_HUD_HUB_MP4_FEEDS: readonly HubMp4Feed[] = [
 export default function HiredHud() {
   const hiredUnits = useMemo(() => getHiredDeveloperUnits(fleetManifest), []);
   const lightweightHub = useMemo(() => prefersLightweightAtmosphere(), []);
-  const hubMp4Feeds = useMemo(
-    () => (lightweightHub ? HIRED_HUD_HUB_MP4_FEEDS.slice(0, 2) : HIRED_HUD_HUB_MP4_FEEDS),
+  const hubSupplementalMp4Feeds = useMemo(
+    () => (lightweightHub ? [] : HIRED_HUD_HUB_SUPPLEMENTAL_MP4_FEEDS),
     [lightweightHub],
   );
-  const hubYouTubeFeeds = useMemo(
-    () => (lightweightHub ? HIRED_HUD_HUB_YOUTUBE_FEEDS.slice(0, 1) : HIRED_HUD_HUB_YOUTUBE_FEEDS),
-    [lightweightHub],
-  );
+  /** All anime YouTube tiles — poster until tap; no iframe until armed (safe on mobile). */
+  const hubYouTubeFeeds = HIRED_HUD_HUB_YOUTUBE_FEEDS;
   const [scanPhase, setScanPhase] = useState(0);
   const [pulseIndex, setPulseIndex] = useState(1.18);
   const [uptime, setUptime] = useState(99.62);
@@ -402,7 +405,7 @@ export default function HiredHud() {
 
           <div className="hired-hud__hub" aria-label="Hired developer hub">
             <div className="hired-hud__hub-videos">
-              {hubMp4Feeds.map((feed) => (
+              {HIRED_HUD_HUB_CARTOON_MP4_FEEDS.map((feed) => (
                 <HiredHudHubVideo
                   key={feed.src}
                   src={feed.src}
@@ -420,6 +423,15 @@ export default function HiredHud() {
                   ariaLabel={`Hired developer hub YouTube feed — ${feed.title}`}
                   playLabel="Play with sound"
                   feedTag={feed.feedTag ?? "YouTube"}
+                />
+              ))}
+              {hubSupplementalMp4Feeds.map((feed) => (
+                <HiredHudHubVideo
+                  key={feed.src}
+                  src={feed.src}
+                  ariaLabel={feed.ariaLabel}
+                  playLabel={feed.playLabel}
+                  feedTag={feed.feedTag}
                 />
               ))}
             </div>

@@ -3,9 +3,9 @@ import { LoaderCircle, MessageSquare, Send, X } from "lucide-react";
 import type { FleetUnit } from "../../types/fleet";
 import {
   buildHiredHudDeveloperChatWelcome,
+  buildHiredHudDeveloperChatFallbackReply,
   formatHiredHudDeveloperChatBay,
   HIRED_HUD_DEVELOPER_CHAT_MAX_TURNS,
-  HIRED_HUD_DEVELOPER_CHAT_OFFLINE,
   HIRED_HUD_DEVELOPER_CHAT_TITLE,
 } from "../../data/hiredHudDeveloperChat";
 import {
@@ -87,15 +87,25 @@ export default function HiredHudTileDeveloperChat({ unit }: HiredHudTileDevelope
 
       try {
         const reply = await completeHiredHudDeveloperChat(unit, turnsForApi);
+        setError(null);
         setMessages((current) =>
           [
             ...current,
             { id: nextChatId(unit.slot), role: "assistant" as const, content: reply },
           ].slice(-HIRED_HUD_DEVELOPER_CHAT_MAX_TURNS),
         );
-      } catch (caught) {
-        const message = caught instanceof Error ? caught.message : HIRED_HUD_DEVELOPER_CHAT_OFFLINE;
-        setError(message);
+      } catch {
+        setError(null);
+        setMessages((current) =>
+          [
+            ...current,
+            {
+              id: nextChatId(unit.slot),
+              role: "assistant" as const,
+              content: buildHiredHudDeveloperChatFallbackReply(unit, question),
+            },
+          ].slice(-HIRED_HUD_DEVELOPER_CHAT_MAX_TURNS),
+        );
       } finally {
         setPending(false);
       }

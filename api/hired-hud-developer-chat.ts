@@ -3,7 +3,8 @@
  */
 
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const OPENROUTER_MODEL = "google/gemini-2.0-flash-001";
+const OPENROUTER_BAY_CHAT_WEB_MODEL = "perplexity/sonar-pro";
+const OPENROUTER_FALLBACK_MODEL = "google/gemini-2.0-flash-001";
 
 /** Hired developer slots cleared on the Hired HUD hub roster. */
 const HIRED_HUD_CHAT_SLOTS = new Set([0, 1, 2, 3, 5, 6, 10, 11, 13, 25]);
@@ -81,7 +82,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
         "X-Title": "USJet AI",
       },
       body: JSON.stringify({
-        model: OPENROUTER_MODEL,
+        model: OPENROUTER_BAY_CHAT_WEB_MODEL,
         messages,
       }),
     });
@@ -89,16 +90,45 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     const raw = await response.text();
 
     if (!response.ok) {
-      let detail = raw;
-      try {
-        const parsed = JSON.parse(raw) as { error?: { message?: string } };
-        detail = parsed.error?.message ?? raw;
-      } catch {
-        /* keep raw */
-      }
-      return res.status(response.status).json({
-        error: detail || `OpenRouter request failed (${response.status})`,
+      const fallback = await fetch(OPENROUTER_API_URL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://www.usjet.ai",
+          "X-Title": "USJet AI",
+        },
+        body: JSON.stringify({
+          model: OPENROUTER_FALLBACK_MODEL,
+          messages,
+        }),
       });
+      const fallbackRaw = await fallback.text();
+      if (!fallback.ok) {
+        let detail = raw;
+        try {
+          const parsed = JSON.parse(raw) as { error?: { message?: string } };
+          detail = parsed.error?.message ?? raw;
+        } catch {
+          /* keep raw */
+        }
+        return res.status(response.status).json({
+          error: detail || `OpenRouter request failed (${response.status})`,
+        });
+      }
+      let fallbackData: {
+        choices?: Array<{ message?: { content?: string | null } }>;
+      };
+      try {
+        fallbackData = JSON.parse(fallbackRaw) as typeof fallbackData;
+      } catch {
+        return res.status(502).json({ error: "Invalid JSON from OpenRouter" });
+      }
+      const fallbackReply = fallbackData.choices?.[0]?.message?.content;
+      if (typeof fallbackReply !== "string" || !fallbackReply.trim()) {
+        return res.status(502).json({ error: "No reply text from the model." });
+      }
+      return res.status(200).json({ reply: fallbackReply.trim() });
     }
 
     let data: {

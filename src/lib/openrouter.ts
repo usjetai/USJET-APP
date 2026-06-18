@@ -11,6 +11,9 @@ export const OPENROUTER_API_URL =
 /** Requested model — https://openrouter.ai/models */
 export const OPENROUTER_MODEL = "google/gemini-2.0-flash-001";
 
+/** Web-grounded model for Hired HUD bay chat (Perplexity Sonar searches the web). */
+export const OPENROUTER_BAY_CHAT_WEB_MODEL = "perplexity/sonar-pro";
+
 export const OPENROUTER_API_KEY = (
   import.meta.env.VITE_OPENROUTER_API_KEY ?? ""
 )
@@ -96,7 +99,8 @@ export async function completeOriginChat(messages: ApiChatMessage[]): Promise<st
 
 export async function completeChat(
   apiKey: string,
-  messages: ApiChatMessage[]
+  messages: ApiChatMessage[],
+  model: string = OPENROUTER_MODEL,
 ): Promise<string> {
   const response = await fetch(OPENROUTER_API_URL, {
     method: "POST",
@@ -107,7 +111,7 @@ export async function completeChat(
       "X-Title": "USJet AI",
     },
     body: JSON.stringify({
-      model: OPENROUTER_MODEL,
+      model,
       messages,
     }),
   });
@@ -142,4 +146,57 @@ export async function completeChat(
   }
 
   return text.trim();
+}
+
+type BayChatApiPayload = {
+  reply?: string;
+  error?: string;
+};
+
+/** Hired HUD bay chat — web search via Perplexity Sonar, then Gemini, then client key. */
+export async function completeBayChat(
+  slot: number,
+  messages: ApiChatMessage[],
+): Promise<string> {
+  try {
+    const response = await fetch("/api/hired-hud-developer-chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slot, messages }),
+    });
+
+    let payload: BayChatApiPayload = {};
+    try {
+      payload = (await response.json()) as BayChatApiPayload;
+    } catch {
+      /* non-JSON */
+    }
+
+    if (response.ok && typeof payload.reply === "string" && payload.reply.trim()) {
+      return payload.reply.trim();
+    }
+
+    if (response.status !== 503 && response.status !== 404) {
+      throw new Error(payload.error ?? `Bay chat failed (${response.status})`);
+    }
+  } catch (error) {
+    if (OPENROUTER_API_KEY) {
+      try {
+        return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_BAY_CHAT_WEB_MODEL);
+      } catch {
+        return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_MODEL);
+      }
+    }
+    throw error instanceof Error ? error : new Error("Bay chat unavailable");
+  }
+
+  if (OPENROUTER_API_KEY) {
+    try {
+      return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_BAY_CHAT_WEB_MODEL);
+    } catch {
+      return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_MODEL);
+    }
+  }
+
+  throw new Error("Bay chat not configured");
 }

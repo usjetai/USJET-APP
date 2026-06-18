@@ -3,7 +3,7 @@ import {
   buildHiredHudDeveloperChatSystemPrompt,
 } from "../data/hiredHudDeveloperChat";
 import type { FleetUnit } from "../types/fleet";
-import { completeOriginChat, type ApiChatMessage } from "./openrouter";
+import { completeBayChat, type ApiChatMessage } from "./openrouter";
 
 export type HiredHudDeveloperChatTurn = {
   role: "user" | "assistant";
@@ -20,7 +20,7 @@ export function buildHiredHudDeveloperChatMessages(
   ];
 }
 
-/** Hub tile developer chat — same Origin/OpenRouter pipe, then in-character fallback. */
+/** Hub tile chat — Perplexity Sonar web search, then in-character fallback pool. */
 export async function completeHiredHudDeveloperChat(
   unit: FleetUnit,
   turns: readonly HiredHudDeveloperChatTurn[],
@@ -29,7 +29,7 @@ export async function completeHiredHudDeveloperChat(
   const lastQuestion = [...turns].reverse().find((turn) => turn.role === "user")?.content ?? "";
 
   try {
-    return await completeOriginChat(messages);
+    return await completeBayChat(unit.slot, messages);
   } catch {
     return buildHiredHudDeveloperChatFallbackReply(unit, lastQuestion);
   }

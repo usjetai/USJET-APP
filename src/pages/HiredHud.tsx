@@ -13,7 +13,7 @@ import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
+import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_TILE_BG, getHiredHudTileGlamChips } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -424,6 +424,13 @@ export default function HiredHud() {
 
                 <div className="hired-hud__tile-content">
                   <div className="hired-hud__tile-profile">
+                    <div className="hired-hud__tile-glam" aria-label="Glam — nails, hair, pedicure, style, car, ring">
+                      {getHiredHudTileGlamChips(unit.slot).map((chip) => (
+                        <span key={`${unit.slot}-${chip.title}`} className="hired-hud__tile-glam-chip" title={chip.title}>
+                          {chip.emoji}
+                        </span>
+                      ))}
+                    </div>
                     <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="tile" />
                   </div>
                   <span className="hired-hud__row-bay">

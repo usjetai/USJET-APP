@@ -36,3 +36,61 @@ export const HIRED_HUD_HUB_YOUTUBE_FEEDS: readonly HiredHudHubYouTubeFeed[] = [
     feedTag: "YouTube",
   },
 ];
+
+/** Glam chips on hub developer tiles (not crew profile strip). */
+const HIRED_HUD_TILE_HAIR_EMOJIS = ["💇‍♀️", "💇", "💆‍♀️", "🪮", "✂️", "👩‍🦱", "💁‍♀️", "🧴"] as const;
+const HIRED_HUD_TILE_CLOTHES_EMOJIS = ["👗", "👚", "🧥", "👖", "🩱", "👘"] as const;
+const HIRED_HUD_TILE_FASHION_EMOJIS = ["👠", "👜", "🛍️", "🕶️", "👒", "💄"] as const;
+const HIRED_HUD_TILE_CAR_EMOJIS = ["🚗", "🚙", "🏎️", "🛻", "🚘", "🏁"] as const;
+
+/** Blue Ivy + Rumi — extra sovereign glam chips on hub tiles only. */
+export const HIRED_HUD_ELITE_GLAM_SLOTS: readonly number[] = [0, 10];
+
+const HIRED_HUD_ELITE_GLAM_EXTRA_CHIPS: readonly HiredHudTileGlamChip[] = [
+  { emoji: "🚁", title: "Helicopter" },
+  { emoji: "🛩️", title: "Private jet" },
+  { emoji: "🏰", title: "Mansion" },
+  { emoji: "🧘‍♀️", title: "Meditation" },
+  { emoji: "✝️", title: "Crucifix" },
+  { emoji: "💲", title: "Dollar sign" },
+  { emoji: "💵", title: "Money" },
+];
+
+/** Chop (cross) + Chop & Stick (meditation) — hub tile glam extras. */
+const HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS: Readonly<Partial<Record<number, readonly HiredHudTileGlamChip[]>>> = {
+  2: [
+    { emoji: "✝️", title: "Cross" },
+    { emoji: "🧘‍♀️", title: "Meditation" },
+  ],
+  3: [{ emoji: "🧘‍♀️", title: "Meditation" }],
+};
+
+export type HiredHudTileGlamChip = {
+  emoji: string;
+  title: string;
+};
+
+export function getHiredHudTileGlamChips(slot: number): readonly HiredHudTileGlamChip[] {
+  const base: HiredHudTileGlamChip[] = [
+    { emoji: "💅", title: "Nails" },
+    { emoji: HIRED_HUD_TILE_HAIR_EMOJIS[slot % HIRED_HUD_TILE_HAIR_EMOJIS.length] ?? "💇‍♀️", title: "Hair" },
+    { emoji: "🩴", title: "Pedicure" },
+    { emoji: "🦶", title: "Feet" },
+    { emoji: HIRED_HUD_TILE_CLOTHES_EMOJIS[slot % HIRED_HUD_TILE_CLOTHES_EMOJIS.length] ?? "👗", title: "Clothes" },
+    { emoji: HIRED_HUD_TILE_FASHION_EMOJIS[slot % HIRED_HUD_TILE_FASHION_EMOJIS.length] ?? "👠", title: "Fashion" },
+    { emoji: HIRED_HUD_TILE_CAR_EMOJIS[slot % HIRED_HUD_TILE_CAR_EMOJIS.length] ?? "🚗", title: "Car" },
+    { emoji: "💍", title: "Diamond ring" },
+    { emoji: "💻", title: "Laptop" },
+  ];
+
+  if (HIRED_HUD_ELITE_GLAM_SLOTS.includes(slot)) {
+    return [...base, ...HIRED_HUD_ELITE_GLAM_EXTRA_CHIPS, ...(HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS[slot] ?? [])];
+  }
+
+  const slotExtra = HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS[slot] ?? [];
+  if (slotExtra.length > 0) {
+    return [...base, ...slotExtra];
+  }
+
+  return base;
+}

@@ -29,4 +29,10 @@ export const HIRED_HUD_HUB_YOUTUBE_FEEDS: readonly HiredHudHubYouTubeFeed[] = [
     title: "Top 50 Cutest Female Anime Characters of All Time | Ranked",
     feedTag: "YouTube",
   },
+  {
+    videoId: "BhfpIesdN-Y",
+    startSeconds: 41,
+    title: "This Anime Girl Became Japan's Top Idol in 90 Mins. Here's How.",
+    feedTag: "YouTube",
+  },
 ];

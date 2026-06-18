@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Radar } from "lucide-react";
+import { HIRED_HUD_RADAR_SCOPE_MAP_SRC } from "../../data/hiredHudAssets";
 import { getFleetAircraftRadarLogoPathForSlot } from "../../lib/fleetAircraftLogos";
 import type { FleetAircraftType } from "../../types/fleet";
 
@@ -72,6 +73,12 @@ export default function HiredHudJetRadar({ slot, aircraftType, variant }: HiredH
         .join(" ")}
       aria-hidden
     >
+      {variant === "hub-tile" ? (
+        <span
+          className="hired-hud__jet-radar-map"
+          style={{ backgroundImage: `url("${HIRED_HUD_RADAR_SCOPE_MAP_SRC}")` }}
+        />
+      ) : null}
       <span className="hired-hud__jet-radar-ring hired-hud__jet-radar-ring--outer" />
       <span className="hired-hud__jet-radar-ring hired-hud__jet-radar-ring--mid" />
       <span className="hired-hud__jet-radar-ring hired-hud__jet-radar-ring--inner" />

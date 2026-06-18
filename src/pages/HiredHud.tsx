@@ -461,6 +461,7 @@ export default function HiredHud() {
                       ))}
                     </div>
                     <HiredHudTileGlamFuelButton name={unit.name} slot={unit.slot} />
+                    <HiredHudTileDeveloperChat unit={unit} />
                     <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="tile" />
                   </div>
                   <span className="hired-hud__row-bay">
@@ -538,7 +539,6 @@ export default function HiredHud() {
                       "Heartbeat stable"
                     )}
                   </span>
-                  <HiredHudTileDeveloperChat unit={unit} />
                 </div>
               </li>
             );

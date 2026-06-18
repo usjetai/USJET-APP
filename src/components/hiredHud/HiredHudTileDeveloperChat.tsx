@@ -119,7 +119,7 @@ export default function HiredHudTileDeveloperChat({ unit }: HiredHudTileDevelope
           onClick={openChat}
         >
           <MessageSquare size={14} aria-hidden />
-          <span>Ask {unit.name}</span>
+          <span>AI bay chat · Ask {unit.name}</span>
           <span className="hired-hud__tile-chat-launch-tag">{formatHiredHudDeveloperChatBay(unit.slot)}</span>
         </button>
       ) : (

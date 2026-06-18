@@ -4,6 +4,9 @@ export const HIRED_HUD_TILE_BG = "/hired-hud/developer-tile-hud-bg.png";
 /** NYC vector map inside hub jet-radar scopes. */
 export const HIRED_HUD_RADAR_SCOPE_MAP_SRC = "/hired-hud/radar-scope-map-nyc.png" as const;
 
+/** Per-tile glam fuel CTA — direct Cash App for nails & hair. */
+export const HIRED_HUD_GLAM_FUEL_CTA_LABEL = "Fuel nails & hair" as const;
+
 /** Looping hub reels on the Hired HUD developer hub panel. */
 export const HIRED_HUD_HUB_VIDEO_SRC = "/hired-hud/hub-minute-loop.mp4" as const;
 export const HIRED_HUD_HUB_EVERYONE_VIDEO_SRC = "/hired-hud/hub-everyone-loop.mp4" as const;

@@ -9,6 +9,8 @@ import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
 import HiredHudHubVideo from "../components/hiredHud/HiredHudHubVideo";
 import HiredHudHubYouTube from "../components/hiredHud/HiredHudHubYouTube";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
+import HiredHudTileFavoriteButton from "../components/hiredHud/HiredHudTileFavoriteButton";
+import HiredHudTileGlamFuelButton from "../components/hiredHud/HiredHudTileGlamFuelButton";
 import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
@@ -35,6 +37,11 @@ import {
   totalFuelDollars,
   type DeveloperFuelReading,
 } from "../lib/hiredHudFuelMeter";
+import {
+  loadHiredHudTileFavorites,
+  saveHiredHudTileFavorites,
+  toggleHiredHudTileFavorite,
+} from "../lib/hiredHudTileFavorites";
 
 function formatHudPercent(value: number): string {
   return `${value >= 0 ? "+" : "-"}${Math.abs(value).toFixed(2)}%`;
@@ -89,6 +96,17 @@ export default function HiredHud() {
     ),
   );
   const [activeLove, setActiveLove] = useState(false);
+  const [tileFavorites, setTileFavorites] = useState<Record<number, boolean>>(() =>
+    loadHiredHudTileFavorites(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
+  );
+
+  const toggleTileFavorite = (slot: number) => {
+    setTileFavorites((current) => {
+      const next = toggleHiredHudTileFavorite(current, slot);
+      saveHiredHudTileFavorites(next);
+      return next;
+    });
+  };
 
   const fleetDailySteps = useMemo(
     () => hiredUnits.reduce((total, unit) => total + (developerSteps[unit.slot] ?? 0), 0),
@@ -380,15 +398,25 @@ export default function HiredHud() {
               const fuelLabel = formatFuelDollars(fuel.dollars);
               const aircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
               const tileScan = (scanPhase + unit.slot * 13) % 100;
+              const isTileFavorite = Boolean(tileFavorites[unit.slot]);
 
               return (
               <li
                 key={unit.id}
-                className={["hired-hud__tile", activeLove ? "hired-hud__tile--active-love" : ""]
+                className={[
+                  "hired-hud__tile",
+                  activeLove ? "hired-hud__tile--active-love" : "",
+                  isTileFavorite ? "hired-hud__tile--favorited" : "",
+                ]
                   .filter(Boolean)
                   .join(" ")}
                 style={{ ["--hired-hud-logo-phase" as string]: `${rosterIndex * 0.35}s` }}
               >
+                <HiredHudTileFavoriteButton
+                  name={unit.name}
+                  isFavorite={isTileFavorite}
+                  onToggle={() => toggleTileFavorite(unit.slot)}
+                />
                 <div className="hired-hud__tile-hud" aria-hidden>
                   <div
                     className="hired-hud__tile-hud-bg"
@@ -431,6 +459,7 @@ export default function HiredHud() {
                         </span>
                       ))}
                     </div>
+                    <HiredHudTileGlamFuelButton name={unit.name} slot={unit.slot} />
                     <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="tile" />
                   </div>
                   <span className="hired-hud__row-bay">
@@ -494,7 +523,12 @@ export default function HiredHud() {
                     </div>
                   </div>
                   <span className="hired-hud__row-status">
-                    {activeLove ? (
+                    {isTileFavorite ? (
+                      <>
+                        <Heart size={11} aria-hidden className="hired-hud__row-favorite-icon" fill="currentColor" />
+                        Favorited
+                      </>
+                    ) : activeLove ? (
                       <>
                         <Heart size={11} aria-hidden className="hired-hud__row-love-icon" fill="currentColor" />
                         Active love

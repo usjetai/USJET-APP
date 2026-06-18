@@ -29467,8 +29467,13 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__tile-glam-chip[title="Meditation"] {
-  border-color: rgb(167 139 250 / 0.45);
-  background: rgb(30 16 48 / 0.9);
+  border-color: rgb(244 114 182 / 0.55);
+  background: rgb(46 16 36 / 0.92);
+  box-shadow:
+    0 0 14px rgb(236 72 153 / 0.5),
+    0 0 28px rgb(251 113 133 / 0.32);
+  filter: drop-shadow(0 0 5px rgb(244 63 94 / 0.55));
+  animation: hired-hud-meditation-blink 1.75s ease-in-out infinite;
 }
 
 .hired-hud__tile-glam-chip[title="Crucifix"],
@@ -29577,6 +29582,33 @@ html.blog-page-root #usjet-app-shell {
   color: rgb(187 247 208 / 0.92);
 }
 
+@keyframes hired-hud-meditation-blink {
+  0%,
+  100% {
+    opacity: 0.78;
+    border-color: rgb(244 114 182 / 0.42);
+    background: rgb(46 16 36 / 0.9);
+    box-shadow:
+      0 0 8px rgb(236 72 153 / 0.3),
+      0 0 16px rgb(251 113 133 / 0.18);
+    filter: drop-shadow(0 0 3px rgb(244 63 94 / 0.35));
+  }
+
+  50% {
+    opacity: 1;
+    border-color: rgb(251 113 133 / 0.98);
+    background: rgb(76 29 49 / 0.97);
+    box-shadow:
+      0 0 20px rgb(244 63 94 / 0.9),
+      0 0 40px rgb(251 113 133 / 0.72),
+      0 0 60px rgb(254 205 211 / 0.38),
+      inset 0 0 12px rgb(236 72 153 / 0.22);
+    filter:
+      drop-shadow(0 0 10px rgb(244 63 94 / 0.95))
+      drop-shadow(0 0 20px rgb(251 113 133 / 0.75));
+  }
+}
+
 @keyframes hired-hud-laptop-blink {
   0%,
   100% {
@@ -29605,6 +29637,15 @@ html.blog-page-root #usjet-app-shell {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hired-hud__tile-glam-chip[title="Meditation"] {
+    animation: none;
+    opacity: 1;
+    border-color: rgb(251 113 133 / 0.75);
+    box-shadow:
+      0 0 14px rgb(244 63 94 / 0.55),
+      0 0 28px rgb(251 113 133 / 0.35);
+  }
+
   .hired-hud__tile-glam-chip[title="Laptop"] {
     animation: none;
     opacity: 1;

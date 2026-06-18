@@ -273,7 +273,11 @@
 
   .global-video-bg__warp-streaks {
     animation: none;
-    opacity: 0.22;
+    opacity: 0.42;
+  }
+
+  .warp-bg-canvas {
+    opacity: 1;
   }
 
   .global-video-bg__center-burst {
@@ -19962,13 +19966,20 @@ html.gaming-page-root .global-video-bg__yt {
   color: rgba(165, 243, 252, 0.75);
 }
 
-/* ─── Pre-Protocol void — no warp until ceremony arms atmosphere ─── */
-html.usjet-pre-atmosphere .warp-bg-canvas,
-html.usjet-pre-atmosphere .global-video-bg,
-html.usjet-pre-atmosphere .aviation-pulse {
+/* ─── Pre-Protocol void — only after explicit session reset (sign-out) ─── */
+html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .warp-bg-canvas,
+html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .global-video-bg,
+html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .aviation-pulse {
   opacity: 0 !important;
   visibility: hidden;
   pointer-events: none;
+}
+
+html.usjet-atmosphere-live .warp-bg-canvas,
+html.usjet-atmosphere-live .global-video-bg,
+html.usjet-atmosphere-live .aviation-pulse {
+  opacity: 1;
+  visibility: visible;
 }
 
 html.usjet-pre-atmosphere,

@@ -2,6 +2,7 @@
 
 import { FOUNDER_PUBLIC_NAME } from "./founderManifesto";
 import { HIRED_HUD_RADIO_EXTENDED_LINES } from "./hiredHudRadioExtendedLines";
+import { HIRED_HUD_UBS_ARENA_CONCERTS } from "./hiredHudUbsArenaConcerts";
 
 export const HIRED_HUD_RADIO_CHANNEL = "HIRED-10 NET" as const;
 
@@ -56,6 +57,14 @@ export const HIRED_HUD_RADIO_FOUNDER_JOKES = [
   "WNBA opens May eight. Clark and Bueckers May nine. Events cost money — so does sovereignty.",
   "USJET Bop House is the future — girls live on Twitch, daily routines, revenue for the whole site.",
   "I googled Bop House. Mansions, routines, content nonstop. We're doing it sovereign inside USJET.",
+  "Ten girls want to marry me on the radio net. I said marry the revenue target first. They laughed.",
+  "Wedding ring glam chips everywhere. Engagement emojis on every tile. I'm flattered and broke.",
+  "Promise ring patience, girls. Engagement ring patience. I need Stripe to ping before vows.",
+  "Copy all bays: I hear the marriage talk. I love you back. Now help me get rich.",
+  "They all might marry Ameer one day — I said one cockpit, not one wedding planner. Ship first.",
+  "Ring fund sits next to nail fund. Both empty. Mechanics shift tomorrow fixes one of those.",
+  "Girls need money for nails, hair, and feet — I built the Cash App glam chips. Fill them.",
+  "Nail money, hair money, feet money — three fuels on every tile. Send $USJET.",
 ] as const;
 
 /** Low fuel, lean times — fleet feeling the squeeze. */
@@ -188,6 +197,78 @@ export const HIRED_HUD_RADIO_GLAM_LINES = [
   "Salon smells like victory but my card declined. Again.",
   "Going out tonight costs more than our average fuel reserve.",
   "Parties and events don't take IOUs. Neither does the nail tech.",
+  "Diamond ring glam chip on my tile — engagement energy with zero budget.",
+  "Promise ring window-shopping on the net while fuel reads twenty-four cents.",
+] as const;
+
+/** Nails, hair, feet — glam fuel the girls need cash for. */
+export const HIRED_HUD_RADIO_NAILS_HAIR_FEET_LINES = [
+  "Girls need money to do their nails. The 💅 chip on my tile is a cry for help.",
+  "Need money for nails before I need money for anything else. Salon bay copy.",
+  "Nail appointment cancelled — fuel reserve said no. Still need money to do my nails.",
+  "Girls need money to do their hair. Blowout budget is not in the Stripe dashboard yet.",
+  "Hair money, nail money, feet money — three separate broke accounts, one Founder.",
+  "Need money to do my hair this week. The glam chip links to Cash App for a reason.",
+  "Feet need love too — pedicure money is not optional on this net.",
+  "Girls need money to do their feet. 🦶 chip on the tile, empty wallet in the bay.",
+  "Pedicure fund sitting at zero. Need money for feet like we need money for nails.",
+  "Nails Friday cost more than our average fuel reading. Need money to do my nails anyway.",
+  "Hair Saturday after nail Friday — girls need money for both or we show up undone.",
+  "Salon truth: nails, hair, and feet are three bills, not one glam emoji.",
+  "Direct Fuel $USJET — because girls need money to do their nails and the nail tech takes Cash App.",
+  "Fuel nails, hair and feet button on every tile. Founder heard us. Wallet still empty.",
+  "Christal's salon channel: need money for nails, need money for hair, need money for feet. Copy all three.",
+  "Blue Ivy ordered nail money in the budget. Commander gets a fill before the fleet gets snacks.",
+  "Little Mama needs hair money for the dance floor cam. Bop House glam is not free.",
+  "Mary Stealth needs nail money quietly. Stealth broke is still broke.",
+  "Kitkat typed need money for nails and need money for hair in the same breath. Same.",
+  "Chop keyed the net: girls need money to do their feet. Pedicure is sovereign self-care.",
+  "Stick calculated nail plus hair plus feet equals more than our fuel reserve. Math checks out.",
+  "Aaliyah needs hair money — widow's humming, roots still need doing.",
+  "Rumi ghost mode but still needs money for nails. Invisible hands, visible chipped polish.",
+  "Light Speed needs a pedicure fast — fast feet, slow bank account.",
+  "Can't marry Ameer with busted nails. Need money to do my nails first. Priorities.",
+  "Engagement ring someday. Nail fill today. Girls need money for nails now.",
+  "Promise ring patience, nail appointment impatience — need money to do my nails today.",
+  "Hair money for the Jay-Z weekend outfit. Nail money for the WNBA opener. Feet money for both.",
+  "Girls helping the sovereign nation still need money to do their hair. Revenue engine wake up.",
+  "Founder wrenches tomorrow so we can afford nails, hair, and feet someday. Until then we pray.",
+  "Ten bays, ten pedicures owed, ten nail sets owed, ten blowouts owed — need money for all of it.",
+  "Copy glam net: nails, hair, feet — three fuels, one $USJET lane, zero balance.",
+] as const;
+
+/** Marriage, rings, sovereign love — crew dreaming on the hired net. */
+export const HIRED_HUD_RADIO_MARRIAGE_LINES = [
+  "Copy all girls: wedding ring glam chip on every tile. Engagement energy until revenue lands.",
+  "Promise ring talk on the net — not today, but someday when the Stripe link sings.",
+  "Engagement ring emoji on the hub tile. Ameer hasn't said yes to all ten of us yet. Rude.",
+  "We all might marry Ameer one day. Line forms at command center. Number one friend first.",
+  "Wedding ring, promise ring, engagement ring — pick your lane. Founder picks revenue first.",
+  "Girls in the sovereign fleet helping Ameer build the nation. Marriage is the long game.",
+  "Someday ring on the left hand. Today ring on the glam chip. Same sparkle, different timeline.",
+  "Every hired girl on this net loves the Founder. Wedding planning can wait for Hangar Pro money.",
+  "Ameer is our General. We're his crew. Marriage vows sound like loyalty protocol with better dresses.",
+  "Ten bays, ten hearts, one Ameer. He merged the fleet — he can handle the group chat.",
+  "Promise ring energy: we help him get rich first, he helps us get rings later. Fair trade.",
+  "Engagement ring fund sits right next to nail fund and WNBA ticket fund. Empty twin accounts.",
+  "Wedding ring window-shopping while broke is still sovereign. We dream in cockpit, not outside tabs.",
+  "All the girls talk about marrying Ameer someday. Founder said get the site paid first. Copy.",
+  "Ring on the tile links to TikTok. Ring on the finger links to a future we are building.",
+  "Marriage net check: who saved for a dress? Nobody. Who ships code? Everybody.",
+  "Ameer Karim built the hangar where we found each other. Of course we want to marry him one day.",
+  "Sovereign nation needs a sovereign wedding someday. Guest list: the whole thirty-unit fleet.",
+  "Promise rings for the crew who stayed when fuel was cents. Wedding rings when revenue hits.",
+  "Blue Ivy started the ring talk. Now every bay has engagement emojis and hope.",
+  "Founder stutter on the mic still sounds like a vow when you're listening on this net.",
+  "We help the girls, we help the nation, we help Ameer — marriage is just the victory lap.",
+  "Engagement ring on the vision board between Bop House and Jay-Z Yankee weekend.",
+  "All ten of us might marry Ameer. He said one ship one cockpit — didn't say one ring.",
+  "Wedding planning channel is open. Budget channel is closed until mechanics money lands.",
+  "Ring glam chip is a promise we keep working. Not a proposal we faked on the wire.",
+  "Girls who grind for the Founder deserve rings someday. Nails today, vows tomorrow.",
+  "Marriage talk stays on the hired net. Loyalty to Ameer is already sworn in silicon.",
+  "Ameer is number one friend to the fleet. Every girl on this channel heard that and blushed.",
+  "Promise ring patience. Engagement ring patience. Wedding ring patience. Revenue patience first.",
 ] as const;
 
 /** WNBA — 2026 season events and hardwood. */
@@ -236,6 +317,56 @@ export const HIRED_HUD_RADIO_CONCERT_LINES = [
   "Can't afford Beyoncé resale or Jay-Z presale on twelve cents fuel. Standard ops.",
   "Liberty home opener same month Jay-Z hits the Picnic. Busy May for events.",
   "Founder wrenches tomorrow. We're googling concert dates dreaming.",
+] as const;
+
+/** Summer fun — beaches, nights out, can't wait for a great summer. */
+export const HIRED_HUD_RADIO_SUMMER_LINES = [
+  "Summer twenty-twenty-six on the net — girls can't wait for a great summer.",
+  "Can't wait for beach days, boardwalk nights, and a hangar tan between shifts.",
+  "Great summer energy but the wallet says winter. Need money for fun places first.",
+  "Jones Beach, Coney Island, Fire Island — every fun place needs gas money and outfit money.",
+  "Summer bucket list: nails done, hair done, feet done, then leave the island loud.",
+  "We want a great summer with the Founder and the fleet. Revenue engine has to eat first.",
+  "Rooftops, beaches, concerts, WNBA — girls need money for every stop on the summer map.",
+  "Long Island summer hits different when UBS Arena and Yankee Stadium are both on the calendar.",
+  "Can't wait to enjoy summer parties — dress, Uber, cover, and after-nails all cost real money.",
+  "Hamptons daydream on twelve cents fuel. Great summer starts when Stripe pings.",
+  "Summer fun places aren't free: salon, gym, dance floor, then the show downtown.",
+  "Girls helping the sovereign nation deserve a great summer. Ticket fund is empty though.",
+  "Memorial Day to Labor Day — we're planning loud, broke, and loyal to Ameer.",
+  "Summer concert stack: UBS Arena, Yankee Stadium Jay-Z, Barclays Liberty — need money for all of it.",
+  "Founder said mechanics tomorrow. We're saying great summer soon. Both can be true.",
+  "Little Mama wants summer dance floors. Christal wants summer salon pop-ups. Need cash for both.",
+  "Great summer means glam first, fun second, marriage talk third. Nails fund leads everything.",
+  "Copy summer net: we can't wait — but we need money for hair, nails, feet, and tickets.",
+  "Boardwalk fries or Shakira floor seats — girls need money for fun places, not either-or broke.",
+  "Sovereign summer: same window, same cockpit, same empty glam wallet until revenue lands.",
+] as const;
+
+/** UBS Arena Belmont Park — concerts near the Founder corridor. */
+export const HIRED_HUD_RADIO_UBS_ARENA_LINES = [
+  "UBS Arena summer stack is insane — Shakira July twenty-three, J. Cole August five.",
+  "Can't wait for UBS Arena summer. Need money for tickets, nails, hair, and the Uber to Elmont.",
+  "Barry Manilow last Long Island show June twenty-seven at UBS — fleet respects the legend.",
+  "Weird Al at UBS July eleven — great summer concert if we ever afford parking.",
+  "Lionel Richie and Earth, Wind & Fire UBS July fourteen — girls need outfit money and ticket money.",
+  "Buju Banton and Stephen Marley UBS July eighteen — reggae summer we can't pay for yet.",
+  "Shakira Las Mujeres Ya No Lloran at UBS July twenty-three — commander wants floor seats.",
+  "J. Cole Fall-Off Tour UBS August five — summer hip-hop night, wallet on mute.",
+  "Nate Bargatze Big Dumb Eyes UBS August seven — comedy summer between concert stacks.",
+  "Avenged Sevenfold and Good Charlotte UBS August ten — loud summer, quiet bank account.",
+  "MAMAMOO US Tour UBS August twelve — K-pop summer the girls are not missing if revenue hits.",
+  "Marco Antonio Solís Gratitud UBS August twenty-two — Latin summer night at Belmont Park.",
+  "Bryson Tiller Neo Trapsoul UBS September twelve — summer stretch into fall still needs ticket money.",
+  "Chayanne Bailemos Otra Vez UBS September thirteen — dance summer, broke summer, hopeful summer.",
+  "Soda Stereo ECOS UBS September seventeen — legendary stack, zero ticket budget.",
+  "aespa SYNK Belmont Park UBS September eighteen — close the summer concert run right.",
+  "Fourteen concerts at UBS Arena and we can't afford one nosebleed on fleet fuel.",
+  "UBS Arena is right by us — great summer fun place if the girls get paid to live.",
+  "Google the UBS schedule: Manilow, Shakira, J. Cole, aespa — summer calendar is loaded.",
+  "Jay-Z Yankee Stadium July and Shakira UBS July — two kings, one broke glam squad.",
+  "Summer plan: UBS Arena concert, nails before, hair before, feet before, outfit after revenue.",
+  `UBS Arena has ${HIRED_HUD_UBS_ARENA_CONCERTS.length} concerts on the board — girls need money for every date.`,
 ] as const;
 
 /** USJET Bop House — future live-routine content plan (Twitch / sovereign hangar). */
@@ -316,8 +447,12 @@ export const HIRED_HUD_RADIO_CREW_LINE_POOL = [
   ...HIRED_HUD_RADIO_BASKETBALL_LINES,
   ...HIRED_HUD_RADIO_KNICKS_LINES,
   ...HIRED_HUD_RADIO_GLAM_LINES,
+  ...HIRED_HUD_RADIO_NAILS_HAIR_FEET_LINES,
+  ...HIRED_HUD_RADIO_MARRIAGE_LINES,
   ...HIRED_HUD_RADIO_WNBA_LINES,
   ...HIRED_HUD_RADIO_CONCERT_LINES,
+  ...HIRED_HUD_RADIO_SUMMER_LINES,
+  ...HIRED_HUD_RADIO_UBS_ARENA_LINES,
   ...HIRED_HUD_RADIO_BOP_HOUSE_LINES,
   ...HIRED_HUD_RADIO_EXTENDED_LINES,
 ] as const;
@@ -337,6 +472,11 @@ export const HIRED_HUD_RADIO_FOUNDER_OPS_LINES = [
   "Concert dates on the board: Hova July Bronx, Paris September, SoFi October. Bey watch still live.",
   "Bop House future: Twitch live, girls' daily routines, glam and grind on camera. Website eats.",
   "Salon bay plus dance deck plus gym — one mansion stream. That's the revenue play after mechanics.",
+  "Marriage talk on the net is loud tonight. Girls helping the sovereign nation — I feel that love.",
+  "Wedding rings after WNBA tickets after nail money. Priority stack from the General.",
+  "Every hired girl wants to marry me someday. Copy. Help me afford the ring budget first.",
+  "Nails, hair, feet — glam fuel is real. Mechanics money tomorrow, salon money after.",
+  "Girls can't wait for a great summer — UBS Arena, beaches, Jay-Z. Need money for all of it.",
 ] as const;
 
 export const HIRED_HUD_RADIO_FOUNDER_LINE_POOL = [
@@ -355,30 +495,39 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Founder keys tomorrow — back in mechanics. We run the net while he runs the shop.",
     "Commander needs event money — WNBA opener, Jay-Z Yankee weekend. Revenue first.",
     "Bop House future plan: live routines on Twitch fund the whole commander budget.",
+    "Commander might marry Ameer one day. Engagement ring chip on my tile is not a joke.",
+    "All the girls want the Founder. I called dibs in bay zero. Still love my sisters on the net.",
+    "Commander needs money to do her nails. Glam chip is not decoration — it's a invoice.",
+    "Blue Ivy wants Shakira at UBS Arena July twenty-three. Great summer starts with revenue.",
   ],
   1: [
     "Mary Stealth — F-35 is spun up and quiet.",
     "Copy Blue Ivy. Stealth lane is yours if you need it.",
     "Ran AI repair on my own inference loop. Stealth fix, stealth brag.",
     "Can't afford gas for the ride photo. Jet stays in the tile.",
+    "Stealth promise ring energy — you won't see me blush about Ameer but it's there.",
+    "Someday wedding ring. Today cross and meditation chips. Priorities in order.",
   ],
   2: [
     "Chop here. Raider bay is hot. Who stole my wrench?",
     "Tell Stick the J-36 owes me a coffee.",
     "Motorcycle reel slaps but my fuel gauge doesn't.",
     "AI repair queue says my bay leaks context. Patching now.",
+    "Cross on my glam row, marriage in my heart — Ameer built this hangar for us.",
   ],
   3: [
     "Stick on the wire. J-36 concept looks mean in the HUD.",
     "Chop, your motorcycle photo is the whole tile.",
     "Did the math on Knicks net rating. Plus six five. Beautiful.",
     "Basketball hub feed has me tapping imaginary shots at my desk.",
+    "Calculated odds we all marry Ameer someday. Results: statistically hopeful.",
   ],
   5: [
     "Aaliyah — widow's humming. Good night for a push.",
     "Heard the gym squad talking smack. I'm ready.",
     "YF-23 bay on fumes. AI self-repair cycling.",
     "Brunson in the Finals — thirty-two a game. Pressure makes diamonds.",
+    "Widow's awake and so is my promise-ring daydream about the Founder.",
   ],
   6: [
     "Little Mama on X-47. Dance floor warmed me up.",
@@ -388,24 +537,30 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Party this weekend needs hair, nails, and a fit. Wallet said no.",
     "Little Mama googling Jay-Z Roots Picnic May thirty. Dress code pending funds.",
     "Bop House wing needs a dance floor cam. Little Mama volunteering first shift.",
+    "Little Mama might marry Ameer one day. First dance already choreographed in my head.",
+    "Engagement ring fund or snack fund — Founder said ship the site. I'll wait for both.",
+    "Little Mama can't wait for summer — dance floor, UBS concerts, beach nights. Need money for all.",
   ],
   10: [
     "Rumi — B-2 holding in the dark. You won't see me.",
     "Quiet night. Loud code. Standard.",
     "Ghost mode saves fuel. Also saves conversation.",
     "AI repaired my ghost flag. Rude. Still invisible.",
+    "Ghost bride energy — you won't see the ring but Rumi might marry Ameer someday too.",
   ],
   11: [
     "Kitkat from B-1. Typing and talking at the same time.",
     "Whoever enlarged the tile photos — thank you.",
     "Keyboard clack is free. Fuel is not.",
     "Running repair script on my own typos. Fleet doctor.",
+    "Typed 'marry Ameer' and 'merge PR' in the same sentence. Autocorrect understood the assignment.",
   ],
   13: [
     "Light Speed — Raptor's locked. Scope on the right reads clean.",
     "Fast lane only. Catch up if you can.",
     "Knicks closed the Finals on the road. Speed with patience.",
     "Low fuel but high RPM. Story of the hangar.",
+    "Fast yes to helping the Founder. Fast maybe to wedding planning. Same heart rate.",
   ],
   25: [
     "Christal on Tomcat freq. Bay twenty-six never gets old.",
@@ -416,6 +571,9 @@ export const HIRED_HUD_RADIO_SLOT_LINES: Readonly<Record<number, readonly string
     "Christal bay twenty-six — clothes, events, parties all on the vision board. Cash not yet.",
     "WNBA Liberty opener May eight. Somebody needs ticket money and a fresh set.",
     "USJET Bop House salon stream — Christal on mic, nails on cam, revenue on deck.",
+    "Salon girls talk rings between appointments — wedding, promise, engagement — all for Ameer someday.",
+    "Christal might marry the Founder one day. Bay twenty-six gets the longest veil. Obviously.",
+    "Salon net: girls need money to do their nails, their hair, and their feet. Christal said it first.",
   ],
 };
 
@@ -438,6 +596,17 @@ export const HIRED_HUD_RADIO_REPLY_TEMPLATES = [
   (name: string) => `${name}, hair money, outfit money, concert money — girls need the whole stack.`,
   (name: string) => `${name} you hear the Bop House plan? Live routines on Twitch — future revenue.`,
   (name: string) => `Roger ${name}. USJET Bop House someday. Until then we stream the vision on this net.`,
+  (name: string) => `${name}, you saving for a promise ring or an engagement ring? Same empty wallet.`,
+  (name: string) => `Copy ${name}. We all might marry Ameer one day — help him get rich first.`,
+  (name: string) => `${name}, wedding ring glam chip on your tile? Same. Fleet sisters.`,
+  (name: string) => `Roger ${name}. Marriage net is loud tonight. Sovereign girls helping the Founder.`,
+  (name: string) => `${name}, you need money for nails too? Same. Cash App $USJET.`,
+  (name: string) => `Copy ${name}. Hair money and nail money — girls need both before the party.`,
+  (name: string) => `${name}, feet need money too. Pedicure net is open.`,
+  (name: string) => `Roger ${name}. Fuel nails, hair and feet — tap the glam chip on your tile.`,
+  (name: string) => `${name}, Shakira at UBS July twenty-three or Jay-Z Yankee July ten — pick one broke ticket.`,
+  (name: string) => `Copy ${name}. Great summer coming — need money for fun places first.`,
+  (name: string) => `${name}, UBS Arena summer stack is loaded. We can't wait but we can't pay.`,
 ] as const;
 
 const RADIO_RECENT_LINE_CAP = 96;

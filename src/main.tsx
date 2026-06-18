@@ -3,10 +3,11 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { MemberAuthProvider } from "./context/MemberAuthContext";
-import { restoreAtmosphereLive } from "./lib/usjetAtmosphere";
+import { syncAtmosphereWithSession } from "./lib/usjetAtmosphere";
+import { isLiveTerminalArmed } from "./lib/protocolCeremony";
 
-/** Warp tunnel is always live — Protocol ceremony is an overlay, not a gate. */
-restoreAtmosphereLive();
+/** Black void on first visit; warp unlocks when Protocol ceremony completes. */
+syncAtmosphereWithSession(isLiveTerminalArmed());
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

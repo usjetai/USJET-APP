@@ -101,8 +101,14 @@
       }
     </script>
     <script>
-      document.documentElement.classList.add("usjet-atmosphere-live");
-      document.documentElement.classList.remove("usjet-pre-atmosphere");
+      (function () {
+        var armed = false;
+        try {
+          armed = localStorage.getItem("usjet-live-terminal-armed") === "1";
+        } catch (e) {}
+        document.documentElement.classList.toggle("usjet-atmosphere-live", armed);
+        document.documentElement.classList.toggle("usjet-pre-atmosphere", !armed);
+      })();
     </script>
   </head>
   <body>

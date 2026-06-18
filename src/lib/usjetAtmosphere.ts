@@ -46,6 +46,15 @@ export function revealAtmosphere(): void {
   }, 1600);
 }
 
+/** First paint + session — black void until Protocol; returning visitors keep warp. */
+export function syncAtmosphereWithSession(terminalArmed: boolean): void {
+  if (terminalArmed) {
+    restoreAtmosphereLive();
+    return;
+  }
+  applyPreAtmosphere();
+}
+
 export function clearAtmosphereLive(): void {
   if (typeof document === "undefined") {
     return;

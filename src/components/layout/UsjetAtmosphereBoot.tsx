@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { restoreAtmosphereLive } from "../../lib/usjetAtmosphere";
+import { syncAtmosphereWithSession } from "../../lib/usjetAtmosphere";
+import { isLiveTerminalArmed } from "../../lib/protocolCeremony";
 
-/** Keep hyperspace atmosphere armed on every route — Protocol boot is a layer on top. */
+/** On load: void sky until Protocol has run; returning visitors keep warp. */
 export default function UsjetAtmosphereBoot() {
   useEffect(() => {
-    restoreAtmosphereLive();
+    syncAtmosphereWithSession(isLiveTerminalArmed());
   }, []);
 
   return null;

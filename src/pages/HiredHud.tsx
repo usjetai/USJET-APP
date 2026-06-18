@@ -13,7 +13,7 @@ import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_START_SEC, HIRED_HUD_HUB_YOUTUBE_TITLE, HIRED_HUD_HUB_YOUTUBE_VIDEO_ID, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
+import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_TILE_BG } from "../data/hiredHudAssets";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -321,14 +321,17 @@ export default function HiredHud() {
                 playLabel="Play second feed"
                 feedTag="Second"
               />
-              <HiredHudHubYouTube
-                videoId={HIRED_HUD_HUB_YOUTUBE_VIDEO_ID}
-                startSeconds={HIRED_HUD_HUB_YOUTUBE_START_SEC}
-                title={HIRED_HUD_HUB_YOUTUBE_TITLE}
-                ariaLabel="Hired developer hub YouTube feed"
-                playLabel="Play with sound"
-                feedTag="YouTube"
-              />
+              {HIRED_HUD_HUB_YOUTUBE_FEEDS.map((feed) => (
+                <HiredHudHubYouTube
+                  key={feed.videoId}
+                  videoId={feed.videoId}
+                  startSeconds={feed.startSeconds}
+                  title={feed.title}
+                  ariaLabel={`Hired developer hub YouTube feed — ${feed.title}`}
+                  playLabel="Play with sound"
+                  feedTag={feed.feedTag ?? "YouTube"}
+                />
+              ))}
             </div>
 
             <div className="hired-hud__ekg-monitor" aria-label="Fleet heart monitor">

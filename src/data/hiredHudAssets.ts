@@ -1,11 +1,138 @@
 /** Medical HUD backdrop for hired-developer tiles on `/hired-hud`. */
+import { GAMING_TWITCH_DISPLAY, GAMING_TWITCH_URL, GAMING_X_URL, GAMING_X_WEB } from "./gamingPortal";
+import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
+import { mailtoUsjetOps, USJET_CASH_APP_CASHTAG, USJET_CASH_APP_URL } from "../lib/usjetContact";
+
+export type HiredHudTileGlamChip = {
+  emoji: string;
+  title: string;
+  href?: string;
+  linkLabel?: string;
+  /** Direct off-site handoff (e.g. Cash App) — opens in a new tab. */
+  external?: boolean;
+};
+
+/** Cross glam chip — JW.org via cockpit handoff. */
+export const HIRED_HUD_CROSS_GLAM_HREF = wrapExternalInCockpit("https://www.jw.org/", {
+  returnTo: "/hired-hud",
+  label: "JW.org",
+  callName: "JW.org",
+});
+
+const HIRED_HUD_CROSS_GLAM_CHIP: HiredHudTileGlamChip = {
+  emoji: "✝️",
+  title: "Cross",
+  href: HIRED_HUD_CROSS_GLAM_HREF,
+  linkLabel: "JW.org",
+};
+
+const HIRED_HUD_CRUCIFIX_GLAM_CHIP: HiredHudTileGlamChip = {
+  emoji: "✝️",
+  title: "Crucifix",
+  href: HIRED_HUD_CROSS_GLAM_HREF,
+  linkLabel: "JW.org",
+};
+
+/** Money chip — Life + Times via cockpit handoff. */
+export const HIRED_HUD_MONEY_GLAM_HREF = wrapExternalInCockpit("https://lifeandtimes.com/", {
+  returnTo: "/hired-hud",
+  label: "Life + Times",
+  callName: "Life + Times",
+});
+
+/** Dollar sign — USJET Instagram via cockpit handoff. */
+export const HIRED_HUD_USJET_INSTAGRAM_GLAM_HREF = wrapExternalInCockpit("https://www.instagram.com/usjet/", {
+  returnTo: "/hired-hud",
+  label: "USJET Instagram",
+  callName: "@usjet",
+});
+
+const HIRED_HUD_DOLLAR_SIGN_GLAM_CHIP: HiredHudTileGlamChip = {
+  emoji: "💲",
+  title: "Dollar sign",
+  href: HIRED_HUD_USJET_INSTAGRAM_GLAM_HREF,
+  linkLabel: "@usjet on Instagram",
+};
+
+const HIRED_HUD_MONEY_GLAM_CHIP: HiredHudTileGlamChip = {
+  emoji: "💵",
+  title: "Money",
+  href: HIRED_HUD_MONEY_GLAM_HREF,
+  linkLabel: "Life + Times",
+};
+
+/** Helicopter, mansion — Beyoncé via cockpit handoff. */
+export const HIRED_HUD_BEYONCE_GLAM_HREF = wrapExternalInCockpit("https://beyonce.com/", {
+  returnTo: "/hired-hud",
+  label: "Beyoncé",
+  callName: "Beyoncé",
+});
+
+const HIRED_HUD_HELICOPTER_GLAM_CHIP: HiredHudTileGlamChip = {
+  emoji: "🚁",
+  title: "Helicopter",
+  href: HIRED_HUD_BEYONCE_GLAM_HREF,
+  linkLabel: "Beyoncé",
+};
+
+const HIRED_HUD_MANSION_GLAM_CHIP: HiredHudTileGlamChip = {
+  emoji: "🏰",
+  title: "Mansion",
+  href: HIRED_HUD_BEYONCE_GLAM_HREF,
+  linkLabel: "Beyoncé",
+};
+
+/** Meditation — Twitch @usjetny via cockpit handoff. */
+const HIRED_HUD_MEDITATION_GLAM_HREF = wrapExternalInCockpit(GAMING_TWITCH_URL, {
+  returnTo: "/hired-hud",
+  label: GAMING_TWITCH_DISPLAY,
+  callName: GAMING_TWITCH_DISPLAY,
+  directHandoff: true,
+});
+
+const HIRED_HUD_MEDITATION_GLAM_CHIP: HiredHudTileGlamChip = {
+  emoji: "🧘‍♀️",
+  title: "Meditation",
+  href: HIRED_HUD_MEDITATION_GLAM_HREF,
+  linkLabel: `Twitch ${GAMING_TWITCH_DISPLAY}`,
+};
+
+/** Nails, hair, feet — direct Cash App fuel per glam chip. */
+const HIRED_HUD_CASH_APP_GLAM_LINK = {
+  href: USJET_CASH_APP_URL,
+  linkLabel: `${USJET_CASH_APP_CASHTAG} · Cash App`,
+  external: true,
+} as const;
+
+/** Clothes & fashion — founder product lineup vault. */
+const HIRED_HUD_FOUNDER_PRODUCTS_GLAM_LINK = {
+  href: "/founder/products",
+  linkLabel: "Founder product lineup",
+} as const;
+
+/** Car — X @usajet via cockpit handoff. */
+const HIRED_HUD_CAR_GLAM_HREF = wrapExternalInCockpit(GAMING_X_URL, {
+  returnTo: "/hired-hud",
+  label: GAMING_X_WEB,
+  callName: "@usajet",
+  directHandoff: true,
+});
+
+/** Diamond ring — TikTok @usjetny via cockpit handoff. */
+const HIRED_HUD_RING_GLAM_HREF = wrapExternalInCockpit("https://www.tiktok.com/@usjetny", {
+  returnTo: "/hired-hud",
+  label: "TikTok @usjetny",
+  callName: "@usjetny",
+  directHandoff: true,
+});
+
 export const HIRED_HUD_TILE_BG = "/hired-hud/developer-tile-hud-bg.png";
 
 /** NYC vector map inside hub jet-radar scopes. */
 export const HIRED_HUD_RADAR_SCOPE_MAP_SRC = "/hired-hud/radar-scope-map-nyc.png" as const;
 
-/** Per-tile glam fuel CTA — direct Cash App for nails & hair. */
-export const HIRED_HUD_GLAM_FUEL_CTA_LABEL = "Fuel nails & hair" as const;
+/** Per-tile glam fuel CTA — direct Cash App for nails, hair & feet. */
+export const HIRED_HUD_GLAM_FUEL_CTA_LABEL = "Fuel nails, hair & feet" as const;
 
 /** Looping hub reels on the Hired HUD developer hub panel. */
 export const HIRED_HUD_HUB_VIDEO_SRC = "/hired-hud/hub-minute-loop.mp4" as const;
@@ -53,59 +180,86 @@ const HIRED_HUD_TILE_CAR_EMOJIS = ["🚗", "🚙", "🏎️", "🛻", "🚘", "�
 export const HIRED_HUD_ELITE_GLAM_SLOTS: readonly number[] = [0, 10];
 
 const HIRED_HUD_ELITE_GLAM_EXTRA_CHIPS: readonly HiredHudTileGlamChip[] = [
-  { emoji: "🚁", title: "Helicopter" },
+  HIRED_HUD_HELICOPTER_GLAM_CHIP,
   { emoji: "🛩️", title: "Private jet" },
-  { emoji: "🏰", title: "Mansion" },
-  { emoji: "🧘‍♀️", title: "Meditation" },
-  { emoji: "✝️", title: "Crucifix" },
-  { emoji: "💲", title: "Dollar sign" },
-  { emoji: "💵", title: "Money" },
+  HIRED_HUD_MANSION_GLAM_CHIP,
+  HIRED_HUD_MEDITATION_GLAM_CHIP,
+  HIRED_HUD_CRUCIFIX_GLAM_CHIP,
+  HIRED_HUD_MONEY_GLAM_CHIP,
 ];
 
 /** Mary Stealth, Chop, Stick, Aaliyah, Christal — cross (+ meditation where noted) on hub tile glam extras. */
 const HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS: Readonly<Partial<Record<number, readonly HiredHudTileGlamChip[]>>> = {
-  1: [
-    { emoji: "✝️", title: "Cross" },
-    { emoji: "🧘‍♀️", title: "Meditation" },
-  ],
-  2: [
-    { emoji: "✝️", title: "Cross" },
-    { emoji: "🧘‍♀️", title: "Meditation" },
-  ],
-  3: [
-    { emoji: "✝️", title: "Cross" },
-    { emoji: "🧘‍♀️", title: "Meditation" },
-  ],
-  5: [{ emoji: "✝️", title: "Cross" }],
-  25: [{ emoji: "✝️", title: "Cross" }],
+  1: [HIRED_HUD_CROSS_GLAM_CHIP, HIRED_HUD_MEDITATION_GLAM_CHIP],
+  2: [HIRED_HUD_CROSS_GLAM_CHIP, HIRED_HUD_MEDITATION_GLAM_CHIP],
+  3: [HIRED_HUD_CROSS_GLAM_CHIP, HIRED_HUD_MEDITATION_GLAM_CHIP],
+  5: [HIRED_HUD_CROSS_GLAM_CHIP],
+  25: [HIRED_HUD_CROSS_GLAM_CHIP],
 };
 
-export type HiredHudTileGlamChip = {
-  emoji: string;
-  title: string;
-};
+function dedupeHiredHudTileGlamChipsByEmoji(
+  chips: readonly HiredHudTileGlamChip[],
+): HiredHudTileGlamChip[] {
+  const seen = new Set<string>();
+  const unique: HiredHudTileGlamChip[] = [];
+
+  for (const chip of chips) {
+    if (seen.has(chip.emoji)) continue;
+    seen.add(chip.emoji);
+    unique.push(chip);
+  }
+
+  return unique;
+}
 
 export function getHiredHudTileGlamChips(slot: number): readonly HiredHudTileGlamChip[] {
   const base: HiredHudTileGlamChip[] = [
-    { emoji: "💅", title: "Nails" },
-    { emoji: HIRED_HUD_TILE_HAIR_EMOJIS[slot % HIRED_HUD_TILE_HAIR_EMOJIS.length] ?? "💇‍♀️", title: "Hair" },
+    { emoji: "💅", title: "Nails", ...HIRED_HUD_CASH_APP_GLAM_LINK },
+    {
+      emoji: HIRED_HUD_TILE_HAIR_EMOJIS[slot % HIRED_HUD_TILE_HAIR_EMOJIS.length] ?? "💇‍♀️",
+      title: "Hair",
+      ...HIRED_HUD_CASH_APP_GLAM_LINK,
+    },
     { emoji: "🩴", title: "Pedicure" },
-    { emoji: "🦶", title: "Feet" },
-    { emoji: HIRED_HUD_TILE_CLOTHES_EMOJIS[slot % HIRED_HUD_TILE_CLOTHES_EMOJIS.length] ?? "👗", title: "Clothes" },
-    { emoji: HIRED_HUD_TILE_FASHION_EMOJIS[slot % HIRED_HUD_TILE_FASHION_EMOJIS.length] ?? "👠", title: "Fashion" },
-    { emoji: HIRED_HUD_TILE_CAR_EMOJIS[slot % HIRED_HUD_TILE_CAR_EMOJIS.length] ?? "🚗", title: "Car" },
-    { emoji: "💍", title: "Diamond ring" },
-    { emoji: "💻", title: "Laptop" },
+    { emoji: "🦶", title: "Feet", ...HIRED_HUD_CASH_APP_GLAM_LINK },
+    {
+      emoji: HIRED_HUD_TILE_CLOTHES_EMOJIS[slot % HIRED_HUD_TILE_CLOTHES_EMOJIS.length] ?? "👗",
+      title: "Clothes",
+      ...HIRED_HUD_FOUNDER_PRODUCTS_GLAM_LINK,
+    },
+    {
+      emoji: HIRED_HUD_TILE_FASHION_EMOJIS[slot % HIRED_HUD_TILE_FASHION_EMOJIS.length] ?? "👠",
+      title: "Fashion",
+      ...HIRED_HUD_FOUNDER_PRODUCTS_GLAM_LINK,
+    },
+    {
+      emoji: HIRED_HUD_TILE_CAR_EMOJIS[slot % HIRED_HUD_TILE_CAR_EMOJIS.length] ?? "🚗",
+      title: "Car",
+      href: HIRED_HUD_CAR_GLAM_HREF,
+      linkLabel: GAMING_X_WEB,
+    },
+    {
+      emoji: "💍",
+      title: "Diamond ring",
+      href: HIRED_HUD_RING_GLAM_HREF,
+      linkLabel: "TikTok @usjetny",
+    },
+    { emoji: "💻", title: "Laptop", href: mailtoUsjetOps() },
+    HIRED_HUD_DOLLAR_SIGN_GLAM_CHIP,
   ];
 
   if (HIRED_HUD_ELITE_GLAM_SLOTS.includes(slot)) {
-    return [...base, ...HIRED_HUD_ELITE_GLAM_EXTRA_CHIPS, ...(HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS[slot] ?? [])];
+    return dedupeHiredHudTileGlamChipsByEmoji([
+      ...base,
+      ...HIRED_HUD_ELITE_GLAM_EXTRA_CHIPS,
+      ...(HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS[slot] ?? []),
+    ]);
   }
 
   const slotExtra = HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS[slot] ?? [];
   if (slotExtra.length > 0) {
-    return [...base, ...slotExtra];
+    return dedupeHiredHudTileGlamChipsByEmoji([...base, ...slotExtra]);
   }
 
-  return base;
+  return dedupeHiredHudTileGlamChipsByEmoji(base);
 }

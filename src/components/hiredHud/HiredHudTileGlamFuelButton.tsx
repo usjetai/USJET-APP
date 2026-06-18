@@ -6,7 +6,7 @@ type HiredHudTileGlamFuelButtonProps = {
   slot: number;
 };
 
-/** Direct Cash App fuel for glam — nails & hair per developer tile. */
+/** Direct Cash App fuel for glam — nails, hair & feet per developer tile. */
 export default function HiredHudTileGlamFuelButton({ name, slot }: HiredHudTileGlamFuelButtonProps) {
   const bay = String(slot + 1).padStart(2, "0");
 

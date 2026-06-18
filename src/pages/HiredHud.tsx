@@ -19,7 +19,8 @@ import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_TILE_BG, getHiredHudTileGlamChips } from "../data/hiredHudAssets";
+import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_TILE_BG, getHiredHudTileGlamChips, type HiredHudTileGlamChip } from "../data/hiredHudAssets";
+import { USJET_OPS_EMAIL } from "../lib/usjetContact";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
 import {
@@ -65,6 +66,33 @@ function randomDeveloperSpo2(): number {
 
 function randomDeveloperPressure(): number {
   return Math.floor(64 + Math.random() * 14);
+}
+
+function renderHiredHudTileGlamChip(slot: number, chip: HiredHudTileGlamChip) {
+  const key = `${slot}-${chip.title}-${chip.emoji}`;
+  const className = "hired-hud__tile-glam-chip";
+
+  if (chip.href) {
+    const linkHint = chip.linkLabel ?? (chip.href.startsWith("mailto:") ? USJET_OPS_EMAIL : chip.href);
+    return (
+      <a
+        key={key}
+        className={`${className} hired-hud__tile-glam-chip--link glass-effect-interactive`}
+        href={chip.href}
+        title={chip.title}
+        aria-label={`${chip.title} — ${linkHint}`}
+        {...(chip.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      >
+        {chip.emoji}
+      </a>
+    );
+  }
+
+  return (
+    <span key={key} className={className} title={chip.title}>
+      {chip.emoji}
+    </span>
+  );
 }
 
 export default function HiredHud() {
@@ -468,11 +496,9 @@ export default function HiredHud() {
                 <div className="hired-hud__tile-content">
                   <div className="hired-hud__tile-profile">
                     <div className="hired-hud__tile-glam" aria-label="Glam — nails, hair, pedicure, style, car, ring">
-                      {getHiredHudTileGlamChips(unit.slot).map((chip) => (
-                        <span key={`${unit.slot}-${chip.title}`} className="hired-hud__tile-glam-chip" title={chip.title}>
-                          {chip.emoji}
-                        </span>
-                      ))}
+                      {getHiredHudTileGlamChips(unit.slot).map((chip) =>
+                        renderHiredHudTileGlamChip(unit.slot, chip),
+                      )}
                     </div>
                     <HiredHudTileGlamFuelButton name={unit.name} slot={unit.slot} />
                     <HiredHudTileDeveloperChat unit={unit} />

@@ -29507,6 +29507,9 @@ html.blog-page-root #usjet-app-shell {
   animation: hired-hud-cross-blink 1.75s ease-in-out infinite;
 }
 
+.hired-hud__tile-glam-chip[title="Nails"],
+.hired-hud__tile-glam-chip[title="Hair"],
+.hired-hud__tile-glam-chip[title="Feet"],
 .hired-hud__tile-glam-chip[title="Dollar sign"],
 .hired-hud__tile-glam-chip[title="Money"] {
   border-color: rgb(74 222 128 / 0.5);
@@ -29523,6 +29526,20 @@ html.blog-page-root #usjet-app-shell {
     0 0 28px rgb(125 211 252 / 0.32);
   filter: drop-shadow(0 0 5px rgb(56 189 248 / 0.55));
   animation: hired-hud-laptop-blink 1.75s ease-in-out infinite;
+}
+
+.hired-hud__tile-glam-chip--link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hired-hud__tile-glam-chip--link:hover,
+.hired-hud__tile-glam-chip--link:focus-visible {
+  border-color: rgb(125 211 252 / 0.72);
+  box-shadow:
+    0 0 18px rgb(56 189 248 / 0.62),
+    0 0 32px rgb(125 211 252 / 0.42);
+  transform: translateY(-1px);
 }
 
 .hired-hud__tile-glam-fuel {
@@ -29784,6 +29801,65 @@ html.blog-page-root #usjet-app-shell {
   box-shadow:
     0 0 0 1px rgb(34 211 238 / 0.28),
     0 8px 18px rgb(2 8 23 / 0.5);
+}
+
+/* Triple hub portraits — mouse hover enlarges each photo */
+@media (hover: hover) and (pointer: fine) {
+  .hired-hud__avatar--triple-tile,
+  .hired-hud__avatar--triple-tile.hired-hud__avatar--tile {
+    overflow: visible;
+  }
+
+  .hired-hud__tile-profile:has(.hired-hud__avatar-panel--zoom:hover) {
+    overflow: visible;
+    z-index: 4;
+  }
+
+  .hired-hud__tile:has(.hired-hud__avatar-panel--zoom:hover) {
+    overflow: visible;
+    z-index: 7;
+  }
+
+  .hired-hud__avatar--triple-tile .hired-hud__avatar-panel--zoom {
+    cursor: zoom-in;
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease,
+      opacity 0.25s ease;
+    transform-origin: center center;
+  }
+
+  .hired-hud__avatar--triple-tile:has(.hired-hud__avatar-panel--zoom:hover)
+    .hired-hud__avatar-panel--zoom:not(:hover) {
+    opacity: 0.65;
+  }
+
+  .hired-hud__avatar--triple-tile .hired-hud__avatar-panel--zoom:hover {
+    z-index: 12;
+    transform: scale(2.1);
+    overflow: visible;
+    box-shadow:
+      0 0 0 2px rgb(34 211 238 / 0.6),
+      0 20px 44px rgb(2 8 23 / 0.78),
+      0 0 32px rgb(56 189 248 / 0.38);
+  }
+
+  .hired-hud__avatar--triple-tile .hired-hud__avatar-panel--zoom:hover .hired-hud__avatar-ring {
+    border-color: rgb(103 232 249 / 0.9);
+    box-shadow:
+      0 0 22px rgb(56 189 248 / 0.5),
+      inset 0 0 14px rgb(34 211 238 / 0.22);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
+  .hired-hud__avatar--triple-tile .hired-hud__avatar-panel--zoom {
+    transition-duration: 0.12s;
+  }
+
+  .hired-hud__avatar--triple-tile .hired-hud__avatar-panel--zoom:hover {
+    transform: scale(1.35);
+  }
 }
 
 .hired-hud__avatar--dual-tile .hired-hud__avatar-img {

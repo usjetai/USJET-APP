@@ -28,7 +28,7 @@ function AvatarPanel({
   return (
     <div
       className={[
-        "hired-hud__avatar-panel",
+        "hired-hud__avatar-panel hired-hud__avatar-panel--zoom",
         rounded ? "" : "hired-hud__avatar-panel--hub-rect",
       ]
         .filter(Boolean)

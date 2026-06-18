@@ -62,8 +62,12 @@ const HIRED_HUD_ELITE_GLAM_EXTRA_CHIPS: readonly HiredHudTileGlamChip[] = [
   { emoji: "💵", title: "Money" },
 ];
 
-/** Chop (cross) + Chop & Stick (meditation) — hub tile glam extras. */
+/** Chop (cross) + Chop & Stick (meditation) + Mary Stealth (cross + meditation) — hub tile glam extras. */
 const HIRED_HUD_SLOT_GLAM_EXTRA_CHIPS: Readonly<Partial<Record<number, readonly HiredHudTileGlamChip[]>>> = {
+  1: [
+    { emoji: "✝️", title: "Cross" },
+    { emoji: "🧘‍♀️", title: "Meditation" },
+  ],
   2: [
     { emoji: "✝️", title: "Cross" },
     { emoji: "🧘‍♀️", title: "Meditation" },

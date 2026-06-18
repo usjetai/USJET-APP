@@ -29478,8 +29478,14 @@ html.blog-page-root #usjet-app-shell {
 
 .hired-hud__tile-glam-chip[title="Crucifix"],
 .hired-hud__tile-glam-chip[title="Cross"] {
-  border-color: rgb(203 213 225 / 0.4);
-  background: rgb(24 24 32 / 0.92);
+  border-color: rgb(248 250 252 / 0.55);
+  background: rgb(24 24 32 / 0.94);
+  color: rgb(248 250 252);
+  box-shadow:
+    0 0 14px rgb(255 255 255 / 0.45),
+    0 0 28px rgb(226 232 240 / 0.28);
+  filter: drop-shadow(0 0 5px rgb(255 255 255 / 0.5));
+  animation: hired-hud-cross-blink 1.75s ease-in-out infinite;
 }
 
 .hired-hud__tile-glam-chip[title="Dollar sign"],
@@ -29582,6 +29588,33 @@ html.blog-page-root #usjet-app-shell {
   color: rgb(187 247 208 / 0.92);
 }
 
+@keyframes hired-hud-cross-blink {
+  0%,
+  100% {
+    opacity: 0.78;
+    border-color: rgb(226 232 240 / 0.42);
+    background: rgb(24 24 32 / 0.92);
+    box-shadow:
+      0 0 8px rgb(255 255 255 / 0.28),
+      0 0 16px rgb(226 232 240 / 0.16);
+    filter: drop-shadow(0 0 3px rgb(255 255 255 / 0.32));
+  }
+
+  50% {
+    opacity: 1;
+    border-color: rgb(255 255 255 / 0.98);
+    background: rgb(40 40 52 / 0.97);
+    box-shadow:
+      0 0 20px rgb(255 255 255 / 0.85),
+      0 0 40px rgb(248 250 252 / 0.62),
+      0 0 60px rgb(226 232 240 / 0.35),
+      inset 0 0 12px rgb(255 255 255 / 0.18);
+    filter:
+      drop-shadow(0 0 10px rgb(255 255 255 / 0.95))
+      drop-shadow(0 0 20px rgb(248 250 252 / 0.72));
+  }
+}
+
 @keyframes hired-hud-meditation-blink {
   0%,
   100% {
@@ -29637,6 +29670,16 @@ html.blog-page-root #usjet-app-shell {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hired-hud__tile-glam-chip[title="Crucifix"],
+  .hired-hud__tile-glam-chip[title="Cross"] {
+    animation: none;
+    opacity: 1;
+    border-color: rgb(248 250 252 / 0.75);
+    box-shadow:
+      0 0 14px rgb(255 255 255 / 0.5),
+      0 0 28px rgb(226 232 240 / 0.32);
+  }
+
   .hired-hud__tile-glam-chip[title="Meditation"] {
     animation: none;
     opacity: 1;

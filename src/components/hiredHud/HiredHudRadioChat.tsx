@@ -76,6 +76,10 @@ function pickFounderLine(recent: ReadonlySet<string>): string {
 }
 
 function pickSpeaker(units: FleetUnit[]): RadioSpeakerId {
+  if (units.length === 0) {
+    return HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID;
+  }
+
   if (randomUnit() < FOUNDER_SPEAKER_WEIGHT) {
     return HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID;
   }
@@ -130,15 +134,23 @@ function buildMessage(
 }
 
 function seedMessages(units: FleetUnit[], recent: Set<string>): RadioMessage[] {
+  if (units.length === 0) {
+    return [];
+  }
+
+  const maxSpeakers = Math.min(8, units.length + 1);
   const speakers: RadioSpeakerId[] = [];
-  while (speakers.length < 8) {
+  let guard = 0;
+
+  while (speakers.length < maxSpeakers && guard < 400) {
+    guard += 1;
     const next = pickSpeaker(units);
     if (!speakers.includes(next)) {
       speakers.push(next);
     }
   }
 
-  if (!speakers.includes(HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID)) {
+  if (!speakers.includes(HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID) && speakers.length > 0) {
     speakers[speakers.length - 1] = HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID;
   }
 

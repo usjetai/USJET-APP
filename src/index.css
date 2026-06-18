@@ -28338,6 +28338,16 @@ html.blog-page-root #usjet-app-shell {
   background: rgb(2 8 18);
 }
 
+.hired-hud__hub-video-yt-poster {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: rgb(2 8 18);
+}
+
 .hired-hud__hub-video-yt-mount iframe {
   display: block;
   width: 100%;

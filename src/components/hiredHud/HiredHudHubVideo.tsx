@@ -21,7 +21,7 @@ type HiredHudHubVideoProps = {
   feedTag?: string;
 };
 
-/** Looping hub reel — autoplay muted inside the Hired HUD developer hub. */
+/** Looping hub reel — plays muted only while visible to avoid decoder overload. */
 export default function HiredHudHubVideo({
   src,
   ariaLabel,
@@ -43,17 +43,37 @@ export default function HiredHudHubVideo({
     const video = videoRef.current;
     if (!video) return undefined;
 
-    const onReady = () => {
-      void startPlayback();
+    let visible = false;
+
+    const maybePlay = () => {
+      if (visible) {
+        void startPlayback();
+      }
     };
 
-    video.addEventListener("loadeddata", onReady);
-    video.addEventListener("canplay", onReady);
-    void startPlayback();
+    video.addEventListener("loadeddata", maybePlay);
+    video.addEventListener("canplay", maybePlay);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = Boolean(entry?.isIntersecting);
+        if (visible) {
+          void startPlayback();
+          return;
+        }
+        video.pause();
+        setNeedsTap(false);
+      },
+      { threshold: 0.2, rootMargin: "48px 0px" },
+    );
+
+    observer.observe(video);
 
     return () => {
-      video.removeEventListener("loadeddata", onReady);
-      video.removeEventListener("canplay", onReady);
+      observer.disconnect();
+      video.removeEventListener("loadeddata", maybePlay);
+      video.removeEventListener("canplay", maybePlay);
+      video.pause();
     };
   }, [src, startPlayback]);
 
@@ -63,11 +83,10 @@ export default function HiredHudHubVideo({
         ref={videoRef}
         className="hired-hud__hub-video-player"
         src={src}
-        autoPlay
         loop
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-label={ariaLabel}
       />
       <span className="hired-hud__hub-video-tag" aria-hidden>

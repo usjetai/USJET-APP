@@ -3,6 +3,10 @@ import { Play, Volume2 } from "lucide-react";
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
 
+function youtubeThumbnailUrl(videoId: string): string {
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+}
+
 type HiredHudHubYouTubeProps = {
   videoId: string;
   startSeconds?: number;
@@ -24,11 +28,16 @@ export default function HiredHudHubYouTube({
   const reactId = useId().replace(/:/g, "");
   const mountId = `hired-hub-yt-${reactId}`;
   const playerRef = useRef<YoutubePlayer | null>(null);
+  const [armed, setArmed] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
+    if (!armed) {
+      return undefined;
+    }
+
     let cancelled = false;
     setReady(false);
     setError(false);
@@ -94,9 +103,14 @@ export default function HiredHudHubYouTube({
       playerRef.current?.destroy();
       playerRef.current = null;
     };
-  }, [mountId, startSeconds, videoId]);
+  }, [armed, mountId, startSeconds, videoId]);
 
   const startWithSound = useCallback(() => {
+    if (!armed) {
+      setArmed(true);
+      return;
+    }
+
     const player = playerRef.current;
     if (!player || !ready) {
       return;
@@ -105,7 +119,23 @@ export default function HiredHudHubYouTube({
     player.setVolume(100);
     player.playVideo();
     setPlaying(true);
-  }, [ready]);
+  }, [armed, ready]);
+
+  useEffect(() => {
+    if (!armed || !ready || playing) {
+      return;
+    }
+
+    const player = playerRef.current;
+    if (!player) {
+      return;
+    }
+
+    player.unMute();
+    player.setVolume(100);
+    player.playVideo();
+    setPlaying(true);
+  }, [armed, ready, playing]);
 
   return (
     <div
@@ -113,7 +143,17 @@ export default function HiredHudHubYouTube({
       aria-label={ariaLabel}
       data-playing={playing ? "true" : "false"}
     >
-      <div id={mountId} className="hired-hud__hub-video-yt-mount" title={title} />
+      {armed ? (
+        <div id={mountId} className="hired-hud__hub-video-yt-mount" title={title} />
+      ) : (
+        <img
+          src={youtubeThumbnailUrl(videoId)}
+          alt=""
+          className="hired-hud__hub-video-yt-poster"
+          decoding="async"
+          draggable={false}
+        />
+      )}
       <span className="hired-hud__hub-video-tag hired-hud__hub-video-tag--youtube" aria-hidden>
         {feedTag}
       </span>
@@ -123,15 +163,16 @@ export default function HiredHudHubYouTube({
           Sound on
         </span>
       ) : null}
-      {!playing && ready && !error ? (
+      {!playing && !error ? (
         <button
           type="button"
           className="hired-hud__hub-video-play hired-hud__hub-video-play--youtube btn-glass glass-effect-interactive"
           onClick={startWithSound}
           aria-label={playLabel}
+          disabled={armed && !ready}
         >
           <Play size={18} aria-hidden />
-          <span>{playLabel}</span>
+          <span>{armed && !ready ? "Loading…" : playLabel}</span>
         </button>
       ) : null}
       {error ? (

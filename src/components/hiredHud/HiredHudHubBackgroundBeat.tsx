@@ -38,9 +38,15 @@ const HiredHudHubBackgroundBeat = forwardRef<HiredHudHubBackgroundBeatHandle>(
     const playerRef = useRef<YoutubePlayer | null>(null);
     const soundLiveRef = useRef(false);
     const readyRef = useRef(false);
+    const [mounted, setMounted] = useState(false);
     const [ready, setReady] = useState(false);
 
     const tryUnlockSound = useCallback((): boolean => {
+      if (!mounted) {
+        setMounted(true);
+        return false;
+      }
+
       if (soundLiveRef.current) {
         return true;
       }
@@ -53,11 +59,15 @@ const HiredHudHubBackgroundBeat = forwardRef<HiredHudHubBackgroundBeatHandle>(
       unlockPlayerSound(player);
       soundLiveRef.current = true;
       return true;
-    }, []);
+    }, [mounted]);
 
     useImperativeHandle(ref, () => ({ armWithSound: tryUnlockSound }), [tryUnlockSound]);
 
     useEffect(() => {
+      if (!mounted) {
+        return undefined;
+      }
+
       let cancelled = false;
       readyRef.current = false;
       setReady(false);
@@ -126,7 +136,15 @@ const HiredHudHubBackgroundBeat = forwardRef<HiredHudHubBackgroundBeatHandle>(
         playerRef.current?.destroy();
         playerRef.current = null;
       };
-    }, [mountId]);
+    }, [mountId, mounted]);
+
+    useEffect(() => {
+      if (!mounted || !readyRef.current || soundLiveRef.current) {
+        return;
+      }
+
+      tryUnlockSound();
+    }, [mounted, ready, tryUnlockSound]);
 
     useEffect(() => {
       const onProtocolTap = () => {
@@ -142,7 +160,9 @@ const HiredHudHubBackgroundBeat = forwardRef<HiredHudHubBackgroundBeatHandle>(
 
     return (
       <div className="hired-hud-hub-beat" aria-hidden data-ready={ready ? "true" : "false"}>
-        <div id={mountId} className="hired-hud-hub-beat__mount" title={HIRED_HUD_HUB_BEAT_LABEL} />
+        {mounted ? (
+          <div id={mountId} className="hired-hud-hub-beat__mount" title={HIRED_HUD_HUB_BEAT_LABEL} />
+        ) : null}
       </div>
     );
   },

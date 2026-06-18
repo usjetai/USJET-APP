@@ -140,6 +140,15 @@
     #020617;
 }
 
+.global-video-bg--youtube-official {
+  background: #010308;
+}
+
+.global-video-bg--youtube-official .global-video-bg__yt {
+  opacity: 1;
+  z-index: 0;
+}
+
 .global-video-bg__media,
 .global-video-bg__yt {
   position: absolute;
@@ -163,6 +172,14 @@
   width: max(100vw, 177.78vh);
   height: max(56.25vw, 100vh);
   opacity: 0.4;
+}
+
+@media (min-width: 1024px) {
+  .global-video-bg--youtube-official .global-video-bg__yt {
+    width: max(100vw, 177.78vh);
+    height: max(56.25vw, 100vh);
+    object-fit: cover;
+  }
 }
 
 /* Bright center vanishing-point burst — dark void edges */
@@ -268,7 +285,7 @@
 @media (prefers-reduced-motion: reduce) {
   .global-video-bg__yt,
   .global-video-bg__media {
-    display: none;
+    opacity: 0.85;
   }
 
   .global-video-bg__warp-streaks {
@@ -19967,6 +19984,9 @@ html.gaming-page-root .global-video-bg__yt {
 }
 
 /* ─── Pre-Protocol void — no warp until ceremony arms atmosphere ─── */
+html:not(.usjet-atmosphere-live) .warp-bg-canvas,
+html:not(.usjet-atmosphere-live) .global-video-bg,
+html:not(.usjet-atmosphere-live) .aviation-pulse,
 html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .warp-bg-canvas,
 html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .global-video-bg,
 html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .aviation-pulse {
@@ -19975,17 +19995,20 @@ html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .aviation-pulse {
   pointer-events: none;
 }
 
+html:not(.usjet-atmosphere-live),
+html:not(.usjet-atmosphere-live) body,
+html:not(.usjet-atmosphere-live) #usjet-app-shell,
+html.usjet-pre-atmosphere,
+html.usjet-pre-atmosphere body,
+html.usjet-pre-atmosphere #usjet-app-shell {
+  background-color: #010308 !important;
+}
+
 html.usjet-atmosphere-live .warp-bg-canvas,
 html.usjet-atmosphere-live .global-video-bg,
 html.usjet-atmosphere-live .aviation-pulse {
   opacity: 1;
   visibility: visible;
-}
-
-html.usjet-pre-atmosphere,
-html.usjet-pre-atmosphere body,
-html.usjet-pre-atmosphere #usjet-app-shell {
-  background-color: #010308 !important;
 }
 
 html.usjet-atmosphere-reveal .warp-bg-canvas,

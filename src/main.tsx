@@ -3,11 +3,10 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { MemberAuthProvider } from "./context/MemberAuthContext";
-import { syncAtmosphereWithSession } from "./lib/usjetAtmosphere";
-import { isLiveTerminalArmed } from "./lib/protocolCeremony";
+import { bootstrapAtmosphere } from "./lib/usjetAtmosphere";
 
-/** Black void on first visit; warp unlocks when Protocol ceremony completes. */
-syncAtmosphereWithSession(isLiveTerminalArmed());
+/** Black void on every load — warp unlocks when Protocol ceremony completes. */
+bootstrapAtmosphere();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

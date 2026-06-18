@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { syncAtmosphereWithSession } from "../../lib/usjetAtmosphere";
-import { isLiveTerminalArmed } from "../../lib/protocolCeremony";
+import { bootstrapAtmosphere } from "../../lib/usjetAtmosphere";
 
-/** On load: void sky until Protocol has run; returning visitors keep warp. */
+/** Reinforce void sky on mount — warp mounts only after Protocol completes. */
 export default function UsjetAtmosphereBoot() {
   useEffect(() => {
-    syncAtmosphereWithSession(isLiveTerminalArmed());
+    bootstrapAtmosphere();
   }, []);
 
   return null;

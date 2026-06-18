@@ -1,6 +1,7 @@
 /** Warp / video / pulse layers — hidden until Protocol ceremony arms the site. */
 
 export const USJET_ATMOSPHERE_LIVE_EVENT = "usjet-atmosphere-live" as const;
+export const USJET_ATMOSPHERE_RESET_EVENT = "usjet-atmosphere-reset" as const;
 
 const PRE_CLASS = "usjet-pre-atmosphere";
 const LIVE_CLASS = "usjet-atmosphere-live";
@@ -18,8 +19,12 @@ export function applyPreAtmosphere(): void {
     return;
   }
   const root = document.documentElement;
+  const wasLive = root.classList.contains(LIVE_CLASS);
   root.classList.add(PRE_CLASS);
   root.classList.remove(LIVE_CLASS, REVEAL_CLASS);
+  if (wasLive) {
+    window.dispatchEvent(new CustomEvent(USJET_ATMOSPHERE_RESET_EVENT));
+  }
 }
 
 /** Returning visitors — warp on without boot reveal animation. */
@@ -32,7 +37,7 @@ export function restoreAtmosphereLive(): void {
   root.classList.add(LIVE_CLASS);
 }
 
-/** Fade warp tunnel in during terminal boot. */
+/** Fade warp tunnel in when Protocol ceremony completes. */
 export function revealAtmosphere(): void {
   if (typeof document === "undefined") {
     return;
@@ -46,13 +51,10 @@ export function revealAtmosphere(): void {
   }, 1600);
 }
 
-/** First paint + session — black void until Protocol; returning visitors keep warp. */
-export function syncAtmosphereWithSession(terminalArmed: boolean): void {
-  if (terminalArmed) {
-    restoreAtmosphereLive();
-    return;
-  }
+/** Every load starts in the void — warp unlocks only after Protocol completes. */
+export function bootstrapAtmosphere(): void {
   applyPreAtmosphere();
+  window.dispatchEvent(new CustomEvent(USJET_ATMOSPHERE_RESET_EVENT));
 }
 
 export function clearAtmosphereLive(): void {
@@ -60,4 +62,5 @@ export function clearAtmosphereLive(): void {
     return;
   }
   applyPreAtmosphere();
+  window.dispatchEvent(new CustomEvent(USJET_ATMOSPHERE_RESET_EVENT));
 }

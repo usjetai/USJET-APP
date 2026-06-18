@@ -4,11 +4,11 @@ import { USJET_PROTOCOL_LOCK } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
 import {
   dispatchProtocolCeremony,
-  isLiveTerminalArmed,
   PROTOCOL_LOCK_SYNCED_STORAGE_KEY,
   USJET_PROTOCOL_CEREMONY_COMPLETE_EVENT,
   USJET_PROTOCOL_SYNC_BROADCAST,
 } from "../../lib/protocolCeremony";
+import { isAtmosphereLive } from "../../lib/usjetAtmosphere";
 import {
   PROTOCOL_ARMED_HOVER,
   PROTOCOL_STANDBY_HOVER,
@@ -98,6 +98,15 @@ export default function FleetCommand({
     const applyStorage = () => {
       try {
         const synced = window.localStorage.getItem(PROTOCOL_LOCK_SYNCED_STORAGE_KEY) === "1";
+        // Atmosphere requires a fresh Protocol run each load — button stays standby until then.
+        if (!isAtmosphereLive()) {
+          setState("idle");
+          notifyFleetOnline(false);
+          setIgniting(false);
+          pendingSyncRef.current = false;
+          clearFleetOnlineHold();
+          return;
+        }
         setState(synced ? "synced" : "idle");
         notifyFleetOnline(synced);
         if (!synced) {
@@ -180,7 +189,7 @@ export default function FleetCommand({
   }, [igniting, onTerminalToggle, state]);
 
   const visuallySynced = state === "synced" || (ceremony && state !== "error");
-  const armedGreen = !ceremony && !igniting && (state === "synced" || isLiveTerminalArmed());
+  const armedGreen = !ceremony && !igniting && state === "synced";
   const standby = !ceremony && state === "idle" && !igniting && !armedGreen;
 
   const labelDefault =

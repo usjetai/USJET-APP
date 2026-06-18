@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="usjet-pre-atmosphere">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -102,12 +102,8 @@
     </script>
     <script>
       (function () {
-        var armed = false;
-        try {
-          armed = localStorage.getItem("usjet-live-terminal-armed") === "1";
-        } catch (e) {}
-        document.documentElement.classList.toggle("usjet-atmosphere-live", armed);
-        document.documentElement.classList.toggle("usjet-pre-atmosphere", !armed);
+        document.documentElement.classList.add("usjet-pre-atmosphere");
+        document.documentElement.classList.remove("usjet-atmosphere-live", "usjet-atmosphere-reveal");
       })();
     </script>
   </head>

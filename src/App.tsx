@@ -8,7 +8,6 @@ import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
 import UsjetProtocolBootOverlay from "./components/layout/UsjetProtocolBootOverlay";
-import WarpBackground from "./components/layout/WarpBackground";
 import GlobalBackgroundBeat from "./components/layout/GlobalBackgroundBeat";
 import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
 import SiteAudioPrime from "./components/layout/SiteAudioPrime";
@@ -16,6 +15,7 @@ import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "./data/globalBackgroundBeat";
 import SiteLatchMenu from "./components/layout/SiteLatchMenu";
 import TierRouteGate from "./components/member/TierRouteGate";
 import CanonicalHead from "./components/layout/CanonicalHead";
+import { useAtmosphereLive } from "./hooks/useAtmosphereLive";
 
 const Fleet = lazy(() => import("./pages/Fleet"));
 const Hangar = lazy(() => import("./pages/Hangar"));
@@ -169,6 +169,7 @@ function AnimatedRoutes() {
 function AppChrome() {
   const location = useLocation();
   const cockpitMode = location.pathname === "/cockpit";
+  const atmosphereLive = useAtmosphereLive();
 
   if (cockpitMode) {
     return (
@@ -182,11 +183,13 @@ function AppChrome() {
 
   return (
     <>
-      <WarpBackground />
-      <GlobalVideoBackground />
-      {GLOBAL_BACKGROUND_BEAT_ENABLED ? <GlobalBackgroundBeat /> : null}
-      {GLOBAL_BACKGROUND_BEAT_ENABLED ? <SiteAudioPrime /> : null}
-      <div aria-hidden className="aviation-pulse aviation-pulse--warp" />
+      {atmosphereLive ? (
+        <>
+          <GlobalVideoBackground />
+          {GLOBAL_BACKGROUND_BEAT_ENABLED ? <GlobalBackgroundBeat /> : null}
+          {GLOBAL_BACKGROUND_BEAT_ENABLED ? <SiteAudioPrime /> : null}
+        </>
+      ) : null}
       <SiteLatchMenu />
       <AppNav />
       <main className="relative z-10">

@@ -43,6 +43,7 @@ export default function UsjetProtocolBootOverlay() {
   const runIdRef = useRef(0);
 
   const dismiss = useCallback(() => {
+    revealAtmosphere();
     setPhase("fade");
     window.setTimeout(() => {
       setPhase("hidden");
@@ -79,13 +80,8 @@ export default function UsjetProtocolBootOverlay() {
     setShowCursor(false);
     setRumble(false);
 
-    window.setTimeout(() => {
-      revealAtmosphere();
-    }, 420);
-
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      revealAtmosphere();
       setVisibleLines(["> CONNECTING TO U.S. JET NETWORK...", "> UPLINK ESTABLISHED"]);
       setShowCursor(true);
       await delay(5000);

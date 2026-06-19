@@ -3,14 +3,14 @@ export type DeveloperFuelReading = {
   percent: number;
 };
 
-const FLEET_FUEL_PER_DEV_MIN = 0.2;
-const FLEET_FUEL_PER_DEV_SPAN = 0.34;
-const FLEET_FUEL_PER_DEV_MAX = 0.6;
+const FLEET_FUEL_PER_DEV_MIN = 1.5;
+const FLEET_FUEL_PER_DEV_SPAN = 3.2;
+const FLEET_FUEL_PER_DEV_MAX = 5.8;
 const FLEET_FUEL_PERCENT_CAP = 0.65;
 
 /** Low cash fuel reserve for a hired developer bay (money meter, not tank volume). */
 export function randomLowFuelReading(slot: number): DeveloperFuelReading {
-  const jitter = ((slot * 37) % 11) * 0.012;
+  const jitter = ((slot * 73) % 17) * 0.085;
   const dollars =
     Math.round((FLEET_FUEL_PER_DEV_MIN + Math.random() * FLEET_FUEL_PER_DEV_SPAN + jitter) * 100) / 100;
   const percent = fuelPercentFromDollars(dollars);

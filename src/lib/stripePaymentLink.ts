@@ -2,7 +2,7 @@
 export const MEMBER_DECK_DIRECT_URL = "";
 
 /** Flight Pass ($19.90/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
-export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/00w4gzaCq83V5gl8tVdwc01";
+export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02";
 
 /** Hangar Pro ($49.95/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
 export const HANGAR_PRO_DIRECT_URL = "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03";

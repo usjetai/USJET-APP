@@ -16337,6 +16337,79 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   animation: none;
 }
 
+/* Global sovereign return FAB — portal to body, above footer (260) and cockpit chrome (220). */
+.usjet-return-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 1.35rem;
+  z-index: 99999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.25rem;
+  min-height: 2.65rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(34, 211, 238, 0.55);
+  border-radius: 999px;
+  background: rgba(2, 8, 23, 0.9);
+  font-family: "Audiowide", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.98);
+  box-shadow:
+    0 0 32px rgba(34, 211, 238, 0.35),
+    0 8px 28px rgba(2, 6, 23, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.usjet-return-fab__label {
+  position: relative;
+  z-index: 1;
+}
+
+.usjet-return-fab__pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  animation: cockpit-bar-pulse 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.usjet-return-fab:hover,
+.usjet-return-fab:focus-visible {
+  color: #fff;
+  border-color: rgba(34, 211, 238, 0.85);
+  outline: none;
+  box-shadow:
+    0 0 42px rgba(34, 211, 238, 0.5),
+    0 10px 32px rgba(2, 6, 23, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .usjet-return-fab__pulse {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .usjet-return-fab {
+    right: 0.75rem;
+    bottom: 5.5rem;
+    min-width: 4.85rem;
+    font-size: 0.62rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cockpit-return-bar,
   .cockpit-ghost-btn,

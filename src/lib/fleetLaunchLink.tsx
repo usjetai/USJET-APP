@@ -1,13 +1,16 @@
 import type { AnchorHTMLAttributes, ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { wrapExternalInCockpit } from "./fleetLaunchUrl";
 
 type FleetLaunchLinkProps = {
   launchUrl: string;
   children: ReactNode;
 } & AnchorHTMLAttributes<HTMLAnchorElement>;
 
-/** Renders internal routes as React Router links and external URLs as anchors. */
+/** Internal routes use React Router; external partners route through `/cockpit` (same window). */
 export function FleetLaunchLink({ launchUrl, children, ...rest }: FleetLaunchLinkProps) {
+  const location = useLocation();
+
   if (launchUrl.startsWith("/")) {
     return (
       <Link to={launchUrl} {...rest}>
@@ -16,9 +19,14 @@ export function FleetLaunchLink({ launchUrl, children, ...rest }: FleetLaunchLin
     );
   }
 
+  const cockpitUrl = wrapExternalInCockpit(launchUrl, {
+    returnTo: location.pathname || "/",
+    label: typeof rest.title === "string" ? rest.title : undefined,
+  });
+
   return (
-    <a href={launchUrl} {...rest}>
+    <Link to={cockpitUrl} {...rest}>
       {children}
-    </a>
+    </Link>
   );
 }

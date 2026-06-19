@@ -13,7 +13,7 @@ type UsjetReturnButtonProps = {
 export default function UsjetReturnButton({
   to,
   onClick,
-  ariaLabel = "Return to USJET",
+  ariaLabel = "Return to US JET",
   placement = "fixed",
 }: UsjetReturnButtonProps) {
   const className = ["cockpit-ghost-btn", placement === "tile" ? "usjet-return-btn--in-tile" : ""]
@@ -23,14 +23,14 @@ export default function UsjetReturnButton({
   if (to) {
     return (
       <Link to={to} className={className} aria-label={ariaLabel}>
-        USJET
+        US JET
       </Link>
     );
   }
 
   return (
     <button type="button" className={className} onClick={onClick} aria-label={ariaLabel}>
-      USJET
+      US JET
     </button>
   );
 }

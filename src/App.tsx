@@ -3,7 +3,9 @@ import { AnimatePresence } from "framer-motion";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { OriginLimitedOfferProvider } from "./context/OriginLimitedOfferContext";
 import { SilentHangarProvider } from "./context/SilentHangarContext";
+import { UsjetExternalNavigationProvider } from "./context/UsjetExternalNavigationContext";
 import AppNav from "./components/layout/AppNav";
+import UsjetReturnFab from "./components/layout/UsjetReturnFab";
 import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
@@ -209,15 +211,18 @@ export default function App() {
       <CanonicalHead />
       <OriginLimitedOfferProvider>
         <SilentHangarProvider>
-          <div
-            id="usjet-app-shell"
-            className="relative min-h-screen overflow-x-hidden bg-transparent text-white"
-          >
-            <AppChrome />
-            <UsjetGlobalContactBar />
-            <UsjetAtmosphereBoot />
-            <UsjetProtocolBootOverlay />
-          </div>
+          <UsjetExternalNavigationProvider>
+            <div
+              id="usjet-app-shell"
+              className="relative min-h-screen overflow-x-hidden bg-transparent text-white"
+            >
+              <AppChrome />
+              <UsjetGlobalContactBar />
+              <UsjetAtmosphereBoot />
+              <UsjetProtocolBootOverlay />
+              <UsjetReturnFab />
+            </div>
+          </UsjetExternalNavigationProvider>
         </SilentHangarProvider>
       </OriginLimitedOfferProvider>
     </Router>

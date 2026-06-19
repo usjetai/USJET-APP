@@ -2,20 +2,9 @@ import { useEffect, useLayoutEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { fleetBayAccentStyle, slotFromBayId } from "../data/fleetBayAccents";
 import { verifyFleetCallName } from "../data/fleetManifest";
-import UsjetReturnButton from "../components/layout/UsjetReturnButton";
 import { isHangarIframeBlocked } from "../lib/hangarEmbedPolicy";
 import { markFleetBayTrusted, sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
 import { logFleetLaunchHandoff } from "../lib/fleetUsageHistory";
-
-const ALLOWED_RETURN = new Set(["/hangar", "/intel", "/origin", "/hoops", "/"]);
-
-const RETURN_ARIA: Record<string, string> = {
-  "/": "Return to USJET Fleet",
-  "/hangar": "Return to USJET Hangar",
-  "/intel": "Return to USJET Intel",
-  "/origin": "Return to USJET Origin",
-  "/hoops": "Return to Jet Hoops",
-};
 
 /** Full-page cockpit handoffs; Hangar tiles use `embed=hangar` for in-tile partner frames. */
 export default function Cockpit() {
@@ -23,10 +12,6 @@ export default function Cockpit() {
   const navigate = useNavigate();
 
   const src = useMemo(() => sanitizeCockpitSrc(params.get("src")), [params]);
-  const returnTo = useMemo(() => {
-    const raw = params.get("return") ?? "/";
-    return ALLOWED_RETURN.has(raw) ? raw : "/";
-  }, [params]);
   const bay = params.get("bay");
   const partnerLabel = params.get("label");
   const callName = params.get("callName")?.trim() ?? "";
@@ -107,13 +92,16 @@ export default function Cockpit() {
               or the USJET control to return.
             </p>
             <div className="cockpit-handoff-interstitial__actions">
-              <a className="cockpit-handoff-interstitial__cta" href={src}>
+              <a
+                className="cockpit-handoff-interstitial__cta"
+                href={src}
+                data-usjet-external-leak="true"
+              >
                 Open {displayName}
               </a>
             </div>
           </div>
         </div>
-        <UsjetReturnButton to={returnTo} ariaLabel={RETURN_ARIA[returnTo] ?? "Return to USJET"} />
       </div>
     );
   }
@@ -129,8 +117,6 @@ export default function Cockpit() {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
-
-      <UsjetReturnButton to={returnTo} ariaLabel={RETURN_ARIA[returnTo] ?? "Return to USJET"} />
     </div>
   );
 }

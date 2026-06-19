@@ -49,15 +49,17 @@ function cellBounds(width, height, portraitNumber) {
 
 async function cropCockpitPortrait(sheet, width, height, portraitNumber) {
   const { left, top, rawWidth, rawHeight } = cellBounds(width, height, portraitNumber);
-  const insetX = Math.round(rawWidth * 0.015);
-  const insetY = Math.round(rawHeight * 0.015);
+  const insetLeft = Math.round(rawWidth * 0.1);
+  const insetRight = Math.round(rawWidth * 0.02);
+  const insetTop = Math.round(rawHeight * 0.02);
+  const insetBottom = Math.round(rawHeight * 0.16);
 
   return sharp(sheet)
     .extract({
-      left: left + insetX,
-      top: top + insetY,
-      width: Math.max(1, rawWidth - insetX * 2),
-      height: Math.max(1, rawHeight - insetY * 2),
+      left: left + insetLeft,
+      top: top + insetTop,
+      width: Math.max(1, rawWidth - insetLeft - insetRight),
+      height: Math.max(1, rawHeight - insetTop - insetBottom),
     })
     .resize(480, 680, { fit: "cover", position: "top" })
     .webp({ quality: 90 })

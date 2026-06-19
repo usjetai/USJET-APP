@@ -19,8 +19,16 @@ const COLS = 5;
 const ROWS = 2;
 const PORTRAIT_COUNT = COLS * ROWS;
 
-/** Portrait 2 — Mary Stealth keeps original fair skin from the sheet. */
-const FAIR_SKIN_PORTRAIT = 2;
+/** Numbered portrait sheet — crop away bottom-left digit overlays. */
+const NUMBER_STRIP_INSET = {
+  left: 0.1,
+  right: 0.02,
+  top: 0.02,
+  bottom: 0.16,
+};
+
+/** Finished sheet art — do not re-tone skin (portraits ship as authored). */
+const APPLY_BROWN_SKIN_TONE = false;
 
 /** Ten sovereign hired developers — order matches founder portrait sheet 1–10. */
 const HIRED_DEVELOPER_AVATARS = [
@@ -141,21 +149,23 @@ function cellBounds(width, height, portraitNumber) {
   return { left, top, rawWidth, rawHeight };
 }
 
-/** Full numbered rectangle from the 2×5 sheet — for hub crew + monitor tiles. */
-async function cropHubRectangle(sheet, width, height, portraitNumber, brownSkin = true) {
+/** Full rectangle from the 2×5 sheet — for hub crew + monitor tiles. */
+async function cropHubRectangle(sheet, width, height, portraitNumber, brownSkin = APPLY_BROWN_SKIN_TONE) {
   const { left, top, rawWidth, rawHeight } = cellBounds(width, height, portraitNumber);
-  const insetX = Math.round(rawWidth * 0.02);
-  const insetY = Math.round(rawHeight * 0.02);
+  const insetLeft = Math.round(rawWidth * NUMBER_STRIP_INSET.left);
+  const insetRight = Math.round(rawWidth * NUMBER_STRIP_INSET.right);
+  const insetTop = Math.round(rawHeight * NUMBER_STRIP_INSET.top);
+  const insetBottom = Math.round(rawHeight * NUMBER_STRIP_INSET.bottom);
 
-  const extractWidth = Math.max(1, rawWidth - insetX * 2);
-  const extractHeight = Math.max(1, rawHeight - insetY * 2);
+  const extractWidth = Math.max(1, rawWidth - insetLeft - insetRight);
+  const extractHeight = Math.max(1, rawHeight - insetTop - insetBottom);
   const targetWidth = 512;
   const targetHeight = Math.max(1, Math.round(targetWidth * (extractHeight / extractWidth)));
 
   const resized = sharp(sheet)
     .extract({
-      left: left + insetX,
-      top: top + insetY,
+      left: left + insetLeft,
+      top: top + insetTop,
       width: extractWidth,
       height: extractHeight,
     })
@@ -175,18 +185,19 @@ async function cropHubRectangle(sheet, width, height, portraitNumber, brownSkin 
 }
 
 /** Tighter face crop for product pages and circular fallbacks. */
-async function cropPortrait(sheet, width, height, portraitNumber, brownSkin = true) {
+async function cropPortrait(sheet, width, height, portraitNumber, brownSkin = APPLY_BROWN_SKIN_TONE) {
   const { left, top, rawWidth, rawHeight } = cellBounds(width, height, portraitNumber);
 
-  const insetX = Math.round(rawWidth * 0.08);
+  const insetLeft = Math.round(rawWidth * 0.12);
+  const insetRight = Math.round(rawWidth * 0.06);
   const insetTop = Math.round(rawHeight * 0.05);
-  const insetBottom = Math.round(rawHeight * 0.16);
+  const insetBottom = Math.round(rawHeight * 0.2);
 
   const resized = sharp(sheet)
     .extract({
-      left: left + insetX,
+      left: left + insetLeft,
       top: top + insetTop,
-      width: Math.max(1, rawWidth - insetX * 2),
+      width: Math.max(1, rawWidth - insetLeft - insetRight),
       height: Math.max(1, rawHeight - insetTop - insetBottom),
     })
     .resize(640, 640, { fit: "cover", position: "top" });
@@ -207,7 +218,7 @@ async function cropPortrait(sheet, width, height, portraitNumber, brownSkin = tr
 async function pruneStaleWebps(dir, keepNames) {
   const keep = new Set(keepNames);
   for (const name of await readdir(dir)) {
-    if (name.endsWith(".webp") && !keep.has(name) && !name.endsWith("-ride.webp")) {
+    if (name.endsWith(".webp") && !keep.has(name) && !name.endsWith("-ride.webp") && !name.endsWith("-super.webp")) {
       await unlink(join(dir, name));
       console.log(`removed stale ${name}`);
     }
@@ -234,14 +245,12 @@ async function main() {
       throw new Error(`Portrait ${dev.portrait} out of range for ${dev.label}`);
     }
 
-    const brownSkin = dev.portrait !== FAIR_SKIN_PORTRAIT;
-
     if (!portraitCache.has(dev.portrait)) {
-      portraitCache.set(dev.portrait, await cropPortrait(sheet, width, height, dev.portrait, brownSkin));
+      portraitCache.set(dev.portrait, await cropPortrait(sheet, width, height, dev.portrait));
     }
 
     if (!hubCache.has(dev.portrait)) {
-      hubCache.set(dev.portrait, await cropHubRectangle(sheet, width, height, dev.portrait, brownSkin));
+      hubCache.set(dev.portrait, await cropHubRectangle(sheet, width, height, dev.portrait));
     }
 
     const buffer = portraitCache.get(dev.portrait);
@@ -268,9 +277,7 @@ async function main() {
       ridePath: `/hired-hud/avatars/bay-${String(dev.slot + 1).padStart(2, "0")}-${dev.slug}-ride.webp`,
       productPath: `/fleet/developer-avatars/${productFilename}`,
     });
-    console.log(
-      `wrote ${hubFilename} + ${hudFilename} + ${productFilename} ← portrait ${dev.portrait}${dev.portrait === FAIR_SKIN_PORTRAIT ? " (fair skin)" : " (brown skin)"}`,
-    );
+    console.log(`wrote ${hubFilename} + ${hudFilename} + ${productFilename} ← portrait ${dev.portrait}`);
   }
 
   await pruneStaleWebps(HUD_OUT_DIR, hudKeep);

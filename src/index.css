@@ -25684,6 +25684,158 @@ html.b2b-page-root #usjet-app-shell {
   }
 }
 
+/* ─── Bop House — pink blink + shine (Hired HUD hub) ─── */
+.app-nav-bop-house {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0 0.82rem;
+  overflow: hidden;
+  isolation: isolate;
+  text-decoration: none;
+  border: 1px solid rgb(244 114 182 / 0.88);
+  background: linear-gradient(145deg, rgb(190 24 93 / 0.94), rgb(157 23 77 / 0.96));
+  box-shadow:
+    0 0 14px rgb(236 72 153 / 0.55),
+    inset 0 1px 0 rgb(255 228 240 / 0.28);
+  color: rgb(255 241 246);
+  animation: app-nav-bop-house-blink 1.05s steps(2, end) infinite;
+}
+
+.app-nav-bop-house__glow,
+.app-nav-bop-house__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.app-nav-bop-house__glow {
+  background: radial-gradient(circle at 35% 50%, rgb(251 113 133 / 0.62), transparent 72%);
+  animation: app-nav-bop-house-glow 1.05s ease-in-out infinite;
+}
+
+.app-nav-bop-house__shine {
+  background: linear-gradient(
+    105deg,
+    transparent 28%,
+    rgb(255 255 255 / 0.72) 44%,
+    rgb(251 207 232 / 0.55) 52%,
+    transparent 68%
+  );
+  transform: translateX(-140%) skewX(-14deg);
+  animation: app-nav-bop-house-shine 2.8s ease-in-out infinite;
+}
+
+.app-nav-bop-house__label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(255 241 246);
+  text-shadow:
+    0 0 10px rgb(251 113 133 / 0.9),
+    0 0 18px rgb(236 72 153 / 0.55);
+  animation: app-nav-bop-house-label-blink 1.05s ease-in-out infinite;
+}
+
+.app-nav-bop-house--active {
+  box-shadow:
+    0 0 20px rgb(244 114 182 / 0.85),
+    inset 0 0 0 1px rgb(255 228 240 / 0.45);
+}
+
+.app-nav-bop-house:hover,
+.app-nav-bop-house:focus-visible {
+  border-color: rgb(251 207 232 / 0.98);
+  box-shadow:
+    0 0 22px rgb(244 114 182 / 0.9),
+    0 0 36px rgb(236 72 153 / 0.45),
+    inset 0 0 0 1px rgb(255 228 240 / 0.42);
+}
+
+@keyframes app-nav-bop-house-blink {
+  0%,
+  100% {
+    background: linear-gradient(145deg, rgb(157 23 77 / 0.94), rgb(131 24 67 / 0.96));
+    border-color: rgb(244 114 182 / 0.72);
+    box-shadow:
+      0 0 10px rgb(236 72 153 / 0.35),
+      inset 0 1px 0 rgb(251 207 232 / 0.18);
+  }
+
+  50% {
+    background: linear-gradient(145deg, rgb(219 39 119), rgb(190 24 93));
+    border-color: rgb(251 207 232 / 0.98);
+    box-shadow:
+      0 0 26px rgb(244 114 182 / 0.98),
+      0 0 42px rgb(236 72 153 / 0.62),
+      inset 0 1px 0 rgb(255 228 240 / 0.45);
+  }
+}
+
+@keyframes app-nav-bop-house-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes app-nav-bop-house-shine {
+  0%,
+  18% {
+    transform: translateX(-140%) skewX(-14deg);
+    opacity: 0;
+  }
+
+  34%,
+  48% {
+    transform: translateX(120%) skewX(-14deg);
+    opacity: 1;
+  }
+
+  64%,
+  100% {
+    transform: translateX(220%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes app-nav-bop-house-label-blink {
+  0%,
+  100% {
+    color: rgb(255 228 240);
+    text-shadow:
+      0 0 8px rgb(251 113 133 / 0.65),
+      0 0 14px rgb(236 72 153 / 0.35);
+  }
+
+  50% {
+    color: rgb(255 255 255);
+    text-shadow:
+      0 0 14px rgb(251 113 133 / 1),
+      0 0 24px rgb(244 63 94 / 0.75);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-nav-bop-house,
+  .app-nav-bop-house__glow,
+  .app-nav-bop-house__shine,
+  .app-nav-bop-house__label {
+    animation: none;
+  }
+}
+
 .app-nav-b:hover,
 .app-nav-b:focus-visible {
   border-color: rgb(251 207 232);

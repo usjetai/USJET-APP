@@ -51,7 +51,7 @@ const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
-  { to: "/hired-hud", label: "Hired HUD" },
+  { to: "/hired-hud", label: "Bop House" },
   { to: "/hangar", label: "Hangar" },
   { to: "/intel", label: "Intel" },
   { to: "/founder", label: "Founder" },
@@ -127,6 +127,25 @@ const AppNav = () => {
                       </svg>
                     </span>
                     {link.label}
+                  </NavLink>
+                ) : link.to === "/hired-hud" ? (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    className={({ isActive }) =>
+                      [
+                        "app-nav-bop-house app-nav-pill btn-glass glass-effect-interactive shrink-0",
+                        isActive ? "app-nav-bop-house--active" : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")
+                    }
+                    title="Bop House — hired developer live hub"
+                    aria-label="Bop House — hired developer live hub"
+                  >
+                    <span className="app-nav-bop-house__glow" aria-hidden />
+                    <span className="app-nav-bop-house__shine" aria-hidden />
+                    <span className="app-nav-bop-house__label">Bop House</span>
                   </NavLink>
                 ) : (
                   <NavLink key={link.to} to={link.to} className={({ isActive }) => navPillClass(isActive)}>

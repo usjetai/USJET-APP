@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { FleetAircraftType } from "../../types/fleet";
 import { getFleetAircraftLogoPathForSlot } from "../../lib/fleetAircraftLogos";
 
@@ -8,14 +9,13 @@ type AircraftIconProps = {
   className?: string;
 };
 
-export default function AircraftIcon({
-  aircraftType,
-  accentId,
-  slot,
-  className = "",
-}: AircraftIconProps) {
+const AircraftIcon = forwardRef<HTMLImageElement, AircraftIconProps>(function AircraftIcon(
+  { aircraftType, accentId, slot, className = "" },
+  ref,
+) {
   return (
     <img
+      ref={ref}
       src={getFleetAircraftLogoPathForSlot(slot, aircraftType)}
       alt=""
       aria-hidden="true"
@@ -25,4 +25,6 @@ export default function AircraftIcon({
       draggable={false}
     />
   );
-}
+});
+
+export default AircraftIcon;

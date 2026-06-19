@@ -19,7 +19,7 @@ import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_TILE_BG, getHiredHudTileGlamChips, type HiredHudTileGlamChip } from "../data/hiredHudAssets";
+import { HIRED_HUD_HUB_BURG_VIDEO_SRC, HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_TILE_BG, getHiredHudTileGlamChips, type HiredHudTileGlamChip } from "../data/hiredHudAssets";
 import { USJET_OPS_EMAIL } from "../lib/usjetContact";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
@@ -128,6 +128,12 @@ const HIRED_HUD_HUB_CARTOON_MP4_FEEDS: readonly HubMp4Feed[] = [
     ariaLabel: "Hired developer hub everyone feed",
     playLabel: "Play everyone feed",
     feedTag: "Everyone",
+  },
+  {
+    src: HIRED_HUD_HUB_BURG_VIDEO_SRC,
+    ariaLabel: "Hired developer hub The Burg feed",
+    playLabel: "Play The Burg feed",
+    feedTag: "The Burg",
   },
 ];
 

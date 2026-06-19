@@ -1,7 +1,7 @@
 /**
- * Process the X-47B UCAS logo: key white sheet, export upright transparent emblem.
+ * Process the X-51 Waverider logo: key white sheet, export upright transparent emblem.
  *
- * Run: node scripts/process-x47b-logo.mjs
+ * Run: node scripts/process-x51-waverider-logo.mjs
  */
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -9,9 +9,9 @@ import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const SOURCE = join(__dirname, "assets/x47b-source-v2.png");
-const OUT_MAIN = join(ROOT, "public/assets/fleet-logos/x47b.png");
-const OUT_RADAR = join(ROOT, "public/assets/fleet-logos/radar-transparent/x47b.png");
+const SOURCE = join(__dirname, "assets/x51-waverider-source.png");
+const OUT_MAIN = join(ROOT, "public/assets/fleet-logos/x51_waverider.png");
+const OUT_RADAR = join(ROOT, "public/assets/fleet-logos/radar-transparent/x51_waverider.png");
 const TARGET = 384;
 
 function isBackgroundPixel(r, g, b) {

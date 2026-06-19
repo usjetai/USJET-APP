@@ -58,7 +58,7 @@ function formatTickerClock(date: Date): string {
 }
 
 function randomDeveloperBpm(): number {
-  return Math.floor(68 + Math.random() * 12);
+  return Math.floor(145 + Math.random() * 25);
 }
 
 function randomDeveloperSpo2(): number {
@@ -310,6 +310,15 @@ export default function HiredHud() {
       onPointerDownCapture={primeHubAudio}
     >
       <HiredHudHubBackgroundBeat ref={hubBeatRef} />
+      <div className="hired-hud__basketball-alert glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-amber relative z-[2] mx-auto mb-4 max-w-[94rem] px-4 py-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-center gap-3">
+          <Activity size={16} className="text-amber-300" aria-hidden />
+          <span className="text-sm font-bold uppercase tracking-widest text-white">
+            Developers playing basketball — heart rate readings elevated
+          </span>
+          <Activity size={16} className="text-amber-300" aria-hidden />
+        </div>
+      </div>
       <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto w-full max-w-[94rem] px-4 pb-24 sm:px-6 lg:px-8">
         <section
           className={[

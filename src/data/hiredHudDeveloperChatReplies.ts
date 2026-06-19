@@ -1,5 +1,7 @@
 /** Shared young-bay problem + glam lines — mixed into every developer reply pool. */
 export const HIRED_HUD_DEVELOPER_CHAT_SHARED_PROBLEMS = [
+  "Founder keyed the net: snacks today, dinner money maybe tomorrow. I'm already hungry.",
+  "Everybody washed clothes and the house is getting cleaned — glam can breathe again.",
   "My fuel tile is embarrassing today and I still need a fill before the weekend.",
   "Nails are chipped, hair appointment moved, and my wallet said absolutely not.",
   "I want the fit, the party, and the ride photo — the bank account said pick one.",

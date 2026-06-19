@@ -12,6 +12,8 @@ import {
   HIRED_HUD_RADIO_FREQUENCY,
   HIRED_HUD_RADIO_REPLY_TEMPLATES,
   HIRED_HUD_RADIO_SLOT_LINES,
+  HIRED_HUD_RADIO_SNACK_ANNOUNCEMENT,
+  HIRED_HUD_RADIO_HOUSE_CLEAN_ANNOUNCEMENT,
   HIRED_HUD_RADIO_TITLE,
   pickRadioLine,
   trackRadioRecentLine,
@@ -133,6 +135,20 @@ function buildMessage(
   return buildCrewMessage(units, speakerId, recent, stamp);
 }
 
+function buildFounderBroadcastMessage(text: string, stamp: Date, idPrefix: string): RadioMessage {
+  return {
+    id: `${idPrefix}-${stamp.getTime()}`,
+    speakerId: HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID,
+    slot: null,
+    name: HIRED_HUD_RADIO_FOUNDER.name,
+    callsign: HIRED_HUD_RADIO_FOUNDER.callsign,
+    text,
+    time: formatRadioTimestamp(stamp),
+    avatarPath: HIRED_HUD_RADIO_FOUNDER.avatarPath,
+    isFounderGod: true,
+  };
+}
+
 function seedMessages(units: FleetUnit[], recent: Set<string>): RadioMessage[] {
   if (units.length === 0) {
     return [];
@@ -161,12 +177,29 @@ function seedMessages(units: FleetUnit[], recent: Set<string>): RadioMessage[] {
   }
   const totalBackMs = offsets[offsets.length - 1];
 
-  return speakers.map((speakerId, index) => {
+  const snackStamp = new Date(now - totalBackMs - randomResponseDelayMs() * 2);
+  const houseCleanStamp = new Date(now - totalBackMs - randomResponseDelayMs());
+  const snackMessage = buildFounderBroadcastMessage(
+    HIRED_HUD_RADIO_SNACK_ANNOUNCEMENT,
+    snackStamp,
+    "founder-snacks",
+  );
+  const houseCleanMessage = buildFounderBroadcastMessage(
+    HIRED_HUD_RADIO_HOUSE_CLEAN_ANNOUNCEMENT,
+    houseCleanStamp,
+    "founder-house-clean",
+  );
+  trackRadioRecentLine(recent, snackMessage.text);
+  trackRadioRecentLine(recent, houseCleanMessage.text);
+
+  const seeded = speakers.map((speakerId, index) => {
     const stamp = new Date(now - (totalBackMs - offsets[index]));
     const message = buildMessage(units, speakerId, recent, stamp);
     trackRadioRecentLine(recent, message.text);
     return message;
   });
+
+  return [snackMessage, houseCleanMessage, ...seeded];
 }
 
 export default function HiredHudRadioChat({ units }: HiredHudRadioChatProps) {

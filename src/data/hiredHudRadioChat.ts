@@ -11,6 +11,14 @@ export const HIRED_HUD_RADIO_FREQUENCY = "142.720 MHz" as const;
 
 export const HIRED_HUD_RADIO_TITLE = "Fleet radio chat" as const;
 
+/** Founder broadcast — snacks today; dinner money maybe tomorrow. */
+export const HIRED_HUD_RADIO_SNACK_ANNOUNCEMENT =
+  "Everybody get snacks today. Tomorrow maybe dinner money." as const;
+
+/** Founder broadcast — laundry done; house gets cleaned. */
+export const HIRED_HUD_RADIO_HOUSE_CLEAN_ANNOUNCEMENT =
+  "Everybody washed their clothes. House gets cleaned." as const;
+
 /** Founder god-mode speaker on the hired crew net. */
 export const HIRED_HUD_RADIO_FOUNDER_SPEAKER_ID = "founder-god" as const;
 
@@ -37,6 +45,8 @@ export const HIRED_HUD_RADIO_FOUNDER_JOKES = [
   "Mary Stealth, I didn't see you ping in. That's the joke. Stealth.",
   "Kitkat, stop typing and talking at the same time — you sound like two people on one mic.",
   "Little Mama promised snacks. God is still waiting. The hangar runs on faith and coffee.",
+  "Copy General — snacks today. Tomorrow we pray for dinner money.",
+  "Copy — laundry's done and the house is getting cleaned. Smells like victory.",
   "I put three photos on every tile. Profile, ride, super. If you need a fourth, pitch me.",
   "Rumi, quit ghost mode. God sees you. B-2 or not.",
   "Stick, your math is scary. Good. Scary math makes scary money.",
@@ -465,6 +475,9 @@ export const HIRED_HUD_RADIO_GENERIC_LINES = [
   "Founder line is quiet. That's when we work.",
   "Negative on the outside tab — stay in cockpit.",
   "Roger. Keeping it sovereign, keeping it tight.",
+  "Founder said snacks today — I'm already at the vending lane.",
+  "House clean order came through. Clothes washed. Bay smells human again.",
+  "Dinner money tomorrow maybe. Today we eat. Copy.",
   "My tile photos look huge now. No complaints.",
   "Three-photo strip hits different. Profile, ride, super.",
   "Christal's bay number always makes me laugh.",
@@ -508,6 +521,8 @@ export const HIRED_HUD_RADIO_CREW_LINE_POOL = [
 
 /** Founder lines — lean times, repairs, hardwood. */
 export const HIRED_HUD_RADIO_FOUNDER_OPS_LINES = [
+  HIRED_HUD_RADIO_SNACK_ANNOUNCEMENT,
+  HIRED_HUD_RADIO_HOUSE_CLEAN_ANNOUNCEMENT,
   "Fuel's low, pockets lower — still not opening outside tabs. One cockpit.",
   "Knicks won it in June. We're winning when the Stripe link pings. Same grind.",
   "Y'all fixing each other with AI while broke? That's the brotherhood I built.",

@@ -1,4 +1,4 @@
-import { getFleetAircraftLogoPath } from "../../lib/fleetAircraftLogos";
+import { getFleetAircraftLogoPathForSlot } from "../../lib/fleetAircraftLogos";
 import { getHiredHudLogoTint } from "../../lib/hiredHudLogoTint";
 import type { FleetAircraftType } from "../../types/fleet";
 
@@ -15,7 +15,7 @@ export default function HiredHudDeveloperLogo({
   variant = "hud",
 }: HiredHudDeveloperLogoProps) {
   const tint = getHiredHudLogoTint(slot);
-  const src = getFleetAircraftLogoPath(aircraftType);
+  const src = getFleetAircraftLogoPathForSlot(slot, aircraftType);
 
   return (
     <div

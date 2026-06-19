@@ -1,7 +1,6 @@
 /**
- * Generate USJET.AI fleet tee product mockups for every aircraft product page.
- * Flat-lay tee base (scripts/assets/tee-base.png), black letterbox, USJET.AI chest text,
- * aircraft logo centered below.
+ * Generate USJET.AI fleet tee product mockups — interior chest design with developer
+ * portrait, name, jet name, AI name, and aircraft emblem.
  *
  * Run: node scripts/generate-fleet-tee-products.mjs
  */
@@ -9,6 +8,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import { resolveTeeCrew } from "./fleet-tee-roster.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -18,13 +18,6 @@ const TEE_BASE = join(__dirname, "assets/tee-base.png");
 const CANVAS = 1024;
 const SHEET_BG = { r: 207, g: 196, b: 166 };
 
-/** Chest branding placement on the 1024×1024 tee canvas (flat-lay base, black letterbox). */
-const BRAND_TEXT_Y = 340;
-const LOGO_TOP = 378;
-const LOGO_MAX_WIDTH = 400;
-const LOGO_MAX_HEIGHT = 270;
-
-/** Slug, display name (for logs), logo file relative to public/ */
 const FLEET_TEE_AIRCRAFT = [
   { slug: "sr-71-blackbird", name: "SR-71 Blackbird", logo: "/fleet/sr71-blackbird-logo.png" },
   { slug: "f-35-lightning-ii", name: "F-35 Lightning II", logo: "/assets/fleet-logos/f35_lightning_ii.png" },
@@ -58,14 +51,56 @@ const FLEET_TEE_AIRCRAFT = [
   { slug: "x-59-quesst", name: "X-59 QueSST", logo: "/assets/fleet-logos/x59_quesst.png" },
 ];
 
-function createBrandingSvg() {
+function escapeXml(value) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function fitText(text, maxChars) {
+  if (text.length <= maxChars) {
+    return text;
+  }
+  return `${text.slice(0, maxChars - 1)}…`;
+}
+
+function createInteriorDesignSvg({ developerName, aiDomain, jetName, hasPortrait }) {
+  const safeDeveloper = developerName ? escapeXml(fitText(developerName.toUpperCase(), 22)) : "";
+  const safeJet = escapeXml(fitText(jetName, 28));
+  const safeAi = escapeXml(fitText(aiDomain, 34));
+
+  const aiFontSize = safeAi.length > 22 ? 15 : safeAi.length > 18 ? 16 : 18;
+
+  const portraitY = hasPortrait ? 352 : 0;
+  const nameY = hasPortrait ? 518 : 372;
+  const jetY = hasPortrait ? 556 : 418;
+  const aiY = hasPortrait ? 586 : 452;
+  const logoY = hasPortrait ? 612 : 488;
+  const dividerY = hasPortrait ? 332 : 348;
+
+  const developerBlock = developerName
+    ? `<text x="512" y="${nameY}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800" letter-spacing="2.5" fill="#111111">${safeDeveloper}</text>`
+    : "";
+
+  const portraitPlaceholder = hasPortrait
+    ? ""
+    : `<text x="512" y="392" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="2" fill="#444444">SOVEREIGN FLEET CREW</text>`;
+
   return Buffer.from(`<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${CANVAS}" height="${CANVAS}" viewBox="0 0 ${CANVAS} ${CANVAS}">
-  <text x="512" y="${BRAND_TEXT_Y}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" letter-spacing="3" fill="#111111">USJET.AI</text>
+  <text x="512" y="308" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="800" letter-spacing="3.5" fill="#111111">USJET.AI</text>
+  <line x1="332" y1="${dividerY}" x2="692" y2="${dividerY}" stroke="#222222" stroke-width="2" opacity="0.55"/>
+  ${portraitPlaceholder}
+  ${developerBlock}
+  <text x="512" y="${jetY}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" letter-spacing="1.2" fill="#1a1a1a">JET · ${safeJet}</text>
+  <text x="512" y="${aiY}" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="${aiFontSize}" font-weight="600" letter-spacing="1.1" fill="#444444">AI · ${safeAi}</text>
+  <rect id="logo-slot" x="312" y="${logoY}" width="400" height="170" fill="none"/>
 </svg>`);
 }
 
-/** Flat-lay white tee on textured black — letterboxed to square; matches dark product page. */
 async function loadTeeBase() {
   return sharp(TEE_BASE)
     .resize(CANVAS, CANVAS, {
@@ -90,8 +125,7 @@ async function removeTanBackground(inputPath) {
       Math.abs(r - SHEET_BG.r) < 30 &&
       Math.abs(g - SHEET_BG.g) < 30 &&
       Math.abs(b - SHEET_BG.b) < 30;
-    const nearWhite = r > 240 && g > 240 && b > 240;
-    if (nearTan || nearWhite) {
+    if (nearTan) {
       data[i + 3] = 0;
     }
   }
@@ -101,50 +135,122 @@ async function removeTanBackground(inputPath) {
   }).png();
 }
 
-async function loadLogoPipeline(logo) {
+async function prepareGarmentLogo(logo) {
   const inputPath = join(ROOT, "public", logo.replace(/^\//, ""));
-  if (logo.startsWith("/fleet/")) {
-    return sharp(inputPath).ensureAlpha();
+  let pipeline =
+    logo.startsWith("/fleet/") || logo.startsWith("/assets/")
+      ? await (logo.startsWith("/fleet/")
+          ? sharp(inputPath).ensureAlpha()
+          : removeTanBackground(logo))
+      : sharp(inputPath).ensureAlpha();
+
+  const { data, info } = await pipeline.raw().toBuffer({ resolveWithObject: true });
+  let lumSum = 0;
+  let count = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] > 20) {
+      lumSum += data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+      count++;
+    }
   }
-  return removeTanBackground(logo);
+
+  const avgLum = count ? lumSum / count : 128;
+  if (avgLum > 185) {
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] > 20) {
+        data[i] = 26;
+        data[i + 1] = 26;
+        data[i + 2] = 26;
+      }
+    }
+  }
+
+  return sharp(data, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  }).png();
+}
+
+async function createCircularPortrait(portraitPath, size) {
+  const inputPath = join(ROOT, "public", portraitPath.replace(/^\//, ""));
+  const mask = Buffer.from(
+    `<svg width="${size}" height="${size}"><circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="white"/></svg>`,
+  );
+  const ring = Buffer.from(`<?xml version="1.0" encoding="UTF-8"?>
+<svg width="${size + 12}" height="${size + 12}" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="${(size + 12) / 2}" cy="${(size + 12) / 2}" r="${size / 2 + 4}" fill="none" stroke="#111111" stroke-width="4"/>
+  <circle cx="${(size + 12) / 2}" cy="${(size + 12) / 2}" r="${size / 2 + 1}" fill="none" stroke="#d4d4d4" stroke-width="1.5"/>
+</svg>`);
+
+  const portrait = await sharp(inputPath)
+    .resize(size, size, { fit: "cover", position: "centre" })
+    .composite([{ input: mask, blend: "dest-in" }])
+    .png()
+    .toBuffer();
+
+  return sharp(ring)
+    .composite([{ input: portrait, left: 6, top: 6 }])
+    .png()
+    .toBuffer();
 }
 
 async function generateTee({ slug, name, logo }) {
   const outPath = join(OUT_DIR, `${slug}-tee-product.webp`);
+  const crew = resolveTeeCrew(slug);
   const base = await loadTeeBase();
-  const branding = await sharp(createBrandingSvg()).png().toBuffer();
+  const designSvg = createInteriorDesignSvg({
+    developerName: crew.developerName,
+    aiDomain: crew.aiDomain,
+    jetName: name,
+    hasPortrait: crew.hasPortrait,
+  });
+  const designLayer = await sharp(designSvg).png().toBuffer();
 
-  const logoPipeline = await loadLogoPipeline(logo);
+  const logoMaxWidth = crew.hasPortrait ? 320 : 360;
+  const logoMaxHeight = crew.hasPortrait ? 150 : 190;
+  const logoTop = crew.hasPortrait ? 618 : 494;
+
+  const logoPipeline = await prepareGarmentLogo(logo);
   const logoMeta = await logoPipeline.metadata();
-  const scale = Math.min(LOGO_MAX_WIDTH / logoMeta.width, LOGO_MAX_HEIGHT / logoMeta.height);
+  const scale = Math.min(logoMaxWidth / logoMeta.width, logoMaxHeight / logoMeta.height);
   const logoWidth = Math.round(logoMeta.width * scale);
   const logoHeight = Math.round(logoMeta.height * scale);
+  const logoBuffer = await logoPipeline.resize(logoWidth, logoHeight, { fit: "inside" }).png().toBuffer();
+  const logoLeft = Math.round((CANVAS - logoWidth) / 2);
 
-  const logoBuffer = await (await loadLogoPipeline(logo))
-    .resize(logoWidth, logoHeight, { fit: "inside" })
-    .png()
-    .toBuffer();
+  const composites = [
+    { input: designLayer, left: 0, top: 0 },
+    { input: logoBuffer, left: logoLeft, top: logoTop },
+  ];
 
-  const left = Math.round((CANVAS - logoWidth) / 2);
+  if (crew.hasPortrait && crew.portrait) {
+    const portraitSize = 132;
+    const portraitBuffer = await createCircularPortrait(crew.portrait, portraitSize);
+    composites.splice(1, 0, {
+      input: portraitBuffer,
+      left: Math.round((CANVAS - portraitSize - 12) / 2),
+      top: 346,
+    });
+  }
 
-  await sharp(base)
-    .composite([
-      { input: branding, left: 0, top: 0 },
-      { input: logoBuffer, left, top: LOGO_TOP },
-    ])
-    .webp({ quality: 90 })
-    .toFile(outPath);
+  await sharp(base).composite(composites).webp({ quality: 92 }).toFile(outPath);
 
-  return { slug, name, outPath: `public/fleet/${slug}-tee-product.webp` };
+  return {
+    slug,
+    name,
+    developerName: crew.developerName,
+    aiDomain: crew.aiDomain,
+    hasPortrait: crew.hasPortrait,
+    outPath: `public/fleet/${slug}-tee-product.webp`,
+  };
 }
 
 await mkdir(OUT_DIR, { recursive: true });
 const results = [];
 for (const aircraft of FLEET_TEE_AIRCRAFT) {
   results.push(await generateTee(aircraft));
-  console.log(`✓ ${aircraft.slug}`);
+  console.log(`✓ ${aircraft.slug}${results.at(-1).developerName ? ` · ${results.at(-1).developerName}` : ""}`);
 }
 
 const manifestPath = join(OUT_DIR, "tee-product-manifest.json");
 await writeFile(manifestPath, JSON.stringify(results, null, 2));
-console.log(`\nGenerated ${results.length} tee product images.`);
+console.log(`\nGenerated ${results.length} crew tee product images.`);

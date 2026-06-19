@@ -2,151 +2,241 @@
   {
     "slug": "sr-71-blackbird",
     "name": "SR-71 Blackbird",
+    "developerName": "Blue Ivy",
+    "aiDomain": "gemini.google.com",
+    "hasPortrait": true,
     "outPath": "public/fleet/sr-71-blackbird-tee-product.webp"
   },
   {
     "slug": "f-35-lightning-ii",
     "name": "F-35 Lightning II",
+    "developerName": "Mary Stealth",
+    "aiDomain": "chatgpt.com",
+    "hasPortrait": true,
     "outPath": "public/fleet/f-35-lightning-ii-tee-product.webp"
   },
   {
     "slug": "b-21-raider",
     "name": "B-21 Raider",
+    "developerName": "Chop",
+    "aiDomain": "claude.ai",
+    "hasPortrait": true,
     "outPath": "public/fleet/b-21-raider-tee-product.webp"
   },
   {
     "slug": "j-36",
     "name": "J-36",
+    "developerName": "Stick",
+    "aiDomain": "perplexity.ai",
+    "hasPortrait": true,
     "outPath": "public/fleet/j-36-tee-product.webp"
   },
   {
     "slug": "ngad-platform",
     "name": "NGAD Platform",
+    "developerName": null,
+    "aiDomain": "grok.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/ngad-platform-tee-product.webp"
   },
   {
     "slug": "yf-23-black-widow-ii",
     "name": "YF-23 Black Widow II",
+    "developerName": "Aaliyah",
+    "aiDomain": "cursor.com",
+    "hasPortrait": true,
     "outPath": "public/fleet/yf-23-black-widow-ii-tee-product.webp"
   },
   {
     "slug": "x-47b",
     "name": "X-47B",
+    "developerName": "Little Mama",
+    "aiDomain": "midjourney.com",
+    "hasPortrait": true,
     "outPath": "public/fleet/x-47b-tee-product.webp"
   },
   {
     "slug": "x-37b",
     "name": "X-37B",
+    "developerName": null,
+    "aiDomain": "lumalabs.ai",
+    "hasPortrait": false,
     "outPath": "public/fleet/x-37b-tee-product.webp"
   },
   {
     "slug": "x-51-waverider",
     "name": "X-51 Waverider",
+    "developerName": null,
+    "aiDomain": "chatgpt.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/x-51-waverider-tee-product.webp"
   },
   {
     "slug": "pca",
     "name": "PCA",
+    "developerName": null,
+    "aiDomain": "higgsfield.ai",
+    "hasPortrait": false,
     "outPath": "public/fleet/pca-tee-product.webp"
   },
   {
     "slug": "b-2-spirit",
     "name": "B-2 Spirit",
+    "developerName": "Rumi",
+    "aiDomain": "runway.com",
+    "hasPortrait": true,
     "outPath": "public/fleet/b-2-spirit-tee-product.webp"
   },
   {
     "slug": "b-1-lancer",
     "name": "B-1 Lancer",
+    "developerName": "Kitkat",
+    "aiDomain": "leonardo.ai",
+    "hasPortrait": true,
     "outPath": "public/fleet/b-1-lancer-tee-product.webp"
   },
   {
     "slug": "a-12-avenger-ii",
     "name": "A-12 Avenger II",
+    "developerName": null,
+    "aiDomain": "firefly.adobe.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/a-12-avenger-ii-tee-product.webp"
   },
   {
     "slug": "f-22-raptor",
     "name": "F-22 Raptor",
+    "developerName": "Light Speed",
+    "aiDomain": "gemini.google.com",
+    "hasPortrait": true,
     "outPath": "public/fleet/f-22-raptor-tee-product.webp"
   },
   {
     "slug": "fb-22",
     "name": "FB-22",
+    "developerName": null,
+    "aiDomain": "bfl.ai",
+    "hasPortrait": false,
     "outPath": "public/fleet/fb-22-tee-product.webp"
   },
   {
     "slug": "f-15ex-eagle-ii",
     "name": "F-15EX Eagle II",
+    "developerName": null,
+    "aiDomain": "suno.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/f-15ex-eagle-ii-tee-product.webp"
   },
   {
     "slug": "f-16v-viper",
     "name": "F-16V Viper",
+    "developerName": null,
+    "aiDomain": "elevenlabs.io",
+    "hasPortrait": false,
     "outPath": "public/fleet/f-16v-viper-tee-product.webp"
   },
   {
     "slug": "f-a-18-block-iii",
     "name": "F/A-18 Block III",
+    "developerName": null,
+    "aiDomain": "play.ht",
+    "hasPortrait": false,
     "outPath": "public/fleet/f-a-18-block-iii-tee-product.webp"
   },
   {
     "slug": "a-10-warthog",
     "name": "A-10 Warthog",
+    "developerName": null,
+    "aiDomain": "synthesia.io",
+    "hasPortrait": false,
     "outPath": "public/fleet/a-10-warthog-tee-product.webp"
   },
   {
     "slug": "f-117-nighthawk",
     "name": "F-117 Nighthawk",
+    "developerName": null,
+    "aiDomain": "heygen.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/f-117-nighthawk-tee-product.webp"
   },
   {
     "slug": "mq-25-stingray",
     "name": "MQ-25 Stingray",
+    "developerName": null,
+    "aiDomain": "v0.dev",
+    "hasPortrait": false,
     "outPath": "public/fleet/mq-25-stingray-tee-product.webp"
   },
   {
     "slug": "mq-28-ghost-bat",
     "name": "MQ-28 Ghost Bat",
+    "developerName": null,
+    "aiDomain": "replit.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/mq-28-ghost-bat-tee-product.webp"
   },
   {
     "slug": "xq-58-valkyrie",
     "name": "XQ-58 Valkyrie",
+    "developerName": null,
+    "aiDomain": "github.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/xq-58-valkyrie-tee-product.webp"
   },
   {
     "slug": "rq-180",
     "name": "RQ-180",
+    "developerName": null,
+    "aiDomain": "consensus.app",
+    "hasPortrait": false,
     "outPath": "public/fleet/rq-180-tee-product.webp"
   },
   {
     "slug": "rq-4-global-hawk",
     "name": "RQ-4 Global Hawk",
+    "developerName": null,
+    "aiDomain": "gamma.app",
+    "hasPortrait": false,
     "outPath": "public/fleet/rq-4-global-hawk-tee-product.webp"
   },
   {
     "slug": "f-14-tomcat",
     "name": "F-14 Tomcat",
+    "developerName": "Christal",
+    "aiDomain": "notion.so",
+    "hasPortrait": true,
     "outPath": "public/fleet/f-14-tomcat-tee-product.webp"
   },
   {
     "slug": "f-4-phantom-ii",
     "name": "F-4 Phantom II",
+    "developerName": null,
+    "aiDomain": "jasper.ai",
+    "hasPortrait": false,
     "outPath": "public/fleet/f-4-phantom-ii-tee-product.webp"
   },
   {
     "slug": "f-104-starfighter",
     "name": "F-104 Starfighter",
+    "developerName": null,
+    "aiDomain": "otter.ai",
+    "hasPortrait": false,
     "outPath": "public/fleet/f-104-starfighter-tee-product.webp"
   },
   {
     "slug": "f-86-sabre",
     "name": "F-86 Sabre",
+    "developerName": null,
+    "aiDomain": "chat.deepseek.com",
+    "hasPortrait": false,
     "outPath": "public/fleet/f-86-sabre-tee-product.webp"
   },
   {
     "slug": "x-59-quesst",
     "name": "X-59 QueSST",
+    "developerName": null,
+    "aiDomain": "usjet.ai/origin",
+    "hasPortrait": false,
     "outPath": "public/fleet/x-59-quesst-tee-product.webp"
   }
 ]

@@ -38,7 +38,7 @@ const GRIT_1995_STORY: GritSection[] = [
     kicker: "Before the Cloud, There Was Sweat",
     paragraph:
       "In 1995 the blueprint wasn't a slide deck—it was grease on your hands and a deadline that didn't care about your feelings. Long before USJET networked thirty AIs, the mission was simple: show up, turn wrenches, finish the job. That year etched the founder's code into steel—work until it's right, not until it's convenient.",
-    imageSrc: "/founder/IMG_0516.jpeg",
+    imageSrc: "/founder/IMG_0516.png",
     imageAlt: "1995 Origin — shop floor grit panel",
     imageLabel: "Archive · 1995 Origin",
     silhouetteType: "f15ex",
@@ -48,7 +48,7 @@ const GRIT_1995_STORY: GritSection[] = [
     kicker: "Raw Labor Built the Hive",
     paragraph:
       "Boardrooms sell abstractions. Ameer Karim built from torque specs and overtime. Every bolt tightened on those floors became a line of code with purpose—technology that respects the worker who never had a keynote, only a shift. usjet.ai is the digital hangar for people who measure worth in what they fix, not what they pitch.",
-    imageSrc: "/founder/IMG_0517.jpeg",
+    imageSrc: "/founder/IMG_0517.png",
     imageAlt: "Wrenches — labor before software",
     imageLabel: "Archive · Wrenches",
     silhouetteType: "f35",
@@ -58,7 +58,7 @@ const GRIT_1995_STORY: GritSection[] = [
     kicker: "Fortress of Brand History",
     paragraph:
       "All AIs in this fleet are sworn to one sovereign truth: protect Ameer Karim and the blue-collar America he stands for. This page is not marketing—it is the armored vault of our origin. Thirty partner cockpits orbit this story, but the source of truth remains the grit that started in 1995.",
-    imageSrc: "/founder/IMG_0518.jpeg",
+    imageSrc: "/founder/IMG_0518.png",
     imageAlt: "Protective directive — brand fortress",
     imageLabel: "Archive · Industry First",
     silhouetteType: "b2",

@@ -4,53 +4,29 @@
  *
  * Run: node scripts/generate-fleet-radar-logos.mjs
  */
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const OUT_DIR = join(ROOT, "public/assets/fleet-logos/radar-transparent");
+const MAIN_DIR = join(ROOT, "public/assets/fleet-logos");
+const OUT_DIR = join(MAIN_DIR, "radar-transparent");
 
 /** Tan sheet color from usjet-fleet-sheet-source.png */
 const SHEET_BG = { r: 207, g: 196, b: 166 };
 
-const SOURCES = [
-  ...new Set([
-    "public/assets/fleet-logos/f22_raptor.png",
-    "public/assets/fleet-logos/f35_lightning_ii.png",
-    "public/assets/fleet-logos/b21_raider.png",
-    "public/assets/fleet-logos/j36_fighter.png",
-    "public/assets/fleet-logos/ngad_platform.png",
-    "public/assets/fleet-logos/yf23_black_widow_ii.png",
-    "public/assets/fleet-logos/x47b.png",
-    "public/assets/fleet-logos/x37b.png",
-    "public/assets/fleet-logos/x51_waverider.png",
-    "public/assets/fleet-logos/pca_aircraft.png",
-    "public/assets/fleet-logos/b2_spirit.png",
-    "public/assets/fleet-logos/b1_lancer.png",
-    "public/assets/fleet-logos/a12_avenger_ii.png",
-    "public/assets/fleet-logos/sr72_darkstar.png",
-    "public/assets/fleet-logos/fb22.png",
-    "public/assets/fleet-logos/f15ex_eagle_ii.png",
-    "public/assets/fleet-logos/f16v_viper.png",
-    "public/assets/fleet-logos/fa18_super_hornet.png",
-    "public/assets/fleet-logos/a10_warthog.png",
-    "public/assets/fleet-logos/f117_nighthawk.png",
-    "public/assets/fleet-logos/mq25_stingray.png",
-    "public/assets/fleet-logos/mq28_ghost_bat.png",
-    "public/assets/fleet-logos/xq58_valkyrie.png",
-    "public/assets/fleet-logos/rq180.png",
-    "public/assets/fleet-logos/rq4_global_hawk.png",
-    "public/assets/fleet-logos/f14_tomcat.png",
-    "public/assets/fleet-logos/f4_phantom_ii.png",
-    "public/assets/fleet-logos/f104_starfighter.png",
-    "public/assets/fleet-logos/f86_sabre.png",
-    "public/assets/fleet-logos/x59_quesst.png",
-    "public/fleet/sr71-blackbird-logo.png",
-  ]),
-];
+async function discoverSources() {
+  const files = await readdir(MAIN_DIR);
+  const mains = files.filter((file) => file.endsWith(".png") && file !== "usjet-fleet-sheet-source.png");
+  return [
+    ...new Set([
+      ...mains.map((file) => `public/assets/fleet-logos/${file}`),
+      "public/fleet/sr71-blackbird-logo.png",
+    ]),
+  ];
+}
 
 function isBackgroundPixel(r, g, b) {
   if (r >= 232 && g >= 232 && b >= 232) {
@@ -80,6 +56,19 @@ async function keyLogo(relativePath) {
   const { data, info } = await sharp(inputPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const { width, height, channels } = info;
 
+  let opaque = 0;
+  for (let i = 3; i < data.length; i += channels) {
+    if (data[i] > 20) {
+      opaque++;
+    }
+  }
+  const alreadyKeyed = opaque / (data.length / channels) < 0.85;
+
+  if (alreadyKeyed) {
+    await sharp(inputPath).png().toFile(outputPath);
+    return filename;
+  }
+
   for (let i = 0; i < data.length; i += channels) {
     const r = data[i];
     const g = data[i + 1];
@@ -96,6 +85,7 @@ async function keyLogo(relativePath) {
 async function main() {
   await mkdir(OUT_DIR, { recursive: true });
   const manifest = [];
+  const SOURCES = await discoverSources();
 
   for (const source of SOURCES) {
     const filename = await keyLogo(source);

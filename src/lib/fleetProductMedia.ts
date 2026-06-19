@@ -1,5 +1,6 @@
 import type { FleetAircraftType } from "../types/fleet";
 import { getFleetAircraftLogoPath } from "./fleetAircraftLogos";
+import { getHiredDeveloperProductAvatarByAircraftSlug } from "./hiredHudDeveloperAvatars";
 import { resolveJ36ProductPaymentLink, resolveSr71BlackbirdTeePaymentLink } from "./stripePaymentLink";
 
 export type FleetProductMediaAsset = {
@@ -129,14 +130,24 @@ const FLEET_TEE_CATALOG: FleetTeeCatalogEntry[] = [
 const FLEET_TEE_BY_SLUG = Object.fromEntries(FLEET_TEE_CATALOG.map((entry) => [entry.slug, entry]));
 
 function buildFleetTeeLineupItem(entry: FleetTeeCatalogEntry): FleetProductLineupItem {
+  const crew = getHiredDeveloperProductAvatarByAircraftSlug(entry.slug);
+  const crewLine = crew
+    ? `${crew.label} · ${entry.aircraftLabel}`
+    : entry.aircraftLabel;
+  const description = crew
+    ? `White short-sleeve crew neck featuring ${crew.label}'s profile, jet designation (${entry.aircraftLabel}), AI domain, and aircraft emblem — sovereign hired-crew merch from the USJET hangar.`
+    : `White short-sleeve crew neck with ${entry.aircraftLabel} jet designation, AI domain, and aircraft emblem. Sovereign fleet merch for the hangar and the runway.`;
+
   return {
     id: `${entry.slug}-tee`,
-    title: `USJET.AI ${entry.aircraftLabel} Tee`,
+    title: crew ? `USJET.AI ${crewLine} Crew Tee` : `USJET.AI ${entry.aircraftLabel} Tee`,
     kind: "Apparel",
-    description: `White short-sleeve crew neck with ${entry.aircraftLabel} graphic and USJET.AI chest branding. Sovereign fleet merch for the hangar and the runway.`,
+    description,
     photo: {
       src: `/fleet/${entry.slug}-tee-product.webp`,
-      alt: `White USJET.AI t-shirt with ${entry.aircraftLabel} graphic on chest.`,
+      alt: crew
+        ? `White USJET.AI crew tee with ${crew.label} portrait, ${entry.aircraftLabel} jet name, and AI domain branding.`
+        : `White USJET.AI t-shirt with ${entry.aircraftLabel} graphic on chest.`,
       isDedicatedProductPhoto: true,
     },
     price: "$25",
@@ -152,9 +163,6 @@ type FleetCapCatalogEntry = {
   description?: string;
   resolveStripePaymentLink?: () => string;
 };
-
-const DEFAULT_CAP_DESCRIPTION =
-  "Structured foam front panel with black mesh back. USJET.AI crown branding and aircraft graphic on the white front. Lightweight trucker cap for the hangar and the runway.";
 
 const SR71_CAP_DESCRIPTION =
   "This trucker cap brings a crisp, vintage-roadside energy to everyday wear. The foam front displays a bold, slightly distressed logo and silhouette in high-contrast tones, while the nylon mesh back keeps you cool on long drives, outdoor meetups, or weekend projects. Lightweight and structured, it shapes up clean and comfortable";
@@ -200,10 +208,12 @@ function buildFleetCapLineupItem(entry: FleetCapCatalogEntry): FleetProductLineu
     id: `${entry.slug}-cap`,
     title: `USJET.AI ${entry.aircraftLabel} Trucker Cap`,
     kind: "Headwear",
-    description: entry.description ?? DEFAULT_CAP_DESCRIPTION,
+    description:
+      entry.description ??
+      `Structured foam front panel with USJET.AI crown branding, ${entry.aircraftLabel} jet emblem, and aircraft name. Black mesh back — lightweight trucker cap for the hangar and the runway.`,
     photo: {
       src: `/fleet/${entry.slug}-cap-product.webp`,
-      alt: `White and black USJET.AI trucker cap with ${entry.aircraftLabel} graphic on the front panel.`,
+      alt: `USJET.AI trucker cap with ${entry.aircraftLabel} jet emblem and name on the front panel.`,
       isDedicatedProductPhoto: true,
     },
     price: "$25",

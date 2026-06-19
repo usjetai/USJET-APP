@@ -1,65 +1,37 @@
 {
-  "generated": "2026-06-17T15:12:21.368Z",
+  "generated": "2026-06-19T01:59:12.150Z",
   "logos": [
     {
-      "source": "public/assets/fleet-logos/f22_raptor.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/f22_raptor.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/f35_lightning_ii.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/f35_lightning_ii.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/b21_raider.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/b21_raider.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/j36_fighter.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/j36_fighter.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/ngad_platform.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/ngad_platform.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/yf23_black_widow_ii.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/yf23_black_widow_ii.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/x47b.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/x47b.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/x37b.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/x37b.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/x51_waverider.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/x51_waverider.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/pca_aircraft.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/pca_aircraft.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/b2_spirit.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/b2_spirit.png"
-    },
-    {
-      "source": "public/assets/fleet-logos/b1_lancer.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/b1_lancer.png"
+      "source": "public/assets/fleet-logos/a10_warthog.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/a10_warthog.png"
     },
     {
       "source": "public/assets/fleet-logos/a12_avenger_ii.png",
       "radarPath": "/assets/fleet-logos/radar-transparent/a12_avenger_ii.png"
     },
     {
-      "source": "public/assets/fleet-logos/sr72_darkstar.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/sr72_darkstar.png"
+      "source": "public/assets/fleet-logos/b1_lancer.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/b1_lancer.png"
     },
     {
-      "source": "public/assets/fleet-logos/fb22.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/fb22.png"
+      "source": "public/assets/fleet-logos/b21_raider.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/b21_raider.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/b2_spirit.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/b2_spirit.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/f104_starfighter.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/f104_starfighter.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/f117_nighthawk.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/f117_nighthawk.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/f14_tomcat.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/f14_tomcat.png"
     },
     {
       "source": "public/assets/fleet-logos/f15ex_eagle_ii.png",
@@ -70,16 +42,32 @@
       "radarPath": "/assets/fleet-logos/radar-transparent/f16v_viper.png"
     },
     {
+      "source": "public/assets/fleet-logos/f22_raptor.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/f22_raptor.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/f35_lightning_ii.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/f35_lightning_ii.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/f4_phantom_ii.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/f4_phantom_ii.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/f86_sabre.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/f86_sabre.png"
+    },
+    {
       "source": "public/assets/fleet-logos/fa18_super_hornet.png",
       "radarPath": "/assets/fleet-logos/radar-transparent/fa18_super_hornet.png"
     },
     {
-      "source": "public/assets/fleet-logos/a10_warthog.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/a10_warthog.png"
+      "source": "public/assets/fleet-logos/fb22.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/fb22.png"
     },
     {
-      "source": "public/assets/fleet-logos/f117_nighthawk.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/f117_nighthawk.png"
+      "source": "public/assets/fleet-logos/j36_fighter.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/j36_fighter.png"
     },
     {
       "source": "public/assets/fleet-logos/mq25_stingray.png",
@@ -90,8 +78,12 @@
       "radarPath": "/assets/fleet-logos/radar-transparent/mq28_ghost_bat.png"
     },
     {
-      "source": "public/assets/fleet-logos/xq58_valkyrie.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/xq58_valkyrie.png"
+      "source": "public/assets/fleet-logos/ngad_platform.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/ngad_platform.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/pca_aircraft.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/pca_aircraft.png"
     },
     {
       "source": "public/assets/fleet-logos/rq180.png",
@@ -102,24 +94,32 @@
       "radarPath": "/assets/fleet-logos/radar-transparent/rq4_global_hawk.png"
     },
     {
-      "source": "public/assets/fleet-logos/f14_tomcat.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/f14_tomcat.png"
+      "source": "public/assets/fleet-logos/sr72_darkstar.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/sr72_darkstar.png"
     },
     {
-      "source": "public/assets/fleet-logos/f4_phantom_ii.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/f4_phantom_ii.png"
+      "source": "public/assets/fleet-logos/x37b.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/x37b.png"
     },
     {
-      "source": "public/assets/fleet-logos/f104_starfighter.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/f104_starfighter.png"
+      "source": "public/assets/fleet-logos/x47b.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/x47b.png"
     },
     {
-      "source": "public/assets/fleet-logos/f86_sabre.png",
-      "radarPath": "/assets/fleet-logos/radar-transparent/f86_sabre.png"
+      "source": "public/assets/fleet-logos/x51_waverider.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/x51_waverider.png"
     },
     {
       "source": "public/assets/fleet-logos/x59_quesst.png",
       "radarPath": "/assets/fleet-logos/radar-transparent/x59_quesst.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/xq58_valkyrie.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/xq58_valkyrie.png"
+    },
+    {
+      "source": "public/assets/fleet-logos/yf23_black_widow_ii.png",
+      "radarPath": "/assets/fleet-logos/radar-transparent/yf23_black_widow_ii.png"
     },
     {
       "source": "public/fleet/sr71-blackbird-logo.png",

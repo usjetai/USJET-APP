@@ -12,6 +12,7 @@ import {
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
 import FleetCard from "../components/fleet/FleetCard";
 import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
+import SovereignVaultGlobalDownload from "../components/growth/SovereignVaultGlobalDownload";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
@@ -24,6 +25,7 @@ const Fleet = () => {
     animate={{ opacity: 1 }}
     className="fleet-page fleet-page--runway relative"
   >
+    <SovereignVaultGlobalDownload fleetFloat />
     <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
       <header className="fleet-runway-hero mb-14 flex flex-col items-center gap-8 border-b border-cyan-400/15 pb-12 text-center md:mb-16">
         <motion.div

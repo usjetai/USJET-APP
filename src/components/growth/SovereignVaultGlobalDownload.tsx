@@ -6,10 +6,15 @@ import { SOVEREIGN_PRICE_DEADLINE_SHORT, SOVEREIGN_VAULT_ROUTE } from "../../dat
 type SovereignVaultGlobalDownloadProps = {
   /** Inside AppNav right rail — not fixed to viewport */
   embedded?: boolean;
+  /** Fleet runway — fixed middle-right with gentle bob float */
+  fleetFloat?: boolean;
 };
 
 /** Site-wide vault discovery — routes to /100k (same destination as footer 100K). */
-export default function SovereignVaultGlobalDownload({ embedded = false }: SovereignVaultGlobalDownloadProps) {
+export default function SovereignVaultGlobalDownload({
+  embedded = false,
+  fleetFloat = false,
+}: SovereignVaultGlobalDownloadProps) {
   const location = useLocation();
   const [shaking, setShaking] = useState(false);
 
@@ -22,7 +27,7 @@ export default function SovereignVaultGlobalDownload({ embedded = false }: Sover
     return null;
   }
 
-  return (
+  const link = (
     <Link
       to={SOVEREIGN_VAULT_ROUTE}
       className={[
@@ -31,6 +36,7 @@ export default function SovereignVaultGlobalDownload({ embedded = false }: Sover
         "glass-effect-interactive",
         "glass-tint-gold",
         embedded ? "vault-100k-stripe-dl--embedded" : "",
+        fleetFloat ? "vault-100k-stripe-dl--fleet-float" : "",
         shaking ? "vault-100k-stripe-dl--shake" : "",
       ]
         .filter(Boolean)
@@ -42,4 +48,14 @@ export default function SovereignVaultGlobalDownload({ embedded = false }: Sover
       <Download className="vault-100k-stripe-dl__icon" size={18} strokeWidth={2.25} aria-hidden />
     </Link>
   );
+
+  if (fleetFloat) {
+    return (
+      <div className="vault-100k-stripe-dl-float-wrap" aria-label="Sovereign vault download">
+        {link}
+      </div>
+    );
+  }
+
+  return link;
 }

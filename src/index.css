@@ -1229,10 +1229,10 @@
   pointer-events: auto;
   margin: 0 auto;
   max-width: min(72rem, 100%);
-  display: grid;
-  grid-template-rows: auto auto;
-  gap: 0.28rem;
-  padding: 0.3rem 0.48rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.34rem;
+  padding: 0.34rem 0.55rem;
   font-size: 0.5rem;
   font-weight: 800;
   font-style: italic;
@@ -1245,11 +1245,39 @@
   display: flex;
   align-items: center;
   min-width: 0;
+  width: 100%;
 }
 
 .usjet-global-contact-bar__row--head {
-  justify-content: space-between;
-  gap: 0.45rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.45rem 0.65rem;
+}
+
+.usjet-global-contact-bar__status-rail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0.28rem 0.62rem;
+  min-width: 0;
+}
+
+.usjet-global-contact-bar__status-rail > *:not(:first-child) {
+  position: relative;
+  padding-left: 0.62rem;
+}
+
+.usjet-global-contact-bar__status-rail > *:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 0.72rem;
+  transform: translateY(-50%);
+  background: rgba(148, 163, 184, 0.28);
 }
 
 .usjet-global-contact-bar__row--lanes {
@@ -1260,18 +1288,12 @@
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  padding-top: 0.04rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
 }
 
 .usjet-global-contact-bar__row--lanes::-webkit-scrollbar {
   display: none;
-}
-
-.usjet-global-contact-bar__lead {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.42rem;
-  flex-shrink: 0;
-  min-width: 0;
 }
 
 .usjet-global-contact-bar__row--lanes .btn-glass,
@@ -1357,6 +1379,102 @@
       0 0 10px rgba(59, 130, 246, 1),
       0 0 22px rgba(96, 165, 250, 0.85),
       0 0 34px rgba(147, 197, 253, 0.45);
+  }
+}
+
+.usjet-global-contact-bar__house-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  flex-shrink: 0;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.usjet-global-contact-bar__house-label {
+  font-size: 0.5rem;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(251, 207, 232, 0.88);
+}
+
+.usjet-global-contact-bar__house-ping {
+  width: 0.34rem;
+  height: 0.34rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: rgb(244, 114, 182);
+  box-shadow: 0 0 6px rgba(236, 72, 153, 0.95), 0 0 14px rgba(244, 114, 182, 0.7);
+  animation: usjet-footer-house-ping 1.05s ease-in-out infinite;
+}
+
+.usjet-global-contact-bar__house-status:hover .usjet-global-contact-bar__house-label,
+.usjet-global-contact-bar__house-status:focus-visible .usjet-global-contact-bar__house-label {
+  color: rgba(255, 228, 240, 0.98);
+}
+
+@keyframes usjet-footer-house-ping {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+    box-shadow: 0 0 4px rgba(236, 72, 153, 0.75), 0 0 10px rgba(244, 114, 182, 0.35);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.32);
+    box-shadow:
+      0 0 10px rgba(244, 114, 182, 1),
+      0 0 22px rgba(236, 72, 153, 0.9),
+      0 0 34px rgba(251, 113, 133, 0.5);
+  }
+}
+
+.usjet-global-contact-bar__delivery-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.usjet-global-contact-bar__delivery-label {
+  font-size: 0.5rem;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(187, 247, 208, 0.9);
+}
+
+.usjet-global-contact-bar__delivery-ping {
+  width: 0.34rem;
+  height: 0.34rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background: rgb(74, 222, 128);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.95), 0 0 14px rgba(74, 222, 128, 0.7);
+  animation: usjet-footer-delivery-ping 1.1s ease-in-out infinite;
+}
+
+@keyframes usjet-footer-delivery-ping {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scale(1);
+    box-shadow: 0 0 4px rgba(34, 197, 94, 0.75), 0 0 10px rgba(74, 222, 128, 0.35);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.32);
+    box-shadow:
+      0 0 10px rgba(74, 222, 128, 1),
+      0 0 22px rgba(34, 197, 94, 0.9),
+      0 0 34px rgba(134, 239, 172, 0.5);
   }
 }
 
@@ -1526,32 +1644,85 @@
   }
 }
 
+@media (max-width: 900px) {
+  .usjet-global-contact-bar__row--head {
+    gap: 0.3rem 0.4rem;
+  }
+
+  .usjet-global-contact-bar__status-rail {
+    gap: 0.22rem 0.42rem;
+  }
+
+  .usjet-global-contact-bar__status-rail > *:not(:first-child) {
+    padding-left: 0.42rem;
+  }
+
+  .usjet-global-contact-bar__house-label,
+  .usjet-global-contact-bar__delivery-label,
+  .usjet-global-contact-bar__status-label {
+    font-size: 0.44rem;
+    letter-spacing: 0.1em;
+  }
+}
+
 @media (max-width: 639px) {
   .usjet-global-contact-bar__shell {
     padding: 0.28rem 0.38rem;
-    gap: 0.24rem;
+    gap: 0.28rem;
   }
 
   .usjet-global-contact-bar__row--head {
-    gap: 0.32rem;
+    gap: 0.24rem 0.32rem;
   }
 
   .usjet-global-contact-bar__row--lanes {
+    gap: 0.2rem 0.22rem;
     justify-content: flex-start;
   }
 
-  .usjet-global-contact-bar__status-label {
-    font-size: 0.46rem;
-    letter-spacing: 0.16em;
+  .usjet-global-contact-bar__status-rail {
+    gap: 0.18rem 0.34rem;
   }
 
-  .usjet-global-contact-bar__cs-label {
-    font-size: 0.44rem;
+  .usjet-global-contact-bar__status-rail > *:not(:first-child) {
+    padding-left: 0.34rem;
+  }
+
+  .usjet-global-contact-bar__status-label--full,
+  .usjet-global-contact-bar__house-label--full,
+  .usjet-global-contact-bar__delivery-label--full,
+  .usjet-global-contact-bar__cs-label--full {
+    display: none;
+  }
+
+  .usjet-global-contact-bar__status-label--short,
+  .usjet-global-contact-bar__house-label--short,
+  .usjet-global-contact-bar__delivery-label--short,
+  .usjet-global-contact-bar__cs-label--short {
+    display: inline;
+  }
+}
+
+@media (min-width: 640px) {
+  .usjet-global-contact-bar__status-label--short,
+  .usjet-global-contact-bar__house-label--short,
+  .usjet-global-contact-bar__delivery-label--short,
+  .usjet-global-contact-bar__cs-label--short {
+    display: none;
+  }
+
+  .usjet-global-contact-bar__status-label--full,
+  .usjet-global-contact-bar__house-label--full,
+  .usjet-global-contact-bar__delivery-label--full,
+  .usjet-global-contact-bar__cs-label--full {
+    display: inline;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .usjet-global-contact-bar__ping,
+  .usjet-global-contact-bar__house-ping,
+  .usjet-global-contact-bar__delivery-ping,
   .usjet-global-contact-bar__usa250-days,
   .usjet-global-contact-bar__pdre,
   .usjet-global-contact-bar__sos {
@@ -1568,6 +1739,18 @@
     opacity: 0.85;
     transform: none;
     box-shadow: 0 0 6px rgba(59, 130, 246, 0.7);
+  }
+
+  .usjet-global-contact-bar__house-ping {
+    opacity: 0.9;
+    transform: none;
+    box-shadow: 0 0 6px rgba(244, 114, 182, 0.75);
+  }
+
+  .usjet-global-contact-bar__delivery-ping {
+    opacity: 0.9;
+    transform: none;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.75);
   }
 
   .usjet-global-contact-bar__sos {
@@ -24141,6 +24324,39 @@ html.fleet-manual-page-root #usjet-app-shell {
   flex-shrink: 0;
 }
 
+.vault-100k-stripe-dl-float-wrap {
+  position: fixed;
+  top: 50%;
+  right: max(0.85rem, env(safe-area-inset-right, 0px));
+  z-index: 220;
+  transform: translateY(-50%);
+  animation: vault-100k-dl-float 3.4s ease-in-out infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.vault-100k-stripe-dl--fleet-float {
+  position: static;
+  top: auto;
+  right: auto;
+  z-index: auto;
+  pointer-events: auto;
+  animation:
+    vault-100k-dl-glow 4s ease-in-out infinite,
+    vault-100k-dl-blink 5s ease-in-out infinite;
+}
+
+@keyframes vault-100k-dl-float {
+  0%,
+  100% {
+    transform: translateY(-50%);
+  }
+
+  50% {
+    transform: translateY(calc(-50% - 12px));
+  }
+}
+
 .vault-100k-stripe-dl__icon {
   filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.65));
 }
@@ -24858,6 +25074,7 @@ html.intelligence-page-root #usjet-app-shell {
   .usjet-global-contact-bar__100k,
   .usjet-global-contact-bar__100k-reflection,
   .vault-100k-stripe-dl,
+  .vault-100k-stripe-dl-float-wrap,
   .sovereign-book-artifact__book,
   .sovereign-book-artifact__glow,
   .vault-100k-page__hero,
@@ -29515,23 +29732,55 @@ html.blog-page-root #usjet-app-shell {
   margin-top: 0.85rem;
 }
 
-.hired-hud__hub .hired-hud__tile-glam {
+.hired-hud__hub .hired-hud__tile-glam-stack {
   position: absolute;
   top: 50%;
   right: 0.75rem;
   bottom: auto;
   left: auto;
   transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.38rem;
+  max-height: min(80%, 24rem);
+  z-index: 4;
+}
+
+.hired-hud__hub .hired-hud__tile-glam {
+  position: static;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  transform: none;
   display: grid;
   grid-template-columns: repeat(4, 2.45rem);
   grid-auto-rows: 2.45rem;
   justify-items: center;
   align-content: center;
   gap: 0.42rem;
-  max-height: min(75%, 22rem);
+  max-height: min(65%, 18rem);
   overflow-y: auto;
-  z-index: 4;
   scrollbar-width: thin;
+}
+
+.hired-hud__tile-patch-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.32rem;
+  flex-shrink: 0;
+}
+
+.hired-hud__tile-earhart-patch,
+.hired-hud__tile-sr71-patch {
+  width: 3.35rem;
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 3px 8px rgb(2 8 23 / 0.72));
+  pointer-events: none;
 }
 
 .hired-hud__hub .hired-hud__tile-favorite {
@@ -30004,11 +30253,25 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__avatar--triple-tile {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.32rem;
   width: 100%;
   max-width: 24rem;
+  padding-top: 1.85rem;
+}
+
+.hired-hud__jet-captain-wings {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  width: min(11rem, 92%);
+  height: auto;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 3px 8px rgb(2 8 23 / 0.72)) drop-shadow(0 0 14px rgb(251 191 36 / 0.28));
+  pointer-events: none;
 }
 
 .hired-hud__avatar--triple-tile .hired-hud__avatar-img {

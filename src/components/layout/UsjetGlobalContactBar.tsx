@@ -16,18 +16,46 @@ export default function UsjetGlobalContactBar() {
     <footer className="usjet-global-contact-bar" aria-label="USJET site status and quick links">
       <GlassEffectContainer className="usjet-global-contact-bar__shell liquid-glass-background glass-effect glass-effect--capsule glass-tint-cyan">
         <div className="usjet-global-contact-bar__row usjet-global-contact-bar__row--head">
-          <div className="usjet-global-contact-bar__lead">
-            <Link
-              to="/"
-              className="usjet-global-contact-bar__brand btn-glass glass-effect-interactive"
-              aria-label="USJet.ai home"
-            >
-              <UsjetWordmark size="nav" glow />
-            </Link>
+          <Link
+            to="/"
+            className="usjet-global-contact-bar__brand btn-glass glass-effect-interactive"
+            aria-label="USJet.ai home"
+          >
+            <UsjetWordmark size="nav" glow />
+          </Link>
+
+          <div className="usjet-global-contact-bar__status-rail" aria-label="USJET live status">
             <div className="usjet-global-contact-bar__status">
-              <span className="usjet-global-contact-bar__status-label">USJET System Active</span>
+              <span className="usjet-global-contact-bar__status-label usjet-global-contact-bar__status-label--full">
+                USJET System Active
+              </span>
+              <span className="usjet-global-contact-bar__status-label usjet-global-contact-bar__status-label--short">
+                System Active
+              </span>
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
+            <Link
+              to="/hired-hud"
+              className="usjet-global-contact-bar__house-status"
+              title="USJET House — hired developer hub"
+            >
+              <span className="usjet-global-contact-bar__house-label usjet-global-contact-bar__house-label--full">
+                USJET House · project in progress
+              </span>
+              <span className="usjet-global-contact-bar__house-label usjet-global-contact-bar__house-label--short">
+                House · in progress
+              </span>
+              <span className="usjet-global-contact-bar__house-ping" aria-hidden />
+            </Link>
+            <span className="usjet-global-contact-bar__delivery-status" title="Free shipping on fleet merchandise">
+              <span className="usjet-global-contact-bar__delivery-label usjet-global-contact-bar__delivery-label--full">
+                Free delivery active
+              </span>
+              <span className="usjet-global-contact-bar__delivery-label usjet-global-contact-bar__delivery-label--short">
+                Free delivery
+              </span>
+              <span className="usjet-global-contact-bar__delivery-ping" aria-hidden />
+            </span>
           </div>
 
           <div className="usjet-global-contact-bar__support">
@@ -50,7 +78,10 @@ export default function UsjetGlobalContactBar() {
                 to={ORIGIN_CS_ROUTE}
                 className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
               >
-                <span className="usjet-global-contact-bar__cs-label">Customer Service</span>
+                <span className="usjet-global-contact-bar__cs-label usjet-global-contact-bar__cs-label--full">
+                  Customer Service
+                </span>
+                <span className="usjet-global-contact-bar__cs-label usjet-global-contact-bar__cs-label--short">Service</span>
               </Link>
             </FooterSurpriseWrap>
           </div>

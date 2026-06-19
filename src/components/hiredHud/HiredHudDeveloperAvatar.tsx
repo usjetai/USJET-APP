@@ -1,4 +1,5 @@
 import { Code2, Star } from "lucide-react";
+import { HIRED_HUD_JET_CAPTAIN_WINGS_SRC } from "../../data/hiredHudAssets";
 import {
   getHiredDeveloperHubAvatarPath,
   getHiredDeveloperProductAvatarPath,
@@ -66,6 +67,16 @@ export default function HiredHudDeveloperAvatar({
 
     return (
       <div className="hired-hud__avatar hired-hud__avatar--tile hired-hud__avatar--triple-tile">
+        <img
+          src={HIRED_HUD_JET_CAPTAIN_WINGS_SRC}
+          alt=""
+          className="hired-hud__jet-captain-wings"
+          width={220}
+          height={80}
+          decoding="async"
+          draggable={false}
+          aria-hidden
+        />
         {hubSrc ? <AvatarPanel src={hubSrc} name={name} label="profile" /> : null}
         {rideSrc ? <AvatarPanel src={rideSrc} name={name} label="ride" /> : null}
         {superSrc ? <AvatarPanel src={superSrc} name={name} label="super" /> : null}

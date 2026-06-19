@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { Newspaper } from "lucide-react";
 import GamingVrNavButton from "../gaming/GamingVrNavButton";
 import AppNavHangarLive from "./AppNavHangarLive";
@@ -68,10 +68,12 @@ const navPillClass = (isActive: boolean) =>
     .join(" ");
 
 const AppNav = () => {
+  const location = useLocation();
   const { session } = useMemberAuth();
   const visibleLinks = NAV_LINKS.filter((link) =>
     link.to === "/member" ? showMemberNavLink(session) : canMemberAccessRoute(link.to, session),
   );
+  const showNavDownload = location.pathname !== "/";
 
   return (
     <header className="liquid-glass-nav sticky top-0 z-50 mx-auto w-full max-w-[min(100vw-1.25rem,72rem)] px-2 backdrop-blur-md sm:max-w-none sm:px-4">
@@ -273,9 +275,11 @@ const AppNav = () => {
           </div>
         </div>
 
-        <div className="app-nav-zone app-nav-zone--download" aria-label="Sovereign vault download">
-          <SovereignVaultGlobalDownload embedded />
-        </div>
+        {showNavDownload ? (
+          <div className="app-nav-zone app-nav-zone--download" aria-label="Sovereign vault download">
+            <SovereignVaultGlobalDownload embedded />
+          </div>
+        ) : null}
       </GlassEffectContainer>
     </header>
   );

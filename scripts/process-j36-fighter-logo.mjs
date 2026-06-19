@@ -1,8 +1,7 @@
 /**
- * Process the SR-71 Blackbird technical-draw logo: crop stock footer, key white
- * sheet, strip watermark haze, rotate upright (nose top), export fleet emblem.
+ * Process the J-36 concept fighter logo: key dark gray sheet, rotate upright.
  *
- * Run: node scripts/process-sr71-blackbird-logo.mjs
+ * Run: node scripts/process-j36-fighter-logo.mjs
  */
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -10,41 +9,35 @@ import sharp from "sharp";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const SOURCE = join(__dirname, "assets/sr71-blackbird-source.png");
-const OUT_MAIN = join(ROOT, "public/fleet/sr71-blackbird-logo.png");
-const OUT_RADAR = join(ROOT, "public/assets/fleet-logos/radar-transparent/sr71-blackbird-logo.png");
-const TARGET = 512;
-/** Alamy footer bar begins below the aircraft art. */
-const FOOTER_CROP_HEIGHT = 565;
+const SOURCE = join(__dirname, "assets/j36-fighter-source.png");
+const OUT_MAIN = join(ROOT, "public/assets/fleet-logos/j36_fighter.png");
+const OUT_RADAR = join(ROOT, "public/assets/fleet-logos/radar-transparent/j36_fighter.png");
+const TARGET = 384;
+const SHEET_BG = { r: 47, g: 47, b: 47 };
 
-function shouldKeepPixel(r, g, b) {
+function isBackgroundPixel(r, g, b) {
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
-  const avg = (r + g + b) / 3;
   const spread = max - min;
 
-  if (min >= 244 || avg >= 238) {
-    return false;
+  const dr = r - SHEET_BG.r;
+  const dg = g - SHEET_BG.g;
+  const db = b - SHEET_BG.b;
+  const distance = Math.sqrt(dr * dr + dg * dg + db * db);
+
+  if (distance <= 10 && spread <= 8) {
+    return true;
   }
 
-  if (spread <= 22 && avg >= 108 && avg <= 232) {
-    return false;
+  if (min >= 232 && spread <= 12) {
+    return true;
   }
 
-  return true;
+  return false;
 }
 
 async function keyToPng(inputPath) {
-  const sourceMeta = await sharp(inputPath).metadata();
-  const cropHeight = Math.min(FOOTER_CROP_HEIGHT, sourceMeta.height ?? FOOTER_CROP_HEIGHT);
-
-  const cropped = await sharp(inputPath)
-    .extract({ left: 0, top: 0, width: sourceMeta.width, height: cropHeight })
-    .ensureAlpha()
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-
-  const { data, info } = cropped;
+  const { data, info } = await sharp(inputPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const { width, height, channels } = info;
 
   for (let y = 0; y < height; y++) {
@@ -54,7 +47,7 @@ async function keyToPng(inputPath) {
       const g = data[i + 1];
       const b = data[i + 2];
 
-      if (!shouldKeepPixel(r, g, b)) {
+      if (isBackgroundPixel(r, g, b)) {
         data[i + 3] = 0;
       }
     }
@@ -63,7 +56,7 @@ async function keyToPng(inputPath) {
   return sharp(data, { raw: { width, height, channels } })
     .png()
     .trim({ threshold: 10 })
-    .rotate(-90, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .rotate(90, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .trim({ threshold: 10 })
     .resize(TARGET, TARGET, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png()

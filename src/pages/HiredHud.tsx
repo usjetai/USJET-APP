@@ -480,7 +480,6 @@ export default function HiredHud() {
             {hiredUnits.map((unit, rosterIndex) => {
               const bpm = developerBpm[unit.slot] ?? 72;
               const spo2 = developerSpo2[unit.slot]?.toFixed(1) ?? "97.0";
-              const pressure = developerPressure[unit.slot] ?? 72;
               const steps = developerSteps[unit.slot] ?? 0;
               const sleepMinutes = developerSleep[unit.slot] ?? 0;
               const sleepLabel = formatSleepTime(sleepMinutes);
@@ -521,21 +520,6 @@ export default function HiredHud() {
                     className="hired-hud__tile-scanline"
                     style={{ transform: `translateY(${tileScan}%)` }}
                   />
-                  <div className="hired-hud__tile-hud-readings">
-                    <span className="hired-hud__tile-hud-label">Cardio unit</span>
-                    <span className="hired-hud__tile-hud-bpm">{bpm} BPM</span>
-                    <span className="hired-hud__tile-hud-spo2">SpO2 {spo2}%</span>
-                    <span className="hired-hud__tile-hud-pressure">Pressure {pressure}%</span>
-                    <span className="hired-hud__tile-hud-steps">{formatDailySteps(steps)} steps</span>
-                    <span className="hired-hud__tile-hud-sleep">Sleep {sleepLabel}</span>
-                    <span className="hired-hud__tile-hud-fuel">Fuel {fuelLabel}</span>
-                    <div className="hired-hud__tile-hud-fuel-meter" aria-hidden>
-                      <span
-                        className="hired-hud__tile-hud-fuel-meter-fill"
-                        style={{ width: `${fuel.percent}%` }}
-                      />
-                    </div>
-                  </div>
                   <div className="hired-hud__tile-logo-wrap">
                     <HiredHudDeveloperLogo slot={unit.slot} aircraftType={aircraftType} variant="hud" />
                   </div>

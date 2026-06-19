@@ -4,7 +4,7 @@ import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import FleetHiredDeveloperCockpit from "./FleetHiredDeveloperCockpit";
 import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
-import { useMemo, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
+import { useMemo, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getFleetProductPagePath } from "../../data/fleetDirectorySeo";
 import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
@@ -70,6 +70,7 @@ export default function FleetCard({
   const productPagePath = getFleetProductPagePath(callsign);
   const showProductFooter = surface === "fleet";
   const isRunway = surface === "fleet";
+  const [aircraftSpinPulse, setAircraftSpinPulse] = useState(false);
   const terminalFeed = useMemo(
     () =>
       buildFleetTileTerminalFeed({
@@ -84,6 +85,33 @@ export default function FleetCard({
       }),
     [name, callsign, domain, slot, bayAccent?.personality, capabilities, isCommandBay, expandInteractive],
   );
+
+  const triggerAircraftSpin = () => {
+    if (!isRunway) {
+      return;
+    }
+    setAircraftSpinPulse(false);
+    requestAnimationFrame(() => setAircraftSpinPulse(true));
+  };
+
+  const handleCardMouseEnter = () => {
+    publishLiveTerminalTile(terminalFeed);
+    triggerAircraftSpin();
+  };
+
+  const handleCardMouseLeave = () => {
+    clearLiveTerminalTile();
+    if (isRunway) {
+      setAircraftSpinPulse(false);
+    }
+  };
+
+  const aircraftWrapClassName = [
+    "fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4",
+    isRunway && aircraftSpinPulse ? "fleet-card__aircraft-wrap--hover-spin" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const syncProtocolToClipboard = () => {
     void copyUsjetProtocol(protocolText);
@@ -184,7 +212,7 @@ export default function FleetCard({
       {isRunway && !isAvailableBay && typeof slot === "number" ? (
         <div className="fleet-card__runway-visual">
           <FleetHiredDeveloperCockpit slot={slot} name={name} />
-          <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4">
+          <div className={aircraftWrapClassName}>
             <AircraftIcon
               aircraftType={aircraftType}
               slot={slot}
@@ -194,7 +222,7 @@ export default function FleetCard({
           </div>
         </div>
       ) : (
-        <div className="fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4">
+        <div className={aircraftWrapClassName}>
           <AircraftIcon
             aircraftType={aircraftType}
             slot={slot}
@@ -264,8 +292,8 @@ export default function FleetCard({
       data-usjet-cockpit={expandInteractive ? "true" : undefined}
       data-usjet-fleet-bay={expandInteractive && typeof slot === "number" ? String(slot + 1) : undefined}
       data-usjet-partner={expandInteractive ? domain : undefined}
-      onMouseEnter={() => publishLiveTerminalTile(terminalFeed)}
-      onMouseLeave={() => clearLiveTerminalTile()}
+      onMouseEnter={handleCardMouseEnter}
+      onMouseLeave={handleCardMouseLeave}
       onFocus={() => publishLiveTerminalTile(terminalFeed)}
       onBlur={() => clearLiveTerminalTile()}
     >

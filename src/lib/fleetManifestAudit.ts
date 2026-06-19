@@ -26,7 +26,7 @@ export const FLEET_PARTNER_HREFS: Record<number, string> = {
   18: "https://synthesia.io",
   19: "https://www.heygen.com",
   20: "https://v0.dev",
-  21: "https://replit.com/ai",
+  21: "https://replit.com/refer/USJET",
   22: "https://github.com/features/copilot",
   23: "https://consensus.app",
   24: "https://gamma.app",

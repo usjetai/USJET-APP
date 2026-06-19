@@ -67,7 +67,7 @@ export const AI_DOMAIN_BY_AIRCRAFT_SLUG = {
   "a-10-warthog": "synthesia.io",
   "f-117-nighthawk": "heygen.com",
   "mq-25-stingray": "v0.dev",
-  "mq-28-ghost-bat": "replit.com",
+  "mq-28-ghost-bat": "replit.com/refer/USJET",
   "xq-58-valkyrie": "github.com",
   "rq-180": "consensus.app",
   "rq-4-global-hawk": "gamma.app",

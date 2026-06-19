@@ -1,10 +1,11 @@
+import { motion } from "framer-motion";
 import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { getFleetCapabilities, getFleetPartnerLabel } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import FleetHiredDeveloperCockpit from "./FleetHiredDeveloperCockpit";
 import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
-import { useMemo, useRef, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
+import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getFleetProductPagePath } from "../../data/fleetDirectorySeo";
 import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
@@ -13,7 +14,7 @@ import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
 import { useOriginLimitedOfferOptional } from "../../context/OriginLimitedOfferContext";
-import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
+import { fleetLaunchUrl, integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
@@ -57,7 +58,11 @@ export default function FleetCard({
   const originOffer = useOriginLimitedOfferOptional();
   const resolvedHref = href?.trim() ?? "";
   const hasExternalPartner = /^https?:\/\//i.test(resolvedHref);
-  const partnerLaunchUrl = fleetLaunchUrl(domain, href, slot);
+  const isRunway = surface === "fleet";
+  const rawPartnerUrl = fleetLaunchUrl(domain, href, slot);
+  const partnerLaunchUrl = isRunway
+    ? integratedLaunchUrl(domain, href, slot, { returnTo: "/", label: name, callName: callsign })
+    : rawPartnerUrl;
   const launchUrl =
     isAvailableBay && !hasExternalPartner ? (jetFighterPagePath ?? "#") : partnerLaunchUrl;
   const isOriginLaunch = partnerLaunchUrl === "/origin" || partnerLaunchUrl.startsWith("/origin?");
@@ -69,9 +74,9 @@ export default function FleetCard({
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
   const productPagePath = getFleetProductPagePath(callsign);
   const showProductFooter = surface === "fleet";
-  const isRunway = surface === "fleet";
-  const aircraftRef = useRef<HTMLImageElement>(null);
-  const aircraftSpinRef = useRef<Animation | null>(null);
+  const launchSpinPendingRef = useRef(false);
+  const [launchSpinning, setLaunchSpinning] = useState(false);
+  const [launchSpinKey, setLaunchSpinKey] = useState(0);
   const terminalFeed = useMemo(
     () =>
       buildFleetTileTerminalFeed({
@@ -87,56 +92,71 @@ export default function FleetCard({
     [name, callsign, domain, slot, bayAccent?.personality, capabilities, isCommandBay, expandInteractive],
   );
 
-  const triggerAircraftSpin = () => {
-    if (!isRunway) {
+  const finishLaunchAfterSpin = () => {
+    if (launchBlocked) {
+      launchSpinPendingRef.current = false;
+      setLaunchSpinning(false);
       return;
     }
-    const aircraft = aircraftRef.current;
-    if (!aircraft) {
+    if (isOriginLaunch && originOffer) {
+      originOffer.requestOriginNavigation();
       return;
     }
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (launchUrl.startsWith("/")) {
+      navigate(launchUrl);
       return;
     }
-
-    aircraftSpinRef.current?.cancel();
-    aircraftSpinRef.current = aircraft.animate(
-      [
-        { transform: "translate3d(0, 0, 0) scale(1) rotate(0deg)" },
-        { transform: "translate3d(3px, -5px, 0) scale(1.05) rotate(-4deg)", offset: 0.12 },
-        { transform: "translate3d(3px, -5px, 0) scale(1.05) rotate(356deg)" },
-      ],
-      {
-        duration: 900,
-        easing: "cubic-bezier(0.34, 1.12, 0.64, 1)",
-        fill: "forwards",
-      },
-    );
+    window.location.assign(launchUrl);
   };
 
-  const resetAircraftSpin = () => {
-    aircraftSpinRef.current?.cancel();
-    aircraftSpinRef.current = null;
-    const aircraft = aircraftRef.current;
-    if (aircraft) {
-      aircraft.style.transform = "";
+  const handleSpinComplete = () => {
+    if (!launchSpinPendingRef.current) {
+      return;
     }
+    launchSpinPendingRef.current = false;
+    setLaunchSpinning(false);
+    finishLaunchAfterSpin();
   };
 
   const handleCardMouseEnter = () => {
     publishLiveTerminalTile(terminalFeed);
-    triggerAircraftSpin();
   };
 
   const handleCardMouseLeave = () => {
     clearLiveTerminalTile();
-    if (isRunway) {
-      resetAircraftSpin();
-    }
   };
 
   const aircraftWrapClassName =
     "fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4";
+
+  const renderAircraftIcon = () => (
+    <AircraftIcon
+      aircraftType={aircraftType}
+      slot={slot}
+      accentId={accentId}
+      className="fleet-card__aircraft h-32 w-32"
+    />
+  );
+
+  const renderAircraftWrap = () => {
+    if (isRunway && launchSpinning && launchSpinKey > 0) {
+      return (
+        <motion.div
+          key={`fleet-aircraft-spin-${launchSpinKey}`}
+          className={aircraftWrapClassName}
+          style={{ transformOrigin: "center center" }}
+          initial={{ rotate: 0, scale: 1, x: 0, y: 0 }}
+          animate={{ rotate: 360, scale: 1.05, x: 3, y: -5 }}
+          transition={{ duration: 0.75, ease: [0.34, 1.12, 0.64, 1] }}
+          onAnimationComplete={handleSpinComplete}
+        >
+          {renderAircraftIcon()}
+        </motion.div>
+      );
+    }
+
+    return <div className={aircraftWrapClassName}>{renderAircraftIcon()}</div>;
+  };
 
   const syncProtocolToClipboard = () => {
     void copyUsjetProtocol(protocolText);
@@ -188,6 +208,33 @@ export default function FleetCard({
     onExpandBay?.();
   };
 
+  const handleLaunchClick = (e: MouseEvent<HTMLButtonElement>) => {
+    if (launchBlocked) {
+      return;
+    }
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+      openPartner();
+      return;
+    }
+    if (launchSpinPendingRef.current) {
+      e.preventDefault();
+      return;
+    }
+
+    e.preventDefault();
+    logFleetUsageIfMember(callsign, name);
+    syncProtocolToClipboard();
+    launchSpinPendingRef.current = true;
+    setLaunchSpinning(true);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      handleSpinComplete();
+      return;
+    }
+
+    setLaunchSpinKey((key) => key + 1);
+  };
+
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (launchBlocked) {
       e.preventDefault();
@@ -221,6 +268,7 @@ export default function FleetCard({
     expandInteractive ? "fleet-card--hangar-expand" : "",
     isCommandBay ? "fleet-card--command" : "",
     isAvailableBay ? "fleet-card--available" : "",
+    launchSpinning ? "fleet-card--launch-spinning" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -237,26 +285,10 @@ export default function FleetCard({
       {isRunway && !isAvailableBay && typeof slot === "number" ? (
         <div className="fleet-card__runway-visual">
           <FleetHiredDeveloperCockpit slot={slot} name={name} />
-          <div className={aircraftWrapClassName}>
-            <AircraftIcon
-              ref={aircraftRef}
-              aircraftType={aircraftType}
-              slot={slot}
-              accentId={accentId}
-              className="fleet-card__aircraft h-32 w-32"
-            />
-          </div>
+          {renderAircraftWrap()}
         </div>
       ) : (
-        <div className={aircraftWrapClassName}>
-          <AircraftIcon
-            ref={aircraftRef}
-            aircraftType={aircraftType}
-            slot={slot}
-            accentId={accentId}
-            className="fleet-card__aircraft h-32 w-32"
-          />
-        </div>
+        renderAircraftWrap()
       )}
 
       <div className="fleet-card__meta mt-auto text-left">
@@ -316,6 +348,7 @@ export default function FleetCard({
     <div
       className={cardClassName}
       style={cardStyle}
+      aria-busy={launchSpinning || undefined}
       data-usjet-cockpit={expandInteractive ? "true" : undefined}
       data-usjet-fleet-bay={expandInteractive && typeof slot === "number" ? String(slot + 1) : undefined}
       data-usjet-partner={expandInteractive ? domain : undefined}
@@ -332,6 +365,16 @@ export default function FleetCard({
           aria-label={launchAriaLabel}
           onClick={handleExpandClick}
           onKeyDown={handleExpandKeyDown}
+        >
+          {glassContent}
+        </button>
+      ) : isRunway ? (
+        <button
+          type="button"
+          className="fleet-card__launch fleet-card__launch--button block min-h-0 w-full flex-1"
+          title={launchTitle}
+          aria-label={launchAriaLabel}
+          onClick={handleLaunchClick}
         >
           {glassContent}
         </button>

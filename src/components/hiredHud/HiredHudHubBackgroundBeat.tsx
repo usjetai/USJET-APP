@@ -95,7 +95,8 @@ const HiredHudHubBackgroundBeat = forwardRef<HiredHudHubBackgroundBeatHandle>(
               disablekb: 1,
               fs: 0,
               iv_load_policy: 3,
-              loop: 0,
+              loop: 1,
+              playlist: HIRED_HUD_HUB_BEAT_VIDEO_ID,
               origin: typeof window !== "undefined" ? window.location.origin : undefined,
             },
             events: {
@@ -110,7 +111,13 @@ const HiredHudHubBackgroundBeat = forwardRef<HiredHudHubBackgroundBeatHandle>(
               },
               onStateChange: (event: { data: number; target: YoutubePlayer }) => {
                 if (event.data === YT_ENDED) {
-                  event.target.pauseVideo();
+                  event.target.seekTo(0, true);
+                  if (soundLiveRef.current) {
+                    unlockPlayerSound(event.target);
+                  } else {
+                    event.target.mute();
+                    event.target.playVideo();
+                  }
                 }
               },
               onError: () => {

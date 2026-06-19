@@ -27,6 +27,7 @@ const STATIC_ENTRIES = [
   { path: "/founder-special-1995", changefreq: "monthly", priority: "0.78" },
   { path: "/special", changefreq: "monthly", priority: "0.65" },
   { path: "/sos", changefreq: "monthly", priority: "0.55" },
+  { path: "/privacy", changefreq: "yearly", priority: "0.5" },
   { path: "/ai-101", changefreq: "weekly", priority: "0.84" },
   { path: "/code-kit", changefreq: "weekly", priority: "0.8" },
   { path: "/b2b", changefreq: "weekly", priority: "0.9" },

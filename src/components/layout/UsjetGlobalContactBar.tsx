@@ -36,6 +36,15 @@ export default function UsjetGlobalContactBar() {
                 SOS
               </Link>
             </FooterSurpriseWrap>
+            <FooterSurpriseWrap chipId="privacy">
+              <Link
+                to="/privacy"
+                className="usjet-global-contact-bar__ops btn-glass glass-effect-interactive"
+                aria-label="USJET privacy policy"
+              >
+                <span className="usjet-global-contact-bar__ops-label">Privacy</span>
+              </Link>
+            </FooterSurpriseWrap>
             <FooterSurpriseWrap chipId="cs">
               <Link
                 to={ORIGIN_CS_ROUTE}

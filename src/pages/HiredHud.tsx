@@ -507,6 +507,11 @@ export default function HiredHud() {
                   isFavorite={isTileFavorite}
                   onToggle={() => toggleTileFavorite(unit.slot)}
                 />
+                <div className="hired-hud__tile-glam" aria-label="Glam — nails, hair, pedicure, style, car, ring">
+                  {getHiredHudTileGlamChips(unit.slot).map((chip) =>
+                    renderHiredHudTileGlamChip(unit.slot, chip),
+                  )}
+                </div>
                 <div className="hired-hud__tile-hud" aria-hidden>
                   <div
                     className="hired-hud__tile-hud-bg"
@@ -542,11 +547,6 @@ export default function HiredHud() {
 
                 <div className="hired-hud__tile-content">
                   <div className="hired-hud__tile-profile">
-                    <div className="hired-hud__tile-glam" aria-label="Glam — nails, hair, pedicure, style, car, ring">
-                      {getHiredHudTileGlamChips(unit.slot).map((chip) =>
-                        renderHiredHudTileGlamChip(unit.slot, chip),
-                      )}
-                    </div>
                     <HiredHudTileGlamFuelButton name={unit.name} slot={unit.slot} />
                     <HiredHudTileDeveloperChat unit={unit} />
                     <HiredHudDeveloperAvatar slot={unit.slot} name={unit.name} variant="tile" />

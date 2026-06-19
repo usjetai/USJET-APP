@@ -29515,6 +29515,36 @@ html.blog-page-root #usjet-app-shell {
   margin-top: 0.85rem;
 }
 
+.hired-hud__hub .hired-hud__tile-glam {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  bottom: auto;
+  left: auto;
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-columns: repeat(4, 2.45rem);
+  grid-auto-rows: 2.45rem;
+  justify-items: center;
+  align-content: center;
+  gap: 0.42rem;
+  max-height: min(75%, 22rem);
+  overflow-y: auto;
+  z-index: 4;
+  scrollbar-width: thin;
+}
+
+.hired-hud__hub .hired-hud__tile-favorite {
+  top: 0.72rem;
+  right: 0.62rem;
+  transform: none;
+}
+
+.hired-hud__hub .hired-hud__tile-favorite:hover,
+.hired-hud__hub .hired-hud__tile-favorite:focus-visible {
+  transform: translateY(-1px);
+}
+
 .hired-hud__tile--scene-mosaic {
   grid-column: 1 / -1;
   min-height: auto;

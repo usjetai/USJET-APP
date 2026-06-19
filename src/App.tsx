@@ -55,6 +55,7 @@ const Gamers = lazy(() => import("./pages/Gamers"));
 const Gaming = lazy(() => import("./pages/Gaming"));
 const HiredHud = lazy(() => import("./pages/HiredHud"));
 const Hoops = lazy(() => import("./pages/Hoops"));
+const X = lazy(() => import("./pages/X"));
 
 function RouteFallback() {
   return (
@@ -100,6 +101,7 @@ function AnimatedRoutes() {
             <Route path="/gaming" element={<Gaming />} />
             <Route path="/vr" element={<Gaming />} />
             <Route path="/gamers" element={<Gamers />} />
+            <Route path="/x" element={<X />} />
             <Route path="/sos" element={<Sos />} />
             <Route path="/ai-101" element={<Ai101 />} />
             <Route path="/code-kit" element={<CodeKit />} />

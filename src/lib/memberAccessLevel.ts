@@ -34,6 +34,7 @@ export const GUEST_PUBLIC_ROUTES = [
   "/gamers",
   "/gaming",
   "/vr",
+  "/x",
   "/hoops",
   "/app/hoops",
 ] as const;
@@ -69,6 +70,7 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/gamers": 0,
   "/gaming": 0,
   "/vr": 0,
+  "/x": 0,
   "/hoops": 0,
   "/app/hoops": 0,
   "/member/login": 0,

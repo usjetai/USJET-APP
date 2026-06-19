@@ -13,6 +13,7 @@ const STATIC_ENTRIES = [
   { path: "/gaming", changefreq: "weekly", priority: "0.86" },
   { path: "/vr", changefreq: "weekly", priority: "0.82" },
   { path: "/gamers", changefreq: "weekly", priority: "0.8" },
+  { path: "/x", changefreq: "daily", priority: "0.76" },
   { path: "/sovereignty", changefreq: "weekly", priority: "0.85" },
   { path: "/strategic-assets", changefreq: "weekly", priority: "0.85" },
   { path: "/intelligence", changefreq: "weekly", priority: "0.95" },

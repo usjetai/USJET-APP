@@ -82,7 +82,6 @@ export default function HiredHudFleetScope({ units }: HiredHudFleetScopeProps) {
         className="hired-hud__fleet-scope-map"
         style={{ backgroundImage: `url("${HIRED_HUD_RADAR_SCOPE_MAP_SRC}")` }}
       />
-      <span className="hired-hud__fleet-scope-watermark-cover" />
       <span className="hired-hud__fleet-scope-ring hired-hud__fleet-scope-ring--outer" />
       <span className="hired-hud__fleet-scope-ring hired-hud__fleet-scope-ring--mid" />
       <span className="hired-hud__fleet-scope-ring hired-hud__fleet-scope-ring--inner" />

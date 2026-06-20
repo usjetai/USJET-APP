@@ -119,6 +119,34 @@
   padding: 0;
 }
 
+/* Founder page video background */
+.founder-video-bg {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #010308;
+}
+
+.founder-video-bg__yt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max(100vw, 177.78vh);
+  height: max(56.25vw, 100vh);
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+@media (min-width: 1024px) {
+  .founder-video-bg__yt {
+    width: max(100vw, 177.78vh);
+    height: max(56.25vw, 100vh);
+    object-fit: cover;
+  }
+}
+
 /* Global warp tunnel — radial streak layers only (no video/veil/wash) */
 .global-video-bg {
   pointer-events: none;

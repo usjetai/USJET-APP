@@ -30827,8 +30827,17 @@ html.blog-page-root #usjet-app-shell {
   background-position: center;
   opacity: 0.32;
   pointer-events: none;
-  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+.hired-hud__fleet-scope-watermark-cover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 12%;
+  z-index: 1;
+  background: rgb(2 12 20);
+  pointer-events: none;
 }
 
 .hired-hud__fleet-scope-ring {

@@ -11,6 +11,7 @@ import HiredHudHubBackgroundBeat, {
 } from "../components/hiredHud/HiredHudHubBackgroundBeat";
 import HiredHudHubVideo from "../components/hiredHud/HiredHudHubVideo";
 import HiredHudHubYouTube from "../components/hiredHud/HiredHudHubYouTube";
+import HiredHudFleetScope from "../components/hiredHud/HiredHudFleetScope";
 import HiredHudRadioChat from "../components/hiredHud/HiredHudRadioChat";
 import HiredHudTileFavoriteButton from "../components/hiredHud/HiredHudTileFavoriteButton";
 import HiredHudTileGlamFuelButton from "../components/hiredHud/HiredHudTileGlamFuelButton";
@@ -419,6 +420,7 @@ export default function HiredHud() {
           </div>
 
           <div className="hired-hud__hub" aria-label="Hired developer hub">
+            <HiredHudFleetScope units={hiredUnits} />
             <div className="hired-hud__hub-videos">
               {HIRED_HUD_HUB_CARTOON_MP4_FEEDS.map((feed) => (
                 <HiredHudHubVideo

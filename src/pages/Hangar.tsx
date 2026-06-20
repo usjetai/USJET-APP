@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
 import HangarIsolatedBayPortal from "../components/hangar/HangarIsolatedBayPortal";
+import SilentBackgroundYouTube from "../components/media/SilentBackgroundYouTube";
 import HangarPageHeader, { HANGAR_META_DESCRIPTION } from "../components/hangar/HangarPageHeader";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { fleetManifest } from "../data/fleetManifest";
@@ -82,6 +83,8 @@ export default function Hangar() {
         .filter(Boolean)
         .join(" ")}
     >
+      {/* Background audio-only YouTube — hidden element that autoplays muted and will unmute when Silent Hangar is armed */}
+      <SilentBackgroundYouTube videoId="BT_83vSP1es" />
       {workbenchFullToast ? (
         <div
           className={[

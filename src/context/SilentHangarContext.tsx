@@ -17,6 +17,11 @@ export function SilentHangarProvider({ children }: { children: ReactNode }) {
     const next: SilentHangarAudioPref = armed ? "armed" : "muted";
     setPref(next);
     writeSilentHangarPref(next);
+    try {
+      window.dispatchEvent(new CustomEvent("silentHangarArm", { detail: { armed } }));
+    } catch {
+      // ignore on non-browser environments
+    }
   }, []);
 
   const toggleAudioArmed = useCallback(() => {

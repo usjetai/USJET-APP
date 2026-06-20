@@ -185,6 +185,12 @@ export const HIRED_HUD_HUB_YOUTUBE_FEEDS: readonly HiredHudHubYouTubeFeed[] = [
     title: "This Anime Girl Became Japan's Top Idol in 90 Mins. Here's How.",
     feedTag: "YouTube",
   },
+  {
+    videoId: "025RgOGsxJ4",
+    startSeconds: 0,
+    title: "USJET requested hub clip",
+    feedTag: "YouTube",
+  },
 ];
 
 /** Glam chips on hub developer tiles (not crew profile strip). */

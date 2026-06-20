@@ -20,7 +20,7 @@ import DirectFuelCashButton from "../components/fuel/DirectFuelCashButton";
 import EkgPulseLine from "../components/intel/EkgPulseLine";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetDisplayAircraftType } from "../data/fleetRoster";
-import { HIRED_HUD_EARHART_PATROL_PATCH_SRC, HIRED_HUD_HUB_BURG_VIDEO_SRC, HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_SR71_BLACKBIRD_PATCH_SRC, HIRED_HUD_SR71_BLACKBIRD_SLOT, HIRED_HUD_TILE_BG, getHiredHudTileGlamChips, type HiredHudTileGlamChip } from "../data/hiredHudAssets";
+import { HIRED_HUD_EARHART_PATROL_PATCH_SRC, HIRED_HUD_HUB_BASKETBALL_GAME_VIDEO_SRC, HIRED_HUD_HUB_BURG_VIDEO_SRC, HIRED_HUD_HUB_EVERYONE_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC, HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC, HIRED_HUD_HUB_SECOND_VIDEO_SRC, HIRED_HUD_HUB_VIDEO_SRC, HIRED_HUD_HUB_YOUTUBE_FEEDS, HIRED_HUD_SR71_BLACKBIRD_PATCH_SRC, HIRED_HUD_SR71_BLACKBIRD_SLOT, HIRED_HUD_TILE_BG, getHiredHudTileGlamChips, type HiredHudTileGlamChip } from "../data/hiredHudAssets";
 import { USJET_OPS_EMAIL } from "../lib/usjetContact";
 import { getHiredDeveloperUnits } from "../data/fleetRoster";
 import { developerRedBlinkHeartClass } from "../lib/developerRedBlink";
@@ -117,6 +117,12 @@ const HIRED_HUD_HUB_CARTOON_MP4_FEEDS: readonly HubMp4Feed[] = [
     ariaLabel: "Hired developer hub Firefly superbike feed",
     playLabel: "Play superbike feed",
     feedTag: "Superbike",
+  },
+  {
+    src: HIRED_HUD_HUB_BASKETBALL_GAME_VIDEO_SRC,
+    ariaLabel: "Hired developer hub basketball game feed",
+    playLabel: "Play basketball game feed",
+    feedTag: "Basketball",
   },
   {
     src: HIRED_HUD_HUB_VIDEO_SRC,

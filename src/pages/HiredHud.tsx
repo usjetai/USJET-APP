@@ -104,6 +104,12 @@ type HubMp4Feed = {
   feedTag: string;
 };
 
+type HubImageFeed = {
+  alt: string;
+  caption: string;
+  label: string;
+};
+
 /** Firefly + hub anime reels — always visible (never trimmed on mobile). */
 const HIRED_HUD_HUB_CARTOON_MP4_FEEDS: readonly HubMp4Feed[] = [
   {
@@ -151,6 +157,14 @@ const HIRED_HUD_HUB_SUPPLEMENTAL_MP4_FEEDS: readonly HubMp4Feed[] = [
     ariaLabel: "Hired developer hub second feed",
     playLabel: "Play second feed",
     feedTag: "Second",
+  },
+];
+
+const HIRED_HUD_HUB_IMAGE_FEEDS: readonly HubImageFeed[] = [
+  {
+    alt: "Submitted glam board art with long pointed nails and anime character portraits",
+    caption: "Submitted glam board · anime portrait set",
+    label: "Submitted image",
   },
 ];
 
@@ -428,6 +442,32 @@ export default function HiredHud() {
           <div className="hired-hud__hub" aria-label="Hired developer hub">
             <HiredHudFleetScope units={hiredUnits} />
             <div className="hired-hud__hub-videos">
+              {HIRED_HUD_HUB_IMAGE_FEEDS.map((feed) => (
+                <figure key={feed.label} className="hired-hud__hub-image-card">
+                  <div className="hired-hud__hub-image-card__frame">
+                    <div className="hired-hud__hub-image-card__art" aria-hidden>
+                      <div className="hired-hud__hub-image-card__glow" />
+                      <div className="hired-hud__hub-image-card__nails">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    </div>
+                    <figcaption className="hired-hud__hub-image-card__caption">
+                      <span className="hired-hud__hub-image-card__label">{feed.label}</span>
+                      <span className="hired-hud__hub-image-card__text">{feed.caption}</span>
+                    </figcaption>
+                  </div>
+                  <span className="sr-only">{feed.alt}</span>
+                </figure>
+              ))}
               {HIRED_HUD_HUB_CARTOON_MP4_FEEDS.map((feed) => (
                 <HiredHudHubVideo
                   key={feed.src}

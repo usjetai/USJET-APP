@@ -16,15 +16,6 @@ import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 import SovereignVaultGlobalDownload from "../growth/SovereignVaultGlobalDownload";
 import { GAMING_X_URL, GAMING_X_WEB } from "../../data/gamingPortal";
 
-const BLUE_IVY_TIKTOK_COCKPIT = wrapExternalInCockpit(
-  "https://www.tiktok.com/@blueivyc4?is_from_webapp=1&sender_device=pc",
-  {
-    label: "Blue Ivy C4",
-    returnTo: "/",
-    directHandoff: true,
-  },
-);
-
 const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
   label: GAMING_X_WEB,
   returnTo: "/",
@@ -167,24 +158,6 @@ const AppNav = () => {
                 aria-label="X — @usajet on x.com"
               >
                 X
-              </Link>
-
-              <Link
-                to={BLUE_IVY_TIKTOK_COCKPIT}
-                className="app-nav-blue btn-glass glass-effect-interactive shrink-0"
-                title="Blue Ivy C4 — TikTok"
-                aria-label="Blue — Blue Ivy C4 on TikTok"
-              >
-                <span className="app-nav-blue__ring" aria-hidden />
-                <span className="app-nav-blue__shine" aria-hidden />
-                <span className="app-nav-blue__spark app-nav-blue__spark--1" aria-hidden />
-                <span className="app-nav-blue__spark app-nav-blue__spark--2" aria-hidden />
-                <span className="app-nav-blue__spark app-nav-blue__spark--3" aria-hidden />
-                <span className="app-nav-blue__face" aria-hidden>
-                  <span className="app-nav-blue__mouth" />
-                  <span className="app-nav-blue__tongue" />
-                </span>
-                <span className="app-nav-blue__label">Blue</span>
               </Link>
 
               <AppNavHangarLive />

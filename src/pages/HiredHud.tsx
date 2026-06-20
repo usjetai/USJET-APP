@@ -163,10 +163,22 @@ const HIRED_HUD_HUB_SUPPLEMENTAL_MP4_FEEDS: readonly HubMp4Feed[] = [
 
 const HIRED_HUD_HUB_IMAGE_FEEDS: readonly HubImageFeed[] = [
   {
+    src: "/hired-hud/usjet%20girls.png",
+    alt: "USJET girls image with anime character nail art",
+    caption: "USJET girls · anime nail set",
+    label: "USJET girls",
+  },
+  {
     src: "/hired-hud/nails.png",
     alt: "Submitted glam board art with long pointed nails and anime character portraits",
     caption: "Submitted glam board · anime portrait set",
-    label: "Submitted image",
+    label: "nails",
+  },
+  {
+    src: "/hired-hud/usjet%20girls2.png",
+    alt: "USJET girls 2 image with anime character nail art",
+    caption: "USJET girls 2 · anime nail set",
+    label: "USJET girls 2",
   },
 ];
 

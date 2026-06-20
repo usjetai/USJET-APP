@@ -16,12 +16,6 @@ import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 import SovereignVaultGlobalDownload from "../growth/SovereignVaultGlobalDownload";
 import { GAMING_X_URL, GAMING_X_WEB } from "../../data/gamingPortal";
 
-const US_NEWS_AIR_COCKPIT = wrapExternalInCockpit("https://www.facebook.com/usnewsair", {
-  label: "US News Air",
-  returnTo: "/",
-  directHandoff: true,
-});
-
 const BLUE_IVY_TIKTOK_COCKPIT = wrapExternalInCockpit(
   "https://www.tiktok.com/@blueivyc4?is_from_webapp=1&sender_device=pc",
   {
@@ -30,18 +24,6 @@ const BLUE_IVY_TIKTOK_COCKPIT = wrapExternalInCockpit(
     directHandoff: true,
   },
 );
-
-const BEYONCE_COCKPIT = wrapExternalInCockpit("https://beyonce.com/", {
-  label: "Beyoncé",
-  returnTo: "/",
-  directHandoff: true,
-});
-
-const JAYZ_COCKPIT = wrapExternalInCockpit("https://lifeandtimes.com/", {
-  label: "Life + Times",
-  returnTo: "/",
-  directHandoff: true,
-});
 
 const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
   label: GAMING_X_WEB,
@@ -188,27 +170,6 @@ const AppNav = () => {
               </Link>
 
               <Link
-                to={US_NEWS_AIR_COCKPIT}
-                className="app-nav-us btn-glass glass-effect-interactive shrink-0"
-                title="US News Air — Facebook"
-                aria-label="US — US News Air on Facebook"
-              >
-                <span className="app-nav-us__push">
-                  <span className="app-nav-us__nozzle" aria-hidden />
-                  <span className="app-nav-us__spray" aria-hidden>
-                    <span className="app-nav-us__mist" />
-                    <span className="app-nav-us__droplet app-nav-us__droplet--1" />
-                    <span className="app-nav-us__droplet app-nav-us__droplet--2" />
-                    <span className="app-nav-us__droplet app-nav-us__droplet--3" />
-                    <span className="app-nav-us__droplet app-nav-us__droplet--4" />
-                    <span className="app-nav-us__droplet app-nav-us__droplet--5" />
-                    <span className="app-nav-us__droplet app-nav-us__droplet--6" />
-                  </span>
-                  <span className="app-nav-us__label">US</span>
-                </span>
-              </Link>
-
-              <Link
                 to={BLUE_IVY_TIKTOK_COCKPIT}
                 className="app-nav-blue btn-glass glass-effect-interactive shrink-0"
                 title="Blue Ivy C4 — TikTok"
@@ -224,26 +185,6 @@ const AppNav = () => {
                   <span className="app-nav-blue__tongue" />
                 </span>
                 <span className="app-nav-blue__label">Blue</span>
-              </Link>
-
-              <Link
-                to={BEYONCE_COCKPIT}
-                className="app-nav-b btn-glass glass-effect-interactive shrink-0"
-                title="Beyoncé — beyonce.com"
-                aria-label="B — Beyoncé official site"
-              >
-                <span className="app-nav-b__glow" aria-hidden />
-                <span className="app-nav-b__label">B</span>
-              </Link>
-
-              <Link
-                to={JAYZ_COCKPIT}
-                className="app-nav-j btn-glass glass-effect-interactive shrink-0"
-                title="Life + Times — lifeandtimes.com"
-                aria-label="J — Life + Times official site"
-              >
-                <span className="app-nav-j__glow" aria-hidden />
-                <span className="app-nav-j__label">J</span>
               </Link>
 
               <AppNavHangarLive />

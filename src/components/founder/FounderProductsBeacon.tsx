@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ShoppingBag } from "lucide-react";
 import { FOUNDER_PRODUCTS } from "../../data/founderProducts";
 
 type FounderProductsBeaconProps = {
@@ -26,10 +25,12 @@ export default function FounderProductsBeacon({ variant = "hero" }: FounderProdu
       <span className="founder-products-beacon__orbit" aria-hidden />
       <span className="founder-products-beacon__shine" aria-hidden />
       <span className="founder-products-beacon__icon-wrap" aria-hidden>
-        <ShoppingBag
+        <img
           className="founder-products-beacon__icon"
-          size={isHero ? 28 : 24}
-          strokeWidth={isHero ? 1.75 : 1.5}
+          src="/founder/lvbag.png"
+          alt=""
+          loading="lazy"
+          decoding="async"
         />
       </span>
       {isHero ? (

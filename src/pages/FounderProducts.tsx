@@ -34,6 +34,13 @@ export default function FounderProducts() {
         <div className="founder-page__center">
           <article className="founder-products founder-page__main">
             <header className="founder-products__hero">
+              <img
+                className="founder-products__hero-bag"
+                src="/founder/lvbag.png"
+                alt="Founder LV bag"
+                loading="eager"
+                decoding="async"
+              />
               <p className="founder-products__kicker">Founder vault</p>
               <h1 className="founder-products__title">Product lineup</h1>
               <p className="founder-products__lede">

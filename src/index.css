@@ -11093,7 +11093,10 @@ button.fleet-card {
 }
 
 .founder-products-beacon__icon {
-  color: #fffbeb;
+  display: block;
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(254, 240, 138, 0.95));
 }
 
@@ -11198,6 +11201,13 @@ button.fleet-card {
   align-items: center;
   text-align: center;
   gap: 0.65rem;
+}
+
+.founder-products__hero-bag {
+  width: clamp(7rem, 22vw, 10.5rem);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(250, 204, 21, 0.3));
 }
 
 .founder-products__kicker {
@@ -11306,11 +11316,13 @@ button.fleet-card {
 .founder-products__card {
   height: 100%;
   padding: 0.85rem;
+  text-align: center;
 }
 
 .founder-products__figure {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
   margin: 0;
 }

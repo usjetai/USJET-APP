@@ -50,6 +50,8 @@ import {
   toggleHiredHudTileFavorite,
 } from "../lib/hiredHudTileFavorites";
 
+const HIRED_HUD_BAG_PATCH_SRC = "/hired-hud/bag-transparent.png" as const;
+
 function formatHudPercent(value: number): string {
   return `${value >= 0 ? "+" : "-"}${Math.abs(value).toFixed(2)}%`;
 }
@@ -583,6 +585,17 @@ export default function HiredHud() {
                         src={HIRED_HUD_SR71_BLACKBIRD_PATCH_SRC}
                         alt=""
                         className="hired-hud__tile-sr71-patch"
+                        width={88}
+                        height={88}
+                        decoding="async"
+                        draggable={false}
+                      />
+                    ) : null}
+                    {unit.slot === 0 || unit.slot === 10 ? (
+                      <img
+                        src={HIRED_HUD_BAG_PATCH_SRC}
+                        alt=""
+                        className="hired-hud__tile-bag-patch"
                         width={88}
                         height={88}
                         decoding="async"

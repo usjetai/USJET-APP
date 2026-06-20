@@ -29970,7 +29970,8 @@ html.blog-page-root #usjet-app-shell {
 }
 
 .hired-hud__tile-earhart-patch,
-.hired-hud__tile-sr71-patch {
+.hired-hud__tile-sr71-patch,
+.hired-hud__tile-bag-patch {
   width: 3.35rem;
   height: auto;
   flex-shrink: 0;

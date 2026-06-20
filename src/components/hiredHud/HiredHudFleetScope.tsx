@@ -194,7 +194,7 @@ export default function HiredHudFleetScope({ units }: HiredHudFleetScopeProps) {
             style={{
               left: `${position.x}%`,
               top: `${position.y}%`,
-              transform: `translate(-50%, -50%) rotate(${track.headingDeg + track.bankAngle}deg)`,
+              transform: `translate(-50%, -50%) rotate(${track.bankAngle}deg)`,
             }}
           >
             <img src={logoSrc} alt="" className="hired-hud__fleet-scope-jet" decoding="async" draggable={false} />

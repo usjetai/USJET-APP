@@ -105,6 +105,7 @@ type HubMp4Feed = {
 };
 
 type HubImageFeed = {
+  src: string;
   alt: string;
   caption: string;
   label: string;
@@ -162,6 +163,7 @@ const HIRED_HUD_HUB_SUPPLEMENTAL_MP4_FEEDS: readonly HubMp4Feed[] = [
 
 const HIRED_HUD_HUB_IMAGE_FEEDS: readonly HubImageFeed[] = [
   {
+    src: "/hired-hud/nails.png",
     alt: "Submitted glam board art with long pointed nails and anime character portraits",
     caption: "Submitted glam board · anime portrait set",
     label: "Submitted image",
@@ -445,27 +447,12 @@ export default function HiredHud() {
               {HIRED_HUD_HUB_IMAGE_FEEDS.map((feed) => (
                 <figure key={feed.label} className="hired-hud__hub-image-card">
                   <div className="hired-hud__hub-image-card__frame">
-                    <div className="hired-hud__hub-image-card__art" aria-hidden>
-                      <div className="hired-hud__hub-image-card__glow" />
-                      <div className="hired-hud__hub-image-card__nails">
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                    </div>
+                    <img src={feed.src} alt={feed.alt} className="hired-hud__hub-image-card__image" loading="eager" />
                     <figcaption className="hired-hud__hub-image-card__caption">
                       <span className="hired-hud__hub-image-card__label">{feed.label}</span>
                       <span className="hired-hud__hub-image-card__text">{feed.caption}</span>
                     </figcaption>
                   </div>
-                  <span className="sr-only">{feed.alt}</span>
                 </figure>
               ))}
               {HIRED_HUD_HUB_CARTOON_MP4_FEEDS.map((feed) => (

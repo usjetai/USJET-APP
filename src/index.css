@@ -28808,59 +28808,15 @@ html.blog-page-root #usjet-app-shell {
   min-height: 18rem;
 }
 
-.hired-hud__hub-image-card__art {
-  position: relative;
-  flex: 1 1 auto;
-  min-height: 14rem;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 42%, rgb(255 255 255 / .08), transparent 32%),
-    linear-gradient(145deg, rgba(251, 207, 232, .08), rgba(30, 41, 59, .72) 52%, rgba(15, 23, 42, .94));
-}
-
-.hired-hud__hub-image-card__glow {
-  position: absolute;
-  inset: -10% 8% auto;
-  height: 58%;
-  background: radial-gradient(ellipse at center, rgb(244 114 182 / .26), transparent 62%);
-  filter: blur(10px);
-}
-
-.hired-hud__hub-image-card__nails {
-  position: absolute;
-  inset: 1rem 1rem 1.1rem;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: .55rem;
-  align-items: end;
-}
-
-.hired-hud__hub-image-card__nails span {
+.hired-hud__hub-image-card__image {
   display: block;
   width: 100%;
-  aspect-ratio: .42 / 1;
-  border-radius: 999px 999px 1.25rem 1.25rem;
-  border: 1px solid rgb(255 255 255 / .22);
-  background:
-    linear-gradient(180deg, rgb(255 255 255 / .24), transparent 32%),
-    linear-gradient(180deg, rgb(248 113 113 / .72), rgb(248 113 113 / .08) 64%, rgb(15 23 42 / .92));
-  box-shadow:
-    0 12px 20px rgb(0 0 0 / .22),
-    inset 0 1px 1px rgb(255 255 255 / .32),
-    inset 0 -12px 18px rgb(0 0 0 / .18);
-  transform: rotate(calc(var(--nail-tilt, 0deg) + (var(--nail-index, 0) * 1deg)));
+  height: auto;
+  min-height: 14rem;
+  object-fit: cover;
+  object-position: center;
+  background: #020812;
 }
-
-.hired-hud__hub-image-card__nails span:nth-child(1) { --nail-index: -4; --nail-tilt: -18deg; }
-.hired-hud__hub-image-card__nails span:nth-child(2) { --nail-index: -2; --nail-tilt: -10deg; }
-.hired-hud__hub-image-card__nails span:nth-child(3) { --nail-index: -1; --nail-tilt: -4deg; }
-.hired-hud__hub-image-card__nails span:nth-child(4) { --nail-index: 0; --nail-tilt: 2deg; }
-.hired-hud__hub-image-card__nails span:nth-child(5) { --nail-index: 1; --nail-tilt: 8deg; }
-.hired-hud__hub-image-card__nails span:nth-child(6) { --nail-index: 2; --nail-tilt: -16deg; }
-.hired-hud__hub-image-card__nails span:nth-child(7) { --nail-index: 3; --nail-tilt: -8deg; }
-.hired-hud__hub-image-card__nails span:nth-child(8) { --nail-index: 4; --nail-tilt: 4deg; }
-.hired-hud__hub-image-card__nails span:nth-child(9) { --nail-index: 5; --nail-tilt: 12deg; }
-.hired-hud__hub-image-card__nails span:nth-child(10) { --nail-index: 6; --nail-tilt: 18deg; }
 
 .hired-hud__hub-image-card__caption {
   display: flex;

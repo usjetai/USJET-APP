@@ -36,15 +36,15 @@ function initialTrack(slot: number): JetTrack {
   
   return {
     angleDeg: rng() * 360,
-    radiusPct: 15 + rng() * 30,
+    radiusPct: 5 + rng() * 45,
     headingDeg: rng() * 360,
-    speed: 0.5 + rng() * 1.5,
+    speed: 0.8 + rng() * 2.0,
     bankAngle: (rng() - 0.5) * 30,
     climbRate: (rng() - 0.5) * 0.5,
     flightPattern,
     patternPhase: rng() * Math.PI * 2,
     targetAngle: rng() * 360,
-    targetRadius: 20 + rng() * 25,
+    targetRadius: 10 + rng() * 40,
   };
 }
 

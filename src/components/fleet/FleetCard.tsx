@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { getFleetCapabilities, getFleetPartnerLabel } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
-import FleetHiredDeveloperCockpit from "./FleetHiredDeveloperCockpit";
 import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
 import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
@@ -282,7 +281,6 @@ export default function FleetCard({
     <div className="fleet-card__glass flex h-full flex-col p-5">
       {isRunway && !isAvailableBay && typeof slot === "number" ? (
         <div className="fleet-card__runway-visual">
-          <FleetHiredDeveloperCockpit slot={slot} name={name} />
           {renderAircraftWrap()}
         </div>
       ) : (

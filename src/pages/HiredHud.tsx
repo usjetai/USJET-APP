@@ -49,6 +49,7 @@ import {
   saveHiredHudTileFavorites,
   toggleHiredHudTileFavorite,
 } from "../lib/hiredHudTileFavorites";
+import { useHiredHudRadarScope } from "../lib/hiredHudRadar";
 
 const HIRED_HUD_BAG_PATCH_SRC = "/hired-hud/bag-transparent.png" as const;
 
@@ -192,6 +193,7 @@ const HIRED_HUD_HUB_IMAGE_FEEDS: readonly HubImageFeed[] = [
 
 export default function HiredHud() {
   const hiredUnits = useMemo(() => getHiredDeveloperUnits(fleetManifest), []);
+  const { tracks: radarTracks, trailPoints: radarTrailPoints } = useHiredHudRadarScope(hiredUnits);
   const lightweightHub = useMemo(() => prefersLightweightAtmosphere(), []);
   const hubSupplementalMp4Feeds = useMemo(
     () => (lightweightHub ? [] : HIRED_HUD_HUB_SUPPLEMENTAL_MP4_FEEDS),
@@ -462,7 +464,7 @@ export default function HiredHud() {
           </div>
 
           <div className="hired-hud__hub" aria-label="Hired developer hub">
-            <HiredHudFleetScope units={hiredUnits} />
+            <HiredHudFleetScope units={hiredUnits} tracks={radarTracks} trailPoints={radarTrailPoints} />
             <div className="hired-hud__hub-videos">
               {HIRED_HUD_HUB_IMAGE_FEEDS.map((feed) => (
                 <figure key={feed.label} className="hired-hud__hub-image-card">
@@ -625,7 +627,13 @@ export default function HiredHud() {
                 </div>
 
                 <div className="hired-hud__tile-radar-wrap" aria-hidden>
-                  <HiredHudJetRadar slot={unit.slot} aircraftType={aircraftType} variant="hub-tile" />
+                  <HiredHudJetRadar
+                    slot={unit.slot}
+                    aircraftType={aircraftType}
+                    track={radarTracks[unit.slot]}
+                    trailPoints={radarTrailPoints[unit.slot] ?? []}
+                    variant="hub-tile"
+                  />
                 </div>
 
                 <div className="hired-hud__tile-content">

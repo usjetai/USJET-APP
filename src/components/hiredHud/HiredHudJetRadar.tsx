@@ -1,70 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
 import { Radar } from "lucide-react";
 import { HIRED_HUD_RADAR_SCOPE_MAP_SRC } from "../../data/hiredHudAssets";
 import { getFleetAircraftRadarLogoPathForSlot } from "../../lib/fleetAircraftLogos";
+import type { HiredHudRadarPoint, HiredHudRadarTrack } from "../../lib/hiredHudRadar";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type HiredHudJetRadarProps = {
   slot: number;
   aircraftType: FleetAircraftType;
+  track: HiredHudRadarTrack;
+  trailPoints: HiredHudRadarPoint[];
   /** Hub monitor tile — larger scope than crew strip. */
   variant?: "hub-tile";
 };
 
-type JetTrack = {
-  angleDeg: number;
-  radiusPct: number;
-  headingDeg: number;
-};
+const TILE_TRAIL_POINTS = 24;
 
-function createSeededRandom(seed: number): () => number {
-  let state = seed >>> 0;
-  return () => {
-    state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
-    return state / 0xffffffff;
-  };
-}
-
-function initialTrack(slot: number): JetTrack {
-  const rng = createSeededRandom(slot * 7919 + 104729);
-  return {
-    angleDeg: rng() * 360,
-    radiusPct: 12 + rng() * 24,
-    headingDeg: rng() * 360,
-  };
-}
-
-function driftTrack(track: JetTrack, rng: () => number): JetTrack {
-  const angleDeg = (track.angleDeg + (rng() - 0.5) * 48 + 360) % 360;
-  const radiusPct = Math.max(8, Math.min(38, track.radiusPct + (rng() - 0.5) * 10));
-  const headingDeg = (track.headingDeg + (rng() - 0.5) * 70 + 360) % 360;
-
-  return { angleDeg, radiusPct, headingDeg };
-}
-
-function trackToPosition(track: JetTrack): { x: number; y: number } {
-  const radians = (track.angleDeg * Math.PI) / 180;
-  return {
-    x: 50 + Math.cos(radians) * track.radiusPct,
-    y: 50 + Math.sin(radians) * track.radiusPct,
-  };
-}
-
-export default function HiredHudJetRadar({ slot, aircraftType, variant }: HiredHudJetRadarProps) {
-  const [track, setTrack] = useState<JetTrack>(() => initialTrack(slot));
-  const rng = useMemo(() => createSeededRandom(slot * 3571 + 90210), [slot]);
+export default function HiredHudJetRadar({ slot, aircraftType, track, trailPoints, variant }: HiredHudJetRadarProps) {
   const logoSrc = getFleetAircraftRadarLogoPathForSlot(slot, aircraftType);
-  const position = trackToPosition(track);
-
-  useEffect(() => {
-    const intervalMs = 720 + (slot % 7) * 95;
-    const id = window.setInterval(() => {
-      if (document.hidden) return;
-      setTrack((current) => driftTrack(current, rng));
-    }, intervalMs);
-
-    return () => window.clearInterval(id);
-  }, [rng, slot]);
+  const visibleTrail = trailPoints.slice(-TILE_TRAIL_POINTS);
 
   return (
     <div
@@ -79,6 +32,26 @@ export default function HiredHudJetRadar({ slot, aircraftType, variant }: HiredH
           style={{ backgroundImage: `url("${HIRED_HUD_RADAR_SCOPE_MAP_SRC}")` }}
         />
       ) : null}
+      <svg className="hired-hud__jet-radar-paths" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
+        <line className="hired-hud__jet-radar-runway" x1="50" y1="-22" x2="50" y2="122" />
+        <line className="hired-hud__jet-radar-runway" x1="-4" y1="4" x2="104" y2="96" />
+        <line className="hired-hud__jet-radar-runway" x1="104" y1="4" x2="-4" y2="96" />
+        {visibleTrail.slice(1).map((point, index) => {
+          const previous = visibleTrail[index];
+          const fadeProgress = (index + 1) / (visibleTrail.length - 1);
+          return (
+            <line
+              key={`jet-radar-path-${slot}-${index}`}
+              className="hired-hud__jet-radar-path"
+              x1={previous?.x ?? point.x}
+              y1={previous?.y ?? point.y}
+              x2={point.x}
+              y2={point.y}
+              style={{ opacity: fadeProgress * 0.55 }}
+            />
+          );
+        })}
+      </svg>
       <span className="hired-hud__jet-radar-ring hired-hud__jet-radar-ring--outer" />
       <span className="hired-hud__jet-radar-ring hired-hud__jet-radar-ring--mid" />
       <span className="hired-hud__jet-radar-ring hired-hud__jet-radar-ring--inner" />
@@ -88,9 +61,9 @@ export default function HiredHudJetRadar({ slot, aircraftType, variant }: HiredH
       <span
         className="hired-hud__jet-radar-blip"
         style={{
-          left: `${position.x}%`,
-          top: `${position.y}%`,
-          transform: `translate(-50%, -50%) rotate(${track.headingDeg}deg)`,
+          left: `${track.x}%`,
+          top: `${track.y}%`,
+          transform: `translate(-50%, -50%) rotate(${track.headingDeg + 90}deg)`,
         }}
       >
         <img src={logoSrc} alt="" className="hired-hud__jet-radar-jet" decoding="async" draggable={false} />

@@ -143,8 +143,8 @@ export const HIRED_HUD_SR71_BLACKBIRD_PATCH_SRC = "/hired-hud/sr71-blackbird-pat
 /** Hired HUD slot for SR-71 Blackbird developer (Blue Ivy). */
 export const HIRED_HUD_SR71_BLACKBIRD_SLOT = 0;
 
-/** NYC vector map inside hub jet-radar scopes. */
-export const HIRED_HUD_RADAR_SCOPE_MAP_SRC = "/hired-hud/radar-scope-map-nyc.png" as const;
+/** NYC photo map inside hub jet-radar scopes. */
+export const HIRED_HUD_RADAR_SCOPE_MAP_SRC = "/hired-hud/nyc.jpg" as const;
 
 /** Per-tile glam fuel CTA — direct Cash App for nails, hair & feet. */
 export const HIRED_HUD_GLAM_FUEL_CTA_LABEL = "Fuel nails, hair & feet" as const;

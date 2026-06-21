@@ -155,6 +155,7 @@ export const HIRED_HUD_HUB_EVERYONE_VIDEO_SRC = "/hired-hud/hub-everyone-loop.mp
 export const HIRED_HUD_HUB_SECOND_VIDEO_SRC = "/hired-hud/hub-second-loop.mp4" as const;
 export const HIRED_HUD_HUB_FIREFLY_HOOPS_VIDEO_SRC = "/hired-hud/hub-firefly-hoops-loop.mp4" as const;
 export const HIRED_HUD_HUB_FIREFLY_MOTORBIKE_VIDEO_SRC = "/hired-hud/hub-firefly-motorbike-loop.mp4" as const;
+export const HIRED_HUD_HUB_FIREFLY_10_VIDEO_SRC = "/hired-hud/hub-firefly-10-loop.mp4" as const;
 export const HIRED_HUD_HUB_BURG_VIDEO_SRC = "/hired-hud/hub-burg-loop.mp4" as const;
 export const HIRED_HUD_HUB_BASKETBALL_GAME_VIDEO_SRC = "/hired-hud/basketball-game-loop.mp4" as const;
 

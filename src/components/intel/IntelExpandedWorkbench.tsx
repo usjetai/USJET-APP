@@ -21,8 +21,6 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
     <article className="intel-expanded intel-expanded--bay-accent" style={{ ...fleetBayAccentStyle(unit.slot), ...gridStyle }}>
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
-          <p className="intel-expanded__callsign">{unit.name}</p>
-          <p className="intel-expanded__unit-name">{unit.name}</p>
           {unit.aiName ? <p className="intel-expanded__ai-name">{unit.aiName}</p> : null}
           <p className="intel-expanded__domain">{unit.domain}</p>
           <p className="intel-expanded__tagline">Market workstation · BTC spot · NYSE composite</p>

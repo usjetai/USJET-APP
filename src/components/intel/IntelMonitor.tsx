@@ -7,6 +7,7 @@ import TickerDisplay from "./TickerDisplay";
 import EkgPulseLine from "./EkgPulseLine";
 import IntelScanLine from "./IntelScanLine";
 import MarketCandlesticks from "./MarketCandlesticks";
+import NyseTicker from "./NyseTicker";
 import { type FleetUnit } from "../../types/fleet";
 
 type IntelMonitorProps = {
@@ -88,6 +89,9 @@ export default function IntelMonitor({ unit, index: _index, style, onExpandReque
         <IntelScanLine />
         <div className="intel-monitor__feed">
           <TickerDisplay slot={unit.slot} />
+        </div>
+        <div className="intel-monitor__nyse">
+          <NyseTicker />
         </div>
       </div>
     </article>

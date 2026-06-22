@@ -158,11 +158,11 @@
 }
 
 /* Hide YouTube play button overlay on background iframes */
-.global-video-bg__yt::-webkit-media-controls-start-play-button,
-.global-video-bg__yt::-webkit-media-controls-play-button,
-.global-video-bg__yt .ytp-large-play-button,
-.global-video-bg__yt .ytp-play-button,
-.global-video-bg__yt .ytp-button {
+.global-video-bg__yt iframe::-webkit-media-controls-start-play-button,
+.global-video-bg__yt iframe::-webkit-media-controls-play-button,
+.global-video-bg__yt iframe .ytp-large-play-button,
+.global-video-bg__yt iframe .ytp-play-button,
+.global-video-bg__yt iframe .ytp-button {
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
@@ -4440,6 +4440,21 @@ button.fleet-card__launch--button {
   text-shadow: 0 0.04em 0.08em rgba(0, 0, 0, 0.78);
 }
 
+.intel-monitor__ai-name {
+  margin: 0.18rem 0 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.42rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.85);
+  text-shadow: 0 0 0.45rem rgba(34, 211, 238, 0.18);
+}
+
 .intel-monitor__status {
   font-size: 0.55rem;
   font-weight: 800;
@@ -5556,6 +5571,20 @@ button.fleet-card__launch--button {
   letter-spacing: 0.02em;
   color: rgba(148, 163, 184, 0.78);
   text-shadow: 0 0.04em 0.08em rgba(0, 0, 0, 0.75);
+}
+
+.intel-expanded__ai-name {
+  margin: 0.18rem 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: theme("fontFamily.sans");
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.9);
+  text-shadow: 0 0 0.55rem rgba(34, 211, 238, 0.22);
 }
 
 .intel-expanded__domain {

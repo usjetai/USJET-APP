@@ -1,4 +1,5 @@
 import { useMemo, type ReactNode } from "react";
+
 import AircraftIcon from "../components/icons/AircraftIcons";
 import IntelExpandedWorkbench from "../components/intel/IntelExpandedWorkbench";
 import IntelMonitor from "../components/intel/IntelMonitor";
@@ -6,7 +7,7 @@ import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
 import IntelPartnershipInvite from "../components/intel/IntelPartnershipInvite";
-import IntelTop10Section from "../components/intel/IntelTop10Section";
+
 import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
@@ -45,24 +46,6 @@ const Intel = () => {
             className="intel-grid__void"
             style={{ gridRow, gridColumn }}
             aria-hidden
-          />,
-        );
-        continue;
-      }
-
-      if (slot === 0 || slot === 1) {
-        const unit = cell.unit ?? unitBySlot.get(slot);
-        if (!unit) {
-          continue;
-        }
-
-        out.push(
-          <IntelReservedBay
-            key={`reserved-${slot}`}
-            variant={slot === 0 ? "market" : "crypto"}
-            unit={unit}
-            index={slot}
-            style={{ gridRow, gridColumn }}
           />,
         );
         continue;
@@ -135,7 +118,7 @@ const Intel = () => {
       <div className="intel-page__shell page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
         <IntelFleetVitals />
         <IntelPulseDashboard />
-        <IntelTop10Section />
+
 
         <div className="intel-page__grid-intro">
           <p className="intel-page__grid-kicker">Monitor grid</p>

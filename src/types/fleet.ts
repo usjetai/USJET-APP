@@ -65,6 +65,8 @@ export type FleetUnit = {
   systemPrompt: string;
   /** Optional unit-specific fleet role line appended to the Master Lock. */
   fleetRole?: string;
+  /** Display name of the underlying AI/model powering this bay. */
+  aiName?: string;
 };
 
 export const HANGAR_COLUMNS = 6;

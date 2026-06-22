@@ -6,6 +6,7 @@ import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
 import MarketDualFeed from "./market/MarketDualFeed";
+import NyseTicker from "./NyseTicker";
 
 type IntelExpandedWorkbenchProps = {
   unit: FleetUnit;
@@ -42,6 +43,9 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
 
       <div className="intel-expanded__body intel-expanded__body--dual">
         <MarketDualFeed seedSlot={unit.slot} />
+      </div>
+      <div className="intel-expanded__nyse">
+        <NyseTicker />
       </div>
     </article>
   );

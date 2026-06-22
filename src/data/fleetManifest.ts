@@ -12,6 +12,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "darkstar",
+    aiName: "Gemini",
   },
   {
     id: "1",
@@ -23,6 +24,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f35",
+    aiName: "ChatGPT",
   },
   {
     id: "2",
@@ -34,6 +36,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "b21",
+    aiName: "Claude",
   },
   {
     id: "3",
@@ -45,6 +48,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "j36",
+    aiName: "Perplexity",
   },
   {
     id: "4",
@@ -56,6 +60,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "ngad",
+    aiName: "Grok",
   },
   {
     id: "5",
@@ -67,6 +72,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "yf23",
+    aiName: "Cursor",
   },
   {
     id: "6",
@@ -78,6 +84,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "x47b",
+    aiName: "Midjourney",
   },
   {
     id: "7",
@@ -89,6 +96,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "x37b",
+    aiName: "Luma Dream Machine",
   },
   {
     id: "8",
@@ -100,6 +108,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "x51",
+    aiName: "Sora",
   },
   {
     id: "9",
@@ -111,6 +120,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "staging",
     aura: "idle",
     aircraftType: "pca",
+    aiName: "Higgsfield",
   },
   {
     id: "10",
@@ -122,6 +132,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "b2",
+    aiName: "Runway",
   },
   {
     id: "11",
@@ -133,6 +144,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "b1",
+    aiName: "Leonardo AI",
   },
   {
     id: "12",
@@ -144,6 +156,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "a12",
+    aiName: "Adobe Firefly",
   },
   {
     id: "13",
@@ -155,6 +168,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f22",
+    aiName: "Gemini",
   },
   {
     id: "14",
@@ -166,6 +180,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "staging",
     aura: "idle",
     aircraftType: "fb22",
+    aiName: "Flux",
   },
   {
     id: "15",
@@ -177,6 +192,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f15ex",
+    aiName: "Suno",
   },
   {
     id: "16",
@@ -188,6 +204,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f16v",
+    aiName: "ElevenLabs",
   },
   {
     id: "17",
@@ -199,6 +216,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "staging",
     aura: "idle",
     aircraftType: "fa18",
+    aiName: "Play.ht",
   },
   {
     id: "18",
@@ -210,6 +228,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "staging",
     aura: "idle",
     aircraftType: "a10",
+    aiName: "Synthesia",
   },
   {
     id: "19",
@@ -221,6 +240,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f117",
+    aiName: "HeyGen",
   },
   {
     id: "20",
@@ -232,6 +252,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "mq25",
+    aiName: "v0.dev",
   },
   {
     id: "21",
@@ -243,6 +264,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "staging",
     aura: "idle",
     aircraftType: "mq28",
+    aiName: "Replit Agent",
   },
   {
     id: "22",
@@ -254,6 +276,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "xq58",
+    aiName: "GitHub Copilot",
   },
   {
     id: "23",
@@ -265,6 +288,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
+    aiName: "Consensus",
   },
   {
     id: "24",
@@ -276,6 +300,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "globalHawk",
+    aiName: "Gamma",
   },
   {
     id: "25",
@@ -287,6 +312,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f14",
+    aiName: "Notion AI",
   },
   {
     id: "26",
@@ -298,6 +324,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f4",
+    aiName: "Jasper",
   },
   {
     id: "27",
@@ -309,6 +336,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "idle",
     aircraftType: "f104",
+    aiName: "Otter.ai",
   },
   {
     id: "28",
@@ -320,6 +348,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "staging",
     aura: "idle",
     aircraftType: "f86",
+    aiName: "DeepSeek",
   },
   {
     id: "29",
@@ -331,6 +360,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     status: "active",
     aura: "listening",
     aircraftType: "x59",
+    aiName: "USJet Origin",
   },
 ];
 

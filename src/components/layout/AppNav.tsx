@@ -24,7 +24,6 @@ const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
-  { to: "/hired-hud", label: "USJET House" },
   { to: "/hangar", label: "Hangar" },
   { to: "/intel", label: "Intel" },
   { to: "/founder", label: "Founder" },
@@ -83,44 +82,7 @@ const AppNav = () => {
                       ].join(" ")
                     }
                   >
-                    <span className="app-nav-founder__hand" aria-hidden>
-                      <svg
-                        className="app-nav-founder__hand-svg"
-                        viewBox="0 0 24 32"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden
-                      >
-                        <rect x="9.5" y="1" width="5" height="21" rx="2.4" fill="#e8c4a8" />
-                        <path
-                          d="M3 15 Q3 27 12 29 Q21 27 21 15 L21 12 Q12 10 3 12 Z"
-                          fill="#e8c4a8"
-                        />
-                        <rect x="4" y="11" width="2.8" height="6" rx="1.4" fill="#c9a27a" transform="rotate(-18 5.4 14)" />
-                        <rect x="7" y="12" width="2.6" height="5" rx="1.3" fill="#c9a27a" />
-                        <rect x="15.5" y="12" width="2.6" height="5" rx="1.3" fill="#c9a27a" />
-                        <rect x="18.2" y="11" width="2.8" height="6" rx="1.4" fill="#c9a27a" transform="rotate(18 19.6 14)" />
-                      </svg>
-                    </span>
                     {link.label}
-                  </NavLink>
-                ) : link.to === "/hired-hud" ? (
-                  <NavLink
-                    key={link.to}
-                    to={link.to}
-                    className={({ isActive }) =>
-                      [
-                        "app-nav-usjet-house app-nav-pill btn-glass glass-effect-interactive shrink-0",
-                        isActive ? "app-nav-usjet-house--active" : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")
-                    }
-                    title="USJET House — hired developer live hub"
-                    aria-label="USJET House — hired developer live hub"
-                  >
-                    <span className="app-nav-usjet-house__glow" aria-hidden />
-                    <span className="app-nav-usjet-house__shine" aria-hidden />
-                    <span className="app-nav-usjet-house__label">USJET House</span>
                   </NavLink>
                 ) : (
                   <NavLink key={link.to} to={link.to} className={({ isActive }) => navPillClass(isActive)}>

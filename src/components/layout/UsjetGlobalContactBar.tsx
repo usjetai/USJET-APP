@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Gem } from "lucide-react";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
@@ -24,7 +24,7 @@ export default function UsjetGlobalContactBar() {
             <UsjetWordmark size="nav" glow />
           </Link>
 
-          <div className="usjet-global-contact-bar__status-rail" aria-label="USJET live status">
+            <div className="usjet-global-contact-bar__status-rail" aria-label="USJET live status">
             <div className="usjet-global-contact-bar__status">
               <span className="usjet-global-contact-bar__status-label usjet-global-contact-bar__status-label--full">
                 USJET System Active
@@ -34,19 +34,6 @@ export default function UsjetGlobalContactBar() {
               </span>
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
-            <Link
-              to="/hired-hud"
-              className="usjet-global-contact-bar__house-status"
-              title="USJET House — hired developer hub"
-            >
-              <span className="usjet-global-contact-bar__house-label usjet-global-contact-bar__house-label--full">
-                USJET House · project in progress
-              </span>
-              <span className="usjet-global-contact-bar__house-label usjet-global-contact-bar__house-label--short">
-                House · in progress
-              </span>
-              <span className="usjet-global-contact-bar__house-ping" aria-hidden />
-            </Link>
             <span className="usjet-global-contact-bar__delivery-status" title="Free shipping on fleet merchandise">
               <span className="usjet-global-contact-bar__delivery-label usjet-global-contact-bar__delivery-label--full">
                 Free delivery active
@@ -96,6 +83,25 @@ export default function UsjetGlobalContactBar() {
               <SilentHangarAudioToggle className="usjet-global-contact-bar__beat-audio" />
             </FooterSurpriseWrap>
           ) : null}
+          <FooterSurpriseWrap chipId="house">
+            <NavLink
+              to="/hired-hud"
+              className={({ isActive }) =>
+                [
+                  "app-nav-usjet-house app-nav-pill btn-glass glass-effect-interactive shrink-0",
+                  isActive ? "app-nav-usjet-house--active" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")
+              }
+              title="USJET House — hired developer live hub"
+              aria-label="USJET House — hired developer live hub"
+            >
+              <span className="app-nav-usjet-house__glow" aria-hidden />
+              <span className="app-nav-usjet-house__shine" aria-hidden />
+              <span className="app-nav-usjet-house__label">USJET House</span>
+            </NavLink>
+          </FooterSurpriseWrap>
           <FooterSurpriseWrap chipId="covenant">
             <span className="footer-surprise-wrap--covenant">
               <WefunderCovenantBridge variant="footer" />

@@ -1,4 +1,4 @@
-package ai.usjet.app;
+package usajet.ai;
 
 import com.getcapacitor.BridgeActivity;
 

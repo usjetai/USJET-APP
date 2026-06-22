@@ -1,4 +1,5 @@
 import { SILENT_HANGAR_LABEL_ARMED, SILENT_HANGAR_LABEL_MUTED } from "../../data/silentHangar";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import { useSilentHangarOptional } from "../../context/SilentHangarContext";
 
 type SilentHangarAudioToggleProps = {
@@ -37,6 +38,10 @@ function IconArmed() {
 
 /** Liquid-glass Captain's audio control — bottom-right of video frames. */
 export default function SilentHangarAudioToggle({ className = "" }: SilentHangarAudioToggleProps) {
+  if (SITE_AUDIO_DISABLED) {
+    return null;
+  }
+
   const { audioArmed, toggleAudioArmed } = useSilentHangarOptional();
 
   return (

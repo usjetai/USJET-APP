@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 
@@ -14,6 +15,10 @@ type Props = {
  * - un-mutes when `audioArmed` global toggle is fired elsewhere
  */
 export default function SilentBackgroundYouTube({ videoId, className = "" }: Props) {
+  if (SITE_AUDIO_DISABLED) {
+    return null;
+  }
+
   const reactId = useId().replace(/:/g, "");
   const mountId = `bg-yt-${reactId}`;
   const playerRef = useRef<YoutubePlayer | null>(null);

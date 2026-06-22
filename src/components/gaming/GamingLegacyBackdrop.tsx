@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSilentHangarOptional } from "../../context/SilentHangarContext";
 import { LEGACY_ENGINE_VIDEO_SRC } from "../../data/gamingLegacyEngine";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import SilentHangarAudioToggle from "../media/SilentHangarAudioToggle";
 
 /** Obsidian + liquid glass atmosphere — HD loop optional; Silent Hangar mutes until armed. */
@@ -32,8 +33,8 @@ export default function GamingLegacyBackdrop() {
       v.muted = true;
       return;
     }
-    v.muted = !audioArmed;
-    if (audioArmed) {
+    v.muted = true;
+    if (!SITE_AUDIO_DISABLED && audioArmed) {
       v.volume = 0.4;
       void v.play().catch(() => undefined);
       return;
@@ -83,7 +84,7 @@ export default function GamingLegacyBackdrop() {
       <div className="gaming-legacy-backdrop__hud-corner gaming-legacy-backdrop__hud-corner--bl" />
       <div className="gaming-legacy-backdrop__hud-corner gaming-legacy-backdrop__hud-corner--br" />
 
-      <SilentHangarAudioToggle className="gaming-legacy-backdrop__audio" />
+      {SITE_AUDIO_DISABLED ? null : <SilentHangarAudioToggle className="gaming-legacy-backdrop__audio" />}
     </div>
   );
 }

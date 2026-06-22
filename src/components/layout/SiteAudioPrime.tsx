@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSilentHangarOptional } from "../../context/SilentHangarContext";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 
 export const USJET_PRIME_AUDIO_EVENT = "usjet-prime-audio" as const;
 
@@ -8,6 +9,10 @@ export default function SiteAudioPrime() {
   const { setAudioArmed } = useSilentHangarOptional();
 
   useEffect(() => {
+    if (SITE_AUDIO_DISABLED) {
+      return undefined;
+    }
+
     const prime = () => {
       setAudioArmed(true);
       window.dispatchEvent(new CustomEvent(USJET_PRIME_AUDIO_EVENT));

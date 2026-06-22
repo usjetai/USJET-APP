@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useSilentHangar } from "../../context/SilentHangarContext";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import { applyTikTokEmbedMute } from "../../lib/tiktokEmbedAudio";
 import { loadTikTokEmbedScript, renderTikTokEmbed } from "../../lib/tiktokEmbedScript";
 import SilentHangarFrame from "./SilentHangarFrame";
@@ -42,7 +43,7 @@ export default function SilentHangarTikTokEmbed({
   }, [embedKey, mountEmbed]);
 
   useEffect(() => {
-    if (audioArmed && !wasArmedRef.current) {
+    if (!SITE_AUDIO_DISABLED && audioArmed && !wasArmedRef.current) {
       setEmbedKey((k) => k + 1);
     }
     wasArmedRef.current = audioArmed;
@@ -52,7 +53,7 @@ export default function SilentHangarTikTokEmbed({
     if (!embedReady) {
       return;
     }
-    applyTikTokEmbedMute(rootRef.current, !audioArmed);
+    applyTikTokEmbedMute(rootRef.current, SITE_AUDIO_DISABLED || !audioArmed);
   }, [audioArmed, embedReady]);
 
   return (

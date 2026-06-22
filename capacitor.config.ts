@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'ai.usjet.app',
+  appId: 'usajet.ai',
   appName: 'usjet-ai',
   webDir: 'dist'
 };

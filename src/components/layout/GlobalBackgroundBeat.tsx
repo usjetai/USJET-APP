@@ -6,6 +6,7 @@ import {
   GLOBAL_BACKGROUND_BEAT_LABEL,
   GLOBAL_BACKGROUND_BEAT_START_INDEX,
 } from "../../data/globalBackgroundBeat";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
 import { USJET_PRIME_AUDIO_EVENT } from "./SiteAudioPrime";
@@ -15,6 +16,10 @@ const YT_ENDED = 0;
 
 /** Hidden YouTube beat — loops the active playlist slot (beat II only). */
 export default function GlobalBackgroundBeat() {
+  if (SITE_AUDIO_DISABLED) {
+    return null;
+  }
+
   const reactId = useId().replace(/:/g, "");
   const mountId = `global-beat-${reactId}`;
   const playerRef = useRef<YoutubePlayer | null>(null);

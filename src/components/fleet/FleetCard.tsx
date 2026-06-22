@@ -31,6 +31,7 @@ type FleetCardProps = {
   systemPrompt?: string;
   returnTo?: string;
   isCommandBay?: boolean;
+  isFleetLocked?: boolean;
   /** Plain click expands the hangar bay; Cmd/Ctrl-click opens the live partner URL. */
   onExpandBay?: () => void;
   surface?: "fleet" | "hangar";
@@ -47,6 +48,7 @@ export default function FleetCard({
   slot,
   systemPrompt,
   isCommandBay = false,
+  isFleetLocked = false,
   isAvailableBay = false,
   jetFighterPagePath,
   onExpandBay,
@@ -247,12 +249,16 @@ export default function FleetCard({
 
   const launchTitle = expandInteractive
     ? "Expand this jet into its USJET cockpit—the hangar stays your home base. Cmd/Ctrl-click opens the live partner."
+    : isFleetLocked
+      ? "Flight Pass required — unlock the rest of the Fleet through Stripe."
     : isAvailableBay && jetFighterPagePath
       ? `Open Jet Fighter page for ${name}`
       : undefined;
 
   const launchAriaLabel =
-    isAvailableBay && !hasExternalPartner && jetFighterPagePath
+    isFleetLocked
+      ? `Unlock ${name} with Flight Pass on Stripe`
+      : isAvailableBay && !hasExternalPartner && jetFighterPagePath
       ? `Open Jet Fighter page for ${name}`
       : expandInteractive
         ? `Bring ${name} into its USJET cockpit — expand hangar bay ${typeof slot === "number" ? String(slot + 1).padStart(2, "0") : ""}`
@@ -265,6 +271,7 @@ export default function FleetCard({
     expandInteractive ? "fleet-card--hangar-expand" : "",
     isCommandBay ? "fleet-card--command" : "",
     isAvailableBay ? "fleet-card--available" : "",
+    isFleetLocked ? "fleet-card--locked" : "",
     launchSpinning ? "fleet-card--launch-spinning" : "",
   ]
     .filter(Boolean)
@@ -296,7 +303,11 @@ export default function FleetCard({
             {getFleetPartnerLabel(slot)}
           </p>
         ) : null}
-        {isAvailableBay ? (
+        {isFleetLocked ? (
+          <p className="fleet-card__locked-label mt-1 text-[8px] font-black uppercase tracking-[0.24em] text-amber-200/85">
+            Flight Pass required · $19.90
+          </p>
+        ) : isAvailableBay ? (
           <p className="developer-available-green-blink mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">
             Available position
           </p>
@@ -326,6 +337,11 @@ export default function FleetCard({
         {aircraftOfficialName ? (
           <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-200/85">
             {aircraftOfficialName}
+          </p>
+        ) : null}
+        {isFleetLocked ? (
+          <p className="fleet-card__locked-copy mt-3 text-[10px] font-bold uppercase tracking-[0.15em] text-white/55">
+            Click to unlock the remaining AI bays through Stripe.
           </p>
         ) : null}
         {capabilities && isAvailableBay ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
@@ -388,12 +404,19 @@ export default function FleetCard({
       {showProductFooter ? (
         <div className="fleet-card__footer">
           <Link
-            to={productPagePath}
+            to={isFleetLocked ? "#" : productPagePath}
             className="fleet-card__product-cta btn-glass-prominent glass-effect-interactive"
-            aria-label={`View product page for ${name}`}
-            onClick={() => logFleetUsageIfMember(callsign, name)}
+            aria-label={isFleetLocked ? `Unlock ${name} with Flight Pass before viewing products` : `View product page for ${name}`}
+            aria-disabled={isFleetLocked || undefined}
+            onClick={(event) => {
+              if (isFleetLocked) {
+                event.preventDefault();
+                return;
+              }
+              logFleetUsageIfMember(callsign, name);
+            }}
           >
-            Product page →
+            {isFleetLocked ? "Locked by Flight Pass" : "Product page →"}
           </Link>
           {jetFighterPagePath && !isRunway ? (
             <Link to={jetFighterPagePath} className="fleet-card__jet-fighter-link">

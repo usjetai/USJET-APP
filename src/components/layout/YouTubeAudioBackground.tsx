@@ -1,4 +1,6 @@
 /** YouTube audio-only background for the hub */
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
+
 const YOUTUBE_ID = "BT_83vSP1es";
 
 const YOUTUBE_AUDIO_EMBED = [
@@ -16,6 +18,10 @@ const YOUTUBE_AUDIO_EMBED = [
 ].join("");
 
 export default function YouTubeAudioBackground() {
+  if (SITE_AUDIO_DISABLED) {
+    return null;
+  }
+
   return (
     <div 
       className="fixed inset-0 pointer-events-none -z-10 opacity-0" 

@@ -12,6 +12,7 @@ import {
   HIRED_HUD_HUB_BEAT_VIDEO_ID,
   HIRED_HUD_HUB_BEAT_VOLUME,
 } from "../../data/hiredHudHubBeat";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import { USJET_PROTOCOL_CEREMONY_EVENT } from "../../lib/protocolCeremony";
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
@@ -33,6 +34,11 @@ function unlockPlayerSound(player: YoutubePlayer): void {
 /** Hidden YouTube track — preloads muted; hub gesture unmutes and plays once. */
 const HiredHudHubBackgroundBeat = forwardRef<HiredHudHubBackgroundBeatHandle>(
   function HiredHudHubBackgroundBeat(_props, ref) {
+    if (SITE_AUDIO_DISABLED) {
+      useImperativeHandle(ref, () => ({ armWithSound: () => false }), []);
+      return null;
+    }
+
     const reactId = useId().replace(/:/g, "");
     const mountId = `hired-hub-beat-${reactId}`;
     const playerRef = useRef<YoutubePlayer | null>(null);

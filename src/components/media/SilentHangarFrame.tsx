@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { SILENT_HANGAR_LABEL_MUTED } from "../../data/silentHangar";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import { useSilentHangarOptional } from "../../context/SilentHangarContext";
 import SilentHangarAudioToggle from "./SilentHangarAudioToggle";
 
@@ -40,7 +41,7 @@ export default function SilentHangarFrame({
             <p>{SILENT_HANGAR_LABEL_MUTED}</p>
           </div>
         ) : null}
-        {showAudioToggle ? <SilentHangarAudioToggle /> : null}
+        {showAudioToggle && !SITE_AUDIO_DISABLED ? <SilentHangarAudioToggle /> : null}
       </div>
     </div>
   );

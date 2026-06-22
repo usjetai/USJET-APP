@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Plane } from "lucide-react";
+import { useMemberAuth } from "../context/MemberAuthContext";
+import { PUBLIC_FLEET_UNLOCKED_COUNT, isFleetSlotLocked } from "../data/fleetAccessPolicy";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetJetFighterPagePath } from "../data/fleetDirectorySeo";
 import {
-  FLEET_AVAILABLE_COUNT,
-  FLEET_HIRED_COUNT,
   getFleetDisplayAircraftName,
   getFleetDisplayAircraftType,
   isFleetBayAvailable,
@@ -14,11 +14,15 @@ import FleetCard from "../components/fleet/FleetCard";
 import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
 import SovereignVaultGlobalDownload from "../components/growth/SovereignVaultGlobalDownload";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
+import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
-const FLEET_RUNWAY_DESCRIPTION = `Runway clearance: ${FLEET_HIRED_COUNT} hired developers on US fighter vectors, ${FLEET_AVAILABLE_COUNT} open positions recruiting. Hired bays launch through sovereign handoff—same window, cockpit return bar, zero external leaks.`;
+const FLEET_RUNWAY_DESCRIPTION = `Runway clearance: ${PUBLIC_FLEET_UNLOCKED_COUNT} AI bays open. The remaining fleet unlocks after Flight Pass checkout and Stripe verification—one click, one clearance, one revenue engine.`;
 
 const Fleet = () => {
+  const { session } = useMemberAuth();
+  const flightPassUrl = resolveFounderPaymentLink();
+
   return (
     <motion.div
     initial={{ opacity: 0 }}
@@ -51,7 +55,7 @@ const Fleet = () => {
             {FLEET_RUNWAY_DESCRIPTION}
           </p>
           <p className="mt-4 text-sm font-medium uppercase tracking-[0.28em] text-cyan-200/45">
-            {FLEET_HIRED_COUNT} hired · {FLEET_AVAILABLE_COUNT} available · {FLEET_UNIT_COUNT} bays · sovereign handoff
+            {PUBLIC_FLEET_UNLOCKED_COUNT} open · {FLEET_UNIT_COUNT - PUBLIC_FLEET_UNLOCKED_COUNT} locked · $19.90 Flight Pass · Stripe only
           </p>
           <p className="fleet-runway-free-shipping mt-5 rounded-full border border-amber-300/35 bg-amber-500/[0.08] px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.28em] text-amber-100/95 sm:text-[10px]">
             Free shipping on all merchandise
@@ -69,6 +73,7 @@ const Fleet = () => {
       >
         {fleetManifest.map((unit) => {
           const available = isFleetBayAvailable(unit.slot);
+          const locked = isFleetSlotLocked(unit.slot, session);
           const displayAircraftType = getFleetDisplayAircraftType(unit.slot, unit.aircraftType);
           return (
             <FleetCard
@@ -78,13 +83,14 @@ const Fleet = () => {
               aircraftOfficialName={getFleetDisplayAircraftName(unit.slot, unit.aircraftType)}
               name={unit.name}
               callsign={unit.callsign}
-              href={resolveFleetUnitHref(unit)}
+              href={locked ? flightPassUrl : resolveFleetUnitHref(unit)}
               slot={unit.slot}
               systemPrompt={unit.systemPrompt}
               returnTo="/"
               surface="fleet"
               isCommandBay={unit.href === "/origin" || unit.slot === 29}
               isAvailableBay={available}
+              isFleetLocked={locked}
               jetFighterPagePath={getFleetJetFighterPagePath(unit.callsign)}
             />
           );

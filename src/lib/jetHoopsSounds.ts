@@ -1,4 +1,5 @@
 /** Jet Hoops audio — placeholder triggers (drop MP3s in public/hoops/sounds/). */
+import { SITE_AUDIO_DISABLED } from "../data/siteAudio";
 
 export type JetHoopsSoundEvent = "pass" | "score" | "whistle" | "buzzer" | "dribble";
 
@@ -24,6 +25,10 @@ function getClip(event: JetHoopsSoundEvent): HTMLAudioElement {
 
 /** Play a sound if the asset exists; silent noop otherwise. */
 export function triggerJetHoopsSound(event: JetHoopsSoundEvent, volume = 0.48): void {
+  if (SITE_AUDIO_DISABLED) {
+    return;
+  }
+
   try {
     const clip = getClip(event);
     const node = clip.cloneNode(true) as HTMLAudioElement;

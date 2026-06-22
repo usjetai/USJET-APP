@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useSilentHangar } from "../../context/SilentHangarContext";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import { createTwitchChannelPlayer, createTwitchClipPlayer, type TwitchPlayerInstance } from "../../lib/twitchPlayerScript";
 import SilentHangarFrame from "./SilentHangarFrame";
 
@@ -68,8 +69,8 @@ export default function SilentHangarTwitchPlayer({
     if (!player || !ready) {
       return;
     }
-    player.setMuted(!audioArmed);
-    if (audioArmed) {
+    player.setMuted(true);
+    if (!SITE_AUDIO_DISABLED && audioArmed) {
       player.setVolume(0.55);
       player.play();
     }

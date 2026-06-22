@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useSilentHangar } from "../../context/SilentHangarContext";
+import { SITE_AUDIO_DISABLED } from "../../data/siteAudio";
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
 import SilentHangarFrame from "./SilentHangarFrame";
@@ -83,7 +84,7 @@ export default function SilentHangarYouTubeEmbed({
     if (!player || !ready) {
       return;
     }
-    if (audioArmed) {
+    if (!SITE_AUDIO_DISABLED && audioArmed) {
       player.unMute();
       player.setVolume(80);
       player.playVideo();

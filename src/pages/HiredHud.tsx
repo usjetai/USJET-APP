@@ -74,7 +74,7 @@ function randomDeveloperPressure(): number {
 }
 
 function renderHiredHudTileGlamChip(slot: number, chip: HiredHudTileGlamChip) {
-  const key = `${slot}-${chip.title}-${chip.emoji}`;
+  const key = `${slot}-${chip.title}-${chip.emoji}-${chip.imageSrc ?? "no-image"}`;
   const className = "hired-hud__tile-glam-chip";
 
   if (chip.href) {
@@ -88,14 +88,32 @@ function renderHiredHudTileGlamChip(slot: number, chip: HiredHudTileGlamChip) {
         aria-label={`${chip.title} — ${linkHint}`}
         {...(chip.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
-        {chip.emoji}
+        <span>{chip.emoji}</span>
+        {chip.imageSrc ? (
+          <img
+            src={chip.imageSrc}
+            alt={chip.imageAlt ?? `${chip.title} image`}
+            className="hired-hud__tile-glam-chip-image"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : null}
       </a>
     );
   }
 
   return (
     <span key={key} className={className} title={chip.title}>
-      {chip.emoji}
+      <span>{chip.emoji}</span>
+      {chip.imageSrc ? (
+        <img
+          src={chip.imageSrc}
+          alt={chip.imageAlt ?? `${chip.title} image`}
+          className="hired-hud__tile-glam-chip-image"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : null}
     </span>
   );
 }

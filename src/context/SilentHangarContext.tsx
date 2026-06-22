@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import type { SilentHangarAudioPref } from "../data/silentHangar";
+import { SITE_AUDIO_DISABLED } from "../data/siteAudio";
 import { readSilentHangarPref, writeSilentHangarPref } from "../lib/silentHangarStorage";
 
 type SilentHangarContextValue = {
@@ -11,14 +12,16 @@ type SilentHangarContextValue = {
 const SilentHangarContext = createContext<SilentHangarContextValue | null>(null);
 
 export function SilentHangarProvider({ children }: { children: ReactNode }) {
-  const [pref, setPref] = useState<SilentHangarAudioPref>(() => readSilentHangarPref());
+  const [pref, setPref] = useState<SilentHangarAudioPref>(() =>
+    SITE_AUDIO_DISABLED ? "muted" : readSilentHangarPref(),
+  );
 
   const setAudioArmed = useCallback((armed: boolean) => {
-    const next: SilentHangarAudioPref = armed ? "armed" : "muted";
+    const next: SilentHangarAudioPref = !SITE_AUDIO_DISABLED && armed ? "armed" : "muted";
     setPref(next);
     writeSilentHangarPref(next);
     try {
-      window.dispatchEvent(new CustomEvent("silentHangarArm", { detail: { armed } }));
+      window.dispatchEvent(new CustomEvent("silentHangarArm", { detail: { armed: next === "armed" } }));
     } catch {
       // ignore on non-browser environments
     }
@@ -30,7 +33,7 @@ export function SilentHangarProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
-      audioArmed: pref === "armed",
+      audioArmed: !SITE_AUDIO_DISABLED && pref === "armed",
       setAudioArmed,
       toggleAudioArmed,
     }),

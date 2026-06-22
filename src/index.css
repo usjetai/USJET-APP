@@ -157,6 +157,18 @@
   background: transparent;
 }
 
+/* Hide YouTube play button overlay on background iframes */
+.global-video-bg__yt::-webkit-media-controls-start-play-button,
+.global-video-bg__yt::-webkit-media-controls-play-button,
+.global-video-bg__yt .ytp-large-play-button,
+.global-video-bg__yt .ytp-play-button,
+.global-video-bg__yt .ytp-button {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
 .global-video-bg--warp-only,
 .global-video-bg--canvas-only {
   background: transparent;

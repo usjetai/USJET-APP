@@ -81,7 +81,7 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/hangar": 1,
   "/member": 1,
   "/special": 1,
-  "/intel": 2,
+  "/intel": 0,
   "/origin": 3,
   "/founder-special-1995": 3,
 };

@@ -1,7 +1,6 @@
 import { ExternalLink, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
-import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetUnit } from "../../types/fleet";
 import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
@@ -23,9 +22,8 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
           <p className="intel-expanded__callsign">{unit.name}</p>
-          <p className="intel-expanded__unit-name">
-            <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
-          </p>
+          <p className="intel-expanded__unit-name">{unit.name}</p>
+          {unit.aiName ? <p className="intel-expanded__ai-name">{unit.aiName}</p> : null}
           <p className="intel-expanded__domain">{unit.domain}</p>
           <p className="intel-expanded__tagline">Market workstation · BTC spot · NYSE composite</p>
         </div>

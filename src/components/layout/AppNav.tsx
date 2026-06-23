@@ -4,7 +4,6 @@ import GamingVrNavButton from "../gaming/GamingVrNavButton";
 import AppNavHangarLive from "./AppNavHangarLive";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
-import MobileRotateCue from "./MobileRotateCue";
 import AppNavCashAppButton from "./AppNavCashAppButton";
 import UsjetOpsMailEnvelope from "./UsjetOpsMailEnvelope";
 import { BLOG_ROUTE } from "../../data/usjetBlog";
@@ -143,9 +142,7 @@ const AppNav = () => {
               <GamingVrNavButton surface="header" />
             </div>
 
-            <div className="app-nav-zone app-nav-zone--tail">
-              <MobileRotateCue />
-            </div>
+            <div className="app-nav-zone app-nav-zone--tail" />
           </div>
         </div>
 

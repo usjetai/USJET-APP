@@ -18,34 +18,58 @@ const STOCK_PRICE_LABEL = "Reserved";
 const BITCOIN_ASSET_CODE = "BTC";
 const BITCOIN_PURCHASE_CODE = "BTC-USD";
 
-const AI_PUBLIC_STOCK_CODES: Record<string, string> = {
-  "Adobe Firefly": "ADBE",
-  ChatGPT: "MSFT",
-  Gemini: "GOOGL",
-  "GitHub Copilot": "MSFT",
-  Sora: "MSFT",
+const AI_ROBINHOOD_COIN_CODES: Record<string, string> = {
+  "Adobe Firefly": "RENDER",
+  ChatGPT: "WLD",
+  Claude: "FET",
+  Consensus: "GRT",
+  Cursor: "VIRTUAL",
+  DeepSeek: "FET",
+  ElevenLabs: "VIRTUAL",
+  Flux: "RENDER",
+  Gamma: "VIRTUAL",
+  Gemini: "GUSD",
+  "GitHub Copilot": "VIRTUAL",
+  Grok: "AIXBT",
+  HeyGen: "RENDER",
+  Higgsfield: "RENDER",
+  Jasper: "VIRTUAL",
+  "Leonardo AI": "RENDER",
+  "Luma Dream Machine": "RENDER",
+  Midjourney: "RENDER",
+  "Notion AI": "VIRTUAL",
+  "Otter.ai": "VIRTUAL",
+  Perplexity: "GRT",
+  "Play.ht": "VIRTUAL",
+  "Replit Agent": "VIRTUAL",
+  Runway: "RENDER",
+  Sora: "WLD",
+  Suno: "VIRTUAL",
+  Synthesia: "RENDER",
+  "USJet Origin": "VIRTUAL",
+  "v0.dev": "VIRTUAL",
 };
 
-function stockCodeForUnit(unit: FleetUnit): string {
-  return AI_PUBLIC_STOCK_CODES[unit.aiName ?? ""] ?? "PRIVATE";
+function robinhoodCoinCodeForUnit(unit: FleetUnit): string {
+  return AI_ROBINHOOD_COIN_CODES[unit.aiName ?? ""] ?? "BTC";
 }
 
 function IntelMarketBoard({ unit }: { unit: FleetUnit }) {
-  const stockCode = stockCodeForUnit(unit);
+  const robinhoodCode = robinhoodCoinCodeForUnit(unit);
   const stockBase = 199.5 + unit.slot * 8.75;
   const bitcoinBase = 62450 + unit.slot * 37;
 
   return (
     <div className="intel-monitor__market-stack">
-      <section className="intel-market-card intel-market-card--nyse" aria-label="New York Stock Exchange UI-only board">
+      <section className="intel-market-card intel-market-card--nyse" aria-label="Robinhood coin code UI-only board">
         <div className="intel-market-card__header">
-          <span className="intel-market-card__eyebrow">Live in New York</span>
-          <strong className="intel-market-card__title">Stock Exchange</strong>
+          <span className="intel-market-card__eyebrow">Robinhood</span>
+          <strong className="intel-market-card__title">Coin Code</strong>
         </div>
         <div className="intel-market-card__ledger">
           <div className="intel-market-card__metric">
-            <span>Stock Code</span>
-            <strong>{stockCode}</strong>
+            <span>AI Coin Code</span>
+            <strong>{robinhoodCode}</strong>
           </div>
           <div className="intel-market-card__metric">
             <span>Price</span>

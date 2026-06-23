@@ -10,15 +10,7 @@ import { BLOG_ROUTE } from "../../data/usjetBlog";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import OriginGateLink from "../origin/OriginGateLink";
 import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
-import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 import SovereignVaultGlobalDownload from "../growth/SovereignVaultGlobalDownload";
-import { GAMING_X_URL, GAMING_X_WEB } from "../../data/gamingPortal";
-
-const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
-  label: GAMING_X_WEB,
-  returnTo: "/",
-  directHandoff: true,
-});
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
@@ -110,15 +102,6 @@ const AppNav = () => {
                 <Newspaper className="app-nav-blog__icon" size={13} strokeWidth={2.4} aria-hidden />
                 <span className="app-nav-blog__label">Blog</span>
               </NavLink>
-
-              <Link
-                to={X_USAJET_COCKPIT}
-                className="app-nav-pill btn-glass glass-effect-interactive shrink-0"
-                title="X — @usajet"
-                aria-label="X — @usajet on x.com"
-              >
-                X
-              </Link>
 
               <AppNavHangarLive />
 

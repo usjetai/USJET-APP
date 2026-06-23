@@ -2,6 +2,7 @@ import type { CSSProperties, KeyboardEvent } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { getWingForSlot } from "../../lib/intelWings";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
+import { useSimulatedAgentActivity } from "../../lib/useSimulatedAgentActivity";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import TickerDisplay from "./TickerDisplay";
 import EkgPulseLine from "./EkgPulseLine";
@@ -27,6 +28,8 @@ export default function IntelMonitor({ unit, index: _index, style, onExpandReque
   const interactive = Boolean(onExpandRequest);
   const wing = getWingForSlot(unit.slot);
   const volatility = WING_VOLATILITY[wing.symbol] ?? 12;
+  const { status: simulatedActivityStatus } = useSimulatedAgentActivity(unit.callsign);
+
 
   return (
     <article
@@ -70,7 +73,7 @@ export default function IntelMonitor({ unit, index: _index, style, onExpandReque
     >
       <header className="intel-monitor__header">
         <IntelMonitorIdentity unit={unit} />
-        <span className="intel-monitor__status">{unit.status}</span>
+        <span className="intel-monitor__status">{simulatedActivityStatus}</span>
       </header>
 
       <div className="intel-monitor__screen liquid-glass-background">

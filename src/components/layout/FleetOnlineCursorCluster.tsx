@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HelpCircle } from "lucide-react";
-import FleetCommand from "../fleet/FleetCommand";
 import { PROTOCOL_PROOF_LINK_LABEL, PROTOCOL_SESSION_PROOF_ROUTE } from "../../data/protocolSessionProof";
 import {
   PROTOCOL_LOCK_SYNCED_STORAGE_KEY,
@@ -35,17 +34,12 @@ export default function FleetOnlineCursorCluster() {
     };
   }, [readFleetOnlineFromStorage]);
 
-  const handleFleetOnlineChange = useCallback((online: boolean) => {
-    setFleetOnline(online);
-  }, []);
-
   return (
     <div
       className={["fleet-online-cursor-cluster", fleetOnline ? "fleet-online-cursor-cluster--online" : ""]
         .filter(Boolean)
         .join(" ")}
     >
-      <FleetCommand onFleetOnlineChange={handleFleetOnlineChange} />
       <Link
         to={PROTOCOL_SESSION_PROOF_ROUTE}
         className="fleet-protocol-proof-link btn-glass glass-effect-interactive"

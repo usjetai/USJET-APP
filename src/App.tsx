@@ -10,6 +10,7 @@ import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
 import UsjetProtocolBootOverlay from "./components/layout/UsjetProtocolBootOverlay";
+import WarpBackground from "./components/layout/WarpBackground";
 import GlobalBackgroundBeat from "./components/layout/GlobalBackgroundBeat";
 import SiteAudioPrime from "./components/layout/SiteAudioPrime";
 import YouTubeAudioBackground from "./components/layout/YouTubeAudioBackground";
@@ -216,6 +217,7 @@ export default function App() {
               id="usjet-app-shell"
               className="relative min-h-screen overflow-x-hidden bg-transparent text-white"
             >
+              <WarpBackground />
               <AppChrome />
               <UsjetGlobalContactBar />
               <UsjetAtmosphereBoot />

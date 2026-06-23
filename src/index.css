@@ -5,6 +5,13 @@
 :where(html) {
   --usjet-logo-corner-radius-sm: 7px;
   --usjet-chip-height: 1.75rem;
+  background: #00030a;
+}
+
+body,
+#root,
+#usjet-app-shell {
+  background: transparent !important;
 }
 
 @layer utilities {
@@ -63,12 +70,12 @@
 .warp-bg-canvas {
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: 0;
   display: block;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background: #010308;
+  background: #00030a;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -157,12 +164,11 @@
   background: transparent;
 }
 
-/* Intel route: remove ALL global background layers (video/canvas/scanlines/audio beat) */
+/* Intel route: remove legacy visual layers; keep the new scroll starfield visible. */
 html .intel-page--no-global-bg {
   /* wrapper marker only */
 }
 
-html:has(.intel-page--no-global-bg) .warp-bg-canvas,
 html:has(.intel-page--no-global-bg) .global-video-bg,
 html:has(.intel-page--no-global-bg) .aviation-pulse,
 html:has(.intel-page--no-global-bg) .global-background-beat,
@@ -403,6 +409,15 @@ html:has(.intel-page--no-global-bg) .usjet-protocol-boot {
   background-size: 280px 120%, 520px 120%;
   background-position: 0 0, 120px 0;
   animation: aviation-pulse-drift 20s linear infinite;
+}
+
+body.usjet-scroll-warp-clean .global-video-bg,
+body.usjet-scroll-warp-clean .aviation-pulse,
+body.usjet-scroll-warp-clean .moving-bg-layer,
+body.usjet-scroll-warp-clean .founder-video-bg {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 @keyframes aviation-pulse-drift {
@@ -6278,15 +6293,7 @@ html.hangar-bay-isolated .usjet-protocol-boot {
 }
 
 .fleet-page--runway::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 130% 55% at 50% -8%, rgba(34, 211, 238, 0.04), transparent 58%),
-    radial-gradient(ellipse 70% 45% at 100% 40%, rgba(37, 99, 235, 0.03), transparent 52%),
-    radial-gradient(ellipse 60% 35% at 0% 70%, rgba(56, 189, 248, 0.02), transparent 48%);
+  content: none;
 }
 
 /* Fleet home — member login / logout / Stripe create-account chrome */
@@ -20541,11 +20548,9 @@ html.gaming-page-root .global-video-bg__yt {
   color: rgba(165, 243, 252, 0.75);
 }
 
-/* ─── Pre-Protocol void — no warp until ceremony arms atmosphere ─── */
-html:not(.usjet-atmosphere-live) .warp-bg-canvas,
+/* ─── Pre-Protocol void — legacy video/pulse stay hidden; scroll starfield remains live ─── */
 html:not(.usjet-atmosphere-live) .global-video-bg,
 html:not(.usjet-atmosphere-live) .aviation-pulse,
-html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .warp-bg-canvas,
 html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .global-video-bg,
 html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .aviation-pulse {
   opacity: 0 !important;
@@ -20562,14 +20567,12 @@ html.usjet-pre-atmosphere #usjet-app-shell {
   background-color: #010308 !important;
 }
 
-html.usjet-atmosphere-live .warp-bg-canvas,
 html.usjet-atmosphere-live .global-video-bg,
 html.usjet-atmosphere-live .aviation-pulse {
   opacity: 1;
   visibility: visible;
 }
 
-html.usjet-atmosphere-reveal .warp-bg-canvas,
 html.usjet-atmosphere-reveal .global-video-bg,
 html.usjet-atmosphere-reveal .aviation-pulse {
   animation: usjet-atmosphere-rise-in 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;

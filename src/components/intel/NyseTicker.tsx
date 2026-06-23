@@ -35,13 +35,10 @@ export default function NyseTicker() {
   return (
     <div className="nyse-ticker">
       <span className="nyse-ticker__label">NYSE</span>
-      {/* Intel: hide time/date everywhere (NYSE time can be reintroduced later if needed) */}
-      <span className="nyse-ticker__clock" aria-hidden>
-        {nyClock.time}
-      </span>
-      <span className="nyse-ticker__date" aria-hidden>
-        {nyClock.date} ET
-      </span>
+      {/* Intel: hide time/date everywhere */}
+      <span className="nyse-ticker__clock" aria-hidden />
+      <span className="nyse-ticker__date" aria-hidden />
+
     </div>
   );
 }

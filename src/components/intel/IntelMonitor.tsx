@@ -15,17 +15,19 @@ type IntelMonitorProps = {
 };
 
 const STOCK_PRICE_LABEL = "Reserved";
-const BITCOIN_CODE = "BTC/USD";
+const BITCOIN_ASSET_CODE = "BTC";
+const BITCOIN_PURCHASE_CODE = "BTC-USD";
+
+const AI_PUBLIC_STOCK_CODES: Record<string, string> = {
+  "Adobe Firefly": "ADBE",
+  ChatGPT: "MSFT",
+  Gemini: "GOOGL",
+  "GitHub Copilot": "MSFT",
+  Sora: "MSFT",
+};
 
 function stockCodeForUnit(unit: FleetUnit): string {
-  const aiName = unit.aiName ?? "AI";
-  const symbol = aiName
-    .replace(/[^a-z0-9]/gi, "")
-    .toUpperCase()
-    .slice(0, 4)
-    .padEnd(4, "X");
-
-  return `USJ-${symbol}-${String(unit.slot + 1).padStart(2, "0")}`;
+  return AI_PUBLIC_STOCK_CODES[unit.aiName ?? ""] ?? "PRIVATE";
 }
 
 function IntelMarketBoard({ unit }: { unit: FleetUnit }) {
@@ -58,12 +60,16 @@ function IntelMarketBoard({ unit }: { unit: FleetUnit }) {
       <section className="intel-market-card intel-market-card--bitcoin" aria-label="Bitcoin UI-only board">
         <div className="intel-market-card__header">
           <span className="intel-market-card__eyebrow">Bitcoin</span>
-          <strong className="intel-market-card__title">Candlesticks</strong>
+          <strong className="intel-market-card__title">{BITCOIN_ASSET_CODE}</strong>
         </div>
-        <div className="intel-market-card__ledger intel-market-card__ledger--single">
+        <div className="intel-market-card__ledger">
           <div className="intel-market-card__metric">
-            <span>Code</span>
-            <strong>{BITCOIN_CODE}</strong>
+            <span>Asset Code</span>
+            <strong>{BITCOIN_ASSET_CODE}</strong>
+          </div>
+          <div className="intel-market-card__metric">
+            <span>Purchase Code</span>
+            <strong>{BITCOIN_PURCHASE_CODE}</strong>
           </div>
         </div>
         <div className="intel-market-card__chart" aria-hidden>

@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 /**
  * Vite build (not Next.js): there is no `next.config.js`.
  *
@@ -10,7 +12,7 @@ import react from "@vitejs/plugin-react";
  *   stricter than the Vite/esbuild pipeline on unused locals/parameters.
  */
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), cloudflare()],
   optimizeDeps: {
     include: ["react", "react-dom", "react/jsx-dev-runtime"],
   },

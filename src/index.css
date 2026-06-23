@@ -157,6 +157,23 @@
   background: transparent;
 }
 
+/* Intel route: remove ALL global background layers (video/canvas/scanlines/audio beat) */
+html .intel-page--no-global-bg {
+  /* wrapper marker only */
+}
+
+html:has(.intel-page--no-global-bg) .warp-bg-canvas,
+html:has(.intel-page--no-global-bg) .global-video-bg,
+html:has(.intel-page--no-global-bg) .aviation-pulse,
+html:has(.intel-page--no-global-bg) .global-background-beat,
+html:has(.intel-page--no-global-bg) .usjet-protocol-boot {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+
 /* Hide YouTube play button overlay on background iframes */
 .global-video-bg__yt iframe::-webkit-media-controls-start-play-button,
 .global-video-bg__yt iframe::-webkit-media-controls-play-button,

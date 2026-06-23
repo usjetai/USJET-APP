@@ -7,6 +7,8 @@ import IntelReservedBay from "../components/intel/IntelReservedBay";
 import IntelFleetVitals from "../components/intel/IntelFleetVitals";
 import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
 import IntelPartnershipInvite from "../components/intel/IntelPartnershipInvite";
+import IntelStockAICode from "../components/intel/IntelStockAICode";
+
 
 import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
@@ -82,7 +84,7 @@ const Intel = () => {
 
   // Founder review — Intel Top 10 gated to Tier 2+ in IntelTop10Section
   return (
-    <div className="intel-page">
+    <div className="intel-page intel-page--no-global-bg">
       {workbenchFullToast ? (
         <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
           <p className="intel-hangar-toast__title">Hangar full</p>
@@ -132,7 +134,9 @@ const Intel = () => {
           <div className="intel-grid grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6">{gridCells}</div>
         </div>
 
+        <IntelStockAICode />
         <IntelPartnershipInvite />
+
       </div>
     </div>
   );

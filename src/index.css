@@ -4558,12 +4558,13 @@ button.fleet-card__launch--button {
     0 0 18px color-mix(in srgb, var(--intel-market-accent) 18%, transparent);
 }
 
-.intel-market-card--bitcoin {
-  --intel-market-accent: #f59e0b;
+.intel-market-card--exchange {
+  --intel-market-accent: #38bdf8;
   --intel-market-bright: #fde68a;
   background:
-    linear-gradient(135deg, rgba(245, 158, 11, 0.15), transparent 48%),
-    rgba(12, 9, 2, 0.54);
+    linear-gradient(135deg, rgba(56, 189, 248, 0.14), transparent 44%),
+    linear-gradient(315deg, rgba(245, 158, 11, 0.12), transparent 58%),
+    rgba(2, 8, 23, 0.56);
 }
 
 .intel-market-card__header,
@@ -4644,13 +4645,13 @@ button.fleet-card__launch--button {
   pointer-events: none;
 }
 
-.intel-market-card--bitcoin .intel-candles__bar--bull .intel-candles__wick {
-  stroke: rgba(253, 230, 138, 0.78);
+.intel-market-card--exchange .intel-candles__bar--bull .intel-candles__wick {
+  stroke: rgba(186, 230, 253, 0.78);
 }
 
-.intel-market-card--bitcoin .intel-candles__bar--bull .intel-candles__body {
-  fill: rgba(245, 158, 11, 0.9);
-  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.65));
+.intel-market-card--exchange .intel-candles__bar--bull .intel-candles__body {
+  fill: rgba(56, 189, 248, 0.9);
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.65));
 }
 
 .intel-monitor__candles {

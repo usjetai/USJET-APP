@@ -15,8 +15,7 @@ type IntelMonitorProps = {
 };
 
 const STOCK_PRICE_LABEL = "Reserved";
-const BITCOIN_ASSET_CODE = "BTC";
-const BITCOIN_PURCHASE_CODE = "BTC-USD";
+const NYSE_VALUE_LABEL = "Feed Reserved";
 
 const AI_ROBINHOOD_COIN_CODES: Record<string, string> = {
   "Adobe Firefly": "RENDER",
@@ -54,10 +53,25 @@ function robinhoodCoinCodeForUnit(unit: FleetUnit): string {
   return AI_ROBINHOOD_COIN_CODES[unit.aiName ?? ""] ?? "BTC";
 }
 
+const AI_PUBLIC_MARKET_CODES: Record<string, string> = {
+  "Adobe Firefly": "ADBE",
+  ChatGPT: "MSFT",
+  Claude: "AMZN",
+  Gemini: "GOOGL",
+  "GitHub Copilot": "MSFT",
+  Grok: "TSLA",
+  Sora: "MSFT",
+};
+
+function publicMarketCodeForUnit(unit: FleetUnit): string {
+  return AI_PUBLIC_MARKET_CODES[unit.aiName ?? ""] ?? "UNLISTED";
+}
+
 function IntelMarketBoard({ unit }: { unit: FleetUnit }) {
   const robinhoodCode = robinhoodCoinCodeForUnit(unit);
+  const publicMarketCode = publicMarketCodeForUnit(unit);
   const stockBase = 199.5 + unit.slot * 8.75;
-  const bitcoinBase = 62450 + unit.slot * 37;
+  const nyseBase = 420 + unit.slot * 6.5;
 
   return (
     <div className="intel-monitor__market-stack">
@@ -81,23 +95,23 @@ function IntelMarketBoard({ unit }: { unit: FleetUnit }) {
         </div>
       </section>
 
-      <section className="intel-market-card intel-market-card--bitcoin" aria-label="Bitcoin UI-only board">
+      <section className="intel-market-card intel-market-card--exchange" aria-label="New York Stock Exchange UI-only board">
         <div className="intel-market-card__header">
-          <span className="intel-market-card__eyebrow">Bitcoin</span>
-          <strong className="intel-market-card__title">{BITCOIN_ASSET_CODE}</strong>
+          <span className="intel-market-card__eyebrow">New York</span>
+          <strong className="intel-market-card__title">Stock Exchange</strong>
         </div>
         <div className="intel-market-card__ledger">
           <div className="intel-market-card__metric">
-            <span>Asset Code</span>
-            <strong>{BITCOIN_ASSET_CODE}</strong>
+            <span>Ticker Code</span>
+            <strong>{publicMarketCode}</strong>
           </div>
           <div className="intel-market-card__metric">
-            <span>Purchase Code</span>
-            <strong>{BITCOIN_PURCHASE_CODE}</strong>
+            <span>Worth</span>
+            <strong>{NYSE_VALUE_LABEL}</strong>
           </div>
         </div>
         <div className="intel-market-card__chart" aria-hidden>
-          <MarketCandlesticks seed={unit.slot + 701} basePrice={bitcoinBase} volatility={420} candleCount={9} />
+          <MarketCandlesticks seed={unit.slot + 701} basePrice={nyseBase} volatility={5.8} candleCount={9} />
         </div>
       </section>
     </div>

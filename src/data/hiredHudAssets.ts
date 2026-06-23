@@ -6,6 +6,8 @@ import { mailtoUsjetOps, USJET_CASH_APP_CASHTAG, USJET_CASH_APP_URL } from "../l
 export type HiredHudTileGlamChip = {
   emoji: string;
   title: string;
+  imageSrc?: string;
+  imageAlt?: string;
   href?: string;
   linkLabel?: string;
   /** Direct off-site handoff (e.g. Cash App) — opens in a new tab. */

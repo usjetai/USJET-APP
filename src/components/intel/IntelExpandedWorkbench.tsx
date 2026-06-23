@@ -2,7 +2,6 @@ import { ExternalLink, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import type { FleetUnit } from "../../types/fleet";
-import { iframeSrcFromUnitHref } from "../../lib/intelGridExpansion";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
 import MarketDualFeed from "./market/MarketDualFeed";
@@ -15,7 +14,6 @@ type IntelExpandedWorkbenchProps = {
 };
 
 export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: IntelExpandedWorkbenchProps) {
-  const src = iframeSrcFromUnitHref(unit.href);
   const launchHref = fleetLaunchUrl(unit.domain, unit.href, unit.slot);
 
   return (
@@ -23,14 +21,12 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
       <header className="intel-expanded__chrome">
         <div className="intel-expanded__meta">
           {unit.aiName ? <p className="intel-expanded__ai-name">{unit.aiName}</p> : null}
-          <p className="intel-expanded__domain">{unit.domain}</p>
-          <p className="intel-expanded__tagline">Market workstation · BTC spot · NYSE composite</p>
         </div>
         <div className="intel-expanded__actions">
           <a
             className="intel-expanded__external"
             href={launchHref}
-            aria-label={`Launch ${unit.name} — integrated navigation`}
+            aria-label={`Launch ${unit.aiName ?? "AI"} — integrated navigation`}
             onClick={() => logFleetUsageIfMember(unit.callsign, unit.name)}
           >
             <ExternalLink size={16} strokeWidth={2} />

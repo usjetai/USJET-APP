@@ -79,7 +79,7 @@ export default function IntelFleetVitals() {
               .filter(Boolean)
               .join(" ")}
             style={fleetBayAccentStyle(unit.slot)}
-            title={unit.name}
+            title={unit.aiName ?? "AI"}
           />
         ))}
       </div>

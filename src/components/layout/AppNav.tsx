@@ -1,25 +1,10 @@
 import { NavLink, Link, useLocation } from "react-router-dom";
-import { Newspaper } from "lucide-react";
-import GamingVrNavButton from "../gaming/GamingVrNavButton";
-import AppNavHangarLive from "./AppNavHangarLive";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
-import MobileRotateCue from "./MobileRotateCue";
-import AppNavCashAppButton from "./AppNavCashAppButton";
-import UsjetOpsMailEnvelope from "./UsjetOpsMailEnvelope";
-import { BLOG_ROUTE } from "../../data/usjetBlog";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import OriginGateLink from "../origin/OriginGateLink";
 import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
-import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
 import SovereignVaultGlobalDownload from "../growth/SovereignVaultGlobalDownload";
-import { GAMING_X_URL, GAMING_X_WEB } from "../../data/gamingPortal";
-
-const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
-  label: GAMING_X_WEB,
-  returnTo: "/",
-  directHandoff: true,
-});
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
@@ -39,12 +24,10 @@ const navPillClass = (isActive: boolean) =>
     .join(" ");
 
 const AppNav = () => {
-  const location = useLocation();
   const { session } = useMemberAuth();
   const visibleLinks = NAV_LINKS.filter((link) =>
     link.to === "/member" ? showMemberNavLink(session) : canMemberAccessRoute(link.to, session),
   );
-  const showNavDownload = location.pathname !== "/";
 
   return (
     <header className="liquid-glass-nav sticky top-0 z-50 mx-auto w-full max-w-[min(100vw-1.25rem,72rem)] px-2 backdrop-blur-md sm:max-w-none sm:px-4">
@@ -93,67 +76,12 @@ const AppNav = () => {
           </div>
 
           <div className="app-nav-row app-nav-row--secondary">
-            <div className="app-nav-zone app-nav-zone--media">
-              <UsjetOpsMailEnvelope className="app-nav-mail__envelope" />
-              <AppNavCashAppButton />
+            <div className="app-nav-zone app-nav-zone--media" />
 
-              <NavLink
-                to={BLOG_ROUTE}
-                className={({ isActive }) =>
-                  ["app-nav-blog btn-glass glass-effect-interactive shrink-0", isActive ? "app-nav-blog--active" : ""]
-                    .filter(Boolean)
-                    .join(" ")
-                }
-                title="USJET Operator Log — founding story, Form C dispatches, invest narrative"
-                aria-label="USJET Blog — Operator Log"
-              >
-                <span className="app-nav-blog__reflection" aria-hidden />
-                <Newspaper className="app-nav-blog__icon" size={13} strokeWidth={2.4} aria-hidden />
-                <span className="app-nav-blog__label">Blog</span>
-              </NavLink>
-
-              <Link
-                to={X_USAJET_COCKPIT}
-                className="app-nav-pill btn-glass glass-effect-interactive shrink-0"
-                title="X — @usajet"
-                aria-label="X — @usajet on x.com"
-              >
-                X
-              </Link>
-
-              <AppNavHangarLive />
-
-              <NavLink
-                to="/b2b"
-                className={({ isActive }) =>
-                  ["app-nav-b2b btn-glass glass-effect-interactive shrink-0", isActive ? "app-nav-b2b--active" : ""]
-                    .filter(Boolean)
-                    .join(" ")
-                }
-                title="B2B Enterprise — industrial operating system"
-                aria-label="B2B Enterprise gateway"
-              >
-                <span className="app-nav-b2b__reflection" aria-hidden />
-                <span className="app-nav-b2b__earth" aria-hidden>
-                  🌍
-                </span>
-                <span className="app-nav-b2b__label">B2B</span>
-              </NavLink>
-
-              <GamingVrNavButton surface="header" />
-            </div>
-
-            <div className="app-nav-zone app-nav-zone--tail">
-              <MobileRotateCue />
-            </div>
+            <div className="app-nav-zone app-nav-zone--tail" />
           </div>
         </div>
 
-        {showNavDownload ? (
-          <div className="app-nav-zone app-nav-zone--download" aria-label="Sovereign vault download">
-            <SovereignVaultGlobalDownload embedded />
-          </div>
-        ) : null}
       </GlassEffectContainer>
     </header>
   );

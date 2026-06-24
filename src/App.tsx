@@ -15,7 +15,6 @@ import SiteAudioPrime from "./components/layout/SiteAudioPrime";
 import YouTubeAudioBackground from "./components/layout/YouTubeAudioBackground";
 import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "./data/globalBackgroundBeat";
 import SiteLatchMenu from "./components/layout/SiteLatchMenu";
-import TierRouteGate from "./components/member/TierRouteGate";
 import CanonicalHead from "./components/layout/CanonicalHead";
 import { useAtmosphereLive } from "./hooks/useAtmosphereLive";
 
@@ -83,22 +82,8 @@ function AnimatedRoutes() {
           <Routes location={location}>
             <Route path="/" element={<Fleet />} />
             <Route path="/login" element={<MemberLogin />} />
-            <Route
-              path="/hangar"
-              element={
-                <TierRouteGate path="/hangar" pageLabel="Hangar">
-                  <Hangar />
-                </TierRouteGate>
-              }
-            />
-            <Route
-              path="/intel"
-              element={
-                <TierRouteGate path="/intel" pageLabel="Intel">
-                  <Intel />
-                </TierRouteGate>
-              }
-            />
+            <Route path="/hangar" element={<Hangar />} />
+            <Route path="/intel" element={<Intel />} />
             <Route path="/founder" element={<Founder />} />
             <Route path="/founder/products" element={<FounderProducts />} />
             <Route path="/gaming" element={<Gaming />} />
@@ -132,39 +117,11 @@ function AnimatedRoutes() {
             <Route path="/hoops" element={<Hoops />} />
             <Route path="/app/hoops" element={<Hoops />} />
             <Route path="/100k" element={<SovereignBlueprint100k />} />
-            <Route
-              path="/origin"
-              element={
-                <TierRouteGate path="/origin" pageLabel="Origin">
-                  <Origin />
-                </TierRouteGate>
-              }
-            />
-            <Route
-              path="/founder-special-1995"
-              element={
-                <TierRouteGate path="/founder-special-1995" pageLabel="1995 Grit Vault">
-                  <FounderSpecial1995 />
-                </TierRouteGate>
-              }
-            />
-            <Route
-              path="/special"
-              element={
-                <TierRouteGate path="/special" pageLabel="Founder Special">
-                  <Special />
-                </TierRouteGate>
-              }
-            />
+            <Route path="/origin" element={<Origin />} />
+            <Route path="/founder-special-1995" element={<FounderSpecial1995 />} />
+            <Route path="/special" element={<Special />} />
             <Route path="/member/login" element={<MemberLogin />} />
-            <Route
-              path="/member"
-              element={
-                <TierRouteGate path="/member" pageLabel="Member Portal">
-                  <MemberPortal />
-                </TierRouteGate>
-              }
-            />
+            <Route path="/member" element={<MemberPortal />} />
           </Routes>
         </Suspense>
       </PageTransition>

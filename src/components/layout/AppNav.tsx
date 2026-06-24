@@ -8,7 +8,6 @@ import SovereignVaultGlobalDownload from "../growth/SovereignVaultGlobalDownload
 
 const NAV_LINKS = [
   { to: "/", label: "Fleet" },
-  { to: "/hangar", label: "Hangar" },
   { to: "/intel", label: "Intel" },
   { to: "/founder", label: "Founder" },
   { to: "/origin", label: "Origin" },

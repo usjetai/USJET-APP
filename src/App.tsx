@@ -20,7 +20,6 @@ import CanonicalHead from "./components/layout/CanonicalHead";
 import { useAtmosphereLive } from "./hooks/useAtmosphereLive";
 
 const Fleet = lazy(() => import("./pages/Fleet"));
-const Hangar = lazy(() => import("./pages/Hangar"));
 const Intel = lazy(() => import("./pages/Intel"));
 const Founder = lazy(() => import("./pages/Founder"));
 const FounderProducts = lazy(() => import("./pages/FounderProducts"));
@@ -83,14 +82,6 @@ function AnimatedRoutes() {
           <Routes location={location}>
             <Route path="/" element={<Fleet />} />
             <Route path="/login" element={<MemberLogin />} />
-            <Route
-              path="/hangar"
-              element={
-                <TierRouteGate path="/hangar" pageLabel="Hangar">
-                  <Hangar />
-                </TierRouteGate>
-              }
-            />
             <Route
               path="/intel"
               element={

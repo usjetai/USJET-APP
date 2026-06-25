@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
-import HangarIsolatedBayPortal from "../components/hangar/HangarIsolatedBayPortal";
+import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import SilentBackgroundYouTube from "../components/media/SilentBackgroundYouTube";
 import HangarPageHeader, { HANGAR_META_DESCRIPTION } from "../components/hangar/HangarPageHeader";
 import { useMemberAuth } from "../context/MemberAuthContext";
@@ -62,15 +62,23 @@ export default function Hangar() {
     tryExpand(targetUnit);
   }, [location.state, tryExpand]);
 
+  const expandedSlots = useMemo(() => new Set(expansions.map((entry) => entry.slot)), [expansions]);
+
   const bayCells = useMemo(
     () =>
-      hangarUnits.map((unit) => (
-        <HangarBayTile key={`hangar-bay-${unit.slot}`} unit={unit} onOpenBay={() => tryExpand(unit)} />
-      )),
-    [tryExpand],
+      hangarUnits.map((unit) =>
+        expandedSlots.has(unit.slot) ? (
+          <HangarToolWorkbench
+            key={`hangar-workbench-${unit.slot}`}
+            unit={unit}
+            onClose={() => closeExpansion(unit.slot)}
+          />
+        ) : (
+          <HangarBayTile key={`hangar-bay-${unit.slot}`} unit={unit} onOpenBay={() => tryExpand(unit)} />
+        ),
+      ),
+    [tryExpand, closeExpansion, expandedSlots],
   );
-
-  const expandedSlots = useMemo(() => new Set(expansions.map((entry) => entry.slot)), [expansions]);
 
   return (
     <motion.div
@@ -123,8 +131,6 @@ export default function Hangar() {
 
         <HangarBayGrid columns={columns}>{bayCells}</HangarBayGrid>
       </div>
-
-      <HangarIsolatedBayPortal expansions={expansions} onClose={closeExpansion} />
     </motion.div>
   );
 }

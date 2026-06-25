@@ -8,6 +8,8 @@ export type HiredHudTileGlamChip = {
   title: string;
   href?: string;
   linkLabel?: string;
+  imageSrc?: string;
+  imageAlt?: string;
   /** Direct off-site handoff (e.g. Cash App) — opens in a new tab. */
   external?: boolean;
 };

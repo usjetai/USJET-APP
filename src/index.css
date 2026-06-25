@@ -28056,6 +28056,38 @@ html.blog-page-root #usjet-app-shell {
 }
 
 /* Lane A — motion bursts (3 / 9 / 18s cycles) */
+/* Professional plain text footer links */
+.footer-text-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: rgba(203, 213, 225, 0.72);
+  transition: color 0.15s ease;
+}
+
+.footer-text-link:hover,
+.footer-text-link:focus-visible {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.footer-text-link--pink {
+  color: rgba(244, 114, 182, 0.9);
+}
+
+.footer-text-link--pink:hover,
+.footer-text-link--pink:focus-visible {
+  color: rgba(249, 168, 212, 1);
+}
+
 .footer-surprise-l0--shake {
   animation: footer-surprise-shake 0.78s ease;
 }

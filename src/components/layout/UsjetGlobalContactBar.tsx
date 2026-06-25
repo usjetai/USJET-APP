@@ -1,30 +1,22 @@
 import { Link, NavLink } from "react-router-dom";
-import { Gem } from "lucide-react";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
-import FooterSurpriseWrap from "./FooterSurpriseWrap";
-import WefunderCovenantBridge from "../campaign/WefunderCovenantBridge";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
-import ZelleFuelChip from "../fuel/ZelleFuelChip";
-import GamingVrNavButton from "../gaming/GamingVrNavButton";
-import SilentHangarAudioToggle from "../media/SilentHangarAudioToggle";
-import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "../../data/globalBackgroundBeat";
 
-/** Fixed bottom strip — brand, status, revenue lanes, SOS / Customer Service. */
+const FOOTER_TEXT_LINK = "footer-text-link";
+const FOOTER_TEXT_LINK_PINK = "footer-text-link footer-text-link--pink";
+
+/** Fixed bottom strip — professional plain text links. USJET House is pink. */
 export default function UsjetGlobalContactBar() {
   return (
     <footer className="usjet-global-contact-bar" aria-label="USJET site status and quick links">
       <GlassEffectContainer className="usjet-global-contact-bar__shell liquid-glass-background glass-effect glass-effect--capsule glass-tint-cyan">
         <div className="usjet-global-contact-bar__row usjet-global-contact-bar__row--head">
-          <Link
-            to="/"
-            className="usjet-global-contact-bar__brand btn-glass glass-effect-interactive"
-            aria-label="USJet.ai home"
-          >
+          <Link to="/" className="usjet-global-contact-bar__brand" aria-label="USJet.ai home">
             <UsjetWordmark size="nav" glow />
           </Link>
 
-            <div className="usjet-global-contact-bar__status-rail" aria-label="USJET live status">
+          <div className="usjet-global-contact-bar__status-rail" aria-label="USJET live status">
             <div className="usjet-global-contact-bar__status">
               <span className="usjet-global-contact-bar__status-label usjet-global-contact-bar__status-label--full">
                 USJET System Active
@@ -34,186 +26,27 @@ export default function UsjetGlobalContactBar() {
               </span>
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
-            <span className="usjet-global-contact-bar__delivery-status" title="Free shipping on fleet merchandise">
-              <span className="usjet-global-contact-bar__delivery-label usjet-global-contact-bar__delivery-label--full">
-                Free delivery active
-              </span>
-              <span className="usjet-global-contact-bar__delivery-label usjet-global-contact-bar__delivery-label--short">
-                Free delivery
-              </span>
-              <span className="usjet-global-contact-bar__delivery-ping" aria-hidden />
-            </span>
           </div>
 
           <div className="usjet-global-contact-bar__support">
-            <FooterSurpriseWrap chipId="sos">
-              <Link to="/sos" className="usjet-global-contact-bar__sos btn-glass glass-effect-interactive">
-                SOS
-              </Link>
-            </FooterSurpriseWrap>
-            <FooterSurpriseWrap chipId="privacy">
-              <Link
-                to="/privacy"
-                className="usjet-global-contact-bar__ops btn-glass glass-effect-interactive"
-                aria-label="USJET privacy policy"
-              >
-                <span className="usjet-global-contact-bar__ops-label">Privacy</span>
-              </Link>
-            </FooterSurpriseWrap>
-            <FooterSurpriseWrap chipId="cs">
-              <Link
-                to={ORIGIN_CS_ROUTE}
-                className="usjet-global-contact-bar__cs btn-glass glass-effect-interactive glass-tint-cyan"
-              >
-                <span className="usjet-global-contact-bar__cs-label usjet-global-contact-bar__cs-label--full">
-                  Customer Service
-                </span>
-                <span className="usjet-global-contact-bar__cs-label usjet-global-contact-bar__cs-label--short">Service</span>
-              </Link>
-            </FooterSurpriseWrap>
+            <Link to="/sos" className={FOOTER_TEXT_LINK}>SOS</Link>
+            <Link to="/privacy" className={FOOTER_TEXT_LINK}>Privacy</Link>
+            <Link to={ORIGIN_CS_ROUTE} className={FOOTER_TEXT_LINK}>Customer Service</Link>
           </div>
         </div>
 
-        <nav
-          className="usjet-global-contact-bar__row usjet-global-contact-bar__row--lanes"
-          aria-label="USJET quick links"
-        >
-          {GLOBAL_BACKGROUND_BEAT_ENABLED ? (
-            <FooterSurpriseWrap chipId="background-beat">
-              <SilentHangarAudioToggle className="usjet-global-contact-bar__beat-audio" />
-            </FooterSurpriseWrap>
-          ) : null}
-          <FooterSurpriseWrap chipId="house">
-            <NavLink
-              to="/hired-hud"
-              className={({ isActive }) =>
-                [
-                  "app-nav-usjet-house app-nav-pill btn-glass glass-effect-interactive shrink-0",
-                  isActive ? "app-nav-usjet-house--active" : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")
-              }
-              title="USJET House — hired developer live hub"
-              aria-label="USJET House — hired developer live hub"
-            >
-              <span className="app-nav-usjet-house__glow" aria-hidden />
-              <span className="app-nav-usjet-house__shine" aria-hidden />
-              <span className="app-nav-usjet-house__label">USJET House</span>
-            </NavLink>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="covenant">
-            <span className="footer-surprise-wrap--covenant">
-              <WefunderCovenantBridge variant="footer" />
-            </span>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="b2b">
-            <Link
-              to="/b2b"
-              className="usjet-global-contact-bar__b2b btn-glass glass-effect-interactive"
-              title="B2B Enterprise — industrial backbone"
-              aria-label="B2B Enterprise gateway"
-            >
-              <span className="usjet-global-contact-bar__b2b-reflection" aria-hidden />
-              <span className="usjet-global-contact-bar__b2b-earth" aria-hidden>
-                🌍
-              </span>
-              <span className="usjet-global-contact-bar__b2b-label">B2B</span>
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="b2k">
-            <Link
-              to="/b2k"
-              className="usjet-global-contact-bar__b2k btn-glass glass-effect-interactive"
-              title="B2K — $2,000 enterprise deployment (coming soon)"
-              aria-label="B2K enterprise deployment lane"
-            >
-              <span className="usjet-global-contact-bar__b2k-reflection" aria-hidden />
-              <span className="usjet-global-contact-bar__b2k-label">B2K</span>
-              <span className="usjet-global-contact-bar__b2k-soon">Soon</span>
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="pdre">
-            <Link
-              to="/pdre"
-              className="usjet-global-contact-bar__pdre btn-glass glass-effect-interactive glass-tint-gold"
-              aria-label="Prime Digital Real Estate — strategic partnership application"
-              title="Prime Digital Real Estate · Institutional Gateway"
-            >
-              PDRE
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="blog">
-            <Link
-              to="/blog"
-              className="usjet-global-contact-bar__blog btn-glass glass-effect-interactive glass-tint-cyan"
-              title="USJET Operator Log"
-              aria-label="USJET blog and operator log"
-            >
-              Blog
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="gamers">
-            <GamingVrNavButton surface="footer" />
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="intel">
-            <Link
-              to="/intelligence"
-              className="usjet-global-contact-bar__intel btn-glass glass-effect-interactive glass-tint-cyan"
-              title="USJET Intelligence — three-tier revenue engine"
-            >
-              Intel
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="manual-25k">
-            <Link
-              to="/fleet-manual"
-              className="usjet-global-contact-bar__25k btn-glass glass-effect-interactive"
-              title="2.5K — USJET Fleet Manual · $2,500 Professional Edition"
-              aria-label="2.5K — Fleet Manual page"
-            >
-              <span className="usjet-global-contact-bar__25k-reflection" aria-hidden />
-              <span className="usjet-global-contact-bar__25k-cash" aria-hidden>
-                💵
-              </span>
-              <span className="usjet-global-contact-bar__25k-label">2.5K</span>
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="vault-100k">
-            <Link
-              to="/100k"
-              className="usjet-global-contact-bar__100k btn-glass glass-effect-interactive glass-tint-gold"
-              title="100K vault — $100,000 until July 4, 2026 · then $500,000"
-              aria-label="100K — Sovereign Fleet Protocol vault"
-            >
-              <span className="usjet-global-contact-bar__100k-reflection" aria-hidden />
-              <Gem className="usjet-global-contact-bar__100k-diamond" size={9} strokeWidth={2.4} aria-hidden />
-              <span className="usjet-global-contact-bar__100k-label">100K</span>
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="fuel">
-            <Link
-              to="/founders-fuel"
-              className="usjet-global-contact-bar__fuel btn-glass glass-effect-interactive glass-tint-gold"
-              title="Founder's Fuel — $19.90/mo"
-            >
-              Fuel
-            </Link>
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="zelle">
-            <ZelleFuelChip variant="footer" />
-          </FooterSurpriseWrap>
-          <FooterSurpriseWrap chipId="licensing">
-            <Link
-              to="/licensing"
-              className="usjet-global-contact-bar__licensing btn-glass glass-effect-interactive glass-tint-gold"
-              aria-label="Brand Licensing and Identity — authorized partner application"
-              title="Brand Licensing & Identity · Authorized Partner Network"
-            >
-              <span className="usjet-global-contact-bar__licensing-short">Licensing</span>
-              <span className="usjet-global-contact-bar__licensing-full">Brand Licensing</span>
-            </Link>
-          </FooterSurpriseWrap>
+        <nav className="usjet-global-contact-bar__row usjet-global-contact-bar__row--lanes" aria-label="USJET quick links">
+          <NavLink to="/hired-hud" className={FOOTER_TEXT_LINK_PINK}>USJET House</NavLink>
+          <Link to="/b2b" className={FOOTER_TEXT_LINK}>B2B</Link>
+          <Link to="/b2k" className={FOOTER_TEXT_LINK}>B2K</Link>
+          <Link to="/pdre" className={FOOTER_TEXT_LINK}>PDRE</Link>
+          <Link to="/blog" className={FOOTER_TEXT_LINK}>Blog</Link>
+          <Link to="/intelligence" className={FOOTER_TEXT_LINK}>Intel</Link>
+          <Link to="/fleet-manual" className={FOOTER_TEXT_LINK}>Fleet Manual</Link>
+          <Link to="/100k" className={FOOTER_TEXT_LINK}>100K</Link>
+          <Link to="/founders-fuel" className={FOOTER_TEXT_LINK}>Fuel</Link>
+          <Link to="/zelle" className={FOOTER_TEXT_LINK}>Zelle</Link>
+          <Link to="/licensing" className={FOOTER_TEXT_LINK}>Licensing</Link>
         </nav>
       </GlassEffectContainer>
     </footer>

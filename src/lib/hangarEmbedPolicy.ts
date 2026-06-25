@@ -40,6 +40,11 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
   ["runway.com", "heygen.com", "replit.com", "otter.ai"].map((host) => host.toLowerCase()),
 );
 
+/** Hugging Face Spaces allow embedding by default — all *.hf.space subdomains. */
+function isHfSpace(host: string): boolean {
+  return host.endsWith(".hf.space");
+}
+
 function normalizeHostname(hostname: string): string {
   return hostname.replace(/^www\./i, "").toLowerCase();
 }
@@ -63,7 +68,7 @@ export function isHangarIframeBlocked(url: string): boolean {
     return true;
   }
 
-  if (HANGAR_IFRAME_AUTO_EMBED_HOSTS.has(host)) {
+  if (HANGAR_IFRAME_AUTO_EMBED_HOSTS.has(host) || isHfSpace(host)) {
     return false;
   }
 

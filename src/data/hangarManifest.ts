@@ -353,14 +353,14 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "29",
     slot: 29,
-    name: "InstantID",
+    name: "USJet Origin",
     callsign: "SOVEREIGN-30",
-    domain: "InstantX-InstantID.hf.space",
-    href: "https://InstantX-InstantID.hf.space",
+    domain: "usjet.ai/origin",
+    href: "/origin",
     status: "active",
     aura: "listening",
     aircraftType: "x59",
-    aiName: "InstantID",
+    aiName: "USJet Origin",
   },
 ];
 

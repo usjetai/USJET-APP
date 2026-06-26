@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Plane } from "lucide-react";
+import { useState } from "react";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { isFleetSlotLocked, PUBLIC_FLEET_UNLOCKED_COUNT } from "../data/fleetAccessPolicy";
 import { fleetManifest } from "../data/fleetManifest";
@@ -19,18 +20,54 @@ import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
 const FLEET_RUNWAY_DESCRIPTION = `Runway clearance: ${PUBLIC_FLEET_UNLOCKED_COUNT} AI bays open free. All ${FLEET_UNIT_COUNT} units stay visible — the remaining ${FLEET_UNIT_COUNT - PUBLIC_FLEET_UNLOCKED_COUNT} unlock at Flight Pass ($19.90/mo) on Stripe.`;
 
+const FLEET_RUNWAY_LOGO_SPINS = 3;
+const FLEET_RUNWAY_LOGO_SPIN_DURATION = 2.4;
+
+function fleetRunwayPrefersReducedMotion(): boolean {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 const Fleet = () => {
   const { session } = useMemberAuth();
   const flightPassUrl = resolveFounderPaymentLink();
+  const [runwayReady, setRunwayReady] = useState(fleetRunwayPrefersReducedMotion);
 
   return (
-    <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    className="fleet-page fleet-page--runway relative"
-  >
-    <SovereignVaultGlobalDownload fleetFloat />
-    <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
+    <>
+      <AnimatePresence>
+        {!runwayReady ? (
+          <motion.div
+            key="fleet-runway-intro"
+            className="fleet-runway-intro"
+            role="status"
+            aria-live="polite"
+            aria-label="Fleet runway loading"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+          >
+            <motion.div
+              className="fleet-runway-intro__logo"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 360 * FLEET_RUNWAY_LOGO_SPINS }}
+              transition={{ duration: FLEET_RUNWAY_LOGO_SPIN_DURATION, ease: [0.45, 0.05, 0.55, 0.95] }}
+              onAnimationComplete={() => setRunwayReady(true)}
+            >
+              <UsjetWordmark size="hero" />
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: runwayReady ? 1 : 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="fleet-page fleet-page--runway relative"
+        aria-busy={!runwayReady}
+        style={{ pointerEvents: runwayReady ? undefined : "none" }}
+      >
+        <SovereignVaultGlobalDownload fleetFloat />
+        <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
       <header className="fleet-runway-hero mb-14 flex flex-col items-center gap-8 border-b border-cyan-400/15 pb-12 text-center md:mb-16">
         <motion.div
           initial={{ opacity: 0, y: -12 }}
@@ -96,8 +133,9 @@ const Fleet = () => {
           );
         })}
       </div>
-    </div>
-    </motion.div>
+        </div>
+      </motion.div>
+    </>
   );
 };
 

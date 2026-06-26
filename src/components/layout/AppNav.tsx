@@ -50,7 +50,7 @@ const AppNav = () => {
     <header className="liquid-glass-nav sticky top-0 z-50 mx-auto w-full max-w-[min(100vw-1.25rem,72rem)] px-2 backdrop-blur-md sm:max-w-none sm:px-4">
       <GlassEffectContainer
         aria-label="USJET primary navigation"
-        className="app-nav-shell app-nav-shell--two-row glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+        className="app-nav-shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
       >
         <div className="app-nav-body">
           <div className="app-nav-row app-nav-row--primary">
@@ -90,62 +90,6 @@ const AppNav = () => {
                 ),
               )}
             </nav>
-          </div>
-
-          <div className="app-nav-row app-nav-row--secondary">
-            <div className="app-nav-zone app-nav-zone--media">
-              <UsjetOpsMailEnvelope className="app-nav-mail__envelope" />
-              <AppNavCashAppButton />
-
-              <NavLink
-                to={BLOG_ROUTE}
-                className={({ isActive }) =>
-                  ["app-nav-blog btn-glass glass-effect-interactive shrink-0", isActive ? "app-nav-blog--active" : ""]
-                    .filter(Boolean)
-                    .join(" ")
-                }
-                title="USJET Operator Log — founding story, Form C dispatches, invest narrative"
-                aria-label="USJET Blog — Operator Log"
-              >
-                <span className="app-nav-blog__reflection" aria-hidden />
-                <Newspaper className="app-nav-blog__icon" size={13} strokeWidth={2.4} aria-hidden />
-                <span className="app-nav-blog__label">Blog</span>
-              </NavLink>
-
-              <Link
-                to={X_USAJET_COCKPIT}
-                className="app-nav-pill btn-glass glass-effect-interactive shrink-0"
-                title="X — @usajet"
-                aria-label="X — @usajet on x.com"
-              >
-                X
-              </Link>
-
-              <AppNavHangarLive />
-
-              <NavLink
-                to="/b2b"
-                className={({ isActive }) =>
-                  ["app-nav-b2b btn-glass glass-effect-interactive shrink-0", isActive ? "app-nav-b2b--active" : ""]
-                    .filter(Boolean)
-                    .join(" ")
-                }
-                title="B2B Enterprise — industrial operating system"
-                aria-label="B2B Enterprise gateway"
-              >
-                <span className="app-nav-b2b__reflection" aria-hidden />
-                <span className="app-nav-b2b__earth" aria-hidden>
-                  🌍
-                </span>
-                <span className="app-nav-b2b__label">B2B</span>
-              </NavLink>
-
-              <GamingVrNavButton surface="header" />
-            </div>
-
-            <div className="app-nav-zone app-nav-zone--tail">
-              <MobileRotateCue />
-            </div>
           </div>
         </div>
 

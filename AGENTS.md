@@ -45,7 +45,7 @@ Ameer Karim often uses **speech-to-text (voice dictation)**, not always typing. 
 
 | Tier | Price | Extraction port |
 |------|-------|-----------------|
-| Flight Pass | $19.90/mo | `https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02` |
+| Flight Pass | $19.90/mo | `https://buy.stripe.com/eVq7sLdOC0Bt9wBfWndwc0e` |
 | Hangar Pro | $49.95/mo | `https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03` |
 | Enterprise Commander | $199.99/mo | `https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04` |
 

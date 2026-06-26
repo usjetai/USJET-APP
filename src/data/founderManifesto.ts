@@ -222,7 +222,7 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
 
 export const DIRECT_LANDING_PROTOCOL = {
   logTitle: "Command Log · Direct Landing Protocol",
-  flightPassDirectExtractionPort: "https://buy.stripe.com/8x25kDeSG2JB38d39Bdwc02",
+  flightPassDirectExtractionPort: "https://buy.stripe.com/eVq7sLdOC0Bt9wBfWndwc0e",
   hangarProDirectExtractionPort: "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03",
   enterpriseDirectExtractionPort: "https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04",
   bypassRule:

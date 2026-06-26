@@ -1,5 +1,5 @@
 import FleetCard from "../fleet/FleetCard";
-import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
+import { resolveHangarUnitHref } from "../../lib/hangarLaunchUrl";
 import {
   getFleetDisplayAircraftName,
   getFleetDisplayAircraftType,
@@ -24,7 +24,7 @@ export default function HangarBayTile({ unit, onOpenBay }: HangarBayTileProps) {
       aircraftOfficialName={getFleetDisplayAircraftName(unit.slot, unit.aircraftType)}
       name={unit.name}
       callsign={unit.callsign}
-      href={resolveFleetUnitHref(unit)}
+      href={resolveHangarUnitHref(unit)}
       slot={unit.slot}
       systemPrompt={unit.systemPrompt}
       returnTo="/hangar"

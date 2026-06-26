@@ -27,6 +27,9 @@ const COCKPIT_MEDIA_ALLOWED_HOSTS = new Set(
 
 function isAllowedFleetEmbedHost(hostname: string): boolean {
   const normalized = hostname.replace(/^www\./i, "").toLowerCase();
+  if (normalized.endsWith(".hf.space")) {
+    return true;
+  }
   if (FLEET_ALLOWED_EMBED_HOSTS.has(normalized) || COCKPIT_MEDIA_ALLOWED_HOSTS.has(normalized)) {
     return true;
   }

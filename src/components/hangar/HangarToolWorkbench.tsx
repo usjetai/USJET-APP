@@ -2,7 +2,7 @@ import { ExternalLink, X } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import type { FleetUnit } from "../../types/fleet";
-import { resolveFleetUnitHref } from "../../lib/fleetManifestAudit";
+import { resolveHangarUnitHref } from "../../lib/hangarLaunchUrl";
 import { isHangarIframeBlocked } from "../../lib/hangarEmbedPolicy";
 import { fleetLaunchUrl } from "../../lib/fleetLaunchUrl";
 
@@ -20,7 +20,7 @@ type HangarToolWorkbenchProps = {
  *   so you never leave USJET.
  */
 export default function HangarToolWorkbench({ unit, onClose, isolated = false }: HangarToolWorkbenchProps) {
-  const rawHref = resolveFleetUnitHref(unit);
+  const rawHref = resolveHangarUnitHref(unit);
   const blocked = !rawHref.startsWith("/") && isHangarIframeBlocked(rawHref);
   const cockpitUrl = blocked
     ? fleetLaunchUrl(unit.domain, rawHref, unit.slot)

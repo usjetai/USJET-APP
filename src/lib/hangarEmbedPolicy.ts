@@ -45,6 +45,9 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "openai-whisper.hf.space",
     "stabilityai-stable-diffusion-3-5-large-turbo.hf.space",
     "stabilityai-stable-diffusion-3-5-medium.hf.space",
+    "black-forest-labs-flux-1-schnell.hf.space",
+    "huggingface-projects-llama-3-2-3b-instruct.hf.space",
+    "instantx-instantid.hf.space",
   ].map((host) => host.toLowerCase()),
 );
 

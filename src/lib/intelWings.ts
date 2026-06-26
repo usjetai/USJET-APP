@@ -49,7 +49,7 @@ export function initialTickerPrice(slot: number, config: WingTickerConfig): numb
 }
 
 export function formatTickerPrice(symbol: string, value: number): string {
-  if (symbol.startsWith("BTC")) {
+  if (symbol.startsWith("BTC") || value >= 1000) {
     return `$${value.toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
   }
 

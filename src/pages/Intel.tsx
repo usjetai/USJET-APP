@@ -3,13 +3,7 @@ import { useMemo, type ReactNode } from "react";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import IntelExpandedWorkbench from "../components/intel/IntelExpandedWorkbench";
 import IntelMonitor from "../components/intel/IntelMonitor";
-import IntelReservedBay from "../components/intel/IntelReservedBay";
-import IntelFleetVitals from "../components/intel/IntelFleetVitals";
-import IntelPulseDashboard from "../components/intel/IntelPulseDashboard";
-import IntelPartnershipInvite from "../components/intel/IntelPartnershipInvite";
-import IntelStockAICode from "../components/intel/IntelStockAICode";
-
-
+import { IntelLiveMarketProvider } from "../context/IntelLiveMarketContext";
 import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
@@ -26,7 +20,7 @@ const BORDER_FORMATION = [
   { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing", slot: 2 },
 ];
 
-const Intel = () => {
+function IntelPageContent() {
   const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useFleetGridExpansions(unitBySlot);
 
   const gridCells = useMemo(() => {
@@ -82,7 +76,6 @@ const Intel = () => {
     return out;
   }, [cellPlan, closeExpansion, tryExpand]);
 
-  // Founder review — Intel Top 10 gated to Tier 2+ in IntelTop10Section
   return (
     <div className="intel-page intel-page--no-global-bg">
       {workbenchFullToast ? (
@@ -118,28 +111,26 @@ const Intel = () => {
       </div>
 
       <div className="intel-page__shell page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
-        <IntelFleetVitals />
-        <IntelPulseDashboard />
-
-
         <div className="intel-page__grid-intro">
-          <p className="intel-page__grid-kicker">Monitor grid</p>
+          <p className="intel-page__grid-kicker">Intel monitor grid</p>
           <p className="intel-page__grid-copy">
-            {HANGAR_COLUMNS} wide · {HANGAR_ROWS} deep · {FLEET_UNIT_COUNT} feeds · click a bay to expand (max{" "}
-            {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches)
+            {HANGAR_COLUMNS} wide · {HANGAR_ROWS} deep · {FLEET_UNIT_COUNT} live Coinbase + NYSE tiles · click to expand
+            (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches)
           </p>
         </div>
 
         <div className="intel-grid-wrap">
           <div className="intel-grid grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-6">{gridCells}</div>
         </div>
-
-        <IntelStockAICode />
-        <IntelPartnershipInvite />
-
       </div>
     </div>
   );
-};
+}
+
+const Intel = () => (
+  <IntelLiveMarketProvider>
+    <IntelPageContent />
+  </IntelLiveMarketProvider>
+);
 
 export default Intel;

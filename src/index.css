@@ -5501,6 +5501,51 @@ button.fleet-card__launch--button {
   color: color-mix(in srgb, var(--intel-signal-dim, #fca5a5) 88%, white);
 }
 
+.nyse-ticker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.28rem 0.45rem;
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.nyse-ticker__label {
+  color: rgba(248, 113, 113, 0.92);
+}
+
+.nyse-ticker__symbol {
+  color: rgba(191, 219, 254, 0.95);
+}
+
+.nyse-ticker__clock,
+.nyse-ticker__date {
+  font-variant-numeric: tabular-nums;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.intel-monitor__nyse,
+.intel-expanded__nyse {
+  position: relative;
+  z-index: 11;
+  padding: 0.25rem 0.55rem 0.45rem;
+}
+
+.intel-candles--live .intel-candles__bar--bull .intel-candles__body,
+.intel-candles--live .intel-candles__bar--bull .intel-candles__wick {
+  stroke: rgba(74, 222, 128, 0.95);
+  fill: rgba(74, 222, 128, 0.88);
+}
+
+.intel-candles--live .intel-candles__bar--bear .intel-candles__body,
+.intel-candles--live .intel-candles__bar--bear .intel-candles__wick {
+  stroke: rgba(248, 113, 113, 0.95);
+  fill: rgba(248, 113, 113, 0.88);
+}
+
 /* Intel expanded 2×2 workstation (market dual-feed) */
 .intel-expanded {
   position: relative;

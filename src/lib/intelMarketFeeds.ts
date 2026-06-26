@@ -1,55 +1,75 @@
-export type BtcSnapshot = {
+import type { OhlcCandle } from "./intelCandles";
+
+export type CoinbaseSnapshot = {
   priceUsd: number;
   changePct24h: number | null;
 };
 
-export async function fetchBtcSnapshot(): Promise<BtcSnapshot> {
-  const url = new URL("https://api.coingecko.com/api/v3/simple/price");
-  url.searchParams.set("ids", "bitcoin");
-  url.searchParams.set("vs_currencies", "usd");
-  url.searchParams.set("include_24hr_change", "true");
+export type BtcSnapshot = CoinbaseSnapshot;
 
-  const response = await fetch(url.toString());
-  if (!response.ok) {
-    throw new Error("btc spot");
+const COINBASE_EXCHANGE = "https://api.exchange.coinbase.com";
+
+export async function fetchCoinbaseSnapshot(productId: string): Promise<CoinbaseSnapshot> {
+  const encoded = encodeURIComponent(productId);
+  const [tickerRes, statsRes] = await Promise.all([
+    fetch(`${COINBASE_EXCHANGE}/products/${encoded}/ticker`),
+    fetch(`${COINBASE_EXCHANGE}/products/${encoded}/stats`),
+  ]);
+
+  if (!tickerRes.ok || !statsRes.ok) {
+    throw new Error(`coinbase spot ${productId}`);
   }
 
-  const data = (await response.json()) as {
-    bitcoin?: { usd?: number; usd_24h_change?: number };
-  };
-  const row = data.bitcoin;
+  const ticker = (await tickerRes.json()) as { price?: string };
+  const stats = (await statsRes.json()) as { open?: string; last?: string };
 
-  if (typeof row?.usd !== "number") {
-    throw new Error("btc spot shape");
+  const priceUsd = Number.parseFloat(ticker.price ?? stats.last ?? "");
+  const open = Number.parseFloat(stats.open ?? "");
+
+  if (!Number.isFinite(priceUsd)) {
+    throw new Error(`coinbase spot shape ${productId}`);
   }
 
-  return {
-    priceUsd: row.usd,
-    changePct24h: typeof row.usd_24h_change === "number" ? row.usd_24h_change : null,
-  };
+  let changePct24h: number | null = null;
+  if (Number.isFinite(open) && open > 0) {
+    changePct24h = ((priceUsd - open) / open) * 100;
+  }
+
+  return { priceUsd, changePct24h };
 }
 
-/** Last ~24h USD closes, downsampled for a compact spark path. */
-export async function fetchBtcSparkline(): Promise<number[]> {
-  const url =
-    "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1";
+/** Coinbase 1h candles — newest last for chart rendering. */
+export async function fetchCoinbaseCandles(productId: string, count = 12): Promise<OhlcCandle[]> {
+  const encoded = encodeURIComponent(productId);
+  const response = await fetch(
+    `${COINBASE_EXCHANGE}/products/${encoded}/candles?granularity=3600`,
+  );
 
-  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error("btc chart");
+    throw new Error(`coinbase candles ${productId}`);
   }
 
-  const data = (await response.json()) as { prices?: [number, number][] };
-  const prices = data.prices ?? [];
-  const values = prices.map(([, price]) => price);
+  const rows = (await response.json()) as [number, number, number, number, number, number][];
 
-  const maxPoints = 56;
-  if (values.length <= maxPoints) {
-    return values;
-  }
+  return rows
+    .slice(0, count)
+    .reverse()
+    .map(([, low, high, open, close]) => ({
+      open,
+      high,
+      low,
+      close,
+    }));
+}
 
-  const step = Math.ceil(values.length / maxPoints);
-  return values.filter((_, index) => index % step === 0);
+export async function fetchBtcSnapshot(): Promise<BtcSnapshot> {
+  return fetchCoinbaseSnapshot("BTC-USD");
+}
+
+/** Last ~24h USD closes from Coinbase hourly candles. */
+export async function fetchBtcSparkline(): Promise<number[]> {
+  const candles = await fetchCoinbaseCandles("BTC-USD", 24);
+  return candles.map((candle) => candle.close);
 }
 
 export function sparklinePointsToPath(values: number[]): string {

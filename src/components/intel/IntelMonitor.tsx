@@ -1,13 +1,13 @@
 import type { CSSProperties, KeyboardEvent } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
-import { getWingForSlot } from "../../lib/intelWings";
+import { getIntelSlotMarket } from "../../data/intelCoinbaseAssets";
 import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { useSimulatedAgentActivity } from "../../lib/useSimulatedAgentActivity";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
-import TickerDisplay from "./TickerDisplay";
+import CoinbaseLiveTicker from "./CoinbaseLiveTicker";
+import CoinbaseLiveCandles from "./CoinbaseLiveCandles";
 import EkgPulseLine from "./EkgPulseLine";
 import IntelScanLine from "./IntelScanLine";
-import MarketCandlesticks from "./MarketCandlesticks";
 import NyseTicker from "./NyseTicker";
 import { type FleetUnit } from "../../types/fleet";
 
@@ -18,16 +18,9 @@ type IntelMonitorProps = {
   onExpandRequest?: () => void;
 };
 
-const WING_VOLATILITY: Record<string, number> = {
-  "BTC/USD": 420,
-  NVDA: 18,
-  TSLA: 4.2,
-};
-
 export default function IntelMonitor({ unit, index: _index, style, onExpandRequest }: IntelMonitorProps) {
   const interactive = Boolean(onExpandRequest);
-  const wing = getWingForSlot(unit.slot);
-  const volatility = WING_VOLATILITY[wing.symbol] ?? 12;
+  const slotMarket = getIntelSlotMarket(unit.slot);
   const { status: simulatedActivityStatus } = useSimulatedAgentActivity(unit.callsign);
 
 
@@ -78,12 +71,7 @@ export default function IntelMonitor({ unit, index: _index, style, onExpandReque
 
       <div className="intel-monitor__screen liquid-glass-background">
         <div className="intel-monitor__candles" aria-hidden>
-          <MarketCandlesticks
-            seed={unit.slot}
-            basePrice={wing.basePrice}
-            volatility={volatility}
-            candleCount={8}
-          />
+          <CoinbaseLiveCandles slot={unit.slot} candleCount={8} />
         </div>
         <div className="intel-monitor__pulse-back" aria-hidden>
           <EkgPulseLine variant="monitor" seed={unit.slot} />
@@ -91,10 +79,10 @@ export default function IntelMonitor({ unit, index: _index, style, onExpandReque
         <div className="intel-monitor__grid" aria-hidden />
         <IntelScanLine />
         <div className="intel-monitor__feed">
-          <TickerDisplay slot={unit.slot} />
+          <CoinbaseLiveTicker slot={unit.slot} />
         </div>
         <div className="intel-monitor__nyse">
-          <NyseTicker />
+          <NyseTicker symbol={slotMarket.nyseSymbol} />
         </div>
       </div>
     </article>

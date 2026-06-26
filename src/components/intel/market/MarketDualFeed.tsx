@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { getIntelSlotMarket } from "../../../data/intelCoinbaseAssets";
+import { useIntelLiveMarket } from "../../../context/IntelLiveMarketContext";
+import { sparklinePointsToPath } from "../../../lib/intelMarketFeeds";
+import { formatTickerChange } from "../../../lib/intelWings";
 import SignalPulse from "../SignalPulse";
-import {
-  fetchBtcSnapshot,
-  fetchBtcSparkline,
-  sparklinePointsToPath,
-  type BtcSnapshot,
-} from "../../../lib/intelMarketFeeds";
-import { MARKET_WORKBENCH_BTC_POLL_MS, MARKET_WORKBENCH_NYSE_EMBED } from "./marketWorkbench.config";
+import CoinbaseLiveCandles from "../CoinbaseLiveCandles";
+import { MARKET_WORKBENCH_BTC_POLL_MS, marketWorkbenchNyseEmbed } from "./marketWorkbench.config";
 
 function formatUsd(n: number): string {
   return new Intl.NumberFormat("en-US", {
@@ -15,14 +14,6 @@ function formatUsd(n: number): string {
     maximumFractionDigits: n >= 1000 ? 0 : 2,
     minimumFractionDigits: 0,
   }).format(n);
-}
-
-function formatChange(pct: number | null): string {
-  if (pct === null || Number.isNaN(pct)) {
-    return "—";
-  }
-  const sign = pct > 0 ? "+" : "";
-  return `${sign}${pct.toFixed(2)}%`;
 }
 
 function formatNyExchangeClock(date: Date): { time: string; date: string } {
@@ -44,40 +35,28 @@ function formatNyExchangeClock(date: Date): { time: string; date: string } {
 }
 
 export type MarketDualFeedProps = {
-  /** De-correlates ghost pulse traces between the two panes. */
   seedSlot: number;
 };
 
 /**
- * 50 / 50 market workbench: BTC spot + spark (left), NYSE composite embed (right).
- * Self-contained so Hangar can mount the same component beside fleet tiles later.
+ * Expanded Intel workbench: Coinbase live spot + candles (left), NYSE symbol embed (right).
  */
 export default function MarketDualFeed({ seedSlot }: MarketDualFeedProps) {
-  const [btc, setBtc] = useState<BtcSnapshot | null>(null);
-  const [spark, setSpark] = useState<number[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const market = getIntelSlotMarket(seedSlot);
+  const { quotes, candles, refreshQuotes, error } = useIntelLiveMarket();
+  const quote = quotes[market.coinbaseProductId];
+  const coinCandles = candles[market.coinbaseProductId] ?? [];
   const [nyClock, setNyClock] = useState(() => formatNyExchangeClock(new Date()));
 
-  const refresh = useCallback(async () => {
-    try {
-      setError(null);
-      const [snap, path] = await Promise.all([fetchBtcSnapshot(), fetchBtcSparkline()]);
-      setBtc(snap);
-      setSpark(path);
-    } catch {
-      setError("signal");
-    }
-  }, []);
-
   useEffect(() => {
-    void refresh();
+    void refreshQuotes();
     const id = window.setInterval(() => {
-      void refresh();
+      void refreshQuotes();
     }, MARKET_WORKBENCH_BTC_POLL_MS);
     return () => {
       window.clearInterval(id);
     };
-  }, [refresh]);
+  }, [refreshQuotes]);
 
   useEffect(() => {
     const tick = () => {
@@ -90,25 +69,27 @@ export default function MarketDualFeed({ seedSlot }: MarketDualFeedProps) {
     };
   }, []);
 
-  const polyline = sparklinePointsToPath(spark);
-  const change = btc?.changePct24h ?? null;
+  const sparkCloses = useMemo(() => coinCandles.map((row) => row.close), [coinCandles]);
+  const polyline = sparklinePointsToPath(sparkCloses);
+  const change = quote?.changePct24h ?? null;
   const changeUp = change !== null && change > 0;
   const changeDown = change !== null && change < 0;
+  const nyseEmbed = marketWorkbenchNyseEmbed(market.nyseTradingViewSymbol);
 
   return (
     <div className="intel-market-dual">
       <section
         className="intel-market-dual__pane intel-market-dual__pane--btc"
-        aria-label="Bitcoin USD spot and intraday trace"
+        aria-label={`Coinbase ${market.coinbaseLabel} spot and candles`}
       >
         <div className="intel-market-dual__pulse" aria-hidden>
           <SignalPulse slot={seedSlot} />
         </div>
         <div className="intel-market-dual__grid" aria-hidden />
         <div className="intel-market-dual__content">
-          <p className="intel-market-dual__eyebrow">Wing feed · BTC / USD</p>
+          <p className="intel-market-dual__eyebrow">Coinbase · {market.coinbaseLabel}</p>
           <p className="intel-market-dual__instrument intel-market-dual__instrument--hero">
-            {btc ? formatUsd(btc.priceUsd) : error ? "— — —" : "· · ·"}
+            {quote ? formatUsd(quote.priceUsd) : error ? "— — —" : "· · ·"}
           </p>
           <p
             className={[
@@ -120,15 +101,15 @@ export default function MarketDualFeed({ seedSlot }: MarketDualFeedProps) {
               .filter(Boolean)
               .join(" ")}
           >
-            24h {formatChange(change)}
+            24h {change === null ? "—" : formatTickerChange(change)}
           </p>
-          <div className="intel-market-dual__chart">
+          <div className="intel-market-dual__chart intel-market-dual__chart--coinbase">
             {polyline ? (
               <svg className="intel-market-dual__spark" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden>
                 <polyline className="intel-market-dual__spark-line" points={polyline} />
               </svg>
             ) : (
-              <div className="intel-market-dual__chart-placeholder" aria-hidden />
+              <CoinbaseLiveCandles slot={seedSlot} candleCount={12} className="intel-market-dual__candles-live" />
             )}
           </div>
         </div>
@@ -136,21 +117,24 @@ export default function MarketDualFeed({ seedSlot }: MarketDualFeedProps) {
 
       <div className="intel-market-dual__divider" aria-hidden />
 
-      <section className="intel-market-dual__pane intel-market-dual__pane--nyse" aria-label="NYSE composite overview">
+      <section
+        className="intel-market-dual__pane intel-market-dual__pane--nyse"
+        aria-label={`NYSE ${market.nyseSymbol} overview`}
+      >
         <div className="intel-market-dual__pulse" aria-hidden>
           <SignalPulse slot={seedSlot + 17} />
         </div>
         <div className="intel-market-dual__grid" aria-hidden />
         <div className="intel-market-dual__content intel-market-dual__content--nyse">
           <p className="intel-market-dual__eyebrow">Exchange feed · NYSE</p>
-          <p className="intel-market-dual__instrument intel-market-dual__instrument--label">NYA · composite</p>
+          <p className="intel-market-dual__instrument intel-market-dual__instrument--label">{market.nyseSymbol}</p>
           <p className="intel-market-dual__instrument intel-market-dual__instrument--nyse-clock">{nyClock.time}</p>
           <p className="intel-market-dual__instrument intel-market-dual__instrument--nyse-date">{nyClock.date} ET</p>
           <div className="intel-market-dual__iframe-shell">
             <iframe
               className="intel-market-dual__iframe"
-              title="NYSE composite — TradingView"
-              src={MARKET_WORKBENCH_NYSE_EMBED}
+              title={`${market.nyseSymbol} — TradingView`}
+              src={nyseEmbed}
               sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
               referrerPolicy="no-referrer-when-downgrade"
             />

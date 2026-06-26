@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+type NyseTickerProps = {
+  symbol?: string;
+};
+
 function formatNyExchangeClock(date: Date): { time: string; date: string } {
   const time = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
@@ -18,7 +22,7 @@ function formatNyExchangeClock(date: Date): { time: string; date: string } {
   return { time, date: day };
 }
 
-export default function NyseTicker() {
+export default function NyseTicker({ symbol = "NYA" }: NyseTickerProps) {
   const [nyClock, setNyClock] = useState(() => formatNyExchangeClock(new Date()));
 
   useEffect(() => {
@@ -35,10 +39,13 @@ export default function NyseTicker() {
   return (
     <div className="nyse-ticker">
       <span className="nyse-ticker__label">NYSE</span>
-      {/* Intel: hide time/date everywhere */}
-      <span className="nyse-ticker__clock" aria-hidden />
-      <span className="nyse-ticker__date" aria-hidden />
-
+      <span className="nyse-ticker__symbol">{symbol}</span>
+      <span className="nyse-ticker__clock" aria-hidden>
+        {nyClock.time}
+      </span>
+      <span className="nyse-ticker__date" aria-hidden>
+        {nyClock.date}
+      </span>
     </div>
   );
 }

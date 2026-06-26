@@ -286,6 +286,11 @@ export default function FleetCard({
 
   const glassContent = (
     <div className="fleet-card__glass flex h-full flex-col p-5">
+      {typeof slot === "number" && (
+        <div className="fleet-card__slot-number absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/40 text-[10px] font-black text-white/80 backdrop-blur-sm">
+          {slot + 1}
+        </div>
+      )}
       {isRunway && !isAvailableBay && typeof slot === "number" ? (
         <div className="fleet-card__runway-visual">
           {renderAircraftWrap()}

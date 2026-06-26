@@ -1,8 +1,8 @@
 import type { MemberSession } from "../types/member";
 import { isFounderGodMode, memberClearanceRank } from "../lib/memberAccessLevel";
 
-/** Public Fleet runway: first six AI bays open; the rest unlock after Flight Pass checkout + verification. */
-export const PUBLIC_FLEET_UNLOCKED_COUNT = 6 as const;
+/** Public Fleet runway: first ten AI bays free; bays 11–30 unlock at Flight Pass (tier 1, $19.90/mo). */
+export const PUBLIC_FLEET_UNLOCKED_COUNT = 10 as const;
 
 export function isPublicFleetSlot(slot: number): boolean {
   return slot >= 0 && slot < PUBLIC_FLEET_UNLOCKED_COUNT;

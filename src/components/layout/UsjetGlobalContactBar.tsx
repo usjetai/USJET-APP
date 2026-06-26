@@ -6,7 +6,7 @@ import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
 const FOOTER_TEXT_LINK = "footer-text-link";
 const FOOTER_TEXT_LINK_PINK = "footer-text-link footer-text-link--pink";
 
-/** Fixed bottom strip — professional plain text links. USJET House is pink. */
+/** Document-flow bottom strip — professional plain text links. USJET House is pink. */
 export default function UsjetGlobalContactBar() {
   return (
     <footer className="usjet-global-contact-bar" aria-label="USJET site status and quick links">

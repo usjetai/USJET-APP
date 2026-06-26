@@ -198,7 +198,7 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   paymentModel:
     "Stripe ONLY — Flight Pass, Hangar Pro, Enterprise Commander. No alternate processors, no complication.",
   guestPublicRoutes: {
-    fleet: "/ — everyone",
+    fleet: "/ — everyone (10 free AI bays; 20 unlock at Flight Pass $19.90/mo)",
     founder: "/founder — everyone",
     sos: "/sos — site operating support (guest)",
     ai101: "/ai-101 — AI glossary flight school (guest)",
@@ -210,14 +210,14 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   },
   tierMatrix: {
     guest:
-      "Fleet + Founder + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + /100k + login/cockpit handoff — no Hangar, Intel board, Origin, Member, or Special",
-    tier1FlightPass: "Fleet + Hangar (4 bays) + Member Portal + Special — no Intel, no Origin",
+      "Fleet (10 free AI bays) + Founder + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + /100k + login/cockpit handoff — no Hangar, Intel board, Origin, Member, or Special",
+    tier1FlightPass: "All 30 fleet AIs + Hangar (4 bays) + Member Portal + Special — no Intel, no Origin",
     tier2HangarPro: "Tier 1 + Intel — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",
     founderGodMode: "USJET-AMEER — all routes, all bays",
   },
   fleetMessage:
-    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; clearance opens the hangar. Guests get Fleet, Founder, /sos, /ai-101, /pdre, /licensing, /support-fleet, and the login runway — everything else bills through the extraction ports.",
+    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; Flight Pass unlocks bays eleven through thirty. Guests get ten free fleet AIs plus Founder and the login runway — everything else bills through the $19.90 extraction port.",
 } as const;
 
 export const DIRECT_LANDING_PROTOCOL = {

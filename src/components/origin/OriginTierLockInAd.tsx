@@ -10,7 +10,7 @@ import {
 } from "../../data/originTierPromo";
 import { getDaysUntilUsa250 } from "../../lib/usa250Countdown";
 
-const ENTERPRISE_CHECKOUT_PATH = "/special?tier=fleet-command";
+const FLIGHT_PASS_CHECKOUT_PATH = "/special?tier=founder";
 
 type PriceBlockProps = {
   label: string;
@@ -100,7 +100,7 @@ export default function OriginTierLockInAd() {
 
         <footer className="origin-tier-lock-in-ad__footer">
           <Link
-            to={ENTERPRISE_CHECKOUT_PATH}
+            to={FLIGHT_PASS_CHECKOUT_PATH}
             className="origin-tier-lock-in-ad__cta btn-glass-prominent glass-effect-interactive"
           >
             Lock in Enterprise Commander

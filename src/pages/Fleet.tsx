@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Plane } from "lucide-react";
 import { useMemberAuth } from "../context/MemberAuthContext";
-import { PUBLIC_FLEET_UNLOCKED_COUNT, isFleetSlotLocked } from "../data/fleetAccessPolicy";
+import { isFleetSlotLocked, PUBLIC_FLEET_UNLOCKED_COUNT } from "../data/fleetAccessPolicy";
 import { fleetManifest } from "../data/fleetManifest";
 import { getFleetJetFighterPagePath } from "../data/fleetDirectorySeo";
 import {
@@ -17,7 +17,7 @@ import UsjetWordmark from "../components/brand/UsjetWordmark";
 import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 import { FLEET_UNIT_COUNT, HANGAR_ROWS } from "../types/fleet";
 
-const FLEET_RUNWAY_DESCRIPTION = `Runway clearance: ${PUBLIC_FLEET_UNLOCKED_COUNT} AI bays open. The remaining fleet unlocks after Flight Pass checkout and Stripe verification—one click, one clearance, one revenue engine.`;
+const FLEET_RUNWAY_DESCRIPTION = `Runway clearance: ${PUBLIC_FLEET_UNLOCKED_COUNT} AI bays open free. All ${FLEET_UNIT_COUNT} units stay visible — the remaining ${FLEET_UNIT_COUNT - PUBLIC_FLEET_UNLOCKED_COUNT} unlock at Flight Pass ($19.90/mo) on Stripe.`;
 
 const Fleet = () => {
   const { session } = useMemberAuth();
@@ -55,7 +55,7 @@ const Fleet = () => {
             {FLEET_RUNWAY_DESCRIPTION}
           </p>
           <p className="mt-4 text-sm font-medium uppercase tracking-[0.28em] text-cyan-200/45">
-            {PUBLIC_FLEET_UNLOCKED_COUNT} open · {FLEET_UNIT_COUNT - PUBLIC_FLEET_UNLOCKED_COUNT} locked · $19.90 Flight Pass · Stripe only
+            {PUBLIC_FLEET_UNLOCKED_COUNT} free · {FLEET_UNIT_COUNT - PUBLIC_FLEET_UNLOCKED_COUNT} locked · Flight Pass $19.90/mo · Stripe only
           </p>
           <p className="fleet-runway-free-shipping mt-5 rounded-full border border-amber-300/35 bg-amber-500/[0.08] px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.28em] text-amber-100/95 sm:text-[10px]">
             Free shipping on all merchandise

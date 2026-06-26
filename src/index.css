@@ -1269,17 +1269,17 @@ html:has(.intel-page--no-global-bg) .usjet-protocol-boot {
   }
 }
 
-/* Global ops contact strip — bottom bar: brand, live status, USA 250, SOS */
+/* Global ops contact strip — document-flow bottom bar (not fixed overlay) */
 .usjet-global-contact-bar {
   --usjet-footer-chip-height: var(--usjet-chip-height);
-  position: fixed;
-  right: max(0.75rem, env(safe-area-inset-right, 0px));
-  bottom: max(0.33rem, env(safe-area-inset-bottom, 0px));
-  left: max(0.75rem, env(safe-area-inset-left, 0px));
+  position: relative;
   z-index: 260;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: max(0.75rem, env(safe-area-inset-left, 0px)) max(0.75rem, env(safe-area-inset-right, 0px));
+  padding-bottom: max(0.33rem, env(safe-area-inset-bottom, 0px));
   pointer-events: none;
-  width: auto;
-  max-width: none;
 }
 
 .usjet-global-contact-bar__shell {
@@ -1675,9 +1675,8 @@ html:has(.intel-page--no-global-bg) .usjet-protocol-boot {
 
 @media (min-width: 640px) {
   .usjet-global-contact-bar {
-    right: max(1.25rem, env(safe-area-inset-right, 0px));
-    bottom: max(0.43rem, env(safe-area-inset-bottom, 0px));
-    left: max(1.25rem, env(safe-area-inset-left, 0px));
+    padding-inline: max(1.25rem, env(safe-area-inset-left, 0px)) max(1.25rem, env(safe-area-inset-right, 0px));
+    padding-bottom: max(0.43rem, env(safe-area-inset-bottom, 0px));
   }
 
   .usjet-global-contact-bar__shell {

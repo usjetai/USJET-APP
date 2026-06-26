@@ -6,15 +6,9 @@ import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout
 import { WRENCHES_PHILOSOPHY } from "../data/founderManifesto";
 import {
   FLIGHT_PASS_STRIPE,
-  FLEET_COMMANDER_STRIPE,
-  HANGAR_PRO_STRIPE,
   type StripeTierProduct,
 } from "../data/stripeProducts";
-import {
-  resolveEnterprisePaymentLink,
-  resolveFounderPaymentLink,
-  resolveHangarProPaymentLink,
-} from "../lib/stripePaymentLink";
+import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 
 type ServiceTier = StripeTierProduct & {
   paymentLink?: string;
@@ -24,14 +18,6 @@ const SERVICE_TIERS: ServiceTier[] = [
   {
     ...FLIGHT_PASS_STRIPE,
     paymentLink: resolveFounderPaymentLink(),
-  },
-  {
-    ...HANGAR_PRO_STRIPE,
-    paymentLink: resolveHangarProPaymentLink(),
-  },
-  {
-    ...FLEET_COMMANDER_STRIPE,
-    paymentLink: resolveEnterprisePaymentLink(),
   },
 ];
 
@@ -104,7 +90,7 @@ const Special = () => {
         </ul>
       </header>
 
-      <div className="special-page__tiers grid gap-5 lg:grid-cols-3">
+      <div className="special-page__tiers grid gap-5 lg:grid-cols-1 lg:max-w-md">
         {SERVICE_TIERS.map((tier) => {
           const isSelected = tier.id === selectedTierId;
           const isHighlighted = tier.highlighted === true;

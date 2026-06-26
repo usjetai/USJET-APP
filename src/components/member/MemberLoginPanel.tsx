@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import { MEMBER_DECK_PRICE_DISPLAY, MEMBER_DECK_PERIOD } from "../../data/memberDeckStripe";
-import { MEMBER_PORTAL_UPGRADE_TIERS } from "../../data/stripeProducts";
+import { FLIGHT_PASS_STRIPE } from "../../data/stripeProducts";
 import { SITE_PREVIEW_MEMBER_NOTE } from "../../data/sitePreviewPromo";
 import { isSitePreviewPromoActive } from "../../lib/sitePreviewPromo";
 import { isUsableStripePaymentLink, resolveMemberDeckPaymentLink, resolvePaymentLinkForTier } from "../../lib/stripePaymentLink";
@@ -90,7 +90,7 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
             <p className="member-login-panel__section-kicker">Member Portal entry</p>
             <p className="member-login-panel__signup-copy">
               <strong>Member Deck {MEMBER_DECK_PRICE_DISPLAY}{MEMBER_DECK_PERIOD}</strong> unlocks the Member Portal and
-              member tools. Three upgrade tiers inside the ship add Hangar, Intel, and Origin clearance.
+              member tools. Flight Pass ($19.90/mo) unlocks the full fleet runway, Hangar, and sovereign clearance.
             </p>
             {memberDeckReady ? (
               <a
@@ -110,18 +110,15 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
             <p className="member-login-panel__signup-note">After checkout, return here and log in with your billing email.</p>
 
             <div className="member-login-panel__upsell">
-              <p className="member-login-panel__upsell-kicker">Upgrade tiers (inside Member Portal)</p>
+              <p className="member-login-panel__upsell-kicker">Flight Pass clearance</p>
               <div className="member-login-panel__upsell-actions">
-                {MEMBER_PORTAL_UPGRADE_TIERS.map((tier) => (
-                  <a
-                    key={tier.id}
-                    href={resolvePaymentLinkForTier(tier.id)}
-                    className="member-login-panel__upsell-btn btn-glass glass-effect-interactive"
-                  >
-                    {tier.name} {tier.priceDisplay}
-                    {tier.period}
-                  </a>
-                ))}
+                <a
+                  href={resolvePaymentLinkForTier("founder")}
+                  className="member-login-panel__upsell-btn btn-glass glass-effect-interactive"
+                >
+                  {FLIGHT_PASS_STRIPE.name} {FLIGHT_PASS_STRIPE.priceDisplay}
+                  {FLIGHT_PASS_STRIPE.period}
+                </a>
               </div>
             </div>
           </section>

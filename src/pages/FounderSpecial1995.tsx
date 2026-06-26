@@ -259,28 +259,14 @@ export default function FounderSpecial1995() {
                       ? "The Grit Vault is yours, General. Thirty units stand ready — no extraction port required on this route."
                       : "Your Flight Pass clearance is live. The 1995 origin vault stays open — upgrade only if you want more bays."}
                   </p>
-                  {clearanceRank === 1 ? (
+                  {clearanceRank >= 1 ? (
                     <Link
-                      to="/special?tier=hangar-pro"
+                      to="/"
                       className="founder-special-1995__cta-link btn-glass glass-effect-interactive"
                     >
-                      Optional upgrade — Hangar Pro $49.95/mo
+                      Enter the Fleet runway
                     </Link>
-                  ) : clearanceRank === 2 ? (
-                    <Link
-                      to="/special?tier=fleet-command"
-                      className="founder-special-1995__cta-link btn-glass glass-effect-interactive"
-                    >
-                      Optional upgrade — Enterprise Commander $199.99/mo
-                    </Link>
-                  ) : (
-                    <Link
-                      to="/hangar"
-                      className="founder-special-1995__cta-link btn-glass glass-effect-interactive"
-                    >
-                      Enter the Hangar
-                    </Link>
-                  )}
+                  ) : null}
                 </>
               ) : (
                 <>

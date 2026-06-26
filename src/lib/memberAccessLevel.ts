@@ -6,7 +6,7 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Guest-only surface — Fleet, Founder, Stripe login, fleet cockpit handoff. */
+/** Guest-only surface — Fleet (10 free bays), Founder, Stripe login, fleet cockpit handoff. */
 export const GUEST_PUBLIC_ROUTES = [
   "/",
   "/hired-hud",
@@ -42,8 +42,8 @@ export const GUEST_PUBLIC_ROUTES = [
 
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Fleet, Founder, member login, fleet cockpit handoff.
- * 1 = Flight Pass+: Hangar, Member Portal, Founder Special checkout.
+ * 0 = public (guest): Fleet (10 free AI bays), Founder, member login, fleet cockpit handoff.
+ * 1 = Flight Pass+: all 30 fleet AIs, Hangar, Member Portal, Founder Special checkout.
  * 2 = Hangar Pro+: Intel.
  * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
  */
@@ -121,37 +121,19 @@ export function canAccessRoute(path: string, clearanceRank: number, founderGodMo
 }
 
 export function clearanceTierLabel(minRank: number): string {
-  if (minRank >= 3) {
-    return "Enterprise Commander";
-  }
-  if (minRank >= 2) {
-    return "Hangar Pro";
-  }
   if (minRank >= 1) {
     return "Flight Pass";
   }
   return "Member clearance";
 }
 
-export function clearanceTierPrice(minRank: number): string {
-  if (minRank >= 3) {
-    return "$199.99/mo";
-  }
-  if (minRank >= 2) {
-    return "$49.95/mo";
-  }
+export function clearanceTierPrice(_minRank: number): string {
   return "$19.90/mo";
 }
 
 export type ClearanceStripeTierId = "founder" | "hangar-pro" | "fleet-command";
 
-export function clearanceTierStripeId(minRank: number): ClearanceStripeTierId {
-  if (minRank >= 3) {
-    return "fleet-command";
-  }
-  if (minRank >= 2) {
-    return "hangar-pro";
-  }
+export function clearanceTierStripeId(_minRank: number): ClearanceStripeTierId {
   return "founder";
 }
 
@@ -170,7 +152,13 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
   if (normalized === "/hangar") {
     return {
       title: "Hangar locked — Flight Pass required",
-      body: `${tierLabel} (${tierPrice}) unlocks the sovereign workbench. Guests browse Fleet and Founder only — verify Stripe clearance to enter the hangar.`,
+      body: `${tierLabel} (${tierPrice}) unlocks the sovereign workbench. Verify Stripe clearance to enter the hangar.`,
+    };
+  }
+  if (normalized === "/") {
+    return {
+      title: "Fleet runway locked — Flight Pass required",
+      body: `${tierLabel} (${tierPrice}) unlocks the full 30-AI fleet runway. Pay on Stripe, verify on Member Login, then launch every bay from one cockpit.`,
     };
   }
   if (normalized === "/special") {

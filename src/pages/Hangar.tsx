@@ -7,7 +7,7 @@ import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import SilentBackgroundYouTube from "../components/media/SilentBackgroundYouTube";
 import HangarPageHeader, { HANGAR_META_DESCRIPTION } from "../components/hangar/HangarPageHeader";
 import { useMemberAuth } from "../context/MemberAuthContext";
-import { fleetManifest } from "../data/fleetManifest";
+import { getHangarUnits } from "../data/hangarManifest";
 import { useHangarGridExpansions } from "../hooks/useHangarGridExpansions";
 import { useHangarColumnLayout } from "../hooks/useHangarColumnLayout";
 import {
@@ -17,7 +17,7 @@ import {
 } from "../lib/memberAccessLevel";
 import { type FleetUnit } from "../types/fleet";
 
-const hangarUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
+const hangarUnits = getHangarUnits();
 const unitBySlot = new Map<number, FleetUnit>(hangarUnits.map((unit) => [unit.slot, unit]));
 
 export default function Hangar() {

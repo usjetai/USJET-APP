@@ -198,7 +198,7 @@ function AppChrome() {
       ) : null}
       <SiteLatchMenu />
       <AppNav />
-      <main className="relative z-10">
+      <main className="relative z-10 flex-1">
         <AnimatedRoutes />
       </main>
     </>
@@ -214,7 +214,7 @@ export default function App() {
           <UsjetExternalNavigationProvider>
             <div
               id="usjet-app-shell"
-              className="relative min-h-screen overflow-x-hidden bg-transparent text-white"
+              className="relative flex min-h-screen flex-col overflow-x-hidden bg-transparent text-white"
             >
               <AppChrome />
               <UsjetGlobalContactBar />

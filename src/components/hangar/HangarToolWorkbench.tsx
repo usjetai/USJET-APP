@@ -68,9 +68,9 @@ export default function HangarToolWorkbench({ unit, onClose, isolated = false }:
           title={`${unit.aiName ?? unit.name} · USJET hangar bay`}
           src={rawHref}
           onLoad={() => setFrameReady(true)}
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads allow-presentation"
           referrerPolicy="no-referrer-when-downgrade"
-          allow="microphone; camera; clipboard-write"
+          allow="microphone; camera; clipboard-write; fullscreen"
         />
       )}
     </article>

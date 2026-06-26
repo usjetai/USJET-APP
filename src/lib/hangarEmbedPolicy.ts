@@ -37,7 +37,15 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
 
 /** Hosts that allowed framing in HEAD checks — auto-load inside the bay iframe. */
 const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
-  ["runway.com", "heygen.com", "replit.com", "otter.ai"].map((host) => host.toLowerCase()),
+  [
+    "runway.com",
+    "heygen.com",
+    "replit.com",
+    "otter.ai",
+    "openai-whisper.hf.space",
+    "stabilityai-stable-diffusion-3-5-large-turbo.hf.space",
+    "stabilityai-stable-diffusion-3-5-medium.hf.space",
+  ].map((host) => host.toLowerCase()),
 );
 
 /** Hugging Face Spaces allow embedding by default — all *.hf.space subdomains. */

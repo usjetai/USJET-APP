@@ -11,6 +11,7 @@ import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
 import UsjetProtocolBootOverlay from "./components/layout/UsjetProtocolBootOverlay";
 import GlobalBackgroundBeat from "./components/layout/GlobalBackgroundBeat";
+import GlobalVideoBackground from "./components/layout/GlobalVideoBackground";
 import SiteAudioPrime from "./components/layout/SiteAudioPrime";
 import YouTubeAudioBackground from "./components/layout/YouTubeAudioBackground";
 import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "./data/globalBackgroundBeat";
@@ -191,6 +192,7 @@ function AppChrome() {
     <>
       {atmosphereLive ? (
         <>
+          <GlobalVideoBackground />
           <YouTubeAudioBackground />
           {GLOBAL_BACKGROUND_BEAT_ENABLED ? <GlobalBackgroundBeat /> : null}
           {GLOBAL_BACKGROUND_BEAT_ENABLED ? <SiteAudioPrime /> : null}

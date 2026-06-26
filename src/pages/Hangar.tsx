@@ -84,7 +84,7 @@ export default function Hangar() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className={[
-        "hangar-page hangar-page--workbench hangar-page--no-global-bg relative",
+        "hangar-page hangar-page--workbench relative",
         expandedSlots.size > 0 ? "hangar-page--bay-open" : "",
       ]
         .filter(Boolean)

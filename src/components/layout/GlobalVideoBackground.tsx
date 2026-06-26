@@ -1,8 +1,8 @@
-/** Official warp atmosphere — https://www.youtube.com/watch?v=UQgBVsbbKRs&t=1s */
-const YOUTUBE_ID = "UQgBVsbbKRs";
-const CLIP_START_SEC = 1;
-
 import { useEffect, useId, useRef, useState } from "react";
+import { GLOBAL_VIDEO_BACKGROUND_YOUTUBE_ID } from "../../data/globalVideoBackground";
+
+const YOUTUBE_ID = GLOBAL_VIDEO_BACKGROUND_YOUTUBE_ID;
+const CLIP_START_SEC = 0;
 import type { YoutubePlayer } from "../../lib/youtubeIFrameApi";
 import { loadYoutubeIFrameApi } from "../../lib/youtubeIFrameApi";
 

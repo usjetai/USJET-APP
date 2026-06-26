@@ -77,7 +77,7 @@ function IntelPageContent() {
   }, [cellPlan, closeExpansion, tryExpand]);
 
   return (
-    <div className="intel-page intel-page--no-global-bg">
+    <div className="intel-page">
       {workbenchFullToast ? (
         <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
           <p className="intel-hangar-toast__title">Hangar full</p>

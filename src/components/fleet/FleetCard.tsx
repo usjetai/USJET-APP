@@ -18,6 +18,8 @@ import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
+const FLEET_TILE_LAUNCH_SPINS = 3;
+
 type FleetCardProps = {
   domain: string;
   aircraftType: FleetAircraftType;
@@ -145,7 +147,7 @@ export default function FleetCard({
           className={aircraftWrapClassName}
           style={{ transformOrigin: "center center" }}
           initial={{ rotate: 0, scale: 1, x: 0, y: 0 }}
-          animate={{ rotate: 360, scale: 1.05, x: 3, y: -5 }}
+          animate={{ rotate: 360 * FLEET_TILE_LAUNCH_SPINS, scale: 1.05, x: 3, y: -5 }}
           transition={{ duration: 0.75, ease: [0.34, 1.12, 0.64, 1] }}
           onAnimationComplete={handleSpinComplete}
         >

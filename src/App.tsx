@@ -190,9 +190,9 @@ function AppChrome() {
 
   return (
     <>
+      <GlobalVideoBackground />
       {atmosphereLive ? (
         <>
-          <GlobalVideoBackground />
           <YouTubeAudioBackground />
           {GLOBAL_BACKGROUND_BEAT_ENABLED ? <GlobalBackgroundBeat /> : null}
           {GLOBAL_BACKGROUND_BEAT_ENABLED ? <SiteAudioPrime /> : null}

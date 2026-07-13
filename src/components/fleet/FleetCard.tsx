@@ -6,7 +6,6 @@ import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
 import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getFleetProductPagePath } from "../../data/fleetDirectorySeo";
 import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
 import { copyUsjetProtocol } from "../../lib/copyUsjetProtocol";
@@ -73,8 +72,7 @@ export default function FleetCard({
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
-  const productPagePath = getFleetProductPagePath(callsign);
-  const showProductFooter = surface === "fleet";
+  const showJetFighterFooter = surface === "fleet" && Boolean(jetFighterPagePath) && !isRunway;
   const launchSpinPendingRef = useRef(false);
   const [launchSpinning, setLaunchSpinning] = useState(false);
   const [launchSpinKey, setLaunchSpinKey] = useState(0);
@@ -408,28 +406,11 @@ export default function FleetCard({
           {glassContent}
         </FleetLaunchLink>
       )}
-      {showProductFooter ? (
+      {showJetFighterFooter && jetFighterPagePath ? (
         <div className="fleet-card__footer">
-          <Link
-            to={isFleetLocked ? "#" : productPagePath}
-            className="fleet-card__product-cta btn-glass-prominent glass-effect-interactive"
-            aria-label={isFleetLocked ? `Unlock ${name} with Flight Pass before viewing products` : `View product page for ${name}`}
-            aria-disabled={isFleetLocked || undefined}
-            onClick={(event) => {
-              if (isFleetLocked) {
-                event.preventDefault();
-                return;
-              }
-              logFleetUsageIfMember(callsign, name);
-            }}
-          >
-            {isFleetLocked ? "Locked by Flight Pass" : "Product page →"}
+          <Link to={jetFighterPagePath} className="fleet-card__jet-fighter-link">
+            {name} · Jet Fighter page →
           </Link>
-          {jetFighterPagePath && !isRunway ? (
-            <Link to={jetFighterPagePath} className="fleet-card__jet-fighter-link">
-              {name} · Jet Fighter page →
-            </Link>
-          ) : null}
         </div>
       ) : null}
     </div>

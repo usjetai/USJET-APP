@@ -6292,6 +6292,97 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   }
 }
 
+.fleet-runway-hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fleet-runway-hero__title {
+  text-wrap: balance;
+}
+
+.fleet-runway-hero__lede {
+  max-width: 36rem;
+  text-wrap: pretty;
+}
+
+.fleet-runway-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.fleet-runway-hero__cta {
+  min-height: 2.85rem;
+  padding: 0.7rem 1.35rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fleet-runway-hero__secondary {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.72);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(34, 211, 238, 0.28);
+  padding-bottom: 0.15rem;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.fleet-runway-hero__secondary:hover,
+.fleet-runway-hero__secondary:focus-visible {
+  color: rgba(224, 242, 254, 0.95);
+  border-color: rgba(34, 211, 238, 0.55);
+  outline: none;
+}
+
+.fleet-runway-hero__cleared {
+  margin: 0;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: rgba(16, 185, 129, 0.08);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.92);
+}
+
+.fleet-runway-hero__proof {
+  margin: 1.25rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.45);
+}
+
+@media (max-width: 640px) {
+  .fleet-runway-hero__actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.9rem;
+  }
+
+  .fleet-runway-hero__cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .fleet-runway-hero__proof {
+    letter-spacing: 0.18em;
+  }
+}
+
 .fleet-page--runway::before {
   content: "";
   position: fixed;

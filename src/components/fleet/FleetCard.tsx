@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccents";
-import { getFleetCapabilities, getFleetPartnerLabel } from "../../data/fleetCapabilities";
+import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
 import { HeartPulse } from "lucide-react";
@@ -303,11 +303,6 @@ export default function FleetCard({
         <h3 className="text-base font-black uppercase italic leading-tight tracking-tight text-white transition-colors group-hover:text-blue-300 sm:text-lg">
           {name}
         </h3>
-        {isRunway && typeof slot === "number" ? (
-          <p className="fleet-card__partner-label mt-0.5 text-[9px] font-bold uppercase tracking-[0.16em] text-cyan-200/90">
-            {getFleetPartnerLabel(slot)}
-          </p>
-        ) : null}
         {isFleetLocked ? (
           <p className="fleet-card__locked-label mt-1 text-[8px] font-black uppercase tracking-[0.24em] text-amber-200/85">
             Flight Pass required · $19.90
@@ -349,7 +344,7 @@ export default function FleetCard({
             Click to unlock the remaining AI bays through Stripe.
           </p>
         ) : null}
-        {capabilities && isAvailableBay ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
+        {capabilities ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
         {!isRunway ? (
           !isAvailableBay ? (
             <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>

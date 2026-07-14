@@ -3,21 +3,21 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 leads with Replit. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 leads with VidGuru. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Replit",
+    name: "VidGuru",
     callsign: "BLACKBIRD-01",
-    domain: "replit.com",
-    href: "https://replit.com/",
+    domain: "vidguru.ai",
+    href: "https://www.vidguru.ai/image-to-video",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "Replit",
-    fleetRole: "Replit — AI coding and app workspace at replit.com.",
+    aiName: "VidGuru",
+    fleetRole: "VidGuru — image-to-video AI at vidguru.ai.",
   },
   {
     id: "1",
@@ -61,15 +61,15 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "4",
     slot: 4,
-    name: "DeepAI",
+    name: "VidGuru Talking Photo",
     callsign: "NGAD-05",
-    domain: "deepai.org",
-    href: "https://deepai.org/chat",
+    domain: "vidguru.ai",
+    href: "https://www.vidguru.ai/ai-talking-photo",
     status: "active",
     aura: "idle",
     aircraftType: "ngad",
-    aiName: "DeepAI",
-    fleetRole: "DeepAI — AI chat at deepai.org/chat.",
+    aiName: "VidGuru Talking Photo",
+    fleetRole: "VidGuru — AI talking photo at vidguru.ai.",
   },
   {
     id: "5",

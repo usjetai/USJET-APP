@@ -67,6 +67,7 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "widgets.commoninja.com",
     "yellow.ai",
     "lovable.dev",
+    "vidguru.ai",
     "gening.ai",
     "notegpt.io",
     "easemate.ai",

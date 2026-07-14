@@ -6,10 +6,11 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Guest-only surface — Fleet (10 free bays), Founder, Stripe login, fleet cockpit handoff. */
+/** Guest-only surface — Fleet (10 free bays), Hangar (4 free tabs), Founder, Stripe login, fleet cockpit handoff. */
 export const GUEST_PUBLIC_ROUTES = [
   "/",
   "/hired-hud",
+  "/hangar",
   "/founder",
   "/member/login",
   "/login",
@@ -42,8 +43,8 @@ export const GUEST_PUBLIC_ROUTES = [
 
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Fleet (10 free AI bays), Founder, member login, fleet cockpit handoff.
- * 1 = Flight Pass+: all 30 fleet AIs, Hangar, Member Portal, Founder Special checkout.
+ * 0 = public (guest): Fleet (10 free AI bays), Hangar (4 free tabs), Founder, member login, fleet cockpit handoff.
+ * 1 = Flight Pass+: all 30 fleet AIs, full Hangar tabs, Member Portal, Founder Special checkout.
  * 2 = Hangar Pro+: Intel.
  * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
  */
@@ -78,7 +79,7 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/member/login": 0,
   "/login": 0,
   "/cockpit": 0,
-  "/hangar": 1,
+  "/hangar": 0,
   "/member": 1,
   "/special": 1,
   "/intel": 0,
@@ -151,8 +152,8 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
   }
   if (normalized === "/hangar") {
     return {
-      title: "Hangar locked — Flight Pass required",
-      body: `${tierLabel} (${tierPrice}) unlocks the sovereign workbench. Verify Stripe clearance to enter the hangar.`,
+      title: "Hangar tabs locked — Flight Pass required",
+      body: `First 4 hangar tabs are free. ${tierLabel} (${tierPrice}) unlocks the rest of the workbench.`,
     };
   }
   if (normalized === "/") {
@@ -376,10 +377,13 @@ export function isOriginCustomerServiceEntry(searchOrPath: string): boolean {
   return new URLSearchParams(query).get("entry") === ORIGIN_CS_ENTRY;
 }
 
-/** Hangar workbench simultaneous bay caps by clearance rank (0 = teaser / no session). */
-export const HANGAR_BAY_LIMIT_TEASER = 2;
-export const HANGAR_BAY_LIMIT_FLIGHT_PASS = 4;
-export const HANGAR_BAY_LIMIT_HANGAR_PRO = 6;
+/** Hangar workbench simultaneous bay caps by clearance rank (0 = free guest tabs). */
+export const HANGAR_BAY_LIMIT_FREE = 4;
+/** @deprecated Prefer HANGAR_BAY_LIMIT_FREE — guests get four free tabs. */
+export const HANGAR_BAY_LIMIT_TEASER = HANGAR_BAY_LIMIT_FREE;
+/** Flight Pass ($19.90/mo) unlocks the rest of the hangar workbench tabs. */
+export const HANGAR_BAY_LIMIT_FLIGHT_PASS = 10;
+export const HANGAR_BAY_LIMIT_HANGAR_PRO = 10;
 export const HANGAR_BAY_LIMIT_ENTERPRISE = 10;
 
 export function getHangarBayLimit(session: MemberSession | null | undefined): number {
@@ -387,16 +391,10 @@ export function getHangarBayLimit(session: MemberSession | null | undefined): nu
     return HANGAR_BAY_LIMIT_ENTERPRISE;
   }
   const rank = memberClearanceRank(session);
-  if (rank >= 3) {
-    return HANGAR_BAY_LIMIT_ENTERPRISE;
-  }
-  if (rank === 2) {
-    return HANGAR_BAY_LIMIT_HANGAR_PRO;
-  }
-  if (rank === 1) {
+  if (rank >= 1) {
     return HANGAR_BAY_LIMIT_FLIGHT_PASS;
   }
-  return HANGAR_BAY_LIMIT_TEASER;
+  return HANGAR_BAY_LIMIT_FREE;
 }
 
 export type HangarBayLimitToast = {
@@ -411,22 +409,8 @@ export function hangarBayLimitToast(session: MemberSession | null | undefined): 
 
   if (rank === 0) {
     return {
-      title: "Preview limit",
-      body: `Teaser holds ${limit} bays — Flight Pass unlocks 4 cockpits.`,
-      showUpgradeLink: true,
-    };
-  }
-  if (rank === 1) {
-    return {
-      title: "Hangar full",
-      body: `Flight Pass holds ${limit} bays — upgrade for more.`,
-      showUpgradeLink: true,
-    };
-  }
-  if (rank === 2) {
-    return {
-      title: "Hangar full",
-      body: `Hangar Pro holds ${limit} bays — upgrade for Enterprise command.`,
+      title: "Free tab limit",
+      body: `First ${limit} hangar tabs are free — Flight Pass ($19.90/mo) unlocks the rest.`,
       showUpgradeLink: true,
     };
   }
@@ -441,19 +425,19 @@ export function hangarBayHeroBadge(session: MemberSession | null | undefined): s
   const limit = getHangarBayLimit(session);
 
   if (isSitePreviewPromoActive()) {
-    return `${limit} bays · full site preview`;
+    return `${limit} tabs · full site preview`;
   }
 
   const rank = memberClearanceRank(session);
 
   if (rank === 0) {
-    return `${limit} bays · preview access`;
+    return `${limit} free tabs · Flight Pass unlocks rest`;
   }
   if (rank === 1) {
-    return `${limit} bays · $19.90/mo`;
+    return `${limit} tabs · Flight Pass $19.90/mo`;
   }
   if (rank === 2) {
-    return `${limit} bays · Hangar Pro`;
+    return `${limit} tabs · Hangar Pro`;
   }
-  return `${limit} bays · Enterprise command`;
+  return `${limit} tabs · Enterprise command`;
 }

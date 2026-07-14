@@ -14,6 +14,8 @@ import {
   hangarBayHeroBadge,
   hangarBayLimitToast,
 } from "../lib/memberAccessLevel";
+import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
+import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 import { type FleetUnit } from "../types/fleet";
 
 const hangarUnits = getHangarUnits();
@@ -25,6 +27,10 @@ export default function Hangar() {
   const bayLimit = getHangarBayLimit(session);
   const bayToast = hangarBayLimitToast(session);
   const bayBadge = hangarBayHeroBadge(session);
+  const flightPassCheckoutUrl = wrapExternalInCockpit(resolveFounderPaymentLink(), {
+    returnTo: "/hangar",
+    label: "Flight Pass",
+  });
   const { columns, setColumnLayout } = useHangarColumnLayout();
   const { tryExpand, closeExpansion, expansions, workbenchFullToast } = useHangarGridExpansions(
     unitBySlot,
@@ -108,8 +114,8 @@ export default function Hangar() {
             {bayToast.showUpgradeLink ? (
               <>
                 {" "}
-                <Link to="/special" className="intel-hangar-toast__link">
-                  Upgrade clearance
+                <Link to={flightPassCheckoutUrl} className="intel-hangar-toast__link">
+                  Unlock with Flight Pass · $19.90/mo
                 </Link>
               </>
             ) : null}

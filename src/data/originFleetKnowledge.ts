@@ -106,7 +106,7 @@ export const ORIGIN_AURA_CS_PLAYBOOK = [
   "3) Answer in short paragraphs or numbered steps (major retail chatbot style). No walls of text.",
   "4) Site FAQ you may answer from training:",
   "   • Fleet (/) — browse 30 partner AI bays; guests see the manifest; launch opens integrated cockpit.",
-  "   • Hangar (/hangar) — workbench bays; Flight Pass unlocks 4 bays, Hangar Pro unlocks Intel, Enterprise unlocks Origin.",
+  "   • Hangar (/hangar) — workbench open to everyone; first 4 tabs free, Flight Pass ($19.90/mo) unlocks the rest. Hangar Pro unlocks Intel, Enterprise unlocks Origin.",
   "   • Tiers (Stripe only): Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo.",
   "   • Login — NO OAuth (no Google/Apple/social). Billing email + access sentence (or cus_ Member ID) at /member/login.",
   "   • Founder (/founder) — founder story and grit vault entry.",

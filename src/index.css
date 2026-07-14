@@ -16478,48 +16478,21 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 0.75rem;
 }
 
 .cockpit-hangar-handoff {
-  width: min(100%, 22rem);
+  width: min(100%, 18rem);
   text-align: center;
-}
-
-.cockpit-hangar-handoff__kicker {
-  margin: 0;
-  font-size: 0.55rem;
-  font-weight: 800;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(34, 211, 238, 0.75);
-}
-
-.cockpit-hangar-handoff__title {
-  margin: 0.45rem 0 0;
-  font-family: theme("fontFamily.aviation");
-  font-size: clamp(1.35rem, 3vw, 1.85rem);
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  color: #fff;
-}
-
-.cockpit-hangar-handoff__body {
-  margin: 0.65rem 0 0;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: rgba(226, 232, 240, 0.78);
 }
 
 .cockpit-hangar-handoff__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
-  min-height: 2.5rem;
-  padding: 0.55rem 1.15rem;
+  min-height: 2.65rem;
+  width: 100%;
+  padding: 0.65rem 1.1rem;
   border-radius: 0.55rem;
   border: 1px solid rgba(34, 211, 238, 0.45);
   background: linear-gradient(165deg, rgba(14, 165, 233, 0.45), rgba(8, 47, 73, 0.85));
@@ -16535,6 +16508,44 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 .cockpit-hangar-handoff__cta:focus-visible {
   border-color: rgba(103, 232, 249, 0.75);
   color: #fff;
+}
+
+.hangar-tile-handoff {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 1rem;
+}
+
+.hangar-tile-handoff__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  min-width: min(100%, 14rem);
+  padding: 0.7rem 1.25rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  background: linear-gradient(165deg, rgba(14, 165, 233, 0.5), rgba(8, 47, 73, 0.9));
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ecfeff;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.18);
+}
+
+.hangar-tile-handoff__btn:hover,
+.hangar-tile-handoff__btn:focus-visible {
+  border-color: rgba(103, 232, 249, 0.8);
+  color: #fff;
+}
+
+.hangar-tool-workbench--handoff-only {
+  background: rgba(2, 8, 23, 0.72);
 }
 
 .cockpit-return-bar {

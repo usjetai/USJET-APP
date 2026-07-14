@@ -207,6 +207,31 @@ function AppChrome() {
   );
 }
 
+function AppShell() {
+  const location = useLocation();
+  const hangarEmbed =
+    location.pathname === "/cockpit" &&
+    new URLSearchParams(location.search).get("embed") === "hangar";
+
+  return (
+    <div
+      id="usjet-app-shell"
+      className={[
+        "relative flex min-h-screen flex-col overflow-x-hidden bg-transparent text-white",
+        hangarEmbed ? "usjet-app-shell--hangar-embed" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <AppChrome />
+      {hangarEmbed ? null : <UsjetGlobalContactBar />}
+      <UsjetAtmosphereBoot />
+      {hangarEmbed ? null : <UsjetProtocolBootOverlay />}
+      {hangarEmbed ? null : <UsjetReturnFab />}
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Router>
@@ -214,16 +239,7 @@ export default function App() {
       <OriginLimitedOfferProvider>
         <SilentHangarProvider>
           <UsjetExternalNavigationProvider>
-            <div
-              id="usjet-app-shell"
-              className="relative flex min-h-screen flex-col overflow-x-hidden bg-transparent text-white"
-            >
-              <AppChrome />
-              <UsjetGlobalContactBar />
-              <UsjetAtmosphereBoot />
-              <UsjetProtocolBootOverlay />
-              <UsjetReturnFab />
-            </div>
+            <AppShell />
           </UsjetExternalNavigationProvider>
         </SilentHangarProvider>
       </OriginLimitedOfferProvider>

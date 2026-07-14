@@ -41,6 +41,8 @@ export function UsjetExternalNavigationProvider({ children }: { children: ReactN
   const [returnTo, setReturnTo] = useState(DEFAULT_RETURN_TO);
 
   const onCockpitRoute = isCockpitPath(location.pathname);
+  const hangarEmbed =
+    onCockpitRoute && new URLSearchParams(location.search).get("embed") === "hangar";
 
   useEffect(() => {
     if (!onCockpitRoute) {
@@ -107,7 +109,7 @@ export function UsjetExternalNavigationProvider({ children }: { children: ReactN
     return () => document.removeEventListener("click", onDocumentClick, true);
   }, [location.pathname, navigate]);
 
-  const showReturnFab = onCockpitRoute || externalHandoffActive;
+  const showReturnFab = !hangarEmbed && (onCockpitRoute || externalHandoffActive);
 
   const value = useMemo(
     () => ({

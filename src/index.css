@@ -8659,6 +8659,70 @@ html.code-kit-page-root #usjet-app-shell {
   min-height: 14rem;
 }
 
+.hangar-home-hero__title {
+  text-wrap: balance;
+}
+
+.hangar-home-hero__lede {
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: pretty;
+}
+
+.hangar-home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.hangar-home-hero__cta {
+  min-height: 2.85rem;
+  padding: 0.7rem 1.35rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hangar-home-hero__secondary {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(254, 243, 199, 0.72);
+  border-bottom: 1px solid rgba(251, 191, 36, 0.28);
+  padding-bottom: 0.15rem;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.hangar-home-hero__secondary:hover,
+.hangar-home-hero__secondary:focus-visible {
+  color: rgba(254, 243, 199, 0.98);
+  border-color: rgba(251, 191, 36, 0.65);
+  outline: none;
+}
+
+.hangar-home-hero__cleared {
+  margin: 0;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: rgba(16, 185, 129, 0.08);
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.92);
+}
+
+.hangar-home-hero__proof {
+  text-wrap: balance;
+}
+
 .hangar-workbench-hero__title {
   text-wrap: balance;
 }
@@ -8702,13 +8766,20 @@ html.code-kit-page-root #usjet-app-shell {
 }
 
 @media (max-width: 640px) {
+  .hangar-home-hero__actions,
   .hangar-workbench-hero__actions {
     width: 100%;
+    flex-direction: column;
   }
 
+  .hangar-home-hero__cta,
   .hangar-workbench-hero__cta {
     width: 100%;
     justify-content: center;
+  }
+
+  .hangar-home-hero__proof {
+    letter-spacing: 0.16em;
   }
 }
 

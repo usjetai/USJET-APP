@@ -39,7 +39,7 @@ export default function Hangar() {
     const meta = document.querySelector('meta[name="description"]');
     const prevDescription = meta?.getAttribute("content") ?? null;
 
-    document.title = "Hangar · USJet.ai";
+    document.title = "USJet.ai · Hangar";
     meta?.setAttribute("content", HANGAR_META_DESCRIPTION);
 
     return () => {

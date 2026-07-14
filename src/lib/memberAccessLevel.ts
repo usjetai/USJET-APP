@@ -1,4 +1,5 @@
 import type { MemberSession } from "../types/member";
+import { FLEET_UNIT_COUNT } from "../types/fleet";
 import { MEMBER_DECK_STRIPE_METADATA } from "../data/memberDeckStripe";
 import { isSitePreviewPromoActive } from "./sitePreviewPromo";
 import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey";
@@ -381,10 +382,10 @@ export function isOriginCustomerServiceEntry(searchOrPath: string): boolean {
 export const HANGAR_BAY_LIMIT_FREE = 4;
 /** @deprecated Prefer HANGAR_BAY_LIMIT_FREE — guests get four free tabs. */
 export const HANGAR_BAY_LIMIT_TEASER = HANGAR_BAY_LIMIT_FREE;
-/** Flight Pass ($19.90/mo) unlocks the rest of the hangar workbench tabs. */
-export const HANGAR_BAY_LIMIT_FLIGHT_PASS = 10;
-export const HANGAR_BAY_LIMIT_HANGAR_PRO = 10;
-export const HANGAR_BAY_LIMIT_ENTERPRISE = 10;
+/** Flight Pass+ can open every hangar bay at once (full 30-unit floor). */
+export const HANGAR_BAY_LIMIT_FLIGHT_PASS = FLEET_UNIT_COUNT;
+export const HANGAR_BAY_LIMIT_HANGAR_PRO = FLEET_UNIT_COUNT;
+export const HANGAR_BAY_LIMIT_ENTERPRISE = FLEET_UNIT_COUNT;
 
 export function getHangarBayLimit(session: MemberSession | null | undefined): number {
   if (isSitePreviewPromoActive()) {

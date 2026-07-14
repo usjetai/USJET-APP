@@ -6011,14 +6011,18 @@ button.fleet-card__launch--button {
   border: 0;
 }
 
-/* Hangar expanded tile — iframe fills the tile, no chrome */
+/* Hangar expanded tile — iframe fills the tile, no chrome.
+   Fixed footprint so opening more bays does not shrink ones already open. */
 .hangar-tool-workbench--tile-only {
   position: relative;
   display: flex;
   flex-direction: column;
   padding: 0;
   overflow: hidden;
-  min-height: clamp(22rem, 60vh, 42rem);
+  width: 100%;
+  height: 28rem;
+  min-height: 28rem;
+  max-height: 28rem;
   border-radius: 0.85rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: #010308;
@@ -8418,14 +8422,15 @@ html.code-kit-page-root #usjet-app-shell {
   isolation: isolate;
   width: 100%;
   min-width: 0;
-  align-items: stretch;
+  align-items: start;
   grid-auto-rows: auto;
 }
 
 .hangar-page--workbench .hangar-bay-grid .fleet-card,
 .hangar-page--workbench .hangar-bay-grid .hangar-tool-workbench {
-  height: 100%;
+  height: auto;
   min-height: 0;
+  align-self: start;
 }
 
 .hangar-page--workbench .hangar-bay-grid--cols-1 {
@@ -8646,17 +8651,30 @@ html.code-kit-page-root #usjet-app-shell {
   z-index: auto;
   grid-column: auto;
   grid-row: auto;
-  aspect-ratio: auto;
-  min-height: 22rem;
+  width: 100%;
+  height: 28rem;
+  min-height: 28rem;
+  max-height: 28rem;
+  aspect-ratio: unset;
+  align-self: start;
+}
+
+.hangar-page--workbench .hangar-bay-grid .hangar-tool-workbench.hangar-tool-workbench--tile-only {
+  height: 28rem;
+  min-height: 28rem;
+  max-height: 28rem;
 }
 
 .hangar-page--workbench .hangar-tool-workbench .hangar-cockpit-frame {
   flex: 1;
-  min-height: 14rem;
+  min-height: 0;
 }
 
 .hangar-page--workbench .hangar-tool-workbench .hangar-tool-workbench__frame {
-  min-height: 14rem;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
 .hangar-home-hero__title {

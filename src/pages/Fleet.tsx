@@ -16,7 +16,6 @@ import {
 } from "../data/fleetRoster";
 import { FLIGHT_PASS_STRIPE } from "../data/stripeProducts";
 import { resolveFleetUnitHref } from "../lib/fleetManifestAudit";
-import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
 import FleetCard from "../components/fleet/FleetCard";
 import FleetAuthChrome from "../components/fleet/FleetAuthChrome";
 import SovereignVaultGlobalDownload from "../components/growth/SovereignVaultGlobalDownload";
@@ -40,10 +39,6 @@ function fleetRunwayPrefersReducedMotion(): boolean {
 const Fleet = () => {
   const { session } = useMemberAuth();
   const flightPassUrl = resolveFounderPaymentLink();
-  const flightPassCheckoutUrl = wrapExternalInCockpit(flightPassUrl, {
-    returnTo: "/",
-    label: "Flight Pass",
-  });
   const fullFleetCleared = hasFullFleetAccess(session);
   const [runwayReady, setRunwayReady] = useState(fleetRunwayPrefersReducedMotion);
 
@@ -107,14 +102,15 @@ const Fleet = () => {
                   </p>
                 ) : (
                   <>
-                    <Link
-                      to={flightPassCheckoutUrl}
+                    <a
+                      href={flightPassUrl}
                       className="fleet-runway-hero__cta btn-glass-prominent glass-effect-interactive"
                       aria-label={`${FLEET_HERO_HEADLINE} with Flight Pass at ${FLIGHT_PASS_STRIPE.priceDisplay}${FLIGHT_PASS_STRIPE.period}`}
+                      data-usjet-external-leak="true"
                     >
                       {FLEET_HERO_CTA}
-                    </Link>
-                    <Link to="/member" className="fleet-runway-hero__secondary glass-effect-interactive">
+                    </a>
+                    <Link to="/member/login" className="fleet-runway-hero__secondary glass-effect-interactive">
                       Already cleared? Member login
                     </Link>
                   </>

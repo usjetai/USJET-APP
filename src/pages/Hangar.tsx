@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
 import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
@@ -14,7 +14,6 @@ import {
   hangarBayHeroBadge,
   hangarBayLimitToast,
 } from "../lib/memberAccessLevel";
-import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
 import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
 import { type FleetUnit } from "../types/fleet";
 
@@ -27,10 +26,7 @@ export default function Hangar() {
   const bayLimit = getHangarBayLimit(session);
   const bayToast = hangarBayLimitToast(session);
   const bayBadge = hangarBayHeroBadge(session);
-  const flightPassCheckoutUrl = wrapExternalInCockpit(resolveFounderPaymentLink(), {
-    returnTo: "/hangar",
-    label: "Flight Pass",
-  });
+  const flightPassUrl = resolveFounderPaymentLink();
   const { columns, setColumnLayout } = useHangarColumnLayout();
   const { tryExpand, closeExpansion, expansions, workbenchFullToast } = useHangarGridExpansions(
     unitBySlot,
@@ -114,9 +110,13 @@ export default function Hangar() {
             {bayToast.showUpgradeLink ? (
               <>
                 {" "}
-                <Link to={flightPassCheckoutUrl} className="intel-hangar-toast__link">
+                <a
+                  href={flightPassUrl}
+                  className="intel-hangar-toast__link"
+                  data-usjet-external-leak="true"
+                >
                   Unlock with Flight Pass · $19.90/mo
-                </Link>
+                </a>
               </>
             ) : null}
           </p>

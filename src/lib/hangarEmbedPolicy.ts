@@ -1,9 +1,11 @@
 /**
- * Partners that send X-Frame-Options / CSP frame-ancestors blocking embed.
- * Hangar bays gate these behind an in-tile Launch tap (iframe src set on click).
+ * Hangar iframe policy — only hosts that actually frame in-browser.
  *
- * Hosts verified via HEAD — June 2026 fleet manifest.
+ * Commercial marketing sites (Runway, Replit, Voiceflow, Dify, Yellow.ai, etc.)
+ * send X-Frame-Options / CSP frame-ancestors that blank the bay. Do not allowlist
+ * them. Hugging Face Spaces (*.hf.space) are the proven in-tile runway.
  */
+
 const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
   [
     "gemini.google.com",
@@ -33,48 +35,35 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "chat.deepseek.com",
     "canva.com",
     "synthesia.io",
-  ].map((host) => host.toLowerCase()),
-);
-
-/** Hosts that allowed framing in HEAD checks — auto-load inside the bay iframe. */
-const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
-  [
     "runway.com",
     "heygen.com",
     "replit.com",
     "otter.ai",
     "pickaxe.co",
-    "studio.pickaxe.co",
     "customgpt.ai",
-    "app.customgpt.ai",
-    "stackai.com",
-    "stack.ai",
     "voiceflow.com",
-    "creator.voiceflow.com",
     "botpress.com",
-    "cdn.botpress.cloud",
     "dify.ai",
-    "cloud.dify.ai",
-    "udify.app",
     "mindstudio.ai",
-    "app.mindstudio.ai",
-    "lindy.ai",
-    "usefini.com",
-    "fini.ai",
-    "aws.amazon.com",
     "featurebase.app",
+    "chatbot.com",
+    "unifyapps.com",
     "openassistantgpt.io",
     "commoninja.com",
-    "widgets.commoninja.com",
+    "thoughtspot.com",
+    "ada.cx",
     "yellow.ai",
-    "openai-whisper.hf.space",
-    "stabilityai-stable-diffusion-3-5-large-turbo.hf.space",
-    "stabilityai-stable-diffusion-3-5-medium.hf.space",
-    "black-forest-labs-flux-1-schnell.hf.space",
-    "huggingface-projects-llama-3-2-3b-instruct.hf.space",
-    "instantx-instantid.hf.space",
+    "forethought.ai",
+    "embeddable.com",
+    "lindy.ai",
+    "usefini.com",
+    "stackai.com",
+    "huggingface.co",
   ].map((host) => host.toLowerCase()),
 );
+
+/** Explicit allowlist beyond *.hf.space — keep empty unless a host is verified to frame. */
+const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set<string>([]);
 
 /** Hugging Face Spaces allow embedding by default — all *.hf.space subdomains. */
 function isHfSpace(host: string): boolean {
@@ -104,11 +93,14 @@ export function isHangarIframeBlocked(url: string): boolean {
     return true;
   }
 
-  if (HANGAR_IFRAME_AUTO_EMBED_HOSTS.has(host) || isHfSpace(host)) {
+  if (isHfSpace(host)) {
     return false;
   }
 
-  // Allowlisted partner roots (e.g. aws.amazon.com/q/…) — check base host match.
+  if (HANGAR_IFRAME_AUTO_EMBED_HOSTS.has(host)) {
+    return false;
+  }
+
   for (const allowed of HANGAR_IFRAME_AUTO_EMBED_HOSTS) {
     if (host === allowed || host.endsWith(`.${allowed}`)) {
       return false;
@@ -117,6 +109,12 @@ export function isHangarIframeBlocked(url: string): boolean {
 
   if (HANGAR_IFRAME_BLOCKED_HOSTS.has(host)) {
     return true;
+  }
+
+  for (const blocked of HANGAR_IFRAME_BLOCKED_HOSTS) {
+    if (host === blocked || host.endsWith(`.${blocked}`)) {
+      return true;
+    }
   }
 
   // Unknown external partner — gate behind Launch until verified.

@@ -3,34 +3,34 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 leads with Lovable. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 leads with Replit. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Lovable",
+    name: "Replit",
     callsign: "BLACKBIRD-01",
-    domain: "lovable.dev",
-    href: "https://lovable.dev/home",
+    domain: "replit.com",
+    href: "https://replit.com/",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "Lovable",
-    fleetRole: "Lovable — AI app builder at lovable.dev/home.",
+    aiName: "Replit",
+    fleetRole: "Replit — AI coding and app workspace at replit.com.",
   },
   {
     id: "1",
     slot: 1,
-    name: "NoteGPT",
+    name: "Gening",
     callsign: "LIGHTNING-02",
-    domain: "notegpt.io",
-    href: "https://notegpt.io/ai-chat",
+    domain: "gening.ai",
+    href: "https://www.gening.ai/free-ai-create-character",
     status: "active",
     aura: "idle",
     aircraftType: "f35",
-    aiName: "NoteGPT",
-    fleetRole: "NoteGPT — AI chat at notegpt.io/ai-chat.",
+    aiName: "Gening",
+    fleetRole: "Gening — free AI character creator at gening.ai.",
   },
   {
     id: "2",

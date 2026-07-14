@@ -37,9 +37,7 @@ export default function MemberPortal() {
             <h1 className="member-portal__title">
               Member <span className="member-portal__title-accent">Portal</span>
             </h1>
-            <p className="member-portal__subtitle">
-              Secure founder access — Stripe Member ID linked to active USJET subscription.
-            </p>
+            <p className="member-portal__subtitle">Clearance confirmed — Stripe Member ID linked to your active subscription.</p>
           </div>
           <button type="button" className="member-portal__header-logout btn-glass glass-effect-interactive" onClick={logout}>
             <LogOut size={14} aria-hidden />
@@ -48,41 +46,43 @@ export default function MemberPortal() {
         </div>
       </header>
 
-      <section className="member-portal__dashboard" aria-label="Member control board">
-        <div className="member-portal__identity-row">
-          <MemberVitalsPanel session={session} />
-          <MemberPrimeBadge session={session} />
-        </div>
+      <div className="member-portal__dashboard" aria-label="Member control board">
+        <section className="member-portal__section member-portal__section--identity" aria-label="Membership clearance">
+          <div className="member-portal__identity-row">
+            <MemberVitalsPanel session={session} />
+            <MemberPrimeBadge session={session} compact />
+          </div>
+        </section>
 
-        <MemberProjectTracker customerId={session.customerId} />
+        <section className="member-portal__section member-portal__section--primary" aria-labelledby="member-portal-projects-label">
+          <p id="member-portal-projects-label" className="member-portal__section-label">
+            Mission Projects
+          </p>
+          <MemberProjectTracker customerId={session.customerId} />
+        </section>
 
-        <MemberShippingAddressForm customerId={session.customerId} />
+        <section className="member-portal__section member-portal__section--secondary" aria-label="Usage and shipping">
+          <div className="member-portal__secondary">
+            <MemberPortalDataBoard customerId={session.customerId} session={session} />
+            <MemberShippingAddressForm customerId={session.customerId} />
+          </div>
+        </section>
 
-        <MemberFleetControlBoard />
-
-        <MemberPortalDataBoard customerId={session.customerId} session={session} />
-      </section>
+        <section className="member-portal__section member-portal__section--fleet" aria-labelledby="member-portal-fleet-label">
+          <p id="member-portal-fleet-label" className="member-portal__section-label">
+            Fleet launch
+          </p>
+          <MemberFleetControlBoard />
+        </section>
+      </div>
 
       <p className="member-portal__footer">
-        Need higher clearance?{" "}
-        <Link to="/special" className="member-portal__link">
-          Upgrade tiers
-        </Link>
-        {" · "}
-        <Link to="/intelligence" className="member-portal__link">
-          Intel ladder
-        </Link>
-        {" · "}
-        <Link to="/b2b" className="member-portal__link">
-          B2B
-        </Link>
-        {" · "}
         <Link to="/hangar" className="member-portal__link">
           Hangar
         </Link>
         {" · "}
-        <Link to="/intel" className="member-portal__link">
-          Intel grid
+        <Link to="/special" className="member-portal__link">
+          Upgrade tiers
         </Link>
       </p>
     </div>

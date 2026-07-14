@@ -2,13 +2,19 @@ import { ShieldCheck } from "lucide-react";
 import type { MemberSession } from "../../types/member";
 import MemberPrimeBadge from "../member/MemberPrimeBadge";
 import type { HangarColumnLayout } from "../../hooks/useHangarColumnLayout";
+import {
+  HANGAR_BAY_LIMIT_FREE,
+  memberClearanceRank,
+} from "../../lib/memberAccessLevel";
+import { resolveFounderPaymentLink } from "../../lib/stripePaymentLink";
+import { FLIGHT_PASS_STRIPE } from "../../data/stripeProducts";
 import { FLEET_UNIT_COUNT } from "../../types/fleet";
 
+/** SEO / document meta — keep benefit-led and accurate to free-tab policy. */
 const HANGAR_META_DESCRIPTION =
-  "USJET is not a passive directory—it networks Gemini, ChatGPT, Claude, and 27 other elite AIs into one US hangar. Each system claims a cockpit bay aboard the same high-velocity fleet: a consensus of intelligence on the path to a digital nervous system.";
+  "USJET Hangar workbench: open AI cockpit bays in-page. First four tabs free; Flight Pass unlocks the rest of the simultaneous workbench.";
 
-const HANGAR_VISION_RIBBON =
-  "Expand a bay and that AI steps straight into its glass cockpit—smooth, frictionless, with the Hangar as home base.";
+const HANGAR_HERO_LEDE = `Click a bay to expand it into a live cockpit on this page. First ${HANGAR_BAY_LIMIT_FREE} tabs are free — Flight Pass clears the rest.`;
 
 type HangarPageHeaderProps = {
   session: MemberSession | null;
@@ -25,32 +31,53 @@ export default function HangarPageHeader({
   columns,
   onColumnLayoutChange,
 }: HangarPageHeaderProps) {
+  const flightPassUrl = resolveFounderPaymentLink();
+  const fullTabsCleared = memberClearanceRank(session) >= 1;
+  const ctaLabel = `Unlock full Hangar · ${FLIGHT_PASS_STRIPE.priceDisplay}${FLIGHT_PASS_STRIPE.period}`;
+
   return (
     <header className="hangar-workbench-hero mb-12 flex flex-col items-start justify-between gap-8 border-b border-amber-400/20 pb-10 md:flex-row md:items-end">
-      <div className="text-left">
+      <div className="hangar-workbench-hero__copy text-left">
         <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-black uppercase tracking-[0.35em] text-amber-300/90">
           <ShieldCheck size={20} className="shrink-0 text-amber-400" aria-hidden />
-          <span>{session?.active ? "Founder's Access Granted" : "Founder's Hangar"}</span>
+          <span>{session?.active ? "Clearance active" : "Open workbench"}</span>
           <span
             className="hangar-ops-badge rounded-md border border-amber-400/40 bg-amber-500/[0.1] px-3 py-1 text-[8px] font-black tracking-[0.2em] text-amber-100/90 sm:text-[9px] sm:tracking-[0.28em]"
-            title="Simultaneous cockpit bays allowed on your clearance tier"
+            title="Simultaneous cockpit tabs allowed on your clearance"
           >
             {bayBadge}
           </span>
         </div>
-        <h1 className="font-aviation text-6xl font-black uppercase italic leading-[0.9] tracking-tighter text-white sm:text-7xl lg:text-8xl">
-          The <span className="text-amber-400">Hangar</span>
+
+        <h1 className="hangar-workbench-hero__title font-aviation text-5xl font-black uppercase italic leading-[0.92] tracking-tighter text-white sm:text-6xl lg:text-7xl">
+          Open the <span className="text-amber-400">Hangar</span>
         </h1>
-        <p className="mt-5 max-w-3xl text-base font-medium leading-relaxed tracking-tight text-white/70">
-          {HANGAR_META_DESCRIPTION}
+
+        <p className="hangar-workbench-hero__lede mt-5 max-w-2xl text-base font-medium leading-relaxed tracking-tight text-white/70 sm:text-lg">
+          {HANGAR_HERO_LEDE}
         </p>
-        <p className="mt-3 max-w-3xl text-sm font-medium leading-relaxed tracking-tight text-amber-100/55">
-          {HANGAR_VISION_RIBBON}
+
+        <div className="hangar-workbench-hero__actions">
+          {fullTabsCleared ? (
+            <p className="hangar-workbench-hero__cleared" role="status">
+              Full hangar tabs unlocked
+            </p>
+          ) : (
+            <a
+              href={flightPassUrl}
+              className="hangar-workbench-hero__cta btn-glass-prominent glass-effect-interactive"
+              data-usjet-external-leak="true"
+              aria-label={ctaLabel}
+            >
+              {ctaLabel}
+            </a>
+          )}
+        </div>
+
+        <p className="hangar-workbench-hero__proof mt-4 max-w-2xl text-sm font-medium uppercase tracking-[0.22em] text-amber-200/45">
+          {FLEET_UNIT_COUNT} bays · {bayLimit} live tabs · {columns}-column floor
         </p>
-        <p className="mt-4 max-w-2xl text-sm font-medium uppercase tracking-[0.28em] text-amber-200/40">
-          {FLEET_UNIT_COUNT} units · {columns}-column bay floor · click a bay to expand (max {bayLimit}{" "}
-          simultaneous cockpits)
-        </p>
+
         <HangarLayoutToggle columns={columns} onChange={onColumnLayoutChange} />
       </div>
 

@@ -29,7 +29,7 @@ export default function HangarBayTile({ unit, onOpenBay }: HangarBayTileProps) {
       systemPrompt={unit.systemPrompt}
       returnTo="/"
       surface="hangar"
-      isCommandBay={unit.href === "/origin" || unit.slot === 29}
+      isCommandBay={unit.href === "/origin" || unit.href.startsWith("/origin?")}
       isAvailableBay={available}
       onExpandBay={onOpenBay}
     />

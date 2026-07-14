@@ -3,8 +3,8 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slots 0–3: proven in-tile partners. Slots 4–13: Founder-selected embed platforms.
- * Slots 14–28: Hugging Face Spaces (iframe-friendly). Slot 29: USJET Origin.
+ * Slots 0–3: proven in-tile partners. Mid floor: Founder embed platforms + support/analytics.
+ * Slots 14–28: Hugging Face Spaces (iframe-friendly) with embed-partner swaps on select bays.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
@@ -34,14 +34,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "2",
     slot: 2,
-    name: "Replit Agent",
+    name: "Embeddable",
     callsign: "RAIDER-03",
-    domain: "replit.com",
-    href: "https://replit.com",
+    domain: "embeddable.com",
+    href: "https://embeddable.com",
     status: "active",
     aura: "idle",
     aircraftType: "b21",
-    aiName: "Replit Agent",
+    aiName: "Embeddable",
+    fleetRole:
+      "Native (not iframe) data dashboards and AI chat for developers — one tag, no third-party cookie friction.",
   },
   {
     id: "3",
@@ -82,26 +84,30 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "6",
     slot: 6,
-    name: "Stack AI",
+    name: "Featurebase",
     callsign: "SALTY-07",
-    domain: "stackai.com",
-    href: "https://www.stackai.com",
+    domain: "featurebase.app",
+    href: "https://www.featurebase.app",
     status: "active",
     aura: "idle",
     aircraftType: "x47b",
-    aiName: "Stack AI",
+    aiName: "Featurebase",
+    fleetRole:
+      "Fibi AI messenger widget — chat, help center, and feedback management embedded in minutes for support dashboards.",
   },
   {
     id: "7",
     slot: 7,
-    name: "Voiceflow",
+    name: "ChatBot.com",
     callsign: "ORBIT-08",
-    domain: "voiceflow.com",
-    href: "https://www.voiceflow.com",
+    domain: "chatbot.com",
+    href: "https://www.chatbot.com",
     status: "active",
     aura: "idle",
     aircraftType: "x37b",
-    aiName: "Voiceflow",
+    aiName: "ChatBot.com",
+    fleetRole:
+      "Unified customer-service and lead-capture workspace; embed across channels with conversation context across tabs.",
   },
   {
     id: "8",
@@ -118,14 +124,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "9",
     slot: 9,
-    name: "Dify.ai",
+    name: "UnifyApps",
     callsign: "PCA-10",
-    domain: "dify.ai",
-    href: "https://dify.ai",
+    domain: "unifyapps.com",
+    href: "https://www.unifyapps.com",
     status: "active",
     aura: "idle",
     aircraftType: "pca",
-    aiName: "Dify.ai",
+    aiName: "UnifyApps",
+    fleetRole:
+      "Business automation embed via iframe + postMessage so the dashboard stays synced with the host site.",
   },
   {
     id: "10",
@@ -142,14 +150,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "11",
     slot: 11,
-    name: "Lindy.ai",
+    name: "OpenAssistantGPT",
     callsign: "LANCER-12",
-    domain: "lindy.ai",
-    href: "https://www.lindy.ai",
+    domain: "openassistantgpt.io",
+    href: "https://www.openassistantgpt.io",
     status: "active",
     aura: "idle",
     aircraftType: "b1",
-    aiName: "Lindy.ai",
+    aiName: "OpenAssistantGPT",
+    fleetRole:
+      "Embed AI chatbots trained on your documentation, with built-in customization for dynamic messaging.",
   },
   {
     id: "12",
@@ -166,14 +176,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "13",
     slot: 13,
-    name: "Amazon Q Business",
-    callsign: "RAPTOR-01",
-    domain: "aws.amazon.com",
-    href: "https://aws.amazon.com/q/business/",
+    name: "Common Ninja",
+    callsign: "RAPTOR-14",
+    domain: "commoninja.com",
+    href: "https://www.commoninja.com",
     status: "active",
     aura: "idle",
     aircraftType: "f22",
-    aiName: "Amazon Q Business",
+    aiName: "Common Ninja",
+    fleetRole:
+      "Plug-and-play widget marketplace — AI chatbots, tickers, and interactive players for React and site builders.",
   },
   {
     id: "14",
@@ -262,14 +274,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "21",
     slot: 21,
-    name: "InstantID",
+    name: "ThoughtSpot Everywhere",
     callsign: "GHOSTBAT-22",
-    domain: "instantx-instantid.hf.space",
-    href: "https://instantx-instantid.hf.space",
+    domain: "thoughtspot.com",
+    href: "https://www.thoughtspot.com/product/everywhere",
     status: "active",
     aura: "idle",
     aircraftType: "mq28",
-    aiName: "InstantID",
+    aiName: "ThoughtSpot Everywhere",
+    fleetRole:
+      "Industry-standard conversational analytics embed — complex data that feels native inside SaaS product UI.",
   },
   {
     id: "22",
@@ -286,26 +300,30 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "23",
     slot: 23,
-    name: "OmniVoice",
+    name: "Yellow.ai",
     callsign: "SENTINEL-24",
-    domain: "k2-fsa-omnivoice.hf.space",
-    href: "https://k2-fsa-omnivoice.hf.space",
+    domain: "yellow.ai",
+    href: "https://yellow.ai",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "OmniVoice",
+    aiName: "Yellow.ai",
+    fleetRole:
+      "Enterprise multilingual and voice-ready AI embedding across models at high scale.",
   },
   {
     id: "24",
     slot: 24,
-    name: "Whisper ASR",
+    name: "Forethought",
     callsign: "GLOBAL-25",
-    domain: "openai-whisper.hf.space",
-    href: "https://openai-whisper.hf.space",
+    domain: "forethought.ai",
+    href: "https://forethought.ai",
     status: "active",
     aura: "idle",
     aircraftType: "globalHawk",
-    aiName: "Whisper",
+    aiName: "Forethought",
+    fleetRole:
+      "Support AI agent with ticket history and semantic search — complex workflows in a compact embed.",
   },
   {
     id: "25",
@@ -358,14 +376,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "29",
     slot: 29,
-    name: "USJet Origin",
+    name: "Ada",
     callsign: "SOVEREIGN-30",
-    domain: "usjet.ai/origin",
-    href: "/origin",
+    domain: "ada.cx",
+    href: "https://www.ada.cx",
     status: "active",
-    aura: "listening",
+    aura: "idle",
     aircraftType: "x59",
-    aiName: "USJet Origin",
+    aiName: "Ada",
+    fleetRole:
+      "Reasoning-engine customer service for mid-market automation — polished widget with its own session management.",
   },
 ];
 

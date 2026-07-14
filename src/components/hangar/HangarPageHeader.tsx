@@ -12,9 +12,9 @@ import { FLEET_UNIT_COUNT } from "../../types/fleet";
 
 /** SEO / document meta — keep benefit-led and accurate to free-tab policy. */
 const HANGAR_META_DESCRIPTION =
-  "USJET Hangar workbench: open the same Fleet AI websites in-page. First four tabs free; Flight Pass unlocks the rest of the simultaneous workbench.";
+  "USJET Hangar workbench: embed-first AI cockpit bays. First four tabs free; Flight Pass unlocks the rest of the simultaneous workbench.";
 
-const HANGAR_HERO_LEDE = `Click a bay to expand the same Fleet AI into a live cockpit tab on this page. First ${HANGAR_BAY_LIMIT_FREE} tabs are free — Flight Pass clears the rest.`;
+const HANGAR_HERO_LEDE = `Click a bay to expand an embed-friendly AI into a live cockpit tab. First ${HANGAR_BAY_LIMIT_FREE} tabs are free — Flight Pass clears the rest.`;
 
 type HangarPageHeaderProps = {
   session: MemberSession | null;

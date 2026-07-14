@@ -43,6 +43,25 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "heygen.com",
     "replit.com",
     "otter.ai",
+    "pickaxe.co",
+    "studio.pickaxe.co",
+    "customgpt.ai",
+    "app.customgpt.ai",
+    "stackai.com",
+    "stack.ai",
+    "voiceflow.com",
+    "creator.voiceflow.com",
+    "botpress.com",
+    "cdn.botpress.cloud",
+    "dify.ai",
+    "cloud.dify.ai",
+    "udify.app",
+    "mindstudio.ai",
+    "app.mindstudio.ai",
+    "lindy.ai",
+    "usefini.com",
+    "fini.ai",
+    "aws.amazon.com",
     "openai-whisper.hf.space",
     "stabilityai-stable-diffusion-3-5-large-turbo.hf.space",
     "stabilityai-stable-diffusion-3-5-medium.hf.space",
@@ -82,6 +101,13 @@ export function isHangarIframeBlocked(url: string): boolean {
 
   if (HANGAR_IFRAME_AUTO_EMBED_HOSTS.has(host) || isHfSpace(host)) {
     return false;
+  }
+
+  // Allowlisted partner roots (e.g. aws.amazon.com/q/…) — check base host match.
+  for (const allowed of HANGAR_IFRAME_AUTO_EMBED_HOSTS) {
+    if (host === allowed || host.endsWith(`.${allowed}`)) {
+      return false;
+    }
   }
 
   if (HANGAR_IFRAME_BLOCKED_HOSTS.has(host)) {

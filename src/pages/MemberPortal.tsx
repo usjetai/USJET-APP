@@ -77,7 +77,7 @@ export default function MemberPortal() {
       </div>
 
       <p className="member-portal__footer">
-        <Link to="/hangar" className="member-portal__link">
+        <Link to="/" className="member-portal__link">
           Hangar
         </Link>
         {" · "}

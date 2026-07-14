@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 type UsjetReturnButtonProps = {
-  /** Internal USJET route — Fleet `/`, Hangar `/hangar`, etc. */
+  /** Internal USJET route — Hangar `/`, Fleet `/fleet`, etc. */
   to?: string;
   /** Collapse in-tile bay without route change (Hangar workbench). */
   onClick?: () => void;

@@ -40,7 +40,8 @@ import { useMemberAuth } from "../context/MemberAuthContext";
 type ChatTurn = { role: "user" | "assistant"; content: string };
 
 const COMMAND_ROUTES = [
-  { to: "/hangar", label: "Hangar" },
+  { to: "/", label: "Hangar" },
+  { to: "/fleet", label: "Fleet" },
   { to: "/intel", label: "Intel Pulse" },
   { to: "/founder", label: "Founder" },
   { to: "/special", label: "Founder Special" },

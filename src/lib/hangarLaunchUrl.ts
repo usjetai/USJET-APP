@@ -8,5 +8,5 @@ export function resolveHangarUnitHref(unit: FleetUnit): string {
   }
 
   const host = unit.domain.replace(/^https?:\/\//i, "").replace(/\/$/, "");
-  return host ? `https://${host}` : "/hangar";
+  return host ? `https://${host}` : "/";
 }

@@ -24,9 +24,9 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     id: "command",
     title: "Command deck",
     routes: [
-      { path: "/", label: "Fleet", hint: "Runway" },
+      { path: "/", label: "Hangar", hint: "Home · workbench" },
+      { path: "/fleet", label: "Fleet", hint: "Runway" },
       { path: "/hired-hud", label: "USJET House", hint: "Live roster monitor" },
-      { path: "/hangar", label: "Hangar", hint: "Workbench" },
       { path: "/intel", label: "Intel", hint: "Pulse board" },
       { path: "/origin", label: "Origin", hint: "Aura command" },
     ],

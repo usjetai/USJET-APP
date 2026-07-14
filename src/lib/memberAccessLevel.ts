@@ -7,11 +7,12 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Guest-only surface — Fleet (10 free bays), Hangar (4 free tabs), Founder, Stripe login, fleet cockpit handoff. */
+/** Guest-only surface — Hangar home (4 free tabs), Fleet (10 free bays), Founder, Stripe login, fleet cockpit handoff. */
 export const GUEST_PUBLIC_ROUTES = [
   "/",
   "/hired-hud",
   "/hangar",
+  "/fleet",
   "/founder",
   "/member/login",
   "/login",
@@ -44,13 +45,14 @@ export const GUEST_PUBLIC_ROUTES = [
 
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Fleet (10 free AI bays), Hangar (4 free tabs), Founder, member login, fleet cockpit handoff.
+ * 0 = public (guest): Hangar home (4 free tabs), Fleet (10 free AI bays), Founder, member login, fleet cockpit handoff.
  * 1 = Flight Pass+: all 30 fleet AIs, full Hangar tabs, Member Portal, Founder Special checkout.
  * 2 = Hangar Pro+: Intel.
  * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
  */
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
+  "/fleet": 0,
   "/hired-hud": 0,
   "/founder": 0,
   "/sos": 0,
@@ -151,13 +153,13 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
         "The Member Portal is the only paid room during the full-site preview. Pay $5.00/mo for Member Deck clearance on Stripe, then verify with billing email and your access sentence. Flight Pass ($19.90/mo) and higher tiers include the portal plus Hangar, Intel, and more.",
     };
   }
-  if (normalized === "/hangar") {
+  if (normalized === "/" || normalized === "/hangar") {
     return {
       title: "Hangar tabs locked — Flight Pass required",
       body: `First 4 hangar tabs are free. ${tierLabel} (${tierPrice}) unlocks the rest of the workbench.`,
     };
   }
-  if (normalized === "/") {
+  if (normalized === "/fleet") {
     return {
       title: "Fleet runway locked — Flight Pass required",
       body: `${tierLabel} (${tierPrice}) unlocks the full 30-AI fleet runway. Pay on Stripe, verify on Member Login, then launch every bay from one cockpit.`,

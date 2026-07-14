@@ -8,14 +8,15 @@ type CockpitReturnBarProps = {
 };
 
 const RETURN_LABELS: Record<string, string> = {
+  "/": "RETURN TO HANGAR",
   "/hangar": "RETURN TO HANGAR",
+  "/fleet": "RETURN TO FLEET",
   "/intel": "RETURN TO INTEL",
   "/origin": "RETURN TO ORIGIN",
-  "/": "RETURN TO FLEET",
 };
 
 export default function CockpitReturnBar({
-  returnTo = "/hangar",
+  returnTo = "/",
   bay = null,
   partnerLabel = null,
 }: CockpitReturnBarProps) {

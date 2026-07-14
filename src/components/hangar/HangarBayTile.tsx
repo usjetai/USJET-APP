@@ -27,7 +27,7 @@ export default function HangarBayTile({ unit, onOpenBay }: HangarBayTileProps) {
       href={resolveHangarUnitHref(unit)}
       slot={unit.slot}
       systemPrompt={unit.systemPrompt}
-      returnTo="/hangar"
+      returnTo="/"
       surface="hangar"
       isCommandBay={unit.href === "/origin" || unit.slot === 29}
       isAvailableBay={available}

@@ -62,7 +62,7 @@ export default function FleetCard({
   const hasExternalPartner = /^https?:\/\//i.test(resolvedHref);
   const isRunway = surface === "fleet";
   const rawPartnerUrl = fleetLaunchUrl(domain, href, slot);
-  const partnerLaunchUrl = isRunway ? rawPartnerUrl : integratedLaunchUrl(domain, href, slot, { returnTo: "/", label: name, callName: callsign });
+  const partnerLaunchUrl = isRunway ? rawPartnerUrl : integratedLaunchUrl(domain, href, slot, { returnTo: "/fleet", label: name, callName: callsign });
   const launchUrl =
     isAvailableBay && !hasExternalPartner ? (jetFighterPagePath ?? "#") : partnerLaunchUrl;
   const isOriginLaunch = partnerLaunchUrl === "/origin" || partnerLaunchUrl.startsWith("/origin?");

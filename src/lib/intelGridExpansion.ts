@@ -61,12 +61,12 @@ export function hangarWorkbenchIframeSrc(rawSrc: string, options?: HangarWorkben
 
   const safe = sanitizeCockpitSrc(rawSrc);
   if (!safe) {
-    return "/hangar";
+    return "/";
   }
 
   const params = new URLSearchParams({
     src: safe,
-    return: options?.returnTo ?? "/hangar",
+    return: options?.returnTo ?? "/",
     embed: "hangar",
   });
 

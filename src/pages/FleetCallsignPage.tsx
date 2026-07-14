@@ -135,7 +135,7 @@ export default function FleetCallsignPage() {
                   >
                     Launch {entry.name}
                   </FleetLaunchLink>
-                  <Link to="/" className="fleet-callsign-page__secondary btn-glass glass-effect-interactive">
+                  <Link to="/fleet" className="fleet-callsign-page__secondary btn-glass glass-effect-interactive">
                     View runway
                   </Link>
                 </>

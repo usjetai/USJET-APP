@@ -27,7 +27,7 @@ export default function MemberLogin() {
       {blockedRoute ? (
         <p className="member-login-page__blocked-banner" role="status">
           <strong>{blockedRoute}</strong> requires paid Stripe clearance. Pay below or log in after checkout.
-          {isSitePreviewPromoActive() ? ` ${SITE_PREVIEW_MEMBER_NOTE}` : " Guests may browse Fleet and Founder only."}
+          {isSitePreviewPromoActive() ? ` ${SITE_PREVIEW_MEMBER_NOTE}` : " Guests may browse Hangar, Fleet, and Founder."}
         </p>
       ) : null}
 

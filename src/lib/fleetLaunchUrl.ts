@@ -150,7 +150,7 @@ export function wrapExternalInCockpit(rawUrl: string, options?: CockpitWrapOptio
   }
 
   const params = new URLSearchParams({ src: safe });
-  const returnTo = options?.returnTo ?? "/hangar";
+  const returnTo = options?.returnTo ?? "/";
   params.set("return", returnTo);
 
   const bayId = fleetBayIdFromSlot(options?.slot);

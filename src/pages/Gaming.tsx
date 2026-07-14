@@ -225,7 +225,7 @@ export default function Gaming() {
               </p>
             )}
             <p className="gaming-page__kit-footer">
-              <Link to="/hangar" className="gaming-page__link">
+              <Link to="/" className="gaming-page__link">
                 Enter Hangar
               </Link>
               {" · "}

@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { OriginLimitedOfferProvider } from "./context/OriginLimitedOfferContext";
 import { SilentHangarProvider } from "./context/SilentHangarContext";
 import { UsjetExternalNavigationProvider } from "./context/UsjetExternalNavigationContext";
@@ -82,16 +82,17 @@ function AnimatedRoutes() {
       <PageTransition key={location.pathname} routeKey={location.pathname}>
         <Suspense fallback={<RouteFallback />}>
           <Routes location={location}>
-            <Route path="/" element={<Fleet />} />
-            <Route path="/login" element={<MemberLogin />} />
             <Route
-              path="/hangar"
+              path="/"
               element={
-                <TierRouteGate path="/hangar" pageLabel="Hangar">
+                <TierRouteGate path="/" pageLabel="Hangar">
                   <Hangar />
                 </TierRouteGate>
               }
             />
+            <Route path="/fleet" element={<Fleet />} />
+            <Route path="/hangar" element={<Navigate to="/" replace />} />
+            <Route path="/login" element={<MemberLogin />} />
             <Route
               path="/intel"
               element={

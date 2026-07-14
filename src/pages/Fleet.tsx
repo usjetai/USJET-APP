@@ -144,7 +144,7 @@ const Fleet = () => {
                   href={locked ? flightPassUrl : resolveFleetUnitHref(unit)}
                   slot={unit.slot}
                   systemPrompt={unit.systemPrompt}
-                  returnTo="/"
+                  returnTo="/fleet"
                   surface="fleet"
                   isCommandBay={unit.href === "/origin" || unit.slot === 29}
                   isAvailableBay={available}

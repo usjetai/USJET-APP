@@ -46,7 +46,7 @@ const FEATURE_CARDS: FeatureCard[] = [
     imageSrc: "/founder/IMG_0517.png",
     imageAlt: "The Fleet — cinematic machine panel",
     silhouetteType: "f35",
-    to: "/hangar",
+    to: "/",
     tintClass: "glass-tint-cyan",
   },
   {

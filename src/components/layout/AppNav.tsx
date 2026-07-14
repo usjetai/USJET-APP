@@ -22,8 +22,8 @@ const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
 });
 
 const NAV_LINKS = [
-  { to: "/", label: "Fleet" },
-  { to: "/hangar", label: "Hangar" },
+  { to: "/", label: "Hangar" },
+  { to: "/fleet", label: "Fleet" },
   { to: "/intel", label: "Intel" },
   { to: "/founder", label: "Founder" },
   { to: "/origin", label: "Origin" },

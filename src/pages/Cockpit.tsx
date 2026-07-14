@@ -66,6 +66,24 @@ export default function Cockpit() {
   const displayName = partnerLabel ?? "partner module";
 
   if (isHangarEmbed) {
+    if (iframeBlocked) {
+      return (
+        <div className="cockpit-shell cockpit-shell--hangar-embed cockpit-shell--hangar-handoff" style={bayAccentStyle}>
+          <div className="cockpit-hangar-handoff">
+            <p className="cockpit-hangar-handoff__kicker">Hangar bay · handoff</p>
+            <h1 className="cockpit-hangar-handoff__title">{displayName}</h1>
+            <p className="cockpit-hangar-handoff__body">
+              This AI blocks in-page embedding. Open it in this window — browser back or the USJET return control brings
+              you to Hangar.
+            </p>
+            <a className="cockpit-hangar-handoff__cta" href={src} data-usjet-external-leak="true">
+              Open {displayName}
+            </a>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="cockpit-shell cockpit-shell--hangar-embed" style={bayAccentStyle}>
         <iframe

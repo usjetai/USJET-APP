@@ -16474,6 +16474,69 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   border: 0;
 }
 
+.cockpit-shell--hangar-handoff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cockpit-hangar-handoff {
+  width: min(100%, 22rem);
+  text-align: center;
+}
+
+.cockpit-hangar-handoff__kicker {
+  margin: 0;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(34, 211, 238, 0.75);
+}
+
+.cockpit-hangar-handoff__title {
+  margin: 0.45rem 0 0;
+  font-family: theme("fontFamily.aviation");
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.cockpit-hangar-handoff__body {
+  margin: 0.65rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.cockpit-hangar-handoff__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  min-height: 2.5rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  background: linear-gradient(165deg, rgba(14, 165, 233, 0.45), rgba(8, 47, 73, 0.85));
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ecfeff;
+}
+
+.cockpit-hangar-handoff__cta:hover,
+.cockpit-hangar-handoff__cta:focus-visible {
+  border-color: rgba(103, 232, 249, 0.75);
+  color: #fff;
+}
+
 .cockpit-return-bar {
   position: relative;
   z-index: 210;

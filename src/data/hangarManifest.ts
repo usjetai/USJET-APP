@@ -3,21 +3,23 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slots 0–3: proven in-tile partners. Mid floor: Founder embed platforms + support/analytics.
- * Slots 14–28: Hugging Face Spaces (iframe-friendly) with embed-partner swaps on select bays.
+ * Slot 0 leads with Yellow.ai. Proven in-tile partners + HF Spaces fill the floor.
+ * Runway sits lower (slot 23). Slot 29: USJET Origin text chat.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Runway",
+    name: "Yellow.ai",
     callsign: "BLACKBIRD-01",
-    domain: "runway.com",
-    href: "https://runway.com",
+    domain: "yellow.ai",
+    href: "https://yellow.ai",
     status: "active",
     aura: "idle",
-    aircraftType: "darkstar",
-    aiName: "Runway",
+    aircraftType: "rq180",
+    aiName: "Yellow.ai",
+    fleetRole:
+      "Enterprise multilingual and voice-ready AI embedding across models at high scale.",
   },
   {
     id: "1",
@@ -34,16 +36,14 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "2",
     slot: 2,
-    name: "Embeddable",
+    name: "Replit Agent",
     callsign: "RAIDER-03",
-    domain: "embeddable.com",
-    href: "https://embeddable.com",
+    domain: "replit.com",
+    href: "https://replit.com",
     status: "active",
     aura: "idle",
     aircraftType: "b21",
-    aiName: "Embeddable",
-    fleetRole:
-      "Native (not iframe) data dashboards and AI chat for developers — one tag, no third-party cookie friction.",
+    aiName: "Replit Agent",
   },
   {
     id: "3",
@@ -98,16 +98,14 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "7",
     slot: 7,
-    name: "ChatBot.com",
+    name: "Voiceflow",
     callsign: "ORBIT-08",
-    domain: "chatbot.com",
-    href: "https://www.chatbot.com",
+    domain: "voiceflow.com",
+    href: "https://www.voiceflow.com",
     status: "active",
     aura: "idle",
     aircraftType: "x37b",
-    aiName: "ChatBot.com",
-    fleetRole:
-      "Unified customer-service and lead-capture workspace; embed across channels with conversation context across tabs.",
+    aiName: "Voiceflow",
   },
   {
     id: "8",
@@ -124,16 +122,14 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "9",
     slot: 9,
-    name: "UnifyApps",
+    name: "Dify.ai",
     callsign: "PCA-10",
-    domain: "unifyapps.com",
-    href: "https://www.unifyapps.com",
+    domain: "dify.ai",
+    href: "https://dify.ai",
     status: "active",
     aura: "idle",
     aircraftType: "pca",
-    aiName: "UnifyApps",
-    fleetRole:
-      "Business automation embed via iframe + postMessage so the dashboard stays synced with the host site.",
+    aiName: "Dify.ai",
   },
   {
     id: "10",
@@ -274,16 +270,14 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "21",
     slot: 21,
-    name: "ThoughtSpot Everywhere",
+    name: "InstantID",
     callsign: "GHOSTBAT-22",
-    domain: "thoughtspot.com",
-    href: "https://www.thoughtspot.com/product/everywhere",
+    domain: "instantx-instantid.hf.space",
+    href: "https://instantx-instantid.hf.space",
     status: "active",
     aura: "idle",
     aircraftType: "mq28",
-    aiName: "ThoughtSpot Everywhere",
-    fleetRole:
-      "Industry-standard conversational analytics embed — complex data that feels native inside SaaS product UI.",
+    aiName: "InstantID",
   },
   {
     id: "22",
@@ -300,30 +294,26 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "23",
     slot: 23,
-    name: "Yellow.ai",
+    name: "Runway",
     callsign: "SENTINEL-24",
-    domain: "yellow.ai",
-    href: "https://yellow.ai",
+    domain: "runway.com",
+    href: "https://runway.com",
     status: "active",
     aura: "idle",
-    aircraftType: "rq180",
-    aiName: "Yellow.ai",
-    fleetRole:
-      "Enterprise multilingual and voice-ready AI embedding across models at high scale.",
+    aircraftType: "darkstar",
+    aiName: "Runway",
   },
   {
     id: "24",
     slot: 24,
-    name: "Forethought",
+    name: "Whisper ASR",
     callsign: "GLOBAL-25",
-    domain: "forethought.ai",
-    href: "https://forethought.ai",
+    domain: "openai-whisper.hf.space",
+    href: "https://openai-whisper.hf.space",
     status: "active",
     aura: "idle",
     aircraftType: "globalHawk",
-    aiName: "Forethought",
-    fleetRole:
-      "Support AI agent with ticket history and semantic search — complex workflows in a compact embed.",
+    aiName: "Whisper",
   },
   {
     id: "25",
@@ -376,16 +366,15 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "29",
     slot: 29,
-    name: "Ada",
+    name: "USJet Origin",
     callsign: "SOVEREIGN-30",
-    domain: "ada.cx",
-    href: "https://www.ada.cx",
+    domain: "usjet.ai/origin",
+    href: "/origin",
     status: "active",
-    aura: "idle",
+    aura: "listening",
     aircraftType: "x59",
-    aiName: "Ada",
-    fleetRole:
-      "Reasoning-engine customer service for mid-market automation — polished widget with its own session management.",
+    aiName: "USJet Origin",
+    fleetRole: "USJET Origin text chat — AI and fleet questions inside the Hangar.",
   },
 ];
 

@@ -1,6 +1,6 @@
 /**
  * Partners that send X-Frame-Options / CSP frame-ancestors blocking embed.
- * Hangar bays gate these behind an in-tile Launch tap (iframe src set on click).
+ * Hangar bays show an External Launch CTA instead of an empty iframe.
  *
  * Hosts verified via HEAD — June 2026 fleet manifest.
  */
@@ -90,4 +90,14 @@ export function isHangarIframeBlocked(url: string): boolean {
 
   // Unknown external partner — gate behind Launch until verified.
   return true;
+}
+
+/** Partner compatibility for Hangar cockpit tiles. */
+export type HangarPartnerCompatibility = "native" | "external" | "internal";
+
+export function getHangarPartnerCompatibility(url: string): HangarPartnerCompatibility {
+  if (!url.trim() || url.startsWith("/")) {
+    return "internal";
+  }
+  return isHangarIframeBlocked(url) ? "external" : "native";
 }

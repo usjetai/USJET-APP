@@ -16548,6 +16548,114 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   background: rgba(2, 8, 23, 0.72);
 }
 
+.hangar-bay-tile {
+  position: relative;
+  height: 100%;
+}
+
+.hangar-bay-tile__compat,
+.hangar-tool-workbench__compat {
+  position: absolute;
+  z-index: 6;
+  top: 0.45rem;
+  left: 0.45rem;
+}
+
+.hangar-tool-workbench__compat {
+  top: 0.55rem;
+  left: 0.55rem;
+}
+
+.hangar-partner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  max-width: calc(100% - 2.75rem);
+  padding: 0.22rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hangar-partner-badge--native {
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  background: rgba(6, 78, 59, 0.72);
+  color: rgba(167, 243, 208, 0.95);
+}
+
+.hangar-partner-badge--external {
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  background: rgba(69, 26, 3, 0.72);
+  color: rgba(253, 230, 138, 0.95);
+}
+
+.hangar-tool-workbench--external {
+  background: rgba(2, 8, 23, 0.78);
+}
+
+.hangar-tile-external {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 100%;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.hangar-tile-external__warning {
+  margin: 0;
+  max-width: 22rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(252, 211, 77, 0.92);
+}
+
+.hangar-tile-external__copy {
+  margin: 0;
+  max-width: 22rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.hangar-tile-external__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  min-width: min(100%, 15rem);
+  margin-top: 0.25rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  background: linear-gradient(165deg, rgba(14, 165, 233, 0.5), rgba(8, 47, 73, 0.9));
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ecfeff;
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.18);
+}
+
+.hangar-tile-external__btn:hover,
+.hangar-tile-external__btn:focus-visible {
+  border-color: rgba(103, 232, 249, 0.8);
+  color: #fff;
+}
+
 .cockpit-return-bar {
   position: relative;
   z-index: 210;

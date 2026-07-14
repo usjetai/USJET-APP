@@ -7,7 +7,7 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Guest-only surface — Hangar home (4 free tabs), Fleet (10 free bays), Founder, Stripe login, fleet cockpit handoff. */
+/** Guest-only surface — Hangar home (6 free tabs), Fleet (10 free bays), Founder, Stripe login, fleet cockpit handoff. */
 export const GUEST_PUBLIC_ROUTES = [
   "/",
   "/hired-hud",
@@ -45,7 +45,7 @@ export const GUEST_PUBLIC_ROUTES = [
 
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Hangar home (4 free tabs), Fleet (10 free AI bays), Founder, member login, fleet cockpit handoff.
+ * 0 = public (guest): Hangar home (6 free tabs), Fleet (10 free AI bays), Founder, member login, fleet cockpit handoff.
  * 1 = Flight Pass+: all 30 fleet AIs, full Hangar tabs, Member Portal, Founder Special checkout.
  * 2 = Hangar Pro+: Intel.
  * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
@@ -156,7 +156,7 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
   if (normalized === "/" || normalized === "/hangar") {
     return {
       title: "Hangar tabs locked — Flight Pass required",
-      body: `First 4 hangar tabs are free. ${tierLabel} (${tierPrice}) unlocks the rest of the workbench.`,
+      body: `First ${HANGAR_BAY_LIMIT_FREE} hangar tabs are free. ${tierLabel} (${tierPrice}) unlocks the rest of the workbench.`,
     };
   }
   if (normalized === "/fleet") {
@@ -381,8 +381,8 @@ export function isOriginCustomerServiceEntry(searchOrPath: string): boolean {
 }
 
 /** Hangar workbench simultaneous bay caps by clearance rank (0 = free guest tabs). */
-export const HANGAR_BAY_LIMIT_FREE = 4;
-/** @deprecated Prefer HANGAR_BAY_LIMIT_FREE — guests get four free tabs. */
+export const HANGAR_BAY_LIMIT_FREE = 6;
+/** @deprecated Prefer HANGAR_BAY_LIMIT_FREE — guests get six free tabs. */
 export const HANGAR_BAY_LIMIT_TEASER = HANGAR_BAY_LIMIT_FREE;
 /** Flight Pass+ can open every hangar bay at once (full 30-unit floor). */
 export const HANGAR_BAY_LIMIT_FLIGHT_PASS = FLEET_UNIT_COUNT;

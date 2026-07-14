@@ -198,7 +198,7 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   paymentModel:
     "Stripe ONLY — Flight Pass, Hangar Pro, Enterprise Commander. No alternate processors, no complication.",
   guestPublicRoutes: {
-    hangar: "/ — home for everyone (first 4 tabs free; remaining tabs unlock at Flight Pass $19.90/mo). /hangar redirects here.",
+    hangar: "/ — home for everyone (first 6 tabs free; remaining tabs unlock at Flight Pass $19.90/mo). /hangar redirects here.",
     fleet: "/fleet — everyone (10 free AI bays; 20 unlock at Flight Pass $19.90/mo)",
     founder: "/founder — everyone",
     sos: "/sos — site operating support (guest)",
@@ -211,14 +211,14 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   },
   tierMatrix: {
     guest:
-      "Hangar home (4 free tabs) + Fleet (10 free AI bays) + Founder + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + /100k + login/cockpit handoff — no Intel board, Origin, Member, or Special",
+      "Hangar home (6 free tabs) + Fleet (10 free AI bays) + Founder + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + /100k + login/cockpit handoff — no Intel board, Origin, Member, or Special",
     tier1FlightPass: "All 30 fleet AIs + Hangar (full tabs) + Member Portal + Special — no Intel, no Origin",
     tier2HangarPro: "Tier 1 + Intel — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",
     founderGodMode: "USJET-AMEER — all routes, all bays",
   },
   fleetMessage:
-    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; Flight Pass unlocks fleet bays eleven through thirty and the rest of the Hangar tabs beyond the first four free. Guests get ten free fleet AIs, four Hangar tabs, Founder, and the login runway — everything else bills through the $19.90 extraction port.",
+    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; Flight Pass unlocks fleet bays eleven through thirty and the rest of the Hangar tabs beyond the first six free. Guests get ten free fleet AIs, six Hangar tabs, Founder, and the login runway — everything else bills through the $19.90 extraction port.",
 } as const;
 
 export const DIRECT_LANDING_PROTOCOL = {

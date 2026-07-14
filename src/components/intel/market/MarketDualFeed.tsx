@@ -1,11 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { getIntelSlotMarket } from "../../../data/intelCoinbaseAssets";
 import { useIntelLiveMarket } from "../../../context/IntelLiveMarketContext";
-import { sparklinePointsToPath } from "../../../lib/intelMarketFeeds";
 import { formatTickerChange } from "../../../lib/intelWings";
 import SignalPulse from "../SignalPulse";
 import CoinbaseLiveCandles from "../CoinbaseLiveCandles";
-import { MARKET_WORKBENCH_BTC_POLL_MS, marketWorkbenchNyseEmbed } from "./marketWorkbench.config";
 
 function formatUsd(n: number): string {
   return new Intl.NumberFormat("en-US", {
@@ -39,24 +37,14 @@ export type MarketDualFeedProps = {
 };
 
 /**
- * Expanded Intel workbench: Coinbase live spot + candles (left), NYSE symbol embed (right).
+ * Expanded Intel workbench dual pane.
+ * Hold line (May 2026): reserved partnership lanes — no live Coinbase/NYSE API feeds until Titans pay.
  */
 export default function MarketDualFeed({ seedSlot }: MarketDualFeedProps) {
   const market = getIntelSlotMarket(seedSlot);
-  const { quotes, candles, refreshQuotes, error } = useIntelLiveMarket();
+  const { quotes, holdLine } = useIntelLiveMarket();
   const quote = quotes[market.coinbaseProductId];
-  const coinCandles = candles[market.coinbaseProductId] ?? [];
   const [nyClock, setNyClock] = useState(() => formatNyExchangeClock(new Date()));
-
-  useEffect(() => {
-    void refreshQuotes();
-    const id = window.setInterval(() => {
-      void refreshQuotes();
-    }, MARKET_WORKBENCH_BTC_POLL_MS);
-    return () => {
-      window.clearInterval(id);
-    };
-  }, [refreshQuotes]);
 
   useEffect(() => {
     const tick = () => {
@@ -69,48 +57,46 @@ export default function MarketDualFeed({ seedSlot }: MarketDualFeedProps) {
     };
   }, []);
 
-  const sparkCloses = useMemo(() => coinCandles.map((row) => row.close), [coinCandles]);
-  const polyline = sparklinePointsToPath(sparkCloses);
   const change = quote?.changePct24h ?? null;
   const changeUp = change !== null && change > 0;
   const changeDown = change !== null && change < 0;
-  const nyseEmbed = marketWorkbenchNyseEmbed(market.nyseTradingViewSymbol);
+  const onHold = holdLine && !quote;
 
   return (
     <div className="intel-market-dual">
       <section
         className="intel-market-dual__pane intel-market-dual__pane--btc"
-        aria-label={`Coinbase ${market.coinbaseLabel} spot and candles`}
+        aria-label={
+          onHold
+            ? `${market.coinbaseLabel} reserved crypto partnership lane`
+            : `Coinbase ${market.coinbaseLabel} spot`
+        }
       >
         <div className="intel-market-dual__pulse" aria-hidden>
           <SignalPulse slot={seedSlot} />
         </div>
         <div className="intel-market-dual__grid" aria-hidden />
         <div className="intel-market-dual__content">
-          <p className="intel-market-dual__eyebrow">Coinbase · {market.coinbaseLabel}</p>
+          <p className="intel-market-dual__eyebrow">
+            {onHold ? `Reserved · ${market.coinbaseLabel}` : `Coinbase · ${market.coinbaseLabel}`}
+          </p>
           <p className="intel-market-dual__instrument intel-market-dual__instrument--hero">
-            {quote ? formatUsd(quote.priceUsd) : error ? "— — —" : "· · ·"}
+            {onHold ? "HOLD" : quote ? formatUsd(quote.priceUsd) : "— — —"}
           </p>
           <p
             className={[
               "intel-market-dual__instrument intel-market-dual__instrument--delta",
-              change === null ? "intel-market-dual__instrument--muted" : "",
+              onHold || change === null ? "intel-market-dual__instrument--muted" : "",
               changeUp ? "intel-market-dual__instrument--up" : "",
               changeDown ? "intel-market-dual__instrument--down" : "",
             ]
               .filter(Boolean)
               .join(" ")}
           >
-            24h {change === null ? "—" : formatTickerChange(change)}
+            {onHold ? "Awaiting Titan partnership" : `24h ${change === null ? "—" : formatTickerChange(change)}`}
           </p>
           <div className="intel-market-dual__chart intel-market-dual__chart--coinbase">
-            {polyline ? (
-              <svg className="intel-market-dual__spark" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden>
-                <polyline className="intel-market-dual__spark-line" points={polyline} />
-              </svg>
-            ) : (
-              <CoinbaseLiveCandles slot={seedSlot} candleCount={12} className="intel-market-dual__candles-live" />
-            )}
+            <CoinbaseLiveCandles slot={seedSlot} candleCount={12} className="intel-market-dual__candles-live" />
           </div>
         </div>
       </section>
@@ -119,25 +105,22 @@ export default function MarketDualFeed({ seedSlot }: MarketDualFeedProps) {
 
       <section
         className="intel-market-dual__pane intel-market-dual__pane--nyse"
-        aria-label={`NYSE ${market.nyseSymbol} overview`}
+        aria-label={`${market.nyseSymbol} reserved NY exchange lane`}
       >
         <div className="intel-market-dual__pulse" aria-hidden>
           <SignalPulse slot={seedSlot + 17} />
         </div>
         <div className="intel-market-dual__grid" aria-hidden />
         <div className="intel-market-dual__content intel-market-dual__content--nyse">
-          <p className="intel-market-dual__eyebrow">Exchange feed · NYSE</p>
+          <p className="intel-market-dual__eyebrow">NY lane · reserved</p>
           <p className="intel-market-dual__instrument intel-market-dual__instrument--label">{market.nyseSymbol}</p>
           <p className="intel-market-dual__instrument intel-market-dual__instrument--nyse-clock">{nyClock.time}</p>
           <p className="intel-market-dual__instrument intel-market-dual__instrument--nyse-date">{nyClock.date} ET</p>
-          <div className="intel-market-dual__iframe-shell">
-            <iframe
-              className="intel-market-dual__iframe"
-              title={`${market.nyseSymbol} — TradingView`}
-              src={nyseEmbed}
-              sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          <div className="intel-market-dual__hold-panel" role="status">
+            <p className="intel-market-dual__hold-title">Hold line</p>
+            <p className="intel-market-dual__hold-copy">
+              No NYSE API feed in this build. Exchanges pay USJET for this audience — not the reverse.
+            </p>
           </div>
         </div>
       </section>

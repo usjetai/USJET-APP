@@ -1,10 +1,8 @@
 import { useMemo, type ReactNode } from "react";
 
-import AircraftIcon from "../components/icons/AircraftIcons";
 import IntelExpandedWorkbench from "../components/intel/IntelExpandedWorkbench";
 import IntelMonitor from "../components/intel/IntelMonitor";
 import { IntelLiveMarketProvider } from "../context/IntelLiveMarketContext";
-import { fleetBayAccentStyle } from "../data/fleetBayAccents";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
 import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
@@ -13,12 +11,6 @@ import { type FleetUnit, FLEET_UNIT_COUNT, HANGAR_COLUMNS, HANGAR_ROWS } from ".
 const intelUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 
 const unitBySlot = new Map<number, FleetUnit>(intelUnits.map((u) => [u.slot, u]));
-
-const BORDER_FORMATION = [
-  { accentId: "intel-border-l-1", aircraftType: "f22" as const, slotClass: "intel-page__escort-slot--wing", slot: 0 },
-  { accentId: "intel-border-l-2", aircraftType: "darkstar" as const, slotClass: "intel-page__escort-slot--lead", slot: 1 },
-  { accentId: "intel-border-l-3", aircraftType: "f35" as const, slotClass: "intel-page__escort-slot--wing", slot: 2 },
-];
 
 function IntelPageContent() {
   const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useFleetGridExpansions(unitBySlot);
@@ -87,35 +79,13 @@ function IntelPageContent() {
         </div>
       ) : null}
 
-      <div className="intel-page__escort intel-page__escort--left" aria-hidden>
-        {BORDER_FORMATION.map((jet) => (
-          <span
-            key={jet.accentId}
-            className={`intel-page__escort-slot intel-page__escort-slot--bay-accent ${jet.slotClass}`}
-            style={fleetBayAccentStyle(jet.slot)}
-          >
-            <AircraftIcon aircraftType={jet.aircraftType} accentId={jet.accentId} className="intel-page__border-jet" />
-          </span>
-        ))}
-      </div>
-      <div className="intel-page__escort intel-page__escort--right" aria-hidden>
-        {BORDER_FORMATION.map((jet) => (
-          <span
-            key={`${jet.accentId}-r`}
-            className={`intel-page__escort-slot intel-page__escort-slot--bay-accent ${jet.slotClass}`}
-            style={fleetBayAccentStyle(jet.slot)}
-          >
-            <AircraftIcon aircraftType={jet.aircraftType} accentId={`${jet.accentId}-r`} className="intel-page__border-jet" />
-          </span>
-        ))}
-      </div>
-
       <div className="intel-page__shell page-atmosphere page-nav-offset mx-auto max-w-[88rem] px-4 pb-24 sm:px-6 lg:px-8">
         <div className="intel-page__grid-intro">
           <p className="intel-page__grid-kicker">Intel monitor grid</p>
           <p className="intel-page__grid-copy">
-            {HANGAR_COLUMNS} wide · {HANGAR_ROWS} deep · {FLEET_UNIT_COUNT} live Coinbase + NYSE tiles · click to expand
-            (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches)
+            {HANGAR_COLUMNS} wide · {HANGAR_ROWS} deep · {FLEET_UNIT_COUNT} fleet tiles · reserved partnership lanes —
+            click to expand (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches). Hold line: no live
+            exchange feeds until Titans pay.
           </p>
         </div>
 

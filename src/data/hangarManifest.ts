@@ -3,7 +3,7 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 AI Chatting · Slot 1 Creen · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 AI Chatting · Slot 1 FreeAssist · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
@@ -22,15 +22,15 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "1",
     slot: 1,
-    name: "Creen",
+    name: "FreeAssist",
     callsign: "LIGHTNING-02",
-    domain: "creen.ai",
-    href: "https://www.creen.ai/",
+    domain: "freeassist.ai",
+    href: "https://freeassist.ai/",
     status: "active",
     aura: "idle",
     aircraftType: "f35",
-    aiName: "Creen",
-    fleetRole: "Creen — AI tools at creen.ai.",
+    aiName: "FreeAssist",
+    fleetRole: "FreeAssist — free AI assist at freeassist.ai.",
   },
   {
     id: "2",

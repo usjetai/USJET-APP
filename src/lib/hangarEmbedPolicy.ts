@@ -82,6 +82,7 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "1min.ai",
     "creen.ai",
     "anuma.ai",
+    "aichatting.net",
     "notegpt.io",
     "easemate.ai",
     "deepai.org",

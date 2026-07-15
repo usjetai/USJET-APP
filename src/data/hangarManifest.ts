@@ -3,21 +3,21 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 Anuma · Slot 1 Creen · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 AI Chatting · Slot 1 Creen · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Anuma",
+    name: "AI Chatting",
     callsign: "BLACKBIRD-01",
-    domain: "anuma.ai",
-    href: "https://www.anuma.ai/",
+    domain: "aichatting.net",
+    href: "https://www.aichatting.net/",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "Anuma",
-    fleetRole: "Anuma — AI tools at anuma.ai.",
+    aiName: "AI Chatting",
+    fleetRole: "AI Chatting — chat at aichatting.net.",
   },
   {
     id: "1",

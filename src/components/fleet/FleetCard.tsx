@@ -18,6 +18,7 @@ import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
 const FLEET_TILE_LAUNCH_SPINS = 3;
+const HANGAR_TILE_OPEN_SPINS = 2;
 
 type FleetCardProps = {
   domain: string;
@@ -97,6 +98,10 @@ export default function FleetCard({
       setLaunchSpinning(false);
       return;
     }
+    if (expandInteractive) {
+      onExpandBay?.();
+      return;
+    }
     if (isOriginLaunch && originOffer) {
       originOffer.requestOriginNavigation();
       return;
@@ -115,6 +120,23 @@ export default function FleetCard({
     launchSpinPendingRef.current = false;
     setLaunchSpinning(false);
     finishLaunchAfterSpin();
+  };
+
+  const beginOpenSpin = () => {
+    if (launchBlocked || launchSpinPendingRef.current) {
+      return;
+    }
+    logFleetUsageIfMember(callsign, name);
+    syncProtocolToClipboard();
+    launchSpinPendingRef.current = true;
+    setLaunchSpinning(true);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      handleSpinComplete();
+      return;
+    }
+
+    setLaunchSpinKey((key) => key + 1);
   };
 
   const handleCardMouseEnter = () => {
@@ -138,15 +160,18 @@ export default function FleetCard({
   );
 
   const renderAircraftWrap = () => {
-    if (isRunway && launchSpinning && launchSpinKey > 0) {
+    const spinCount = expandInteractive ? HANGAR_TILE_OPEN_SPINS : FLEET_TILE_LAUNCH_SPINS;
+    const spinDuration = expandInteractive ? 0.55 : 0.75;
+
+    if (launchSpinning && launchSpinKey > 0 && (isRunway || expandInteractive)) {
       return (
         <motion.div
           key={`fleet-aircraft-spin-${launchSpinKey}`}
           className={aircraftWrapClassName}
           style={{ transformOrigin: "center center" }}
           initial={{ rotate: 0, scale: 1, x: 0, y: 0 }}
-          animate={{ rotate: 360 * FLEET_TILE_LAUNCH_SPINS, scale: 1.05, x: 3, y: -5 }}
-          transition={{ duration: 0.75, ease: [0.34, 1.12, 0.64, 1] }}
+          animate={{ rotate: 360 * spinCount, scale: 1.05, x: 3, y: -5 }}
+          transition={{ duration: spinDuration, ease: [0.34, 1.12, 0.64, 1] }}
           onAnimationComplete={handleSpinComplete}
         >
           {renderAircraftIcon()}
@@ -186,9 +211,7 @@ export default function FleetCard({
       openPartner();
       return;
     }
-    logFleetUsageIfMember(callsign, name);
-    syncProtocolToClipboard();
-    onExpandBay?.();
+    beginOpenSpin();
   };
 
   const handleExpandKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -199,12 +222,7 @@ export default function FleetCard({
       return;
     }
     e.preventDefault();
-    if (launchBlocked) {
-      return;
-    }
-    logFleetUsageIfMember(callsign, name);
-    syncProtocolToClipboard();
-    onExpandBay?.();
+    beginOpenSpin();
   };
 
   const handleLaunchClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -221,17 +239,7 @@ export default function FleetCard({
     }
 
     e.preventDefault();
-    logFleetUsageIfMember(callsign, name);
-    syncProtocolToClipboard();
-    launchSpinPendingRef.current = true;
-    setLaunchSpinning(true);
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      handleSpinComplete();
-      return;
-    }
-
-    setLaunchSpinKey((key) => key + 1);
+    beginOpenSpin();
   };
 
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {

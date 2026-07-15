@@ -8482,6 +8482,14 @@ html.code-kit-page-root #usjet-app-shell {
   background: transparent;
 }
 
+.hangar-page--workbench .fleet-card--launch-spinning {
+  pointer-events: none;
+}
+
+.hangar-page--workbench .fleet-card--launch-spinning .fleet-card__aircraft-wrap {
+  transition: none;
+}
+
 .hangar-page--workbench .fleet-card--hangar-expand:hover .fleet-card__glass,
 .hangar-page--workbench .fleet-card--hangar-expand:focus-visible .fleet-card__glass {
   border-color: color-mix(in srgb, rgba(251, 191, 36, 0.62) 42%, rgba(255, 255, 255, 0.22));

@@ -40,6 +40,7 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "julius.ai",
     "craiyon.com",
     "hotbot.com",
+    "framer.com",
   ].map((host) => host.toLowerCase()),
 );
 

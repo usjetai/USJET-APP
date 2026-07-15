@@ -3,21 +3,21 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 Runable · Slot 1 FreeAssist · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 Framer · Slot 1 FreeAssist · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Runable",
+    name: "Framer",
     callsign: "BLACKBIRD-01",
-    domain: "runable.com",
-    href: "https://runable.com/",
+    domain: "framer.com",
+    href: "https://www.framer.com/",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "Runable",
-    fleetRole: "Runable — AI tools at runable.com.",
+    aiName: "Framer",
+    fleetRole: "Framer — design and sites at framer.com.",
   },
   {
     id: "1",

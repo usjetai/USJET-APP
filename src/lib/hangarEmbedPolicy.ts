@@ -39,6 +39,7 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "aifreeforever.com",
     "julius.ai",
     "craiyon.com",
+    "hotbot.com",
   ].map((host) => host.toLowerCase()),
 );
 
@@ -82,6 +83,7 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "1min.ai",
     "creen.ai",
     "freeassist.ai",
+    "runable.com",
     "anuma.ai",
     "aichatting.net",
     "notegpt.io",

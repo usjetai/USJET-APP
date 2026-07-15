@@ -34,6 +34,11 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "synthesia.io",
     "felo.ai",
     "grammarly.com",
+    "meta.ai",
+    "genspark.ai",
+    "aifreeforever.com",
+    "julius.ai",
+    "craiyon.com",
   ].map((host) => host.toLowerCase()),
 );
 
@@ -75,6 +80,8 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "quickframe.com",
     "quillbot.com",
     "1min.ai",
+    "creen.ai",
+    "anuma.ai",
     "notegpt.io",
     "easemate.ai",
     "deepai.org",

@@ -3,34 +3,34 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 Felo · Slot 1 Grammarly · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 Anuma · Slot 1 Creen · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Felo",
+    name: "Anuma",
     callsign: "BLACKBIRD-01",
-    domain: "felo.ai",
-    href: "https://felo.ai/search",
+    domain: "anuma.ai",
+    href: "https://www.anuma.ai/",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "Felo",
-    fleetRole: "Felo — AI search at felo.ai/search.",
+    aiName: "Anuma",
+    fleetRole: "Anuma — AI tools at anuma.ai.",
   },
   {
     id: "1",
     slot: 1,
-    name: "Grammarly",
+    name: "Creen",
     callsign: "LIGHTNING-02",
-    domain: "grammarly.com",
-    href: "https://www.grammarly.com/ai-chat",
+    domain: "creen.ai",
+    href: "https://www.creen.ai/",
     status: "active",
     aura: "idle",
     aircraftType: "f35",
-    aiName: "Grammarly",
-    fleetRole: "Grammarly — AI chat at grammarly.com/ai-chat.",
+    aiName: "Creen",
+    fleetRole: "Creen — AI tools at creen.ai.",
   },
   {
     id: "2",

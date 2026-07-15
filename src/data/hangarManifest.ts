@@ -3,34 +3,34 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 QuickFrame · Slot 1 QuillBot. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 Nano GPT · Slot 1 1min.ai. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "QuickFrame",
+    name: "Nano GPT",
     callsign: "BLACKBIRD-01",
-    domain: "ai.quickframe.com",
-    href: "https://ai.quickframe.com/",
+    domain: "nano-gpt.com",
+    href: "https://nano-gpt.com/conversation/new?mode=chat",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "QuickFrame",
-    fleetRole: "QuickFrame — AI video creation at ai.quickframe.com.",
+    aiName: "Nano GPT",
+    fleetRole: "Nano GPT — chat at nano-gpt.com.",
   },
   {
     id: "1",
     slot: 1,
-    name: "QuillBot",
+    name: "1min.ai",
     callsign: "LIGHTNING-02",
-    domain: "quillbot.com",
-    href: "https://quillbot.com/",
+    domain: "1min.ai",
+    href: "https://1min.ai/",
     status: "active",
     aura: "idle",
     aircraftType: "f35",
-    aiName: "QuillBot",
-    fleetRole: "QuillBot — AI paraphrasing and writing tools at quillbot.com.",
+    aiName: "1min.ai",
+    fleetRole: "1min.ai — all-in-one AI tools at 1min.ai.",
   },
   {
     id: "2",

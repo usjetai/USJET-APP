@@ -32,6 +32,8 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "chat.deepseek.com",
     "canva.com",
     "synthesia.io",
+    "felo.ai",
+    "grammarly.com",
   ].map((host) => host.toLowerCase()),
 );
 

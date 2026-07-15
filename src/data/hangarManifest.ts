@@ -3,34 +3,34 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 Nano GPT · Slot 1 1min.ai. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 Felo · Slot 1 Grammarly · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Nano GPT",
+    name: "Felo",
     callsign: "BLACKBIRD-01",
-    domain: "nano-gpt.com",
-    href: "https://nano-gpt.com/conversation/new?mode=chat",
+    domain: "felo.ai",
+    href: "https://felo.ai/search",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "Nano GPT",
-    fleetRole: "Nano GPT — chat at nano-gpt.com.",
+    aiName: "Felo",
+    fleetRole: "Felo — AI search at felo.ai/search.",
   },
   {
     id: "1",
     slot: 1,
-    name: "1min.ai",
+    name: "Grammarly",
     callsign: "LIGHTNING-02",
-    domain: "1min.ai",
-    href: "https://1min.ai/",
+    domain: "grammarly.com",
+    href: "https://www.grammarly.com/ai-chat",
     status: "active",
     aura: "idle",
     aircraftType: "f35",
-    aiName: "1min.ai",
-    fleetRole: "1min.ai — all-in-one AI tools at 1min.ai.",
+    aiName: "Grammarly",
+    fleetRole: "Grammarly — AI chat at grammarly.com/ai-chat.",
   },
   {
     id: "2",

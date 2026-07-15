@@ -1,6 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import { LogOut, Wrench } from "lucide-react";
 import MemberFleetControlBoard from "../components/member/MemberFleetControlBoard";
+import MemberHangarControlBoard from "../components/member/MemberHangarControlBoard";
 import MemberPortalDataBoard from "../components/member/MemberPortalDataBoard";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import MemberProjectTracker from "../components/member/MemberProjectTracker";
@@ -68,6 +69,13 @@ export default function MemberPortal() {
           </div>
         </section>
 
+        <section className="member-portal__section member-portal__section--hangar" aria-labelledby="member-portal-hangar-label">
+          <p id="member-portal-hangar-label" className="member-portal__section-label">
+            Hangar launch
+          </p>
+          <MemberHangarControlBoard />
+        </section>
+
         <section className="member-portal__section member-portal__section--fleet" aria-labelledby="member-portal-fleet-label">
           <p id="member-portal-fleet-label" className="member-portal__section-label">
             Fleet launch
@@ -79,6 +87,10 @@ export default function MemberPortal() {
       <p className="member-portal__footer">
         <Link to="/" className="member-portal__link">
           Hangar
+        </Link>
+        {" · "}
+        <Link to="/fleet" className="member-portal__link">
+          Fleet
         </Link>
         {" · "}
         <Link to="/special" className="member-portal__link">

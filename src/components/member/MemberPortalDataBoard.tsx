@@ -130,61 +130,61 @@ export default function MemberPortalDataBoard({ customerId, session }: MemberPor
         </div>
 
         {displayRows.length > 0 ? (
-          <div className="member-data-board__table-wrap">
-            <table className="member-data-board__table">
-              <thead>
-                <tr>
-                  <th scope="col">Unit</th>
-                  <th scope="col">Launches</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Share</th>
-                  <th scope="col" className="member-data-board__th-last">
-                    Last
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {displayRows.map((row, index) => {
-                  const shareWidth = Math.max(
-                    6,
-                    Math.round((row.browserLaunches / maxLaunches) * 100),
-                  );
-                  const lastAt = lastUsedByCallsign.get(row.callsign.toUpperCase());
-                  const isActive = row.browserLaunches > 0 || row.browserTimeMs > 0;
+          <ul className="member-data-board__grid" aria-label="Fleet unit telemetry">
+            {displayRows.map((row, index) => {
+              const shareWidth = Math.max(
+                6,
+                Math.round((row.browserLaunches / maxLaunches) * 100),
+              );
+              const lastAt = lastUsedByCallsign.get(row.callsign.toUpperCase());
+              const isActive = row.browserLaunches > 0 || row.browserTimeMs > 0;
 
-                  return (
-                    <tr
-                      key={row.unitId}
-                      className={isActive ? "member-data-board__tr--active" : ""}
-                    >
-                      <td>
-                        <span className="member-data-board__rank">{String(index + 1).padStart(2, "0")}</span>
-                        <span className="member-data-board__unit-callsign">{row.name}</span>
-                        <span className="member-data-board__unit-name">
-                          <DeveloperRedBlinkName name={row.name} />
-                        </span>
-                      </td>
-                      <td className="member-data-board__td-num">{row.browserLaunches}</td>
-                      <td className="member-data-board__td-num">
-                        {formatPortalUsageDuration(row.browserTimeMs)}
-                      </td>
-                      <td>
+              return (
+                <li
+                  key={row.unitId}
+                  className={[
+                    "member-data-board__cell",
+                    isActive ? "member-data-board__cell--active" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  <div className="member-data-board__cell-head">
+                    <span className="member-data-board__rank">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="member-data-board__unit-callsign">{row.callsign}</span>
+                  </div>
+                  <p className="member-data-board__unit-name">
+                    <DeveloperRedBlinkName name={row.name} />
+                  </p>
+                  <dl className="member-data-board__cell-metrics">
+                    <div>
+                      <dt>Launches</dt>
+                      <dd>{row.browserLaunches}</dd>
+                    </div>
+                    <div>
+                      <dt>Time</dt>
+                      <dd>{formatPortalUsageDuration(row.browserTimeMs)}</dd>
+                    </div>
+                    <div>
+                      <dt>Last</dt>
+                      <dd>{lastAt ? formatLastUsed(lastAt) : "—"}</dd>
+                    </div>
+                    <div>
+                      <dt>Share</dt>
+                      <dd>
                         <span className="member-data-board__share-track" aria-hidden>
                           <span
                             className="member-data-board__share-fill"
                             style={{ width: `${shareWidth}%` }}
                           />
                         </span>
-                      </td>
-                      <td className="member-data-board__td-last">
-                        {lastAt ? formatLastUsed(lastAt) : "—"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                      </dd>
+                    </div>
+                  </dl>
+                </li>
+              );
+            })}
+          </ul>
         ) : (
           <p className="member-data-board__empty">{MEMBER_YOUR_AI_DATA_EMPTY}</p>
         )}

@@ -15081,6 +15081,43 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   white-space: nowrap;
 }
 
+/* Member Hangar board — amber workbench dialect, locked 3-column floor */
+.member-hangar-board {
+  border-color: rgba(251, 191, 36, 0.28);
+}
+
+.member-hangar-board__kicker {
+  color: rgba(251, 191, 36, 0.82);
+}
+
+.member-hangar-board__enter {
+  display: inline-flex;
+  margin-top: 0.85rem;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.member-hangar-board__grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 640px) {
+  .member-hangar-board__grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .member-hangar-board__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
 /* ─── Member fleet usage chart ─── */
 .member-usage {
   overflow: hidden;
@@ -15590,22 +15627,28 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 
 .member-data-board__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
   margin: 0;
   padding: 0 1.25rem 1rem;
   list-style: none;
 }
 
-@media (min-width: 520px) {
+@media (max-width: 720px) {
   .member-data-board__grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 960px) {
+  .member-data-board__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 .member-data-board__cell {
   margin: 0;
-  padding: 0.55rem 0.5rem 0.6rem;
+  padding: 0.65rem 0.6rem 0.7rem;
   border-radius: 0.55rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(2, 8, 23, 0.42);
@@ -15617,11 +15660,17 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   box-shadow: 0 0 12px rgba(34, 211, 238, 0.1);
 }
 
+.member-data-board__cell-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
 .member-data-board__cell-metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.35rem 0.4rem;
-  margin: 0.4rem 0 0.35rem;
+  gap: 0.4rem 0.45rem;
+  margin: 0.45rem 0 0;
 }
 
 .member-data-board__cell-metrics div {
@@ -15644,6 +15693,12 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   font-size: 0.68rem;
   font-weight: 700;
   color: #67e8f9;
+}
+
+.member-data-board__cell-metrics .member-data-board__share-track {
+  display: block;
+  width: 100%;
+  margin-top: 0.2rem;
 }
 
 .member-data-board__tier {

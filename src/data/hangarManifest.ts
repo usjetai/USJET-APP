@@ -3,34 +3,34 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 leads with VidGuru. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 QuickFrame · Slot 1 QuillBot. Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "VidGuru",
+    name: "QuickFrame",
     callsign: "BLACKBIRD-01",
-    domain: "vidguru.ai",
-    href: "https://www.vidguru.ai/image-to-video",
+    domain: "ai.quickframe.com",
+    href: "https://ai.quickframe.com/",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "VidGuru",
-    fleetRole: "VidGuru — image-to-video AI at vidguru.ai.",
+    aiName: "QuickFrame",
+    fleetRole: "QuickFrame — AI video creation at ai.quickframe.com.",
   },
   {
     id: "1",
     slot: 1,
-    name: "Gening",
+    name: "QuillBot",
     callsign: "LIGHTNING-02",
-    domain: "gening.ai",
-    href: "https://www.gening.ai/free-ai-create-character",
+    domain: "quillbot.com",
+    href: "https://quillbot.com/",
     status: "active",
     aura: "idle",
     aircraftType: "f35",
-    aiName: "Gening",
-    fleetRole: "Gening — free AI character creator at gening.ai.",
+    aiName: "QuillBot",
+    fleetRole: "QuillBot — AI paraphrasing and writing tools at quillbot.com.",
   },
   {
     id: "2",

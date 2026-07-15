@@ -67,7 +67,7 @@ export default function MemberPortalDataBoard({ customerId, session }: MemberPor
   );
   const idleCount = rows.length - totals.activeUnits;
   const displayRows = showAllUnits ? sortByActivity(rows) : activeRows;
-  const maxLaunches = displayRows[0]?.browserLaunches ?? 1;
+  const maxLaunches = Math.max(1, displayRows[0]?.browserLaunches ?? 0);
 
   return (
     <GlassEffectContainer className="member-data-board glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
@@ -80,37 +80,36 @@ export default function MemberPortalDataBoard({ customerId, session }: MemberPor
         </p>
       </header>
 
-      <div className="member-data-board__summary" aria-label="Your AI data totals">
-        <div className="member-data-board__summary-cell">
-          <span className="member-data-board__summary-label">Launches</span>
-          <span className="member-data-board__summary-value">{totals.browserLaunches}</span>
-        </div>
-        <div className="member-data-board__summary-cell">
-          <span className="member-data-board__summary-label">Time on deck</span>
-          <span className="member-data-board__summary-value">
+      <div className="member-data-board__readings" aria-label="Your AI data totals">
+        <article className="member-data-board__reading">
+          <span className="member-data-board__reading-label">Launches</span>
+          <span className="member-data-board__reading-value">{totals.browserLaunches}</span>
+        </article>
+        <article className="member-data-board__reading">
+          <span className="member-data-board__reading-label">Time on deck</span>
+          <span className="member-data-board__reading-value">
             {formatPortalUsageDuration(totals.browserTimeMs)}
           </span>
-        </div>
-        <div className="member-data-board__summary-cell">
-          <span className="member-data-board__summary-label">Units active</span>
-          <span className="member-data-board__summary-value">
+        </article>
+        <article className="member-data-board__reading">
+          <span className="member-data-board__reading-label">Units active</span>
+          <span className="member-data-board__reading-value">
             {totals.activeUnits}
-            <span className="member-data-board__summary-muted"> / {rows.length}</span>
+            <span className="member-data-board__reading-muted"> / {rows.length}</span>
           </span>
-        </div>
-      </div>
-
-      <div className="member-data-board__flight-pass" aria-label="Flight Pass window">
-        <div className="member-data-board__flight-pass-head">
-          <span className="member-data-board__flight-pass-label">Flight Pass</span>
-          <span className="member-data-board__flight-pass-status">{flightPass.label}</span>
-        </div>
-        <span className="member-data-board__tier-bar" aria-hidden>
-          <span
-            className="member-data-board__tier-bar-fill"
-            style={{ width: `${Math.min(100, flightPass.percentUsed)}%` }}
-          />
-        </span>
+        </article>
+        <article className="member-data-board__reading member-data-board__reading--pass">
+          <div className="member-data-board__reading-pass-head">
+            <span className="member-data-board__reading-label">Flight Pass</span>
+            <span className="member-data-board__reading-pass-status">{flightPass.label}</span>
+          </div>
+          <span className="member-data-board__tier-bar" aria-hidden>
+            <span
+              className="member-data-board__tier-bar-fill"
+              style={{ width: `${Math.min(100, flightPass.percentUsed)}%` }}
+            />
+          </span>
+        </article>
       </div>
 
       <section className="member-data-board__usage" aria-labelledby="member-your-ai-data-usage">
@@ -130,7 +129,7 @@ export default function MemberPortalDataBoard({ customerId, session }: MemberPor
         </div>
 
         {displayRows.length > 0 ? (
-          <ul className="member-data-board__grid" aria-label="Fleet unit telemetry">
+          <ul className="member-data-board__tiles" aria-label="Fleet unit telemetry">
             {displayRows.map((row, index) => {
               const shareWidth = Math.max(
                 6,
@@ -143,44 +142,46 @@ export default function MemberPortalDataBoard({ customerId, session }: MemberPor
                 <li
                   key={row.unitId}
                   className={[
-                    "member-data-board__cell",
-                    isActive ? "member-data-board__cell--active" : "",
+                    "member-data-board__tile",
+                    isActive ? "member-data-board__tile--active" : "",
                   ]
                     .filter(Boolean)
                     .join(" ")}
                 >
-                  <div className="member-data-board__cell-head">
+                  <div className="member-data-board__tile-top">
                     <span className="member-data-board__rank">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="member-data-board__unit-callsign">{row.callsign}</span>
+                    <div className="member-data-board__tile-identity">
+                      <span className="member-data-board__unit-callsign">{row.callsign}</span>
+                      <p className="member-data-board__unit-name">
+                        <DeveloperRedBlinkName name={row.name} />
+                      </p>
+                    </div>
                   </div>
-                  <p className="member-data-board__unit-name">
-                    <DeveloperRedBlinkName name={row.name} />
-                  </p>
-                  <dl className="member-data-board__cell-metrics">
-                    <div>
+
+                  <dl className="member-data-board__tile-metrics">
+                    <div className="member-data-board__metric-cell">
                       <dt>Launches</dt>
                       <dd>{row.browserLaunches}</dd>
                     </div>
-                    <div>
+                    <div className="member-data-board__metric-cell">
                       <dt>Time</dt>
                       <dd>{formatPortalUsageDuration(row.browserTimeMs)}</dd>
                     </div>
-                    <div>
+                    <div className="member-data-board__metric-cell">
                       <dt>Last</dt>
                       <dd>{lastAt ? formatLastUsed(lastAt) : "—"}</dd>
                     </div>
-                    <div>
-                      <dt>Share</dt>
-                      <dd>
-                        <span className="member-data-board__share-track" aria-hidden>
-                          <span
-                            className="member-data-board__share-fill"
-                            style={{ width: `${shareWidth}%` }}
-                          />
-                        </span>
-                      </dd>
-                    </div>
                   </dl>
+
+                  <div className="member-data-board__tile-share">
+                    <span className="member-data-board__tile-share-label">Share</span>
+                    <span className="member-data-board__share-track" aria-hidden>
+                      <span
+                        className="member-data-board__share-fill"
+                        style={{ width: `${shareWidth}%` }}
+                      />
+                    </span>
+                  </div>
                 </li>
               );
             })}

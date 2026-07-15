@@ -62,11 +62,18 @@ export default function MemberPortal() {
           <MemberProjectTracker customerId={session.customerId} />
         </section>
 
-        <section className="member-portal__section member-portal__section--secondary" aria-label="Usage and shipping">
-          <div className="member-portal__secondary">
-            <MemberPortalDataBoard customerId={session.customerId} session={session} />
-            <MemberShippingAddressForm customerId={session.customerId} />
-          </div>
+        <section className="member-portal__section member-portal__section--telemetry" aria-labelledby="member-portal-telemetry-label">
+          <p id="member-portal-telemetry-label" className="member-portal__section-label">
+            Your AI Data
+          </p>
+          <MemberPortalDataBoard customerId={session.customerId} session={session} />
+        </section>
+
+        <section className="member-portal__section member-portal__section--shipping" aria-labelledby="member-portal-shipping-label">
+          <p id="member-portal-shipping-label" className="member-portal__section-label">
+            Shipping
+          </p>
+          <MemberShippingAddressForm customerId={session.customerId} />
         </section>
 
         <section className="member-portal__section member-portal__section--hangar" aria-labelledby="member-portal-hangar-label">

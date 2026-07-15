@@ -14702,13 +14702,6 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   align-items: stretch;
 }
 
-.member-portal__secondary {
-  display: grid;
-  gap: 1.25rem;
-  align-items: start;
-  min-width: 0;
-}
-
 @media (min-width: 900px) {
   .member-portal__identity-row {
     grid-template-columns: minmax(0, 1fr) minmax(11rem, 14rem);
@@ -14726,11 +14719,9 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   }
 }
 
-@media (min-width: 1024px) {
-  .member-portal__secondary {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: 1.35rem;
-  }
+.member-portal__section--telemetry,
+.member-portal__section--shipping {
+  min-width: 0;
 }
 
 .member-portal--active .member-portal__subtitle {
@@ -15370,13 +15361,18 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 }
 
 /* ─── Member portal data board ─── */
+.member-data-board.glass-effect-container,
 .member-data-board {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
   overflow: hidden;
   border: 1px solid rgba(34, 211, 238, 0.24);
 }
 
 .member-data-board__header {
-  padding: 1.1rem 1.25rem 0.35rem;
+  padding: 1.25rem 1.35rem 0.5rem;
 }
 
 .member-data-board__kicker {
@@ -15403,6 +15399,7 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   font-size: 0.82rem;
   line-height: 1.55;
   color: rgba(226, 232, 240, 0.78);
+  max-width: 42rem;
 }
 
 .member-data-board__clearance {
@@ -15417,45 +15414,75 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   font-weight: 800;
 }
 
-.member-data-board__summary-muted {
-  font-size: 0.72em;
+.member-data-board__readings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0.35rem 1.35rem 1.15rem;
+}
+
+@media (min-width: 720px) {
+  .member-data-board__readings {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.member-data-board__reading {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.55rem;
+  min-height: 5.25rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(2, 8, 23, 0.48);
+}
+
+.member-data-board__reading--pass {
+  gap: 0.7rem;
+}
+
+.member-data-board__reading-label {
+  display: block;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.member-data-board__reading-value {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #67e8f9;
+}
+
+.member-data-board__reading-muted {
+  font-size: 0.62em;
   font-weight: 600;
   color: rgba(148, 163, 184, 0.75);
 }
 
-.member-data-board__flight-pass {
-  margin: 0 1.25rem 1rem;
-  padding: 0.65rem 0.75rem;
-  border-radius: 0.55rem;
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  background: rgba(2, 8, 23, 0.42);
-}
-
-.member-data-board__flight-pass-head {
+.member-data-board__reading-pass-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.45rem;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-.member-data-board__flight-pass-label {
-  font-size: 0.52rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(103, 232, 249, 0.85);
-}
-
-.member-data-board__flight-pass-status {
-  font-size: 0.68rem;
+.member-data-board__reading-pass-status {
+  font-size: 0.72rem;
   font-weight: 600;
+  line-height: 1.35;
   color: rgba(226, 232, 240, 0.88);
-  text-align: right;
 }
 
 .member-data-board__usage {
-  padding: 0 1.25rem 1.15rem;
+  padding: 0 1.35rem 1.35rem;
   border-top: 1px solid rgba(34, 211, 238, 0.14);
 }
 
@@ -15465,7 +15492,7 @@ body.usjet-atmosphere--cinematic .moving-clouds {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem 0.75rem;
-  margin: 0.85rem 0 0.65rem;
+  margin: 1rem 0 0.85rem;
 }
 
 .member-data-board__usage-title {
@@ -15478,7 +15505,7 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 }
 
 .member-data-board__toggle {
-  padding: 0.35rem 0.55rem;
+  padding: 0.4rem 0.7rem;
   font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -15517,14 +15544,13 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 }
 
 .member-data-board__rank {
-  display: inline-block;
-  min-width: 1.6rem;
-  margin-right: 0.35rem;
+  flex-shrink: 0;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: rgba(251, 191, 36, 0.85);
+  letter-spacing: 0.04em;
+  color: rgba(251, 191, 36, 0.9);
 }
 
 .member-data-board__table .member-data-board__unit-callsign {
@@ -15558,8 +15584,9 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 
 .member-data-board__share-track {
   display: block;
-  min-width: 4.5rem;
-  height: 0.32rem;
+  flex: 1;
+  min-width: 0;
+  height: 0.38rem;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
@@ -15581,144 +15608,128 @@ body.usjet-atmosphere--cinematic .moving-clouds {
 }
 
 .member-data-board__idle-note {
-  margin-top: 0.65rem;
+  margin-top: 0.85rem;
   font-size: 0.72rem;
   color: rgba(148, 163, 184, 0.7);
 }
 
-.member-data-board__summary {
+.member-data-board__tiles {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.65rem;
-  padding: 0 1.25rem 0.85rem;
-}
-
-@media (max-width: 720px) {
-  .member-data-board__summary {
-    grid-template-columns: 1fr;
-  }
-}
-
-.member-data-board__summary-cell {
-  padding: 0.55rem 0.65rem;
-  border-radius: 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(2, 8, 23, 0.38);
-}
-
-.member-data-board__summary-label {
-  display: block;
-  font-size: 0.52rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.38);
-}
-
-.member-data-board__summary-value {
-  display: block;
-  margin-top: 0.2rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #67e8f9;
-}
-
-.member-data-board__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.65rem;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
   margin: 0;
-  padding: 0 1.25rem 1rem;
+  padding: 0;
   list-style: none;
 }
 
-@media (max-width: 720px) {
-  .member-data-board__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 721px) and (max-width: 960px) {
-  .member-data-board__grid {
+@media (min-width: 640px) {
+  .member-data-board__tiles {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.member-data-board__cell {
-  margin: 0;
-  padding: 0.65rem 0.6rem 0.7rem;
-  border-radius: 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(2, 8, 23, 0.42);
+@media (min-width: 1024px) {
+  .member-data-board__tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-.member-data-board__cell--active {
-  border-color: rgba(34, 211, 238, 0.32);
-  background: rgba(8, 47, 73, 0.28);
-  box-shadow: 0 0 12px rgba(34, 211, 238, 0.1);
-}
-
-.member-data-board__cell-head {
+.member-data-board__tile {
   display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0;
+  min-height: 9.5rem;
+  padding: 0.95rem 1rem 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(2, 8, 23, 0.46);
 }
 
-.member-data-board__cell-metrics {
+.member-data-board__tile--active {
+  border-color: rgba(34, 211, 238, 0.34);
+  background: rgba(8, 47, 73, 0.3);
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.12);
+}
+
+.member-data-board__tile-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.member-data-board__tile-identity {
+  min-width: 0;
+  flex: 1;
+}
+
+.member-data-board__tile-metrics {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem 0.45rem;
-  margin: 0.45rem 0 0;
-}
-
-.member-data-board__cell-metrics div {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
   margin: 0;
 }
 
-.member-data-board__cell-metrics dt {
+.member-data-board__metric-cell {
   margin: 0;
-  font-size: 0.48rem;
+  min-width: 0;
+  padding: 0.45rem 0.5rem;
+  border-radius: 0.5rem;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.member-data-board__metric-cell dt {
+  margin: 0;
+  font-size: 0.5rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.member-data-board__metric-cell dd {
+  margin: 0.28rem 0 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #67e8f9;
+  overflow-wrap: anywhere;
+}
+
+.member-data-board__tile-share {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: auto;
+}
+
+.member-data-board__tile-share-label {
+  flex-shrink: 0;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.38);
 }
 
-.member-data-board__cell-metrics dd {
-  margin: 0.12rem 0 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #67e8f9;
-}
-
-.member-data-board__cell-metrics .member-data-board__share-track {
-  display: block;
-  width: 100%;
-  margin-top: 0.2rem;
-}
-
-.member-data-board__tier {
-  margin-top: 0.15rem;
-}
-
 .member-data-board__unit-callsign {
   display: block;
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(96, 165, 250, 0.92);
+  color: rgba(96, 165, 250, 0.95);
 }
 
 .member-data-board__unit-name {
   display: block;
-  margin-top: 0.1rem;
-  font-size: 0.72rem;
+  margin: 0.2rem 0 0;
+  font-size: 0.88rem;
   font-weight: 700;
+  line-height: 1.25;
   color: #f8fafc;
 }
 

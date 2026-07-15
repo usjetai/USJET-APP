@@ -17,7 +17,7 @@ import YouTubeAudioBackground from "./components/layout/YouTubeAudioBackground";
 import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "./data/globalBackgroundBeat";
 import SiteLatchMenu from "./components/layout/SiteLatchMenu";
 import TierRouteGate from "./components/member/TierRouteGate";
-import CanonicalHead from "./components/layout/CanonicalHead";
+import SeoHead from "./components/layout/SeoHead";
 import { useAtmosphereLive } from "./hooks/useAtmosphereLive";
 
 const Fleet = lazy(() => import("./pages/Fleet"));
@@ -236,7 +236,7 @@ function AppShell() {
 export default function App() {
   return (
     <Router>
-      <CanonicalHead />
+      <SeoHead />
       <OriginLimitedOfferProvider>
         <SilentHangarProvider>
           <UsjetExternalNavigationProvider>

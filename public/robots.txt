@@ -1,11 +1,46 @@
-# USJET.AI — allow full crawl; SPA + static paths on origin
+# USJET.AI — crawl public hangar + fleet surfaces
+# Gated Member / Intel / Origin / Cockpit URLs send noindex via SeoHead
+# and are omitted from sitemap.xml.
+
 User-agent: *
 Allow: /
 
-Allow: /founder/
-Allow: /gaming/
-Allow: /favicon.svg
-Allow: /favicon-32x32.png
+Allow: /fleet
+Allow: /founder
+Allow: /blog
+Allow: /fleet-directory
+Allow: /ai-101
+Allow: /b2b
+Allow: /member/login
+Allow: /llms.txt
 
-# Sitemap (generated at build via scripts/generate-sitemap.mjs)
+# Soft-block gated SPA shells (prefix). Keep /member/login crawlable for branded login queries.
+Disallow: /cockpit
+Disallow: /intel
+Disallow: /origin
+Disallow: /founder-special-1995
+Disallow: /special
+
+# AI crawlers — full allow on public hangar surfaces
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
 Sitemap: https://www.usjet.ai/sitemap.xml

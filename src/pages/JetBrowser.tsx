@@ -5,6 +5,10 @@ import JetBrowserTile, {
   type JetBrowserBay,
 } from "../components/jetBrowser/JetBrowserTile";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
+import {
+  useJetBrowserColumnLayout,
+  type JetBrowserColumnLayout,
+} from "../hooks/useJetBrowserColumnLayout";
 import { jetBrowserTileLabel, normalizeJetBrowserUrl } from "../lib/jetBrowserUrl";
 
 const JET_BROWSER_META =
@@ -13,6 +17,7 @@ const JET_BROWSER_META =
 const MAX_OPEN_TILES = 8;
 const EMPTY_READY_BAYS = 3;
 const FULL_TOAST_MS = 3200;
+const LAYOUT_OPTIONS = [2, 3, 4] as const satisfies readonly JetBrowserColumnLayout[];
 
 function createBayId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -24,12 +29,26 @@ function createBayId(): string {
 export default function JetBrowser() {
   const inputId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { columns, setColumnLayout } = useJetBrowserColumnLayout();
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [tiles, setTiles] = useState<JetBrowserBay[]>([]);
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const [fullToast, setFullToast] = useState(false);
   const toastTimerRef = useRef<number | null>(null);
+
+  const gridClass = useMemo(
+    () =>
+      [
+        "hangar-bay-grid fleet-runway-grid jet-browser-grid grid gap-4",
+        columns === 2 ? "jet-browser-grid--cols-2" : "",
+        columns === 3 ? "jet-browser-grid--cols-3" : "",
+        columns === 4 ? "jet-browser-grid--cols-4" : "",
+      ]
+        .filter(Boolean)
+        .join(" "),
+    [columns],
+  );
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -188,14 +207,36 @@ export default function JetBrowser() {
               </p>
             )}
           </form>
+
+          <div
+            className="jet-browser-layout-toggle hangar-layout-toggle mt-6 flex flex-wrap items-center justify-center gap-2"
+            role="group"
+            aria-label="Jet Browser tile rows"
+          >
+            <span className="mr-1 text-[10px] font-black uppercase tracking-[0.28em] text-cyan-200/50">
+              Layout
+            </span>
+            {LAYOUT_OPTIONS.map((count) => (
+              <button
+                key={count}
+                type="button"
+                className={[
+                  "hangar-layout-toggle__btn btn-glass glass-effect-interactive glass-tint-cyan",
+                  columns === count ? "hangar-layout-toggle__btn--active" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                aria-pressed={columns === count}
+                onClick={() => setColumnLayout(count)}
+              >
+                {count} Rows
+              </button>
+            ))}
+          </div>
         </header>
 
         <div className="hangar-bay-grid-wrap">
-          <div
-            className="hangar-bay-grid fleet-runway-grid jet-browser-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            role="region"
-            aria-label="Jet Browser tile formation"
-          >
+          <div className={gridClass} role="region" aria-label="Jet Browser tile formation">
             {tiles.map((bay, index) => (
               <JetBrowserTile
                 key={bay.id}

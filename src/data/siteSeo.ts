@@ -159,6 +159,11 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "Hired HUD — Developer Roster | USJET.AI",
     description: "Hired HUD: USJET developer roster and hangar assignment board.",
   },
+  "/jet-browser": {
+    title: "Jet Browser | USJET.AI",
+    description:
+      "USJET Jet Browser — load any domain into Hangar-style tiles. Enlarge, work, shrink. One ship, one cockpit.",
+  },
   "/hoops": {
     title: "Jet Hoops | USJET.AI",
     description: "Jet Hoops — USJET hangar sports surface.",

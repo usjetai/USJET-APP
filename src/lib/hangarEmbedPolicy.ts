@@ -124,6 +124,34 @@ export function hostFromUrl(url: string): string | null {
   }
 }
 
+function hostIsAutoEmbed(host: string): boolean {
+  if (HANGAR_IFRAME_AUTO_EMBED_HOSTS.has(host) || isHfSpace(host)) {
+    return true;
+  }
+
+  for (const allowed of HANGAR_IFRAME_AUTO_EMBED_HOSTS) {
+    if (host === allowed || host.endsWith(`.${allowed}`)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function hostIsKnownBlocked(host: string): boolean {
+  if (HANGAR_IFRAME_BLOCKED_HOSTS.has(host)) {
+    return true;
+  }
+
+  for (const blocked of HANGAR_IFRAME_BLOCKED_HOSTS) {
+    if (host === blocked || host.endsWith(`.${blocked}`)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 /** True when the partner must show Launch before setting iframe src (stays in tile). */
 export function isHangarIframeBlocked(url: string): boolean {
   if (!url.trim() || url.startsWith("/")) {
@@ -135,21 +163,35 @@ export function isHangarIframeBlocked(url: string): boolean {
     return true;
   }
 
-  if (HANGAR_IFRAME_AUTO_EMBED_HOSTS.has(host) || isHfSpace(host)) {
+  if (hostIsAutoEmbed(host)) {
     return false;
   }
 
-  // Allowlisted partner roots (e.g. aws.amazon.com/q/…) — check base host match.
-  for (const allowed of HANGAR_IFRAME_AUTO_EMBED_HOSTS) {
-    if (host === allowed || host.endsWith(`.${allowed}`)) {
-      return false;
-    }
-  }
-
-  if (HANGAR_IFRAME_BLOCKED_HOSTS.has(host)) {
+  if (hostIsKnownBlocked(host)) {
     return true;
   }
 
   // Unknown external partner — gate behind Launch until verified.
   return true;
+}
+
+/**
+ * Jet Browser: only known frame-blockers show handoff.
+ * Unknown domains still try in-tile iframe so captains can load any link.
+ */
+export function isJetBrowserIframeBlocked(url: string): boolean {
+  if (!url.trim() || url.startsWith("/")) {
+    return false;
+  }
+
+  const host = hostFromUrl(url);
+  if (!host) {
+    return true;
+  }
+
+  if (hostIsAutoEmbed(host)) {
+    return false;
+  }
+
+  return hostIsKnownBlocked(host);
 }

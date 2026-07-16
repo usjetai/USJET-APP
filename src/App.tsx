@@ -59,6 +59,7 @@ const Gamers = lazy(() => import("./pages/Gamers"));
 const Gaming = lazy(() => import("./pages/Gaming"));
 const HiredHud = lazy(() => import("./pages/HiredHud"));
 const Hoops = lazy(() => import("./pages/Hoops"));
+const JetBrowser = lazy(() => import("./pages/JetBrowser"));
 const X = lazy(() => import("./pages/X"));
 
 function RouteFallback() {
@@ -133,6 +134,14 @@ function AnimatedRoutes() {
             <Route path="/hired-hud" element={<HiredHud />} />
             <Route path="/hoops" element={<Hoops />} />
             <Route path="/app/hoops" element={<Hoops />} />
+            <Route
+              path="/jet-browser"
+              element={
+                <TierRouteGate path="/jet-browser" pageLabel="Jet Browser">
+                  <JetBrowser />
+                </TierRouteGate>
+              }
+            />
             <Route path="/100k" element={<SovereignBlueprint100k />} />
             <Route
               path="/origin"

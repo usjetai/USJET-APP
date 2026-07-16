@@ -6212,6 +6212,179 @@ button.fleet-card__launch--button {
   pointer-events: none !important;
 }
 
+/* ── Jet Browser — captain-loaded Hangar tiles ── */
+.jet-browser-launch {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem 1.1rem 1.05rem;
+  text-align: left;
+}
+
+.jet-browser-launch__label {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.78);
+}
+
+.jet-browser-launch__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: stretch;
+}
+
+.jet-browser-launch__input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(103, 232, 249, 0.28);
+  background: rgba(2, 8, 20, 0.72);
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(248, 250, 252, 0.96);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.jet-browser-launch__input::placeholder {
+  color: rgba(148, 163, 184, 0.55);
+}
+
+.jet-browser-launch__input:focus {
+  border-color: rgba(34, 211, 238, 0.55);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.14);
+}
+
+.jet-browser-launch__submit {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #041018;
+  cursor: pointer;
+}
+
+.jet-browser-launch__hint,
+.jet-browser-launch__error {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.jet-browser-launch__hint {
+  color: rgba(148, 163, 184, 0.72);
+}
+
+.jet-browser-launch__error {
+  color: rgba(252, 165, 165, 0.95);
+}
+
+.jet-browser-empty-bay {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  min-height: 13.5rem;
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  padding: 1.25rem 1.15rem;
+  text-align: left;
+  cursor: pointer;
+  border-style: dashed;
+  border-color: rgba(103, 232, 249, 0.28);
+  background: rgba(2, 10, 22, 0.42);
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.jet-browser-empty-bay:hover,
+.jet-browser-empty-bay:focus-visible {
+  border-color: rgba(34, 211, 238, 0.55);
+  background: rgba(8, 24, 42, 0.55);
+  transform: translateY(-2px);
+}
+
+.jet-browser-empty-bay__kicker {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.55);
+}
+
+.jet-browser-empty-bay__title {
+  font-family: theme("fontFamily.aviation");
+  font-size: 1.35rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.82);
+}
+
+.jet-browser-empty-bay__copy {
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.jet-browser-tile {
+  position: relative;
+}
+
+.jet-browser-tile__label {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.65rem;
+  z-index: 18;
+  max-width: calc(100% - 5.5rem);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(2, 8, 23, 0.72);
+  padding: 0.22rem 0.55rem;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.82);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.jet-browser-tile__note {
+  margin: 0 0 0.75rem;
+  max-width: 16rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  text-align: center;
+  color: rgba(148, 163, 184, 0.78);
+}
+
+.jet-browser-page .jet-browser-grid .hangar-tool-workbench.hangar-tool-workbench--tile-only.hangar-tool-workbench--focused {
+  position: fixed;
+  z-index: 440;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+}
+
 /* Hangar bay isolation — portaled full-bleed partner view above global chrome */
 html.hangar-bay-isolated .liquid-glass-nav,
 html.hangar-bay-isolated .usjet-global-contact-bar,

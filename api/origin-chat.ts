@@ -1,10 +1,8 @@
 /**
- * Server proxy for Origin Aura — keeps OpenRouter key off the client bundle.
- * Set OPENROUTER_API_KEY (preferred) or VITE_OPENROUTER_API_KEY in Vercel Production.
+ * Origin Aura compatibility endpoint — zero-cost onboard answers only.
+ * No Gemini / OpenRouter billing. Prefer the in-app knowledge brain;
+ * this route stays for older clients and returns a short ship briefing.
  */
-
-const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const OPENROUTER_MODEL = "google/gemini-2.0-flash-001";
 
 type ApiChatMessage = {
   role: "user" | "assistant" | "system";
@@ -39,10 +37,28 @@ function parseBody(body: OriginChatBody | string | undefined): OriginChatBody {
   return body;
 }
 
-function resolveOpenRouterKey(): string {
-  return (process.env.OPENROUTER_API_KEY ?? process.env.VITE_OPENROUTER_API_KEY ?? "")
-    .trim()
-    .replace(/^['"]|['"]$/g, "");
+function lastUserText(messages: ApiChatMessage[]): string {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message?.role === "user" && message.content.trim()) {
+      return message.content.trim();
+    }
+  }
+  return "";
+}
+
+function onboardReply(userText: string): string {
+  const q = userText.toLowerCase();
+  if (!q.trim()) {
+    return "Welcome to U. S. Jet.\n\nFlight Plan\nI'm Origin — onboard command. Ask about Hangar, Fleet, tiers, login, or a partner bay.";
+  }
+  if (/(price|tier|flight pass|hangar pro|enterprise)/.test(q)) {
+    return "Welcome to U. S. Jet.\n\nFlight Plan\nStripe only: Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo. Verify at /member/login.";
+  }
+  if (/(hangar|fleet|login|founder|intel|jet browser)/.test(q)) {
+    return "Welcome to U. S. Jet.\n\nFlight Plan\nHangar (/), Fleet (/fleet), Jet Browser (/jet-browser), Founder (/founder), Intel (/intel). Login is Stripe-only at /member/login — no OAuth.";
+  }
+  return "Welcome to U. S. Jet.\n\nFlight Plan\nOrigin runs on ship knowledge at zero cloud cost. Open /origin in the app for the full onboard brain — fleet bays, tiers, Hangar, and ops.";
 }
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
@@ -50,62 +66,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = resolveOpenRouterKey();
-  if (!apiKey) {
-    return res.status(503).json({ error: "Origin Aura is not configured on the server." });
-  }
-
   const { messages } = parseBody(req.body);
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: "messages array required" });
   }
 
-  try {
-    const response = await fetch(OPENROUTER_API_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://www.usjet.ai",
-        "X-Title": "USJet AI",
-      },
-      body: JSON.stringify({
-        model: OPENROUTER_MODEL,
-        messages,
-      }),
-    });
-
-    const raw = await response.text();
-
-    if (!response.ok) {
-      let detail = raw;
-      try {
-        const parsed = JSON.parse(raw) as { error?: { message?: string } };
-        detail = parsed.error?.message ?? raw;
-      } catch {
-        /* keep raw */
-      }
-      return res.status(response.status).json({
-        error: detail || `OpenRouter request failed (${response.status})`,
-      });
-    }
-
-    let data: {
-      choices?: Array<{ message?: { content?: string | null } }>;
-    };
-    try {
-      data = JSON.parse(raw) as typeof data;
-    } catch {
-      return res.status(502).json({ error: "Invalid JSON from OpenRouter" });
-    }
-
-    const reply = data.choices?.[0]?.message?.content;
-    if (typeof reply !== "string" || !reply.trim()) {
-      return res.status(502).json({ error: "No reply text from the model." });
-    }
-
-    return res.status(200).json({ reply: reply.trim() });
-  } catch {
-    return res.status(502).json({ error: "Origin Aura link failed — try again." });
-  }
+  return res.status(200).json({ reply: onboardReply(lastUserText(messages)) });
 }

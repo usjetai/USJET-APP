@@ -4,7 +4,7 @@
 
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 const OPENROUTER_BAY_CHAT_WEB_MODEL = "perplexity/sonar-pro";
-const OPENROUTER_FALLBACK_MODEL = "google/gemini-2.0-flash-001";
+const OPENROUTER_FALLBACK_MODEL = "google/gemini-2.5-flash";
 
 /** Hired developer slots cleared on the Hired HUD hub roster. */
 const HIRED_HUD_CHAT_SLOTS = new Set([0, 1, 2, 3, 5, 6, 10, 11, 13, 25]);

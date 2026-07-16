@@ -50,11 +50,11 @@ const COMMAND_ROUTES = [
 const WELCOME_ASSISTANT: ChatTurn = {
   role: "assistant",
   content:
-    "I'm Origin — text chat for AI questions. Ask about the fleet, which tool to use, Hangar, Intel, tiers, or how AI works. Type below and send.",
+    "Welcome to U. S. Jet. I'm Origin — onboard command at zero cloud cost. Ask about the fleet, which bay to open, Hangar, Jet Browser, tiers, or Stripe login.",
 };
 
 const ORIGIN_CHAT_ERROR =
-  "Origin is online, but the AI link is quiet right now. Try again in a moment.";
+  "Origin hit turbulence on that question. Try again, or ask about Hangar, Fleet, tiers, or a partner bay by name.";
 
 export default function Origin() {
   const [searchParams] = useSearchParams();
@@ -197,8 +197,8 @@ export default function Origin() {
           <h1 className="origin-page__title">Origin Intelligence Core</h1>
           <p className="origin-page__lede">
             {isCustomerServiceEntry
-              ? "Customer Service text channel — ask Origin about your account, fleet, or clearance."
-              : "Text chat for AI questions. Ask how tools work, which bay to open, or how the Hangar and fleet fit together."}
+              ? "Customer Service text channel — onboard ship knowledge, zero cloud bill. Ask about your account, fleet, or clearance."
+              : "Onboard ship knowledge — fleet routing, Hangar, tiers, Jet Browser. No paid cloud model. Type and send."}
           </p>
         </header>
 

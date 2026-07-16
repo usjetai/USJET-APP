@@ -1,15 +1,16 @@
 /**
- * OpenRouter chat (OpenAI-compatible). Model and endpoint are centralized here.
- * Production Aura on Origin: set VITE_OPENROUTER_API_KEY in Vercel — admin-only; never speak env names in user TTS.
+ * Chat helpers. Origin Aura is zero-cost onboard knowledge (no paid cloud model).
+ * Hired HUD bay chat may still use OpenRouter when configured.
  */
 
 import { buildOriginAuraSystemPrompt } from "../data/originFleetKnowledge";
+import { answerOriginFromKnowledge } from "./originKnowledgeBrain";
 
 export const OPENROUTER_API_URL =
   "https://openrouter.ai/api/v1/chat/completions";
 
 /** Requested model — https://openrouter.ai/models */
-export const OPENROUTER_MODEL = "google/gemini-2.0-flash-001";
+export const OPENROUTER_MODEL = "google/gemini-2.5-flash";
 
 /** Web-grounded model for Hired HUD bay chat (Perplexity Sonar searches the web). */
 export const OPENROUTER_BAY_CHAT_WEB_MODEL = "perplexity/sonar-pro";
@@ -55,46 +56,17 @@ function openRouterReferer(): string {
   return "https://www.usjet.ai";
 }
 
-type OriginChatApiPayload = {
-  reply?: string;
-  error?: string;
-};
+function originBrainOptionsFromMessages(messages: ApiChatMessage[]): BuildOpenRouterOptions {
+  const system = messages.find((message) => message.role === "system")?.content ?? "";
+  const entry = /CUSTOMER SERVICE ENTRY/i.test(system) ? ("customer-service" as const) : undefined;
+  const memberMatch = system.match(/MEMBER_CONTEXT[\s\S]*$/i);
+  const memberContext = memberMatch?.[0]?.trim();
+  return { entry, memberContext };
+}
 
-/** Origin Aura — server proxy first, then client VITE key for local dev. */
+/** Origin Aura — zero-cost onboard knowledge. Never bills a cloud model. */
 export async function completeOriginChat(messages: ApiChatMessage[]): Promise<string> {
-  try {
-    const response = await fetch("/api/origin-chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages }),
-    });
-
-    let payload: OriginChatApiPayload = {};
-    try {
-      payload = (await response.json()) as OriginChatApiPayload;
-    } catch {
-      /* non-JSON */
-    }
-
-    if (response.ok && typeof payload.reply === "string" && payload.reply.trim()) {
-      return payload.reply.trim();
-    }
-
-    if (response.status !== 503 && response.status !== 404) {
-      throw new Error(payload.error ?? `Origin chat failed (${response.status})`);
-    }
-  } catch (error) {
-    if (OPENROUTER_API_KEY) {
-      return completeChat(OPENROUTER_API_KEY, messages);
-    }
-    throw error instanceof Error ? error : new Error("Aura link unavailable");
-  }
-
-  if (OPENROUTER_API_KEY) {
-    return completeChat(OPENROUTER_API_KEY, messages);
-  }
-
-  throw new Error("Aura link not configured");
+  return answerOriginFromKnowledge(messages, originBrainOptionsFromMessages(messages));
 }
 
 export async function completeChat(

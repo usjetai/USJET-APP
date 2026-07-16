@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
@@ -32,7 +32,20 @@ export default function Hangar() {
     unitBySlot,
     bayLimit,
   );
+  const [focusedSlot, setFocusedSlot] = useState<number | null>(null);
   const autoExpandedSlotRef = useRef<number | null>(null);
+
+  const handleCloseExpansion = useCallback(
+    (slot: number) => {
+      setFocusedSlot((current) => (current === slot ? null : current));
+      closeExpansion(slot);
+    },
+    [closeExpansion],
+  );
+
+  const handleToggleFocus = useCallback((slot: number) => {
+    setFocusedSlot((current) => (current === slot ? null : slot));
+  }, []);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -65,6 +78,12 @@ export default function Hangar() {
 
   const expandedSlots = useMemo(() => new Set(expansions.map((entry) => entry.slot)), [expansions]);
 
+  useEffect(() => {
+    if (focusedSlot !== null && !expandedSlots.has(focusedSlot)) {
+      setFocusedSlot(null);
+    }
+  }, [expandedSlots, focusedSlot]);
+
   const bayCells = useMemo(
     () =>
       hangarUnits.map((unit) =>
@@ -72,13 +91,15 @@ export default function Hangar() {
           <HangarToolWorkbench
             key={`hangar-workbench-${unit.slot}`}
             unit={unit}
-            onClose={() => closeExpansion(unit.slot)}
+            focused={focusedSlot === unit.slot}
+            onToggleFocus={() => handleToggleFocus(unit.slot)}
+            onClose={() => handleCloseExpansion(unit.slot)}
           />
         ) : (
           <HangarBayTile key={`hangar-bay-${unit.slot}`} unit={unit} onOpenBay={() => tryExpand(unit)} />
         ),
       ),
-    [tryExpand, closeExpansion, expandedSlots],
+    [tryExpand, handleCloseExpansion, handleToggleFocus, expandedSlots, focusedSlot],
   );
 
   return (
@@ -88,6 +109,7 @@ export default function Hangar() {
       className={[
         "hangar-page hangar-page--workbench relative",
         expandedSlots.size > 0 ? "hangar-page--bay-open" : "",
+        focusedSlot !== null ? "hangar-page--bay-focused" : "",
       ]
         .filter(Boolean)
         .join(" ")}

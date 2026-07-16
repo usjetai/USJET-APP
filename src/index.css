@@ -6028,27 +6028,66 @@ button.fleet-card__launch--button {
   background: #010308;
 }
 
-.hangar-tool-workbench--tile-only .hangar-tile-close {
+.hangar-bay-focus-slot {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.hangar-bay-focus-slot--active {
+  height: 28rem;
+  min-height: 28rem;
+}
+
+.hangar-bay-focus-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 430;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(2, 6, 14, 0.72);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.hangar-tile-controls {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
   z-index: 20;
   display: inline-flex;
   align-items: center;
+  gap: 0.35rem;
+}
+
+.hangar-tool-workbench--tile-only .hangar-tile-focus,
+.hangar-tool-workbench--tile-only .hangar-tile-close {
+  position: static;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.22);
-  background: rgba(2,8,23,0.72);
-  color: rgba(255,255,255,0.72);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(2, 8, 23, 0.72);
+  color: rgba(255, 255, 255, 0.72);
   cursor: pointer;
   backdrop-filter: blur(6px);
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
-.hangar-tool-workbench--tile-only .hangar-tile-close:hover {
-  background: rgba(239,68,68,0.72);
+.hangar-tool-workbench--tile-only .hangar-tile-focus:hover,
+.hangar-tool-workbench--tile-only .hangar-tile-focus:focus-visible {
+  background: rgba(34, 211, 238, 0.28);
+  border-color: rgba(103, 232, 249, 0.55);
+  color: #fff;
+}
+
+.hangar-tool-workbench--tile-only .hangar-tile-close:hover,
+.hangar-tool-workbench--tile-only .hangar-tile-close:focus-visible {
+  background: rgba(239, 68, 68, 0.72);
   color: #fff;
 }
 
@@ -6062,6 +6101,44 @@ button.fleet-card__launch--button {
   border: 0;
   border-radius: inherit;
   background: #010308;
+}
+
+/* Enlarge mode — same iframe, full working surface; grid slot held by focus-slot */
+.hangar-tool-workbench--tile-only.hangar-tool-workbench--focused {
+  position: fixed;
+  top: max(4.75rem, calc(env(safe-area-inset-top, 0px) + 4.25rem));
+  right: max(0.85rem, env(safe-area-inset-right, 0px));
+  bottom: max(0.85rem, env(safe-area-inset-bottom, 0px));
+  left: max(0.85rem, env(safe-area-inset-left, 0px));
+  z-index: 440;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  border-radius: 1rem;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 28px 80px -24px rgba(0, 0, 0, 0.85),
+    0 0 48px rgba(34, 211, 238, 0.12);
+}
+
+.hangar-tool-workbench--tile-only.hangar-tool-workbench--focused .hangar-tile-controls {
+  top: max(0.65rem, env(safe-area-inset-top, 0px));
+  right: max(0.65rem, env(safe-area-inset-right, 0px));
+}
+
+.hangar-page--bay-focused {
+  overflow: hidden;
+}
+
+@media (max-width: 639px) {
+  .hangar-tool-workbench--tile-only.hangar-tool-workbench--focused {
+    top: max(4.25rem, calc(env(safe-area-inset-top, 0px) + 3.75rem));
+    right: max(0.5rem, env(safe-area-inset-right, 0px));
+    bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+    left: max(0.5rem, env(safe-area-inset-left, 0px));
+    border-radius: 0.75rem;
+  }
 }
 
 /* Launch card for iframe-blocked AI sites */
@@ -6195,7 +6272,7 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   border-radius: 0;
 }
 
-.hangar-tool-workbench--isolated .hangar-tile-close {
+.hangar-tool-workbench--isolated .hangar-tile-controls {
   top: max(0.65rem, env(safe-area-inset-top, 0px));
   right: max(0.65rem, env(safe-area-inset-right, 0px));
 }
@@ -8609,6 +8686,7 @@ html.code-kit-page-root #usjet-app-shell {
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__external,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__tactical,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close,
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-focus,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-close {
   border-color: color-mix(in srgb, var(--fleet-accent) 32%, transparent);
   color: color-mix(in srgb, var(--fleet-accent-bright) 88%, white);
@@ -8620,6 +8698,8 @@ html.code-kit-page-root #usjet-app-shell {
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__tactical:focus-visible,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close:hover,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .intel-expanded__close:focus-visible,
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-focus:hover,
+.hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-focus:focus-visible,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-close:hover,
 .hangar-page--workbench .hangar-tool-workbench--bay-accent .hangar-tile-close:focus-visible {
   border-color: color-mix(in srgb, var(--fleet-accent) 55%, transparent);
@@ -8667,10 +8747,26 @@ html.code-kit-page-root #usjet-app-shell {
   align-self: start;
 }
 
+.hangar-page--workbench .hangar-bay-grid .hangar-bay-focus-slot {
+  width: 100%;
+  align-self: start;
+}
+
 .hangar-page--workbench .hangar-bay-grid .hangar-tool-workbench.hangar-tool-workbench--tile-only {
   height: 28rem;
   min-height: 28rem;
   max-height: 28rem;
+}
+
+.hangar-page--workbench
+  .hangar-bay-grid
+  .hangar-tool-workbench.hangar-tool-workbench--tile-only.hangar-tool-workbench--focused {
+  position: fixed;
+  z-index: 440;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
 }
 
 .hangar-page--workbench .hangar-tool-workbench .hangar-cockpit-frame {

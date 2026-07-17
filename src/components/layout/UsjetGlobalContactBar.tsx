@@ -3,51 +3,122 @@ import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
 
-const FOOTER_TEXT_LINK = "footer-text-link";
-const FOOTER_TEXT_LINK_PINK = "footer-text-link footer-text-link--pink";
+const YEAR = new Date().getFullYear();
 
-/** Document-flow bottom strip — professional plain text links. USJET House is pink. */
+function footerLinkClass({ isActive }: { isActive: boolean }) {
+  return ["usjet-footer__link", isActive ? "usjet-footer__link--active" : ""].filter(Boolean).join(" ");
+}
+
+/** Document-flow site footer — professional link columns, liquid glass shell. */
 export default function UsjetGlobalContactBar() {
   return (
-    <footer className="usjet-global-contact-bar" aria-label="USJET site status and quick links">
-      <GlassEffectContainer className="usjet-global-contact-bar__shell liquid-glass-background glass-effect glass-effect--capsule glass-tint-cyan">
-        <div className="usjet-global-contact-bar__row usjet-global-contact-bar__row--head">
-          <Link to="/" className="usjet-global-contact-bar__brand" aria-label="USJet.ai home">
-            <UsjetWordmark size="nav" glow />
-          </Link>
-
-          <div className="usjet-global-contact-bar__status-rail" aria-label="USJET live status">
-            <div className="usjet-global-contact-bar__status">
+    <footer className="usjet-global-contact-bar" aria-label="USJET site footer">
+      <GlassEffectContainer className="usjet-global-contact-bar__shell liquid-glass-background glass-effect glass-effect--rounded-rect glass-tint-cyan">
+        <div className="usjet-footer__grid">
+          <div className="usjet-footer__brand-col">
+            <Link to="/" className="usjet-global-contact-bar__brand" aria-label="USJet.ai home">
+              <UsjetWordmark size="nav" glow />
+            </Link>
+            <p className="usjet-footer__tagline">
+              Sovereign workbench for America&apos;s labor force — grit into gold.
+            </p>
+            <div className="usjet-global-contact-bar__status" aria-label="USJET live status">
               <span className="usjet-global-contact-bar__status-label usjet-global-contact-bar__status-label--full">
-                USJET System Active
+                System Active
               </span>
               <span className="usjet-global-contact-bar__status-label usjet-global-contact-bar__status-label--short">
-                System Active
+                Active
               </span>
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
           </div>
 
-          <div className="usjet-global-contact-bar__support">
-            <Link to="/sos" className={FOOTER_TEXT_LINK}>Help</Link>
-            <Link to="/privacy" className={FOOTER_TEXT_LINK}>Privacy</Link>
-            <Link to={ORIGIN_CS_ROUTE} className={FOOTER_TEXT_LINK}>Customer Service</Link>
-          </div>
+          <nav className="usjet-footer__col" aria-label="Platform">
+            <h2 className="usjet-footer__heading">Platform</h2>
+            <NavLink to="/" end className={footerLinkClass}>
+              Hangar
+            </NavLink>
+            <NavLink to="/fleet" className={footerLinkClass}>
+              Fleet
+            </NavLink>
+            <NavLink to="/intelligence" className={footerLinkClass}>
+              Intel
+            </NavLink>
+            <NavLink to="/jet-browser" className={footerLinkClass}>
+              Jet Browser
+            </NavLink>
+            <NavLink to="/blog" className={footerLinkClass}>
+              Blog
+            </NavLink>
+            <NavLink to="/fleet-manual" className={footerLinkClass}>
+              Fleet Manual
+            </NavLink>
+          </nav>
+
+          <nav className="usjet-footer__col" aria-label="Business">
+            <h2 className="usjet-footer__heading">Business</h2>
+            <NavLink to="/b2b" className={footerLinkClass}>
+              B2B
+            </NavLink>
+            <NavLink to="/b2k" className={footerLinkClass}>
+              B2K
+            </NavLink>
+            <NavLink to="/pdre" className={footerLinkClass}>
+              PDRE
+            </NavLink>
+            <NavLink to="/licensing" className={footerLinkClass}>
+              Licensing
+            </NavLink>
+            <NavLink to="/founders-fuel" className={footerLinkClass}>
+              Fuel
+            </NavLink>
+            <NavLink to="/zelle" className={footerLinkClass}>
+              Zelle
+            </NavLink>
+            <NavLink
+              to="/hired-hud"
+              className={({ isActive }) =>
+                ["usjet-footer__link", "usjet-footer__link--house", isActive ? "usjet-footer__link--active" : ""]
+                  .filter(Boolean)
+                  .join(" ")
+              }
+            >
+              USJET House
+            </NavLink>
+            <NavLink to="/100k" className={footerLinkClass}>
+              100K
+            </NavLink>
+          </nav>
+
+          <nav className="usjet-footer__col" aria-label="Support">
+            <h2 className="usjet-footer__heading">Support</h2>
+            <NavLink to="/sos" className={footerLinkClass}>
+              Help
+            </NavLink>
+            <NavLink to="/privacy" className={footerLinkClass}>
+              Privacy
+            </NavLink>
+            <NavLink to={ORIGIN_CS_ROUTE} className={footerLinkClass}>
+              Customer Service
+            </NavLink>
+            <NavLink to="/ai-101" className={footerLinkClass}>
+              AI 101
+            </NavLink>
+            <NavLink to="/founder" className={footerLinkClass}>
+              Founder
+            </NavLink>
+            <NavLink to="/member" className={footerLinkClass}>
+              Member
+            </NavLink>
+          </nav>
         </div>
 
-        <nav className="usjet-global-contact-bar__row usjet-global-contact-bar__row--lanes" aria-label="USJET quick links">
-          <NavLink to="/hired-hud" className={FOOTER_TEXT_LINK_PINK}>USJET House</NavLink>
-          <Link to="/b2b" className={FOOTER_TEXT_LINK}>B2B</Link>
-          <Link to="/b2k" className={FOOTER_TEXT_LINK}>B2K</Link>
-          <Link to="/pdre" className={FOOTER_TEXT_LINK}>PDRE</Link>
-          <Link to="/blog" className={FOOTER_TEXT_LINK}>Blog</Link>
-          <Link to="/intelligence" className={FOOTER_TEXT_LINK}>Intel</Link>
-          <Link to="/fleet-manual" className={FOOTER_TEXT_LINK}>Fleet Manual</Link>
-          <Link to="/100k" className={FOOTER_TEXT_LINK}>100K</Link>
-          <Link to="/founders-fuel" className={FOOTER_TEXT_LINK}>Fuel</Link>
-          <Link to="/zelle" className={FOOTER_TEXT_LINK}>Zelle</Link>
-          <Link to="/licensing" className={FOOTER_TEXT_LINK}>Licensing</Link>
-        </nav>
+        <div className="usjet-footer__legal">
+          <p className="usjet-footer__copy">
+            © {YEAR} USJET.AI · All rights reserved
+          </p>
+          <p className="usjet-footer__legal-note">One Ship · One Cockpit · Stripe-cleared members only</p>
+        </div>
       </GlassEffectContainer>
     </footer>
   );

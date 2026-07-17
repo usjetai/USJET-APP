@@ -9341,6 +9341,103 @@ html.code-kit-page-root #usjet-app-shell {
   text-wrap: balance;
 }
 
+.hangar-start-mission {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto 1.75rem;
+  padding: 1.35rem 1.4rem 1.45rem;
+}
+
+.hangar-start-mission__header {
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+.hangar-start-mission__kicker {
+  margin: 0 0 0.45rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.72);
+}
+
+.hangar-start-mission__title {
+  margin: 0;
+  font-family: var(--font-aviation, Audiowide, sans-serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.hangar-start-mission__lede {
+  margin: 0.7rem auto 0;
+  max-width: 34rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.72);
+  text-wrap: pretty;
+}
+
+.hangar-start-mission__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.hangar-start-mission__group-label {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.55);
+}
+
+.hangar-start-mission__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hangar-start-mission__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.28rem;
+  min-width: min(100%, 14rem);
+  padding: 0.85rem 1.05rem;
+  text-align: left;
+}
+
+.hangar-start-mission__btn-label {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(236, 254, 255, 0.95);
+}
+
+.hangar-start-mission__btn-meta {
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: rgba(186, 230, 253, 0.62);
+}
+
+@media (max-width: 640px) {
+  .hangar-start-mission {
+    margin-bottom: 1.35rem;
+    padding: 1.15rem 1.05rem 1.25rem;
+  }
+
+  .hangar-start-mission__btn {
+    width: 100%;
+  }
+}
+
 .hangar-workbench-hero__title {
   text-wrap: balance;
 }

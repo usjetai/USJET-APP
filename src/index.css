@@ -6916,7 +6916,7 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   color: rgba(255, 255, 255, 0.62);
 }
 
-/* Site operating support (/sos) */
+/* Help center (/sos) */
 .sos-page__header {
   margin-bottom: 1.75rem;
   text-align: center;
@@ -6925,6 +6925,7 @@ html.hangar-bay-isolated .usjet-protocol-boot {
 .sos-page__kicker-row {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.45rem;
   margin-bottom: 0.75rem;
 }
@@ -6950,10 +6951,6 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   line-height: 1.15;
 }
 
-.sos-page__title-route {
-  color: rgba(34, 211, 238, 0.95);
-}
-
 .sos-page__subtitle {
   margin: 0.85rem auto 0;
   max-width: 40rem;
@@ -6962,76 +6959,56 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   color: rgba(255, 255, 255, 0.62);
 }
 
-.sos-page__shell {
-  padding: 0;
-  overflow: hidden;
+.sos-page__subtitle a {
+  color: rgba(125, 235, 255, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
-.sos-page__shell-inner {
+.sos-page__topics {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  padding: 0.85rem 0.85rem 0.65rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(6, 24, 38, 0.35);
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 1.25rem;
 }
 
-.sos-page__tab {
-  flex: 1 1 auto;
-  min-width: 7.5rem;
-  padding: 0.5rem 0.65rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.65rem;
-  background: rgba(255, 255, 255, 0.04);
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
-  cursor: pointer;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease,
-    background 0.15s ease;
-}
-
-.sos-page__tab:hover {
-  color: rgba(255, 255, 255, 0.78);
-  border-color: rgba(34, 211, 238, 0.35);
-}
-
-.sos-page__tab--active {
-  color: #fff;
-  border-color: rgba(34, 211, 238, 0.55);
-  background: rgba(34, 211, 238, 0.12);
-}
-
-.sos-page__panel {
-  padding: 1.15rem 1.1rem 1.35rem;
+.sos-page__topic {
+  padding: 1.15rem 1.1rem 1.25rem;
 }
 
 @media (min-width: 640px) {
-  .sos-page__panel {
-    padding: 1.35rem 1.5rem 1.6rem;
+  .sos-page__topic {
+    padding: 1.35rem 1.4rem 1.45rem;
   }
 }
 
-.sos-page__section-title {
-  margin: 0 0 0.65rem;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(103, 232, 249, 0.85);
+.sos-page__topic-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.55rem;
 }
 
-.sos-page__subhead {
-  margin: 1.35rem 0 0.5rem;
-  font-size: 0.68rem;
-  font-weight: 800;
+.sos-page__topic-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  background: rgba(34, 211, 238, 0.08);
+  color: rgba(125, 235, 255, 0.95);
+}
+
+.sos-page__section-title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(248, 250, 252, 0.95);
 }
 
 .sos-page__lead {
@@ -7058,15 +7035,10 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   font-weight: 700;
 }
 
-.sos-page__note {
-  margin: 1rem 0 0;
-  padding: 0.75rem 0.85rem;
-  border-radius: 0.65rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.2);
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.55);
+.sos-page__list a {
+  color: rgba(125, 235, 255, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 .sos-page__inline-link {
@@ -7233,6 +7205,330 @@ html.hangar-bay-isolated .usjet-protocol-boot {
 
 .ai101-fleet-host-card .fleet-card__glass {
   min-height: 11rem;
+}
+
+/* AI 101 — one-on-one lesson + quiz */
+.ai101-lesson__shell {
+  padding: 1.25rem 1.15rem 1.4rem;
+}
+
+@media (min-width: 640px) {
+  .ai101-lesson__shell {
+    padding: 1.5rem 1.5rem 1.65rem;
+  }
+}
+
+.ai101-lesson__kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.7);
+}
+
+.ai101-lesson__title {
+  margin: 0;
+  font-family: var(--font-aviation, inherit);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.ai101-lesson__route {
+  margin: 0.45rem 0 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(186, 230, 253, 0.65);
+}
+
+.ai101-lesson__link {
+  color: rgba(125, 235, 255, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.ai101-lesson__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ai101-lesson__body p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.ai101-lesson__bullets {
+  margin: 1rem 0 0;
+  padding-left: 1.15rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(186, 230, 253, 0.78);
+}
+
+.ai101-lesson__bullets li + li {
+  margin-top: 0.4rem;
+}
+
+.ai101-quiz__shell {
+  padding: 1.35rem 1.15rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .ai101-quiz__shell {
+    padding: 1.75rem 1.6rem 1.85rem;
+  }
+}
+
+.ai101-quiz__kicker {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(251, 191, 36, 0.8);
+}
+
+.ai101-quiz__title {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-aviation, inherit);
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.ai101-quiz__lede {
+  margin: 0.65rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.75);
+}
+
+.ai101-quiz__lede a {
+  color: rgba(125, 235, 255, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.ai101-quiz__passed {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.15rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  background: rgba(6, 78, 59, 0.35);
+  color: rgba(167, 243, 208, 0.95);
+}
+
+.ai101-quiz__passed-title {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ai101-quiz__passed-copy {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: rgba(209, 250, 229, 0.85);
+}
+
+.ai101-quiz__passed-copy a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.ai101-quiz__list {
+  margin: 1.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.ai101-quiz__prompt {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: rgba(248, 250, 252, 0.95);
+}
+
+.ai101-quiz__num {
+  color: rgba(103, 232, 249, 0.85);
+  margin-right: 0.25rem;
+}
+
+.ai101-quiz__choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ai101-quiz__choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(2, 8, 20, 0.45);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: rgba(226, 232, 240, 0.88);
+  cursor: pointer;
+}
+
+.ai101-quiz__choice input {
+  margin-top: 0.15rem;
+}
+
+.ai101-quiz__choice--selected {
+  border-color: rgba(34, 211, 238, 0.45);
+  background: rgba(8, 47, 73, 0.55);
+}
+
+.ai101-quiz__choice--correct {
+  border-color: rgba(52, 211, 153, 0.55);
+  background: rgba(6, 78, 59, 0.35);
+}
+
+.ai101-quiz__choice--wrong {
+  border-color: rgba(248, 113, 113, 0.5);
+  background: rgba(69, 10, 10, 0.35);
+}
+
+.ai101-quiz__actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ai101-quiz__submit {
+  padding: 0.85rem 1.35rem;
+  border-radius: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ai101-quiz__submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ai101-quiz__hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+.ai101-quiz__result {
+  margin-top: 1.15rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.ai101-quiz__result--pass {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  background: rgba(6, 78, 59, 0.35);
+  color: rgba(209, 250, 229, 0.95);
+}
+
+.ai101-quiz__result--pass a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.ai101-quiz__result--fail {
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  background: rgba(69, 26, 3, 0.35);
+  color: rgba(254, 243, 199, 0.92);
+}
+
+.ai101-quiz__fail-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ai101-quiz__fail-row p {
+  margin: 0;
+  flex: 1 1 14rem;
+}
+
+.ai101-quiz__retry {
+  padding: 0.55rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.member-ai101-badge {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 0.95rem 1.05rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(2, 8, 23, 0.45);
+}
+
+.member-ai101-badge--earned {
+  border-color: rgba(52, 211, 153, 0.45);
+  background: linear-gradient(155deg, rgba(6, 78, 59, 0.45), rgba(2, 8, 23, 0.55));
+  color: rgba(167, 243, 208, 0.95);
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.15);
+}
+
+.member-ai101-badge--locked {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.member-ai101-badge__label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.member-ai101-badge__copy {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.member-ai101-badge__link {
+  color: rgba(125, 235, 255, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 /* AI 101 — Cockpit calibration (browser troubleshooting) */

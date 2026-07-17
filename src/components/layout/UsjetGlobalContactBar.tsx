@@ -29,7 +29,7 @@ export default function UsjetGlobalContactBar() {
           </div>
 
           <div className="usjet-global-contact-bar__support">
-            <Link to="/sos" className={FOOTER_TEXT_LINK}>SOS</Link>
+            <Link to="/sos" className={FOOTER_TEXT_LINK}>Help</Link>
             <Link to="/privacy" className={FOOTER_TEXT_LINK}>Privacy</Link>
             <Link to={ORIGIN_CS_ROUTE} className={FOOTER_TEXT_LINK}>Customer Service</Link>
           </div>

@@ -3,6 +3,7 @@ import { LogOut, Wrench } from "lucide-react";
 import MemberFleetControlBoard from "../components/member/MemberFleetControlBoard";
 import MemberHangarControlBoard from "../components/member/MemberHangarControlBoard";
 import MemberPortalDataBoard from "../components/member/MemberPortalDataBoard";
+import MemberAi101Badge from "../components/member/MemberAi101Badge";
 import MemberPrimeBadge from "../components/member/MemberPrimeBadge";
 import MemberProjectTracker from "../components/member/MemberProjectTracker";
 import MemberShippingAddressForm from "../components/member/MemberShippingAddressForm";
@@ -53,6 +54,7 @@ export default function MemberPortal() {
             <MemberVitalsPanel session={session} />
             <MemberPrimeBadge session={session} compact />
           </div>
+          <MemberAi101Badge customerId={session.customerId} />
         </section>
 
         <section className="member-portal__section member-portal__section--primary" aria-labelledby="member-portal-projects-label">

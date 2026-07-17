@@ -1,232 +1,235 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Award, LifeBuoy } from "lucide-react";
+import {
+  BookOpen,
+  CircleHelp,
+  CreditCard,
+  LifeBuoy,
+  LogIn,
+  Mail,
+  MessageSquareText,
+  Wrench,
+} from "lucide-react";
+import type { ReactNode } from "react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import { SECURITY_STRIPE_ONLY_MAY_2026 } from "../data/founderManifesto";
+import { ORIGIN_CS_ROUTE } from "../lib/memberAccessLevel";
 import { mailtoUsjetOps, USJET_OPS_EMAIL } from "../lib/usjetContact";
 
-type SosTabId = "browser" | "audio" | "stripe";
+type HelpTopic = {
+  id: string;
+  title: string;
+  icon: typeof CircleHelp;
+  body: ReactNode;
+};
 
-const TABS: { id: SosTabId; label: string }[] = [
-  { id: "browser", label: "Browser & line" },
-  { id: "audio", label: "Audio (Origin)" },
-  { id: "stripe", label: "Stripe & member ID" },
+const HELP_TOPICS: HelpTopic[] = [
+  {
+    id: "start",
+    title: "Quick start",
+    icon: CircleHelp,
+    body: (
+      <ul className="sos-page__list">
+        <li>
+          <strong>Hangar</strong> (<Link to="/">/</Link>) — home workbench. First 6 tabs are free; open a bay to work
+          in-tile.
+        </li>
+        <li>
+          <strong>Fleet</strong> (<Link to="/fleet">/fleet</Link>) — runway of partner AIs. Guests get 10 free bays.
+        </li>
+        <li>
+          <strong>Jet Browser</strong> (<Link to="/jet-browser">/jet-browser</Link>) — paste any domain into tiles;
+          enlarge to work, shrink to formation.
+        </li>
+        <li>
+          <strong>Learn the ship</strong> — full glossary and lessons live on{" "}
+          <Link to="/ai-101">AI 101</Link>, not here.
+        </li>
+      </ul>
+    ),
+  },
+  {
+    id: "login",
+    title: "Login & Member ID",
+    icon: LogIn,
+    body: (
+      <>
+        <p className="sos-page__lead">
+          Go to{" "}
+          <Link to="/member/login" className="sos-page__inline-link">
+            Member Login
+          </Link>
+          . Pay on Stripe first, then verify with <strong>billing email</strong> plus your{" "}
+          <strong>access sentence</strong> or Stripe <strong>Member ID</strong> (<code className="sos-page__code">cus_…</code>
+          ). Email alone does not unlock the portal.
+        </p>
+        <ul className="sos-page__list">
+          <li>
+            <strong>No Google / Apple sign-in.</strong> {SECURITY_STRIPE_ONLY_MAY_2026.noOAuthEver.join(" ")}
+          </li>
+          <li>
+            <strong>Not your Stripe password.</strong> Use the billing email you paid with, plus the sentence or{" "}
+            <code className="sos-page__code">cus_…</code> from your receipt.
+          </li>
+          <li>
+            <strong>Session length.</strong> A verified session lasts about 24 hours in this browser; Sign out clears it.
+          </li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: "billing",
+    title: "Plans & billing",
+    icon: CreditCard,
+    body: (
+      <ul className="sos-page__list">
+        <li>
+          <strong>Flight Pass — $19.90/mo</strong> — full Hangar tabs + Member Portal.
+        </li>
+        <li>
+          <strong>Hangar Pro — $49.95/mo</strong> — adds Intel.
+        </li>
+        <li>
+          <strong>Enterprise Commander — $199.99/mo</strong> — adds Origin + 1995 Grit Vault.
+        </li>
+        <li>
+          <strong>Manage charges</strong> in your Stripe customer portal / receipt tools. Cancel and invoices stay with
+          Stripe — email Ops if you need a human handoff.
+        </li>
+      </ul>
+    ),
+  },
+  {
+    id: "hangar",
+    title: "Hangar & tiles",
+    icon: Wrench,
+    body: (
+      <ul className="sos-page__list">
+        <li>
+          <strong>Open a bay</strong> — click a Hangar tile to load the workbench in place.
+        </li>
+        <li>
+          <strong>Enlarge / shrink</strong> — use the maximize control on an open tile for a tall work surface; Escape or
+          shrink returns to formation.
+        </li>
+        <li>
+          <strong>Blank or blocked partner</strong> — some sites refuse iframes. Use the in-tile Open handoff (same
+          window / cockpit). Never expect a new browser tab from USJET.
+        </li>
+        <li>
+          <strong>Page looks stale</strong> — hard reload:{" "}
+          <kbd className="sos-page__kbd">Ctrl</kbd>+<kbd className="sos-page__kbd">Shift</kbd>+
+          <kbd className="sos-page__kbd">R</kbd> (Windows) or <kbd className="sos-page__kbd">Cmd</kbd>+
+          <kbd className="sos-page__kbd">Shift</kbd>+<kbd className="sos-page__kbd">R</kbd> (Mac).
+        </li>
+      </ul>
+    ),
+  },
+  {
+    id: "origin",
+    title: "Origin help chat",
+    icon: MessageSquareText,
+    body: (
+      <>
+        <p className="sos-page__lead">
+          <Link to="/origin" className="sos-page__inline-link">
+            Origin
+          </Link>{" "}
+          is onboard ship help (text). It answers Hangar, Fleet, tiers, and login from USJET knowledge — no paid cloud
+          bill. Customer Service entry:{" "}
+          <Link to={ORIGIN_CS_ROUTE} className="sos-page__inline-link">
+            Origin CS
+          </Link>
+          .
+        </p>
+        <ul className="sos-page__list">
+          <li>
+            <strong>Ask plainly</strong> — “How do I log in?”, “What does Claude do?”, “How much is Flight Pass?”
+          </li>
+          <li>
+            <strong>Enterprise clearance</strong> may be required for the full Origin route depending on your tier.
+          </li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: "contact",
+    title: "Contact Ops",
+    icon: Mail,
+    body: (
+      <ul className="sos-page__list">
+        <li>
+          Email{" "}
+          <a href={mailtoUsjetOps("USJET Help")} className="sos-page__inline-link">
+            {USJET_OPS_EMAIL}
+          </a>{" "}
+          for billing disputes, lockouts, or anything chat cannot close.
+        </li>
+        <li>
+          <strong>Response time</strong> — usually 1–3 business days (async, not an on-call desk).
+        </li>
+        <li>Include what you tried, your billing email, and the page URL.</li>
+      </ul>
+    ),
+  },
 ];
 
 export default function Sos() {
-  const [tab, setTab] = useState<SosTabId>("browser");
-
   return (
     <div className="sos-page page-atmosphere page-nav-offset mx-auto max-w-3xl px-6 pb-28 sm:px-8">
       <header className="sos-page__header">
         <div className="sos-page__kicker-row">
           <LifeBuoy size={14} aria-hidden />
-          <p className="sos-page__kicker">Site operating support</p>
+          <p className="sos-page__kicker">Help center</p>
         </div>
-        <h1 className="sos-page__title">
-          <span className="sos-page__title-route">/sos</span> calm line checks
-        </h1>
+        <h1 className="sos-page__title">How can we help?</h1>
         <p className="sos-page__subtitle">
-          Practical fixes for cache, connection, Origin voice, and member sign-in. If something still does not match
-          your clearance, contact OPS at{" "}
-          <a href={mailtoUsjetOps("USJET SOS")} className="sos-page__inline-link">
-            {USJET_OPS_EMAIL}
-          </a>
-          .
+          Short answers for login, Hangar tiles, plans, and Origin. For the full flight school — glossary, lessons, and
+          how the ship works — go to <Link to="/ai-101">AI 101</Link>.
         </p>
       </header>
 
-      <GlassEffectContainer className="sos-page__shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
-        <div className="sos-page__shell-inner" role="tablist" aria-label="SOS topics">
-          {TABS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={tab === item.id}
-              className={["sos-page__tab", tab === item.id ? "sos-page__tab--active" : ""].filter(Boolean).join(" ")}
-              onClick={() => setTab(item.id)}
+      <div className="sos-page__topics" role="list">
+        {HELP_TOPICS.map((topic) => {
+          const Icon = topic.icon;
+          return (
+            <GlassEffectContainer
+              key={topic.id}
+              className="sos-page__topic glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+              role="listitem"
             >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="sos-page__panel" role="tabpanel">
-          {tab === "browser" ? <BrowserLinePanel /> : null}
-          {tab === "audio" ? <AudioOriginPanel /> : null}
-          {tab === "stripe" ? <StripeMemberPanel /> : null}
-        </div>
-      </GlassEffectContainer>
+              <div className="sos-page__topic-head">
+                <span className="sos-page__topic-icon" aria-hidden>
+                  <Icon size={18} strokeWidth={2.2} />
+                </span>
+                <h2 className="sos-page__section-title">{topic.title}</h2>
+              </div>
+              <div className="sos-page__section">{topic.body}</div>
+            </GlassEffectContainer>
+          );
+        })}
+      </div>
 
       <section
-        id="sos-footer"
         className="sos-page__footer mt-12 scroll-mt-28 text-center sm:scroll-mt-32"
-        aria-labelledby="sos-footer-heading"
+        aria-labelledby="sos-learn-heading"
       >
-        <p id="sos-footer-heading" className="sos-page__subtitle mx-auto mb-5 max-w-md text-balance">
-          You read the operating lanes—next: the flight school.
+        <p id="sos-learn-heading" className="sos-page__subtitle mx-auto mb-5 max-w-md text-balance">
+          Need the real curriculum? AI 101 is the knowledge deck.
         </p>
         <Link
           to="/ai-101?from=sos"
           className="sos-page__ai101-badge glass-effect glass-effect--rounded-rect glass-effect-interactive"
-          aria-label="Continue to the USJET AI 101 curriculum in the same window"
+          aria-label="Open AI 101 flight school"
         >
           <span className="sos-page__ai101-badge__ribbon" aria-hidden>
-            Cleared
+            Learn
           </span>
-          <Award className="sos-page__ai101-badge__icon" size={20} strokeWidth={2.2} aria-hidden />
+          <BookOpen className="sos-page__ai101-badge__icon" size={20} strokeWidth={2.2} aria-hidden />
           <span className="sos-page__ai101-badge__label">AI 101</span>
         </Link>
       </section>
-    </div>
-  );
-}
-
-function BrowserLinePanel() {
-  return (
-    <div className="sos-page__section">
-      <h2 className="sos-page__section-title">Browser & line</h2>
-      <ul className="sos-page__list">
-        <li>
-          <strong>Stale layout or odd state after an update.</strong> Use your browser&apos;s hard reload (often{" "}
-          <kbd className="sos-page__kbd">Ctrl</kbd>+<kbd className="sos-page__kbd">Shift</kbd>+<kbd className="sos-page__kbd">R</kbd>{" "}
-          or <kbd className="sos-page__kbd">Cmd</kbd>+<kbd className="sos-page__kbd">Shift</kbd>+<kbd className="sos-page__kbd">R</kbd>
-          ) so the shell picks up fresh assets.
-        </li>
-        <li>
-          <strong>Site data and sign-in loops.</strong> Open browser settings → privacy or site settings → find this
-          site&apos;s entry → clear cached data or cookies for the USJET hostname you are actually using. You will need
-          to sign in to the Member Portal again afterward.
-        </li>
-        <li>
-          <strong>Integrated partner view (<Link to="/cockpit">/cockpit</Link>).</strong> Partners load in an embedded
-          frame. If the frame stays blank or the partner refuses embedding, the cockpit may offer to open the live
-          module in <em>this same window</em> so you can continue; use the return control to come back to USJET.
-        </li>
-        <li>
-          <strong>Stripe checkout.</strong> Tier links on{" "}
-          <Link to="/member/login" className="sos-page__inline-link">
-            Member Login
-          </Link>{" "}
-          navigate in the same tab to Stripe&apos;s hosted checkout (not an in-page embed here). If the page will not
-          advance after payment, try a hard reload on USJET once you are back on this origin.
-        </li>
-        <li>
-          <strong>Pop-up blockers.</strong> USJET does not rely on a separate pop-up window for member checkout. If a
-          partner flow inside <code className="sos-page__code">/cockpit</code> needs an auxiliary window and your
-          browser blocks it, allow pop-ups for this site and retry.
-        </li>
-      </ul>
-
-      <h3 className="sos-page__subhead">Connection &amp; domain</h3>
-      <ul className="sos-page__list">
-        <li>
-          <strong>HTTPS.</strong> Voice paths on Origin expect a secure context; avoid mixed-content or downgraded HTTP
-          when testing locally.
-        </li>
-        <li>
-          <strong>VPN, firewall, and corporate filters.</strong> They can block media capture, third-party frames, or
-          HTTPS calls your browser makes after you interact. If only one network fails, try another path or ask the
-          network operator for an allow rule.
-        </li>
-        <li>
-          <strong>Captive portals (hotel, café, inflight).</strong> Complete the Wi‑Fi login page first; otherwise assets
-          and verification calls may appear to hang.
-        </li>
-        <li>
-          <strong>Hostname sanity.</strong> Confirm the address bar shows the USJET host you trust before entering a
-          billing email or member identifier.
-        </li>
-      </ul>
-    </div>
-  );
-}
-
-function AudioOriginPanel() {
-  return (
-    <div className="sos-page__section">
-      <h2 className="sos-page__section-title">Audio (Origin)</h2>
-      <p className="sos-page__lead">
-        Origin on <Link to="/origin">/origin</Link> uses the browser microphone for conversational listening and the
-        device speech synthesizer for spoken briefings. The in-app &quot;Browser connect&quot; guide and voice
-        troubleshoot panel repeat the same steps: settings → microphone → allow this site.
-      </p>
-      <ul className="sos-page__list">
-        <li>
-          <strong>Mic mode.</strong> When you tap the Aura control to listen, Origin requests microphone access through{" "}
-          <code className="sos-page__code">navigator.mediaDevices.getUserMedia</code>. If permission is denied, the page
-          shows a &quot;Microphone permission denied&quot; status (or an iPhone-specific prompt to tap for access).
-        </li>
-        <li>
-          <strong>Speak mode.</strong> The separate Speak control uses <code className="sos-page__code">speechSynthesis</code>{" "}
-          only — no microphone is required for that path.
-        </li>
-        <li>
-          <strong>While Aura is speaking.</strong> Tapping Aura during output mutes website audio (the status strip reads
-          &quot;Speakers off — USJET website audio muted&quot; when muted while idle).
-        </li>
-        <li>
-          <strong>Autoplay guardrails.</strong> If the welcome voice cannot start automatically, Origin surfaces a
-          banner such as &quot;Tap Enable Origin voice&quot; — especially on iOS-like devices where a deliberate tap is
-          required before audio or mic access opens.
-        </li>
-        <li>
-          <strong>Speech recognition unsupported.</strong> If the browser lacks Web Speech recognition, Origin opens a
-          troubleshoot state; use the on-page &quot;Voice troubleshoot&quot; actions (&quot;Retry mic&quot; / &quot;Test
-          speak&quot;) there.
-        </li>
-      </ul>
-      <p className="sos-page__note">
-        macOS system microphone privacy (System Settings → Privacy &amp; Security → Microphone) must allow your browser.
-        Chrome site permissions (lock icon → Site settings → Microphone) should be set to Allow for this origin.
-      </p>
-    </div>
-  );
-}
-
-function StripeMemberPanel() {
-  return (
-    <div className="sos-page__section">
-      <h2 className="sos-page__section-title">Stripe &amp; member ID</h2>
-      <p className="sos-page__lead">
-        Clearance matches the live product copy on{" "}
-        <Link to="/member/login" className="sos-page__inline-link">
-          Member Login
-        </Link>
-        : pay through Stripe first, then verify with <strong>billing email</strong> plus either your{" "}
-        <strong>founder-issued access sentence</strong> or your Stripe <strong>Member ID</strong> in the form{" "}
-        <code className="sos-page__code">cus_…</code>. <strong>Email alone does not unlock the Member Portal.</strong>
-      </p>
-      <ul className="sos-page__list">
-        <li>
-          <strong>No OAuth.</strong> {SECURITY_STRIPE_ONLY_MAY_2026.noOAuthEver.join(" ")} The login panel states:
-          &quot;Stripe-only gate — no Google or Apple OAuth.&quot;
-        </li>
-        <li>
-          <strong>Not a Stripe password.</strong> USJET does not use your Stripe account password as the member password.
-          Verification is the billing email plus the access sentence or <code className="sos-page__code">cus_…</code>{" "}
-          Member ID, checked against the configured verify endpoint.
-        </li>
-        <li>
-          <strong>After checkout.</strong> Return to Member Login and use the same billing email you paid with, plus the
-          sentence or Member ID shown on Stripe confirmation / receipt when applicable.
-        </li>
-        <li>
-          <strong>Signed-in session storage.</strong> A verified session is stored in this browser&apos;s{" "}
-          <code className="sos-page__code">localStorage</code> and expires after twenty-four hours of age; signing out
-          clears it immediately.
-        </li>
-        <li>
-          <strong>Project tooling note.</strong> Member Project copy references the Stripe dashboard for charges and
-          quotas; the Member Portal UI here does not embed a subscription cancel button—manage billing through
-          Stripe&apos;s own account tools or email OPS if you need a human routing.
-        </li>
-      </ul>
-      <p className="sos-page__note">
-        Tier pricing on the login panel: Flight Pass <strong>$19.90/mo</strong>, Hangar Pro <strong>$49.95/mo</strong>,
-        Enterprise Commander <strong>$199.99/mo</strong> — all routed through Stripe Payment Links.
-      </p>
     </div>
   );
 }

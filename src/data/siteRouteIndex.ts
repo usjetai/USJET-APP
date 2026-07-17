@@ -76,8 +76,8 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     id: "ops",
     title: "Ops & flight school",
     routes: [
-      { path: "/ai-101", label: "AI 101" },
-      { path: "/sos", label: "SOS" },
+      { path: "/ai-101", label: "AI 101", hint: "Flight school" },
+      { path: "/sos", label: "Help", hint: "SOS help center" },
       { path: "/privacy", label: "Privacy" },
       { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
       { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },

@@ -60,9 +60,9 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     keywords: "USJET blog, operator log, AI doctrine, founder startup log",
   },
   "/ai-101": {
-    title: "AI 101 — Operator Briefing | USJET.AI",
+    title: "AI 101 — One-on-One Lesson | USJET.AI",
     description:
-      "AI 101 for operators: how USJET's Hangar, Fleet, and Flight Pass work — plain language for blue-collar America.",
+      "Learn Hangar, Fleet, Jet Browser, Intel, Origin, and Member. Pass the ten-question quiz for your Member Portal badge.",
   },
   "/b2b": {
     title: "B2B Industrial Backbone — Enterprise AI Hangar | USJET.AI",
@@ -152,8 +152,9 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     description: "USJET.AI privacy policy — how we handle member and hangar data.",
   },
   "/sos": {
-    title: "SOS — Customer Service Lane | USJET.AI",
-    description: "USJET SOS customer service lane — get help from the hangar ops desk.",
+    title: "Help Center | USJET.AI",
+    description:
+      "USJET Help — login, Hangar tiles, plans, and Origin. Full curriculum lives on AI 101.",
   },
   "/hired-hud": {
     title: "Hired HUD — Developer Roster | USJET.AI",

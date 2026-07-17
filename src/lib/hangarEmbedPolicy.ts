@@ -9,6 +9,8 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "gemini.google.com",
     "chatgpt.com",
     "claude.ai",
+    "opus.pro",
+    "agent.opus.pro",
     "perplexity.ai",
     "grok.com",
     "x.ai",
@@ -41,6 +43,7 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "craiyon.com",
     "hotbot.com",
     "framer.com",
+    "deepai.org",
   ].map((host) => host.toLowerCase()),
 );
 
@@ -90,7 +93,6 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "aichatting.net",
     "notegpt.io",
     "easemate.ai",
-    "deepai.org",
     "surfsense.com",
     "notrack.ai",
     "rewind.ai",
@@ -98,6 +100,7 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "getalai.com",
     "eesel.ai",
     "gamma.app",
+    "notegpt.io",
     "openai-whisper.hf.space",
     "stabilityai-stable-diffusion-3-5-large-turbo.hf.space",
     "stabilityai-stable-diffusion-3-5-medium.hf.space",

@@ -3,21 +3,21 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 Anima · Slot 1 FreeAssist · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 Kimi · Slot 1 FreeAssist · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "0",
     slot: 0,
-    name: "Anima",
+    name: "Kimi",
     callsign: "BLACKBIRD-01",
-    domain: "animaapp.com",
-    href: "https://www.animaapp.com/",
+    domain: "kimi.com",
+    href: "https://www.kimi.com",
     status: "active",
     aura: "idle",
     aircraftType: "rq180",
-    aiName: "Anima",
-    fleetRole: "Anima — design to code at animaapp.com.",
+    aiName: "Kimi",
+    fleetRole: "Moonshot Kimi — long-context AI assistant for chat and research.",
   },
   {
     id: "1",
@@ -35,15 +35,15 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "2",
     slot: 2,
-    name: "Kimi",
+    name: "NoteGPT",
     callsign: "RAIDER-03",
-    domain: "kimi.com",
-    href: "https://www.kimi.com",
+    domain: "notegpt.io",
+    href: "https://notegpt.io/",
     status: "active",
     aura: "idle",
     aircraftType: "b21",
-    aiName: "Kimi",
-    fleetRole: "Moonshot Kimi — long-context AI assistant for chat and research.",
+    aiName: "NoteGPT",
+    fleetRole: "NoteGPT — summarize, chat, and study tools at notegpt.io (Hangar embed-friendly).",
   },
   {
     id: "3",

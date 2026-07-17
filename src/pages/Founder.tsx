@@ -4,7 +4,6 @@ import FounderJetWing from "../components/founder/FounderJetWing";
 import FounderWorkerSilhouette, {
   type FounderWorkerSilhouetteType,
 } from "../components/founder/FounderWorkerSilhouettes";
-import FounderVideoBackground from "../components/founder/FounderVideoBackground";
 import AircraftIcon from "../components/icons/AircraftIcons";
 import FounderLinkedInBeacon from "../components/founder/FounderLinkedInBeacon";
 import FounderProductsBeacon from "../components/founder/FounderProductsBeacon";
@@ -92,7 +91,6 @@ const Founder = () => {
 
   return (
     <div className="founder-page founder-page--warp founder-page--wing page-atmosphere page-nav-offset px-6 pb-28 sm:px-8">
-      <FounderVideoBackground />
       <div className="founder-page__wing-grid">
         <FounderJetWing side="left" />
 

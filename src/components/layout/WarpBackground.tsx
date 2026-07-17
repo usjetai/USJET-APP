@@ -1,8 +1,14 @@
 import { useEffect, useRef } from "react";
 
-const NUM_STARS_DESKTOP = 1100;
-const NUM_STARS_MOBILE = 420;
-const STAR_SPEED = 0.22;
+const NUM_STARS_DESKTOP = 1400;
+const NUM_STARS_MOBILE = 560;
+const NUM_STARS_REDUCED = 280;
+const BASE_STAR_SPEED = 0.38;
+const REDUCED_STAR_SPEED = 0.18;
+const SCROLL_BOOST_DECAY = 0.88;
+const SCROLL_BOOST_GAIN = 0.06;
+const SCROLL_BOOST_MIN = -6;
+const SCROLL_BOOST_MAX = 18;
 
 function prefersLightweightWarp(): boolean {
   if (typeof window === "undefined") {
@@ -44,13 +50,19 @@ class Star {
     this.tone = pickTone();
   }
 
-  update() {
+  update(speed: number) {
     this.prevZ = this.z;
-    this.z -= STAR_SPEED * 120;
+    this.z -= speed * 120;
     if (this.z <= 0) {
       this.x = (Math.random() - 0.5) * 2000;
       this.y = (Math.random() - 0.5) * 2000;
       this.z = 2000;
+      this.prevZ = this.z;
+      this.tone = pickTone();
+    } else if (this.z > 2000) {
+      this.x = (Math.random() - 0.5) * 2000;
+      this.y = (Math.random() - 0.5) * 2000;
+      this.z = 0.1;
       this.prevZ = this.z;
       this.tone = pickTone();
     }
@@ -59,16 +71,18 @@ class Star {
   draw(ctx: CanvasRenderingContext2D, width: number, height: number) {
     const cx = width / 2;
     const cy = height / 2;
-    const x = cx + (this.x / this.z) * 1000;
-    const y = cy + (this.y / this.z) * 1000;
-    const px = cx + (this.x / this.prevZ) * 1000;
-    const py = cy + (this.y / this.prevZ) * 1000;
+    const scale = Math.max(width, height) * 0.55;
+    const x = cx + (this.x / this.z) * scale;
+    const y = cy + (this.y / this.z) * scale;
+    const px = cx + (this.x / this.prevZ) * scale;
+    const py = cy + (this.y / this.prevZ) * scale;
     const depth = 1 - this.z / 2000;
     const [r, g, b] = TONE_RGB[this.tone];
-    const alpha = Math.min(1, depth * 0.96 + 0.22);
+    const alpha = Math.min(1, depth * 1.05 + 0.28);
 
     ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    ctx.lineWidth = 3.4 * depth + 0.35;
+    ctx.lineWidth = 4.2 * depth + 0.55;
+    ctx.lineCap = "round";
     ctx.beginPath();
     ctx.moveTo(px, py);
     ctx.lineTo(x, y);
@@ -84,7 +98,10 @@ function readViewportSize() {
   };
 }
 
-/** Canvas starfield warp — AA-VFX UQgBVsbbKRs hyperspace tunnel (radial streaks toward viewer). */
+/**
+ * Canvas starfield warp — hyperspace tunnel (AA-VFX style).
+ * Idle motion always on; scroll down punches warp forward, scroll up reverses.
+ */
 export default function WarpBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const layoutWidthRef = useRef(0);
@@ -100,6 +117,9 @@ export default function WarpBackground() {
     let animationFrameId = 0;
     let stars: Star[] = [];
     let resizeTimer: number | null = null;
+    let scrollBoost = 0;
+    let lastScrollY = window.scrollY;
+    let lastScrollTs = performance.now();
 
     const resizeCanvas = () => {
       const { width, height } = readViewportSize();
@@ -113,7 +133,11 @@ export default function WarpBackground() {
     };
 
     const initStars = () => {
-      const count = prefersLightweightWarp() ? NUM_STARS_MOBILE : NUM_STARS_DESKTOP;
+      const count = motionMq.matches
+        ? NUM_STARS_REDUCED
+        : prefersLightweightWarp()
+          ? NUM_STARS_MOBILE
+          : NUM_STARS_DESKTOP;
       stars = Array.from({ length: count }, () => new Star());
     };
 
@@ -131,17 +155,41 @@ export default function WarpBackground() {
       ctx.fillRect(0, 0, w, h);
     };
 
+    const onScroll = () => {
+      const now = performance.now();
+      const dt = Math.max(8, Math.min(48, now - lastScrollTs));
+      lastScrollTs = now;
+      const y = window.scrollY;
+      const dy = y - lastScrollY;
+      lastScrollY = y;
+      // Normalize by frame time so trackpads and mice feel similar.
+      scrollBoost = Math.max(
+        SCROLL_BOOST_MIN,
+        Math.min(SCROLL_BOOST_MAX, scrollBoost + (dy / dt) * SCROLL_BOOST_GAIN * 16),
+      );
+    };
+
     const animate = () => {
       if (document.hidden) {
         animationFrameId = requestAnimationFrame(animate);
         return;
       }
 
+      scrollBoost *= SCROLL_BOOST_DECAY;
+      if (Math.abs(scrollBoost) < 0.02) {
+        scrollBoost = 0;
+      }
+
+      // Baseline cruise + scroll punch (down = faster toward camera, up = reverse).
+      const cruise = motionMq.matches ? REDUCED_STAR_SPEED : BASE_STAR_SPEED;
+      const speed = cruise * (1.2 + scrollBoost * 0.28);
+
       const { width: w, height: h } = readViewportSize();
-      ctx.fillStyle = "rgba(1, 4, 12, 0.16)";
+      // Slightly stronger trail fade keeps streaks crisp while the void stays deep.
+      ctx.fillStyle = "rgba(1, 4, 12, 0.22)";
       ctx.fillRect(0, 0, w, h);
       for (const star of stars) {
-        star.update();
+        star.update(speed);
         star.draw(ctx, w, h);
       }
       animationFrameId = requestAnimationFrame(animate);
@@ -151,12 +199,7 @@ export default function WarpBackground() {
       cancelAnimationFrame(animationFrameId);
       const { width, height } = resizeCanvas();
       layoutWidthRef.current = width;
-
-      if (motionMq.matches) {
-        paintVoid(width, height);
-        return;
-      }
-
+      // Always animate — reduced-motion still gets a gentler cruise so the tunnel reads.
       initStars();
       paintVoid(width, height);
       animate();
@@ -187,6 +230,7 @@ export default function WarpBackground() {
 
     startWarp();
 
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", scheduleLayoutChange);
     window.visualViewport?.addEventListener("resize", scheduleLayoutChange);
 
@@ -200,6 +244,7 @@ export default function WarpBackground() {
       if (resizeTimer !== null) {
         window.clearTimeout(resizeTimer);
       }
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", scheduleLayoutChange);
       window.visualViewport?.removeEventListener("resize", scheduleLayoutChange);
       motionMq.removeEventListener("change", onMotionChange);

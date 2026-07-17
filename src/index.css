@@ -63,7 +63,8 @@
 .warp-bg-canvas {
   position: fixed;
   inset: 0;
-  z-index: -2;
+  /* Stay above html/body paint — negative z-index hid the tunnel behind solid black */
+  z-index: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -71,6 +72,8 @@
   background: #010308;
   transform: translateZ(0);
   backface-visibility: hidden;
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 1023px), (pointer: coarse) {
@@ -119,40 +122,12 @@
   padding: 0;
 }
 
-/* Founder page video background */
-.founder-video-bg {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: #010308;
-}
-
-.founder-video-bg__yt {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: max(100vw, 177.78vh);
-  height: max(56.25vw, 100vh);
-  pointer-events: none;
-  opacity: 0.4;
-}
-
-@media (min-width: 1024px) {
-  .founder-video-bg__yt {
-    width: max(100vw, 177.78vh);
-    height: max(56.25vw, 100vh);
-    object-fit: cover;
-  }
-}
-
 /* Global warp tunnel — radial streak layers only (no video/veil/wash) */
 .global-video-bg {
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
   background: transparent;
 }
@@ -411,8 +386,8 @@
 
 /* Warp-speed variant: faster, brighter streaks (global — every route) */
 .aviation-pulse--warp {
-  z-index: -1;
-  opacity: 0.4;
+  z-index: 1;
+  opacity: 0.28;
   mix-blend-mode: screen;
   background-image:
     repeating-linear-gradient(
@@ -21780,15 +21755,19 @@ html.gaming-page-root .global-video-bg__yt {
   color: rgba(165, 243, 252, 0.75);
 }
 
-/* ─── Pre-Protocol void — no warp until ceremony arms atmosphere ─── */
-html:not(.usjet-atmosphere-live) .warp-bg-canvas,
+/* ─── Pre-Protocol — canvas warp + pulse always on; YouTube stays gated ─── */
 html:not(.usjet-atmosphere-live) .global-video-bg,
-html:not(.usjet-atmosphere-live) .aviation-pulse,
-html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .warp-bg-canvas,
-html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .global-video-bg,
-html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .aviation-pulse {
+html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .global-video-bg {
   opacity: 0 !important;
   visibility: hidden;
+  pointer-events: none;
+}
+
+/* Scroll-linked hyperspace canvas is always visible (not Protocol-gated). */
+html:not(.usjet-atmosphere-live) .warp-bg-canvas,
+html.usjet-pre-atmosphere:not(.usjet-atmosphere-live) .warp-bg-canvas {
+  opacity: 1 !important;
+  visibility: visible !important;
   pointer-events: none;
 }
 

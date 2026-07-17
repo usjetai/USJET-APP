@@ -3,8 +3,7 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 Kimi · Slot 1 FreeAssist · Slot 13 Swisscows (Start Mission browser).
- * Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 Kimi · Slot 1 FreeAssist · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
@@ -177,16 +176,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "13",
     slot: 13,
-    name: "Swisscows",
+    name: "Common Ninja",
     callsign: "RAPTOR-14",
-    domain: "swisscows.com",
-    href: "https://swisscows.com/en/web",
+    domain: "commoninja.com",
+    href: "https://www.commoninja.com",
     status: "active",
     aura: "idle",
     aircraftType: "f22",
-    aiName: "Swisscows",
+    aiName: "Common Ninja",
     fleetRole:
-      "Swisscows — privacy search browser for the Hangar (X-Frame friendly). Start Mission browser option.",
+      "Plug-and-play widget marketplace — AI chatbots, tickers, and interactive players for React and site builders.",
   },
   {
     id: "14",

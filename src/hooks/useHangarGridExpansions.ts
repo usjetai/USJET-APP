@@ -79,32 +79,6 @@ export function useHangarGridExpansions(
     setExpansions((prev) => prev.filter((e) => e.slot !== slot));
   }, []);
 
-  /** Open a bay without toggle-close — used by Start Mission quick-launch. */
-  const openExpansion = useCallback(
-    (unit: FleetUnit) => {
-      const slot = unit.slot;
-      let rejectFull = false;
-
-      setExpansions((prev) => {
-        if (prev.some((e) => e.slot === slot)) {
-          return prev;
-        }
-
-        if (prev.length >= maxExpansions) {
-          rejectFull = true;
-          return prev;
-        }
-
-        return [...prev, { slot, unit }];
-      });
-
-      if (rejectFull) {
-        flashWorkbenchFullToast();
-      }
-    },
-    [flashWorkbenchFullToast, maxExpansions],
-  );
-
   const cellPlan = useMemo(() => {
     const plan = new Map<number, HangarWorkbenchCell>();
     const expandedBySlot = new Map(expansions.map((e) => [e.slot, e.unit]));
@@ -126,7 +100,6 @@ export function useHangarGridExpansions(
 
   return {
     tryExpand,
-    openExpansion,
     closeExpansion,
     cellPlan,
     expansions,

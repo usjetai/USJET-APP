@@ -3,12 +3,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
-import HangarStartMissionBox from "../components/hangar/HangarStartMissionBox";
 import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import HangarPageHeader, { HANGAR_META_DESCRIPTION } from "../components/hangar/HangarPageHeader";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { getHangarUnits } from "../data/hangarManifest";
-import type { HangarStartMissionOption } from "../data/hangarStartMissions";
 import { useHangarGridExpansions } from "../hooks/useHangarGridExpansions";
 import { useHangarColumnLayout } from "../hooks/useHangarColumnLayout";
 import {
@@ -30,8 +28,10 @@ export default function Hangar() {
   const bayBadge = hangarBayHeroBadge(session);
   const flightPassUrl = resolveFounderPaymentLink();
   const { columns, setColumnLayout } = useHangarColumnLayout();
-  const { tryExpand, openExpansion, closeExpansion, expansions, workbenchFullToast } =
-    useHangarGridExpansions(unitBySlot, bayLimit);
+  const { tryExpand, closeExpansion, expansions, workbenchFullToast } = useHangarGridExpansions(
+    unitBySlot,
+    bayLimit,
+  );
   const [focusedSlot, setFocusedSlot] = useState<number | null>(null);
   const autoExpandedSlotRef = useRef<number | null>(null);
 
@@ -46,24 +46,6 @@ export default function Hangar() {
   const handleToggleFocus = useCallback((slot: number) => {
     setFocusedSlot((current) => (current === slot ? null : slot));
   }, []);
-
-  const handleStartMission = useCallback(
-    (option: HangarStartMissionOption) => {
-      const unit = unitBySlot.get(option.hangarSlot);
-      if (!unit) return;
-
-      openExpansion(unit);
-      setFocusedSlot(option.hangarSlot);
-
-      window.requestAnimationFrame(() => {
-        const bay = document.querySelector(
-          `[data-hangar-slot="${option.hangarSlot}"]`,
-        ) as HTMLElement | null;
-        bay?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      });
-    },
-    [openExpansion],
-  );
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -106,18 +88,15 @@ export default function Hangar() {
     () =>
       hangarUnits.map((unit) =>
         expandedSlots.has(unit.slot) ? (
-          <div key={`hangar-workbench-${unit.slot}`} data-hangar-slot={unit.slot}>
-            <HangarToolWorkbench
-              unit={unit}
-              focused={focusedSlot === unit.slot}
-              onToggleFocus={() => handleToggleFocus(unit.slot)}
-              onClose={() => handleCloseExpansion(unit.slot)}
-            />
-          </div>
+          <HangarToolWorkbench
+            key={`hangar-workbench-${unit.slot}`}
+            unit={unit}
+            focused={focusedSlot === unit.slot}
+            onToggleFocus={() => handleToggleFocus(unit.slot)}
+            onClose={() => handleCloseExpansion(unit.slot)}
+          />
         ) : (
-          <div key={`hangar-bay-${unit.slot}`} data-hangar-slot={unit.slot}>
-            <HangarBayTile unit={unit} onOpenBay={() => tryExpand(unit)} />
-          </div>
+          <HangarBayTile key={`hangar-bay-${unit.slot}`} unit={unit} onOpenBay={() => tryExpand(unit)} />
         ),
       ),
     [tryExpand, handleCloseExpansion, handleToggleFocus, expandedSlots, focusedSlot],
@@ -174,8 +153,6 @@ export default function Hangar() {
           columns={columns}
           onColumnLayoutChange={setColumnLayout}
         />
-
-        <HangarStartMissionBox onLaunchMission={handleStartMission} />
 
         <HangarBayGrid columns={columns}>{bayCells}</HangarBayGrid>
       </div>

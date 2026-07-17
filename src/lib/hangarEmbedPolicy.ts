@@ -102,6 +102,7 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "gamma.app",
     "notegpt.io",
     "swisscows.com",
+    "ipiccy.com",
     "openai-whisper.hf.space",
     "stabilityai-stable-diffusion-3-5-large-turbo.hf.space",
     "stabilityai-stable-diffusion-3-5-medium.hf.space",

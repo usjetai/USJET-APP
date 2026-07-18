@@ -44,6 +44,7 @@ const HANGAR_IFRAME_BLOCKED_HOSTS = new Set(
     "hotbot.com",
     "framer.com",
     "deepai.org",
+    "chatbotchatapp.com",
   ].map((host) => host.toLowerCase()),
 );
 

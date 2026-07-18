@@ -20,19 +20,30 @@ function prefersLightweightWarp(): boolean {
 /** Width must change by this many px before we rebuild the starfield (rotation / breakpoint). */
 const WIDTH_REBUILD_DELTA_PX = 48;
 
-type StarTone = "white" | "cyan" | "gold";
+type StarTone = "white" | "cyan" | "gold" | "red" | "pink" | "purple" | "violet" | "magenta";
 
 const TONE_RGB: Record<StarTone, [number, number, number]> = {
   white: [255, 255, 255],
   cyan: [56, 232, 255],
   gold: [251, 191, 36],
+  red: [255, 72, 96],
+  pink: [255, 140, 196],
+  purple: [168, 85, 247],
+  violet: [196, 160, 255],
+  magenta: [236, 72, 153],
 };
 
+/** Weighted mix — white still anchors the tunnel; color stars read clearly in motion. */
 function pickTone(): StarTone {
   const r = Math.random();
-  if (r < 0.62) return "white";
-  if (r < 0.88) return "cyan";
-  return "gold";
+  if (r < 0.34) return "white";
+  if (r < 0.48) return "cyan";
+  if (r < 0.58) return "gold";
+  if (r < 0.68) return "purple";
+  if (r < 0.78) return "pink";
+  if (r < 0.86) return "magenta";
+  if (r < 0.93) return "violet";
+  return "red";
 }
 
 class Star {
@@ -78,7 +89,9 @@ class Star {
     const py = cy + (this.y / this.prevZ) * scale;
     const depth = 1 - this.z / 2000;
     const [r, g, b] = TONE_RGB[this.tone];
-    const alpha = Math.min(1, depth * 1.05 + 0.28);
+    // Color stars get a touch more alpha so pink/purple/red read against the void.
+    const colorBoost = this.tone === "white" || this.tone === "cyan" ? 0 : 0.1;
+    const alpha = Math.min(1, depth * 1.05 + 0.28 + colorBoost);
 
     ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
     ctx.lineWidth = 4.2 * depth + 0.55;
@@ -87,6 +100,15 @@ class Star {
     ctx.moveTo(px, py);
     ctx.lineTo(x, y);
     ctx.stroke();
+
+    // Near-field spark — tiny star head so color pops at the tip of the streak.
+    if (depth > 0.55) {
+      const spark = Math.min(1, (depth - 0.55) * 2.2);
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${spark * 0.95})`;
+      ctx.beginPath();
+      ctx.arc(x, y, 0.9 + depth * 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    }
   }
 }
 
@@ -148,9 +170,11 @@ export default function WarpBackground() {
       const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
       gradient.addColorStop(0, "rgba(255, 255, 255, 0.14)");
       gradient.addColorStop(0.04, "rgba(186, 230, 253, 0.08)");
-      gradient.addColorStop(0.12, "#0a1424");
-      gradient.addColorStop(0.42, "#040810");
-      gradient.addColorStop(1, "#010308");
+      gradient.addColorStop(0.1, "rgba(196, 160, 255, 0.06)");
+      gradient.addColorStop(0.18, "#0c1028");
+      gradient.addColorStop(0.42, "#080414");
+      gradient.addColorStop(0.72, "#040610");
+      gradient.addColorStop(1, "#010208");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, w, h);
     };

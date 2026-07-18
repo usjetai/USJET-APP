@@ -251,11 +251,14 @@
   opacity: 0.88;
   background: repeating-conic-gradient(
     from 0deg at 50% 50%,
-    rgba(255, 255, 255, 0) 0deg 5.8deg,
-    rgba(255, 255, 255, 0.58) 5.85deg 6.45deg,
-    rgba(186, 230, 253, 0.22) 6.5deg 6.85deg,
-    rgba(251, 191, 36, 0.14) 6.9deg 7.15deg,
-    rgba(255, 255, 255, 0) 7.2deg 15.5deg
+    rgba(255, 255, 255, 0) 0deg 4.6deg,
+    rgba(255, 255, 255, 0.56) 4.65deg 5.2deg,
+    rgba(186, 230, 253, 0.22) 5.25deg 5.55deg,
+    rgba(168, 85, 247, 0.2) 5.6deg 5.85deg,
+    rgba(255, 140, 196, 0.18) 5.9deg 6.15deg,
+    rgba(251, 191, 36, 0.14) 6.2deg 6.4deg,
+    rgba(255, 72, 96, 0.16) 6.45deg 6.65deg,
+    rgba(255, 255, 255, 0) 6.7deg 14.2deg
   );
   animation: global-warp-tunnel 2.6s linear infinite;
 }
@@ -264,11 +267,13 @@
   opacity: 0.62;
   background: repeating-conic-gradient(
     from 12deg at 50% 50%,
-    rgba(255, 255, 255, 0) 0deg 7.2deg,
-    rgba(255, 255, 255, 0.38) 7.25deg 7.65deg,
-    rgba(56, 232, 255, 0.18) 7.7deg 8deg,
-    rgba(251, 191, 36, 0.22) 8.05deg 8.3deg,
-    rgba(255, 255, 255, 0) 8.35deg 17deg
+    rgba(255, 255, 255, 0) 0deg 5.8deg,
+    rgba(255, 255, 255, 0.36) 5.85deg 6.25deg,
+    rgba(56, 232, 255, 0.18) 6.3deg 6.55deg,
+    rgba(196, 160, 255, 0.2) 6.6deg 6.85deg,
+    rgba(236, 72, 153, 0.18) 6.9deg 7.15deg,
+    rgba(251, 191, 36, 0.2) 7.2deg 7.4deg,
+    rgba(255, 255, 255, 0) 7.45deg 15.5deg
   );
   animation: global-warp-tunnel-fast 1.9s linear infinite;
 }

@@ -302,12 +302,15 @@ export default function FleetCard({
 
   const hangarAnimStyle =
     isHangarSurface && typeof slot === "number"
-      ? ({ "--hangar-anim-delay": `${(slot % 12) * 0.35}s` } as CSSProperties)
+      ? ({
+          "--hangar-anim-delay": `${(slot % 12) * 0.35}s`,
+          "--hangar-hud-hue": `${Math.round((slot * 137.508) % 360)}deg`,
+        } as CSSProperties)
       : undefined;
 
   const cardStyle = {
     ...style,
-    ...(bayAccent && typeof slot === "number" ? fleetBayAccentStyle(slot) : null),
+    ...(typeof slot === "number" ? fleetBayAccentStyle(slot) : null),
     ...hangarAnimStyle,
   } as CSSProperties | undefined;
 

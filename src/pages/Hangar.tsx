@@ -145,7 +145,7 @@ export default function Hangar() {
         </div>
       ) : null}
 
-      <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
+      <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[110rem] px-3 pb-24 sm:px-5 lg:px-6">
         <HangarPageHeader
           session={session}
           bayBadge={bayBadge}

@@ -37,6 +37,8 @@ export const FLEET_AIRCRAFT_LOGO_PATHS: Record<FleetAircraftType, string> = {
 /** Slot-specific emblem overrides (e.g. SR-71 bay uses dedicated Blackbird art). */
 const FLEET_SLOT_LOGO_OVERRIDES: Partial<Record<number, string>> = {
   0: "/fleet/sr71-blackbird-logo.png",
+  /** Hangar / runway tile 24 (0-based slot 23) — F-111 Aardvark. */
+  23: "/fleet/f111-aardvark-logo.png",
 };
 
 export function getFleetAircraftLogoPath(aircraftType: FleetAircraftType): string {

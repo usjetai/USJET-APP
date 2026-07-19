@@ -11,6 +11,12 @@ export type FleetRosterMeta = {
   aircraftType: FleetAircraftType;
 };
 
+/** Slot-specific official names (when emblem art differs from the bay’s aircraftType). */
+const FLEET_SLOT_AIRCRAFT_NAME_OVERRIDES: Partial<Record<number, string>> = {
+  /** Tile 24 — F-111 Aardvark emblem. */
+  23: "F-111 Aardvark",
+};
+
 /** Official designations keyed by fleet aircraft vector — shared with runway + directory. */
 export const AIRCRAFT_OFFICIAL_NAME_BY_TYPE: Record<FleetAircraftType, string> = {
   darkstar: "SR-71 Blackbird",
@@ -120,6 +126,10 @@ export function getFleetDisplayAircraftType(slot: number, fallback: FleetAircraf
 }
 
 export function getFleetDisplayAircraftName(slot: number, fallbackType: FleetAircraftType): string {
+  const slotName = FLEET_SLOT_AIRCRAFT_NAME_OVERRIDES[slot];
+  if (slotName) {
+    return slotName;
+  }
   const meta = getFleetRosterMeta(slot);
   if (meta.rosterStatus !== "available") {
     return meta.aircraftOfficialName;

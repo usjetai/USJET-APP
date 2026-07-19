@@ -9020,11 +9020,13 @@ html.code-kit-page-root #usjet-app-shell {
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar {
-  aspect-ratio: 4 / 5;
-  min-height: 13.5rem;
+  aspect-ratio: 3 / 4;
+  min-height: 18rem;
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass {
+  /* Full-bleed HUD at the top; text keeps side padding below */
+  padding: 0 0 1.15rem !important;
   border-radius: 1rem;
   border-color: color-mix(in srgb, rgba(251, 191, 36, 0.45) 36%, rgba(255, 255, 255, 0.18));
   background:
@@ -9039,6 +9041,16 @@ html.code-kit-page-root #usjet-app-shell {
     0 0 18px -12px rgba(251, 191, 36, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.26),
     inset 0 -22px 44px -32px rgba(20, 10, 4, 0.78);
+  overflow: hidden;
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__meta {
+  padding-inline: 1.25rem;
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__slot-number {
+  top: 0.65rem;
+  right: 0.65rem;
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass::before {
@@ -9079,43 +9091,161 @@ html.code-kit-page-root #usjet-app-shell {
 
 .fleet-card__aircraft-wrap--radar-hud {
   position: relative;
+  display: grid;
+  place-items: center;
   isolation: isolate;
-  min-height: 9.5rem;
+  /* Square scope so the HUD circle shares the logo’s exact center */
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1;
+  min-height: 17.5rem;
+  margin-inline: 0;
+  margin-bottom: 0.75rem !important;
+  padding: 0 !important;
   overflow: hidden;
-  border-radius: 0.85rem;
+  border-radius: 0;
+}
+
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__aircraft-wrap--radar-hud {
+  width: 100%;
+  margin-inline: 0;
+  border-radius: 0;
 }
 
 .fleet-card__radar-hud {
   position: absolute;
   inset: 0;
   z-index: 0;
+  display: grid;
+  place-items: center;
   pointer-events: none;
   overflow: hidden;
   border-radius: inherit;
-  background: radial-gradient(circle at 50% 50%, rgba(6, 40, 90, 0.65) 0%, rgba(2, 12, 32, 0.95) 78%);
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      color-mix(in srgb, var(--fleet-accent, #22d3ee) 22%, rgba(6, 40, 90, 0.55)) 0%,
+      rgba(2, 12, 32, 0.95) 78%
+    ),
+    #021028;
 }
 
 .fleet-card__radar-hud-video {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  left: 50%;
+  top: 50%;
+  width: 112%;
+  height: 112%;
+  /* Perfect center under the fleet logo */
+  translate: -50% -50%;
   object-fit: cover;
-  object-position: center;
-  opacity: 0.95;
-  filter: saturate(1.15) brightness(1.06);
+  object-position: 50% 50%;
+  opacity: 1;
+  filter:
+    saturate(1.35)
+    contrast(1.06)
+    brightness(1.05)
+    hue-rotate(var(--hangar-hud-hue, 0deg));
   pointer-events: none;
-  /* Play the real clip — do not CSS-rotate the video layer */
   transform: none !important;
   animation: none !important;
+  transform-origin: center center;
+}
+
+/* Per-bay accent wash — every tile a different color */
+.fleet-card__radar-hud-tint {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      color-mix(in srgb, var(--fleet-accent, #22d3ee) 38%, transparent) 0%,
+      color-mix(in srgb, var(--fleet-accent, #22d3ee) 12%, transparent) 42%,
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--fleet-accent, #22d3ee) 16%, transparent);
+  mix-blend-mode: soft-light;
+}
+
+/* Soft void at reticle center — clears under the nose tip */
+.fleet-card__radar-hud-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(2, 12, 32, 0.2) 0%, rgba(2, 12, 32, 0.04) 20%, transparent 42%),
+    linear-gradient(180deg, rgba(2, 12, 32, 0.05) 0%, transparent 22%, transparent 72%, rgba(2, 12, 32, 0.3) 100%);
+  pointer-events: none;
+}
+
+.fleet-card__radar-readings {
+  position: absolute;
+  left: 0.55rem;
+  right: 0.55rem;
+  bottom: 0.45rem;
+  z-index: 3;
+  display: grid;
+  gap: 0.2rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--fleet-accent-bright, #67e8f9) 88%, white);
+  text-shadow: 0 0 8px rgba(var(--fleet-accent-rgb, 34, 211, 238), 0.45);
+  pointer-events: none;
+}
+
+.fleet-card__radar-readings__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.35rem;
+  opacity: 0.95;
+}
+
+.fleet-card__radar-readings__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 0.7rem;
+  margin-top: 0.05rem;
+}
+
+.fleet-card__radar-readings__bars > span {
+  flex: 1;
+  min-height: 15%;
+  border-radius: 1px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--fleet-accent-bright, #a3e635) 90%, white),
+    color-mix(in srgb, var(--fleet-accent, #22d3ee) 80%, transparent)
+  );
+  box-shadow: 0 0 6px rgba(var(--fleet-accent-rgb, 34, 211, 238), 0.4);
 }
 
 .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
   position: relative;
-  z-index: 1;
-  animation: hangar-logo-float 4.8s ease-in-out infinite;
+  z-index: 4;
+  grid-area: 1 / 1;
+  place-self: center;
+  width: clamp(12rem, 78%, 17.5rem) !important;
+  height: clamp(12rem, 78%, 17.5rem) !important;
+  margin: 0 !important;
+  /* Top-down logos: nose on reticle + cumulative hangar nudges (½+2+2 up, net left). */
+  translate: -0.78125rem calc(48% - 6.25rem) !important;
+  transform-origin: 50% 4% !important;
+  object-fit: contain;
+  object-position: 50% 0%;
+  animation: hangar-logo-float-nose 4.8s ease-in-out infinite;
   animation-delay: var(--hangar-anim-delay, 0s);
-  filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.28)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+  filter:
+    brightness(0.62)
+    contrast(1.12)
+    drop-shadow(0 0 6px rgba(125, 211, 252, 0.95))
+    drop-shadow(0 0 18px rgba(56, 189, 248, 0.85))
+    drop-shadow(0 0 36px rgba(37, 99, 235, 0.7))
+    drop-shadow(0 0 56px rgba(29, 78, 216, 0.45))
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
 }
 
 @keyframes hangar-tile-breathe {
@@ -9170,6 +9300,17 @@ html.code-kit-page-root #usjet-app-shell {
   }
 }
 
+/* Float relative to nose-centered hangar placement (translate property holds the nose offset). */
+@keyframes hangar-logo-float-nose {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hangar-page--workbench .fleet-card--surface-hangar,
   .hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass,
@@ -9177,14 +9318,15 @@ html.code-kit-page-root #usjet-app-shell {
     animation: none !important;
   }
 
+  /* Keep the HUD clip visible — do not collapse to a flat poster. */
   .fleet-card__radar-hud-video {
-    display: none;
+    display: block;
+    opacity: 1;
   }
 
-  .fleet-card__radar-hud {
-    background:
-      radial-gradient(circle at 50% 50%, rgba(6, 40, 90, 0.55) 0%, rgba(2, 12, 32, 0.92) 72%),
-      url("/assets/hangar/tile-radar-bg.png") center / contain no-repeat;
+  /* Nose placement + hangar nudges even when float is off. */
+  .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
+    translate: -0.78125rem calc(48% - 6.25rem) !important;
   }
 }
 
@@ -9851,6 +9993,21 @@ html.code-kit-page-root #usjet-app-shell {
 .fleet-card:focus-visible .fleet-card__aircraft {
   transform: translate3d(3px, -5px, 0) scale(1.05) rotate(-4deg);
   filter: var(--aircraft-logo-glow) drop-shadow(0 0 8px rgba(96, 165, 250, 0.45));
+}
+
+/* Hangar radar: keep nose locked to reticle — don't steal transform on hover. */
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft,
+.hangar-page--workbench .fleet-card--surface-hangar:hover .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft,
+.hangar-page--workbench .fleet-card--surface-hangar:focus-visible .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
+  transform: none;
+  filter:
+    brightness(0.62)
+    contrast(1.12)
+    drop-shadow(0 0 6px rgba(125, 211, 252, 0.95))
+    drop-shadow(0 0 18px rgba(56, 189, 248, 0.85))
+    drop-shadow(0 0 36px rgba(37, 99, 235, 0.7))
+    drop-shadow(0 0 56px rgba(29, 78, 216, 0.45))
+    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
 }
 
 /* Runway tiles: hover nudge on img; launch spin runs on parent wrap via Framer Motion */

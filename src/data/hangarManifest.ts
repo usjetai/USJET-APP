@@ -101,15 +101,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "7",
     slot: 7,
-    name: "Rewind",
+    name: "Agentic RAG",
     callsign: "ORBIT-08",
-    domain: "rewind.ai",
-    href: "https://rewind.ai/video/",
+    domain: "agents-course-unit-3-agentic-rag.hf.space",
+    href: "https://agents-course-unit-3-agentic-rag.hf.space",
     status: "active",
     aura: "idle",
     aircraftType: "x37b",
-    aiName: "Rewind",
-    fleetRole: "Rewind — AI video at rewind.ai/video.",
+    aiName: "Agentic RAG",
+    fleetRole:
+      "Agentic RAG — Hugging Face Space at huggingface.co/spaces/agents-course/Unit_3_Agentic_RAG (Hangar embeds via agents-course-unit-3-agentic-rag.hf.space).",
   },
   {
     id: "8",

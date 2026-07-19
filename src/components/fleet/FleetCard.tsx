@@ -3,6 +3,7 @@ import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccen
 import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
+import HangarTileRadarVideo from "../hangar/HangarTileRadarVideo";
 import { HeartPulse } from "lucide-react";
 import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -165,18 +166,7 @@ export default function FleetCard({
   );
 
   const renderHangarRadarHud = () =>
-    isHangarSurface ? (
-      <span className="fleet-card__radar-hud" aria-hidden="true">
-        <span
-          className="fleet-card__radar-hud-spin"
-          style={
-            typeof slot === "number"
-              ? ({ animationDelay: `${-((slot % 10) * 1.7)}s` } as CSSProperties)
-              : undefined
-          }
-        />
-      </span>
-    ) : null;
+    isHangarSurface ? <HangarTileRadarVideo slot={slot} /> : null;
 
   const renderAircraftWrap = () => {
     const spinCount = expandInteractive ? HANGAR_TILE_OPEN_SPINS : FLEET_TILE_LAUNCH_SPINS;

@@ -14,6 +14,8 @@ export default function GlobalVideoBackground() {
 
   useEffect(() => {
     let cancelled = false;
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
     setReady(false);
     playerRef.current?.destroy();
     playerRef.current = null;
@@ -58,10 +60,32 @@ export default function GlobalVideoBackground() {
       }
     };
 
-    void boot();
+    // Phones/tablets: defer YouTube API until the main thread is idle so first paint wins.
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    const deferForDevice =
+      Boolean(connection?.saveData) ||
+      window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
+
+    if (deferForDevice && "requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(() => {
+        if (!cancelled) void boot();
+      }, { timeout: 2200 });
+    } else if (deferForDevice) {
+      timeoutId = window.setTimeout(() => {
+        if (!cancelled) void boot();
+      }, 900);
+    } else {
+      void boot();
+    }
 
     return () => {
       cancelled = true;
+      if (idleId !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
       playerRef.current?.destroy();
       playerRef.current = null;
     };

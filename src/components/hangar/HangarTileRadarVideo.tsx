@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 /** Cache-bust so square re-encode replaces older wide loops in the browser. */
-const VIDEO_SRC = "/assets/hangar/tile-radar-bg-loop.mp4?v=nojet6";
+const VIDEO_SRC_WEBM = "/assets/hangar/tile-radar-bg-loop.webm?v=nojet6";
+const VIDEO_SRC_MP4 = "/assets/hangar/tile-radar-bg-loop.mp4?v=nojet6";
 const POSTER_SRC = "/assets/hangar/tile-radar-bg.png?v=nojet6";
 
 type HangarTileRadarVideoProps = {
@@ -57,10 +58,21 @@ function buildTelemetry(slot: number | undefined, tick: number): Telemetry {
   return { az, el, rng, snr };
 }
 
-/** Muted looping radar HUD — each bay seeks to a different reading in the clip. */
+function prefersLeanMedia(): boolean {
+  if (typeof window === "undefined") return false;
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } })
+    .connection;
+  if (connection?.saveData) return true;
+  if (connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g") return true;
+  return window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
+}
+
+/** Muted looping radar HUD — loads media only when the bay is near the viewport. */
 export default function HangarTileRadarVideo({ slot }: HangarTileRadarVideoProps) {
+  const wrapRef = useRef<HTMLSpanElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const seededRef = useRef(false);
+  const [active, setActive] = useState(false);
   const [tick, setTick] = useState(0);
   const telemetry = buildTelemetry(slot, tick);
   const hue = hudHueDegrees(slot);
@@ -69,12 +81,64 @@ export default function HangarTileRadarVideo({ slot }: HangarTileRadarVideoProps
   } as CSSProperties;
 
   useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    const lean = prefersLeanMedia();
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        setActive(entry.isIntersecting);
+      },
+      {
+        // Phone: load only near-viewport tiles. Desktop: a bit more lookahead.
+        rootMargin: lean ? "120px 0px" : "240px 0px",
+        threshold: 0.01,
+      },
+    );
+    io.observe(wrap);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!active) return;
+    const telemetryMs = 480 + (typeof slot === "number" ? (slot % 5) * 70 : 0);
+    const telemetryTimer = window.setInterval(() => {
+      setTick((n) => (n + 1) % 10_000);
+    }, telemetryMs);
+    return () => window.clearInterval(telemetryTimer);
+  }, [active, slot]);
+
+  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    if (!active) {
+      video.pause();
+      // Drop decoded frames / network so 30 hangar bays do not thrash mobile.
+      video.removeAttribute("src");
+      while (video.firstChild) {
+        video.removeChild(video.firstChild);
+      }
+      video.load();
+      seededRef.current = false;
+      return;
+    }
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const rand = mulberry32(((typeof slot === "number" ? slot : 3) + 1) * 2654435761);
     seededRef.current = false;
+
+    const webm = document.createElement("source");
+    webm.src = VIDEO_SRC_WEBM;
+    webm.type = "video/webm";
+    const mp4 = document.createElement("source");
+    mp4.src = VIDEO_SRC_MP4;
+    mp4.type = "video/mp4";
+    video.appendChild(webm);
+    video.appendChild(mp4);
+    video.load();
 
     const seedReading = () => {
       if (seededRef.current) return;
@@ -86,7 +150,6 @@ export default function HangarTileRadarVideo({ slot }: HangarTileRadarVideoProps
       } catch {
         /* ignore seek abort while loading */
       }
-      // Keep HUD motion even when OS reduce-motion is on — this clip is the bay identity.
       video.playbackRate = reduceMotion ? 0.75 : playbackRateForSlot(slot);
     };
 
@@ -102,11 +165,10 @@ export default function HangarTileRadarVideo({ slot }: HangarTileRadarVideoProps
       void video.play().catch(() => undefined);
     };
 
-    ensurePlaying();
-
     video.addEventListener("loadedmetadata", ensurePlaying);
     video.addEventListener("loadeddata", ensurePlaying);
     video.addEventListener("canplay", ensurePlaying);
+    ensurePlaying();
 
     const reshuffleMs = reduceMotion
       ? 12000 + (typeof slot === "number" ? (slot % 5) * 900 : 0)
@@ -120,47 +182,25 @@ export default function HangarTileRadarVideo({ slot }: HangarTileRadarVideoProps
       }
     }, reshuffleMs);
 
-    const telemetryMs = 380 + (typeof slot === "number" ? (slot % 5) * 55 : 0);
-    const telemetryTimer = window.setInterval(() => {
-      setTick((n) => (n + 1) % 10_000);
-    }, telemetryMs);
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-        if (entry.isIntersecting) {
-          ensurePlaying();
-        } else {
-          video.pause();
-        }
-      },
-      { rootMargin: "80px", threshold: 0.05 },
-    );
-    io.observe(video);
-
     return () => {
       video.removeEventListener("loadedmetadata", ensurePlaying);
       video.removeEventListener("loadeddata", ensurePlaying);
       video.removeEventListener("canplay", ensurePlaying);
       window.clearInterval(reshuffle);
-      window.clearInterval(telemetryTimer);
-      io.disconnect();
+      video.pause();
     };
-  }, [slot]);
+  }, [active, slot]);
 
   return (
-    <span className="fleet-card__radar-hud" style={hudStyle} aria-hidden="true">
+    <span ref={wrapRef} className="fleet-card__radar-hud" style={hudStyle} aria-hidden="true">
       <video
         ref={videoRef}
         className="fleet-card__radar-hud-video"
-        src={VIDEO_SRC}
         poster={POSTER_SRC}
-        autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="none"
         disablePictureInPicture
         disableRemotePlayback
       />

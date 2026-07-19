@@ -11,6 +11,10 @@ import {
   HANGAR_PRO_STRIPE,
   FLEET_COMMANDER_STRIPE,
 } from "../data/stripeProducts";
+import {
+  COMPETITIVE_POSITIONING_THESIS,
+  OFFER_BUYING_REASONS,
+} from "../data/competitivePositioning";
 import { USJET_OPS_EMAIL } from "./usjetContact";
 
 type BrainMessage = {
@@ -148,6 +152,21 @@ export function answerOriginFromKnowledge(
   if (/(fleet|runway|30 (ai|unit)|partner ai|which (ai|tool|bay))/.test(q) && !findFleetHits(raw).length) {
     return flightPlan(
       "Fleet (/fleet) is the runway of partner AIs. Guests get 10 free bays; Flight Pass clears the rest. Name a tool (ChatGPT, Claude, Midjourney…) and I'll route you to the bay.",
+    );
+  }
+
+  if (
+    /(why (usjet|us jet)|better than|vs\.? |versus |competitor|alternative|chatgpt only|custom build|fragmented|why (not|buy)|objection|positioning)/.test(
+      q,
+    )
+  ) {
+    return flightPlan(
+      [
+        COMPETITIVE_POSITIONING_THESIS,
+        "",
+        "Buy reasons:",
+        ...OFFER_BUYING_REASONS.map((o) => `• ${o.offer} (${o.priceDisplay}): ${o.buyBecause}`),
+      ].join("\n"),
     );
   }
 

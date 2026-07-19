@@ -1,5 +1,14 @@
 /** USJET B2B Industrial Backbone — $1T blue-collar sector infrastructure. */
 
+export {
+  COMPETITIVE_POSITIONING_SDR_BRIEF,
+  COMPETITIVE_POSITIONING_THESIS,
+  COMPETITIVE_ALTERNATIVES,
+  OFFER_BUYING_REASONS,
+  USJET_REPLACES,
+  USJET_UNIQUE_BUNDLE,
+} from "./competitivePositioning";
+
 export const B2B_ENTERPRISE_ROUTE = "/b2b" as const;
 
 export const B2B_SECTOR_TAG = "$1T Blue-Collar Sector · Enterprise Backbone" as const;

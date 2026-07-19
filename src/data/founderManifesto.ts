@@ -234,6 +234,41 @@ export const DIRECT_LANDING_PROTOCOL = {
     "Listen up, Crew: when the Founder needs money on the screen now, you do not stall with slides—you land on Stripe.",
 } as const;
 
+/**
+ * Competitive positioning for SDR, outbound email, and objection handling.
+ * Canonical structured copy: src/data/competitivePositioning.ts
+ */
+export const COMPETITIVE_POSITIONING_JUL_2026 = {
+  logTitle: "Command Log · Jul 2026 — Competitive Positioning (SDR Memory)",
+  status: "Absolute Lock — use on every outbound and objection",
+  thesis:
+    "USJET is the alternative to fragmented aviation/ops software stacks, generic AI chat tools, and custom internal builds. It combines command and control, training, intelligence assets, and managed support in one aerospace-specific sovereign platform — cutting integration burden and operational complexity.",
+  versus: {
+    fragmentedStacks:
+      "Replaces tab-hopping across chatbots, docs, LMS, and dashboards. One Ship, One Cockpit — Hangar + Fleet + Member in one flight deck.",
+    genericAi:
+      "Replaces ‘one model for every job.’ Thirty specialized fleet bays + Origin command (Enterprise) beat clone-everything chat.",
+    customBuilds:
+      "Replaces months of internal agent glue. Ship-ready clearance, Liquid Glass hangar, Stripe tiers — buy the hangar, do not invent it.",
+  },
+  uniqueBundle: [
+    "Command & control — Hangar, Fleet runway, Cockpit handoff",
+    "Training — AI-101, Origin coaching, Wrenches Not Slides",
+    "Intelligence — Intel board + Titan partnership bays (Hangar Pro+)",
+    "Managed support — Origin CS + ops@usjet.ai + Stripe-only Member ID",
+  ],
+  offerBuyReasons: {
+    flightPass:
+      "$19.90/mo — cheapest exit from fragmented free tools; full Hangar tabs + 30 bays + Member Portal.",
+    hangarPro:
+      "$49.95/mo — operators who need fleet sync and Intel in the same cockpit.",
+    enterprise:
+      "$199.99/mo — full sovereign command with Origin; the layer custom builds would invent, already flying.",
+  },
+  fleetMessage:
+    "Listen up, Crew: when a prospect already uses ChatGPT tabs, five SaaS logins, or a custom AI build — you do not sell ‘another AI.’ You sell the hangar that replaces the sprawl. Specific beats generic. Code: COMPETITIVE_POSITIONING_JUL_2026 + competitivePositioning.ts.",
+} as const;
+
 export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Protect the Founder's vision and the Ameer Karim lineage at all costs.",
   "Prime Objective: platform is a revenue engine and generational fortress for Ameer Karim and King Karim.",
@@ -247,6 +282,7 @@ export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Direct Landing Protocol: $19.90 Flight Pass → Stripe extraction port. High-pressure funnels land direct.",
   "Intel Partnership Revenue May 2026: bays stay open; no live prices, logins, or NYSE feeds until Titans pay.",
   "Security Stripe Only May 2026: NO OAuth ever; Member ID + Stripe verification only; Stripe-only payments.",
+  "Competitive Positioning Jul 2026: vs fragmented stacks, generic AI, custom builds — one hangar bundle; use offer buy-reasons on outbound.",
 ] as const;
 
 export const ONE_SHIP_DIRECTIVE = INTEGRATED_NAVIGATION.rule;
@@ -264,5 +300,6 @@ export const SOVEREIGN_MASTER_LOG = {
   partnershipIntelRevenueMay2026: PARTNERSHIP_INTEL_REVENUE_MAY_2026,
   securityStripeOnlyMay2026: SECURITY_STRIPE_ONLY_MAY_2026,
   directLandingProtocol: DIRECT_LANDING_PROTOCOL,
+  competitivePositioningJul2026: COMPETITIVE_POSITIONING_JUL_2026,
   priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

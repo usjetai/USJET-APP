@@ -20,6 +20,7 @@ alwaysApply: true
 | Area | Path / pattern |
 |------|----------------|
 | Master Log (code) | `src/data/founderManifesto.ts` |
+| Competitive / SDR | `src/data/competitivePositioning.ts` |
 | Fleet URLs | `src/lib/fleetLaunchUrl.ts` |
 | 1995 Grit Vault | `src/pages/FounderSpecial1995.tsx` |
 | Intel partnership bays | `src/components/intel/IntelReservedBay.tsx` |
@@ -57,6 +58,10 @@ Hard-wired in `src/lib/stripePaymentLink.ts`. High-pressure funnels / quick-entr
 ## Command Log · May 14, 2026 — Intel Partnership Revenue Vision
 
 **Status: Hold Line — Do Not Implement.** Intel bays (Bitcoin / Coinbase / Robinhood side boxes) stay **open reserved revenue real estate** — perfect as-is until Titans pay. **Future:** Robinhood/Coinbase partner logins in bays when capital arrives — **not now.** **NYSE thesis:** USJET will NOT pay for API feeds; **NYSE/markets need USJET's audience** — they pay USJET for distribution, not the reverse. Remove NYSE dependency until they value the partnership. **Pitch story:** Founder owns the hangar where labor checks the board; exchanges need that crowd more than we need ticker tape. **Broader:** session forks teach cloning = wasted RAM; future = fleet on sovereign hardware, one-prompt personal AI. **Hold line:** "Our representatives are still helping other customers. Please continue to hold." Code: `PARTNERSHIP_INTEL_REVENUE_MAY_2026`. **No** live prices, logins, or NYSE feeds in this build.
+
+## Command Log · Jul 2026 — Competitive Positioning (SDR Memory)
+
+**Status: Absolute Lock.** Position USJET vs **fragmented stacks**, **generic AI**, and **custom builds**. Bundle: command & control + training + intelligence + managed support. Offer buy-reasons: Flight Pass exit fragmented tabs; Hangar Pro fleet+Intel; Enterprise Origin vs inventing a custom command layer. Paste brief: `COMPETITIVE_POSITIONING_SDR_BRIEF` in `competitivePositioning.ts`. Code: `COMPETITIVE_POSITIONING_JUL_2026`.
 
 ## Do not deviate
 

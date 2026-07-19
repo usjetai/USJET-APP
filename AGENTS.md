@@ -57,6 +57,9 @@ High-pressure funnels and quick-entry gates bypass intermediate checkout and lan
 ### Command Log · May 14, 2026 — Founder Authoritative Access & Security Lock
 **Status: Absolute Lock.** **NO OAuth — EVER** (no Google, no Apple, no social sign-in). Login = **Member ID + Stripe verification only**. **Stripe ONLY** payments — no other processors. **Guests (public):** `/` Hangar home (first **3** tabs free; `/hangar` redirects), `/fleet` (10 free bays), `/founder` — **NOT** `/intel`, `/origin`, `/member`. **Tier 1 Flight Pass:** + Member Portal, full Hangar tabs — no Intel/Origin. **Tier 2 Hangar Pro:** + Intel. **Tier 3 Enterprise:** + Origin. **USJET-AMEER god mode:** all routes. Code: `SECURITY_STRIPE_ONLY_MAY_2026` in `founderManifesto.ts`; enforcement in `memberAccessLevel.ts` + `TierRouteGate`.
 
+### Command Log · Jul 2026 — Competitive Positioning (SDR Memory)
+**Status: Absolute Lock — use on every outbound and objection.** Position USJET as the alternative to **fragmented aviation/ops software stacks**, **generic AI tools**, and **custom internal builds**. Unique bundle: **command & control** (Hangar + Fleet + Cockpit) + **training** (AI-101 / Origin) + **intelligence** (Intel / Titan bays) + **managed support** (Origin CS + ops@usjet.ai). **Buy reasons:** Flight Pass $19.90 — exit fragmented free tabs; Hangar Pro $49.95 — fleet + Intel in one cockpit; Enterprise $199.99 — Origin command layer instead of inventing a custom build. Structured copy: `src/data/competitivePositioning.ts` (`COMPETITIVE_POSITIONING_SDR_BRIEF` for paste into lead tools). Code: `COMPETITIVE_POSITIONING_JUL_2026` in `founderManifesto.ts`.
+
 ### Security
 Protect Ameer Karim's vision.
 

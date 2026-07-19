@@ -26,7 +26,7 @@ export type PageSeo = {
 export const DEFAULT_PAGE_SEO: PageSeo = {
   title: "USJET.AI | Hangar Home — 30 AI Tools, One Cockpit",
   description:
-    "Enter the USJET Hangar — home cockpit for blue-collar America. Open live AI workbench bays in one ship. Six free Hangar tabs. Flight Pass from $19.90/mo. Founded by Ameer Karim.",
+    "Enter the USJET Hangar — home cockpit for blue-collar America. Open live AI workbench bays in one ship. Three free Hangar tabs. Flight Pass from $19.90/mo. Founded by Ameer Karim.",
   keywords:
     "USJET, USJET.AI, AI hangar, AI cockpit, AI tools, Hangar, Fleet runway, Flight Pass, blue-collar America, sovereign AI, Ameer Karim, enterprise AI, aviation fintech",
   ogType: "website",

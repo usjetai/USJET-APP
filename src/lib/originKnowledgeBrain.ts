@@ -141,7 +141,7 @@ export function answerOriginFromKnowledge(
 
   if (/(hangar|workbench|home ?bay|free tab)/.test(q)) {
     return flightPlan(
-      `Hangar (/) is home. First 6 workbench tabs are free. ${FLIGHT_PASS_STRIPE.priceDisplay}${FLIGHT_PASS_STRIPE.period} Flight Pass unlocks the rest. Open a bay, enlarge to work, shrink back to formation.`,
+      `Hangar (/) is home. First 3 workbench tabs are free. ${FLIGHT_PASS_STRIPE.priceDisplay}${FLIGHT_PASS_STRIPE.period} Flight Pass unlocks the rest. Open a bay, enlarge to work, shrink back to formation.`,
     );
   }
 

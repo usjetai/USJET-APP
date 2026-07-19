@@ -30,7 +30,7 @@ const HELP_TOPICS: HelpTopic[] = [
     body: (
       <ul className="sos-page__list">
         <li>
-          <strong>Hangar</strong> (<Link to="/">/</Link>) — home workbench. First 6 tabs are free; open a bay to work
+          <strong>Hangar</strong> (<Link to="/">/</Link>) — home workbench. First 3 tabs are free; open a bay to work
           in-tile.
         </li>
         <li>

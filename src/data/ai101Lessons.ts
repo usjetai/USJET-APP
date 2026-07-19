@@ -22,7 +22,7 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     kicker: "Core rule",
     paragraphs: [
       "U.S. Jet is not a pile of bookmark links. It is one ship. You stay in the same browser window. Partner tools open through the Hangar workbench or the /cockpit handoff — never as a leaky new tab from our chrome.",
-      "Guests can explore Hangar (first six free tabs), Fleet (ten free bays), Founder, Help, AI 101, and Jet Browser. Paid tiers unlock more Hangar tabs, Intel, Origin, and Member tools. Payments are Stripe only — no Google or Apple login.",
+      "Guests can explore Hangar (first three free tabs), Fleet (ten free bays), Founder, Help, AI 101, and Jet Browser. Paid tiers unlock more Hangar tabs, Intel, Origin, and Member tools. Payments are Stripe only — no Google or Apple login.",
     ],
     bullets: [
       "Integrated navigation: same window, Cockpit return when you leave a partner.",
@@ -37,12 +37,12 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     kicker: "Primary surface",
     paragraphs: [
       "Hangar is the home page. It is a floor of AI workbench tiles. Click a tile to open that bay in place — the partner loads inside the tile so you can work without leaving the ship.",
-      "On an open tile you can enlarge for a tall focus surface, then shrink back to formation. Close the bay when you are done. Guests get the first six simultaneous tabs free; Flight Pass unlocks the full floor.",
+      "On an open tile you can enlarge for a tall focus surface, then shrink back to formation. Close the bay when you are done. Guests get the first three simultaneous tabs free; Flight Pass unlocks the full floor.",
       "Use the layout control (columns) to change how dense the grid feels. Some partners block iframes — those bays show an Open handoff that still keeps you in-window through cockpit rules.",
     ],
     bullets: [
       "Open → work → enlarge/shrink → close.",
-      "First 6 tabs free for guests; Flight Pass for the rest.",
+      "First 3 tabs free for guests; Flight Pass for the rest.",
       "Blank frame? Use the in-tile Open control — do not hunt for a new browser tab.",
     ],
   },

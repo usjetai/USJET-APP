@@ -26,8 +26,8 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
   {
     id: "q2",
     prompt: "How many Hangar tabs can guests open for free?",
-    choices: ["Two", "Four", "Six", "All thirty"],
-    correctIndex: 2,
+    choices: ["Two", "Three", "Six", "All thirty"],
+    correctIndex: 1,
   },
   {
     id: "q3",

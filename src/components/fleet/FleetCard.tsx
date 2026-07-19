@@ -147,8 +147,13 @@ export default function FleetCard({
     clearLiveTerminalTile();
   };
 
-  const aircraftWrapClassName =
-    "fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4";
+  const isHangarSurface = surface === "hangar";
+  const aircraftWrapClassName = [
+    "fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4",
+    isHangarSurface ? "fleet-card__aircraft-wrap--radar-hud" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const renderAircraftIcon = () => (
     <AircraftIcon
@@ -158,6 +163,20 @@ export default function FleetCard({
       className="fleet-card__aircraft h-32 w-32"
     />
   );
+
+  const renderHangarRadarHud = () =>
+    isHangarSurface ? (
+      <span className="fleet-card__radar-hud" aria-hidden="true">
+        <span
+          className="fleet-card__radar-hud-spin"
+          style={
+            typeof slot === "number"
+              ? ({ animationDelay: `${-((slot % 10) * 1.7)}s` } as CSSProperties)
+              : undefined
+          }
+        />
+      </span>
+    ) : null;
 
   const renderAircraftWrap = () => {
     const spinCount = expandInteractive ? HANGAR_TILE_OPEN_SPINS : FLEET_TILE_LAUNCH_SPINS;
@@ -174,12 +193,18 @@ export default function FleetCard({
           transition={{ duration: spinDuration, ease: [0.34, 1.12, 0.64, 1] }}
           onAnimationComplete={handleSpinComplete}
         >
+          {renderHangarRadarHud()}
           {renderAircraftIcon()}
         </motion.div>
       );
     }
 
-    return <div className={aircraftWrapClassName}>{renderAircraftIcon()}</div>;
+    return (
+      <div className={aircraftWrapClassName}>
+        {renderHangarRadarHud()}
+        {renderAircraftIcon()}
+      </div>
+    );
   };
 
   const syncProtocolToClipboard = () => {

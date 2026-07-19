@@ -9056,6 +9056,64 @@ html.code-kit-page-root #usjet-app-shell {
   background: transparent;
 }
 
+/* Hangar tiles — animated radar HUD behind floating aircraft logo */
+.fleet-card__aircraft-wrap--radar-hud {
+  position: relative;
+  isolation: isolate;
+  min-height: 9.5rem;
+  overflow: hidden;
+  border-radius: 0.85rem;
+}
+
+.fleet-card__radar-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 48%, rgba(6, 40, 90, 0.55) 0%, rgba(2, 12, 32, 0.92) 72%);
+}
+
+.fleet-card__radar-hud-spin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 168%;
+  height: 168%;
+  translate: -50% -50%;
+  background:
+    url("/assets/hangar/tile-radar-bg.png") center / cover no-repeat;
+  opacity: 0.92;
+  filter: saturate(1.15) brightness(1.05);
+  animation: hangar-tile-radar-spin 22s linear infinite;
+  will-change: transform;
+}
+
+.fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.28)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
+}
+
+@keyframes hangar-tile-radar-spin {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.03);
+  }
+  to {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fleet-card__radar-hud-spin {
+    animation: none;
+  }
+}
+
 .hangar-page--workbench .fleet-card--launch-spinning {
   pointer-events: none;
 }

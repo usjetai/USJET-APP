@@ -109,7 +109,7 @@ const ASSETS = [
   { out: "f14_tomcat.png", aircraftType: "f14" },
   { out: "f4_phantom_ii.png", aircraftType: "f4" },
   { out: "f104_starfighter.png", aircraftType: "f104" },
-  { out: "f86_sabre.png", aircraftType: "f86" },
+  { out: "fa_xx.png", aircraftType: "f86" },
   { out: "x59_quesst.png", aircraftType: "x59" },
 ];
 

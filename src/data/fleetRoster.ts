@@ -30,7 +30,7 @@ export const AIRCRAFT_OFFICIAL_NAME_BY_TYPE: Record<FleetAircraftType, string> =
   fb22: "FB-22C",
   f15ex: "F-15EX Eagle II",
   f16v: "F-16V Viper",
-  fa18: "F/A-18 Block III",
+  fa18: "F/A-18 Super Hornet",
   a10: "A-10 Warthog",
   f117: "F-117 Nighthawk",
   mq25: "MQ-25 Stingray",
@@ -41,7 +41,7 @@ export const AIRCRAFT_OFFICIAL_NAME_BY_TYPE: Record<FleetAircraftType, string> =
   f14: "F-14 Tomcat",
   f4: "F-4 Phantom II",
   f104: "F-104 Starfighter",
-  f86: "F-86 Sabre",
+  f86: "F/A-XX",
   x59: "X-59 QueSST",
 };
 

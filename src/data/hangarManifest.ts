@@ -361,7 +361,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     id: "28",
     slot: 28,
     name: "Pro Realism Edit",
-    callsign: "SABRE-29",
+    callsign: "FAXX-29",
     domain: "sneak-moose-pro-realism-edit-studio.hf.space",
     href: "https://sneak-moose-pro-realism-edit-studio.hf.space",
     status: "active",

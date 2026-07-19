@@ -26,7 +26,7 @@ const OPAQUE_LOGOS = [
   "f15ex_eagle_ii.png",
   "f16v_viper.png",
   "f4_phantom_ii.png",
-  "f86_sabre.png",
+  "fa_xx.png",
   "fa18_super_hornet.png",
   "fb22.png",
   "mq25_stingray.png",

@@ -342,7 +342,7 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     id: "28",
     slot: 28,
     name: "DeepSeek",
-    callsign: "SABRE-29",
+    callsign: "FAXX-29",
     domain: "deepseek.com",
     href: "https://deepseek.com",
     status: "active",

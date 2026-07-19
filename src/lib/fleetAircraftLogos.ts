@@ -30,7 +30,7 @@ export const FLEET_AIRCRAFT_LOGO_PATHS: Record<FleetAircraftType, string> = {
   f14: "/assets/fleet-logos/f14_tomcat.png",
   f4: "/assets/fleet-logos/f4_phantom_ii.png",
   f104: "/assets/fleet-logos/f104_starfighter.png",
-  f86: "/assets/fleet-logos/f86_sabre.png",
+  f86: "/assets/fleet-logos/fa_xx.png",
   x59: "/assets/fleet-logos/x59_quesst.png",
 };
 

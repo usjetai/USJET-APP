@@ -40,7 +40,7 @@ const FLEET_CAP_AIRCRAFT = [
   { slug: "fb-22", name: "FB-22", logo: "/assets/fleet-logos/fb22.png" },
   { slug: "f-15ex-eagle-ii", name: "F-15EX Eagle II", logo: "/assets/fleet-logos/f15ex_eagle_ii.png" },
   { slug: "f-16v-viper", name: "F-16V Viper", logo: "/assets/fleet-logos/f16v_viper.png" },
-  { slug: "f-a-18-block-iii", name: "F/A-18 Block III", logo: "/assets/fleet-logos/fa18_super_hornet.png" },
+  { slug: "f-a-18-block-iii", name: "F/A-18 Super Hornet", logo: "/assets/fleet-logos/fa18_super_hornet.png" },
   { slug: "a-10-warthog", name: "A-10 Warthog", logo: "/assets/fleet-logos/a10_warthog.png" },
   { slug: "f-117-nighthawk", name: "F-117 Nighthawk", logo: "/assets/fleet-logos/f117_nighthawk.png" },
   { slug: "mq-25-stingray", name: "MQ-25 Stingray", logo: "/assets/fleet-logos/mq25_stingray.png" },
@@ -51,7 +51,7 @@ const FLEET_CAP_AIRCRAFT = [
   { slug: "f-14-tomcat", name: "F-14 Tomcat", logo: "/assets/fleet-logos/f14_tomcat.png" },
   { slug: "f-4-phantom-ii", name: "F-4 Phantom II", logo: "/assets/fleet-logos/f4_phantom_ii.png" },
   { slug: "f-104-starfighter", name: "F-104 Starfighter", logo: "/assets/fleet-logos/f104_starfighter.png" },
-  { slug: "f-86-sabre", name: "F-86 Sabre", logo: "/assets/fleet-logos/f86_sabre.png" },
+  { slug: "f-86-sabre", name: "F/A-XX", logo: "/assets/fleet-logos/fa_xx.png" },
   { slug: "x-59-quesst", name: "X-59 QueSST", logo: "/assets/fleet-logos/x59_quesst.png" },
 ];
 

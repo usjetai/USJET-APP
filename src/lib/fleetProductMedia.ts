@@ -112,7 +112,7 @@ const FLEET_TEE_CATALOG: FleetTeeCatalogEntry[] = [
   { slug: "fb-22", aircraftLabel: "FB-22C" },
   { slug: "f-15ex-eagle-ii", aircraftLabel: "F-15EX Eagle II" },
   { slug: "f-16v-viper", aircraftLabel: "F-16V Viper" },
-  { slug: "f-a-18-block-iii", aircraftLabel: "F/A-18 Block III" },
+  { slug: "f-a-18-block-iii", aircraftLabel: "F/A-18 Super Hornet" },
   { slug: "a-10-warthog", aircraftLabel: "A-10 Warthog" },
   { slug: "f-117-nighthawk", aircraftLabel: "F-117 Nighthawk" },
   { slug: "mq-25-stingray", aircraftLabel: "MQ-25 Stingray" },
@@ -123,7 +123,7 @@ const FLEET_TEE_CATALOG: FleetTeeCatalogEntry[] = [
   { slug: "f-14-tomcat", aircraftLabel: "F-14 Tomcat" },
   { slug: "f-4-phantom-ii", aircraftLabel: "F-4 Phantom II" },
   { slug: "f-104-starfighter", aircraftLabel: "F-104 Starfighter" },
-  { slug: "f-86-sabre", aircraftLabel: "F-86 Sabre" },
+  { slug: "f-86-sabre", aircraftLabel: "F/A-XX" },
   { slug: "x-59-quesst", aircraftLabel: "X-59 QueSST" },
 ];
 
@@ -186,7 +186,7 @@ const FLEET_CAP_CATALOG: FleetCapCatalogEntry[] = [
   { slug: "fb-22", aircraftLabel: "FB-22C" },
   { slug: "f-15ex-eagle-ii", aircraftLabel: "F-15EX Eagle II" },
   { slug: "f-16v-viper", aircraftLabel: "F-16V Viper" },
-  { slug: "f-a-18-block-iii", aircraftLabel: "F/A-18 Block III" },
+  { slug: "f-a-18-block-iii", aircraftLabel: "F/A-18 Super Hornet" },
   { slug: "a-10-warthog", aircraftLabel: "A-10 Warthog" },
   { slug: "f-117-nighthawk", aircraftLabel: "F-117 Nighthawk" },
   { slug: "mq-25-stingray", aircraftLabel: "MQ-25 Stingray" },
@@ -197,7 +197,7 @@ const FLEET_CAP_CATALOG: FleetCapCatalogEntry[] = [
   { slug: "f-14-tomcat", aircraftLabel: "F-14 Tomcat" },
   { slug: "f-4-phantom-ii", aircraftLabel: "F-4 Phantom II" },
   { slug: "f-104-starfighter", aircraftLabel: "F-104 Starfighter" },
-  { slug: "f-86-sabre", aircraftLabel: "F-86 Sabre" },
+  { slug: "f-86-sabre", aircraftLabel: "F/A-XX" },
   { slug: "x-59-quesst", aircraftLabel: "X-59 QueSST" },
 ];
 

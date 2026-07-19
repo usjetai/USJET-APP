@@ -137,7 +137,7 @@
   },
   {
     "slug": "f-a-18-block-iii",
-    "name": "F/A-18 Block III",
+    "name": "F/A-18 Super Hornet",
     "developerName": null,
     "aiDomain": "play.ht",
     "hasPortrait": false,
@@ -225,7 +225,7 @@
   },
   {
     "slug": "f-86-sabre",
-    "name": "F-86 Sabre",
+    "name": "F/A-XX",
     "developerName": null,
     "aiDomain": "chat.deepseek.com",
     "hasPortrait": false,

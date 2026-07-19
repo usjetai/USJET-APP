@@ -41,8 +41,16 @@ const FLEET_SLOT_LOGO_OVERRIDES: Partial<Record<number, string>> = {
   23: "/fleet/f111-aardvark-logo.png",
 };
 
+/** Cache-bust after solidifying logo alpha (HUD light must not pass through). */
+const FLEET_LOGO_CACHE_TAG = "solid1";
+
+function withLogoCacheTag(path: string): string {
+  const join = path.includes("?") ? "&" : "?";
+  return `${path}${join}v=${FLEET_LOGO_CACHE_TAG}`;
+}
+
 export function getFleetAircraftLogoPath(aircraftType: FleetAircraftType): string {
-  return FLEET_AIRCRAFT_LOGO_PATHS[aircraftType];
+  return withLogoCacheTag(FLEET_AIRCRAFT_LOGO_PATHS[aircraftType]);
 }
 
 export function getFleetAircraftLogoPathForSlot(
@@ -50,7 +58,7 @@ export function getFleetAircraftLogoPathForSlot(
   aircraftType: FleetAircraftType,
 ): string {
   if (typeof slot === "number" && FLEET_SLOT_LOGO_OVERRIDES[slot]) {
-    return FLEET_SLOT_LOGO_OVERRIDES[slot]!;
+    return withLogoCacheTag(FLEET_SLOT_LOGO_OVERRIDES[slot]!);
   }
   return getFleetAircraftLogoPath(aircraftType);
 }
@@ -61,6 +69,6 @@ export function getFleetAircraftRadarLogoPathForSlot(
   aircraftType: FleetAircraftType,
 ): string {
   const base = getFleetAircraftLogoPathForSlot(slot, aircraftType);
-  const filename = base.split("/").pop();
-  return filename ? `/assets/fleet-logos/radar-transparent/${filename}` : base;
+  const filename = base.split("/").pop()?.split("?")[0];
+  return filename ? withLogoCacheTag(`/assets/fleet-logos/radar-transparent/${filename}`) : base;
 }

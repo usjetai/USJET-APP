@@ -9253,16 +9253,17 @@ html.code-kit-page-root #usjet-app-shell {
   transform-origin: 50% 4% !important;
   object-fit: contain;
   object-position: 50% 0%;
+  opacity: 1;
+  mix-blend-mode: normal;
   animation: hangar-logo-float-nose 4.8s ease-in-out infinite;
   animation-delay: var(--hangar-anim-delay, 0s);
+  /* Solid body — opaque plates that block HUD light (no neon wash-through). */
   filter:
-    brightness(0.62)
-    contrast(1.12)
-    drop-shadow(0 0 6px rgba(125, 211, 252, 0.95))
-    drop-shadow(0 0 18px rgba(56, 189, 248, 0.85))
-    drop-shadow(0 0 36px rgba(37, 99, 235, 0.7))
-    drop-shadow(0 0 56px rgba(29, 78, 216, 0.45))
-    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+    brightness(0.88)
+    contrast(1.1)
+    drop-shadow(0 0 0.5px rgba(2, 12, 32, 1))
+    drop-shadow(0 0 2px rgba(2, 12, 32, 0.95))
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.65));
 }
 
 /* When spinning, offset lives on the wrapper so Framer rotate uses nose origin. */
@@ -10031,14 +10032,14 @@ html.code-kit-page-root #usjet-app-shell {
 .hangar-page--workbench .fleet-card--surface-hangar:hover .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft,
 .hangar-page--workbench .fleet-card--surface-hangar:focus-visible .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
   transform: none;
+  opacity: 1;
+  mix-blend-mode: normal;
   filter:
-    brightness(0.62)
-    contrast(1.12)
-    drop-shadow(0 0 6px rgba(125, 211, 252, 0.95))
-    drop-shadow(0 0 18px rgba(56, 189, 248, 0.85))
-    drop-shadow(0 0 36px rgba(37, 99, 235, 0.7))
-    drop-shadow(0 0 56px rgba(29, 78, 216, 0.45))
-    drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+    brightness(0.88)
+    contrast(1.1)
+    drop-shadow(0 0 0.5px rgba(2, 12, 32, 1))
+    drop-shadow(0 0 2px rgba(2, 12, 32, 0.95))
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.65));
 }
 
 /* Runway tiles: hover nudge on img; launch spin runs on parent wrap via Framer Motion */

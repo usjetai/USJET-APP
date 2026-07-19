@@ -9020,12 +9020,18 @@ html.code-kit-page-root #usjet-app-shell {
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar {
-  aspect-ratio: 3 / 4;
-  min-height: 18rem;
+  /* Let the square HUD + meta define height — no forced crop of the radar stage */
+  aspect-ratio: auto;
+  min-height: 0;
+  height: auto;
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass {
   /* Full-bleed HUD at the top; text keeps side padding below */
+  display: flex;
+  flex-direction: column;
+  height: auto !important;
+  min-height: 0;
   padding: 0 0 1.15rem !important;
   border-radius: 1rem;
   border-color: color-mix(in srgb, rgba(251, 191, 36, 0.45) 36%, rgba(255, 255, 255, 0.18));
@@ -9094,13 +9100,18 @@ html.code-kit-page-root #usjet-app-shell {
   display: grid;
   place-items: center;
   isolation: isolate;
-  /* Square scope so the HUD circle shares the logo’s exact center */
+  /* Background stays one space right; logo nudged one space left from that lock. */
+  --hangar-space: 1.25rem;
+  --hangar-hud-nudge-x: 0rem;
+  --hangar-hud-bg-nudge-x: var(--hangar-space);
+  --hangar-hud-nudge-y: calc(48% - 6.25rem);
+  /* Full-bleed square stage — tile width owns the HUD size */
   width: 100%;
   max-width: none;
   aspect-ratio: 1;
-  min-height: 17.5rem;
+  min-height: 0;
   margin-inline: 0;
-  margin-bottom: 0.75rem !important;
+  margin-bottom: 0 !important;
   padding: 0 !important;
   overflow: hidden;
   border-radius: 0;
@@ -9123,7 +9134,7 @@ html.code-kit-page-root #usjet-app-shell {
   border-radius: inherit;
   background:
     radial-gradient(
-      circle at 50% 50%,
+      circle at calc(50% + var(--hangar-hud-bg-nudge-x, 0px)) 50%,
       color-mix(in srgb, var(--fleet-accent, #22d3ee) 22%, rgba(6, 40, 90, 0.55)) 0%,
       rgba(2, 12, 32, 0.95) 78%
     ),
@@ -9132,11 +9143,16 @@ html.code-kit-page-root #usjet-app-shell {
 
 .fleet-card__radar-hud-video {
   position: absolute;
-  left: 50%;
+  /* Bleed past the stage so a right-shifted reticle never leaves an empty strip */
+  inset: -18%;
+  width: auto;
+  height: auto;
+  min-width: 136%;
+  min-height: 136%;
+  left: calc(50% + var(--hangar-hud-bg-nudge-x, 0px));
   top: 50%;
-  width: 112%;
-  height: 112%;
-  /* Perfect center under the fleet logo */
+  right: auto;
+  bottom: auto;
   translate: -50% -50%;
   object-fit: cover;
   object-position: 50% 50%;
@@ -9160,7 +9176,7 @@ html.code-kit-page-root #usjet-app-shell {
   pointer-events: none;
   background:
     radial-gradient(
-      circle at 50% 50%,
+      circle at calc(50% + var(--hangar-hud-bg-nudge-x, 0px)) 50%,
       color-mix(in srgb, var(--fleet-accent, #22d3ee) 38%, transparent) 0%,
       color-mix(in srgb, var(--fleet-accent, #22d3ee) 12%, transparent) 42%,
       transparent 70%
@@ -9175,7 +9191,12 @@ html.code-kit-page-root #usjet-app-shell {
   inset: 0;
   z-index: 2;
   background:
-    radial-gradient(circle at 50% 50%, rgba(2, 12, 32, 0.2) 0%, rgba(2, 12, 32, 0.04) 20%, transparent 42%),
+    radial-gradient(
+      circle at calc(50% + var(--hangar-hud-bg-nudge-x, 0px)) 50%,
+      rgba(2, 12, 32, 0.2) 0%,
+      rgba(2, 12, 32, 0.04) 20%,
+      transparent 42%
+    ),
     linear-gradient(180deg, rgba(2, 12, 32, 0.05) 0%, transparent 22%, transparent 72%, rgba(2, 12, 32, 0.3) 100%);
   pointer-events: none;
 }
@@ -9203,6 +9224,22 @@ html.code-kit-page-root #usjet-app-shell {
   opacity: 0.95;
 }
 
+/* Spin wrapper sits in the HUD grid cell; radar video stays put underneath. */
+.fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft-spin {
+  position: relative;
+  z-index: 4;
+  grid-area: 1 / 1;
+  place-self: center;
+  display: grid;
+  place-items: center;
+  width: clamp(12rem, 78%, 17.5rem);
+  height: clamp(12rem, 78%, 17.5rem);
+  margin: 0;
+  translate: var(--hangar-hud-nudge-x) var(--hangar-hud-nudge-y);
+  transform-origin: 50% 4%;
+  pointer-events: none;
+}
+
 .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
   position: relative;
   z-index: 4;
@@ -9211,8 +9248,8 @@ html.code-kit-page-root #usjet-app-shell {
   width: clamp(12rem, 78%, 17.5rem) !important;
   height: clamp(12rem, 78%, 17.5rem) !important;
   margin: 0 !important;
-  /* Top-down logos: nose on reticle + cumulative hangar nudges (½+2+2 up, net left). */
-  translate: -0.78125rem calc(48% - 6.25rem) !important;
+  /* Top-down logos: nose on reticle + shared hangar HUD nudge. */
+  translate: var(--hangar-hud-nudge-x) var(--hangar-hud-nudge-y) !important;
   transform-origin: 50% 4% !important;
   object-fit: contain;
   object-position: 50% 0%;
@@ -9226,6 +9263,16 @@ html.code-kit-page-root #usjet-app-shell {
     drop-shadow(0 0 36px rgba(37, 99, 235, 0.7))
     drop-shadow(0 0 56px rgba(29, 78, 216, 0.45))
     drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+/* When spinning, offset lives on the wrapper so Framer rotate uses nose origin. */
+.fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft-spin .fleet-card__aircraft {
+  grid-area: auto;
+  place-self: stretch;
+  width: 100% !important;
+  height: 100% !important;
+  translate: none !important;
+  animation: none !important;
 }
 
 @keyframes hangar-tile-breathe {
@@ -9306,7 +9353,11 @@ html.code-kit-page-root #usjet-app-shell {
 
   /* Nose placement + hangar nudges even when float is off. */
   .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
-    translate: -0.78125rem calc(48% - 6.25rem) !important;
+    translate: var(--hangar-hud-nudge-x) var(--hangar-hud-nudge-y) !important;
+  }
+
+  .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft-spin {
+    translate: var(--hangar-hud-nudge-x) var(--hangar-hud-nudge-y);
   }
 }
 

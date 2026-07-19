@@ -171,8 +171,33 @@ export default function FleetCard({
   const renderAircraftWrap = () => {
     const spinCount = expandInteractive ? HANGAR_TILE_OPEN_SPINS : FLEET_TILE_LAUNCH_SPINS;
     const spinDuration = expandInteractive ? 0.55 : 0.75;
+    const isSpinning = launchSpinning && launchSpinKey > 0 && (isRunway || expandInteractive);
 
-    if (launchSpinning && launchSpinKey > 0 && (isRunway || expandInteractive)) {
+    // Hangar: keep radar HUD locked; only the jet logo spins on open.
+    if (isHangarSurface) {
+      return (
+        <div className={aircraftWrapClassName}>
+          {renderHangarRadarHud()}
+          {isSpinning ? (
+            <motion.div
+              key={`fleet-aircraft-spin-${launchSpinKey}`}
+              className="fleet-card__aircraft-spin"
+              style={{ transformOrigin: "50% 4%" }}
+              initial={{ rotate: 0, scale: 1 }}
+              animate={{ rotate: 360 * spinCount, scale: 1.05 }}
+              transition={{ duration: spinDuration, ease: [0.34, 1.12, 0.64, 1] }}
+              onAnimationComplete={handleSpinComplete}
+            >
+              {renderAircraftIcon()}
+            </motion.div>
+          ) : (
+            renderAircraftIcon()
+          )}
+        </div>
+      );
+    }
+
+    if (isSpinning) {
       return (
         <motion.div
           key={`fleet-aircraft-spin-${launchSpinKey}`}
@@ -183,18 +208,12 @@ export default function FleetCard({
           transition={{ duration: spinDuration, ease: [0.34, 1.12, 0.64, 1] }}
           onAnimationComplete={handleSpinComplete}
         >
-          {renderHangarRadarHud()}
           {renderAircraftIcon()}
         </motion.div>
       );
     }
 
-    return (
-      <div className={aircraftWrapClassName}>
-        {renderHangarRadarHud()}
-        {renderAircraftIcon()}
-      </div>
-    );
+    return <div className={aircraftWrapClassName}>{renderAircraftIcon()}</div>;
   };
 
   const syncProtocolToClipboard = () => {

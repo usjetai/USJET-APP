@@ -27,7 +27,7 @@ export const AIRCRAFT_OFFICIAL_NAME_BY_TYPE: Record<FleetAircraftType, string> =
   b2: "B-2 Spirit",
   b1: "B-1 Lancer",
   a12: "A-12 Avenger II",
-  fb22: "FB-22",
+  fb22: "FB-22C",
   f15ex: "F-15EX Eagle II",
   f16v: "F-16V Viper",
   fa18: "F/A-18 Block III",

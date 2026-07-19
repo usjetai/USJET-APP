@@ -9203,26 +9203,6 @@ html.code-kit-page-root #usjet-app-shell {
   opacity: 0.95;
 }
 
-.fleet-card__radar-readings__bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 0.7rem;
-  margin-top: 0.05rem;
-}
-
-.fleet-card__radar-readings__bars > span {
-  flex: 1;
-  min-height: 15%;
-  border-radius: 1px;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--fleet-accent-bright, #a3e635) 90%, white),
-    color-mix(in srgb, var(--fleet-accent, #22d3ee) 80%, transparent)
-  );
-  box-shadow: 0 0 6px rgba(var(--fleet-accent-rgb, 34, 211, 238), 0.4);
-}
-
 .fleet-card__aircraft-wrap--radar-hud .fleet-card__aircraft {
   position: relative;
   z-index: 4;

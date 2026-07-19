@@ -14,7 +14,6 @@ type Telemetry = {
   el: string;
   rng: string;
   snr: string;
-  bars: number[];
 };
 
 function mulberry32(seed: number): () => number {
@@ -55,8 +54,7 @@ function buildTelemetry(slot: number | undefined, tick: number): Telemetry {
   const el = ((rand() - 0.35) * 28).toFixed(1);
   const rng = (8 + rand() * 92).toFixed(1);
   const snr = (12 + rand() * 36).toFixed(0);
-  const bars = Array.from({ length: 5 }, () => 18 + Math.round(rand() * 82));
-  return { az, el, rng, snr, bars };
+  return { az, el, rng, snr };
 }
 
 /** Muted looping radar HUD — each bay seeks to a different reading in the clip. */
@@ -176,11 +174,6 @@ export default function HangarTileRadarVideo({ slot }: HangarTileRadarVideoProps
         <span className="fleet-card__radar-readings__row">
           <span>RNG {telemetry.rng}</span>
           <span>SNR {telemetry.snr}</span>
-        </span>
-        <span className="fleet-card__radar-readings__bars">
-          {telemetry.bars.map((h, i) => (
-            <span key={i} style={{ height: `${h}%` }} />
-          ))}
         </span>
       </span>
     </span>

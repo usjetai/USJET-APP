@@ -310,12 +310,16 @@ export default function FleetCard({
     .filter(Boolean)
     .join(" ");
 
-  const cardStyle = bayAccent
-    ? ({
-        ...style,
-        ...fleetBayAccentStyle(slot as number),
-      } as CSSProperties)
-    : style;
+  const hangarAnimStyle =
+    isHangarSurface && typeof slot === "number"
+      ? ({ "--hangar-anim-delay": `${(slot % 12) * 0.35}s` } as CSSProperties)
+      : undefined;
+
+  const cardStyle = {
+    ...style,
+    ...(bayAccent && typeof slot === "number" ? fleetBayAccentStyle(slot) : null),
+    ...hangarAnimStyle,
+  } as CSSProperties | undefined;
 
   const glassContent = (
     <div className="fleet-card__glass flex h-full flex-col p-5">

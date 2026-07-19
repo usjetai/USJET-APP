@@ -35,15 +35,16 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "2",
     slot: 2,
-    name: "1min.AI",
+    name: "OSW Studio",
     callsign: "RAIDER-03",
-    domain: "1min.ai",
-    href: "https://1min.ai/",
+    domain: "otst-osw-studio.hf.space",
+    href: "https://otst-osw-studio.hf.space",
     status: "active",
     aura: "idle",
     aircraftType: "b21",
-    aiName: "1min.AI",
-    fleetRole: "1min.AI — multi-tool AI suite at 1min.ai (Hangar embed-friendly).",
+    aiName: "OSW Studio",
+    fleetRole:
+      "OSW Studio — Hugging Face Space at huggingface.co/spaces/otst/osw-studio (Hangar embeds via otst-osw-studio.hf.space).",
   },
   {
     id: "3",

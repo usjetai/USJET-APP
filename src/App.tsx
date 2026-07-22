@@ -36,8 +36,6 @@ const DirectFuel = lazy(() => import("./pages/DirectFuel"));
 const DirectFuelZelle = lazy(() => import("./pages/DirectFuelZelle"));
 const MobileLandscapeGuide = lazy(() => import("./pages/MobileLandscapeGuide"));
 const ProtocolSessionProof = lazy(() => import("./pages/ProtocolSessionProof"));
-const PdrePartnership = lazy(() => import("./pages/PdrePartnership"));
-const BrandLicensing = lazy(() => import("./pages/BrandLicensing"));
 const SupportFleet = lazy(() => import("./pages/SupportFleet"));
 const FoundersFuel = lazy(() => import("./pages/FoundersFuel"));
 const FleetDirectory = lazy(() => import("./pages/FleetDirectory"));
@@ -47,7 +45,6 @@ const FleetManual = lazy(() => import("./pages/FleetManual"));
 const IntelligenceAssets = lazy(() => import("./pages/IntelligenceAssets"));
 const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
 const Sovereignty = lazy(() => import("./pages/Sovereignty"));
-const B2k = lazy(() => import("./pages/B2k"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
@@ -106,11 +103,8 @@ function AnimatedRoutes() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/ai-101" element={<Ai101 />} />
             <Route path="/code-kit" element={<CodeKit />} />
-            <Route path="/b2k" element={<B2k />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/pdre" element={<PdrePartnership />} />
-            <Route path="/licensing" element={<BrandLicensing />} />
             <Route path="/support-fleet" element={<SupportFleet />} />
             <Route path="/intelligence" element={<IntelligenceAssets />} />
             <Route path="/strategic-assets" element={<StrategicAssets />} />

@@ -148,7 +148,7 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     kicker: "Map",
     paragraphs: [
       "Hired HUD / USJET House watches live roster energy. Fleet Directory lists jet-fighter call signs. Gaming and Jet Hoops are entertainment surfaces inside the same ship rules.",
-      "Revenue and partner pages (Founder’s Fuel, Code Kit, Licensing, Sovereignty, and related) support growth and institutional story — explore them when you are ready to deepen the business side.",
+      "Revenue and partner pages (Founder’s Fuel, Code Kit, Sovereignty, and related) support growth and institutional story — explore them when you are ready to deepen the business side.",
       "Privacy and protocol pages document policy. Landscape guide helps mobile operators. Always prefer same-window navigation from the header, footer Help link, or side latch menu.",
     ],
     bullets: [

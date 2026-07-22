@@ -6,7 +6,7 @@ type UsjetStarEmblemProps = {
   variant?: "default" | "steel";
 };
 
-/** USJET sovereign star — licensing watermark and brand mark. */
+/** USJET sovereign star — brand mark. */
 export default function UsjetStarEmblem({
   className = "",
   decorative = true,

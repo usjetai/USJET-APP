@@ -71,7 +71,7 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
     body: [
       "Visitors often ask what usjet.ai is. Here is the straight answer: it is the sovereign cockpit for a thirty-agent AI fleet, built for operators who run labor-based businesses—shops, logistics, crews, and field ops.",
       "The homepage is the runway. Each bay is a specialist agent with its own logic—not a clone of you, not a generic chatbot. The Hangar holds your workflows. The Member Portal tracks vitals, projects, and fleet activity. Intel surfaces market pulse for cleared operators.",
-      "The revenue architecture is intentional: Founder's Fuel at $19.90/mo supports the mission. The Code Kit ($499) serves builders who want the engine room. The Fleet Manual ($2,500) is professional implementation. B2K deployment is coming soon.",
+      "The revenue architecture is intentional: Founder's Fuel at $19.90/mo supports the mission. The Code Kit ($499) serves builders who want the engine room. The Fleet Manual ($2,500) is professional implementation.",
       "AI 101 decodes the vocabulary—cockpit terms, Stripe verification, partnership protocol (do not clone your AI). This site is not slides. It is wrenches, glass, and line checks.",
       "What it is not: a social network, a replacement for your ERP, or a magic button. It is infrastructure you operate. Daily logs on this blog will stay responsive through day fifty of the march to USA 250.",
     ],

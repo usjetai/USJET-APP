@@ -54,10 +54,6 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     description:
       "Learn Hangar, Fleet, Jet Browser, Intel, Origin, and Member. Pass the ten-question quiz for your Member Portal badge.",
   },
-  "/b2k": {
-    title: "B2K Enterprise Deployment | USJET.AI",
-    description: "B2K enterprise deployment for USJET sovereign fleet clearance and hangar workstations.",
-  },
   "/fleet-directory": {
     title: "Jet Fighter Directory — 30 Call Signs | USJET.AI",
     description:
@@ -114,17 +110,9 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "Code Kit — USJET Engine Kit | USJET.AI",
     description: "USJET Code Kit: engine kit and developer tooling from the hangar.",
   },
-  "/licensing": {
-    title: "Brand Licensing | USJET.AI",
-    description: "License the USJET brand, fleet identity, and hangar IP for institutional partners.",
-  },
   "/support-fleet": {
     title: "Support the Fleet | USJET.AI",
     description: "Support the USJET fleet — fuel hangar growth and sovereign runway expansion.",
-  },
-  "/pdre": {
-    title: "PDRE Partnership | USJET.AI",
-    description: "PDRE partnership surface for USJET institutional collaboration.",
   },
   "/privacy": {
     title: "Privacy Policy | USJET.AI",

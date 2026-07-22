@@ -39,7 +39,7 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
       "Member verification inputs you submit on Member Login — billing email, founder-issued access sentence, and/or Stripe Member ID (cus_…).",
       "Browser-local session data after successful verification (stored in localStorage on your device, not on a separate social identity provider).",
       "Technical signals your browser sends automatically — IP address, user agent, referrer, and basic request logs needed for security and uptime.",
-      "Voluntary correspondence when you email ops@usjet.ai or submit institutional forms (PDRE, licensing, support).",
+      "Voluntary correspondence when you email ops@usjet.ai or submit support forms.",
       "Usage within gated surfaces (Hangar, Intel, Origin, Member Portal) needed to honor your subscription tier and in-product features.",
     ],
   },

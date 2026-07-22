@@ -201,7 +201,6 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
     fleet: "/fleet — everyone (10 free AI bays; 20 unlock at Flight Pass $19.90/mo)",
     sos: "/sos — site operating support (guest)",
     ai101: "/ai-101 — AI glossary flight school (guest)",
-    pdre: "/pdre — Prime Digital Real Estate institutional prospectus (guest)",
     login: "/member/login and /login — Stripe signup + verification",
     cockpit: "/cockpit — fleet sovereign handoff from Hangar / Fleet runway",
     blocked:
@@ -209,7 +208,7 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   },
   tierMatrix: {
     guest:
-      "Hangar home (3 free tabs) + Fleet (10 free AI bays) + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + login/cockpit handoff — no Intel board, Origin, Member, or Special",
+      "Hangar home (3 free tabs) + Fleet (10 free AI bays) + /sos + /ai-101 + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + login/cockpit handoff — no Intel board, Origin, Member, or Special",
     tier1FlightPass: "All 30 fleet AIs + Hangar (full tabs) + Member Portal + Special — no Intel, no Origin",
     tier2HangarPro: "Tier 1 + Intel — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",

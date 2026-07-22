@@ -24,10 +24,10 @@ export const STRATEGIC_WIKIPEDIA_FOOTNOTE =
 export const STRATEGIC_GATE_TITLE = "Strategic interest gateway" as const;
 
 export function strategicGateBody(): string {
-  return "The USJET identity stack is intentionally scarce. Expressions of acquisition, partnership, or brand alignment are reviewed through the brand licensing lane.";
+  return "The USJET identity stack is intentionally scarce. Expressions of acquisition, partnership, or brand alignment are reviewed through founder operations.";
 }
 
-export const STRATEGIC_GATE_CTA_LABEL = "Open brand licensing" as const;
+export const STRATEGIC_GATE_CTA_LABEL = "Email founder operations" as const;
 
 export const STRATEGIC_HERO_KICKER = "Executive leverage · Strategic assets dashboard" as const;
 

@@ -8,16 +8,6 @@ export type LiveTerminalSegment =
 
 const EXTRA_ACRONYMS: readonly Ai101GlossaryCore[] = [
   {
-    code: "PDRE",
-    phrase: "Prime Digital Real Estate",
-    meaning: "Institutional partnership lane for reserved Intel placement and sponsorship intake.",
-  },
-  {
-    code: "LIC",
-    phrase: "Brand licensing",
-    meaning: "Authorized Partner Network — licensed use of the USJET star emblem on fleets, apparel, and equipment.",
-  },
-  {
     code: "OPS",
     phrase: "Operations inbox",
     meaning: "ops@usjet.ai — sovereign routing for institutional and partnership correspondence.",
@@ -43,8 +33,6 @@ const TICKER_CODES = [
   "FLEET",
   "HANGAR",
   "INTEL",
-  "PDRE",
-  "LIC",
   "COCKPIT",
   "BAY",
   "CLEAR",

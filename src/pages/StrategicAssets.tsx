@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BookOpen, ExternalLink, Radio, Satellite } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import { mailtoUsjetOps } from "../lib/usjetContact";
 import {
   STRATEGIC_ASSETS_PAGE_TITLE,
   STRATEGIC_ASSETS_ROUTE,
@@ -19,7 +20,7 @@ import {
   strategicGateBody,
 } from "../data/strategicAssetsPage";
 
-const GATE_ROUTE = "/licensing" as const;
+const GATE_MAILTO = mailtoUsjetOps("Strategic assets — acquisition / partnership inquiry");
 
 function MorphHeroVisual() {
   return (
@@ -157,9 +158,9 @@ export default function StrategicAssets() {
               {STRATEGIC_GATE_TITLE}
             </h2>
             <p className="strategic-assets-counter__copy">{strategicGateBody()}</p>
-            <Link to={GATE_ROUTE} className="strategic-assets-counter__btn btn-glass-prominent glass-effect-interactive glass-tint-gold">
+            <a href={GATE_MAILTO} className="strategic-assets-counter__btn btn-glass-prominent glass-effect-interactive glass-tint-gold">
               {STRATEGIC_GATE_CTA_LABEL}
-            </Link>
+            </a>
             <p className="strategic-assets-counter__trail">
               Executive surface · internal path{" "}
               <code className="strategic-assets-counter__code">{STRATEGIC_ASSETS_ROUTE}</code>
@@ -171,12 +172,6 @@ export default function StrategicAssets() {
       <footer className="strategic-assets-cross">
         <Link to="/sovereignty" className="strategic-assets-cross__link">
           Sovereign acquisition protocol
-        </Link>
-        <span aria-hidden className="strategic-assets-cross__dot">
-          ·
-        </span>
-        <Link to="/licensing" className="strategic-assets-cross__link">
-          Brand Licensing
         </Link>
       </footer>
     </div>

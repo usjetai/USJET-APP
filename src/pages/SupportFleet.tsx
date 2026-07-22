@@ -60,23 +60,23 @@ export default function SupportFleet() {
           <p className="support-fleet-page__lane-kicker">Whales · top</p>
           <h3 className="support-fleet-page__lane-title">Strategic partners</h3>
           <p className="support-fleet-page__lane-copy">
-            Institutions and exchanges lease prime placement through the PDRE institutional gateway.
+            Institutions and exchanges lease prime placement — route through founder operations.
           </p>
-          <Link to="/pdre" className="support-fleet-page__lane-link glass-effect-interactive">
-            PDRE gateway →
-          </Link>
+          <a
+            href={mailtoUsjetOps("Strategic partnership inquiry")}
+            className="support-fleet-page__lane-link glass-effect-interactive"
+          >
+            Email OPS →
+          </a>
         </GlassEffectContainer>
         <GlassEffectContainer className="support-fleet-page__lane glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
           <p className="support-fleet-page__lane-kicker">Fleet · bottom</p>
-          <h3 className="support-fleet-page__lane-title">Brand licensing</h3>
+          <h3 className="support-fleet-page__lane-title">Fleet supporters</h3>
           <p className="support-fleet-page__lane-copy">
-            Shops, manufacturers, and local fleets apply to wear the Star as authorized USJET partners.
+            Shops, manufacturers, and local fleets fuel the mission and fly with the Star.
           </p>
           <Link to="/founders-fuel" className="support-fleet-page__lane-link glass-effect-interactive">
             Founder&apos;s Fuel $19.90 →
-          </Link>
-          <Link to="/licensing" className="support-fleet-page__lane-link glass-effect-interactive">
-            Brand licensing →
           </Link>
         </GlassEffectContainer>
       </div>

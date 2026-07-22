@@ -57,15 +57,6 @@ export default function UsjetGlobalContactBar() {
 
           <nav className="usjet-footer__col" aria-label="Business">
             <h2 className="usjet-footer__heading">Business</h2>
-            <NavLink to="/b2k" className={footerLinkClass}>
-              B2K
-            </NavLink>
-            <NavLink to="/pdre" className={footerLinkClass}>
-              PDRE
-            </NavLink>
-            <NavLink to="/licensing" className={footerLinkClass}>
-              Licensing
-            </NavLink>
             <NavLink to="/founders-fuel" className={footerLinkClass}>
               Fuel
             </NavLink>

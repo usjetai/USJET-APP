@@ -127,13 +127,4 @@ export const DEVELOPER_PAGES_EXPORT: DeveloperPageExportConfig[] = [
       { kind: "badges", selector: ".protocol-proof-page__eyebrow", file: "eyebrow-badge" },
     ],
   },
-  {
-    path: "/b2k",
-    slug: "b2k",
-    label: "B2K enterprise deployment",
-    captures: [
-      { kind: "badges", selector: ".b2k-page__badge", file: "page-badge" },
-      { kind: "logos", selector: ".b2k-help-actions__envelope-icon", file: "app-crew-envelope-icon" },
-    ],
-  },
 ];

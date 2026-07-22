@@ -37,12 +37,6 @@
     <priority>0.86</priority>
   </url>
   <url>
-    <loc>https://www.usjet.ai/b2k</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
     <loc>https://www.usjet.ai/intelligence</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -109,22 +103,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.usjet.ai/licensing</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.78</priority>
-  </url>
-  <url>
     <loc>https://www.usjet.ai/support-fleet</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://www.usjet.ai/pdre</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.usjet.ai/hired-hud</loc>

@@ -265,12 +265,6 @@ export default function Sovereignty() {
         <span aria-hidden className="strategic-assets-cross__dot">
           ·
         </span>
-        <Link to="/licensing" className="strategic-assets-cross__link">
-          Brand licensing
-        </Link>
-        <span aria-hidden className="strategic-assets-cross__dot">
-          ·
-        </span>
         <span className="sovereignty-cross__path">
           <code>{SOVEREIGNTY_ROUTE}</code>
         </span>

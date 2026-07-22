@@ -58,9 +58,6 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     id: "partners",
     title: "Partners & growth",
     routes: [
-      { path: "/b2k", label: "B2K" },
-      { path: "/pdre", label: "PDRE Gateway" },
-      { path: "/licensing", label: "Brand Licensing" },
       { path: "/support-fleet", label: "Support the Fleet" },
       { path: "/intelligence", label: "Intelligence Assets" },
       { path: "/strategic-assets", label: "Strategic Assets" },

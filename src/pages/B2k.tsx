@@ -22,7 +22,7 @@ export default function B2k() {
     const prevDesc = meta?.getAttribute("content") ?? "";
     meta?.setAttribute(
       "content",
-      "USJET B2K — $2,000 enterprise deployment lane. Coming soon. Scoped AI implementation between B2B briefing and Fleet Manual.",
+      "USJET B2K — $2,000 enterprise deployment lane. Coming soon. Scoped AI implementation below the Fleet Manual.",
     );
     document.documentElement.classList.add("b2k-page-root");
     return () => {
@@ -69,16 +69,8 @@ export default function B2k() {
         </ul>
         <p className="b2k-page__info-foot">
           Need enterprise scale today?{" "}
-          <Link to="/b2b" className="b2k-page__inline-link">
-            B2B briefing
-          </Link>{" "}
-          ·{" "}
           <Link to="/fleet-manual" className="b2k-page__inline-link">
             Fleet Manual ($2,500)
-          </Link>{" "}
-          ·{" "}
-          <Link to="/100k" className="b2k-page__inline-link">
-            Sovereign Protocol
           </Link>
         </p>
       </section>

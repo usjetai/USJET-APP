@@ -43,16 +43,6 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
       "Launch the USJET Fleet runway: 30 networked AI units in one sovereign cockpit. Call signs, jet fighter identity, and integrated navigation — no new tabs.",
     keywords: "USJET fleet, AI runway, 30 AI tools, jet fighter callsigns, sovereign cockpit",
   },
-  "/founder": {
-    title: "Founder Ameer Karim — Museum of Grit | USJET.AI",
-    description:
-      "Meet Founder Ameer Karim. Wrenches, Not Slides — the grit story behind USJET.AI, the sovereign AI hangar built for America's labor force.",
-    keywords: "Ameer Karim, USJET founder, Wrenches Not Slides, museum of grit",
-  },
-  "/founder/products": {
-    title: "Founder Products — Merch & Gear | USJET.AI",
-    description: "Founder-lined USJET products and fleet gear. Institutional merch from the sovereign hangar.",
-  },
   "/blog": {
     title: "Operator Log — USJET Blog | AI Fleet Doctrine",
     description:
@@ -63,12 +53,6 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "AI 101 — One-on-One Lesson | USJET.AI",
     description:
       "Learn Hangar, Fleet, Jet Browser, Intel, Origin, and Member. Pass the ten-question quiz for your Member Portal badge.",
-  },
-  "/b2b": {
-    title: "B2B Industrial Backbone — Enterprise AI Hangar | USJET.AI",
-    description:
-      "USJET B2B: industrial backbone for enterprises that need a sovereign AI hangar, not another slide deck. Partner with the fleet.",
-    keywords: "USJET B2B, enterprise AI, industrial backbone, AI hangar partnership",
   },
   "/b2k": {
     title: "B2K Enterprise Deployment | USJET.AI",
@@ -126,11 +110,6 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "X Signal Deck · @usajet | USJET.AI",
     description: "USJET X signal deck — live brand signal and fleet broadcasts.",
   },
-  "/100k": {
-    title: "Sovereign Fleet Protocol · Volume I | USJET.AI",
-    description:
-      "Sovereign Fleet Protocol vault — institutional clearance document for USJET fleet architecture.",
-  },
   "/code-kit": {
     title: "Code Kit — USJET Engine Kit | USJET.AI",
     description: "USJET Code Kit: engine kit and developer tooling from the hangar.",
@@ -177,7 +156,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   "/member/login": {
     title: "Member Login — Stripe Clearance | USJET.AI",
     description:
-      "Pay first, then verify. USJET Member Login with Stripe billing email and founder-issued access sentence.",
+      "Pay first, then verify. USJET Member Login with Stripe billing email and Member ID.",
   },
   "/member": {
     title: "Member Portal | USJET.AI",
@@ -192,11 +171,6 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   "/origin": {
     title: "Origin Command | USJET.AI",
     description: "USJET Origin — sovereign command bay for Enterprise Commander clearance.",
-    noindex: true,
-  },
-  "/founder-special-1995": {
-    title: "Founder Special 1995 — Grit Vault | USJET.AI",
-    description: "1995 Grit Vault — Founder Special clearance surface.",
     noindex: true,
   },
   "/special": {

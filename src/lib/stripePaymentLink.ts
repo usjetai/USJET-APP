@@ -10,9 +10,6 @@ export const HANGAR_PRO_DIRECT_URL = "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFd
 /** Enterprise Fleet Commander ($199.99/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
 export const ENTERPRISE_DIRECT_URL = "https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04";
 
-/** Sovereign Fleet Protocol Volume I ($100,000) — hard-wired Stripe Payment Link. */
-export const BLUEPRINT_100K_DIRECT_URL = "https://buy.stripe.com/bJeeVd39Y2JBaAF9xZdwc05";
-
 /** USJET Code Kit ($499) — paste live Payment Link from Stripe Dashboard. */
 export const CODE_KIT_DIRECT_URL = "";
 
@@ -74,12 +71,6 @@ export function resolveCodeKitPaymentLink(): string {
 export function resolveFleetManualPaymentLink(): string {
   const url = import.meta.env.VITE_STRIPE_FLEET_MANUAL_PAYMENT_LINK?.trim();
   return isUsableStripePaymentLink(url) ? url : FLEET_MANUAL_DIRECT_URL;
-}
-
-/** Sovereign Fleet Blueprint ($100,000) — env override when set, else BLUEPRINT_100K_DIRECT_URL. */
-export function resolve100kPaymentLink(): string {
-  const url = import.meta.env.VITE_STRIPE_100K_PAYMENT_LINK?.trim();
-  return isUsableStripePaymentLink(url) ? url : BLUEPRINT_100K_DIRECT_URL;
 }
 
 export type StripeTierPaymentId = "founder" | "hangar-pro" | "fleet-command";

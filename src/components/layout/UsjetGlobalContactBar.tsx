@@ -57,9 +57,6 @@ export default function UsjetGlobalContactBar() {
 
           <nav className="usjet-footer__col" aria-label="Business">
             <h2 className="usjet-footer__heading">Business</h2>
-            <NavLink to="/b2b" className={footerLinkClass}>
-              B2B
-            </NavLink>
             <NavLink to="/b2k" className={footerLinkClass}>
               B2K
             </NavLink>
@@ -85,9 +82,6 @@ export default function UsjetGlobalContactBar() {
             >
               USJET House
             </NavLink>
-            <NavLink to="/100k" className={footerLinkClass}>
-              100K
-            </NavLink>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Support">
@@ -103,9 +97,6 @@ export default function UsjetGlobalContactBar() {
             </NavLink>
             <NavLink to="/ai-101" className={footerLinkClass}>
               AI 101
-            </NavLink>
-            <NavLink to="/founder" className={footerLinkClass}>
-              Founder
             </NavLink>
             <NavLink to="/member" className={footerLinkClass}>
               Member

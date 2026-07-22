@@ -37,8 +37,8 @@ export const CODE_KIT_PACKAGES = [
   },
   {
     id: "revenue-templates",
-    title: "Stripe & B2B Lead-Gen Templates",
-    detail: "High-conversion checkout and enterprise briefing flows — the same architecture behind the $100K and $2,500 tiers.",
+    title: "Stripe Lead-Gen Templates",
+    detail: "High-conversion checkout and enterprise briefing flows — the same architecture behind the $2,500 tier.",
   },
 ] as const;
 

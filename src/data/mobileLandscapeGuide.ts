@@ -16,7 +16,7 @@ export const MOBILE_LANDSCAPE_WHY = [
   },
   {
     heading: "Toolbars stay on one line",
-    body: "The top nav (Protocol, Fleet online, Blog, B2B) and the bottom contact strip pack dozens of chips. Landscape gives them room so nothing hides behind overflow or feels crushed.",
+    body: "The top nav (Protocol, Fleet online, Blog) and the bottom contact strip pack dozens of chips. Landscape gives them room so nothing hides behind overflow or feels crushed.",
   },
   {
     heading: "This is a developer / operator console",

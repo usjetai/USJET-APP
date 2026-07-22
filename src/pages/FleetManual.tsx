@@ -63,8 +63,7 @@ export default function FleetManual() {
             ))}
           </ul>
           <p className="fleet-manual-page__contrast">
-            The <strong>$100K Sovereign Protocol</strong> holds the black-box legal and capital logic. The Fleet Manual
-            is practical implementation — your cockpit operating system.
+            The Fleet Manual is practical implementation — your cockpit operating system.
           </p>
         </div>
       </section>

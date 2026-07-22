@@ -72,7 +72,6 @@ export const STRIPE_DESCRIPTOR_CATALOG = {
   fleetCommand: entry("fleet-command", "Enterprise Fleet Commander", "FLEET CMD", "USJET LLC PASSPORT"),
   fleetManual: entry("fleet-manual", "Fleet Manual Professional", "MANUAL 2.5K", "USJET LLC PASSPORT"),
   codeKit: entry("code-kit", "USJET Code Kit", "CODE KIT", "USJET LLC PASSPORT"),
-  sovereign100k: entry("sovereign-100k", "Sovereign Fleet Protocol", "100K VAULT", "USJET LLC PASSPORT"),
 } as const;
 
 /** Dashboard paste sheet for Stripe → Settings → Business → Statement descriptor. */

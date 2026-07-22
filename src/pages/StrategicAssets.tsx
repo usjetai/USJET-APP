@@ -19,7 +19,7 @@ import {
   strategicGateBody,
 } from "../data/strategicAssetsPage";
 
-const VAULT_ROUTE = "/100k" as const;
+const GATE_ROUTE = "/licensing" as const;
 
 function MorphHeroVisual() {
   return (
@@ -157,7 +157,7 @@ export default function StrategicAssets() {
               {STRATEGIC_GATE_TITLE}
             </h2>
             <p className="strategic-assets-counter__copy">{strategicGateBody()}</p>
-            <Link to={VAULT_ROUTE} className="strategic-assets-counter__btn btn-glass-prominent glass-effect-interactive glass-tint-gold">
+            <Link to={GATE_ROUTE} className="strategic-assets-counter__btn btn-glass-prominent glass-effect-interactive glass-tint-gold">
               {STRATEGIC_GATE_CTA_LABEL}
             </Link>
             <p className="strategic-assets-counter__trail">
@@ -171,12 +171,6 @@ export default function StrategicAssets() {
       <footer className="strategic-assets-cross">
         <Link to="/sovereignty" className="strategic-assets-cross__link">
           Sovereign acquisition protocol
-        </Link>
-        <span aria-hidden className="strategic-assets-cross__dot">
-          ·
-        </span>
-        <Link to="/b2b" className="strategic-assets-cross__link">
-          B2B Industrial Backbone
         </Link>
         <span aria-hidden className="strategic-assets-cross__dot">
           ·

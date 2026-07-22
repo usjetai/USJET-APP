@@ -23,7 +23,7 @@ export const GAMER_FOUNDER_CTA = "Start founding" as const;
 export const GAMER_FOUNDER_KIT_FEATURES_LEGACY = [
   "Early access to the USJET VR Training Hangar",
   "Direct pipeline to 30-agent fleet orchestration",
-  "USJET VR-AI development blueprints (Volume I)",
+  "USJET VR-AI development blueprints",
   "Gamer-to-Operator flight manual & transition path",
 ] as const;
 
@@ -45,13 +45,5 @@ export const GAMING_WEALTH_PIPELINE_STAGES = [
     body: "Manage real AI fleets for local businesses — professional edition, fleet manual clearance.",
     href: "/fleet-manual" as const,
     cta: "Fleet manual",
-  },
-  {
-    id: "partner",
-    tier: "Stage 3 — The Partner",
-    price: "$100K",
-    body: "Own a piece of the industrial infrastructure — sovereign fleet protocol vault.",
-    href: "/100k" as const,
-    cta: "100K vault",
   },
 ] as const;

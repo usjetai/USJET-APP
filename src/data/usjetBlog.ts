@@ -66,12 +66,12 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
     publishedAt: "2026-05-18",
     cadenceDay: 4,
     excerpt:
-      "usjet.ai is not a brochure. It is a working command surface: fleet runway, member portal, revenue ladder, B2B gateway, and AI 101 flight school.",
+      "usjet.ai is not a brochure. It is a working command surface: fleet runway, member portal, revenue ladder, and AI 101 flight school.",
     tags: ["Platform", "Fleet", "Operators"],
     body: [
       "Visitors often ask what usjet.ai is. Here is the straight answer: it is the sovereign cockpit for a thirty-agent AI fleet, built for operators who run labor-based businesses—shops, logistics, crews, and field ops.",
       "The homepage is the runway. Each bay is a specialist agent with its own logic—not a clone of you, not a generic chatbot. The Hangar holds your workflows. The Member Portal tracks vitals, projects, and fleet activity. Intel surfaces market pulse for cleared operators.",
-      "The revenue architecture is intentional: Founder's Fuel at $19.90/mo supports the mission. The Code Kit ($499) serves builders who want the engine room. The Fleet Manual ($2,500) is professional implementation. The Sovereign Protocol ($100K) is institutional IP. B2B is the enterprise briefing lane. B2K deployment is coming soon.",
+      "The revenue architecture is intentional: Founder's Fuel at $19.90/mo supports the mission. The Code Kit ($499) serves builders who want the engine room. The Fleet Manual ($2,500) is professional implementation. B2K deployment is coming soon.",
       "AI 101 decodes the vocabulary—cockpit terms, Stripe verification, partnership protocol (do not clone your AI). This site is not slides. It is wrenches, glass, and line checks.",
       "What it is not: a social network, a replacement for your ERP, or a magic button. It is infrastructure you operate. Daily logs on this blog will stay responsive through day fifty of the march to USA 250.",
     ],
@@ -187,7 +187,6 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
     footerCta: {
       intro: "Infrastructure is live. The filing is real. Choose your lane:",
       links: [
-        { label: "Priority waitlist · B2B briefing", to: "/b2b" },
         { label: "Founder's Fuel · $19.90/mo", to: "/founders-fuel" },
       ],
     },

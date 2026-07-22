@@ -1,9 +1,4 @@
-/** Executive Strategic Assets landing — digital brand + Sovereign inquiry gate */
-
-import {
-  SOVEREIGN_BLUEPRINT_PRICE_DISPLAY,
-  SOVEREIGN_BLUEPRINT_PRICE_SHORT,
-} from "./sovereignBlueprint100k";
+/** Executive Strategic Assets landing — digital brand + strategic inquiry gate */
 
 export const STRATEGIC_ASSETS_ROUTE = "/strategic-assets" as const;
 
@@ -29,10 +24,10 @@ export const STRATEGIC_WIKIPEDIA_FOOTNOTE =
 export const STRATEGIC_GATE_TITLE = "Strategic interest gateway" as const;
 
 export function strategicGateBody(): string {
-  return `The USJET identity stack is intentionally scarce. Expressions of acquisition, partnership, or brand alignment are reviewed through the Sovereign Fleet Protocol threshold (${SOVEREIGN_BLUEPRINT_PRICE_DISPLAY}).`;
+  return "The USJET identity stack is intentionally scarce. Expressions of acquisition, partnership, or brand alignment are reviewed through the brand licensing lane.";
 }
 
-export const STRATEGIC_GATE_CTA_LABEL = `Open Sovereign Protocol vault · ${SOVEREIGN_BLUEPRINT_PRICE_SHORT}` as const;
+export const STRATEGIC_GATE_CTA_LABEL = "Open brand licensing" as const;
 
 export const STRATEGIC_HERO_KICKER = "Executive leverage · Strategic assets dashboard" as const;
 
@@ -49,10 +44,10 @@ export const STRATEGIC_LEVERAGE_POINTS = [
   },
   {
     id: "protocol",
-    title: "Sovereign-tier conversations",
+    title: "Executive-tier conversations",
     body: "Acquisition, partnership, and brand-alignment topics are handled with legal and finance discipline — not improvised DMs.",
   },
 ] as const;
 
 export const STRATEGIC_META_DESCRIPTION =
-  "USJET.AI outlines digital sovereignty, Sovereign-tier inquiry rails, and encyclopedic aviation context." as const;
+  "USJET.AI outlines digital sovereignty, executive inquiry rails, and encyclopedic aviation context." as const;

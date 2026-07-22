@@ -8,18 +8,16 @@ const SITE = "https://www.usjet.ai";
 
 /**
  * Public marketing + conversion surfaces only.
- * Gated routes (/member, /intel, /origin, /special, /cockpit, /founder-special-1995)
+ * Gated routes (/member, /intel, /origin, /special, /cockpit)
  * stay out of the sitemap — they send noindex via SeoHead.
  */
 const STATIC_ENTRIES = [
   { path: "/", changefreq: "daily", priority: "1.0" },
   { path: "/fleet", changefreq: "weekly", priority: "0.98" },
-  { path: "/founder", changefreq: "weekly", priority: "0.92" },
   { path: "/blog", changefreq: "daily", priority: "0.95" },
   { path: "/fleet-directory", changefreq: "weekly", priority: "0.9" },
   { path: "/fleet-manual", changefreq: "weekly", priority: "0.88" },
   { path: "/ai-101", changefreq: "weekly", priority: "0.86" },
-  { path: "/b2b", changefreq: "weekly", priority: "0.9" },
   { path: "/b2k", changefreq: "weekly", priority: "0.75" },
   { path: "/intelligence", changefreq: "weekly", priority: "0.88" },
   { path: "/strategic-assets", changefreq: "weekly", priority: "0.82" },
@@ -31,14 +29,12 @@ const STATIC_ENTRIES = [
   { path: "/vr", changefreq: "weekly", priority: "0.78" },
   { path: "/gamers", changefreq: "weekly", priority: "0.76" },
   { path: "/x", changefreq: "daily", priority: "0.72" },
-  { path: "/100k", changefreq: "monthly", priority: "0.78" },
   { path: "/code-kit", changefreq: "weekly", priority: "0.8" },
   { path: "/licensing", changefreq: "weekly", priority: "0.78" },
   { path: "/support-fleet", changefreq: "weekly", priority: "0.72" },
   { path: "/pdre", changefreq: "monthly", priority: "0.6" },
   { path: "/hired-hud", changefreq: "weekly", priority: "0.7" },
   { path: "/hoops", changefreq: "monthly", priority: "0.55" },
-  { path: "/founder/products", changefreq: "monthly", priority: "0.7" },
   { path: "/sos", changefreq: "monthly", priority: "0.55" },
   { path: "/privacy", changefreq: "yearly", priority: "0.45" },
   { path: "/login", changefreq: "monthly", priority: "0.5" },

@@ -30,7 +30,7 @@ export const FLEET_MANUAL_FEATURES = [
   "30-agent deployment playbooks for shops, crews, and field ops",
   "Labor-to-AI handoff SOPs — intake, dispatch, billing, closeout",
   "Cockpit-ready checklists — daily, weekly, monthly command rhythm",
-  "Implementation-only IP — not the Sovereign legal/capital black box",
+  "Implementation-only IP — practical cockpit operations, no legal/capital filler",
 ] as const;
 
 export const FLEET_MANUAL_SCARCITY_COPY = `Limited to ${FLEET_MANUAL_LICENSE_CAP} Professional Licenses` as const;

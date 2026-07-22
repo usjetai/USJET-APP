@@ -22,4 +22,4 @@ export function getWefunderReservationUrl(): string {
 
 export const WEFUNDER_GOAL_DISPLAY = "$50,000" as const;
 
-export const WEFUNDER_RESERVATION_FALLBACK_ROUTE = "/b2b" as const;
+export const WEFUNDER_RESERVATION_FALLBACK_ROUTE = "/" as const;

@@ -1,6 +1,5 @@
 import type { MemberTier } from "../types/member";
 import {
-  BLUEPRINT_100K_DIRECT_URL,
   CODE_KIT_DIRECT_URL,
   ENTERPRISE_DIRECT_URL,
   FLEET_MANUAL_DIRECT_URL,
@@ -15,7 +14,6 @@ export const STRIPE_DIRECT_EXTRACTION_PORTS = {
   flightPass: FLIGHT_PASS_DIRECT_URL,
   hangarPro: HANGAR_PRO_DIRECT_URL,
   enterprise: ENTERPRISE_DIRECT_URL,
-  blueprint100k: BLUEPRINT_100K_DIRECT_URL,
   fleetManual: FLEET_MANUAL_DIRECT_URL,
   codeKit: CODE_KIT_DIRECT_URL,
 } as const;

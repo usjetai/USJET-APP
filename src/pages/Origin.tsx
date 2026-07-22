@@ -43,7 +43,6 @@ const COMMAND_ROUTES = [
   { to: "/", label: "Hangar" },
   { to: "/fleet", label: "Fleet" },
   { to: "/intel", label: "Intel Pulse" },
-  { to: "/founder", label: "Founder" },
   { to: "/special", label: "Founder Special" },
 ] as const;
 

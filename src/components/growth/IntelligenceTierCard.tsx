@@ -1,13 +1,12 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Lock, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
-import SovereignVaultConfidentialityModal from "./SovereignVaultConfidentialityModal";
 import { recordFuelCheckoutIntent } from "../../lib/foundersFuelMetrics";
 import { recordFleetManualCheckoutIntent } from "../../lib/fleetManualMetrics";
-import { isUsableStripePaymentLink, resolve100kPaymentLink, resolveFleetManualPaymentLink, resolveFounderPaymentLink } from "../../lib/stripePaymentLink";
+import { isUsableStripePaymentLink, resolveFleetManualPaymentLink, resolveFounderPaymentLink } from "../../lib/stripePaymentLink";
 
-type TierKind = "fuel" | "manual" | "protocol";
+type TierKind = "fuel" | "manual";
 
 type IntelligenceTierCardProps = {
   kind: TierKind;
@@ -39,42 +38,25 @@ export default function IntelligenceTierCard({
   featured = false,
 }: IntelligenceTierCardProps) {
   const [status, setStatus] = useState<"idle" | "routing">("idle");
-  const [modalOpen, setModalOpen] = useState(false);
-  const [agreed, setAgreed] = useState(false);
 
-  const paymentLink =
-    kind === "fuel"
-      ? resolveFounderPaymentLink()
-      : kind === "manual"
-        ? resolveFleetManualPaymentLink()
-        : resolve100kPaymentLink();
+  const paymentLink = kind === "fuel" ? resolveFounderPaymentLink() : resolveFleetManualPaymentLink();
 
   const checkoutReady = isUsableStripePaymentLink(paymentLink);
 
-  const routeToStripe = () => {
+  const handleBuy = () => {
     if (!checkoutReady) {
       return;
     }
     if (kind === "fuel") {
       recordFuelCheckoutIntent();
-    } else if (kind === "manual") {
+    } else {
       recordFleetManualCheckoutIntent();
     }
     setStatus("routing");
     window.location.href = paymentLink;
   };
 
-  const handleBuy = () => {
-    if (kind === "protocol") {
-      setAgreed(false);
-      setModalOpen(true);
-      return;
-    }
-    routeToStripe();
-  };
-
-  const tint =
-    kind === "protocol" ? "glass-tint-gold" : kind === "manual" ? "glass-tint-cyan" : "glass-tint-cyan";
+  const tint = "glass-tint-cyan";
 
   return (
     <>
@@ -83,7 +65,6 @@ export default function IntelligenceTierCard({
           "intelligence-tier-card glass-effect glass-effect--rounded-rect liquid-glass-background",
           tint,
           featured ? "intelligence-tier-card--featured" : "",
-          kind === "protocol" ? "intelligence-tier-card--vault-secure" : "",
           `intelligence-tier-card--${kind}`,
         ]
           .filter(Boolean)
@@ -107,18 +88,15 @@ export default function IntelligenceTierCard({
               disabled={status === "routing"}
               onClick={handleBuy}
             >
-              {kind === "protocol" ? <Lock size={16} aria-hidden /> : <Shield size={16} aria-hidden />}
+              <Shield size={16} aria-hidden />
               <span>
                 {status === "routing"
                   ? "Routing to Stripe…"
-                  : `${cta}${kind === "protocol" ? ` — ${priceDisplay}` : period ? ` — ${priceDisplay}${period}` : ` — ${priceDisplay}`}`}
+                  : `${cta} — ${priceDisplay}${period}`}
               </span>
             </button>
-            {!checkoutReady && kind !== "protocol" ? (
+            {!checkoutReady ? (
               <p className="intelligence-tier-card__pending">Stripe checkout activating — use detail page or ops wire.</p>
-            ) : null}
-            {kind === "protocol" && !checkoutReady ? (
-              <p className="intelligence-tier-card__pending">Stripe checkout activating — confidentiality gate ready when live.</p>
             ) : null}
             <Link to={detailRoute} className="intelligence-tier-card__detail btn-glass glass-effect-interactive">
               Full briefing
@@ -126,23 +104,6 @@ export default function IntelligenceTierCard({
           </div>
         </div>
       </GlassEffectContainer>
-
-      {kind === "protocol" ? (
-        <SovereignVaultConfidentialityModal
-          open={modalOpen}
-          agreed={agreed}
-          onAgreedChange={setAgreed}
-          onCancel={() => {
-            if (status !== "routing") {
-              setModalOpen(false);
-              setAgreed(false);
-            }
-          }}
-          onProceed={routeToStripe}
-          checkoutReady={checkoutReady}
-          routing={status === "routing"}
-        />
-      ) : null}
     </>
   );
 }

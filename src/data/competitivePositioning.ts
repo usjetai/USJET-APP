@@ -103,9 +103,9 @@ export const OFFER_BUYING_REASONS = [
     offer: "Enterprise Fleet Commander",
     priceDisplay: "$199.99/mo",
     replaces: "Hiring an agency or internal team to build a multi-agent command layer and training program from scratch.",
-    bundles: "Everything in Hangar Pro + Origin (Aura) command node + 1995 Grit Vault — teach, route, and orchestrate partner AIs from one seat.",
+    bundles: "Everything in Hangar Pro + Origin (Aura) command node — teach, route, and orchestrate partner AIs from one seat.",
     buyBecause:
-      "Full sovereign command: one node that owns the fleet, training voice, and founder-grade vault — before custom-build burn or USA 250 price climb.",
+      "Full sovereign command: one node that owns the fleet and the training voice — before custom-build burn or USA 250 price climb.",
     objectionHandle:
       "If they threaten a custom build: Enterprise is the command layer they would otherwise invent — already flying, Stripe-cleared, Origin-seated.",
   },

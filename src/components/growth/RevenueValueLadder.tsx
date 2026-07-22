@@ -3,9 +3,8 @@ import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { CODE_KIT_PRICE_DISPLAY, CODE_KIT_ROUTE } from "../../data/codeKit499";
 import { FLEET_MANUAL_PRICE_DISPLAY, FLEET_MANUAL_ROUTE } from "../../data/fleetManual2500";
 import { FOUNDERS_FUEL_PRICE_DISPLAY } from "../../data/foundersFuel";
-import { SOVEREIGN_BLUEPRINT_PRICE_SHORT, SOVEREIGN_VAULT_ROUTE } from "../../data/sovereignBlueprint100k";
 
-type LadderTier = "fuel" | "code" | "manual" | "protocol";
+type LadderTier = "fuel" | "code" | "manual";
 
 type RevenueValueLadderProps = {
   active?: LadderTier;
@@ -30,12 +29,6 @@ const TIERS = [
     verb: "Run the mission",
     to: FLEET_MANUAL_ROUTE,
   },
-  {
-    id: "protocol" as const,
-    price: SOVEREIGN_BLUEPRINT_PRICE_SHORT,
-    verb: "Own the mission framework",
-    to: SOVEREIGN_VAULT_ROUTE,
-  },
 ] as const;
 
 export default function RevenueValueLadder({ active }: RevenueValueLadderProps) {
@@ -48,9 +41,7 @@ export default function RevenueValueLadder({ active }: RevenueValueLadderProps) 
         ? "code"
         : location.pathname === FLEET_MANUAL_ROUTE
           ? "manual"
-          : location.pathname === SOVEREIGN_VAULT_ROUTE
-            ? "protocol"
-            : undefined);
+          : undefined);
 
   return (
     <GlassEffectContainer className="revenue-ladder glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">

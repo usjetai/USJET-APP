@@ -2,7 +2,7 @@ type UsjetStarEmblemProps = {
   className?: string;
   /** When true, hides from assistive tech (decorative watermark). */
   decorative?: boolean;
-  /** Steel finish for B2B / industrial surfaces. */
+  /** Steel finish for industrial surfaces. */
   variant?: "default" | "steel";
 };
 

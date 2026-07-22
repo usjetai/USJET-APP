@@ -58,8 +58,7 @@ const HELP_TOPICS: HelpTopic[] = [
           <Link to="/member/login" className="sos-page__inline-link">
             Member Login
           </Link>
-          . Pay on Stripe first, then verify with <strong>billing email</strong> plus your{" "}
-          <strong>access sentence</strong> or Stripe <strong>Member ID</strong> (<code className="sos-page__code">cus_…</code>
+          . Pay on Stripe first, then verify with <strong>billing email</strong> plus your Stripe <strong>Member ID</strong> (<code className="sos-page__code">cus_…</code>
           ). Email alone does not unlock the portal.
         </p>
         <ul className="sos-page__list">
@@ -67,7 +66,7 @@ const HELP_TOPICS: HelpTopic[] = [
             <strong>No Google / Apple sign-in.</strong> {SECURITY_STRIPE_ONLY_MAY_2026.noOAuthEver.join(" ")}
           </li>
           <li>
-            <strong>Not your Stripe password.</strong> Use the billing email you paid with, plus the sentence or{" "}
+            <strong>Not your Stripe password.</strong> Use the billing email you paid with, plus your Member ID{" "}
             <code className="sos-page__code">cus_…</code> from your receipt.
           </li>
           <li>
@@ -90,7 +89,7 @@ const HELP_TOPICS: HelpTopic[] = [
           <strong>Hangar Pro — $49.95/mo</strong> — adds Intel.
         </li>
         <li>
-          <strong>Enterprise Commander — $199.99/mo</strong> — adds Origin + 1995 Grit Vault.
+          <strong>Enterprise Commander — $199.99/mo</strong> — adds Origin.
         </li>
         <li>
           <strong>Manage charges</strong> in your Stripe customer portal / receipt tools. Cancel and invoices stay with

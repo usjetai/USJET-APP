@@ -4,7 +4,7 @@
  * Protect Ameer Karim's vision.
  */
 
-/** Public Founder (/founder) masthead — display name */
+/** Public Founder masthead — display name */
 export const FOUNDER_PUBLIC_NAME = "Ameer Karim" as const;
 
 export const FOUNDER_PUBLIC_NAME_KICKER = "Founder · USJET.AI" as const;
@@ -52,7 +52,7 @@ export const FOUNDER_CREATIVE_MANIFESTO = {
   imaginationRule:
     "Use your creative engines for Good. We are building a sovereign cockpit, not just a website.",
   fleetMessage:
-    "Listen up, Crew: The Founder is flying blind right now, enjoying the vision we're painting with words—but he's expecting to wake up to a masterpiece. Make the 1995 Page and the Intel Board look like something that belongs in a museum of grit.",
+    "Listen up, Crew: The Founder is flying blind right now, enjoying the vision we're painting with words—but he's expecting to wake up to a masterpiece. Make the Intel Board look like something that belongs in a museum of grit.",
   securityDirective: "Protect Ameer Karim's vision—and the lineage: Founder, Successor, and King Karim.",
 } as const;
 
@@ -79,7 +79,7 @@ export const TRUSTED_FLEET_LAUNCH_DIRECTIVE = {
   directive:
     "USJET certifies fleet partner destinations and owns the launch experience—first visit interstitial, repeat trusted handoff without broken iframe wait.",
   honesty:
-    "Partners enforce X-Frame-Options and CSP; USJET does not override Google vault doors. Same-window handoff only—never target=\"_blank\".",
+    "Partners enforce X-Frame-Options and CSP; USJET does not override Google security doors. Same-window handoff only—never target=\"_blank\".",
   fleetBriefing:
     "Listen up, Crew: certify the bay, flash the cockpit, open the hatch in-window. After first clearance, handoff=trusted skips the stall.",
 } as const;
@@ -99,7 +99,6 @@ export const WARP_SPEED_DIRECTIVE = {
   mandates: [
     "GlobalVideoBackground: YouTube embed or local /video/usjet-warp-tunnel.mp4.",
     "global-video-bg__warp-streaks radial tunnel overlay on all routes (except /cockpit).",
-    "1995 Grit Vault: cinematic body class, gold liquid glass, 3.5s warp on founder-special-1995.",
   ],
 } as const;
 
@@ -200,25 +199,24 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
   guestPublicRoutes: {
     hangar: "/ — home for everyone (first 3 tabs free; remaining tabs unlock at Flight Pass $19.90/mo). /hangar redirects here.",
     fleet: "/fleet — everyone (10 free AI bays; 20 unlock at Flight Pass $19.90/mo)",
-    founder: "/founder — everyone",
     sos: "/sos — site operating support (guest)",
     ai101: "/ai-101 — AI glossary flight school (guest)",
     pdre: "/pdre — Prime Digital Real Estate institutional prospectus (guest)",
     login: "/member/login and /login — Stripe signup + verification",
     cockpit: "/cockpit — fleet sovereign handoff from Hangar / Fleet runway",
     blocked:
-      "/intel, /origin, /member, /special, /founder-special-1995 — paid clearance required",
+      "/intel, /origin, /member, /special — paid clearance required",
   },
   tierMatrix: {
     guest:
-      "Hangar home (3 free tabs) + Fleet (10 free AI bays) + Founder + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + /100k + login/cockpit handoff — no Intel board, Origin, Member, or Special",
+      "Hangar home (3 free tabs) + Fleet (10 free AI bays) + /sos + /ai-101 + /pdre + /licensing + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + login/cockpit handoff — no Intel board, Origin, Member, or Special",
     tier1FlightPass: "All 30 fleet AIs + Hangar (full tabs) + Member Portal + Special — no Intel, no Origin",
     tier2HangarPro: "Tier 1 + Intel — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",
     founderGodMode: "USJET-AMEER — all routes, all bays",
   },
   fleetMessage:
-    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; Flight Pass unlocks fleet bays eleven through thirty and the rest of the Hangar tabs beyond the first three free. Guests get ten free fleet AIs, three Hangar tabs, Founder, and the login runway — everything else bills through the $19.90 extraction port.",
+    "Listen up, Crew: no OAuth side doors. Stripe verifies the Member ID; Flight Pass unlocks fleet bays eleven through thirty and the rest of the Hangar tabs beyond the first three free. Guests get ten free fleet AIs, three Hangar tabs, and the login runway — everything else bills through the $19.90 extraction port.",
 } as const;
 
 export const DIRECT_LANDING_PROTOCOL = {

@@ -227,7 +227,6 @@ export const HIRED_HUD_RADIO_EXTENDED_LINES = [
   "SEO prebuild sitemap growth surfaces live.",
   "Blog AI one oh one SOS routes public.",
   "Learn surface chrome tier glow nav tight.",
-  "Special page grit vault gold warp.",
   "Founder three panels origin fleet industry.",
   "Anonymous silhouettes worker line art grit.",
   "Chiseled wordmark Audiowide stone hits.",

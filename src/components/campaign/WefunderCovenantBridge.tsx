@@ -19,7 +19,7 @@ type WefunderCovenantBridgeProps = {
   /** Footer chip vs full-width CTA */
   variant?: "footer" | "prominent";
   className?: string;
-  /** Show fleet ticker above the trigger (B2B / blog blocks) */
+  /** Show fleet ticker above the trigger (blog blocks) */
   showTicker?: boolean;
 };
 

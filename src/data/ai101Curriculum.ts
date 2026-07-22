@@ -79,19 +79,13 @@ const SITE_AND_LESSON: Record<string, SiteLesson> = {
   },
   GATE: {
     websiteContext:
-      "`TierRouteGate` wraps Hangar, Member, Intel, Origin, Special, and 1995 routes, showing upgrade copy from `tierRouteGateCopy` when clearance is too low.",
+      "`TierRouteGate` wraps Hangar, Member, Intel, Origin, and Special routes, showing upgrade copy from `tierRouteGateCopy` when clearance is too low.",
     lesson:
       "Gates are not insults; they are pressure seals. I stand behind them until your Stripe tier matches the deck behind the door—then the hatch spins open.",
   },
-  GRID: {
-    websiteContext:
-      "Intel uses a six-column monitor grid; Hangar mirrors hangar columns constants from `types/fleet` so expansion math stays consistent with the manifest count.",
-    lesson:
-      "The grid is the ruler: six wide, five deep, thirty souls. Learn the lattice and you always know where a bay should land when the layout reflows responsive.",
-  },
   GUEST: {
     websiteContext:
-      "Guest routes include `/`, `/founder`, `/member/login`, `/cockpit`, `/sos`, and this `/ai-101` page; Hangar and Intel stay hidden until Flight Pass or higher.",
+      "Guest routes include `/`, `/member/login`, `/cockpit`, `/sos`, and this `/ai-101` page; Hangar and Intel stay hidden until Flight Pass or higher.",
     lesson:
       "Guests get the window seat: runway, founder story, SOS, and school. I will wave from the hangar side of the glass until your clearance catches up.",
   },
@@ -178,12 +172,6 @@ const SITE_AND_LESSON: Record<string, SiteLesson> = {
       "Global chrome stacks `WarpBackground`, `GlobalVideoBackground`, `AppNav`, and page shells that keep `page-atmosphere` transparent so warp motion reads through.",
     lesson:
       "USJET is the airframe wrapping every route. We paint in glass, grit, and velocity on purpose—templates need not apply on this flight line.",
-  },
-  VAULT: {
-    websiteContext:
-      "`/founder-special-1995` is gated to Enterprise in routing tables, presenting the gold grit vault experience separate from the main Founder glass story.",
-    lesson:
-      "Vault is time travel with a paid padlock. Enterprise clears the door; inside is 1995 grit, not the default liquid runway. Dress for the era you enter.",
   },
   WRAP: {
     websiteContext:

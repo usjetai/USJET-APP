@@ -6,11 +6,9 @@ User-agent: *
 Allow: /
 
 Allow: /fleet
-Allow: /founder
 Allow: /blog
 Allow: /fleet-directory
 Allow: /ai-101
-Allow: /b2b
 Allow: /member/login
 Allow: /llms.txt
 
@@ -18,7 +16,6 @@ Allow: /llms.txt
 Disallow: /cockpit
 Disallow: /intel
 Disallow: /origin
-Disallow: /founder-special-1995
 Disallow: /special
 
 # AI crawlers — full allow on public hangar surfaces

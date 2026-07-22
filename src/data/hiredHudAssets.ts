@@ -106,12 +106,6 @@ const HIRED_HUD_CASH_APP_GLAM_LINK = {
   external: true,
 } as const;
 
-/** Clothes & fashion — founder product lineup vault. */
-const HIRED_HUD_FOUNDER_PRODUCTS_GLAM_LINK = {
-  href: "/founder/products",
-  linkLabel: "Founder product lineup",
-} as const;
-
 /** Car — X @usajet via cockpit handoff. */
 const HIRED_HUD_CAR_GLAM_HREF = wrapExternalInCockpit(GAMING_X_URL, {
   returnTo: "/hired-hud",
@@ -251,12 +245,10 @@ export function getHiredHudTileGlamChips(slot: number): readonly HiredHudTileGla
     {
       emoji: HIRED_HUD_TILE_CLOTHES_EMOJIS[slot % HIRED_HUD_TILE_CLOTHES_EMOJIS.length] ?? "👗",
       title: "Clothes",
-      ...HIRED_HUD_FOUNDER_PRODUCTS_GLAM_LINK,
     },
     {
       emoji: HIRED_HUD_TILE_FASHION_EMOJIS[slot % HIRED_HUD_TILE_FASHION_EMOJIS.length] ?? "👠",
       title: "Fashion",
-      ...HIRED_HUD_FOUNDER_PRODUCTS_GLAM_LINK,
     },
     {
       emoji: HIRED_HUD_TILE_CAR_EMOJIS[slot % HIRED_HUD_TILE_CAR_EMOJIS.length] ?? "🚗",

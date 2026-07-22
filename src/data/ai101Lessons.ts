@@ -108,22 +108,12 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     ],
   },
   {
-    id: "founder",
-    title: "Founder & 1995",
-    route: "/founder",
-    kicker: "Story & grit",
-    paragraphs: [
-      "Founder tells Ameer Karim’s story and the grit behind the brand. Founder Products and the 1995 Grit Vault deepen lineage and vault content — 1995 is Enterprise-tier.",
-      "Read Founder when you want to understand why the ship exists. Use Hangar and Fleet when you want to work.",
-    ],
-  },
-  {
     id: "member",
     title: "Member Login & Portal",
     route: "/member",
     kicker: "Stripe clearance",
     paragraphs: [
-      "Member Login: pay on Stripe first, then verify with billing email plus your founder-issued access sentence or Stripe Member ID (cus_…). No OAuth. Email alone never unlocks the portal.",
+      "Member Login: pay on Stripe first, then verify with billing email plus your Stripe Member ID (cus_…). No OAuth. Email alone never unlocks the portal.",
       "Member Portal holds Mission Projects, AI data telemetry, shipping, and Hangar/Fleet launch boards. After you pass this AI 101 quiz, your AI 101 badge appears here as proof.",
     ],
     bullets: [
@@ -139,7 +129,7 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     kicker: "Checkout",
     paragraphs: [
       "Founder Special is the tier checkout surface — Flight Pass, Hangar Pro, Enterprise Commander — wired to Stripe Payment Links. High-pressure funnels land direct on those ports.",
-      "Pick the clearance that matches what you need: Hangar depth, Intel, or Origin + vault.",
+      "Pick the clearance that matches what you need: Hangar depth, Intel, or Origin.",
     ],
   },
   {
@@ -158,7 +148,7 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     kicker: "Map",
     paragraphs: [
       "Hired HUD / USJET House watches live roster energy. Fleet Directory lists jet-fighter call signs. Gaming and Jet Hoops are entertainment surfaces inside the same ship rules.",
-      "Revenue and partner pages (Founder’s Fuel, Code Kit, B2B, Licensing, Sovereignty, and related) support growth and institutional story — explore them when you are ready to deepen the business side.",
+      "Revenue and partner pages (Founder’s Fuel, Code Kit, Licensing, Sovereignty, and related) support growth and institutional story — explore them when you are ready to deepen the business side.",
       "Privacy and protocol pages document policy. Landscape guide helps mobile operators. Always prefer same-window navigation from the header, footer Help link, or side latch menu.",
     ],
     bullets: [

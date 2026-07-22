@@ -2,13 +2,11 @@ import { useEffect } from "react";
 import IntelligenceFuelVisual from "../components/growth/IntelligenceFuelVisual";
 import IntelligenceTierCard from "../components/growth/IntelligenceTierCard";
 import FleetManualArtifact from "../components/growth/FleetManualArtifact";
-import SovereignProtocolBookArtifact from "../components/growth/SovereignProtocolBookArtifact";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import {
   REVENUE_ARCHITECTURE_EYEBROW,
   REVENUE_ARCHITECTURE_LEDE,
   REVENUE_ARCHITECTURE_TITLE,
-  REVENUE_TIER_ANCHOR,
   REVENUE_TIER_COMMUNITY,
   REVENUE_TIER_OPERATOR,
   REVENUE_TRANSFERABLE_BULLETS,
@@ -24,7 +22,7 @@ export default function IntelligenceAssets() {
     const prevDesc = meta?.getAttribute("content") ?? "";
     meta?.setAttribute(
       "content",
-      "USJET three-tier revenue engine — Founder's Fuel $19.90/mo, Fleet Manual $2,500, Sovereign Fleet Protocol $100,000.",
+      "USJET revenue engine — Founder's Fuel $19.90/mo and the Fleet Manual $2,500.",
     );
     document.documentElement.classList.add("intelligence-page-root");
     return () => {
@@ -47,7 +45,7 @@ export default function IntelligenceAssets() {
       <section className="intelligence-page__transferable" aria-labelledby="intelligence-transferable-heading">
         <GlassEffectContainer className="intelligence-transferable glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-gold">
           <div className="intelligence-transferable__inner">
-            <p className="intelligence-transferable__kicker">Sovereign Vault · IP ladder</p>
+            <p className="intelligence-transferable__kicker">IP ladder</p>
             <h2 id="intelligence-transferable-heading" className="intelligence-transferable__title">
               {REVENUE_TRANSFERABLE_TITLE}
             </h2>
@@ -63,22 +61,8 @@ export default function IntelligenceAssets() {
 
       <div className="intelligence-page__ladder">
         <IntelligenceTierCard
-          kind="protocol"
-          tierLabel={REVENUE_TIER_ANCHOR.tierLabel}
-          name={REVENUE_TIER_ANCHOR.name}
-          subtitle={REVENUE_TIER_ANCHOR.subtitle}
-          priceDisplay={REVENUE_TIER_ANCHOR.priceDisplay}
-          period={REVENUE_TIER_ANCHOR.period}
-          stripeDescription={REVENUE_TIER_ANCHOR.stripeDescription}
-          logic={REVENUE_TIER_ANCHOR.logic}
-          cta={REVENUE_TIER_ANCHOR.cta}
-          detailRoute={REVENUE_TIER_ANCHOR.detailRoute}
-          visual={<SovereignProtocolBookArtifact />}
-          featured
-        />
-
-        <IntelligenceTierCard
           kind="manual"
+          featured
           tierLabel={REVENUE_TIER_OPERATOR.tierLabel}
           name={REVENUE_TIER_OPERATOR.name}
           subtitle={REVENUE_TIER_OPERATOR.subtitle}

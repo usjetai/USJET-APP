@@ -31,11 +31,9 @@ PAGES = [
     ("FLEET", "/", (0, 210), "#22d3ee"),
     ("HANGAR", "/hangar", (55, 175), "#f59e0b"),
     ("INTEL", "/intel", (110, 120), "#a78bfa"),
-    ("FOUNDER", "/founder", (155, 55), "#f472b6"),
     ("ORIGIN", "/origin", (180, -20), "#ec4899"),
     ("MEMBER", "/member", (155, -95), "#34d399"),
     ("SPECIAL", "/special", (90, -150), "#fbbf24"),
-    ("1995", "/founder-special-1995", (10, -165), "#d97706"),
     ("COCKPIT", "/cockpit", (-70, -120), "#38bdf8"),
 ]
 
@@ -127,7 +125,7 @@ def main() -> None:
     # Tier rings legend (icons only — minimal words)
     c.setFont("Helvetica", 6)
     c.setFillColor(colors.HexColor("#64748b"))
-    c.drawString(24, 24, "T1 FLEET+HANGAR  |  T2 +INTEL+MEMBER  |  T3 +ORIGIN  |  GUEST: FLEET+HANGAR+FOUNDER")
+    c.drawString(24, 24, "T1 FLEET+HANGAR  |  T2 +INTEL+MEMBER  |  T3 +ORIGIN  |  GUEST: FLEET+HANGAR")
     c.drawString(24, H - 22, "USJET LLC · EST. 2018 · master-tech · WIREFRAME SOVEREIGN MAP · PRINT = HARD PROOF")
 
     c.showPage()

@@ -176,21 +176,21 @@ export function answerOriginFromKnowledge(
         `Stripe only — no Google/Apple login, no other processors.`,
         `• Flight Pass ${FLIGHT_PASS_STRIPE.priceDisplay}${FLIGHT_PASS_STRIPE.period} — full Hangar tabs + Member Portal`,
         `• Hangar Pro ${HANGAR_PRO_STRIPE.priceDisplay}${HANGAR_PRO_STRIPE.period} — adds Intel`,
-        `• Enterprise Commander ${FLEET_COMMANDER_STRIPE.priceDisplay}${FLEET_COMMANDER_STRIPE.period} — adds Origin + 1995 vault`,
+        `• Enterprise Commander ${FLEET_COMMANDER_STRIPE.priceDisplay}${FLEET_COMMANDER_STRIPE.period} — adds Origin`,
         `Pay on Stripe, then verify at /member/login.`,
       ].join("\n"),
     );
   }
 
-  if (/(login|log in|sign in|member (id|portal|login)|oauth|stripe verify|access sentence|cus_)/.test(q)) {
+  if (/(login|log in|sign in|member (id|portal|login)|oauth|stripe verify|cus_)/.test(q)) {
     return flightPlan(
-      "Login is Stripe-only: billing email + founder-issued access sentence (or cus_ Member ID) at /member/login. No Google, Apple, or social sign-in. Member Portal holds Mission Projects after clearance.",
+      "Login is Stripe-only: billing email + Member ID (cus_…) at /member/login. No Google, Apple, or social sign-in. Member Portal holds Mission Projects after clearance.",
     );
   }
 
-  if (/(founder|ameer|grit|1995|story)/.test(q)) {
+  if (/(founder|ameer|grit|story)/.test(q)) {
     return flightPlan(
-      "Founder page (/founder) carries Ameer Karim's story. The 1995 Grit Vault is Enterprise clearance. Wrenches, not slides — this ship is a revenue engine for America's labor force.",
+      "Ameer Karim forged this fleet in grit. Wrenches, not slides — this ship is a revenue engine for America's labor force.",
     );
   }
 

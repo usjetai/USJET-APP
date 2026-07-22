@@ -47,7 +47,7 @@ export const GAMER_FOUNDER_KIT_HOOK =
   "Entry clearance for the gaming community — blueprints, operator manual, and the Gamer-to-Operator transition path." as const;
 
 export const GAMER_FOUNDER_KIT_FEATURES = [
-  "USJET VR-AI development blueprints (Volume I)",
+  "USJET VR-AI development blueprints",
   "Gamer-to-Operator transition manual",
   "Hangar orientation — pilot the 30-agent fleet",
   "Signal access when the VR portal expands",

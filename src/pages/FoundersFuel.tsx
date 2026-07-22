@@ -8,7 +8,6 @@ import LiveFuelActivityToast from "../components/growth/LiveFuelActivityToast";
 import RevenueValueLadder from "../components/growth/RevenueValueLadder";
 import { FOUNDERS_FUEL_SOCIAL_PROOF } from "../data/foundersFuel";
 import { FLEET_MANUAL_PRICE_DISPLAY, FLEET_MANUAL_ROUTE } from "../data/fleetManual2500";
-import { SOVEREIGN_PRICE_DEADLINE_SHORT, SOVEREIGN_VAULT_ROUTE } from "../data/sovereignBlueprint100k";
 
 function useSprintCountdown() {
   const target = useMemo(() => {
@@ -125,10 +124,6 @@ export default function FoundersFuel() {
         {" · "}
         <Link to={FLEET_MANUAL_ROUTE} className="founders-fuel-page__link glass-effect-interactive">
           Fleet Manual ({FLEET_MANUAL_PRICE_DISPLAY})
-        </Link>
-        {" · "}
-        <Link to={SOVEREIGN_VAULT_ROUTE} className="founders-fuel-page__link glass-effect-interactive">
-          Sovereign Vault ({SOVEREIGN_PRICE_DEADLINE_SHORT})
         </Link>
         {" · "}
         <Link to="/" className="founders-fuel-page__link glass-effect-interactive">

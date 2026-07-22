@@ -24,10 +24,7 @@ import { useAtmosphereLive } from "./hooks/useAtmosphereLive";
 const Fleet = lazy(() => import("./pages/Fleet"));
 const Hangar = lazy(() => import("./pages/Hangar"));
 const Intel = lazy(() => import("./pages/Intel"));
-const Founder = lazy(() => import("./pages/Founder"));
-const FounderProducts = lazy(() => import("./pages/FounderProducts"));
 const Origin = lazy(() => import("./pages/Origin"));
-const FounderSpecial1995 = lazy(() => import("./pages/FounderSpecial1995"));
 const Special = lazy(() => import("./pages/Special"));
 const MemberPortal = lazy(() => import("./pages/MemberPortal"));
 const MemberLogin = lazy(() => import("./pages/MemberLogin"));
@@ -50,8 +47,6 @@ const FleetManual = lazy(() => import("./pages/FleetManual"));
 const IntelligenceAssets = lazy(() => import("./pages/IntelligenceAssets"));
 const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
 const Sovereignty = lazy(() => import("./pages/Sovereignty"));
-const SovereignBlueprint100k = lazy(() => import("./pages/SovereignBlueprint100k"));
-const B2bEnterprise = lazy(() => import("./pages/B2bEnterprise"));
 const B2k = lazy(() => import("./pages/B2k"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -103,8 +98,6 @@ function AnimatedRoutes() {
                 </TierRouteGate>
               }
             />
-            <Route path="/founder" element={<Founder />} />
-            <Route path="/founder/products" element={<FounderProducts />} />
             <Route path="/gaming" element={<Gaming />} />
             <Route path="/vr" element={<Gaming />} />
             <Route path="/gamers" element={<Gamers />} />
@@ -113,7 +106,6 @@ function AnimatedRoutes() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/ai-101" element={<Ai101 />} />
             <Route path="/code-kit" element={<CodeKit />} />
-            <Route path="/b2b" element={<B2bEnterprise />} />
             <Route path="/b2k" element={<B2k />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
@@ -143,20 +135,11 @@ function AnimatedRoutes() {
                 </TierRouteGate>
               }
             />
-            <Route path="/100k" element={<SovereignBlueprint100k />} />
             <Route
               path="/origin"
               element={
                 <TierRouteGate path="/origin" pageLabel="Origin">
                   <Origin />
-                </TierRouteGate>
-              }
-            />
-            <Route
-              path="/founder-special-1995"
-              element={
-                <TierRouteGate path="/founder-special-1995" pageLabel="1995 Grit Vault">
-                  <FounderSpecial1995 />
                 </TierRouteGate>
               }
             />

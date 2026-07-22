@@ -85,10 +85,6 @@ export default function SupportFleet() {
         <Link to="/" className="support-fleet-page__return-link glass-effect-interactive">
           Fleet home
         </Link>
-        {" · "}
-        <Link to="/founder" className="support-fleet-page__return-link glass-effect-interactive">
-          Founder
-        </Link>
       </p>
     </div>
   );

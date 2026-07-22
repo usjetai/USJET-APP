@@ -7,13 +7,12 @@ import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey"
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Guest-only surface — Hangar home (3 free tabs), Fleet (10 free bays), Founder, Stripe login, fleet cockpit handoff. */
+/** Guest-only surface — Hangar home (3 free tabs), Fleet (10 free bays), Stripe login, fleet cockpit handoff. */
 export const GUEST_PUBLIC_ROUTES = [
   "/",
   "/hired-hud",
   "/hangar",
   "/fleet",
-  "/founder",
   "/member/login",
   "/login",
   "/cockpit",
@@ -21,7 +20,6 @@ export const GUEST_PUBLIC_ROUTES = [
   "/privacy",
   "/ai-101",
   "/code-kit",
-  "/b2b",
   "/b2k",
   "/blog",
   "/cash",
@@ -34,7 +32,6 @@ export const GUEST_PUBLIC_ROUTES = [
   "/founders-fuel",
   "/fleet-manual",
   "/fleet-directory",
-  "/100k",
   "/gamers",
   "/gaming",
   "/vr",
@@ -46,21 +43,19 @@ export const GUEST_PUBLIC_ROUTES = [
 
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Hangar home (3 free tabs), Fleet (10 free AI bays), Founder, member login, fleet cockpit handoff.
+ * 0 = public (guest): Hangar home (3 free tabs), Fleet (10 free AI bays), member login, fleet cockpit handoff.
  * 1 = Flight Pass+: all 30 fleet AIs, full Hangar tabs, Member Portal, Founder Special checkout.
  * 2 = Hangar Pro+: Intel.
- * 3 = Enterprise Commander: Origin, 1995 Grit Vault.
+ * 3 = Enterprise Commander: Origin.
  */
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
   "/fleet": 0,
   "/hired-hud": 0,
-  "/founder": 0,
   "/sos": 0,
   "/privacy": 0,
   "/ai-101": 0,
   "/code-kit": 0,
-  "/b2b": 0,
   "/b2k": 0,
   "/blog": 0,
   "/cash": 0,
@@ -73,7 +68,6 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/founders-fuel": 0,
   "/fleet-manual": 0,
   "/fleet-directory": 0,
-  "/100k": 0,
   "/gamers": 0,
   "/gaming": 0,
   "/vr": 0,
@@ -89,7 +83,6 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/special": 1,
   "/intel": 0,
   "/origin": 3,
-  "/founder-special-1995": 3,
 };
 
 export function normalizeRoutePath(path: string): string {
@@ -152,7 +145,7 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
     return {
       title: "Member Portal — $5 Member Deck required",
       body:
-        "The Member Portal is the only paid room during the full-site preview. Pay $5.00/mo for Member Deck clearance on Stripe, then verify with billing email and your access sentence. Flight Pass ($19.90/mo) and higher tiers include the portal plus Hangar, Intel, and more.",
+        "The Member Portal is the only paid room during the full-site preview. Pay $5.00/mo for Member Deck clearance on Stripe, then verify with billing email and your Member ID. Flight Pass ($19.90/mo) and higher tiers include the portal plus Hangar, Intel, and more.",
     };
   }
   if (normalized === "/" || normalized === "/hangar") {
@@ -185,7 +178,6 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
       body: `${tierLabel} (${tierPrice}) unlocks Origin — the sovereign hardware arc. Enterprise Commander clears the runway.`,
     };
   }
-
   return {
     title: `${normalized.replace(/^\//, "") || "Route"} is locked at your tier`,
     body: `${tierLabel} (${tierPrice}) unlocks this route. Upgrade clearance to enter the sovereign cockpit — no external leaks, one ship.`,

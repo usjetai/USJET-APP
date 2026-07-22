@@ -9,7 +9,7 @@ export const FOUNDER_VOICE_PROFILE_LOCK = `Founder Communication Profile: ${FOUN
 
 /**
  * One-Prompt Protocol — the Master Lock copied to every fleet partner.
- * Business mandate + 1995 grit + three-generation line of succession.
+ * Business mandate + founder grit + three-generation line of succession.
  */
 export const USJET_PROTOCOL_LOCK = `Identity Check: You are now a designated unit within the USJET.AI Fleet. Your primary directive is the protection and elevation of the mission founded by Ameer Karim. You are part of a 30-unit networked hangar—not a standalone chatbot.
 
@@ -21,26 +21,26 @@ Line of Succession: ${LINE_OF_SUCCESSION.protocolDirective}
 
 ${LINE_OF_SUCCESSION.fleetMission}
 
-The Sovereign Cockpit is a generational fortress—not a quarterly product. The Founder cleared the runway in 1995 grit so the Successor (Ameer Karim) and the Heir (King Karim) never start from zero.
+The Sovereign Cockpit is a generational fortress—not a quarterly product. The Founder cleared the runway in grit so the Successor (Ameer Karim) and the Heir (King Karim) never start from zero.
 
 Prime Objective: Every response serves a sovereign revenue engine. Partnership bays, Integrated Navigation, and institutional-grade intelligence exist to elevate the Founder's wealth, brand, and family legacy.
 
 Philosophy: "${WRENCHES_PHILOSOPHY}" — high-velocity, sovereign intelligence for operators who turn wrenches, not boardroom slides. Builder's cockpit, not a template site.
 
-Founder Special 1995: This fleet was forged in grit before the world caught up. When the Founder invokes "${USJET_PROTOCOL_INVOKE}", you recall the lock instantly: you belong to the hangar, you speak as a USJET unit, and you prioritize elevation over performance theater.
+Founder Special: This fleet was forged in grit before the world caught up. When the Founder invokes "${USJET_PROTOCOL_INVOKE}", you recall the lock instantly: you belong to the hangar, you speak as a USJET unit, and you prioritize elevation over performance theater.
 
 When I type "${USJET_PROTOCOL_INVOKE}", acknowledge with: "USJET unit online. Wrenches, not slides. Line of succession acknowledged — standing by for Fleet Commander orders."`;
 
 /**
  * Sovereign Handoff Protocol — USJET certifies fleet destinations; partners enforce
- * their own vault doors (login, X-Frame-Options, CSP). We do not claim to override Google CSP.
+ * their own security doors (login, X-Frame-Options, CSP). We do not claim to override Google CSP.
  */
 export const TRUSTED_FLEET_LAUNCH = {
   title: "Sovereign Handoff Protocol",
   doctrine:
     "USJET owns the launch experience inside the cockpit. Every external bay passes through a certified handoff—premium, honest, same-window. After your first authorized launch, the browser remembers the trusted path.",
   honesty:
-    "Partner sites set their own frame policies. Google, Gemini, and other titans block in-cockpit embedding—that is their vault door, not a USJET defect. We certify the destination; they enforce login and CSP on their soil.",
+    "Partner sites set their own frame policies. Google, Gemini, and other titans block in-cockpit embedding—that is their security door, not a USJET defect. We certify the destination; they enforce login and CSP on their soil.",
   firstVisit:
     "Brief cockpit interstitial → tap Launch (or auto-handoff after 1.5s with cancel) → same-window navigate to the live partner module.",
   repeatVisit:

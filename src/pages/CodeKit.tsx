@@ -17,7 +17,7 @@ export default function CodeKit() {
     const prevDesc = meta?.getAttribute("content") ?? "";
     meta?.setAttribute(
       "content",
-      "USJET Developer’s Engine Kit — $499 production codebase: Liquid Glass UI, 30-agent orchestration, Stripe and B2B templates.",
+      "USJET Developer’s Engine Kit — $499 production codebase: Liquid Glass UI, 30-agent orchestration, and Stripe templates.",
     );
     document.documentElement.classList.add("code-kit-page-root");
     return () => {

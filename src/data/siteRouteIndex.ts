@@ -5,7 +5,6 @@ import { CODE_KIT_ROUTE } from "./codeKit499";
 import { FLEET_MANUAL_ROUTE } from "./fleetManual2500";
 import { MOBILE_LANDSCAPE_ROUTE } from "./mobileLandscapeGuide";
 import { PROTOCOL_SESSION_PROOF_ROUTE } from "./protocolSessionProof";
-import { SOVEREIGN_VAULT_ROUTE } from "./sovereignBlueprint100k";
 
 export type SiteRouteEntry = {
   path: string;
@@ -36,8 +35,6 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     id: "founder-member",
     title: "Founder & member",
     routes: [
-      { path: "/founder", label: "Founder", hint: "Story" },
-      { path: "/founder-special-1995", label: "1995 Grit Vault" },
       { path: "/special", label: "Founder Special", hint: "Tier checkout" },
       { path: "/member/login", label: "Member Login" },
       { path: "/member", label: "Member Portal" },
@@ -55,14 +52,12 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
       { path: "/founders-fuel", label: "Founder's Fuel", hint: "$19.90/mo" },
       { path: CODE_KIT_ROUTE, label: "Code Kit" },
       { path: FLEET_MANUAL_ROUTE, label: "Fleet Manual", hint: "2.5K" },
-      { path: SOVEREIGN_VAULT_ROUTE, label: "Sovereign Protocol", hint: "100K" },
     ],
   },
   {
     id: "partners",
     title: "Partners & growth",
     routes: [
-      { path: "/b2b", label: "B2B Enterprise" },
       { path: "/b2k", label: "B2K" },
       { path: "/pdre", label: "PDRE Gateway" },
       { path: "/licensing", label: "Brand Licensing" },

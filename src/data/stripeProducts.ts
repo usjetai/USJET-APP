@@ -7,7 +7,6 @@ import {
   HANGAR_PRO_DIRECT_URL,
 } from "../lib/stripePaymentLink";
 import { STRIPE_DESCRIPTOR_CATALOG } from "./stripeStatementDescriptors";
-import { MEMBER_DECK_HOOK, MEMBER_DECK_PERIOD, MEMBER_DECK_PRICE_DISPLAY, MEMBER_DECK_STRIPE_METADATA } from "./memberDeckStripe";
 
 /** Direct Landing Protocol — hard-wired Stripe extraction ports (env overrides in stripePaymentLink.ts). */
 export const STRIPE_DIRECT_EXTRACTION_PORTS = {
@@ -55,34 +54,6 @@ export type StripeTierProduct = {
   paymentLinkEnvKey: string;
   highlighted?: boolean;
   badge?: string;
-};
-
-export type MemberDeckProduct = Omit<StripeTierProduct, "id"> & { id: "member-deck" };
-
-/** USJet Member Deck ($5/mo) — Member Portal + member tools only. */
-export const MEMBER_DECK_STRIPE: MemberDeckProduct = {
-  id: "member-deck",
-  name: "USJet Member Deck",
-  hook: MEMBER_DECK_HOOK,
-  priceCents: 500,
-  priceDisplay: MEMBER_DECK_PRICE_DISPLAY,
-  period: MEMBER_DECK_PERIOD,
-  description:
-    "Paid entry to the Member Portal — telemetry, project tracker, vitals, and your clearance ladder. Does not unlock Hangar, Intel, or Origin; upgrade to Flight Pass or higher inside the ship.",
-  features: [
-    "Member Portal + Your AI data board",
-    "Fleet usage telemetry",
-    "Project tracker & member vitals",
-  ],
-  statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.memberDeck.cardStatement,
-  cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.memberDeck.cardSuffix,
-  metadata: {
-    [STRIPE_METADATA_KEYS.tier]: MEMBER_DECK_STRIPE_METADATA.tier,
-    [STRIPE_METADATA_KEYS.accessLevel]: MEMBER_DECK_STRIPE_METADATA.access_level,
-  },
-  memberTier: "USJET-PRIME-ACTIVE",
-  paymentLinkEnvKey: "VITE_STRIPE_MEMBER_DECK_PAYMENT_LINK",
-  badge: "Portal entry",
 };
 
 /** USJet Flight Pass ($19.90/mo) — entry clearance tier. */
@@ -170,9 +141,9 @@ export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
 
 export const STRIPE_TIER_PRODUCTS = [FLIGHT_PASS_STRIPE, HANGAR_PRO_STRIPE, FLEET_COMMANDER_STRIPE] as const;
 
-const STRIPE_ACCESS_PRODUCTS = [MEMBER_DECK_STRIPE, ...STRIPE_TIER_PRODUCTS] as const;
+const STRIPE_ACCESS_PRODUCTS = [...STRIPE_TIER_PRODUCTS] as const;
 
-/** Upgrade tiers shown inside Member Portal (excludes $5 deck). */
+/** Upgrade tiers shown inside Member Portal. */
 export const MEMBER_PORTAL_UPGRADE_TIERS = [FLIGHT_PASS_STRIPE, HANGAR_PRO_STRIPE, FLEET_COMMANDER_STRIPE] as const;
 
 /** Dashboard paste sheet — Product → Description, Statement descriptor, Metadata. */

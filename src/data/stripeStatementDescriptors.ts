@@ -66,7 +66,6 @@ function entry(
 
 /** Canonical descriptors — keep in sync with Stripe Dashboard products. */
 export const STRIPE_DESCRIPTOR_CATALOG = {
-  memberDeck: entry("member-deck", "USJet Member Deck", "MEMBER", "USJET LLC PASSPORT"),
   flightPass: entry("flight-pass", "USJet Flight Pass", "FLIGHT PASS", "USJET LLC PASSPORT"),
   hangarPro: entry("hangar-pro", "Hangar Pro", "HANGAR PRO", "USJET LLC PASSPORT"),
   fleetCommand: entry("fleet-command", "Enterprise Fleet Commander", "FLEET CMD", "USJET LLC PASSPORT"),

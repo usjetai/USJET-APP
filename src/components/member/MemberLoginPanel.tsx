@@ -3,11 +3,10 @@ import { CreditCard, ShieldCheck } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
-import { MEMBER_DECK_PRICE_DISPLAY, MEMBER_DECK_PERIOD } from "../../data/memberDeckStripe";
 import { FLIGHT_PASS_STRIPE } from "../../data/stripeProducts";
 import { SITE_PREVIEW_MEMBER_NOTE } from "../../data/sitePreviewPromo";
 import { isSitePreviewPromoActive } from "../../lib/sitePreviewPromo";
-import { isUsableStripePaymentLink, resolveMemberDeckPaymentLink, resolvePaymentLinkForTier } from "../../lib/stripePaymentLink";
+import { isUsableStripePaymentLink, resolvePaymentLinkForTier } from "../../lib/stripePaymentLink";
 
 type MemberLoginPanelProps = {
   onSuccess?: () => void;
@@ -18,8 +17,8 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
   const [email, setEmail] = useState("");
   const [accessSentence, setAccessSentence] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const memberDeckLink = resolveMemberDeckPaymentLink();
-  const memberDeckReady = isUsableStripePaymentLink(memberDeckLink);
+  const flightPassLink = resolvePaymentLinkForTier("founder");
+  const flightPassReady = isUsableStripePaymentLink(flightPassLink);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -87,40 +86,31 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
           <div className="member-login-panel__divider" aria-hidden />
 
           <section className="member-login-panel__signup" aria-label="Create account via Stripe">
-            <p className="member-login-panel__section-kicker">Member Portal entry</p>
+            <p className="member-login-panel__section-kicker">Flight Pass entry</p>
             <p className="member-login-panel__signup-copy">
-              <strong>Member Deck {MEMBER_DECK_PRICE_DISPLAY}{MEMBER_DECK_PERIOD}</strong> unlocks the Member Portal and
-              member tools. Flight Pass ($19.90/mo) unlocks the full fleet runway, Hangar, and sovereign clearance.
+              <strong>
+                {FLIGHT_PASS_STRIPE.name} {FLIGHT_PASS_STRIPE.priceDisplay}
+                {FLIGHT_PASS_STRIPE.period}
+              </strong>{" "}
+              unlocks the Member Portal, full Hangar tabs, and the fleet runway. Hangar Pro adds Intel;
+              Enterprise adds Origin.
             </p>
-            {memberDeckReady ? (
+            {flightPassReady ? (
               <a
-                href={memberDeckLink}
+                href={flightPassLink}
                 className="member-login-panel__create btn-glass-prominent glass-effect-interactive"
               >
                 <CreditCard size={16} aria-hidden />
-                Member Deck — {MEMBER_DECK_PRICE_DISPLAY}
-                {MEMBER_DECK_PERIOD}
+                {FLIGHT_PASS_STRIPE.name} — {FLIGHT_PASS_STRIPE.priceDisplay}
+                {FLIGHT_PASS_STRIPE.period}
               </a>
             ) : (
               <p className="member-login-panel__signup-note">
-                Add your $5 Stripe Payment Link to <code>VITE_STRIPE_MEMBER_DECK_PAYMENT_LINK</code> in{" "}
-                <code>.env.local</code> or Vercel, then redeploy.
+                Flight Pass Stripe Payment Link is not configured. Set{" "}
+                <code>VITE_STRIPE_FOUNDER_PAYMENT_LINK</code> or use the hard-wired Direct Landing port.
               </p>
             )}
             <p className="member-login-panel__signup-note">After checkout, return here and log in with your billing email.</p>
-
-            <div className="member-login-panel__upsell">
-              <p className="member-login-panel__upsell-kicker">Flight Pass clearance</p>
-              <div className="member-login-panel__upsell-actions">
-                <a
-                  href={resolvePaymentLinkForTier("founder")}
-                  className="member-login-panel__upsell-btn btn-glass glass-effect-interactive"
-                >
-                  {FLIGHT_PASS_STRIPE.name} {FLIGHT_PASS_STRIPE.priceDisplay}
-                  {FLIGHT_PASS_STRIPE.period}
-                </a>
-              </div>
-            </div>
           </section>
         </div>
 

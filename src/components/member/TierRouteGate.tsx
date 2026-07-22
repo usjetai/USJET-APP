@@ -3,9 +3,9 @@ import { CreditCard, Lock, ShieldAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
-import { MEMBER_DECK_PRICE_DISPLAY } from "../../data/memberDeckStripe";
+import { FLIGHT_PASS_STRIPE } from "../../data/stripeProducts";
 import { isSitePreviewPromoActive } from "../../lib/sitePreviewPromo";
-import { isUsableStripePaymentLink, resolveMemberDeckPaymentLink } from "../../lib/stripePaymentLink";
+import { isUsableStripePaymentLink, resolveFounderPaymentLink } from "../../lib/stripePaymentLink";
 import {
   canMemberAccessRoute,
   isOriginCustomerServiceEntry,
@@ -44,8 +44,8 @@ export default function TierRouteGate({ path, pageLabel: _pageLabel, children }:
 
   if (!session?.active) {
     const isMemberRoute = normalizeRoutePath(path) === "/member";
-    const memberDeckLink = resolveMemberDeckPaymentLink();
-    const memberDeckReady = isUsableStripePaymentLink(memberDeckLink);
+    const flightPassLink = resolveFounderPaymentLink();
+    const flightPassReady = isUsableStripePaymentLink(flightPassLink);
     const { title, body } = tierRouteGateCopy(path, routeMinClearanceRank(path));
 
     if (isMemberRoute) {
@@ -60,21 +60,23 @@ export default function TierRouteGate({ path, pageLabel: _pageLabel, children }:
               <div className="tier-route-gate__icon-wrap">
                 <Lock size={28} className="tier-route-gate__icon" aria-hidden />
               </div>
-              <p className="tier-route-gate__kicker">Member Deck required</p>
+              <p className="tier-route-gate__kicker">Flight Pass required</p>
               <h2 className="tier-route-gate__title">{title}</h2>
               <p className="tier-route-gate__copy">{body}</p>
-              {memberDeckReady ? (
+              {flightPassReady ? (
                 <a
-                  href={memberDeckLink}
+                  href={flightPassLink}
                   className="tier-route-gate__cta btn-glass-prominent glass-effect-interactive"
                 >
                   <CreditCard size={16} aria-hidden />
-                  Member Deck — {MEMBER_DECK_PRICE_DISPLAY}/mo
+                  {FLIGHT_PASS_STRIPE.name} — {FLIGHT_PASS_STRIPE.priceDisplay}
+                  {FLIGHT_PASS_STRIPE.period}
                 </a>
               ) : (
                 <p className="tier-route-gate__copy tier-route-gate__copy--muted">
-                  Paste your $5 Stripe Payment Link into <code>VITE_STRIPE_MEMBER_DECK_PAYMENT_LINK</code>, then
-                  redeploy.
+                  Flight Pass Stripe Payment Link is not configured. Set{" "}
+                  <code>VITE_STRIPE_FOUNDER_PAYMENT_LINK</code> or use the hard-wired Direct Landing
+                  port, then redeploy.
                 </p>
               )}
               <p className="tier-route-gate__footer">

@@ -1,6 +1,5 @@
 import type { MemberSession } from "../types/member";
 import { FLEET_UNIT_COUNT } from "../types/fleet";
-import { MEMBER_DECK_STRIPE_METADATA } from "../data/memberDeckStripe";
 import { isSitePreviewPromoActive } from "./sitePreviewPromo";
 import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey";
 
@@ -137,9 +136,9 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
 
   if (normalized === "/member") {
     return {
-      title: "Member Portal — $5 Member Deck required",
+      title: "Member Portal — Flight Pass required",
       body:
-        "The Member Portal is the only paid room during the full-site preview. Pay $5.00/mo for Member Deck clearance on Stripe, then verify with billing email and your Member ID. Flight Pass ($19.90/mo) and higher tiers include the portal plus Hangar, Intel, and more.",
+        "Pay Flight Pass ($19.90/mo) on Stripe, then verify with billing email and your Member ID. Flight Pass unlocks the Member Portal, full Hangar tabs, and the fleet runway. Hangar Pro adds Intel; Enterprise adds Origin.",
     };
   }
   if (normalized === "/" || normalized === "/hangar") {
@@ -195,6 +194,7 @@ export function accessLevelRank(accessLevel?: string): number {
   if (normalized.includes("OPERATOR")) {
     return 2;
   }
+  // Retired Member Deck metadata — no longer grants portal access.
   if (normalized.includes("LVL_00") || normalized.includes("MEMBER_DECK")) {
     return 0;
   }
@@ -217,6 +217,7 @@ export function stripeTierRank(stripeTier?: string): number {
   if (tier === "OPERATOR") {
     return 2;
   }
+  // Retired Member Deck tier tag — no longer grants portal access.
   if (tier === "MEMBER" || tier === "MEMBER_DECK") {
     return 0;
   }
@@ -227,28 +228,19 @@ export function stripeTierRank(stripeTier?: string): number {
   return 0;
 }
 
-/** $5 Member Deck — unlocks /member only (Flight Pass+ also includes the portal). */
-export function hasMemberDeckAccess(session: MemberSession | null | undefined): boolean {
+/** Flight Pass+ unlocks Member Portal (retired $5 Member Deck no longer grants access). */
+export function hasMemberPortalAccess(session: MemberSession | null | undefined): boolean {
   if (!session?.active) {
     return false;
   }
   if (isFounderGodMode(session)) {
     return true;
   }
-  if (memberClearanceRank(session) >= 1) {
-    return true;
-  }
-
-  const access = session.accessLevel?.trim().toUpperCase() ?? "";
-  const tier = session.stripeTier?.trim().toUpperCase() ?? "";
-  const memberMeta = MEMBER_DECK_STRIPE_METADATA;
-
-  return (
-    access === memberMeta.access_level.toUpperCase() ||
-    access.includes("LVL_00") ||
-    tier === memberMeta.tier.toUpperCase()
-  );
+  return memberClearanceRank(session) >= 1;
 }
+
+/** @deprecated Use hasMemberPortalAccess — Member Deck product removed. */
+export const hasMemberDeckAccess = hasMemberPortalAccess;
 
 /** Human tier label for strips, Aura, and member-facing copy. */
 export function memberClearanceDisplayLabel(session: MemberSession | null | undefined): string {
@@ -268,7 +260,7 @@ export function memberClearanceDisplayLabel(session: MemberSession | null | unde
   if (rank >= 1) {
     return "Flight Pass";
   }
-  return "Member clearance";
+  return "Guest clearance";
 }
 
 /** Tenure since Stripe verification — for MEMBER_CONTEXT and Origin strip. */
@@ -334,10 +326,6 @@ export function canMemberAccessRoute(
   session: MemberSession | null | undefined,
 ): boolean {
   const normalized = normalizeRoutePath(path);
-
-  if (normalized === "/member") {
-    return hasMemberDeckAccess(session);
-  }
 
   if (isSitePreviewPromoActive() && routeMinClearanceRank(path) > 0) {
     return true;

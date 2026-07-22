@@ -1,6 +1,3 @@
-/** Member Deck ($5/mo) — paste your live Payment Link after creating the product in Stripe. */
-export const MEMBER_DECK_DIRECT_URL = "";
-
 /** Flight Pass ($19.90/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
 export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/eVq7sLdOC0Bt9wBfWndwc0e";
 
@@ -81,12 +78,6 @@ export const GAMER_FOUNDER_KIT_DIRECT_URL = "";
 export function resolveGamerFounderKitPaymentLink(): string {
   const url = import.meta.env.VITE_STRIPE_GAMER_FOUNDER_KIT_PAYMENT_LINK?.trim();
   return isUsableStripePaymentLink(url) ? url : GAMER_FOUNDER_KIT_DIRECT_URL.trim();
-}
-
-/** Member Deck ($5/mo) — env override when set, else MEMBER_DECK_DIRECT_URL. */
-export function resolveMemberDeckPaymentLink(): string {
-  const url = import.meta.env.VITE_STRIPE_MEMBER_DECK_PAYMENT_LINK?.trim();
-  return isUsableStripePaymentLink(url) ? url : MEMBER_DECK_DIRECT_URL.trim();
 }
 
 /** Flight Pass ($19.90/mo) — env override when set, else FLIGHT_PASS_DIRECT_URL. */

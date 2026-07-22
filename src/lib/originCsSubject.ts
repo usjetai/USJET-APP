@@ -26,7 +26,7 @@ const OVERWHELM_PATTERNS: RegExp[] = [
 ];
 
 const VERIFICATION_PATTERNS: RegExp[] = [
-  /\b(verify|verification|log\s*in|sign\s*in|my account|member\s*id|access sentence)\b/i,
+  /\b(verify|verification|log\s*in|sign\s*in|my account|member\s*id)\b/i,
   /\b(am i (a )?member|check my (tier|clearance|subscription))\b/i,
 ];
 
@@ -184,7 +184,7 @@ export function buildCsEstablishSubjectSpokenReply(): string {
 }
 
 export function buildCsGuestVerificationSpokenReply(): string {
-  return "To verify your membership, go to Member Login at usjet.ai slash member slash login. Use your Stripe billing email and your founder-issued access sentence — text only, no voice verify needed. Once you're in, come back here and I'll read your clearance.";
+  return "To verify your membership, go to Member Login at usjet.ai slash member slash login. Use your Stripe billing email and your Member ID — text only, no voice verify needed. Once you're in, come back here and I'll read your clearance.";
 }
 
 export function buildCsSubjectSystemNudge(state: OriginCsSubjectState): string {
@@ -217,7 +217,7 @@ export function buildCsVerificationSystemNudge(sessionActive: boolean): string {
   }
   return [
     "VERIFICATION_NUDGE:",
-    "Guest verification is text-only at /member/login — Stripe billing email plus founder-issued access sentence (or cus_ Member ID).",
+    "Guest verification is text-only at /member/login — Stripe billing email plus Member ID (cus_…).",
     "No OAuth. No voice verification step. After login, they return here with MEMBER_CONTEXT.",
   ].join("\n");
 }

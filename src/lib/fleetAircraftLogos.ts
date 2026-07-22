@@ -42,7 +42,7 @@ const FLEET_SLOT_LOGO_OVERRIDES: Partial<Record<number, string>> = {
 };
 
 /** Cache-bust after solidifying logo alpha (HUD light must not pass through). */
-const FLEET_LOGO_CACHE_TAG = "solid1";
+const FLEET_LOGO_CACHE_TAG = "solid2";
 
 function withLogoCacheTag(path: string): string {
   const join = path.includes("?") ? "&" : "?";

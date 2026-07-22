@@ -19,7 +19,8 @@ import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
 const FLEET_TILE_LAUNCH_SPINS = 3;
-const HANGAR_TILE_OPEN_SPINS = 2;
+/** Hangar bay open — logo lifts off the tile (no spin). */
+const HANGAR_TILE_TAKEOFF_MS = 0.62;
 
 type FleetCardProps = {
   domain: string;
@@ -169,23 +170,37 @@ export default function FleetCard({
     isHangarSurface ? <HangarTileRadarVideo slot={slot} /> : null;
 
   const renderAircraftWrap = () => {
-    const spinCount = expandInteractive ? HANGAR_TILE_OPEN_SPINS : FLEET_TILE_LAUNCH_SPINS;
-    const spinDuration = expandInteractive ? 0.55 : 0.75;
-    const isSpinning = launchSpinning && launchSpinKey > 0 && (isRunway || expandInteractive);
+    const spinCount = FLEET_TILE_LAUNCH_SPINS;
+    const spinDuration = 0.75;
+    const takeoffDuration = HANGAR_TILE_TAKEOFF_MS;
+    const isTakingOff = launchSpinning && launchSpinKey > 0 && expandInteractive;
+    const isSpinning = launchSpinning && launchSpinKey > 0 && isRunway;
 
-    // Hangar: keep radar HUD locked; only the jet logo spins on open.
+    // Hangar: radar HUD stays locked; logo peels / lifts off the tile (no spin).
     if (isHangarSurface) {
       return (
         <div className={aircraftWrapClassName}>
           {renderHangarRadarHud()}
-          {isSpinning ? (
+          {isTakingOff ? (
             <motion.div
-              key={`fleet-aircraft-spin-${launchSpinKey}`}
-              className="fleet-card__aircraft-spin"
-              style={{ transformOrigin: "50% 4%" }}
-              initial={{ rotate: 0, scale: 1 }}
-              animate={{ rotate: 360 * spinCount, scale: 1.05 }}
-              transition={{ duration: spinDuration, ease: [0.34, 1.12, 0.64, 1] }}
+              key={`fleet-aircraft-takeoff-${launchSpinKey}`}
+              className="fleet-card__aircraft-spin fleet-card__aircraft-spin--takeoff"
+              style={{ transformOrigin: "50% 70%", transformStyle: "preserve-3d" }}
+              initial={{
+                y: 0,
+                scale: 1,
+                rotateX: 0,
+                opacity: 1,
+                filter: "brightness(0.88) contrast(1.1)",
+              }}
+              animate={{
+                y: -128,
+                scale: 1.18,
+                rotateX: -28,
+                opacity: 0,
+                filter: "brightness(1.05) contrast(1.05)",
+              }}
+              transition={{ duration: takeoffDuration, ease: [0.22, 1, 0.36, 1] }}
               onAnimationComplete={handleSpinComplete}
             >
               {renderAircraftIcon()}

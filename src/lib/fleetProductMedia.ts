@@ -27,7 +27,7 @@ export type FleetProductLineupItem = {
  * Defaults to the roster aircraft emblem in `/assets/fleet-logos/`.
  */
 const PRODUCT_LOGO_BY_AIRCRAFT_SLUG: Record<string, string> = {
-  "sr-71-blackbird": "/fleet/sr71-blackbird-logo.png",
+  "sr-71-blackbird": "/fleet/sr71-blackbird-logo.png?v=solid2",
 };
 
 /**

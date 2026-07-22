@@ -12,7 +12,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ["react", "react-dom", "react/jsx-dev-runtime"],
+    include: ["react", "react-dom", "react/jsx-dev-runtime", "three"],
+    exclude: ["@met4citizen/talkinghead"],
   },
   build: {
     rollupOptions: {
@@ -20,6 +21,9 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes("node_modules")) {
             return;
+          }
+          if (id.includes("@met4citizen/talkinghead") || id.includes("node_modules/three")) {
+            return "vendor-talkinghead";
           }
           if (id.includes("framer-motion")) {
             return "vendor-framer-motion";

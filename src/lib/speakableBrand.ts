@@ -53,7 +53,10 @@ export function toSpeakableText(text: string): string {
     .replace(/\bUS\s*Jet(?:\.ai)?\b/gi, USJET_SPOKEN)
     .replace(/\bUSJET\b/g, USJET_SPOKEN)
     .replace(/\busjet\.ai\b/gi, `${USJET_SPOKEN} dot A I`)
-    .replace(/\busjet\b/gi, USJET_SPOKEN);
+    .replace(/\busjet\b/gi, USJET_SPOKEN)
+    // Pricing: "/mo" means month — never let TTS say "mo".
+    .replace(/\/mo\b/gi, " per month")
+    .replace(/\bper\s+mo\b/gi, "per month");
 }
 
 const AURA_VOICE_HINTS = [

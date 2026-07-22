@@ -5,6 +5,7 @@ import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
 import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import HangarPageHeader, { HANGAR_META_DESCRIPTION } from "../components/hangar/HangarPageHeader";
+import OriginHangarIntro from "../components/hangar/OriginHangarIntro";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { getHangarUnits } from "../data/hangarManifest";
 import { useHangarGridExpansions } from "../hooks/useHangarGridExpansions";
@@ -153,6 +154,8 @@ export default function Hangar() {
           columns={columns}
           onColumnLayoutChange={setColumnLayout}
         />
+
+        <OriginHangarIntro />
 
         <HangarBayGrid columns={columns}>{bayCells}</HangarBayGrid>
       </div>

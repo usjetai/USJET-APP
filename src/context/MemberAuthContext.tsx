@@ -79,7 +79,7 @@ export function MemberAuthProvider({ children }: { children: ReactNode }) {
       try {
         const verified = await verifyMemberAccess({ memberId, email });
         if (!verified.active) {
-          setError("No active USJET subscription found. Pay via Stripe first, then log in with your access sentence.");
+          setError("No active USJET subscription found. Pay via Stripe first, then log in with your Member ID.");
           applySession(null);
           return false;
         }

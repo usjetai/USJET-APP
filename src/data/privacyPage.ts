@@ -36,7 +36,7 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     title: "Information we collect",
     paragraphs: ["We collect only what the product needs to operate clearance, billing alignment, and cockpit routing:"],
     bullets: [
-      "Member verification inputs you submit on Member Login — billing email, founder-issued access sentence, and/or Stripe Member ID (cus_…).",
+      "Member verification inputs you submit on Member Login — billing email and Stripe Member ID (cus_…).",
       "Browser-local session data after successful verification (stored in localStorage on your device, not on a separate social identity provider).",
       "Technical signals your browser sends automatically — IP address, user agent, referrer, and basic request logs needed for security and uptime.",
       "Voluntary correspondence when you email ops@usjet.ai or submit support forms.",
@@ -59,7 +59,7 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     id: "auth-payments",
     title: "Authentication & payments",
     paragraphs: [
-      "USJET does not offer Google, Apple, or other OAuth sign-in. Clearance is Stripe-only: you pay through Stripe Payment Links, then verify with billing email plus your access sentence or Stripe Member ID.",
+      "USJET does not offer Google, Apple, or other OAuth sign-in. Clearance is Stripe-only: you pay through Stripe Payment Links, then verify with billing email plus your Member ID.",
       "Stripe processes card and subscription data on its own hosted checkout and customer portal. USJET does not store full payment card numbers on this site. Stripe's privacy policy governs payment data they collect.",
       "Tier pricing shown on Member Login: Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo — all routed through Stripe.",
     ],

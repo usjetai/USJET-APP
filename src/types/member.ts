@@ -2,6 +2,7 @@ export type MemberTier = "USJET-PRIME-ACTIVE" | "USJET-ROYAL-HEIR" | "INACTIVE" 
 
 export type MemberSession = {
   customerId: string;
+  name?: string;
   email?: string;
   tier: MemberTier;
   active: boolean;
@@ -16,6 +17,7 @@ export type MemberSession = {
 export type VerifyMemberResponse = {
   active: boolean;
   customerId: string;
+  name?: string;
   tier: MemberTier;
   email?: string;
   stripeTier?: string;

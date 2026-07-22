@@ -25,12 +25,14 @@ export default function MemberPrimeBadge({
         ].join(" ")}
       >
         {active
-          ? (session?.tier ?? "USJET-PRIME-ACTIVE")
+          ? "MEMBERSHIP ACTIVE"
           : founderReviewOpen
-            ? "FOUNDER REVIEW · OPEN"
+            ? "PREVIEW MODE"
             : "ACCESS LOCKED"}
       </p>
-      {active && session?.customerId ? (
+      {active && session?.name ? (
+        <p className="usjet-prime-badge__id">{session.name}</p>
+      ) : active && session?.customerId ? (
         <p className="usjet-prime-badge__id">{session.customerId}</p>
       ) : null}
     </div>

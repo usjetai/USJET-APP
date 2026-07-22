@@ -202,7 +202,7 @@ export function answerOriginFromKnowledge(
 
   if (/(origin|who are you|what are you|aura)/.test(q)) {
     return flightPlan(
-      "I'm Origin (Aura) — bay 30 command node. I run on U. S. Jet ship knowledge at zero cloud cost: fleet routing, Hangar, tiers, login, and ops. I am not a general paid chatbot.",
+      "I'm Origin (Aura) — bay 30 command node. I teach the twenty-nine partner AIs, Hangar, tiers, login, and ops. Ask anything about the ship.",
     );
   }
 
@@ -244,7 +244,7 @@ export function answerOriginFromKnowledge(
 
   return flightPlan(
     [
-      "I'm onboard knowledge Origin — I don't call paid cloud models.",
+      "I'm Origin — your command guide for U. S. Jet.",
       "I can brief Hangar, Fleet bays, Jet Browser, tiers, Stripe login, Founder, Intel, and ops email.",
       "Name a partner AI (for example Claude or Midjourney), or ask how Flight Pass works.",
       cs ? "What's your project?" : "What do you need cleared?",

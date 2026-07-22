@@ -1,60 +1,33 @@
+import { FormEvent, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Send } from "lucide-react";
-import { FormEvent, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import UsjetWordmark from "../components/brand/UsjetWordmark";
-import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import { Mic, MicOff, Send, Settings2 } from "lucide-react";
+import type { OriginAvatarHandle } from "../components/origin/OriginAvatarStage";
 import OriginMemberStrip from "../components/origin/OriginMemberStrip";
-import EkgPulseLine from "../components/intel/EkgPulseLine";
-import DeveloperRedBlinkName from "../components/DeveloperRedBlinkName";
-import { fleetManifest } from "../data/fleetManifest";
-import { integratedLaunchUrl } from "../lib/fleetLaunchUrl";
-import { buildOpenRouterMessages, completeOriginChat } from "../lib/openrouter";
 import {
-  buildOriginMemberContext,
-  readMemberProjects,
-} from "../lib/memberProjectTracker";
-import {
-  adoptCsSubjectFromText,
-  augmentMemberContextForCs,
-  buildCsEstablishSubjectSpokenReply,
-  buildCsGuestVerificationSpokenReply,
-  buildCsOverwhelmSpokenReply,
-  buildCsOverwhelmSystemNudge,
-  buildCsSubjectSystemNudge,
-  buildCsTopicShiftSpokenReply,
-  buildCsVerificationSystemNudge,
-  bumpCsUserTurn,
-  detectCsOverwhelm,
-  detectCsTopicShift,
-  detectCsVerificationIntent,
-  readOriginCsSubjectState,
-  seedCsSubjectFromMember,
-} from "../lib/originCsSubject";
+  ORIGIN_CHAT_ERROR,
+  ORIGIN_WELCOME_ASSISTANT,
+  sendOriginTurn,
+  type OriginChatTurn,
+} from "../lib/originChatTurn";
 import {
   buildOriginCsMemberScreenGreet,
   ORIGIN_CS_SCREEN_GREET,
 } from "../lib/speakableBrand";
 import { isOriginCustomerServiceEntry } from "../lib/memberAccessLevel";
 import { useMemberAuth } from "../context/MemberAuthContext";
+import {
+  captionForStatus,
+  createSpeechRecognition,
+  isSpeechRecognitionSupported,
+  type OriginVoiceStatus,
+} from "../lib/originVoiceSession";
 
-type ChatTurn = { role: "user" | "assistant"; content: string };
+const OriginAvatarStage = lazy(() => import("../components/origin/OriginAvatarStage"));
 
-const COMMAND_ROUTES = [
-  { to: "/", label: "Hangar" },
-  { to: "/fleet", label: "Fleet" },
-  { to: "/intel", label: "Intel Pulse" },
-  { to: "/special", label: "Founder Special" },
-] as const;
-
-const WELCOME_ASSISTANT: ChatTurn = {
-  role: "assistant",
-  content:
-    "Welcome to U. S. Jet. I'm Origin — onboard command at zero cloud cost. Ask about the fleet, which bay to open, Hangar, Jet Browser, tiers, or Stripe login.",
-};
-
-const ORIGIN_CHAT_ERROR =
-  "Origin hit turbulence on that question. Try again, or ask about Hangar, Fleet, tiers, or a partner bay by name.";
-
+/**
+ * Origin command node — full-bleed Founder android stage
+ * with browser mic STT → Origin chat → TTS presence.
+ */
 export default function Origin() {
   const [searchParams] = useSearchParams();
   const { session } = useMemberAuth();
@@ -67,272 +40,413 @@ export default function Origin() {
     return isCustomerServiceEntry ? ORIGIN_CS_SCREEN_GREET : null;
   }, [isCustomerServiceEntry, session]);
 
-  const memberContext = useMemo(
-    () => buildOriginMemberContext(session?.active ? session : null),
-    [session],
-  );
+  const avatarRef = useRef<OriginAvatarHandle | null>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const sessionActiveRef = useRef(false);
+  const mutedRef = useRef(false);
+  const busyRef = useRef(false);
+  const turnsRef = useRef<OriginChatTurn[]>([ORIGIN_WELCOME_ASSISTANT]);
 
-  const sortedFleet = useMemo(
-    () => [...fleetManifest].sort((a, b) => a.slot - b.slot),
-    [],
-  );
-
-  const [turns, setTurns] = useState<ChatTurn[]>([WELCOME_ASSISTANT]);
+  const speechSupported = useMemo(() => isSpeechRecognitionSupported(), []);
+  const [avatarReady, setAvatarReady] = useState(false);
+  const [status, setStatus] = useState<OriginVoiceStatus>("loading");
+  const [sessionLive, setSessionLive] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [showSubtitles, setShowSubtitles] = useState(true);
+  const [subtitles, setSubtitles] = useState("");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [composerOpen, setComposerOpen] = useState(!isSpeechRecognitionSupported());
+  const [turns, setTurns] = useState<OriginChatTurn[]>([ORIGIN_WELCOME_ASSISTANT]);
   const [draft, setDraft] = useState("");
-  const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const onAvatarReady = useCallback((value: boolean) => {
+    setAvatarReady(value);
+  }, []);
+
+  const onAvatarLoadError = useCallback((message: string) => {
+    setError(message);
+    setComposerOpen(true);
+  }, []);
+
+  useEffect(() => {
+    turnsRef.current = turns;
+  }, [turns]);
+
+  useEffect(() => {
+    mutedRef.current = muted;
+  }, [muted]);
 
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = "Origin · USJet.ai";
+    document.title = "Origin · Face to face · USJet.ai";
     return () => {
       document.title = prevTitle;
+      sessionActiveRef.current = false;
+      recognitionRef.current?.stop();
+      window.speechSynthesis?.cancel();
+      avatarRef.current?.stopSpeaking();
     };
   }, []);
 
   useEffect(() => {
-    const el = listRef.current;
-    if (!el) return;
-    el.scrollTop = el.scrollHeight;
-  }, [turns, busy]);
+    if (avatarReady && status === "loading") {
+      setStatus("idle");
+    }
+  }, [avatarReady, status]);
 
-  const sendMessage = async (raw: string) => {
-    const text = raw.trim();
-    if (!text || busy) return;
+  const caption = captionForStatus(status, speechSupported);
 
-    setError(null);
-    setDraft("");
-    setBusy(true);
+  const runTurn = useCallback(
+    async (raw: string) => {
+      const text = raw.trim();
+      if (!text || busyRef.current) return;
 
-    const nextTurns: ChatTurn[] = [...turns, { role: "user", content: text }];
-    setTurns(nextTurns);
+      busyRef.current = true;
+      setError(null);
+      setStatus("processing");
+      setSubtitles("");
+      avatarRef.current?.stopSpeaking();
 
-    let csPreface: string | null = null;
-    const csNudges: string[] = [];
-    let csState = readOriginCsSubjectState();
+      const result = await sendOriginTurn({
+        text,
+        turns: turnsRef.current,
+        session: session?.active ? session : null,
+        isCustomerServiceEntry,
+      });
 
-    if (isCustomerServiceEntry) {
-      csState = seedCsSubjectFromMember(session?.active ? session : null);
-      const projects = session?.active ? readMemberProjects(session.customerId) : [];
+      setTurns(result.turns);
+      turnsRef.current = result.turns;
 
-      if (detectCsOverwhelm(text)) {
-        csPreface = buildCsOverwhelmSpokenReply();
-        csNudges.push(buildCsOverwhelmSystemNudge());
-      } else if (detectCsVerificationIntent(text)) {
-        if (session?.active) {
-          csNudges.push(buildCsVerificationSystemNudge(true));
-        } else {
-          csPreface = buildCsGuestVerificationSpokenReply();
-          csNudges.push(buildCsVerificationSystemNudge(false));
-        }
-      } else {
-        const shift = detectCsTopicShift(text, csState, projects);
-        if (shift.shifted) {
-          csPreface = buildCsTopicShiftSpokenReply(csState);
-          csNudges.push(buildCsSubjectSystemNudge(csState));
-        } else {
-          csState = adoptCsSubjectFromText(text, csState, session?.active ? session : null);
-          if (!csState.activeCsSubject && csState.userTurnCount === 0) {
-            csPreface = buildCsEstablishSubjectSpokenReply();
-          }
-        }
+      if (result.error) {
+        setError(result.error);
       }
 
-      csState = bumpCsUserTurn(csState);
+      setStatus("speaking");
+      setSubtitles(showSubtitles ? result.reply : "");
+      try {
+        await avatarRef.current?.speakText(result.reply, (chunk) => {
+          if (showSubtitles) setSubtitles(chunk);
+        });
+      } catch {
+        setError(ORIGIN_CHAT_ERROR);
+      }
+
+      busyRef.current = false;
+      if (sessionActiveRef.current && !mutedRef.current && speechSupported) {
+        setStatus("listening");
+        avatarRef.current?.setListening(true);
+        try {
+          recognitionRef.current?.start();
+        } catch {
+          /* already started */
+        }
+      } else {
+        setStatus("idle");
+      }
+    },
+    [isCustomerServiceEntry, session, showSubtitles, speechSupported],
+  );
+
+  const stopSession = useCallback(() => {
+    sessionActiveRef.current = false;
+    setSessionLive(false);
+    recognitionRef.current?.stop();
+    recognitionRef.current = null;
+    avatarRef.current?.stopSpeaking();
+    window.speechSynthesis?.cancel();
+    busyRef.current = false;
+    setStatus(avatarReady ? "idle" : "loading");
+    setSubtitles("");
+  }, [avatarReady]);
+
+  const startSession = useCallback(() => {
+    avatarRef.current?.start();
+    setError(null);
+
+    if (!speechSupported) {
+      setComposerOpen(true);
+      setStatus("idle");
+      setSessionLive(false);
+      return;
     }
 
-    const augmentedMemberContext = isCustomerServiceEntry
-      ? augmentMemberContextForCs(memberContext, csState, csNudges)
-      : memberContext;
+    const recognition = createSpeechRecognition();
+    if (!recognition) {
+      setComposerOpen(true);
+      setStatus("idle");
+      return;
+    }
 
+    recognition.onresult = (event) => {
+      if (mutedRef.current || busyRef.current) return;
+      let interim = "";
+      let finalText = "";
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        const result = event.results[i];
+        if (!result) continue;
+        const piece = result[0]?.transcript ?? "";
+        if (result.isFinal) finalText += piece;
+        else interim += piece;
+      }
+      if (interim && showSubtitles) {
+        setSubtitles(interim);
+      }
+      if (finalText.trim()) {
+        recognition.stop();
+        void runTurn(finalText);
+      }
+    };
+
+    recognition.onerror = () => {
+      if (!sessionActiveRef.current) return;
+      setStatus("error");
+      setError("Mic hiccup — try Start talking again, or type below.");
+    };
+
+    recognition.onend = () => {
+      if (!sessionActiveRef.current || busyRef.current || mutedRef.current) return;
+      try {
+        recognition.start();
+      } catch {
+        /* ignore */
+      }
+    };
+
+    recognitionRef.current = recognition;
+    sessionActiveRef.current = true;
+    setSessionLive(true);
+    setStatus("listening");
+    avatarRef.current?.setListening(true);
     try {
-      const reply = await completeOriginChat(
-        buildOpenRouterMessages(nextTurns, {
-          entry: isCustomerServiceEntry ? "customer-service" : undefined,
-          memberContext: augmentedMemberContext,
-        }),
-      );
-      const assistantText = csPreface ? `${csPreface}\n\n${reply}` : reply;
-      setTurns([...nextTurns, { role: "assistant", content: assistantText }]);
+      recognition.start();
     } catch {
-      setError(ORIGIN_CHAT_ERROR);
-      setTurns([
-        ...nextTurns,
-        {
-          role: "assistant",
-          content: ORIGIN_CHAT_ERROR,
-        },
-      ]);
-    } finally {
-      setBusy(false);
-      inputRef.current?.focus();
+      setError("Could not start the microphone.");
+      stopSession();
+    }
+  }, [runTurn, showSubtitles, speechSupported, stopSession]);
+
+  const toggleMain = () => {
+    if (sessionLive) stopSession();
+    else startSession();
+  };
+
+  const toggleMute = () => {
+    const next = !muted;
+    setMuted(next);
+    mutedRef.current = next;
+    if (next) {
+      recognitionRef.current?.stop();
+      if (sessionActiveRef.current && !busyRef.current) setStatus("idle");
+    } else if (sessionActiveRef.current && !busyRef.current && speechSupported) {
+      setStatus("listening");
+      avatarRef.current?.setListening(true);
+      try {
+        recognitionRef.current?.start();
+      } catch {
+        /* ignore */
+      }
     }
   };
 
-  const onSubmit = (event: FormEvent) => {
+  const onComposerSubmit = (event: FormEvent) => {
     event.preventDefault();
-    void sendMessage(draft);
+    const text = draft.trim();
+    if (!text) return;
+    setDraft("");
+    void runTurn(text);
   };
 
-  const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      void sendMessage(draft);
-    }
-  };
+  const mainLabel = !avatarReady
+    ? "Loading…"
+    : sessionLive
+      ? "End conversation"
+      : speechSupported
+        ? "Start talking"
+        : "Type to Origin";
 
   return (
-    <div className="origin-page origin-page--chat page-atmosphere page-nav-offset relative min-h-screen overflow-hidden pb-24">
-      <div className="origin-page__ekg" aria-hidden>
-        <EkgPulseLine variant="hero" seed={29} />
-      </div>
+    <div className="origin-avatar-app page-nav-offset">
+      <Suspense
+        fallback={
+          <div className="origin-avatar-stage origin-avatar-stage--loading-shell">
+            <p className="origin-avatar-stage__loading">Loading avatar…</p>
+          </div>
+        }
+      >
+        <OriginAvatarStage
+          ref={avatarRef}
+          onReadyChange={onAvatarReady}
+          onLoadError={onAvatarLoadError}
+        />
+      </Suspense>
 
-      <div className="origin-page__shell mx-auto flex max-w-6xl flex-col items-center px-4 sm:px-6">
-        <header className="origin-page__header mb-8 text-center">
-          <UsjetWordmark size="hero" className="origin-page__wordmark" />
-          <p className="origin-page__kicker">Command node · Bay 30</p>
-          <h1 className="origin-page__title">Origin Intelligence Core</h1>
-          <p className="origin-page__lede">
-            {isCustomerServiceEntry
-              ? "Customer Service text channel — onboard ship knowledge, zero cloud bill. Ask about your account, fleet, or clearance."
-              : "Onboard ship knowledge — fleet routing, Hangar, tiers, Jet Browser. No paid cloud model. Type and send."}
+      <header className="origin-avatar-app__topbar">
+        <div className="origin-avatar-app__identity">
+          <h1>Origin</h1>
+          <p>
+            Talk to <strong>USJET.AI</strong> face to face. Browser mic · live command ·
+            Origin&nbsp;android
+            {isCustomerServiceEntry ? " · Customer Service channel" : ""}
           </p>
-        </header>
+          {csScreenGreet ? <p className="origin-avatar-app__cs">{csScreenGreet}</p> : null}
+          {session?.active ? (
+            <div className="origin-avatar-app__member">
+              <OriginMemberStrip session={session} />
+            </div>
+          ) : null}
+        </div>
+        <div className="origin-avatar-app__top-actions">
+          <Link to="/" className="origin-avatar-app__ghost glass-effect-interactive">
+            Hangar
+          </Link>
+          <button
+            type="button"
+            className="origin-avatar-app__icon-btn"
+            aria-label="Settings"
+            title="Settings"
+            onClick={() => setSettingsOpen(true)}
+          >
+            <Settings2 size={16} aria-hidden />
+          </button>
+        </div>
+      </header>
 
-        {session?.active ? <OriginMemberStrip session={session} /> : null}
+      <footer className="origin-avatar-app__controls">
+        <div
+          className={[
+            "origin-avatar-app__subtitles",
+            showSubtitles && subtitles ? "origin-avatar-app__subtitles--visible" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          aria-live="polite"
+        >
+          {subtitles}
+        </div>
 
-        {csScreenGreet ? (
-          <p className="origin-page__cs-greet mb-4 max-w-lg text-center text-sm leading-relaxed text-cyan-200/90">
-            {csScreenGreet}
+        <div
+          className={[
+            "origin-avatar-app__caption",
+            status === "listening" || status === "speaking" ? "origin-avatar-app__caption--live" : "",
+            status === "error" ? "origin-avatar-app__caption--error" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          role="status"
+        >
+          {caption}
+        </div>
+
+        <div className="origin-avatar-app__buttons">
+          <button
+            type="button"
+            className={[
+              "origin-avatar-app__main-btn",
+              sessionLive ? "origin-avatar-app__main-btn--live" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            disabled={!avatarReady && speechSupported}
+            onClick={toggleMain}
+          >
+            {mainLabel}
+          </button>
+          {sessionLive && speechSupported ? (
+            <button
+              type="button"
+              className={[
+                "origin-avatar-app__icon-btn",
+                muted ? "origin-avatar-app__icon-btn--active" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              aria-label={muted ? "Unmute microphone" : "Mute microphone"}
+              title={muted ? "Unmute microphone" : "Mute microphone"}
+              onClick={toggleMute}
+            >
+              {muted ? <MicOff size={16} aria-hidden /> : <Mic size={16} aria-hidden />}
+            </button>
+          ) : null}
+        </div>
+
+        {error ? (
+          <p className="origin-avatar-app__error" role="status">
+            {error}
           </p>
         ) : null}
 
-        <GlassEffectContainer className="origin-chat glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mb-10 w-full max-w-3xl flex-col items-stretch gap-0 p-0">
-          <div className="origin-chat__head">
-            <p className="origin-chat__kicker">Origin · text channel</p>
-            <p className="origin-chat__title">Ask about AI</p>
-          </div>
+        <button
+          type="button"
+          className="origin-avatar-app__composer-toggle glass-effect-interactive"
+          onClick={() => setComposerOpen((v) => !v)}
+        >
+          {composerOpen ? "Hide text channel" : "Type instead"}
+        </button>
 
-          <div className="origin-chat__log" ref={listRef} role="log" aria-live="polite" aria-relevant="additions">
-            {turns.map((turn, index) => (
-              <div
-                key={`${turn.role}-${index}`}
-                className={[
-                  "origin-chat__bubble",
-                  turn.role === "user" ? "origin-chat__bubble--user" : "origin-chat__bubble--assistant",
-                ].join(" ")}
-              >
-                <p className="origin-chat__role">{turn.role === "user" ? "You" : "Origin"}</p>
-                <p className="origin-chat__text">{turn.content}</p>
-              </div>
-            ))}
-            {busy ? (
-              <div className="origin-chat__bubble origin-chat__bubble--assistant origin-chat__bubble--pending">
-                <p className="origin-chat__role">Origin</p>
-                <p className="origin-chat__text">Thinking…</p>
-              </div>
-            ) : null}
-          </div>
-
-          <form className="origin-chat__composer" onSubmit={onSubmit}>
-            <label className="sr-only" htmlFor="origin-chat-input">
+        {composerOpen ? (
+          <form className="origin-avatar-app__composer" onSubmit={onComposerSubmit}>
+            <label className="sr-only" htmlFor="origin-avatar-input">
               Message Origin
             </label>
             <textarea
-              id="origin-chat-input"
-              ref={inputRef}
-              className="origin-chat__input"
+              id="origin-avatar-input"
+              className="origin-avatar-app__input"
               rows={2}
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="Ask about AI, the fleet, Hangar, or how a tool works…"
-              disabled={busy}
+              placeholder="Ask about Hangar, Fleet, tiers, or a partner bay…"
+              disabled={busyRef.current && status === "processing"}
               autoComplete="off"
             />
             <button
               type="submit"
-              className="origin-chat__send btn-glass-prominent glass-effect-interactive"
-              disabled={busy || !draft.trim()}
+              className="origin-avatar-app__send btn-glass-prominent glass-effect-interactive"
+              disabled={!draft.trim() || status === "processing"}
               aria-label="Send message"
             >
               <Send size={16} aria-hidden />
               Send
             </button>
           </form>
+        ) : null}
+      </footer>
 
-          {error ? (
-            <p className="origin-chat__error" role="status">
-              {error}
+      {settingsOpen ? (
+        <div
+          className="origin-avatar-app__dialog-backdrop"
+          role="presentation"
+          onClick={() => setSettingsOpen(false)}
+        >
+          <div
+            className="origin-avatar-app__dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="origin-avatar-settings-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2 id="origin-avatar-settings-title">Settings</h2>
+            <label className="origin-avatar-app__check-row">
+              <input
+                type="checkbox"
+                checked={showSubtitles}
+                onChange={(event) => setShowSubtitles(event.target.checked)}
+              />
+              Show subtitles while she speaks
+            </label>
+            <p className="origin-avatar-app__dialog-note">
+              Day-one voice uses your browser mic and speech engine — not a hosted speech-to-speech
+              backend. Swap the GLB via <code>VITE_ORIGIN_AVATAR_URL</code> when Origin&apos;s final
+              mesh is ready.
             </p>
-          ) : null}
-        </GlassEffectContainer>
-
-        <GlassEffectContainer className="origin-page__deck glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mb-10 w-full max-w-4xl flex-col items-stretch gap-0 p-0">
-          <div className="origin-page__deck-head">
-            <p className="origin-page__deck-kicker">USJET command deck</p>
-            <p className="origin-page__deck-title">Internal routes</p>
+            <div className="origin-avatar-app__dialog-actions">
+              <button type="button" className="origin-avatar-app__dialog-done" onClick={() => setSettingsOpen(false)}>
+                Done
+              </button>
+            </div>
           </div>
-          <nav className="origin-page__deck-nav" aria-label="USJET command routes">
-            {COMMAND_ROUTES.map((route) => (
-              <Link key={route.to} to={route.to} className="origin-page__deck-link btn-glass glass-effect-interactive">
-                {route.label}
-              </Link>
-            ))}
-          </nav>
-        </GlassEffectContainer>
-
-        <section className="origin-page__fleet w-full max-w-5xl" aria-labelledby="origin-fleet-heading">
-          <div className="origin-page__fleet-head">
-            <h2 id="origin-fleet-heading" className="origin-page__fleet-title">
-              Fleet manifest — 30 bays
-            </h2>
-            <p className="origin-page__fleet-copy">
-              Launch any partner from Origin — integrated navigation across the fleet.
-            </p>
-          </div>
-          <div className="origin-page__fleet-grid">
-            {sortedFleet.map((unit) => {
-              const url = integratedLaunchUrl(unit.domain, unit.href, unit.slot, {
-                returnTo: "/origin",
-                label: unit.name,
-              });
-              const isOrigin = unit.href === "/origin" || unit.slot === 29;
-
-              if (isOrigin) {
-                return (
-                  <span
-                    key={unit.id}
-                    className="origin-page__fleet-chip origin-page__fleet-chip--command"
-                    aria-current="page"
-                  >
-                    <span className="origin-page__fleet-slot">30</span>
-                    <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
-                  </span>
-                );
-              }
-
-              return (
-                <a key={unit.id} href={url} className="origin-page__fleet-chip">
-                  <span className="origin-page__fleet-slot">{String(unit.slot + 1).padStart(2, "0")}</span>
-                  <DeveloperRedBlinkName name={unit.name} fleetSlot={unit.slot} />
-                </a>
-              );
-            })}
-          </div>
-        </section>
-      </div>
-
-      <div className="origin-page__hud origin-page__hud--left font-mono text-[10px] uppercase tracking-tighter text-white/25">
-        <p>Lat: 40.7128° N</p>
-        <p>Long: 74.0060° W</p>
-      </div>
-      <div className="origin-page__hud origin-page__hud--right text-right font-mono text-[10px] uppercase tracking-tighter text-white/25">
-        <p>Protocol: USJET-v5</p>
-        <p>Channel: Text chat</p>
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -68,7 +68,7 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
     prompt: "How do you log in to the Member Portal?",
     choices: [
       "Google or Apple OAuth",
-      "Stripe billing email plus access sentence or cus_ Member ID",
+      "Stripe billing email plus Member ID (cus_…)",
       "Username and Stripe password only",
       "Voice print at Origin",
     ],

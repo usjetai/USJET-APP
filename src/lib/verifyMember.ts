@@ -64,6 +64,7 @@ export async function verifyMemberAccess(input: VerifyInput): Promise<MemberSess
 
   return {
     customerId: data.customerId,
+    name: data.name,
     email: data.email ?? (email || undefined),
     tier: data.tier,
     active: data.active,

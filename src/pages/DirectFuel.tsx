@@ -95,10 +95,6 @@ export default function DirectFuel() {
         ·{" "}
         <Link to="/support-fleet" className="direct-fuel-page__link">
           Support the Fleet
-        </Link>{" "}
-        ·{" "}
-        <Link to="/founder" className="direct-fuel-page__link">
-          Founder story
         </Link>
       </p>
     </div>

@@ -38,7 +38,7 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
         <h2 className="member-login-panel__title">Pay first. Then verify.</h2>
         <p className="member-login-panel__lead">
           <strong>Email alone does not unlock the Member Portal.</strong> Complete Stripe checkout, then log in with
-          billing email and your founder-issued access sentence (or Stripe <code>cus_…</code> Member ID).
+          billing email and your Stripe <code>cus_…</code> Member ID.
         </p>
         {isSitePreviewPromoActive() ? (
           <p className="member-login-panel__preview-note">{SITE_PREVIEW_MEMBER_NOTE}</p>
@@ -62,7 +62,7 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
                 />
               </label>
               <label className="member-login-panel__field">
-                <span>Access sentence or Member ID</span>
+                <span>Member ID</span>
                 <input
                   type="text"
                   name="accessSentence"
@@ -72,7 +72,7 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
                   value={accessSentence}
                   onChange={(event) => setAccessSentence(event.target.value)}
                   className="member-login-panel__input"
-                  placeholder="Founder sentence or cus_…"
+                  placeholder="cus_…"
                 />
               </label>
               {error ? <p className="member-login-panel__error">{error}</p> : null}
@@ -127,10 +127,6 @@ export default function MemberLoginPanel({ onSuccess }: MemberLoginPanelProps) {
         <footer className="member-login-panel__footer">
           <Link to="/" className="member-login-panel__link">
             Fleet
-          </Link>
-          <span aria-hidden> · </span>
-          <Link to="/founder" className="member-login-panel__link">
-            Founder
           </Link>
         </footer>
       </div>

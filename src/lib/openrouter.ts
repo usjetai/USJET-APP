@@ -1,5 +1,6 @@
 /**
- * Chat helpers. Origin Aura is zero-cost onboard knowledge (no paid cloud model).
+ * Chat helpers. Origin Aura prefers live OpenRouter (server `/api/origin-chat`),
+ * then a client key if present, then the onboard knowledge brain.
  * Hired HUD bay chat may still use OpenRouter when configured.
  */
 
@@ -64,8 +65,61 @@ function originBrainOptionsFromMessages(messages: ApiChatMessage[]): BuildOpenRo
   return { entry, memberContext };
 }
 
-/** Origin Aura — zero-cost onboard knowledge. Never bills a cloud model. */
+type OriginChatApiPayload = {
+  reply?: string;
+  error?: string;
+  source?: string;
+};
+
+/** Origin Aura — live model via server proxy, then client key, then onboard brain. */
 export async function completeOriginChat(messages: ApiChatMessage[]): Promise<string> {
+  try {
+    const response = await fetch("/api/origin-chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages }),
+    });
+
+    let payload: OriginChatApiPayload = {};
+    try {
+      payload = (await response.json()) as OriginChatApiPayload;
+    } catch {
+      /* non-JSON */
+    }
+
+    if (response.ok && typeof payload.reply === "string" && payload.reply.trim()) {
+      // Prefer live OpenRouter; ignore thin onboard-fallback when a client key exists.
+      if (payload.source !== "onboard-fallback" || !OPENROUTER_API_KEY) {
+        return payload.reply.trim();
+      }
+    }
+
+    if (response.status !== 503 && response.status !== 404 && response.status !== 502) {
+      if (payload.error) {
+        throw new Error(payload.error);
+      }
+    }
+  } catch (error) {
+    if (OPENROUTER_API_KEY) {
+      try {
+        return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_MODEL);
+      } catch {
+        /* fall through to knowledge brain */
+      }
+    }
+    if (error instanceof Error && !OPENROUTER_API_KEY) {
+      /* continue to brain */
+    }
+  }
+
+  if (OPENROUTER_API_KEY) {
+    try {
+      return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_MODEL);
+    } catch {
+      /* knowledge brain last resort */
+    }
+  }
+
   return answerOriginFromKnowledge(messages, originBrainOptionsFromMessages(messages));
 }
 

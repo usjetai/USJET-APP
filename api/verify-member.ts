@@ -95,9 +95,13 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       ? memberAccessFromStripeMetadata(stripeMetadata)
       : { tier: "INACTIVE" as const };
 
+    const customer = await stripe.customers.retrieve(resolvedCustomerId!);
+    const customerName = customer && typeof customer === "object" && "name" in customer ? (customer as { name?: string }).name : undefined;
+
     return res.status(200).json({
       active,
       customerId: resolvedCustomerId,
+      name: customerName || undefined,
       tier: access.tier,
       stripeTier: access.stripeTier,
       accessLevel: access.accessLevel,

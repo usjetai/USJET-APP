@@ -40,7 +40,7 @@ export default function MemberLogin() {
           Member <span className="member-login-page__title-accent">Login</span>
         </h1>
         <p className="member-login-page__subtitle">
-          Stripe payment first. Then verify with billing email and your founder-issued access sentence.
+          Stripe payment first. Then verify with billing email and your Stripe Member ID.
         </p>
       </header>
 

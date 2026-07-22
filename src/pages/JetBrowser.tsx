@@ -4,7 +4,6 @@ import JetBrowserTile, {
   JetBrowserEmptyBay,
   type JetBrowserBay,
 } from "../components/jetBrowser/JetBrowserTile";
-import UsjetWordmark from "../components/brand/UsjetWordmark";
 import {
   useJetBrowserColumnLayout,
   type JetBrowserColumnLayout,
@@ -150,23 +149,20 @@ export default function JetBrowser() {
       ) : null}
 
       <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[92rem] px-4 pb-24 sm:px-6 lg:px-8">
-        <header className="jet-browser-hero mb-10 border-b border-cyan-400/20 pb-10 md:mb-12 md:pb-12">
-          <div className="flex flex-col items-center text-center">
-            <UsjetWordmark size="hero" />
-            <p className="mt-6 font-black uppercase tracking-[0.35em] text-cyan-300/90">
-              Jet Browser · Captain-loaded bays
-            </p>
-            <h1 className="mt-4 font-aviation text-4xl font-black uppercase italic leading-[0.95] tracking-tighter text-white sm:text-5xl lg:text-6xl">
+        <header className="jet-browser-hero jet-browser-hero--rail mb-4 border-b border-cyan-400/20 pb-4 md:mb-5 md:pb-4">
+          <div className="jet-browser-hero__copy">
+            <p className="jet-browser-hero__kicker">Jet Browser · Captain-loaded bays</p>
+            <h1 className="jet-browser-hero__title font-aviation">
               Jet <span className="text-cyan-400">Browser</span>
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-relaxed tracking-tight text-white/70 sm:text-lg">
+            <p className="jet-browser-hero__lede">
               Enter a domain or any page link. It opens in a tile. Enter another — another tile.
               Enlarge to work, shrink to formation. One ship, one cockpit.
             </p>
           </div>
 
           <form
-            className="jet-browser-launch glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mt-8 mx-auto max-w-3xl"
+            className="jet-browser-launch glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
             onSubmit={handleLaunch}
           >
             <label htmlFor={inputId} className="jet-browser-launch__label">
@@ -209,13 +205,11 @@ export default function JetBrowser() {
           </form>
 
           <div
-            className="jet-browser-layout-toggle hangar-layout-toggle mt-6 flex flex-wrap items-center justify-center gap-2"
+            className="jet-browser-layout-toggle hangar-layout-toggle"
             role="group"
             aria-label="Jet Browser tile rows"
           >
-            <span className="mr-1 text-[10px] font-black uppercase tracking-[0.28em] text-cyan-200/50">
-              Layout
-            </span>
+            <span className="hangar-layout-toggle__label">Layout</span>
             {LAYOUT_OPTIONS.map((count) => (
               <button
                 key={count}

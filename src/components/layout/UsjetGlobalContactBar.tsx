@@ -9,7 +9,7 @@ function footerLinkClass({ isActive }: { isActive: boolean }) {
   return ["usjet-footer__link", isActive ? "usjet-footer__link--active" : ""].filter(Boolean).join(" ");
 }
 
-/** Document-flow site footer — professional link columns, liquid glass shell. */
+/** Document-flow site footer — four equal columns, liquid glass shell. */
 export default function UsjetGlobalContactBar() {
   return (
     <footer className="usjet-global-contact-bar" aria-label="USJET site footer">
@@ -96,9 +96,7 @@ export default function UsjetGlobalContactBar() {
         </div>
 
         <div className="usjet-footer__legal">
-          <p className="usjet-footer__copy">
-            © {YEAR} USJET.AI · All rights reserved
-          </p>
+          <p className="usjet-footer__copy">© {YEAR} USJET.AI · All rights reserved</p>
           <p className="usjet-footer__legal-note">One Ship · One Cockpit · Stripe-cleared members only</p>
         </div>
       </GlassEffectContainer>

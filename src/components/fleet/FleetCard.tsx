@@ -16,7 +16,7 @@ import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalT
 import { useOriginLimitedOfferOptional } from "../../context/OriginLimitedOfferContext";
 import { fleetLaunchUrl, integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import {
-  buildRandomFleetFlightPlan,
+  buildFleetLaunchFlightPlan,
   type FleetFlightPlan,
 } from "../../lib/fleetRunwayFlight";
 import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
@@ -137,18 +137,12 @@ export default function FleetCard({
     launchSpinPendingRef.current = true;
     setLaunchSpinning(true);
 
-    // Fleet + Hangar: portal sortie with a final full-viewport pass (visible on phones).
-    // Hangar used to climb inside overflow:hidden tiles — invisible mega-pass on mobile.
+    // Fleet + Hangar: portal sortie + full-viewport mega-pass (phones included).
+    // Never skip — reduce-motion still gets a short mega-pass so the brand moment lands.
     const rect =
       aircraftAnchorRef.current?.getBoundingClientRect() ??
       new DOMRect(window.innerWidth / 2 - 64, window.innerHeight / 2 - 64, 128, 128);
-    setFlightPlan(buildRandomFleetFlightPlan(rect));
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      handleSpinComplete();
-      return;
-    }
-
+    setFlightPlan(buildFleetLaunchFlightPlan(rect));
     setLaunchSpinKey((key) => key + 1);
   };
 

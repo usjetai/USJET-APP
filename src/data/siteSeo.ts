@@ -12,9 +12,9 @@ export const SITE_ORIGIN = "https://www.usjet.ai" as const;
 
 export const SITE_NAME = "USJET.AI" as const;
 
-export const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/founder/usjet-hero-logo.png` as const;
+export const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/brand/usjet-logo.png` as const;
 
-export const DEFAULT_OG_IMAGE_ALT = "USJET.AI — sovereign AI fleet cockpit wordmark" as const;
+export const DEFAULT_OG_IMAGE_ALT = "USJET — official logo" as const;
 
 export type PageSeo = {
   title: string;
@@ -254,7 +254,7 @@ export function buildWebsiteJsonLd(): Record<string, unknown> {
       "@type": "Organization",
       name: "USJET LLC",
       url: SITE_ORIGIN,
-      logo: `${SITE_ORIGIN}/favicon.svg`,
+      logo: `${SITE_ORIGIN}/brand/usjet-logo.png`,
       founder: { "@type": "Person", name: "Ameer Karim" },
     },
     potentialAction: {
@@ -289,7 +289,7 @@ export function buildArticleJsonLd(input: {
       name: "USJET LLC",
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_ORIGIN}/favicon.svg`,
+        url: `${SITE_ORIGIN}/brand/usjet-logo.png`,
       },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": input.url },

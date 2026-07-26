@@ -5,22 +5,26 @@ type UsjetWordmarkProps = {
   glow?: boolean;
 };
 
+const USJET_LOGO_SRC = "/brand/usjet-logo.png?v=2";
+
 /**
- * High-fidelity chiseled stone wordmark — Audiowide base with engraved depth + throttle glow.
+ * Official USJET logo mark — poly jet + Ai + US JET wordmark.
  */
 export default function UsjetWordmark({ className = "", size = "nav", glow = true }: UsjetWordmarkProps) {
   return (
-    <span
+    <img
+      src={USJET_LOGO_SRC}
+      alt="USJET"
       className={[
-        "usjet-logo-stone",
-        size === "hero" ? "usjet-logo-stone--hero" : "usjet-logo-stone--nav",
-        glow ? "usjet-logo-stone--glow" : "",
+        "usjet-logo-mark",
+        size === "hero" ? "usjet-logo-mark--hero" : "usjet-logo-mark--nav",
+        glow ? "usjet-logo-mark--glow" : "",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
-    >
-      USJET<span className="usjet-logo-stone__ai">.AI</span>
-    </span>
+      decoding="async"
+      draggable={false}
+    />
   );
 }

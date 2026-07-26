@@ -27,7 +27,7 @@ export const HIRED_HUD_RADIO_FOUNDER = {
   name: FOUNDER_PUBLIC_NAME,
   callsign: "GOD · USJET-AMEER",
   rosterLabel: "GOD",
-  avatarPath: "/founder/usjet-hero-logo.png",
+  avatarPath: "/brand/usjet-logo.png",
 } as const;
 
 /** Funny founder lines — General keys the net. */

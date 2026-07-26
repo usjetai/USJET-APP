@@ -433,7 +433,43 @@
   }
 }
 
-/* USJET stone wordmark — chiseled Audiowide (Baguette-stone fidelity via depth + glow) */
+/* USJET official logo mark — poly jet + Ai + US JET */
+.usjet-logo-mark {
+  display: block;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.usjet-logo-mark--nav {
+  height: clamp(1.9rem, 6.2vw, 2.55rem);
+  width: auto;
+  max-width: min(12rem, 48vw);
+}
+
+.usjet-logo-mark--hero {
+  height: clamp(3.4rem, 12vw, 6.5rem);
+  width: auto;
+  max-width: min(22rem, 88vw);
+}
+
+.usjet-logo-mark--glow {
+  animation: usjet-nav-logo-throttle-glow 2.75s ease-in-out infinite alternate;
+}
+
+.usjet-logo-mark--hero.usjet-logo-mark--glow {
+  animation-duration: 3.2s;
+}
+
+.nav-brand-usjet:hover .usjet-logo-mark--glow,
+.nav-brand-usjet:focus-visible .usjet-logo-mark--glow {
+  animation-duration: 1.35s;
+}
+
+/* Legacy stone wordmark classes — kept for brand-export / static HTML captures */
 .usjet-logo-stone {
   display: inline-block;
   font-family: theme("fontFamily.aviation");
@@ -1358,8 +1394,9 @@
   line-height: 1;
 }
 
-.usjet-global-contact-bar__brand .usjet-logo-stone--nav {
-  font-size: clamp(0.58rem, 1.2vw, 0.72rem);
+.usjet-global-contact-bar__brand .usjet-logo-mark--nav {
+  height: clamp(1.65rem, 4.2vw, 2.1rem);
+  max-width: min(10.5rem, 42vw);
 }
 
 /* Status: label first, ping on the right (active side) */

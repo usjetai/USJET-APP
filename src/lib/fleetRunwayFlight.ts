@@ -125,14 +125,15 @@ export function buildRandomFleetFlightPlan(rect: DOMRect): FleetFlightPlan {
     y: samples.map((s) => s.y),
     scale: samples.map((_, i) => {
       if (i === 0) return 1;
-      if (i === 1) return 1.05;
+      if (i === 1) return 1.1;
+      // Keep growing through the sortie — larger = climbing toward the camera.
       const t = (i - 1) / (n - 2);
-      if (t < 0.85) return 1.05 + t * 0.2;
-      return 1.22 - (t - 0.85) * 1.8;
+      const eased = t * t * (3 - 2 * t); // smoothstep
+      return 1.1 + eased * 2.15; // ~1.1 → ~3.25 by exit
     }),
     opacity: samples.map((_, i) => {
       if (i < n - 2) return 1;
-      if (i === n - 2) return 0.9;
+      if (i === n - 2) return 0.85;
       return 0;
     }),
     times,

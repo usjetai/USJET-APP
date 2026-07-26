@@ -2,6 +2,13 @@ import { useState, type FormEvent } from "react";
 import { Lock } from "lucide-react";
 import { isUsableStripePaymentLink, resolvePaymentLinkForTier } from "../../lib/stripePaymentLink";
 import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
+import { trackBeginCheckout } from "../../lib/analytics";
+
+const TIER_VALUE: Record<SpecialTierId, number> = {
+  founder: 19.9,
+  "hangar-pro": 49.95,
+  "fleet-command": 199.99,
+};
 
 export type SpecialTierId = "founder" | "hangar-pro" | "fleet-command";
 
@@ -45,6 +52,7 @@ export default function StripeSecureCheckout({
 
     setStatus("processing");
     setMessage(null);
+    trackBeginCheckout({ tier: tierId, value: TIER_VALUE[tierId], url: usablePaymentLink });
     window.location.href = usablePaymentLink;
   };
 

@@ -19,6 +19,7 @@ import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "./data/globalBackgroundBeat";
 import SiteLatchMenu from "./components/layout/SiteLatchMenu";
 import TierRouteGate from "./components/member/TierRouteGate";
 import SeoHead from "./components/layout/SeoHead";
+import AnalyticsRouteTracker from "./components/layout/AnalyticsRouteTracker";
 import { useAtmosphereLive } from "./hooks/useAtmosphereLive";
 
 const Fleet = lazy(() => import("./pages/Fleet"));
@@ -225,6 +226,7 @@ export default function App() {
   return (
     <Router>
       <SeoHead />
+      <AnalyticsRouteTracker />
       <OriginLimitedOfferProvider>
         <SilentHangarProvider>
           <UsjetExternalNavigationProvider>

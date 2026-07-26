@@ -111,8 +111,8 @@ export function buildRandomFleetFlightPlan(rect: DOMRect): FleetFlightPlan {
   const sortieCount = samples.length;
   const centerX = vw / 2 - originLeft;
   const centerY = vh / 2 - originTop;
-  /** Fill the longest viewport axis so the craft blanks the whole page. */
-  const coverScale = Math.max(vw, vh) / size * 1.35;
+  /** Fill the longest viewport axis so the craft blanks the whole page (phones included). */
+  const coverScale = Math.max(4.2, (Math.max(vw, vh) / Math.max(size, 1)) * 1.45);
   const passSpan = Math.hypot(vw, vh) * 0.95;
   // Final pass heading — come back through the page after the sortie exits.
   const passHeading = (exitAim + 180 + (Math.random() * 36 - 18) + 360) % 360;

@@ -1,6 +1,7 @@
 /**
  * Fleet runway takeoff flight plans.
  * Aircraft art is nose-up at 0° — that is forward. CSS rotate is clockwise.
+ * Paths only move forward along the nose; airplanes never reverse.
  */
 
 export type FleetFlightPlan = {
@@ -16,7 +17,7 @@ export type FleetFlightPlan = {
   duration: number;
 };
 
-/** Offset from origin when nose faces `headingDeg` (0 = up / forward). */
+/** Offset when nose faces `headingDeg` (0 = up / forward). Always nose-first. */
 export function headingToDelta(headingDeg: number, distance: number): { x: number; y: number } {
   const rad = (headingDeg * Math.PI) / 180;
   return {
@@ -30,14 +31,22 @@ function normalizeDelta(delta: number): number {
   return wrapped > 180 ? wrapped - 360 : wrapped;
 }
 
-/** Continuous rotate value that turns the short way from `fromDeg` toward `toDeg`. */
+/** Continuous rotate that turns the short way from `fromDeg` toward `toDeg`. */
 export function shortestTurn(fromDeg: number, toDeg: number): number {
   return fromDeg + normalizeDelta(toDeg - fromDeg);
 }
 
+type FlightSample = {
+  x: number;
+  y: number;
+  /** Continuous CSS rotate; nose always matches forward travel. */
+  rotate: number;
+};
+
 /**
- * Build a random sortie: turn nose → roll out → cruise the viewport → exit off-page.
- * Position keyframes are offsets from the tile origin (for `position: fixed` flight).
+ * Sample a forward-only curved sortie.
+ * Each beat advances along the current nose heading, then banks a little for the next —
+ * never slides sideways or reverses.
  */
 export function buildRandomFleetFlightPlan(rect: DOMRect): FleetFlightPlan {
   const size = Math.max(rect.width, rect.height, 96);
@@ -46,47 +55,87 @@ export function buildRandomFleetFlightPlan(rect: DOMRect): FleetFlightPlan {
   const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
   const vh = typeof window !== "undefined" ? window.innerHeight : 800;
 
-  let travelHeading = Math.random() * 360;
-  let visualRotate = shortestTurn(0, travelHeading);
-  const rotateNose = visualRotate;
+  const departureHeading = Math.random() * 360;
+  let heading = departureHeading;
+  let visualRotate = shortestTurn(0, departureHeading);
 
-  const d1 = 130 + Math.random() * 170;
-  const p1 = headingToDelta(travelHeading, d1);
+  const samples: FlightSample[] = [
+    { x: 0, y: 0, rotate: 0 },
+    // On the pad: swing the nose to the departure heading before rolling.
+    { x: 0, y: 0, rotate: visualRotate },
+  ];
 
-  const turn1 = (75 + Math.random() * 130) * (Math.random() < 0.5 ? 1 : -1);
-  travelHeading = (travelHeading + turn1 + 360) % 360;
-  visualRotate = shortestTurn(visualRotate, travelHeading);
-  const rotateCruise = visualRotate;
-  const d2 = 200 + Math.random() * 260;
-  const step2 = headingToDelta(travelHeading, d2);
-  const p2 = { x: p1.x + step2.x, y: p1.y + step2.y };
+  const turnSign = Math.random() < 0.5 ? 1 : -1;
+  const cruiseTurnRate = (7 + Math.random() * 8) * turnSign;
+  const exitAim = (departureHeading + turnSign * (50 + Math.random() * 65) + 360) % 360;
 
-  const turn2 = (55 + Math.random() * 125) * (Math.random() < 0.5 ? 1 : -1);
-  travelHeading = (travelHeading + turn2 + 360) % 360;
-  visualRotate = shortestTurn(visualRotate, travelHeading);
-  const rotateSweep = visualRotate;
-  const d3 = 170 + Math.random() * 220;
-  const step3 = headingToDelta(travelHeading, d3);
-  const p3 = { x: p2.x + step3.x, y: p2.y + step3.y };
+  let x = 0;
+  let y = 0;
 
-  const turn3 = (25 + Math.random() * 80) * (Math.random() < 0.5 ? 1 : -1);
-  travelHeading = (travelHeading + turn3 + 360) % 360;
-  visualRotate = shortestTurn(visualRotate, travelHeading);
-  const exitDist = Math.hypot(vw, vh) * (0.85 + Math.random() * 0.4);
-  const stepExit = headingToDelta(travelHeading, exitDist);
-  const pExit = { x: p3.x + stepExit.x, y: p3.y + stepExit.y };
+  const advance = (distance: number) => {
+    const delta = headingToDelta(heading, distance);
+    x += delta.x;
+    y += delta.y;
+    samples.push({ x, y, rotate: visualRotate });
+  };
+
+  const bankToward = (targetHeading: number, maxStepTurn: number) => {
+    const remaining = normalizeDelta(targetHeading - heading);
+    const turnThisBeat = Math.max(-maxStepTurn, Math.min(maxStepTurn, remaining));
+    heading = (heading + turnThisBeat + 360) % 360;
+    visualRotate = shortestTurn(visualRotate, heading);
+  };
+
+  // Climb-out straight ahead — takeoff must read forward.
+  for (let i = 0; i < 3; i += 1) {
+    advance(46 + Math.random() * 16);
+  }
+
+  // Cruise: fly forward, then ease the nose a few degrees for the next beat.
+  for (let i = 0; i < 10; i += 1) {
+    const progress = i / 9;
+    advance(52 + Math.random() * 24 + progress * 20);
+    const turnThisBeat = cruiseTurnRate * (0.7 + 0.45 * Math.sin(progress * Math.PI));
+    heading = (heading + turnThisBeat + 360) % 360;
+    visualRotate = shortestTurn(visualRotate, heading);
+  }
+
+  // Exit: keep forward flight while easing onto exit heading, then leave the page.
+  for (let i = 0; i < 6; i += 1) {
+    const progress = (i + 1) / 6;
+    advance(i < 5 ? 75 + progress * 95 : Math.hypot(vw, vh) * (0.6 + Math.random() * 0.25));
+    bankToward(exitAim, 12);
+  }
+
+  const n = samples.length;
+  const times = samples.map((_, i) => {
+    if (i === 0) return 0;
+    if (i === 1) return 0.14;
+    const forwardIndex = i - 2;
+    const forwardCount = n - 2;
+    return 0.14 + (0.86 * (forwardIndex + 1)) / forwardCount;
+  });
 
   return {
     size,
     originLeft,
     originTop,
-    // rest → nose aims → climb-out → cruise turn → sweep → leave the page
-    rotate: [0, rotateNose, rotateNose, rotateCruise, rotateSweep, visualRotate],
-    x: [0, 0, p1.x, p2.x, p3.x, pExit.x],
-    y: [0, 0, p1.y, p2.y, p3.y, pExit.y],
-    scale: [1, 1.06, 1.14, 1.2, 1.24, 0.78],
-    opacity: [1, 1, 1, 1, 0.92, 0],
-    times: [0, 0.1, 0.28, 0.52, 0.74, 1],
-    duration: 2.9 + Math.random() * 0.7,
+    rotate: samples.map((s) => s.rotate),
+    x: samples.map((s) => s.x),
+    y: samples.map((s) => s.y),
+    scale: samples.map((_, i) => {
+      if (i === 0) return 1;
+      if (i === 1) return 1.05;
+      const t = (i - 1) / (n - 2);
+      if (t < 0.85) return 1.05 + t * 0.2;
+      return 1.22 - (t - 0.85) * 1.8;
+    }),
+    opacity: samples.map((_, i) => {
+      if (i < n - 2) return 1;
+      if (i === n - 2) return 0.9;
+      return 0;
+    }),
+    times,
+    duration: 3.3 + Math.random() * 0.5,
   };
 }

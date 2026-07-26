@@ -216,7 +216,8 @@ export default function FleetCard({
         transition={{
           duration: flightPlan.duration,
           times: flightPlan.times,
-          ease: ["easeOut", "easeInOut", "easeInOut", "easeInOut", "easeIn"],
+          // Linear keeps each beat nose-aligned with forward travel (no reverse slide).
+          ease: "linear",
         }}
         onAnimationComplete={handleSpinComplete}
       >

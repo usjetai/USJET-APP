@@ -3018,13 +3018,11 @@
   pointer-events: none;
 }
 
-/* Fixed sortie craft — portal to document.body (escapes tile overflow).
-   Do NOT set CSS transform here — Framer Motion owns transform; a -webkit-transform
-   override was blanking the mega-pass on iOS Safari. */
+/* Fixed sortie craft — nose-up art flies free of tile overflow clipping.
+   Final pass scales past the viewport so the jet blanks the whole page before launch. */
 .fleet-card__aircraft-flight {
   position: fixed;
-  inset: auto;
-  z-index: 2147483000;
+  z-index: 20000;
   display: grid;
   place-items: center;
   margin: 0;
@@ -3033,15 +3031,12 @@
   transform-origin: 50% 50%;
   will-change: transform, opacity;
   filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.72));
-  isolation: isolate;
 }
 
 .fleet-card__aircraft-flight .fleet-card__aircraft {
   width: 100% !important;
   height: 100% !important;
   margin: 0 !important;
-  max-width: none !important;
-  max-height: none !important;
   object-fit: contain;
 }
 

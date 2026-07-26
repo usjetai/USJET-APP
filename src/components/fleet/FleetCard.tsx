@@ -16,12 +16,17 @@ import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalT
 import { useOriginLimitedOfferOptional } from "../../context/OriginLimitedOfferContext";
 import { fleetLaunchUrl, integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
 import {
-  buildFleetLaunchFlightPlan,
+  buildRandomFleetFlightPlan,
   type FleetFlightPlan,
 } from "../../lib/fleetRunwayFlight";
 import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
+
+/** Hangar bay open — yaw left, yaw right, straighten, then slow climb off the tile. */
+const HANGAR_TILE_TAKEOFF_MS = 2.65;
+/** Degrees of left/right yaw before takeoff (top-down logos). */
+const HANGAR_TILE_YAW_DEG = 34;
 
 type FleetCardProps = {
   domain: string;
@@ -136,13 +141,18 @@ export default function FleetCard({
     syncProtocolToClipboard();
     launchSpinPendingRef.current = true;
     setLaunchSpinning(true);
+    if (isRunway) {
+      const rect =
+        aircraftAnchorRef.current?.getBoundingClientRect() ??
+        new DOMRect(window.innerWidth / 2 - 64, window.innerHeight / 2 - 64, 128, 128);
+      setFlightPlan(buildRandomFleetFlightPlan(rect));
+    }
 
-    // Fleet + Hangar: portal sortie + full-viewport mega-pass (phones included).
-    // Never skip — reduce-motion still gets a short mega-pass so the brand moment lands.
-    const rect =
-      aircraftAnchorRef.current?.getBoundingClientRect() ??
-      new DOMRect(window.innerWidth / 2 - 64, window.innerHeight / 2 - 64, 128, 128);
-    setFlightPlan(buildFleetLaunchFlightPlan(rect));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      handleSpinComplete();
+      return;
+    }
+
     setLaunchSpinKey((key) => key + 1);
   };
 
@@ -220,31 +230,60 @@ export default function FleetCard({
   };
 
   const renderAircraftWrap = () => {
-    const isPortalTakingOff =
-      launchSpinning && launchSpinKey > 0 && Boolean(flightPlan) && (isRunway || (isHangarSurface && expandInteractive));
+    const hangarTakeoffDuration = HANGAR_TILE_TAKEOFF_MS;
+    const isTakingOff = launchSpinning && launchSpinKey > 0 && expandInteractive;
+    const isRunwayTakingOff = launchSpinning && launchSpinKey > 0 && isRunway && flightPlan;
 
-    // Hangar: radar HUD stays locked in the tile; logo flies a full-viewport portal pass.
+    // Hangar: radar HUD stays locked; logo yaws left → right → straight, then climbs off slow.
     if (isHangarSurface) {
       return (
-        <>
-          <div className={aircraftWrapClassName}>
-            {renderHangarRadarHud()}
-            <div
-              ref={aircraftAnchorRef}
-              className="fleet-card__aircraft-spin"
-              aria-hidden={isPortalTakingOff ? true : undefined}
-              style={isPortalTakingOff ? { visibility: "hidden" } : undefined}
+        <div className={aircraftWrapClassName}>
+          {renderHangarRadarHud()}
+          {isTakingOff ? (
+            <motion.div
+              key={`fleet-aircraft-takeoff-${launchSpinKey}`}
+              className="fleet-card__aircraft-spin fleet-card__aircraft-spin--takeoff"
+              style={{ transformOrigin: "50% 55%", transformStyle: "preserve-3d" }}
+              initial={{
+                rotate: 0,
+                y: 0,
+                scale: 1,
+                rotateX: 0,
+                opacity: 1,
+                filter: "brightness(0.88) contrast(1.1)",
+              }}
+              animate={{
+                rotate: [0, -HANGAR_TILE_YAW_DEG, HANGAR_TILE_YAW_DEG, 0, 0],
+                y: [0, 0, 0, 0, -148],
+                scale: [1, 1, 1, 1, 1.16],
+                rotateX: [0, 0, 0, 0, -22],
+                opacity: [1, 1, 1, 1, 0],
+                filter: [
+                  "brightness(0.88) contrast(1.1)",
+                  "brightness(0.92) contrast(1.08)",
+                  "brightness(0.96) contrast(1.06)",
+                  "brightness(1) contrast(1.05)",
+                  "brightness(1.06) contrast(1.04)",
+                ],
+              }}
+              transition={{
+                duration: hangarTakeoffDuration,
+                times: [0, 0.18, 0.38, 0.52, 1],
+                ease: ["easeInOut", "easeInOut", "easeInOut", "easeOut"],
+              }}
+              onAnimationComplete={handleSpinComplete}
             >
               {renderAircraftIcon()}
-            </div>
-          </div>
-          {isPortalTakingOff ? renderRunwayFlightPortal() : null}
-        </>
+            </motion.div>
+          ) : (
+            renderAircraftIcon()
+          )}
+        </div>
       );
     }
 
-    // Fleet runway: turn nose to a random heading, cruise the page, mega-pass, then exit.
-    if (isPortalTakingOff) {
+    // Fleet runway: turn nose to a random heading, cruise the page, then exit.
+    if (isRunwayTakingOff) {
       return (
         <>
           <div

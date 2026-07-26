@@ -6,11 +6,15 @@ const PRODUCT_HUNT_PRODUCT_ID = "1277332";
 /** Product Hunt product slug. */
 const PRODUCT_HUNT_SLUG = "usjet-ai";
 
+/** Live launch page — where clicks should land so visitors can upvote. */
+const PRODUCT_HUNT_LAUNCH_URL =
+  "https://www.producthunt.com/products/usjet-ai?launch=usjet-ai";
+
 /**
  * Daily launch post ID. When set, the badge upgrades to the stronger
- * "Featured" badge (shows upvotes / #-of-the-day ranking) which is better
- * social proof and links straight to the live launch post. Grab it from your
- * Product Hunt launch URL: producthunt.com/posts/<slug> → the badge embed code.
+ * "Featured" badge (shows live upvotes / #-of-the-day ranking). Grab it from
+ * your Product Hunt launch's "Embed" button — the snippet contains
+ * `post_id=NNNNNN`. Paste just that number here.
  */
 const PRODUCT_HUNT_POST_ID = "";
 
@@ -36,7 +40,7 @@ export default function ProductHuntBadge({
 
   const href = featured
     ? `https://www.producthunt.com/posts/${PRODUCT_HUNT_SLUG}?utm_source=badge-featured&utm_medium=badge&utm_campaign=producthunt-launch`
-    : `https://www.producthunt.com/products/${PRODUCT_HUNT_SLUG}/reviews/new?utm_source=badge-product_review&utm_medium=badge`;
+    : `${PRODUCT_HUNT_LAUNCH_URL}&utm_source=badge-launch&utm_medium=badge&utm_campaign=producthunt-launch`;
 
   const imgSrc = featured
     ? `https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=${PRODUCT_HUNT_POST_ID}&theme=${theme}`

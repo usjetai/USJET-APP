@@ -18,11 +18,28 @@ import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
-/** Fleet runway — one slow spiral, then lift off the tile into launch. */
-const FLEET_TILE_SPIRAL_TURNS = 1;
-const FLEET_TILE_SPIRAL_TAKEOFF_MS = 1.45;
+/** Fleet runway — lift off the tile in a fresh random heading each click. */
+const FLEET_TILE_TAKEOFF_MS = 0.72;
+const FLEET_TILE_TAKEOFF_DISTANCE_PX = 176;
 /** Hangar bay open — logo lifts off the tile (no spin). */
 const HANGAR_TILE_TAKEOFF_MS = 0.62;
+
+type FleetTakeoffVector = {
+  x: number;
+  y: number;
+  /** Light bank toward the departure heading — not a spiral. */
+  bank: number;
+};
+
+function randomFleetTakeoffVector(): FleetTakeoffVector {
+  const angle = Math.random() * Math.PI * 2;
+  const distance = FLEET_TILE_TAKEOFF_DISTANCE_PX * (0.88 + Math.random() * 0.24);
+  return {
+    x: Math.cos(angle) * distance,
+    y: Math.sin(angle) * distance,
+    bank: Math.cos(angle) * 18,
+  };
+}
 
 type FleetCardProps = {
   domain: string;
@@ -81,6 +98,7 @@ export default function FleetCard({
   const launchSpinPendingRef = useRef(false);
   const [launchSpinning, setLaunchSpinning] = useState(false);
   const [launchSpinKey, setLaunchSpinKey] = useState(0);
+  const [runwayTakeoff, setRunwayTakeoff] = useState<FleetTakeoffVector>(() => randomFleetTakeoffVector());
   const terminalFeed = useMemo(
     () =>
       buildFleetTileTerminalFeed({
@@ -134,6 +152,9 @@ export default function FleetCard({
     syncProtocolToClipboard();
     launchSpinPendingRef.current = true;
     setLaunchSpinning(true);
+    if (isRunway) {
+      setRunwayTakeoff(randomFleetTakeoffVector());
+    }
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       handleSpinComplete();
@@ -173,9 +194,9 @@ export default function FleetCard({
 
   const renderAircraftWrap = () => {
     const hangarTakeoffDuration = HANGAR_TILE_TAKEOFF_MS;
-    const runwaySpiralDuration = FLEET_TILE_SPIRAL_TAKEOFF_MS;
+    const runwayTakeoffDuration = FLEET_TILE_TAKEOFF_MS;
     const isTakingOff = launchSpinning && launchSpinKey > 0 && expandInteractive;
-    const isSpiralingOff = launchSpinning && launchSpinKey > 0 && isRunway;
+    const isRunwayTakingOff = launchSpinning && launchSpinKey > 0 && isRunway;
 
     // Hangar: radar HUD stays locked; logo peels / lifts off the tile (no spin).
     if (isHangarSurface) {
@@ -213,13 +234,13 @@ export default function FleetCard({
       );
     }
 
-    // Fleet runway: one slow spiral, then climb off the tile into launch.
-    if (isSpiralingOff) {
+    // Fleet runway: straight-line random takeoff — new heading every click, no spiral.
+    if (isRunwayTakingOff) {
       return (
         <div className={`${aircraftWrapClassName} fleet-card__aircraft-wrap--runway-takeoff`}>
           <motion.div
-            key={`fleet-aircraft-spiral-${launchSpinKey}`}
-            className="fleet-card__aircraft-spin fleet-card__aircraft-spin--runway-spiral"
+            key={`fleet-aircraft-takeoff-${launchSpinKey}`}
+            className="fleet-card__aircraft-spin fleet-card__aircraft-spin--runway-takeoff"
             style={{ transformOrigin: "50% 55%", transformStyle: "preserve-3d" }}
             initial={{
               rotate: 0,
@@ -229,16 +250,15 @@ export default function FleetCard({
               opacity: 1,
             }}
             animate={{
-              rotate: 360 * FLEET_TILE_SPIRAL_TURNS,
-              scale: 1.22,
-              x: [0, 10, -6, 4, 0],
-              y: [0, -18, -56, -110, -168],
-              opacity: [1, 1, 0.92, 0.45, 0],
+              rotate: runwayTakeoff.bank,
+              scale: 1.16,
+              x: runwayTakeoff.x,
+              y: runwayTakeoff.y,
+              opacity: 0,
             }}
             transition={{
-              duration: runwaySpiralDuration,
-              ease: [0.22, 0.72, 0.28, 1],
-              times: [0, 0.22, 0.48, 0.78, 1],
+              duration: runwayTakeoffDuration,
+              ease: [0.2, 0.8, 0.2, 1],
             }}
             onAnimationComplete={handleSpinComplete}
           >

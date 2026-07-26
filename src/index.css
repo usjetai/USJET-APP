@@ -3018,7 +3018,7 @@
   pointer-events: none;
 }
 
-.fleet-card__aircraft-spin--runway-spiral {
+.fleet-card__aircraft-spin--runway-takeoff {
   will-change: transform, opacity;
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.55));
 }

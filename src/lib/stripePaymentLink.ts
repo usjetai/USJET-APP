@@ -2,7 +2,7 @@
 export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/eVq7sLdOC0Bt9wBfWndwc0e";
 
 /** Hangar Pro ($49.95/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
-export const HANGAR_PRO_DIRECT_URL = "https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04";
+export const HANGAR_PRO_DIRECT_URL = "https://buy.stripe.com/bJefZhaCq1Fx24939Bdwc0f";
 
 /** Enterprise Fleet Commander ($199.99/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
 export const ENTERPRISE_DIRECT_URL = "https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03";

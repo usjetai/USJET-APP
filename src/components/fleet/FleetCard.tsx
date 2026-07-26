@@ -18,7 +18,9 @@ import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
-const FLEET_TILE_LAUNCH_SPINS = 3;
+/** Fleet runway — one slow spiral, then lift off the tile into launch. */
+const FLEET_TILE_SPIRAL_TURNS = 1;
+const FLEET_TILE_SPIRAL_TAKEOFF_MS = 1.45;
 /** Hangar bay open — logo lifts off the tile (no spin). */
 const HANGAR_TILE_TAKEOFF_MS = 0.62;
 
@@ -170,11 +172,10 @@ export default function FleetCard({
     isHangarSurface ? <HangarTileRadarVideo slot={slot} /> : null;
 
   const renderAircraftWrap = () => {
-    const spinCount = FLEET_TILE_LAUNCH_SPINS;
-    const spinDuration = 0.75;
-    const takeoffDuration = HANGAR_TILE_TAKEOFF_MS;
+    const hangarTakeoffDuration = HANGAR_TILE_TAKEOFF_MS;
+    const runwaySpiralDuration = FLEET_TILE_SPIRAL_TAKEOFF_MS;
     const isTakingOff = launchSpinning && launchSpinKey > 0 && expandInteractive;
-    const isSpinning = launchSpinning && launchSpinKey > 0 && isRunway;
+    const isSpiralingOff = launchSpinning && launchSpinKey > 0 && isRunway;
 
     // Hangar: radar HUD stays locked; logo peels / lifts off the tile (no spin).
     if (isHangarSurface) {
@@ -200,7 +201,7 @@ export default function FleetCard({
                 opacity: 0,
                 filter: "brightness(1.05) contrast(1.05)",
               }}
-              transition={{ duration: takeoffDuration, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: hangarTakeoffDuration, ease: [0.22, 1, 0.36, 1] }}
               onAnimationComplete={handleSpinComplete}
             >
               {renderAircraftIcon()}
@@ -212,19 +213,38 @@ export default function FleetCard({
       );
     }
 
-    if (isSpinning) {
+    // Fleet runway: one slow spiral, then climb off the tile into launch.
+    if (isSpiralingOff) {
       return (
-        <motion.div
-          key={`fleet-aircraft-spin-${launchSpinKey}`}
-          className={aircraftWrapClassName}
-          style={{ transformOrigin: "center center" }}
-          initial={{ rotate: 0, scale: 1, x: 0, y: 0 }}
-          animate={{ rotate: 360 * spinCount, scale: 1.05, x: 3, y: -5 }}
-          transition={{ duration: spinDuration, ease: [0.34, 1.12, 0.64, 1] }}
-          onAnimationComplete={handleSpinComplete}
-        >
-          {renderAircraftIcon()}
-        </motion.div>
+        <div className={`${aircraftWrapClassName} fleet-card__aircraft-wrap--runway-takeoff`}>
+          <motion.div
+            key={`fleet-aircraft-spiral-${launchSpinKey}`}
+            className="fleet-card__aircraft-spin fleet-card__aircraft-spin--runway-spiral"
+            style={{ transformOrigin: "50% 55%", transformStyle: "preserve-3d" }}
+            initial={{
+              rotate: 0,
+              scale: 1,
+              x: 0,
+              y: 0,
+              opacity: 1,
+            }}
+            animate={{
+              rotate: 360 * FLEET_TILE_SPIRAL_TURNS,
+              scale: 1.22,
+              x: [0, 10, -6, 4, 0],
+              y: [0, -18, -56, -110, -168],
+              opacity: [1, 1, 0.92, 0.45, 0],
+            }}
+            transition={{
+              duration: runwaySpiralDuration,
+              ease: [0.22, 0.72, 0.28, 1],
+              times: [0, 0.22, 0.48, 0.78, 1],
+            }}
+            onAnimationComplete={handleSpinComplete}
+          >
+            {renderAircraftIcon()}
+          </motion.div>
+        </div>
       );
     }
 

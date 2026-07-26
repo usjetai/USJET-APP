@@ -5,7 +5,6 @@ import HangarBayGrid from "../components/hangar/HangarBayGrid";
 import HangarBayTile from "../components/hangar/HangarBayTile";
 import HangarToolWorkbench from "../components/hangar/HangarToolWorkbench";
 import HangarPageHeader, { HANGAR_META_DESCRIPTION } from "../components/hangar/HangarPageHeader";
-import ProductHuntBadge from "../components/growth/ProductHuntBadge";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import { getHangarUnits } from "../data/hangarManifest";
 import { useHangarGridExpansions } from "../hooks/useHangarGridExpansions";
@@ -147,10 +146,6 @@ export default function Hangar() {
       ) : null}
 
       <div className="page-atmosphere page-nav-offset relative z-[1] mx-auto max-w-[110rem] px-3 pb-24 sm:px-5 lg:px-6">
-        <div className="mb-6">
-          <ProductHuntBadge />
-        </div>
-
         <HangarPageHeader
           session={session}
           bayBadge={bayBadge}

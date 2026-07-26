@@ -3000,6 +3000,29 @@
     box-shadow 0.35s ease;
 }
 
+.fleet-card--launch-spinning {
+  z-index: 8;
+  overflow: visible;
+}
+
+.fleet-card--launch-spinning .fleet-card__glass,
+.fleet-card--launch-spinning .fleet-card__runway-visual,
+.fleet-card--launch-spinning .fleet-card__aircraft-wrap {
+  overflow: visible;
+}
+
+.fleet-card__aircraft-wrap--runway-takeoff {
+  position: relative;
+  z-index: 6;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.fleet-card__aircraft-spin--runway-spiral {
+  will-change: transform, opacity;
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.55));
+}
+
 .fleet-card__launch {
   flex: 1 1 auto;
   min-height: 0;
@@ -8598,6 +8621,10 @@ html.code-kit-page-root #usjet-app-shell {
   overflow: hidden;
 }
 
+.fleet-page--runway .fleet-card--surface-runway.fleet-card--launch-spinning {
+  overflow: visible;
+}
+
 .fleet-page--runway .fleet-card--surface-runway .fleet-card__glass {
   display: flex;
   flex-direction: row;
@@ -9671,47 +9698,6 @@ html.code-kit-page-root #usjet-app-shell {
   gap: 0.75rem 1.25rem;
 }
 
-.hangar-home-hero__side {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.4rem;
-  flex: 0 0 auto;
-  min-width: 5.75rem;
-  max-width: 7.5rem;
-}
-
-.hangar-origin-chip {
-  display: block;
-  overflow: hidden;
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 0.55rem;
-  border: 1px solid rgba(103, 232, 249, 0.35);
-  background: rgba(2, 12, 24, 0.55);
-  box-shadow:
-    0 0 14px rgba(34, 211, 238, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.hangar-origin-chip:hover,
-.hangar-origin-chip:focus-visible {
-  border-color: rgba(103, 232, 249, 0.65);
-  box-shadow:
-    0 0 18px rgba(34, 211, 238, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  outline: none;
-}
-
-.hangar-origin-chip__img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 18%;
-}
-
 .hangar-home-hero--rail .hangar-home-hero__copy {
   min-width: 0;
   max-width: 38rem;
@@ -9720,32 +9706,6 @@ html.code-kit-page-root #usjet-app-shell {
 .hangar-home-hero--rail .hangar-home-hero__body {
   margin-top: 0.45rem;
   max-width: none;
-}
-
-.hangar-home-hero__lede-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
-  width: 100%;
-}
-
-.hangar-home-hero__ph-badge {
-  margin-left: auto;
-  flex: 0 0 auto;
-  align-self: center;
-  line-height: 0;
-}
-
-.hangar-home-hero__ph-badge img {
-  display: block;
-}
-
-@media (max-width: 640px) {
-  .hangar-home-hero__ph-badge {
-    margin-left: 0;
-  }
 }
 
 .hangar-home-hero--rail .hangar-home-hero__kicker {

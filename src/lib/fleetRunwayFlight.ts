@@ -2,6 +2,7 @@
  * Fleet runway takeoff flight plans.
  * Aircraft art is nose-up at 0° — that is forward. CSS rotate is clockwise.
  * Paths only move forward along the nose; airplanes never reverse.
+ * After the sortie leaves the page, one final full-viewport pass plays, then launch.
  */
 
 export type FleetFlightPlan = {
@@ -107,13 +108,47 @@ export function buildRandomFleetFlightPlan(rect: DOMRect): FleetFlightPlan {
     bankToward(exitAim, 12);
   }
 
+  const sortieCount = samples.length;
+  const centerX = vw / 2 - originLeft;
+  const centerY = vh / 2 - originTop;
+  /** Fill the longest viewport axis so the craft blanks the whole page. */
+  const coverScale = Math.max(vw, vh) / size * 1.35;
+  const passSpan = Math.hypot(vw, vh) * 0.95;
+  // Final pass heading — come back through the page after the sortie exits.
+  const passHeading = (exitAim + 180 + (Math.random() * 36 - 18) + 360) % 360;
+  const passRotate = shortestTurn(visualRotate, passHeading);
+  const entryOffset = headingToDelta(passHeading + 180, passSpan);
+  const exitOffset = headingToDelta(passHeading, passSpan);
+  const entryX = centerX + entryOffset.x;
+  const entryY = centerY + entryOffset.y;
+  const exitX = centerX + exitOffset.x;
+  const exitY = centerY + exitOffset.y;
+
+  // Off-page hold (invisible), then teleport to entry while still invisible.
+  samples.push(
+    { x, y, rotate: visualRotate },
+    { x: entryX, y: entryY, rotate: passRotate },
+    // Appear huge off-screen, then one final full-page pass through center.
+    { x: entryX, y: entryY, rotate: passRotate },
+    { x: centerX, y: centerY, rotate: passRotate },
+    { x: exitX, y: exitY, rotate: passRotate },
+    { x: exitX + exitOffset.x * 0.2, y: exitY + exitOffset.y * 0.2, rotate: passRotate },
+  );
+
   const n = samples.length;
+  const sortieEnd = 0.68;
   const times = samples.map((_, i) => {
     if (i === 0) return 0;
-    if (i === 1) return 0.14;
-    const forwardIndex = i - 2;
-    const forwardCount = n - 2;
-    return 0.14 + (0.86 * (forwardIndex + 1)) / forwardCount;
+    if (i === 1) return 0.1;
+    if (i < sortieCount) {
+      const forwardIndex = i - 2;
+      const forwardCount = Math.max(1, sortieCount - 2);
+      return 0.1 + (sortieEnd - 0.1) * ((forwardIndex + 1) / forwardCount);
+    }
+    // Final pass beats after the craft has left the page.
+    const passIndex = i - sortieCount;
+    const passTimes = [0.7, 0.74, 0.78, 0.9, 0.97, 1];
+    return passTimes[passIndex] ?? 1;
   });
 
   return {
@@ -126,17 +161,25 @@ export function buildRandomFleetFlightPlan(rect: DOMRect): FleetFlightPlan {
     scale: samples.map((_, i) => {
       if (i === 0) return 1;
       if (i === 1) return 1.1;
-      // Keep growing through the sortie — larger = climbing toward the camera.
-      const t = (i - 1) / (n - 2);
-      const eased = t * t * (3 - 2 * t); // smoothstep
-      return 1.1 + eased * 2.15; // ~1.1 → ~3.25 by exit
+      if (i < sortieCount) {
+        // Keep growing through the sortie — larger = climbing toward the camera.
+        const t = (i - 1) / Math.max(1, sortieCount - 2);
+        const eased = t * t * (3 - 2 * t); // smoothstep
+        return 1.1 + eased * 2.15; // ~1.1 → ~3.25 by exit
+      }
+      // Invisible grow / teleport, then stay page-covering for the final pass.
+      return coverScale;
     }),
     opacity: samples.map((_, i) => {
-      if (i < n - 2) return 1;
-      if (i === n - 2) return 0.85;
-      return 0;
+      if (i < sortieCount - 2) return 1;
+      if (i === sortieCount - 2) return 0.85;
+      if (i === sortieCount - 1) return 0; // left the page
+      if (i === sortieCount) return 0; // hold off-page
+      if (i === sortieCount + 1) return 0; // teleport to entry (invisible)
+      if (i === n - 1) return 0; // fade as it clears after the mega pass
+      return 1; // full-page pass visible
     }),
     times,
-    duration: 3.3 + Math.random() * 0.5,
+    duration: 4.6 + Math.random() * 0.45,
   };
 }

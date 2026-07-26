@@ -46,8 +46,8 @@ Ameer Karim often uses **speech-to-text (voice dictation)**, not always typing. 
 | Tier | Price | Extraction port |
 |------|-------|-----------------|
 | Flight Pass | $19.90/mo | `https://buy.stripe.com/eVq7sLdOC0Bt9wBfWndwc0e` |
-| Hangar Pro | $49.95/mo | `https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03` |
-| Enterprise Commander | $199.99/mo | `https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04` |
+| Hangar Pro | $49.95/mo | `https://buy.stripe.com/cNi6oHcKy4RJ38d11tdwc04` |
+| Enterprise Commander | $199.99/mo | `https://buy.stripe.com/5kQ8wP11Qbg75gl4dFdwc03` |
 
 High-pressure funnels and quick-entry gates bypass intermediate checkout and land direct. Every fleet unit knows these links. One click, one clearance, one revenue engine.
 

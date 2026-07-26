@@ -23,8 +23,10 @@ import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
-/** Hangar bay open — logo lifts off the tile (no spin). */
-const HANGAR_TILE_TAKEOFF_MS = 0.62;
+/** Hangar bay open — yaw left, yaw right, straighten, then slow climb off the tile. */
+const HANGAR_TILE_TAKEOFF_MS = 2.65;
+/** Degrees of left/right yaw before takeoff (top-down logos). */
+const HANGAR_TILE_YAW_DEG = 34;
 
 type FleetCardProps = {
   domain: string;
@@ -232,7 +234,7 @@ export default function FleetCard({
     const isTakingOff = launchSpinning && launchSpinKey > 0 && expandInteractive;
     const isRunwayTakingOff = launchSpinning && launchSpinKey > 0 && isRunway && flightPlan;
 
-    // Hangar: radar HUD stays locked; logo peels / lifts off the tile (no spin).
+    // Hangar: radar HUD stays locked; logo yaws left → right → straight, then climbs off slow.
     if (isHangarSurface) {
       return (
         <div className={aircraftWrapClassName}>
@@ -241,8 +243,9 @@ export default function FleetCard({
             <motion.div
               key={`fleet-aircraft-takeoff-${launchSpinKey}`}
               className="fleet-card__aircraft-spin fleet-card__aircraft-spin--takeoff"
-              style={{ transformOrigin: "50% 70%", transformStyle: "preserve-3d" }}
+              style={{ transformOrigin: "50% 55%", transformStyle: "preserve-3d" }}
               initial={{
+                rotate: 0,
                 y: 0,
                 scale: 1,
                 rotateX: 0,
@@ -250,13 +253,24 @@ export default function FleetCard({
                 filter: "brightness(0.88) contrast(1.1)",
               }}
               animate={{
-                y: -128,
-                scale: 1.18,
-                rotateX: -28,
-                opacity: 0,
-                filter: "brightness(1.05) contrast(1.05)",
+                rotate: [0, -HANGAR_TILE_YAW_DEG, HANGAR_TILE_YAW_DEG, 0, 0],
+                y: [0, 0, 0, 0, -148],
+                scale: [1, 1, 1, 1, 1.16],
+                rotateX: [0, 0, 0, 0, -22],
+                opacity: [1, 1, 1, 1, 0],
+                filter: [
+                  "brightness(0.88) contrast(1.1)",
+                  "brightness(0.92) contrast(1.08)",
+                  "brightness(0.96) contrast(1.06)",
+                  "brightness(1) contrast(1.05)",
+                  "brightness(1.06) contrast(1.04)",
+                ],
               }}
-              transition={{ duration: hangarTakeoffDuration, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: hangarTakeoffDuration,
+                times: [0, 0.18, 0.38, 0.52, 1],
+                ease: ["easeInOut", "easeInOut", "easeInOut", "easeOut"],
+              }}
               onAnimationComplete={handleSpinComplete}
             >
               {renderAircraftIcon()}
@@ -433,13 +447,22 @@ export default function FleetCard({
             Flight Pass required · $19.90
           </p>
         ) : isAvailableBay ? (
-          <p className="developer-available-green-blink mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">
-            Available position
+          <p
+            className={[
+              isRunway ? null : "developer-available-green-blink",
+              "mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            {isRunway ? "Open bay" : "Available position"}
           </p>
         ) : isCommandBay ? (
           <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
         ) : expandInteractive ? (
           <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/50">USJET fleet · consensus bay</p>
+        ) : isRunway ? (
+          <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/55">Partner bay</p>
         ) : (
           <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-emerald-300/75">Hired developer</p>
         )}

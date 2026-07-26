@@ -6,6 +6,7 @@ import AircraftIcon from "../icons/AircraftIcons";
 import HangarTileRadarVideo from "../hangar/HangarTileRadarVideo";
 import { HeartPulse } from "lucide-react";
 import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
+import { createPortal } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { FleetLaunchLink } from "../../lib/fleetLaunchLink";
 import { buildUnitSystemPrompt } from "../../data/usjetProtocol";
@@ -14,32 +15,16 @@ import { logFleetUsageIfMember } from "../../lib/fleetUsageHistory";
 import { buildFleetTileTerminalFeed, clearLiveTerminalTile, publishLiveTerminalTile } from "../../lib/liveTerminalBridge";
 import { useOriginLimitedOfferOptional } from "../../context/OriginLimitedOfferContext";
 import { fleetLaunchUrl, integratedLaunchUrl } from "../../lib/fleetLaunchUrl";
+import {
+  buildRandomFleetFlightPlan,
+  type FleetFlightPlan,
+} from "../../lib/fleetRunwayFlight";
 import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import type { FleetAircraftType } from "../../types/fleet";
 
-/** Fleet runway — lift off the tile in a fresh random heading each click. */
-const FLEET_TILE_TAKEOFF_MS = 0.72;
-const FLEET_TILE_TAKEOFF_DISTANCE_PX = 176;
 /** Hangar bay open — logo lifts off the tile (no spin). */
 const HANGAR_TILE_TAKEOFF_MS = 0.62;
-
-type FleetTakeoffVector = {
-  x: number;
-  y: number;
-  /** Light bank toward the departure heading — not a spiral. */
-  bank: number;
-};
-
-function randomFleetTakeoffVector(): FleetTakeoffVector {
-  const angle = Math.random() * Math.PI * 2;
-  const distance = FLEET_TILE_TAKEOFF_DISTANCE_PX * (0.88 + Math.random() * 0.24);
-  return {
-    x: Math.cos(angle) * distance,
-    y: Math.sin(angle) * distance,
-    bank: Math.cos(angle) * 18,
-  };
-}
 
 type FleetCardProps = {
   domain: string;
@@ -96,9 +81,10 @@ export default function FleetCard({
   const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
   const showJetFighterFooter = surface === "fleet" && Boolean(jetFighterPagePath) && !isRunway;
   const launchSpinPendingRef = useRef(false);
+  const aircraftAnchorRef = useRef<HTMLDivElement>(null);
   const [launchSpinning, setLaunchSpinning] = useState(false);
   const [launchSpinKey, setLaunchSpinKey] = useState(0);
-  const [runwayTakeoff, setRunwayTakeoff] = useState<FleetTakeoffVector>(() => randomFleetTakeoffVector());
+  const [flightPlan, setFlightPlan] = useState<FleetFlightPlan | null>(null);
   const terminalFeed = useMemo(
     () =>
       buildFleetTileTerminalFeed({
@@ -141,6 +127,7 @@ export default function FleetCard({
     }
     launchSpinPendingRef.current = false;
     setLaunchSpinning(false);
+    setFlightPlan(null);
     finishLaunchAfterSpin();
   };
 
@@ -153,7 +140,10 @@ export default function FleetCard({
     launchSpinPendingRef.current = true;
     setLaunchSpinning(true);
     if (isRunway) {
-      setRunwayTakeoff(randomFleetTakeoffVector());
+      const rect =
+        aircraftAnchorRef.current?.getBoundingClientRect() ??
+        new DOMRect(window.innerWidth / 2 - 64, window.innerHeight / 2 - 64, 128, 128);
+      setFlightPlan(buildRandomFleetFlightPlan(rect));
     }
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -192,11 +182,54 @@ export default function FleetCard({
   const renderHangarRadarHud = () =>
     isHangarSurface ? <HangarTileRadarVideo slot={slot} /> : null;
 
+  const renderRunwayFlightPortal = () => {
+    if (!flightPlan || typeof document === "undefined") {
+      return null;
+    }
+
+    return createPortal(
+      <motion.div
+        key={`fleet-aircraft-sortie-${launchSpinKey}`}
+        className="fleet-card__aircraft-flight"
+        style={{
+          left: flightPlan.originLeft,
+          top: flightPlan.originTop,
+          width: flightPlan.size,
+          height: flightPlan.size,
+          marginLeft: -flightPlan.size / 2,
+          marginTop: -flightPlan.size / 2,
+        }}
+        initial={{
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          opacity: 1,
+        }}
+        animate={{
+          x: flightPlan.x,
+          y: flightPlan.y,
+          rotate: flightPlan.rotate,
+          scale: flightPlan.scale,
+          opacity: flightPlan.opacity,
+        }}
+        transition={{
+          duration: flightPlan.duration,
+          times: flightPlan.times,
+          ease: ["easeOut", "easeInOut", "easeInOut", "easeInOut", "easeIn"],
+        }}
+        onAnimationComplete={handleSpinComplete}
+      >
+        {renderAircraftIcon()}
+      </motion.div>,
+      document.body,
+    );
+  };
+
   const renderAircraftWrap = () => {
     const hangarTakeoffDuration = HANGAR_TILE_TAKEOFF_MS;
-    const runwayTakeoffDuration = FLEET_TILE_TAKEOFF_MS;
     const isTakingOff = launchSpinning && launchSpinKey > 0 && expandInteractive;
-    const isRunwayTakingOff = launchSpinning && launchSpinKey > 0 && isRunway;
+    const isRunwayTakingOff = launchSpinning && launchSpinKey > 0 && isRunway && flightPlan;
 
     // Hangar: radar HUD stays locked; logo peels / lifts off the tile (no spin).
     if (isHangarSurface) {
@@ -234,41 +267,28 @@ export default function FleetCard({
       );
     }
 
-    // Fleet runway: straight-line random takeoff — new heading every click, no spiral.
+    // Fleet runway: turn nose to a random heading, cruise the page, then exit.
     if (isRunwayTakingOff) {
       return (
-        <div className={`${aircraftWrapClassName} fleet-card__aircraft-wrap--runway-takeoff`}>
-          <motion.div
-            key={`fleet-aircraft-takeoff-${launchSpinKey}`}
-            className="fleet-card__aircraft-spin fleet-card__aircraft-spin--runway-takeoff"
-            style={{ transformOrigin: "50% 55%", transformStyle: "preserve-3d" }}
-            initial={{
-              rotate: 0,
-              scale: 1,
-              x: 0,
-              y: 0,
-              opacity: 1,
-            }}
-            animate={{
-              rotate: runwayTakeoff.bank,
-              scale: 1.16,
-              x: runwayTakeoff.x,
-              y: runwayTakeoff.y,
-              opacity: 0,
-            }}
-            transition={{
-              duration: runwayTakeoffDuration,
-              ease: [0.2, 0.8, 0.2, 1],
-            }}
-            onAnimationComplete={handleSpinComplete}
+        <>
+          <div
+            ref={aircraftAnchorRef}
+            className={`${aircraftWrapClassName} fleet-card__aircraft-wrap--runway-takeoff`}
+            aria-hidden="true"
+            style={{ visibility: "hidden" }}
           >
             {renderAircraftIcon()}
-          </motion.div>
-        </div>
+          </div>
+          {renderRunwayFlightPortal()}
+        </>
       );
     }
 
-    return <div className={aircraftWrapClassName}>{renderAircraftIcon()}</div>;
+    return (
+      <div ref={aircraftAnchorRef} className={aircraftWrapClassName}>
+        {renderAircraftIcon()}
+      </div>
+    );
   };
 
   const syncProtocolToClipboard = () => {

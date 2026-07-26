@@ -3018,9 +3018,25 @@
   pointer-events: none;
 }
 
-.fleet-card__aircraft-spin--runway-takeoff {
+/* Fixed sortie craft — nose-up art flies free of tile overflow clipping. */
+.fleet-card__aircraft-flight {
+  position: fixed;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  transform-origin: 50% 50%;
   will-change: transform, opacity;
-  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.55));
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.6));
+}
+
+.fleet-card__aircraft-flight .fleet-card__aircraft {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  object-fit: contain;
 }
 
 .fleet-card__launch {

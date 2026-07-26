@@ -53,8 +53,8 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/compare" className={footerLinkClass}>
               Compare
             </NavLink>
-            <NavLink to="/fleet-manual" className={footerLinkClass}>
-              Fleet Manual
+            <NavLink to="/special" className={footerLinkClass}>
+              Pricing
             </NavLink>
           </nav>
 

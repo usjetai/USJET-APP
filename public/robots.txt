@@ -11,13 +11,13 @@ Allow: /compare
 Allow: /fleet-directory
 Allow: /ai-101
 Allow: /member/login
+Allow: /special
 Allow: /llms.txt
 
 # Soft-block gated SPA shells (prefix). Keep /member/login crawlable for branded login queries.
 Disallow: /cockpit
 Disallow: /intel
 Disallow: /origin
-Disallow: /special
 
 # AI crawlers — full allow on public hangar surfaces
 User-agent: GPTBot

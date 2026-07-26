@@ -42,7 +42,6 @@ const FoundersFuel = lazy(() => import("./pages/FoundersFuel"));
 const FleetDirectory = lazy(() => import("./pages/FleetDirectory"));
 const FleetCallsignPage = lazy(() => import("./pages/FleetCallsignPage"));
 const FleetProductPage = lazy(() => import("./pages/FleetProductPage"));
-const FleetManual = lazy(() => import("./pages/FleetManual"));
 const IntelligenceAssets = lazy(() => import("./pages/IntelligenceAssets"));
 const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
 const Sovereignty = lazy(() => import("./pages/Sovereignty"));
@@ -119,7 +118,8 @@ function AnimatedRoutes() {
             <Route path="/zelle" element={<DirectFuelZelle />} />
             <Route path="/landscape" element={<MobileLandscapeGuide />} />
             <Route path="/protocol-proof" element={<ProtocolSessionProof />} />
-            <Route path="/fleet-manual" element={<FleetManual />} />
+            <Route path="/fleet-manual" element={<Navigate to="/special" replace />} />
+            <Route path="/pricing" element={<Navigate to="/special" replace />} />
             <Route path="/fleet-directory" element={<FleetDirectory />} />
             <Route path="/fleet-directory/:callsign" element={<FleetCallsignPage />} />
             <Route path="/product/:callsign" element={<FleetProductPage />} />
@@ -142,14 +142,7 @@ function AnimatedRoutes() {
                 </TierRouteGate>
               }
             />
-            <Route
-              path="/special"
-              element={
-                <TierRouteGate path="/special" pageLabel="Founder Special">
-                  <Special />
-                </TierRouteGate>
-              }
-            />
+            <Route path="/special" element={<Special />} />
             <Route path="/member/login" element={<MemberLogin />} />
             <Route
               path="/member"

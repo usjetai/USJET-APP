@@ -203,13 +203,13 @@ export const SECURITY_STRIPE_ONLY_MAY_2026 = {
     login: "/member/login and /login — Stripe signup + verification",
     cockpit: "/cockpit — fleet sovereign handoff from Hangar / Fleet runway",
     blocked:
-      "/intel, /origin, /member, /special — paid clearance required",
+      "/origin, /member — paid clearance required",
   },
   tierMatrix: {
     guest:
-      "Hangar home (3 free tabs) + Fleet (10 free AI bays) + /sos + /ai-101 + /support-fleet + /intelligence + /founders-fuel + /fleet-manual + /fleet-directory + login/cockpit handoff — no Intel board, Origin, Member, or Special",
-    tier1FlightPass: "All 30 fleet AIs + Hangar (full tabs) + Member Portal + Special — no Intel, no Origin",
-    tier2HangarPro: "Tier 1 + Intel — no Origin",
+      "Hangar home (3 free tabs) + Fleet (10 free AI bays) + /sos + /ai-101 + /support-fleet + /intelligence + /founders-fuel + /special (pricing) + /fleet-directory + login/cockpit handoff — no Origin or Member Portal",
+    tier1FlightPass: "All 30 fleet AIs + Hangar (full tabs) + Member Portal — no Origin",
+    tier2HangarPro: "Tier 1 + Hangar Pro Intel clearance path — no Origin",
     tier3Enterprise: "Full sovereign command including Origin",
     founderGodMode: "USJET-AMEER — all routes, all bays",
   },

@@ -81,8 +81,9 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     keywords: "USJET jet fighter, fleet directory, AI callsigns, hangar recruiting",
   },
   "/fleet-manual": {
-    title: "Fleet Manual — Operator Doctrine | USJET.AI",
-    description: "USJET Fleet Manual: operating doctrine for the 30-unit AI hangar and sovereign cockpit.",
+    title: "Pricing — Clearance Tiers | USJET.AI",
+    description:
+      "USJET clearance tiers — Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo.",
   },
   "/intelligence": {
     title: "Intelligence Assets — Revenue Architecture | USJET.AI",
@@ -182,9 +183,9 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     noindex: true,
   },
   "/special": {
-    title: "Sovereign Access — Upgrade Tiers | USJET.AI",
-    description: "USJET sovereign access tiers — Flight Pass, Hangar Pro, Enterprise Commander.",
-    noindex: true,
+    title: "Pricing — Flight Pass · Hangar Pro · Enterprise | USJET.AI",
+    description:
+      "USJET clearance pricing: Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo — features and Stripe checkout.",
   },
   "/cockpit": {
     title: "Cockpit | USJET.AI",

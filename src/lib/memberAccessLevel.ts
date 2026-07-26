@@ -27,7 +27,8 @@ export const GUEST_PUBLIC_ROUTES = [
   "/strategic-assets",
   "/sovereignty",
   "/founders-fuel",
-  "/fleet-manual",
+  "/special",
+  "/pricing",
   "/fleet-directory",
   "/gamers",
   "/gaming",
@@ -42,7 +43,7 @@ export const GUEST_PUBLIC_ROUTES = [
 /**
  * Minimum clearance rank per route.
  * 0 = public (guest): Hangar home (3 free tabs), Fleet (10 free AI bays), Intel open board (tiers TBD), member login, fleet cockpit handoff.
- * 1 = Flight Pass+: all 30 fleet AIs, full Hangar tabs, Member Portal, Founder Special checkout.
+ * 1 = Flight Pass+: all 30 fleet AIs, full Hangar tabs, Member Portal.
  * 2 = Hangar Pro+: reserved for future Intel tier lock.
  * 3 = Enterprise Commander: Origin.
  */
@@ -65,7 +66,8 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/strategic-assets": 0,
   "/sovereignty": 0,
   "/founders-fuel": 0,
-  "/fleet-manual": 0,
+  "/special": 0,
+  "/pricing": 0,
   "/fleet-directory": 0,
   "/gamers": 0,
   "/gaming": 0,
@@ -79,7 +81,6 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/cockpit": 0,
   "/hangar": 0,
   "/member": 1,
-  "/special": 1,
   "/intel": 0,
   "/origin": 3,
 };
@@ -157,12 +158,6 @@ export function tierRouteGateCopy(path: string, minRank: number): { title: strin
     return {
       title: "Fleet runway locked — Flight Pass required",
       body: `${tierLabel} (${tierPrice}) unlocks the full 30-AI fleet runway. Pay on Stripe, verify on Member Login, then launch every bay from one cockpit.`,
-    };
-  }
-  if (normalized === "/special") {
-    return {
-      title: "Founder Special — clearance required",
-      body: `Active Stripe clearance (${tierLabel}, ${tierPrice}) unlocks tier checkout inside the ship. Pay first on Member Login, then return to upgrade bays.`,
     };
   }
   if (normalized === "/intel") {

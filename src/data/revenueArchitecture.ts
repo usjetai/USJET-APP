@@ -15,9 +15,9 @@ export const REVENUE_TRANSFERABLE_COPY =
   "As the USJET Fleet expands, the market value of this IP is projected to appreciate. These products are designed as transferable assets — not disposable subscriptions." as const;
 
 export const REVENUE_TRANSFERABLE_BULLETS = [
-  "Founder's Fuel ($19.90/mo): Support the dev. Low-friction entry that builds the community.",
-  "Code Kit ($499): Builder tier — Liquid Glass UI, 30-agent orchestration, and Stripe conversion templates.",
-  "Fleet Manual ($2,500): Professional operator level — hardcover/digital hybrid implementation of the fleet.",
+  "Flight Pass ($19.90/mo): Full Hangar + all 30 Fleet AIs + Member Portal.",
+  "Hangar Pro ($49.95/mo): Everything in Flight Pass + live Intel board.",
+  "Enterprise Commander ($199.99/mo): Everything in Hangar Pro + Origin command.",
 ] as const;
 
 export const REVENUE_TIER_BUILDER = {
@@ -48,17 +48,17 @@ export const REVENUE_TIER_COMMUNITY = {
 } as const;
 
 export const REVENUE_TIER_OPERATOR = {
-  id: "manual",
+  id: "hangar-pro",
   tierLabel: "Operator tier",
-  name: "The USJET Fleet Manual",
-  subtitle: "Professional Edition",
-  priceDisplay: "$2,500",
-  period: "",
+  name: "Hangar Pro",
+  subtitle: "Fleet + live Intel",
+  priceDisplay: "$49.95",
+  period: "/mo",
   stripeDescription:
-    "The professional-grade implementation guide for blue-collar AI transition. This manual provides the direct operational logic to integrate AI agents into existing labor workflows, shop management, and logistics. High-efficiency, actionable intelligence for the serious operator. Includes digital manual access and priority fleet updates.",
-  logic: "No slow signals. A professional tool priced like a top-tier diagnostic — for shop owners and fleet managers.",
-  cta: "Buy now",
-  detailRoute: "/fleet-manual",
+    "Everything in Flight Pass plus the live Intel board — Crypto and NYSE pulse in the same cockpit. High-velocity operator sync with no second login.",
+  logic: "For crews who run the board and the bay together.",
+  cta: "Clear Hangar Pro",
+  detailRoute: "/special?tier=hangar-pro",
 } as const;
 
 export const REVENUE_TIERS = [REVENUE_TIER_COMMUNITY, REVENUE_TIER_OPERATOR] as const;

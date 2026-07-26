@@ -44,7 +44,7 @@ export default function CodeKit() {
         <p className="code-kit-page__lede">{CODE_KIT_LEDE}</p>
       </header>
 
-      <RevenueValueLadder active="code" />
+      <RevenueValueLadder />
 
       <Ai101EngineRoom showHeader={false} showBriefingLink={false} />
     </div>

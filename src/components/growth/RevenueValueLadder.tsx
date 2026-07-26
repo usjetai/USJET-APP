@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
-import { CODE_KIT_PRICE_DISPLAY, CODE_KIT_ROUTE } from "../../data/codeKit499";
-import { FLEET_MANUAL_PRICE_DISPLAY, FLEET_MANUAL_ROUTE } from "../../data/fleetManual2500";
-import { FOUNDERS_FUEL_PRICE_DISPLAY } from "../../data/foundersFuel";
+import {
+  FLEET_COMMANDER_STRIPE,
+  FLIGHT_PASS_STRIPE,
+  HANGAR_PRO_STRIPE,
+} from "../../data/stripeProducts";
 
-type LadderTier = "fuel" | "code" | "manual";
+type LadderTier = "founder" | "hangar-pro" | "fleet-command";
 
 type RevenueValueLadderProps = {
   active?: LadderTier;
@@ -12,41 +14,40 @@ type RevenueValueLadderProps = {
 
 const TIERS = [
   {
-    id: "fuel" as const,
-    price: FOUNDERS_FUEL_PRICE_DISPLAY,
-    verb: "Support the mission",
-    to: "/founders-fuel",
+    id: "founder" as const,
+    price: FLIGHT_PASS_STRIPE.priceDisplay + FLIGHT_PASS_STRIPE.period,
+    verb: "Flight Pass",
+    to: "/special?tier=founder",
   },
   {
-    id: "code" as const,
-    price: CODE_KIT_PRICE_DISPLAY,
-    verb: "Build the mission",
-    to: CODE_KIT_ROUTE,
+    id: "hangar-pro" as const,
+    price: HANGAR_PRO_STRIPE.priceDisplay + HANGAR_PRO_STRIPE.period,
+    verb: "Hangar Pro",
+    to: "/special?tier=hangar-pro",
   },
   {
-    id: "manual" as const,
-    price: FLEET_MANUAL_PRICE_DISPLAY,
-    verb: "Run the mission",
-    to: FLEET_MANUAL_ROUTE,
+    id: "fleet-command" as const,
+    price: FLEET_COMMANDER_STRIPE.priceDisplay + FLEET_COMMANDER_STRIPE.period,
+    verb: "Enterprise",
+    to: "/special?tier=fleet-command",
   },
 ] as const;
 
 export default function RevenueValueLadder({ active }: RevenueValueLadderProps) {
   const location = useLocation();
+  const tierParam = new URLSearchParams(location.search).get("tier");
   const resolvedActive =
     active ??
-    (location.pathname === "/founders-fuel"
-      ? "fuel"
-      : location.pathname === CODE_KIT_ROUTE
-        ? "code"
-        : location.pathname === FLEET_MANUAL_ROUTE
-          ? "manual"
-          : undefined);
+    (tierParam === "founder" || tierParam === "hangar-pro" || tierParam === "fleet-command"
+      ? tierParam
+      : location.pathname === "/special"
+        ? "hangar-pro"
+        : undefined);
 
   return (
     <GlassEffectContainer className="revenue-ladder glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
       <div className="revenue-ladder__inner">
-        <p className="revenue-ladder__eyebrow">Value ladder · high performance only</p>
+        <p className="revenue-ladder__eyebrow">Clearance ladder · three prices</p>
         <ol className="revenue-ladder__list">
           {TIERS.map((tier) => {
             const isActive = resolvedActive === tier.id;

@@ -2,7 +2,6 @@
 
 import { ORIGIN_CS_ROUTE } from "../lib/memberAccessLevel";
 import { CODE_KIT_ROUTE } from "./codeKit499";
-import { FLEET_MANUAL_ROUTE } from "./fleetManual2500";
 import { MOBILE_LANDSCAPE_ROUTE } from "./mobileLandscapeGuide";
 import { PROTOCOL_SESSION_PROOF_ROUTE } from "./protocolSessionProof";
 
@@ -49,9 +48,9 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     id: "revenue",
     title: "Revenue ladder",
     routes: [
-      { path: "/founders-fuel", label: "Founder's Fuel", hint: "$19.90/mo" },
+      { path: "/special", label: "Clearance Tiers", hint: "$19.90 · $49.95 · $199.99" },
+      { path: "/founders-fuel", label: "Founder's Fuel", hint: "Support" },
       { path: CODE_KIT_ROUTE, label: "Code Kit" },
-      { path: FLEET_MANUAL_ROUTE, label: "Fleet Manual", hint: "2.5K" },
     ],
   },
   {

@@ -5,10 +5,17 @@ import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout/StripeSecureCheckout";
 import { WRENCHES_PHILOSOPHY } from "../data/founderManifesto";
 import {
+  FLEET_COMMANDER_STRIPE,
   FLIGHT_PASS_STRIPE,
+  HANGAR_PRO_STRIPE,
+  STRIPE_TIER_PRODUCTS,
   type StripeTierProduct,
 } from "../data/stripeProducts";
-import { resolveFounderPaymentLink } from "../lib/stripePaymentLink";
+import {
+  resolveEnterprisePaymentLink,
+  resolveFounderPaymentLink,
+  resolveHangarProPaymentLink,
+} from "../lib/stripePaymentLink";
 
 type ServiceTier = StripeTierProduct & {
   paymentLink?: string;
@@ -19,13 +26,21 @@ const SERVICE_TIERS: ServiceTier[] = [
     ...FLIGHT_PASS_STRIPE,
     paymentLink: resolveFounderPaymentLink(),
   },
+  {
+    ...HANGAR_PRO_STRIPE,
+    paymentLink: resolveHangarProPaymentLink(),
+  },
+  {
+    ...FLEET_COMMANDER_STRIPE,
+    paymentLink: resolveEnterprisePaymentLink(),
+  },
 ];
 
 const VALUE_LADDER = [
-  { label: "Hangar", detail: "30 AI cockpit bays — one sovereign switchboard" },
-  { label: "Intel", detail: "Crypto & NYSE pulse — institutional-grade board" },
-  { label: "Fleet Protocol", detail: "Integrated navigation — no dead iframes, one cockpit" },
-  { label: "Member ID", detail: "Stripe-issued clearance — gate unlock on every route" },
+  { label: "Hangar", detail: "Full workbench — all tabs under one clearance" },
+  { label: "Fleet", detail: "30 specialized AIs — same-window cockpit launches" },
+  { label: "Intel", detail: "Live Crypto + NYSE board — Hangar Pro and up" },
+  { label: "Origin", detail: "Aura command node — Enterprise Commander only" },
 ] as const;
 
 const Special = () => {
@@ -35,17 +50,24 @@ const Special = () => {
     if (tier === "fleet-command" || tier === "hangar-pro" || tier === "founder") {
       return tier;
     }
-    return "founder";
+    return "hangar-pro";
   });
 
   const selectedTier = useMemo(
-    () => SERVICE_TIERS.find((tier) => tier.id === selectedTierId) ?? SERVICE_TIERS[0],
+    () => SERVICE_TIERS.find((tier) => tier.id === selectedTierId) ?? SERVICE_TIERS[1] ?? SERVICE_TIERS[0],
     [selectedTierId],
   );
 
   useEffect(() => {
+    const tier = searchParams.get("tier");
+    if (tier === "fleet-command" || tier === "hangar-pro" || tier === "founder") {
+      setSelectedTierId(tier);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     const prevTitle = document.title;
-    document.title = "Sovereign Access · USJet.ai";
+    document.title = "Pricing · Flight Pass · Hangar Pro · Enterprise | USJet.ai";
     return () => {
       document.title = prevTitle;
     };
@@ -56,15 +78,15 @@ const Special = () => {
       <header className="special-page__header mb-12 border-b border-white/10 pb-10">
         <div className="mb-4 flex flex-wrap items-center gap-3 font-black uppercase tracking-[0.35em] text-cyan-300/90">
           <ShieldCheck size={20} className="shrink-0" aria-hidden />
-          <span>Sovereign cockpit access · bank-ready</span>
+          <span>Three clearances · three prices</span>
         </div>
         <h1 className="font-aviation text-5xl font-black uppercase italic leading-[0.95] tracking-tighter text-white sm:text-6xl lg:text-7xl">
-          Put Your Money <span className="text-blue-500">On The Screen</span>
+          Pick Your <span className="text-blue-500">Clearance</span>
         </h1>
         <p className="special-page__lead mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/70 sm:text-lg">
-          This is not an investor pitch deck. It is the USJET sovereign cockpit—a 30-unit AI hangar built
-          from shop-floor grit for operators who turn wrenches, not slides. Pick your clearance. Stripe
-          issues your Member ID. You fly same-window—always in the cockpit.
+          Flight Pass, Hangar Pro, or Enterprise Commander. Each tier unlocks more of the sovereign cockpit —
+          Hangar, Fleet, Intel, then Origin. Stripe issues your Member ID. You fly same-window — always in the
+          cockpit.
         </p>
 
         <div className="special-page__mandate mt-6 inline-flex flex-wrap items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
@@ -76,7 +98,7 @@ const Special = () => {
             ·
           </span>
           <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/55">
-            Launch rates live in test — institutional grade
+            {STRIPE_TIER_PRODUCTS.length} tiers · Stripe Direct Landing
           </span>
         </div>
 
@@ -90,7 +112,7 @@ const Special = () => {
         </ul>
       </header>
 
-      <div className="special-page__tiers grid gap-5 lg:grid-cols-1 lg:max-w-md">
+      <div className="special-page__tiers grid gap-5 lg:grid-cols-3">
         {SERVICE_TIERS.map((tier) => {
           const isSelected = tier.id === selectedTierId;
           const isHighlighted = tier.highlighted === true;
@@ -182,8 +204,8 @@ const Special = () => {
           </div>
 
           <p className="special-checkout__trust">
-            Your payment unlocks Hangar, Intel, Fleet Protocol, and a Stripe Member ID for cockpit gate
-            access. Cancel anytime. One ship, one cockpit—no external tabs.
+            Your payment unlocks the features on the selected tier and issues a Stripe Member ID for cockpit
+            gate access. Cancel anytime. One ship, one cockpit — no external tabs.
           </p>
 
           <StripeSecureCheckout
@@ -195,7 +217,6 @@ const Special = () => {
           />
         </GlassEffectContainer>
       </section>
-
     </div>
   );
 };

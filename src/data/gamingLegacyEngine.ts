@@ -41,9 +41,9 @@ export const GAMING_WEALTH_PIPELINE_STAGES = [
   {
     id: "operator",
     tier: "Stage 2 — The Operator",
-    price: "$2,500",
-    body: "Manage real AI fleets for local businesses — professional edition, fleet manual clearance.",
-    href: "/fleet-manual" as const,
-    cta: "Fleet manual",
+    price: "$49.95/mo",
+    body: "Manage real AI fleets with Hangar Pro — full Hangar, all 30 AIs, and live Intel in one cockpit.",
+    href: "/special?tier=hangar-pro" as const,
+    cta: "Hangar Pro",
   },
 ] as const;

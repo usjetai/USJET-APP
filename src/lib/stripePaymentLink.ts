@@ -86,19 +86,29 @@ export function resolveFounderPaymentLink(): string {
   return isUsableStripePaymentLink(url) ? url : FLIGHT_PASS_DIRECT_URL;
 }
 
-/** Resolve the direct extraction port for a Special-page tier — all tiers land on Flight Pass ($19.90/mo). */
-export function resolvePaymentLinkForTier(_tierId: StripeTierPaymentId): string {
-  return resolveFounderPaymentLink();
+/** Resolve the direct extraction port for a Special-page tier. */
+export function resolvePaymentLinkForTier(tierId: StripeTierPaymentId): string {
+  switch (tierId) {
+    case "hangar-pro":
+      return resolveHangarProPaymentLink();
+    case "fleet-command":
+      return resolveEnterprisePaymentLink();
+    case "founder":
+    default:
+      return resolveFounderPaymentLink();
+  }
 }
 
-/** Hangar Pro — routes to Flight Pass ($19.90/mo). */
+/** Hangar Pro ($49.95/mo) — env override when set, else HANGAR_PRO_DIRECT_URL. */
 export function resolveHangarProPaymentLink(): string {
-  return resolveFounderPaymentLink();
+  const url = import.meta.env.VITE_STRIPE_PRO_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : HANGAR_PRO_DIRECT_URL;
 }
 
-/** Enterprise — routes to Flight Pass ($19.90/mo). */
+/** Enterprise Fleet Commander ($199.99/mo) — env override when set, else ENTERPRISE_DIRECT_URL. */
 export function resolveEnterprisePaymentLink(): string {
-  return resolveFounderPaymentLink();
+  const url = import.meta.env.VITE_STRIPE_ENTERPRISE_PAYMENT_LINK?.trim();
+  return isUsableStripePaymentLink(url) ? url : ENTERPRISE_DIRECT_URL;
 }
 
 /** Digital Sovereignty playbook ($49) — Stripe Payment Link when published. */

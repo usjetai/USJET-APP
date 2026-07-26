@@ -60,17 +60,18 @@ export type StripeTierProduct = {
 export const FLIGHT_PASS_STRIPE: StripeTierProduct = {
   id: "founder",
   name: "USJet Flight Pass",
-  hook: "Entry clearance · first on the runway",
+  hook: "Entry clearance · exit the tab sprawl",
   priceCents: 1990,
   priceDisplay: "$19.90",
   period: "/mo",
   description:
-    "Your clearance into the sovereign hangar. Thirty AI bays, live Intel, and fleet protocol locked to your Member ID—built for operators who measure worth in what they fix, not what they pitch.",
+    "Your clearance into the sovereign hangar. Full Hangar workbench, all 30 Fleet AIs, and Member Portal — locked to your Stripe Member ID. Built for operators who measure worth in what they fix, not what they pitch.",
   features: [
-    "30-Tool AI Fleet Access",
-    "Sovereign Cockpit Interface",
-    "Unlimited Access to Captain Aura",
-    "Standard Hangar Support",
+    "Full Hangar workbench (all tabs)",
+    "All 30 Fleet AI bays",
+    "Member Portal + Stripe Member ID",
+    "Same-window Cockpit launches",
+    "Standard hangar support",
   ],
   statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.flightPass.cardStatement,
   cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.flightPass.cardSuffix,
@@ -80,25 +81,24 @@ export const FLIGHT_PASS_STRIPE: StripeTierProduct = {
   },
   memberTier: "USJET-PRIME-ACTIVE",
   paymentLinkEnvKey: "VITE_STRIPE_FOUNDER_PAYMENT_LINK",
-  highlighted: true,
-  badge: "Most chosen",
 };
 
 /** Bank-ready Hangar Pro ($49.95/mo) — mirror in Stripe Product settings. */
 export const HANGAR_PRO_STRIPE: StripeTierProduct = {
   id: "hangar-pro",
   name: "Hangar Pro",
-  hook: "Operator tier · full fleet sync",
+  hook: "Operator tier · fleet + live Intel",
   priceCents: 4995,
   priceDisplay: "$49.95",
   period: "/mo",
   description:
-    "Full access to the USJET Sovereign Cockpit. Includes real-time AI Fleet networking, 30-unit Hangar connectivity, and live Intel Pulse dashboard (Crypto/NYSE). Integrated for high-velocity labor and enterprise founders. No dead iframes—direct flight links only.",
+    "Everything in Flight Pass, plus the live Intel board — Crypto and NYSE pulse in the same cockpit. High-velocity operator sync with no second login and no dead iframes.",
   features: [
-    "Full Hangar Automation Suite",
-    'High-Velocity Logistics AI',
-    'Priority "Wrenches, Not Slides" Toolset',
-    "Integrated Multi-AI Networking",
+    "Everything in Flight Pass",
+    "Live Intel board (Crypto + NYSE)",
+    "High-velocity operator sync",
+    "Full fleet networking in one cockpit",
+    "Priority wrenches-not-slides toolset",
   ],
   statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.hangarPro.cardStatement,
   cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.hangarPro.cardSuffix,
@@ -108,6 +108,8 @@ export const HANGAR_PRO_STRIPE: StripeTierProduct = {
   },
   memberTier: "USJET-PRIME-ACTIVE",
   paymentLinkEnvKey: "VITE_STRIPE_PRO_PAYMENT_LINK",
+  highlighted: true,
+  badge: "Most chosen",
 };
 
 /** USJET Enterprise Fleet Commander ($199.99/mo) — sovereign command tier. */
@@ -119,13 +121,13 @@ export const FLEET_COMMANDER_STRIPE: StripeTierProduct = {
   priceDisplay: "$199.99",
   period: "/mo",
   description:
-    "The only clearance that seats you at Origin — Aura teaches and orchestrates all twenty-nine partner AIs from one command node. Lock in $199.99/mo for one year before USA 250: on July 4, 2026, Enterprise Commander rises to $500/mo.",
+    "Everything in Hangar Pro, plus Origin — Aura teaches and orchestrates partner AIs from one command node. Lock in $199.99/mo before USA 250: on July 4, 2026, Enterprise Commander rises to $500/mo.",
   features: [
-    'Direct "Master Lock" Protocol Access',
-    "Origin command — teach, route, and orchestrate all 29 partner AIs",
-    "Real-Time Titans Intel Dashboard (Crypto/NYSE)",
-    "Dedicated Fleet Command Channel",
-    "Priority Revenue-Engine Support",
+    "Everything in Hangar Pro",
+    "Origin command node (Aura)",
+    "Teach, route, and orchestrate partner AIs",
+    "Priority revenue-engine support",
+    "USA 250 lock-in pricing",
   ],
   statementDescriptor: STRIPE_DESCRIPTOR_CATALOG.fleetCommand.cardStatement,
   cardDescriptorSuffix: STRIPE_DESCRIPTOR_CATALOG.fleetCommand.cardSuffix,

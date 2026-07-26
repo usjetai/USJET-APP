@@ -13739,20 +13739,9 @@ button.fleet-card {
 }
 
 .special-tier-card {
-  border: 0;
-  padding: 0;
   margin: 0;
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-  color: inherit;
   border-radius: 1.75rem;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.special-tier-card:focus-visible {
-  outline: 2px solid rgba(56, 189, 248, 0.75);
-  outline-offset: 4px;
 }
 
 .special-tier-card:hover {
@@ -13879,7 +13868,36 @@ button.fleet-card {
 }
 
 .special-tier-card__footer {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: auto;
   padding: 0 1.25rem 1.25rem;
+}
+
+.special-tier-card__buy {
+  min-height: 3rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.special-tier-card__buy:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.special-tier-card__buy-note,
+.special-tier-card__buy-error {
+  margin: 0;
+  font-size: 0.62rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.special-tier-card__buy-error {
+  color: rgba(252, 165, 165, 0.95);
 }
 
 .special-tier-card__cta {

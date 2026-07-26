@@ -1,24 +1,26 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Check, ShieldCheck, Sparkles, Wrench, Zap } from "lucide-react";
+import { Check, Lock, ShieldCheck, Sparkles, Wrench } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
-import StripeSecureCheckout, { type SpecialTierId } from "../components/checkout/StripeSecureCheckout";
+import type { SpecialTierId } from "../components/checkout/StripeSecureCheckout";
 import { WRENCHES_PHILOSOPHY } from "../data/founderManifesto";
 import {
   FLEET_COMMANDER_STRIPE,
   FLIGHT_PASS_STRIPE,
   HANGAR_PRO_STRIPE,
-  STRIPE_TIER_PRODUCTS,
   type StripeTierProduct,
 } from "../data/stripeProducts";
+import { trackBeginCheckout } from "../lib/analytics";
 import {
+  isUsableStripePaymentLink,
   resolveEnterprisePaymentLink,
   resolveFounderPaymentLink,
   resolveHangarProPaymentLink,
+  resolvePaymentLinkForTier,
 } from "../lib/stripePaymentLink";
 
 type ServiceTier = StripeTierProduct & {
-  paymentLink?: string;
+  paymentLink: string;
 };
 
 const SERVICE_TIERS: ServiceTier[] = [
@@ -36,6 +38,12 @@ const SERVICE_TIERS: ServiceTier[] = [
   },
 ];
 
+const TIER_VALUE: Record<SpecialTierId, number> = {
+  founder: 19.9,
+  "hangar-pro": 49.95,
+  "fleet-command": 199.99,
+};
+
 const VALUE_LADDER = [
   { label: "Hangar", detail: "Full workbench — all tabs under one clearance" },
   { label: "Fleet", detail: "30 specialized AIs — same-window cockpit launches" },
@@ -43,27 +51,30 @@ const VALUE_LADDER = [
   { label: "Origin", detail: "Aura command node — Enterprise Commander only" },
 ] as const;
 
+function launchStripeCheckout(tier: ServiceTier) {
+  const url = isUsableStripePaymentLink(tier.paymentLink)
+    ? tier.paymentLink
+    : resolvePaymentLinkForTier(tier.id);
+  if (!isUsableStripePaymentLink(url)) {
+    return false;
+  }
+  trackBeginCheckout({ tier: tier.id, value: TIER_VALUE[tier.id], url });
+  window.location.href = url;
+  return true;
+}
+
 const Special = () => {
   const [searchParams] = useSearchParams();
-  const [selectedTierId, setSelectedTierId] = useState<SpecialTierId>(() => {
+  const [routingTierId, setRoutingTierId] = useState<SpecialTierId | null>(null);
+  const [errorTierId, setErrorTierId] = useState<SpecialTierId | null>(null);
+
+  const highlightTierId = (() => {
     const tier = searchParams.get("tier");
     if (tier === "fleet-command" || tier === "hangar-pro" || tier === "founder") {
       return tier;
     }
-    return "hangar-pro";
-  });
-
-  const selectedTier = useMemo(
-    () => SERVICE_TIERS.find((tier) => tier.id === selectedTierId) ?? SERVICE_TIERS[1] ?? SERVICE_TIERS[0],
-    [selectedTierId],
-  );
-
-  useEffect(() => {
-    const tier = searchParams.get("tier");
-    if (tier === "fleet-command" || tier === "hangar-pro" || tier === "founder") {
-      setSelectedTierId(tier);
-    }
-  }, [searchParams]);
+    return null;
+  })();
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -72,6 +83,22 @@ const Special = () => {
       document.title = prevTitle;
     };
   }, []);
+
+  useEffect(() => {
+    if (!highlightTierId) return;
+    const el = document.getElementById(`pricing-tier-${highlightTierId}`);
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [highlightTierId]);
+
+  const handleBuy = (tier: ServiceTier) => {
+    setErrorTierId(null);
+    setRoutingTierId(tier.id);
+    const ok = launchStripeCheckout(tier);
+    if (!ok) {
+      setRoutingTierId(null);
+      setErrorTierId(tier.id);
+    }
+  };
 
   return (
     <div className="special-page page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-28 sm:px-6 lg:px-8">
@@ -84,9 +111,8 @@ const Special = () => {
           Pick Your <span className="text-blue-500">Clearance</span>
         </h1>
         <p className="special-page__lead mt-5 max-w-3xl text-base font-medium leading-relaxed text-white/70 sm:text-lg">
-          Flight Pass, Hangar Pro, or Enterprise Commander. Each tier unlocks more of the sovereign cockpit —
-          Hangar, Fleet, Intel, then Origin. Stripe issues your Member ID. You fly same-window — always in the
-          cockpit.
+          Flight Pass, Hangar Pro, or Enterprise Commander. Each card has its own Stripe checkout — pick a
+          tier and enter. Member ID issues on confirmation.
         </p>
 
         <div className="special-page__mandate mt-6 inline-flex flex-wrap items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
@@ -98,7 +124,7 @@ const Special = () => {
             ·
           </span>
           <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-white/55">
-            {STRIPE_TIER_PRODUCTS.length} tiers · Stripe Direct Landing
+            3 tiers · Stripe Direct Landing
           </span>
         </div>
 
@@ -112,21 +138,19 @@ const Special = () => {
         </ul>
       </header>
 
-      <div className="special-page__tiers grid gap-5 lg:grid-cols-3">
+      <div className="special-page__tiers grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {SERVICE_TIERS.map((tier) => {
-          const isSelected = tier.id === selectedTierId;
-          const isHighlighted = tier.highlighted === true;
+          const isHighlighted = tier.highlighted === true || highlightTierId === tier.id;
+          const isRouting = routingTierId === tier.id;
+          const checkoutReady = isUsableStripePaymentLink(tier.paymentLink);
 
           return (
-            <button
+            <article
               key={tier.id}
-              type="button"
-              onClick={() => setSelectedTierId(tier.id)}
-              aria-pressed={isSelected}
+              id={`pricing-tier-${tier.id}`}
               className={[
-                "special-tier-card text-left",
-                isHighlighted ? "special-tier-card--featured" : "",
-                isSelected ? "special-tier-card--selected" : "",
+                "special-tier-card",
+                isHighlighted ? "special-tier-card--featured special-tier-card--selected" : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
@@ -161,62 +185,36 @@ const Special = () => {
                       </li>
                     ))}
                   </ul>
-
-                  <p className="special-tier-card__descriptor">
-                    Card statement: <code>{tier.statementDescriptor}</code>
-                  </p>
                 </div>
 
                 <div className="special-tier-card__footer">
-                  <span className="special-tier-card__cta">
-                    {isSelected ? (
-                      <>
-                        <Zap size={14} aria-hidden />
-                        Cleared for checkout
-                      </>
-                    ) : (
-                      `Select ${tier.name}`
-                    )}
-                  </span>
+                  <button
+                    type="button"
+                    className="special-tier-card__buy btn-glass-prominent glass-effect-interactive w-full justify-center"
+                    disabled={isRouting || !checkoutReady}
+                    onClick={() => handleBuy(tier)}
+                  >
+                    <Lock size={16} aria-hidden />
+                    <span>
+                      {isRouting
+                        ? "Routing to Stripe…"
+                        : `Enter — ${tier.priceDisplay}${tier.period}`}
+                    </span>
+                  </button>
+
+                  {!checkoutReady || errorTierId === tier.id ? (
+                    <p className="special-tier-card__buy-error" role="alert">
+                      Checkout link unavailable. Try again or email ops@usjet.ai.
+                    </p>
+                  ) : (
+                    <p className="special-tier-card__buy-note">Stripe secure checkout · Member ID on confirm</p>
+                  )}
                 </div>
               </GlassEffectContainer>
-            </button>
+            </article>
           );
         })}
       </div>
-
-      <section className="special-checkout" aria-labelledby="special-checkout-heading">
-        <GlassEffectContainer className="special-checkout__shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan flex-col items-stretch gap-0 p-0">
-          <div className="special-checkout__header">
-            <div className="flex items-center gap-3">
-              <ShieldCheck size={22} className="text-cyan-300" aria-hidden />
-              <div>
-                <p className="special-checkout__eyebrow">Stripe-secured · PCI compliant</p>
-                <h2 id="special-checkout-heading" className="special-checkout__title">
-                  Authorize Clearance
-                </h2>
-              </div>
-            </div>
-            <p className="special-checkout__summary">
-              {selectedTier.name} · {selectedTier.priceDisplay}
-              {selectedTier.period}
-            </p>
-          </div>
-
-          <p className="special-checkout__trust">
-            Your payment unlocks the features on the selected tier and issues a Stripe Member ID for cockpit
-            gate access. Cancel anytime. One ship, one cockpit — no external tabs.
-          </p>
-
-          <StripeSecureCheckout
-            tierId={selectedTier.id}
-            tierLabel={selectedTier.name}
-            amountLabel={`${selectedTier.priceDisplay}${selectedTier.period}`}
-            statementDescriptor={selectedTier.statementDescriptor}
-            paymentLink={selectedTier.paymentLink}
-          />
-        </GlassEffectContainer>
-      </section>
     </div>
   );
 };

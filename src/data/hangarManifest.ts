@@ -3,7 +3,7 @@ import { buildUnitSystemPrompt } from "./usjetProtocol";
 
 /**
  * Hangar workbench roster — embed-first floor (independent of Fleet runway brands).
- * Slot 0 Kimi · Slot 1 FreeAssist · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
+ * Slot 0 Kimi · Slot 1 SurfSense · Slot 2 NoTrack · Mid floor: partners + HF Spaces. Slot 29: USJET Origin.
  */
 const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
@@ -22,29 +22,28 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "1",
     slot: 1,
-    name: "FreeAssist",
+    name: "SurfSense",
     callsign: "LIGHTNING-02",
-    domain: "freeassist.ai",
-    href: "https://freeassist.ai/",
+    domain: "surfsense.com",
+    href: "https://www.surfsense.com/free/gpt-5.4-mini-no-login",
     status: "active",
     aura: "idle",
     aircraftType: "f35",
-    aiName: "FreeAssist",
-    fleetRole: "FreeAssist — free AI assist at freeassist.ai.",
+    aiName: "SurfSense",
+    fleetRole: "SurfSense — free GPT-5.4 mini chat with no login.",
   },
   {
     id: "2",
     slot: 2,
-    name: "OSW Studio",
+    name: "NoTrack",
     callsign: "RAIDER-03",
-    domain: "otst-osw-studio.hf.space",
-    href: "https://otst-osw-studio.hf.space",
+    domain: "notrack.ai",
+    href: "https://notrack.ai/",
     status: "active",
     aura: "idle",
     aircraftType: "b21",
-    aiName: "OSW Studio",
-    fleetRole:
-      "OSW Studio — Hugging Face Space at huggingface.co/spaces/otst/osw-studio (Hangar embeds via otst-osw-studio.hf.space).",
+    aiName: "NoTrack",
+    fleetRole: "NoTrack — private AI chat at notrack.ai.",
   },
   {
     id: "3",
@@ -75,28 +74,29 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
   {
     id: "5",
     slot: 5,
-    name: "SurfSense",
+    name: "FreeAssist",
     callsign: "WIDOW-06",
-    domain: "surfsense.com",
-    href: "https://www.surfsense.com/free/gpt-5.4-mini-no-login",
+    domain: "freeassist.ai",
+    href: "https://freeassist.ai/",
     status: "active",
     aura: "idle",
     aircraftType: "yf23",
-    aiName: "SurfSense",
-    fleetRole: "SurfSense — free GPT-5.4 mini chat with no login.",
+    aiName: "FreeAssist",
+    fleetRole: "FreeAssist — free AI assist at freeassist.ai.",
   },
   {
     id: "6",
     slot: 6,
-    name: "NoTrack",
+    name: "OSW Studio",
     callsign: "SALTY-07",
-    domain: "notrack.ai",
-    href: "https://notrack.ai/",
+    domain: "otst-osw-studio.hf.space",
+    href: "https://otst-osw-studio.hf.space",
     status: "active",
     aura: "idle",
     aircraftType: "x47b",
-    aiName: "NoTrack",
-    fleetRole: "NoTrack — private AI chat at notrack.ai.",
+    aiName: "OSW Studio",
+    fleetRole:
+      "OSW Studio — Hugging Face Space at huggingface.co/spaces/otst/osw-studio (Hangar embeds via otst-osw-studio.hf.space).",
   },
   {
     id: "7",

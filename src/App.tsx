@@ -48,6 +48,8 @@ const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
 const Sovereignty = lazy(() => import("./pages/Sovereignty"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const CompareHub = lazy(() => import("./pages/CompareHub"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
 const Gamers = lazy(() => import("./pages/Gamers"));
 const Gaming = lazy(() => import("./pages/Gaming"));
@@ -106,6 +108,8 @@ function AnimatedRoutes() {
             <Route path="/code-kit" element={<CodeKit />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/compare" element={<CompareHub />} />
+            <Route path="/compare/:slug" element={<ComparePage />} />
             <Route path="/support-fleet" element={<SupportFleet />} />
             <Route path="/intelligence" element={<IntelligenceAssets />} />
             <Route path="/strategic-assets" element={<StrategicAssets />} />

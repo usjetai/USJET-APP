@@ -7,6 +7,7 @@ Allow: /
 
 Allow: /fleet
 Allow: /blog
+Allow: /compare
 Allow: /fleet-directory
 Allow: /ai-101
 Allow: /member/login

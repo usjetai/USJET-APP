@@ -9693,7 +9693,33 @@ html.code-kit-page-root #usjet-app-shell {
 
 .hangar-home-hero--rail .hangar-home-hero__body {
   margin-top: 0.45rem;
-  max-width: 38rem;
+  max-width: none;
+}
+
+.hangar-home-hero__lede-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  width: 100%;
+}
+
+.hangar-home-hero__ph-badge {
+  margin-left: auto;
+  flex: 0 0 auto;
+  align-self: center;
+  line-height: 0;
+}
+
+.hangar-home-hero__ph-badge img {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .hangar-home-hero__ph-badge {
+    margin-left: 0;
+  }
 }
 
 .hangar-home-hero--rail .hangar-home-hero__kicker {
@@ -30417,4 +30443,273 @@ html.blog-page-root #usjet-app-shell {
   color: rgb(255 251 235);
   border-color: rgb(253 224 71 / 0.75);
   box-shadow: 0 0 18px rgb(250 204 21 / 0.22);
+}
+
+/* ─── Compare / SEO money pages ─── */
+.compare-page__hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.compare-page__wordmark {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+}
+
+.compare-page__eyebrow {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.8);
+}
+
+.compare-page__title {
+  margin: 0.7rem 0 0;
+  font-family: theme("fontFamily.aviation"), "Audiowide", sans-serif;
+  font-size: clamp(1.45rem, 3.6vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.compare-page__lede {
+  margin: 0.9rem auto 0;
+  max-width: 38rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.68);
+  text-wrap: pretty;
+}
+
+.compare-page__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.35rem;
+}
+
+.compare-page__cta,
+.compare-page__cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.15rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.compare-page__secure {
+  margin: 0.85rem 0 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.55);
+}
+
+.compare-page__section-title {
+  margin: 0 0 0.85rem;
+  font-family: theme("fontFamily.aviation"), "Audiowide", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.compare-page__lanes,
+.compare-page__replaces,
+.compare-page__bundle,
+.compare-page__split,
+.compare-page__proof,
+.compare-page__offer-band,
+.compare-page__faq,
+.compare-page__siblings {
+  margin-top: 1.75rem;
+}
+
+.compare-page__lane-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .compare-page__lane-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.compare-lane__inner,
+.compare-panel__inner,
+.compare-offer__inner {
+  padding: 1.15rem 1.2rem 1.25rem;
+}
+
+.compare-lane__eyebrow,
+.compare-panel__kicker,
+.compare-offer__kicker {
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.75);
+}
+
+.compare-lane__title,
+.compare-panel__title,
+.compare-offer__title {
+  margin: 0.55rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: #fff;
+}
+
+.compare-lane__lede,
+.compare-panel__copy,
+.compare-offer__copy,
+.compare-lane__offer {
+  margin: 0.65rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.compare-panel__copy--muted {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.compare-panel__objection {
+  margin: 0.85rem 0 0;
+  padding: 0.75rem 0.85rem;
+  border-left: 2px solid rgba(34, 211, 238, 0.55);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: rgba(165, 243, 252, 0.88);
+  background: rgba(6, 78, 99, 0.18);
+}
+
+.compare-lane__link {
+  display: inline-flex;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(103, 232, 249);
+  text-decoration: none;
+}
+
+.compare-page__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.55rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.compare-page__bundle-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .compare-page__bundle-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.compare-bundle-item {
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  border-radius: 0.75rem;
+  background: rgba(3, 12, 24, 0.35);
+}
+
+.compare-bundle-item__title {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.9);
+}
+
+.compare-bundle-item__body {
+  margin: 0.45rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.compare-faq__list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.compare-faq__item {
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  border-radius: 0.75rem;
+  background: rgba(3, 12, 24, 0.35);
+  padding: 0.85rem 1rem;
+}
+
+.compare-faq__question {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  list-style: none;
+}
+
+.compare-faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.compare-faq__answer {
+  margin: 0.65rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.compare-page__siblings-label {
+  margin: 0 0 0.55rem;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.7);
+}
+
+.compare-page__siblings-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.1rem;
+}
+
+.compare-page__sibling-link {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.88);
+  text-decoration: none;
 }

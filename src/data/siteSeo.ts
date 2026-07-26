@@ -1,3 +1,11 @@
+import {
+  buildSeoMoneyFaqJsonLd,
+  buildSeoMoneyWebPageJsonLd,
+  SEO_MONEY_HUB_PATH,
+  SEO_MONEY_HUB_SEO,
+  SEO_MONEY_PAGES,
+} from "./seoMoneyPages";
+
 /** Canonical hostname for hreflang, OG, canonical, JSON-LD (apex redirects to www in production). */
 
 export const SITE_ORIGIN = "https://www.usjet.ai" as const;
@@ -49,6 +57,18 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
       "USJET Operator Log: founding dispatches, partnership doctrine, and runway intelligence for captains building with AI — not cloning it.",
     keywords: "USJET blog, operator log, AI doctrine, founder startup log",
   },
+  [SEO_MONEY_HUB_PATH]: {
+    ...SEO_MONEY_HUB_SEO,
+  },
+  ...Object.fromEntries(
+    SEO_MONEY_PAGES.map((page) => [
+      page.path,
+      {
+        ...page.seo,
+        jsonLd: [buildSeoMoneyWebPageJsonLd(page), buildSeoMoneyFaqJsonLd(page)],
+      } satisfies PageSeo,
+    ]),
+  ),
   "/ai-101": {
     title: "AI 101 — One-on-One Lesson | USJET.AI",
     description:

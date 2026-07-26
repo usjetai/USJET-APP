@@ -1,7 +1,6 @@
 import { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
-import EkgPulseLine from "./EkgPulseLine";
 import IntelScanLine from "./IntelScanLine";
 import ReservedBayLiveMock from "./ReservedBayLiveMock";
 import { useMemberAuth } from "../../context/MemberAuthContext";
@@ -85,9 +84,6 @@ export default function IntelReservedBay({ variant, unit, index: _index, style }
       </header>
 
       <div className="intel-monitor__screen intel-reserved-bay__screen">
-        <div className="intel-monitor__pulse-back intel-reserved-bay__ekg" aria-hidden>
-          <EkgPulseLine variant="monitor" seed={unit.slot + (isMarket ? 0 : 17)} />
-        </div>
         <div className="intel-monitor__grid" aria-hidden />
         <IntelScanLine className="intel-reserved-bay__scan" />
 

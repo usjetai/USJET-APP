@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { fleetBayAccentStyle } from "../../data/fleetBayAccents";
 import { fleetManifest } from "../../data/fleetManifest";
-import EkgPulseLine from "./EkgPulseLine";
 
 const FLEET_COUNT = fleetManifest.length;
 
@@ -46,9 +45,6 @@ export default function IntelFleetVitals() {
             {activeCount}/{FLEET_COUNT} online
           </span>
         </div>
-      </div>
-      <div className="intel-fleet-vitals__ekg">
-        <EkgPulseLine variant="hero" seed={30} traces={3} />
       </div>
       <div className="intel-fleet-vitals__footer">
         <div className="intel-fleet-vitals__metric">

@@ -6,7 +6,6 @@ import { useSimulatedAgentActivity } from "../../lib/useSimulatedAgentActivity";
 import IntelMonitorIdentity from "./IntelMonitorIdentity";
 import CoinbaseLiveTicker from "./CoinbaseLiveTicker";
 import CoinbaseLiveCandles from "./CoinbaseLiveCandles";
-import EkgPulseLine from "./EkgPulseLine";
 import IntelScanLine from "./IntelScanLine";
 import NyseTicker from "./NyseTicker";
 import { type FleetUnit } from "../../types/fleet";
@@ -72,9 +71,6 @@ export default function IntelMonitor({ unit, index: _index, style, onExpandReque
       <div className="intel-monitor__screen liquid-glass-background">
         <div className="intel-monitor__candles" aria-hidden>
           <CoinbaseLiveCandles slot={unit.slot} candleCount={8} />
-        </div>
-        <div className="intel-monitor__pulse-back" aria-hidden>
-          <EkgPulseLine variant="monitor" seed={unit.slot} />
         </div>
         <div className="intel-monitor__grid" aria-hidden />
         <IntelScanLine />

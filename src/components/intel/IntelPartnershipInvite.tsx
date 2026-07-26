@@ -5,8 +5,8 @@ import { mailtoUsjetOps } from "../../lib/usjetContact";
 const INSTITUTIONAL_MAILTO = mailtoUsjetOps("Intel — institutional / strategic partnership inquiry");
 
 /**
- * Intel bottom deck — institutional invite (not ad inventory). Hold line: no live partner APIs;
- * OPS email + internal SOS only (integrated nav).
+ * Intel bottom deck — institutional invite (not ad inventory).
+ * Live boards are on; Titan partner logins still lease through OPS.
  */
 export default function IntelPartnershipInvite() {
   return (
@@ -32,7 +32,7 @@ export default function IntelPartnershipInvite() {
             </Link>
           </div>
           <p className="intel-partnership-invite__note">
-            Reserved bays display mock telemetry only — no live exchange handoff in this build.
+            Live Coinbase + NYSE boards are on. Titan partner login seats still lease through OPS.
           </p>
         </div>
       </GlassEffectContainer>

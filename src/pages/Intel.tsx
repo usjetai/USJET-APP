@@ -5,15 +5,20 @@ import IntelMonitor from "../components/intel/IntelMonitor";
 import { IntelLiveMarketProvider } from "../context/IntelLiveMarketContext";
 import { fleetManifest } from "../data/fleetManifest";
 import { useFleetGridExpansions } from "../hooks/useFleetGridExpansions";
-import { MAX_SIMULTANEOUS_WORKBENCHES } from "../lib/intelGridExpansion";
 import { type FleetUnit, FLEET_UNIT_COUNT, HANGAR_COLUMNS, HANGAR_ROWS } from "../types/fleet";
 
 const intelUnits = [...fleetManifest].sort((a, b) => a.slot - b.slot);
 
 const unitBySlot = new Map<number, FleetUnit>(intelUnits.map((u) => [u.slot, u]));
 
+/** Temporary open board — every tile can open to view prices; tier caps later. */
+const INTEL_OPEN_BOARD_MAX = FLEET_UNIT_COUNT;
+
 function IntelPageContent() {
-  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useFleetGridExpansions(unitBySlot);
+  const { tryExpand, closeExpansion, cellPlan, workbenchFullToast } = useFleetGridExpansions(unitBySlot, {
+    maxSimultaneous: INTEL_OPEN_BOARD_MAX,
+    replaceOnConflict: true,
+  });
 
   const gridCells = useMemo(() => {
     const out: ReactNode[] = [];
@@ -74,7 +79,7 @@ function IntelPageContent() {
         <div className="intel-hangar-toast" role="status" aria-live="polite" aria-atomic="true">
           <p className="intel-hangar-toast__title">Hangar full</p>
           <p className="intel-hangar-toast__body">
-            Three workstations are live. Close one to open another 2×2 bay.
+            Close a workstation to open another 2×2 bay.
           </p>
         </div>
       ) : null}
@@ -83,9 +88,8 @@ function IntelPageContent() {
         <div className="intel-page__grid-intro">
           <p className="intel-page__grid-kicker">Intel monitor grid</p>
           <p className="intel-page__grid-copy">
-            {HANGAR_COLUMNS} wide · {HANGAR_ROWS} deep · {FLEET_UNIT_COUNT} fleet tiles · reserved partnership lanes —
-            click to expand (max {MAX_SIMULTANEOUS_WORKBENCHES} simultaneous 2×2 workbenches). Hold line: no live
-            exchange feeds until Titans pay.
+            {HANGAR_COLUMNS} wide · {HANGAR_ROWS} deep · {FLEET_UNIT_COUNT} fleet tiles · live Coinbase spot + NYSE
+            board — click any tile to open prices (open board while we wire tiers).
           </p>
         </div>
 

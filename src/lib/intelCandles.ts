@@ -23,6 +23,10 @@ export function generateCandles(seed: number, count: number, basePrice: number, 
   return candles;
 }
 
+/**
+ * Advance mock OHLC: usually tick the open candle; ~1 in 4 ticks rolls a new bar
+ * so the chart scrolls instead of freezing on a single body.
+ */
 export function tickLastCandle(candles: OhlcCandle[], volatility: number): OhlcCandle[] {
   if (candles.length === 0) {
     return candles;
@@ -34,6 +38,22 @@ export function tickLastCandle(candles: OhlcCandle[], volatility: number): OhlcC
   last.close = Math.max(0.01, last.close + delta);
   last.high = Math.max(last.high, last.close, last.open);
   last.low = Math.min(last.low, last.close, last.open);
+
+  const rollNewBar = Math.random() < 0.28;
+  if (!rollNewBar) {
+    next[next.length - 1] = last;
+    return next;
+  }
+
   next[next.length - 1] = last;
+  const open = last.close;
+  const closeNoise = (Math.random() - 0.5) * volatility * 0.35;
+  const close = Math.max(0.01, open + closeNoise);
+  const high = Math.max(open, close) + volatility * (0.08 + Math.random() * 0.12);
+  const low = Math.min(open, close) - volatility * (0.06 + Math.random() * 0.1);
+  next.push({ open, high, low, close });
+  if (next.length > candles.length) {
+    next.shift();
+  }
   return next;
 }

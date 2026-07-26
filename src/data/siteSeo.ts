@@ -172,9 +172,9 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     noindex: true,
   },
   "/intel": {
-    title: "Intel Board | USJET.AI",
-    description: "USJET Intel board — partnership bays and institutional pulse for Hangar Pro clearance.",
-    noindex: true,
+    title: "Intel Board — Live Coinbase + NYSE | USJET.AI",
+    description:
+      "USJET Intel board — live Coinbase spot and NYSE TradingView boards across the fleet monitor grid. Open any tile for prices.",
   },
   "/origin": {
     title: "Origin Command | USJET.AI",

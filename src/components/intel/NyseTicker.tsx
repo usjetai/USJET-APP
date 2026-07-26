@@ -22,7 +22,7 @@ function formatNyExchangeClock(date: Date): { time: string; date: string } {
   return { time, date: day };
 }
 
-/** NY clock ambiance only — not a live NYSE price feed (Master Log hold line). */
+/** NYSE lane readout — live board expands in the 2×2 workbench. */
 export default function NyseTicker({ symbol = "NYA" }: NyseTickerProps) {
   const [nyClock, setNyClock] = useState(() => formatNyExchangeClock(new Date()));
 
@@ -38,9 +38,9 @@ export default function NyseTicker({ symbol = "NYA" }: NyseTickerProps) {
   }, []);
 
   return (
-    <div className="nyse-ticker nyse-ticker--hold">
-      <span className="nyse-ticker__label">NY lane</span>
-      <span className="nyse-ticker__symbol">{symbol} · reserved</span>
+    <div className="nyse-ticker nyse-ticker--live">
+      <span className="nyse-ticker__label">NYSE live</span>
+      <span className="nyse-ticker__symbol">{symbol}</span>
       <span className="nyse-ticker__clock" aria-hidden>
         {nyClock.time}
       </span>

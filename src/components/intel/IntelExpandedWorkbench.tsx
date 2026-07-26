@@ -25,7 +25,7 @@ export default function IntelExpandedWorkbench({ unit, gridStyle, onClose }: Int
           {unit.aiName ? <p className="intel-expanded__ai-name">{unit.aiName}</p> : null}
           <p className="intel-expanded__domain">{unit.domain}</p>
           <p className="intel-expanded__tagline">
-            Reserved lanes · {slotMarket.coinbaseLabel} / {slotMarket.nyseSymbol} · hold until Titans pay
+            Live board · {slotMarket.coinbaseLabel} / {slotMarket.nyseSymbol} · NYSE via TradingView
           </p>
         </div>
         <div className="intel-expanded__actions">

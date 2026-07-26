@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Activity, Wrench } from "lucide-react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
-import EkgPulseLine from "./EkgPulseLine";
 import MarketCandlesticks from "./MarketCandlesticks";
 import TickerDisplay from "./TickerDisplay";
 import { formatTickerChange, getWingForSlot } from "../../lib/intelWings";
@@ -14,7 +13,8 @@ const PULSE_WINGS: { slot: number; volatility: number }[] = [
 
 function PulseVitalMetric({ slot }: { slot: number }) {
   const config = getWingForSlot(slot);
-  const [changePct, setChangePct] = useState(0);
+  const [price, setPrice] = useState(() => config.basePrice);
+  const changePct = ((price - config.basePrice) / config.basePrice) * 100;
 
   useEffect(() => {
     let cancelled = false;
@@ -24,9 +24,10 @@ function PulseVitalMetric({ slot }: { slot: number }) {
       if (cancelled) return;
       const nextMs = 1100 + Math.random() * 2200;
       tid = window.setTimeout(() => {
-        const drift = (Math.random() - 0.48) * config.step;
-        const next = Math.max(config.basePrice * 0.82, config.basePrice + drift);
-        setChangePct(((next - config.basePrice) / config.basePrice) * 100);
+        setPrice((current) => {
+          const drift = (Math.random() - 0.48) * config.step;
+          return Math.max(config.basePrice * 0.82, current + drift);
+        });
         schedule();
       }, nextMs);
     };
@@ -78,17 +79,12 @@ export default function IntelPulseDashboard() {
       <GlassEffectContainer className="intel-pulse__ekg-shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
         <div className="intel-pulse__ekg-meta">
           <div className="intel-pulse__ekg-meta-copy">
-            <span className="intel-pulse__ekg-label">Vitals Market EKG</span>
-            <p className="intel-pulse__ekg-hold">
-              Frequency channels are still helping other customers. Please continue to hold.
-            </p>
+            <span className="intel-pulse__ekg-label">Vitals Market</span>
+            <p className="intel-pulse__ekg-hold">Field channels for operators — live board on the grid below.</p>
           </div>
-          <span className="intel-pulse__ekg-badge" title="Cockpit immersion telemetry — not live partner P&L">
-            Market Pulse · Simulated
+          <span className="intel-pulse__ekg-badge" title="Cockpit market vitals">
+            Market Pulse
           </span>
-        </div>
-        <div className="intel-pulse__ekg-stage">
-          <EkgPulseLine variant="hero" seed={7} traces={3} />
         </div>
         <div className="intel-pulse__ekg-footer" aria-label="Intel pulse vitals channels">
           {PULSE_WINGS.map((wing) => (

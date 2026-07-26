@@ -1,5 +1,4 @@
 import { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
-import EkgPulseLine from "./EkgPulseLine";
 import IntelScanLine from "./IntelScanLine";
 import { getTop10TierPitch, type IntelTop10Tier } from "../../data/intelTop10Tiers";
 import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
@@ -56,9 +55,6 @@ export default function IntelTop10Bay({ tier, index: _index }: IntelTop10BayProp
       </header>
 
       <div className="intel-monitor__screen intel-reserved-bay__screen">
-        <div className="intel-monitor__pulse-back intel-reserved-bay__ekg" aria-hidden>
-          <EkgPulseLine variant="monitor" seed={tier.ekgSeed} />
-        </div>
         <div className="intel-monitor__grid" aria-hidden />
         <IntelScanLine className="intel-reserved-bay__scan" />
 

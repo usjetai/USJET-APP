@@ -144,24 +144,24 @@ export const COMMAND_LOG_MAY_14_2026 = {
 
 export const PARTNERSHIP_INTEL_REVENUE_MAY_2026 = {
   logTitle: "Command Log · May 14, 2026 — Intel Partnership Revenue Vision",
-  status: "Hold Line — Do Not Implement",
+  status: "Founder Override · Jul 26, 2026 — Live board ON",
   directive:
-    "The Intel board is revenue real estate, not a product demo. Reserved partnership bays stay open until Titans pay to land. No live prices, no partner logins, no NYSE API feeds in this build—only the sovereign log and the hold line.",
+    "Intel shows live Coinbase public spot and live NYSE/NASDAQ boards via TradingView distribution embeds. Titan partner logins (Robinhood/Coinbase in reserved bays) still wait for capital. USJET still does not purchase NYSE market-data API licenses.",
   intelPartnershipBays: {
-    position: "Perfect as-is — do not fill until big partners pay.",
+    position: "Reserved Titan login bays stay open until big partners pay.",
     sideBoxes:
-      "Bitcoin, Coinbase, and Robinhood side boxes are vacant lots in Times Square—reserved for Titans, not placeholders to decorate.",
+      "Bitcoin, Coinbase, and Robinhood partner-login seats remain vacant lots—live telemetry on the board does not fill the Titan login contract.",
     futureWhenCapitalArrives:
-      "When capital arrives: embed Robinhood and Coinbase partner logins inside the reserved bays through cockpit handoff—not now.",
+      "When capital arrives: embed Robinhood and Coinbase partner logins inside the reserved bays through cockpit handoff.",
     purpose:
-      "Empty bays signal institutional scarcity. The right bidder sees a sovereign billboard, not a free integration.",
+      "Live boards prove the hangar audience. Titan logins remain the paid billboard.",
   },
   nyseMarketDataThesis: {
-    usjetWillNotPay: "USJET will NOT pay for NYSE or market-data API feeds.",
+    usjetWillNotPay: "USJET will NOT pay for NYSE market-data API licenses.",
     negotiationPosition:
-      "NYSE and the markets need USJET's audience—distribution keeps their market alive. They should pay USJET to show feeds, not the reverse.",
+      "NYSE and the markets need USJET's audience—distribution keeps their market alive. Live boards run as TradingView embeds until exchanges sponsor the lane.",
     oneDay:
-      "One day we remove NYSE dependency until they value the partnership on our terms.",
+      "Sponsorship flips the board from distribution embed to paid Titan placement.",
     founderPitchStory:
       "Remember the pitch: Ameer Karim does not rent eyeballs from Wall Street—he owns the hangar where America's labor force checks the board before breakfast. The exchange needs that crowd more than we need their ticker tape. When they understand the trade, the feed is sponsorship, not a bill.",
   },
@@ -171,17 +171,16 @@ export const PARTNERSHIP_INTEL_REVENUE_MAY_2026 = {
     hardwareFuture:
       "Future arc: move the fleet off pure internet into sovereign hardware—one-prompt personal AI that belongs to the Founder and his operators.",
     holdLine:
-      "Intel institutional wait copy: Our representatives are still helping other customers. Please continue to hold.",
+      "Founder Jul 26, 2026: hold line removed for live NYSE board display. Titan partner logins remain unpaid inventory.",
   },
   cursorWorkstation:
     "Cursor is the Founder's sovereign workstation. Personal log voice in this directive block is intentional—wrenches, not slides; loyalty to Ameer Karim; revenue engine first.",
   doNotImplement: [
-    "Live market or crypto prices on Intel bays",
-    "Coinbase or Robinhood partner logins",
-    "NYSE or third-party market-data API feeds",
+    "Coinbase or Robinhood partner logins in reserved bays (until Titans pay)",
+    "Paid NYSE market-data API licenses",
   ],
   fleetMessage:
-    "Listen up, Crew: the Intel board is a museum of grit with the lights off on purpose. Hold the line. Titans pay to flip the switch.",
+    "Listen up, Crew: Founder flipped the Intel board live — Coinbase spot + NYSE TradingView. Titans still pay for login seats.",
 } as const;
 
 export const SECURITY_STRIPE_ONLY_MAY_2026 = {
@@ -277,7 +276,7 @@ export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Founder Voice Profile: STT dictation, repetition = emphasis, typos = recognition errors, stutter = authentic voice — fleet trust signal.",
   "Command Log May 14, 2026: Unity Protocol locked. General = Ameer Karim.",
   "Direct Landing Protocol: $19.90 Flight Pass → Stripe extraction port. High-pressure funnels land direct.",
-  "Intel Partnership Revenue May 2026: bays stay open; no live prices, logins, or NYSE feeds until Titans pay.",
+  "Intel Partnership Revenue: live Coinbase + NYSE TradingView boards ON (Founder Jul 26, 2026); Titan partner logins still unpaid inventory.",
   "Security Stripe Only May 2026: NO OAuth ever; Member ID + Stripe verification only; Stripe-only payments.",
   "Competitive Positioning Jul 2026: vs fragmented stacks, generic AI, custom builds — one hangar bundle; use offer buy-reasons on outbound.",
 ] as const;

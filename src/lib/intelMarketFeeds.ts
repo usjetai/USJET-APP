@@ -1,5 +1,8 @@
 import type { OhlcCandle } from "./intelCandles";
 
+/** Public Coinbase spot poll interval for Intel live board. */
+export const INTEL_COINBASE_POLL_MS = 15_000;
+
 export type CoinbaseSnapshot = {
   priceUsd: number;
   changePct24h: number | null;

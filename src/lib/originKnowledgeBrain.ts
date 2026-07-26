@@ -196,7 +196,7 @@ export function answerOriginFromKnowledge(
 
   if (/(intel|nyse|robinhood|coinbase|bitcoin bay)/.test(q)) {
     return flightPlan(
-      "Intel (/intel) is Hangar Pro+. Partnership bays stay reserved revenue real estate until Titans pay — we do not rent NYSE feeds. Hold the line.",
+      "Intel (/intel) is Hangar Pro+. Live Coinbase spot + NYSE TradingView boards are on. Titan partner logins still lease through OPS — USJET does not buy NYSE API licenses.",
     );
   }
 

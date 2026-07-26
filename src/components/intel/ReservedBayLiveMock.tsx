@@ -21,9 +21,11 @@ export default function ReservedBayLiveMock({ variant }: ReservedBayLiveMockProp
   useEffect(() => {
     const id = window.setInterval(() => {
       setTick((t) => t + 1);
-      setPrice((p) => {
-        const drift = (Math.sin(Date.now() / 2400) + (Math.random() - 0.5) * 0.4) * (variant === "crypto" ? 180 : 12);
-        return Math.max(base * 0.98, base + drift);
+      setPrice((current) => {
+        const step = variant === "crypto" ? 180 : 12;
+        const drift =
+          (Math.sin(Date.now() / 2400) * 0.35 + (Math.random() - 0.5) * 0.65) * step * 0.22;
+        return Math.max(base * 0.92, Math.min(base * 1.08, current + drift));
       });
     }, 1400);
     return () => window.clearInterval(id);

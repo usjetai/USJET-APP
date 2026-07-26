@@ -36,13 +36,14 @@ export const GUEST_PUBLIC_ROUTES = [
   "/hoops",
   "/app/hoops",
   "/jet-browser",
+  "/intel",
 ] as const;
 
 /**
  * Minimum clearance rank per route.
- * 0 = public (guest): Hangar home (3 free tabs), Fleet (10 free AI bays), member login, fleet cockpit handoff.
+ * 0 = public (guest): Hangar home (3 free tabs), Fleet (10 free AI bays), Intel open board (tiers TBD), member login, fleet cockpit handoff.
  * 1 = Flight Pass+: all 30 fleet AIs, full Hangar tabs, Member Portal, Founder Special checkout.
- * 2 = Hangar Pro+: Intel.
+ * 2 = Hangar Pro+: reserved for future Intel tier lock.
  * 3 = Enterprise Commander: Origin.
  */
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {

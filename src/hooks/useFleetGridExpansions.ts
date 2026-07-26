@@ -13,8 +13,18 @@ export type FleetWorkbenchCell =
   | { mode: "unit"; unit: FleetUnit }
   | { mode: "expanded"; unit: FleetUnit };
 
-/** Each entry is one 2×2 bay: unique `anchor` (grid top-left) + full `unit` (own `href`, `id`). Up to three non-overlapping bays — they never share state or overwrite each other. */
+/** Each entry is one 2×2 bay: unique `anchor` (grid top-left) + full `unit` (own `href`, `id`). */
 type Expansion = { anchor: number; unit: FleetUnit };
+
+export type FleetGridExpansionOptions = {
+  /** Cap on simultaneous 2×2 workbenches. Default: MAX_SIMULTANEOUS_WORKBENCHES (3). */
+  maxSimultaneous?: number;
+  /**
+   * When true, opening a bay closes overlapping / same-anchor bays (and oldest when full)
+   * instead of silently rejecting — every tile can always open.
+   */
+  replaceOnConflict?: boolean;
+};
 
 const WORKBENCH_FULL_TOAST_MS = 3400;
 const WORKBENCH_TOAST_DEBOUNCE_MS = 750;
@@ -22,7 +32,13 @@ const WORKBENCH_TOAST_DEBOUNCE_MS = 750;
 /**
  * Shared 2×2 expansion state for Intel monitors and Hangar fleet tiles (same 6×5 slot grid).
  */
-export function useFleetGridExpansions(unitBySlot: ReadonlyMap<number, FleetUnit>) {
+export function useFleetGridExpansions(
+  unitBySlot: ReadonlyMap<number, FleetUnit>,
+  options?: FleetGridExpansionOptions,
+) {
+  const maxSimultaneous = options?.maxSimultaneous ?? MAX_SIMULTANEOUS_WORKBENCHES;
+  const replaceOnConflict = options?.replaceOnConflict ?? false;
+
   const [expansions, setExpansions] = useState<Expansion[]>([]);
   const [workbenchFullToast, setWorkbenchFullToast] = useState(false);
   const toastTimerRef = useRef<number | null>(null);
@@ -60,7 +76,17 @@ export function useFleetGridExpansions(unitBySlot: ReadonlyMap<number, FleetUnit
       setExpansions((prev) => {
         const same = prev.find((e) => e.anchor === anchor && e.unit.id === unit.id);
         if (same) {
-          return prev.filter((e) => e.anchor !== anchor);
+          return prev.filter((e) => !(e.anchor === anchor && e.unit.id === unit.id));
+        }
+
+        let next = prev.filter((e) => e.anchor !== anchor);
+
+        if (replaceOnConflict) {
+          next = next.filter((e) => !quadsOverlap(e.anchor, anchor));
+          while (next.length >= maxSimultaneous) {
+            next = next.slice(1);
+          }
+          return [...next, { anchor, unit }];
         }
 
         if (prev.some((e) => e.anchor === anchor)) {
@@ -71,7 +97,7 @@ export function useFleetGridExpansions(unitBySlot: ReadonlyMap<number, FleetUnit
           return prev;
         }
 
-        if (prev.length >= MAX_SIMULTANEOUS_WORKBENCHES) {
+        if (prev.length >= maxSimultaneous) {
           rejectFull = true;
           return prev;
         }
@@ -83,7 +109,7 @@ export function useFleetGridExpansions(unitBySlot: ReadonlyMap<number, FleetUnit
         flashWorkbenchFullToast();
       }
     },
-    [flashWorkbenchFullToast],
+    [flashWorkbenchFullToast, maxSimultaneous, replaceOnConflict],
   );
 
   const closeExpansion = useCallback((anchor: number) => {

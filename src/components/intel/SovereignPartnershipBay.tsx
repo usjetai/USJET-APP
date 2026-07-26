@@ -1,6 +1,5 @@
 import { USJET_OPS_EMAIL } from "../../lib/usjetContact";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
-import EkgPulseLine from "./EkgPulseLine";
 
 /**
  * Crypto Intel Bay — Slot 01 reserved for premier exchange partner API.
@@ -13,9 +12,6 @@ export default function SovereignPartnershipBay() {
       aria-labelledby="intel-sovereign-bay-heading"
     >
       <div className="intel-sovereign-bay__stage">
-        <div className="intel-sovereign-bay__ekg" aria-hidden>
-          <EkgPulseLine variant="hero" seed={1} />
-        </div>
         <div className="intel-sovereign-bay__grid" aria-hidden />
         <div className="intel-sovereign-bay__content">
           <p className="intel-sovereign-bay__kicker">Sovereign Partnership</p>

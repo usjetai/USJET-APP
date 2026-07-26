@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
 import { ShieldCheck } from "lucide-react";
 import { useMemo } from "react";
-import EkgPulseLine from "../intel/EkgPulseLine";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { memberClearanceDisplayLabel, membershipTenureLabel } from "../../lib/memberAccessLevel";
 import { getMemberProjectStats } from "../../lib/memberProjectTracker";
@@ -48,14 +46,13 @@ export default function OriginMemberStrip({ session }: OriginMemberStripProps) {
       : `Clearance confirmed — ${clearanceLabel} on the roster`;
 
   return (
-    <GlassEffectContainer className="origin-member-strip glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan mb-6 w-full max-w-3xl">
+    <GlassEffectContainer className="origin-member-strip glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
       <div className="origin-member-strip__inner">
-        <div className="origin-member-strip__header">
-          <MotionStripHeader clearanceLabel={clearanceLabel} proudKicker={proudKicker} tenure={tenure} />
-        </div>
-
-        <div className="origin-member-strip__ekg" aria-hidden>
-          <EkgPulseLine variant="hero" seed={77} className="origin-member-strip__ekg-line" />
+        <div className="origin-member-strip__lead">
+          <ShieldCheck size={14} className="origin-member-strip__icon" aria-hidden />
+          <p className="origin-member-strip__kicker">{proudKicker}</p>
+          <span className="origin-member-strip__badge">{clearanceLabel}</span>
+          <span className="origin-member-strip__tenure">{tenure}</span>
         </div>
 
         <dl className="origin-member-strip__grid">
@@ -69,36 +66,7 @@ export default function OriginMemberStrip({ session }: OriginMemberStripProps) {
           />
           <StripCell label="Session forks" value={String(stats.totalSessionForks)} accent />
         </dl>
-
-        <div className="origin-member-strip__footer">
-          <Link to="/member" className="origin-member-strip__portal-link btn-glass glass-effect-interactive">
-            Open Mission Projects
-          </Link>
-        </div>
       </div>
     </GlassEffectContainer>
-  );
-}
-
-function MotionStripHeader({
-  clearanceLabel,
-  proudKicker,
-  tenure,
-}: {
-  clearanceLabel: string;
-  proudKicker: string;
-  tenure: string;
-}) {
-  return (
-    <>
-      <div className="origin-member-strip__title-row">
-        <ShieldCheck size={16} className="origin-member-strip__icon" aria-hidden />
-        <p className="origin-member-strip__kicker">{proudKicker}</p>
-      </div>
-      <div className="origin-member-strip__badge-row">
-        <span className="origin-member-strip__badge">{clearanceLabel}</span>
-        <span className="origin-member-strip__tenure">{tenure}</span>
-      </div>
-    </>
   );
 }

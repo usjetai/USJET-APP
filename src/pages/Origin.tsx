@@ -16,6 +16,13 @@ import {
 import { isOriginCustomerServiceEntry } from "../lib/memberAccessLevel";
 import { useMemberAuth } from "../context/MemberAuthContext";
 import {
+  fetchOriginRealtimeStatus,
+  OriginRealtimeClient,
+  type OriginRealtimeStatus,
+  type OriginRealtimeToolHandlers,
+} from "../lib/originRealtimeClient";
+import { OriginS2SSocketClient } from "../lib/originS2SSocket";
+import {
   captionForStatus,
   createSpeechRecognition,
   isSpeechRecognitionSupported,
@@ -25,8 +32,9 @@ import {
 const OriginAvatarStage = lazy(() => import("../components/origin/OriginAvatarStage"));
 
 /**
- * Origin command node — full-bleed Founder android stage
- * with browser mic STT → Origin chat → TTS presence.
+ * Origin command android — official white/gold pilot + HeadAudio lip-sync.
+ * Prefer custom S2S WebSocket (PCM16 append) or OpenAI Realtime WebRTC when armed;
+ * otherwise Web Speech STT → /api/origin-chat → TTS.
  */
 export default function Origin() {
   const [searchParams] = useSearchParams();
@@ -42,6 +50,8 @@ export default function Origin() {
 
   const avatarRef = useRef<OriginAvatarHandle | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const realtimeRef = useRef<OriginRealtimeClient | OriginS2SSocketClient | null>(null);
+  const realtimeProbeRef = useRef<OriginRealtimeStatus | null>(null);
   const sessionActiveRef = useRef(false);
   const mutedRef = useRef(false);
   const busyRef = useRef(false);
@@ -51,6 +61,8 @@ export default function Origin() {
   const [avatarReady, setAvatarReady] = useState(false);
   const [status, setStatus] = useState<OriginVoiceStatus>("loading");
   const [sessionLive, setSessionLive] = useState(false);
+  const [realtimeArmed, setRealtimeArmed] = useState(false);
+  const [s2sTransport, setS2sTransport] = useState<"webrtc" | "websocket" | "none">("none");
   const [muted, setMuted] = useState(false);
   const [showSubtitles, setShowSubtitles] = useState(true);
   const [subtitles, setSubtitles] = useState("");
@@ -60,13 +72,28 @@ export default function Origin() {
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    let cancelled = false;
+    void fetchOriginRealtimeStatus().then((probe) => {
+      if (cancelled) return;
+      realtimeProbeRef.current = probe;
+      const armed =
+        probe.available && (probe.transport === "webrtc" || probe.transport === "websocket");
+      setRealtimeArmed(armed);
+      setS2sTransport(probe.transport);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const onAvatarReady = useCallback((value: boolean) => {
     setAvatarReady(value);
   }, []);
 
   const onAvatarLoadError = useCallback((message: string) => {
+    // Soft notice — do not force composer; character presence still works.
     setError(message);
-    setComposerOpen(true);
   }, []);
 
   useEffect(() => {
@@ -84,6 +111,8 @@ export default function Origin() {
       document.title = prevTitle;
       sessionActiveRef.current = false;
       recognitionRef.current?.stop();
+      void realtimeRef.current?.disconnect(true);
+      realtimeRef.current = null;
       window.speechSynthesis?.cancel();
       avatarRef.current?.stopSpeaking();
     };
@@ -153,6 +182,7 @@ export default function Origin() {
     setSessionLive(false);
     recognitionRef.current?.stop();
     recognitionRef.current = null;
+    void realtimeRef.current?.disconnect(false);
     avatarRef.current?.stopSpeaking();
     window.speechSynthesis?.cancel();
     busyRef.current = false;
@@ -160,10 +190,75 @@ export default function Origin() {
     setSubtitles("");
   }, [avatarReady]);
 
-  const startSession = useCallback(() => {
+  const buildRealtimeHandlers = useCallback((): OriginRealtimeToolHandlers => {
+    return {
+      setMood: (mood) => avatarRef.current?.setMood(mood),
+      makeHandGesture: (gesture) => avatarRef.current?.playGesture(gesture),
+      makeFacialExpression: (emoji) => avatarRef.current?.speakEmoji(emoji),
+      onSpeechStarted: () => {
+        setStatus("listening");
+        avatarRef.current?.setListening(true);
+        avatarRef.current?.setRemoteSpeaking(false);
+      },
+      onSpeakingChange: (speaking) => {
+        setStatus(speaking ? "speaking" : sessionActiveRef.current ? "listening" : "idle");
+        avatarRef.current?.setRemoteSpeaking(speaking);
+        if (!speaking) avatarRef.current?.setListening(Boolean(sessionActiveRef.current));
+      },
+      onRemoteAudioStream: (stream) => {
+        avatarRef.current?.attachRemoteAudio(stream);
+      },
+      onError: (message) => {
+        setError(message);
+        setStatus("error");
+      },
+    };
+  }, []);
+
+  const startRealtimeSession = useCallback(async () => {
     avatarRef.current?.start();
     setError(null);
+    setStatus("processing");
+    setSubtitles(showSubtitles ? "Connecting Origin Realtime…" : "");
 
+    const handlers = buildRealtimeHandlers();
+    const probe = realtimeProbeRef.current;
+    const instructionsExtra = isCustomerServiceEntry
+      ? "Customer Service entry: prioritize ops@usjet.ai, Stripe Member ID login, and Hangar help."
+      : undefined;
+
+    try {
+      if (probe?.transport === "websocket" && probe.wsUrl) {
+        const socketClient = new OriginS2SSocketClient(handlers);
+        realtimeRef.current = socketClient;
+        await socketClient.connect({ wsUrl: probe.wsUrl, instructionsExtra });
+      } else {
+        const webrtcClient = new OriginRealtimeClient(handlers);
+        realtimeRef.current = webrtcClient;
+        await webrtcClient.connect({ instructionsExtra });
+      }
+      sessionActiveRef.current = true;
+      setSessionLive(true);
+      setStatus("listening");
+      avatarRef.current?.setListening(true);
+      setSubtitles(
+        showSubtitles
+          ? probe?.transport === "websocket"
+            ? "Origin S2S live — mic streams PCM16; speak naturally."
+            : "Origin Realtime live — speak naturally."
+          : "",
+      );
+    } catch (err) {
+      realtimeRef.current = null;
+      const message = err instanceof Error ? err.message : "Realtime connect failed";
+      setError(message);
+      setStatus("error");
+      setSessionLive(false);
+      throw err;
+    }
+  }, [buildRealtimeHandlers, isCustomerServiceEntry, showSubtitles]);
+
+  const startLegacySpeechSession = useCallback(() => {
     if (!speechSupported) {
       setComposerOpen(true);
       setStatus("idle");
@@ -226,6 +321,21 @@ export default function Origin() {
     }
   }, [runTurn, showSubtitles, speechSupported, stopSession]);
 
+  const startSession = useCallback(() => {
+    avatarRef.current?.start();
+    setError(null);
+
+    if (realtimeArmed) {
+      void startRealtimeSession().catch(() => {
+        setError((prev) => `${prev ?? "Realtime unavailable."} Falling back to browser speech.`);
+        startLegacySpeechSession();
+      });
+      return;
+    }
+
+    startLegacySpeechSession();
+  }, [realtimeArmed, startLegacySpeechSession, startRealtimeSession]);
+
   const toggleMain = () => {
     if (sessionLive) stopSession();
     else startSession();
@@ -235,16 +345,19 @@ export default function Origin() {
     const next = !muted;
     setMuted(next);
     mutedRef.current = next;
+    realtimeRef.current?.setMicEnabled(!next);
     if (next) {
       recognitionRef.current?.stop();
       if (sessionActiveRef.current && !busyRef.current) setStatus("idle");
-    } else if (sessionActiveRef.current && !busyRef.current && speechSupported) {
+    } else if (sessionActiveRef.current && !busyRef.current) {
       setStatus("listening");
       avatarRef.current?.setListening(true);
-      try {
-        recognitionRef.current?.start();
-      } catch {
-        /* ignore */
+      if (!realtimeRef.current && speechSupported) {
+        try {
+          recognitionRef.current?.start();
+        } catch {
+          /* ignore */
+        }
       }
     }
   };
@@ -261,7 +374,7 @@ export default function Origin() {
     ? "Loading…"
     : sessionLive
       ? "End conversation"
-      : speechSupported
+      : realtimeArmed || speechSupported
         ? "Start talking"
         : "Type to Origin";
 
@@ -285,16 +398,16 @@ export default function Origin() {
         <div className="origin-avatar-app__identity">
           <h1>Origin</h1>
           <p>
-            Talk to <strong>USJET.AI</strong> face to face. Browser mic · live command ·
-            Origin&nbsp;android
+            Talk to <strong>USJET.AI</strong> face to face — white-and-gold command android.{" "}
+            {realtimeArmed
+              ? s2sTransport === "websocket"
+                ? "S2S WebSocket · "
+                : "Realtime S2S · "
+              : "Browser speech · "}
+            HeadAudio lip-sync
             {isCustomerServiceEntry ? " · Customer Service channel" : ""}
           </p>
           {csScreenGreet ? <p className="origin-avatar-app__cs">{csScreenGreet}</p> : null}
-          {session?.active ? (
-            <div className="origin-avatar-app__member">
-              <OriginMemberStrip session={session} />
-            </div>
-          ) : null}
         </div>
         <div className="origin-avatar-app__top-actions">
           <Link to="/" className="origin-avatar-app__ghost glass-effect-interactive">
@@ -352,7 +465,7 @@ export default function Origin() {
           >
             {mainLabel}
           </button>
-          {sessionLive && speechSupported ? (
+          {sessionLive ? (
             <button
               type="button"
               className={[
@@ -383,6 +496,12 @@ export default function Origin() {
         >
           {composerOpen ? "Hide text channel" : "Type instead"}
         </button>
+
+        {session?.active ? (
+          <div className="origin-avatar-app__member-bar">
+            <OriginMemberStrip session={session} />
+          </div>
+        ) : null}
 
         {composerOpen ? (
           <form className="origin-avatar-app__composer" onSubmit={onComposerSubmit}>
@@ -435,9 +554,11 @@ export default function Origin() {
               Show subtitles while she speaks
             </label>
             <p className="origin-avatar-app__dialog-note">
-              Day-one voice uses your browser mic and speech engine — not a hosted speech-to-speech
-              backend. Swap the GLB via <code>VITE_ORIGIN_AVATAR_URL</code> when Origin&apos;s final
-              mesh is ready.
+              {realtimeArmed
+                ? s2sTransport === "websocket"
+                  ? "S2S WebSocket armed — PCM16 input_audio_buffer.append + output_audio.delta, HeadAudio lip-sync, tools: set_mood / make_hand_gesture / make_facial_expression."
+                  : "Realtime S2S armed — OpenAI WebRTC + HeadAudio lip-sync on Origin. Tools: set_mood, make_hand_gesture, make_facial_expression."
+                : "S2S offline — set OPENAI_API_KEY (WebRTC) or ORIGIN_S2S_WS_URL (WebSocket). Until then: browser mic → Origin chat → TTS. Official look uses Origin’s white/gold pilot video."}
             </p>
             <div className="origin-avatar-app__dialog-actions">
               <button type="button" className="origin-avatar-app__dialog-done" onClick={() => setSettingsOpen(false)}>

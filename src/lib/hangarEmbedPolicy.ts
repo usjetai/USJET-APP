@@ -201,3 +201,12 @@ export function isJetBrowserIframeBlocked(url: string): boolean {
 
   return hostIsKnownBlocked(host);
 }
+
+/** True when Jet Browser / Quick Mission can auto-load this URL inside an iframe. */
+export function isJetBrowserIframeAutoEmbed(url: string): boolean {
+  const host = hostFromUrl(url);
+  if (!host) {
+    return false;
+  }
+  return hostIsAutoEmbed(host);
+}

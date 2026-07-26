@@ -1,13 +1,20 @@
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
+import JetBrowserQuickMissions from "../components/jetBrowser/JetBrowserQuickMissions";
 import JetBrowserTile, {
   JetBrowserEmptyBay,
   type JetBrowserBay,
 } from "../components/jetBrowser/JetBrowserTile";
 import {
+  JET_BROWSER_QUICK_MISSIONS,
+  type JetBrowserQuickMission,
+  type JetBrowserQuickMissionApp,
+} from "../data/jetBrowserQuickMissions";
+import {
   useJetBrowserColumnLayout,
   type JetBrowserColumnLayout,
 } from "../hooks/useJetBrowserColumnLayout";
+import { isJetBrowserIframeAutoEmbed } from "../lib/hangarEmbedPolicy";
 import { jetBrowserTileLabel, normalizeJetBrowserUrl } from "../lib/jetBrowserUrl";
 
 const JET_BROWSER_META =
@@ -34,6 +41,9 @@ export default function JetBrowser() {
   const [tiles, setTiles] = useState<JetBrowserBay[]>([]);
   const [focusedId, setFocusedId] = useState<string | null>(null);
   const [fullToast, setFullToast] = useState(false);
+  const [activeMissionId, setActiveMissionId] = useState<string | null>(
+    () => JET_BROWSER_QUICK_MISSIONS[0]?.id ?? null,
+  );
   const toastTimerRef = useRef<number | null>(null);
 
   const gridClass = useMemo(
@@ -122,6 +132,51 @@ export default function JetBrowser() {
     setFocusedId((current) => (current === id ? null : id));
   }, []);
 
+  const handleSelectMission = useCallback(
+    (mission: JetBrowserQuickMission) => {
+      setActiveMissionId(mission.id);
+      const safeApps = mission.apps.filter((app) => isJetBrowserIframeAutoEmbed(app.href));
+      if (safeApps.length === 0) {
+        setError("No iframe-clear apps in this mission.");
+        return;
+      }
+
+      const loadout = safeApps.slice(0, MAX_OPEN_TILES).map((app) => ({
+        id: createBayId(),
+        url: app.href,
+      }));
+      setFocusedId(null);
+      setTiles(loadout);
+      setError(null);
+      if (safeApps.length > MAX_OPEN_TILES) {
+        flashFullToast();
+      }
+    },
+    [flashFullToast],
+  );
+
+  const handleSelectMissionApp = useCallback(
+    (app: JetBrowserQuickMissionApp) => {
+      if (!isJetBrowserIframeAutoEmbed(app.href)) {
+        setError(`${app.name} is blocked from iframe tiles — pick another AI.`);
+        return;
+      }
+
+      setTiles((prev) => {
+        if (prev.some((tile) => tile.url === app.href)) {
+          return prev;
+        }
+        if (prev.length >= MAX_OPEN_TILES) {
+          flashFullToast();
+          return prev;
+        }
+        return [...prev, { id: createBayId(), url: app.href }];
+      });
+      setError(null);
+    },
+    [flashFullToast],
+  );
+
   const emptyCount = useMemo(() => {
     if (tiles.length >= MAX_OPEN_TILES) return 0;
     return Math.min(EMPTY_READY_BAYS, MAX_OPEN_TILES - tiles.length);
@@ -156,10 +211,16 @@ export default function JetBrowser() {
               Jet <span className="text-cyan-400">Browser</span>
             </h1>
             <p className="jet-browser-hero__lede">
-              Enter a domain or any page link. It opens in a tile. Enter another — another tile.
-              Enlarge to work, shrink to formation. One ship, one cockpit.
+              Enter a domain or any page link. Or run a Quick Mission — Product Hunt AI tabs that
+              auto-embed in tiles. Enlarge to work, shrink to formation. One ship, one cockpit.
             </p>
           </div>
+
+          <JetBrowserQuickMissions
+            activeMissionId={activeMissionId}
+            onSelectMission={handleSelectMission}
+            onSelectApp={handleSelectMissionApp}
+          />
 
           <form
             className="jet-browser-launch glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"

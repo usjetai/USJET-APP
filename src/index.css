@@ -880,6 +880,139 @@
   box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.35);
 }
 
+.app-nav-zone--social {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Instagram — header chip, gradient glow */
+.app-nav-instagram {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0 0.55rem 0 0.42rem;
+  text-decoration: none;
+  border: 1px solid rgba(225, 48, 108, 0.65);
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(131, 58, 180, 0.82) 0%,
+    rgba(193, 53, 132, 0.88) 35%,
+    rgba(225, 48, 108, 0.9) 55%,
+    rgba(253, 29, 29, 0.85) 75%,
+    rgba(252, 176, 69, 0.78) 100%
+  );
+  box-shadow:
+    0 0 14px rgba(225, 48, 108, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transform: none;
+}
+
+.app-nav-instagram:hover,
+.app-nav-instagram:focus-visible {
+  transform: none;
+  border-color: rgba(252, 176, 69, 0.95);
+  box-shadow:
+    0 0 18px rgba(225, 48, 108, 0.55),
+    0 0 8px rgba(131, 58, 180, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.app-nav-instagram:active {
+  transform: none;
+}
+
+.app-nav-instagram__halo,
+.app-nav-instagram__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.app-nav-instagram__halo {
+  background: radial-gradient(circle at 30% 50%, rgba(252, 176, 69, 0.45), transparent 70%);
+}
+
+.app-nav-instagram__shine {
+  background: linear-gradient(
+    105deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.65) 46%,
+    rgba(252, 176, 69, 0.4) 52%,
+    transparent 68%
+  );
+  transform: translateX(-140%) skewX(-14deg);
+}
+
+.app-nav-instagram__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0.28rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.22);
+  box-shadow:
+    0 0 8px rgba(252, 176, 69, 0.45),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.app-nav-instagram__label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(131, 58, 180, 0.55);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-nav-instagram__shine {
+    animation: app-nav-instagram-shine 3.4s ease-in-out infinite;
+  }
+
+  .app-nav-instagram__halo {
+    animation: app-nav-instagram-halo 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes app-nav-instagram-shine {
+  0%,
+  100% {
+    transform: translateX(-140%) skewX(-14deg);
+  }
+
+  45%,
+  55% {
+    transform: translateX(140%) skewX(-14deg);
+  }
+}
+
+@keyframes app-nav-instagram-halo {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-nav-instagram__halo,
+  .app-nav-instagram__shine {
+    animation: none;
+  }
+}
+
 /* Cash App — header chip, green glow + blink */
 .app-nav-cashapp {
   position: relative;
@@ -25506,7 +25639,8 @@ html.intelligence-page-root #usjet-app-shell {
 
 /* Header chip height lock — final pass after per-chip styles */
 .app-nav-shell .btn-glass,
-.app-nav-shell .app-nav-cashapp {
+.app-nav-shell .app-nav-cashapp,
+.app-nav-shell .app-nav-instagram {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;

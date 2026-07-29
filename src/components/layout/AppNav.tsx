@@ -1,24 +1,10 @@
 import { NavLink, Link } from "react-router-dom";
-import { Newspaper } from "lucide-react";
-import GamingVrNavButton from "../gaming/GamingVrNavButton";
-import AppNavHangarLive from "./AppNavHangarLive";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
-import MobileRotateCue from "./MobileRotateCue";
-import AppNavCashAppButton from "./AppNavCashAppButton";
-import UsjetOpsMailEnvelope from "./UsjetOpsMailEnvelope";
-import { BLOG_ROUTE } from "../../data/usjetBlog";
+import AppNavInstagramBadge from "./AppNavInstagramBadge";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import OriginGateLink from "../origin/OriginGateLink";
 import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
-import { wrapExternalInCockpit } from "../../lib/fleetLaunchUrl";
-import { GAMING_X_URL, GAMING_X_WEB } from "../../data/gamingPortal";
-
-const X_USAJET_COCKPIT = wrapExternalInCockpit(GAMING_X_URL, {
-  label: GAMING_X_WEB,
-  returnTo: "/",
-  directHandoff: true,
-});
 
 const NAV_LINKS = [
   { to: "/", label: "Hangar" },
@@ -72,9 +58,12 @@ const AppNav = () => {
                 ),
               )}
             </nav>
+
+            <div className="app-nav-zone app-nav-zone--social">
+              <AppNavInstagramBadge />
+            </div>
           </div>
         </div>
-
       </GlassEffectContainer>
     </header>
   );

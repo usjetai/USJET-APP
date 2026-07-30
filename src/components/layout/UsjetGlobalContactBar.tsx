@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
+import { USJET_BUSINESS_ADDRESS_LINES } from "../../lib/usjetContact";
 
 const YEAR = new Date().getFullYear();
 
@@ -22,6 +23,13 @@ export default function UsjetGlobalContactBar() {
             <p className="usjet-footer__tagline">
               Sovereign workbench for America&apos;s labor force — grit into gold.
             </p>
+            <address className="usjet-footer__address">
+              {USJET_BUSINESS_ADDRESS_LINES.map((line) => (
+                <span key={line} className="usjet-footer__address-line">
+                  {line}
+                </span>
+              ))}
+            </address>
             <div className="usjet-global-contact-bar__status" aria-label="USJET live status">
               <span className="usjet-global-contact-bar__status-label usjet-global-contact-bar__status-label--full">
                 System Active

@@ -885,6 +885,141 @@
   flex-shrink: 0;
 }
 
+/* Phone — header dial chip */
+.app-nav-phone {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0 0.55rem 0 0.42rem;
+  text-decoration: none;
+  border: 1px solid rgba(34, 211, 238, 0.55);
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(8, 145, 178, 0.72), rgba(14, 60, 90, 0.88));
+  box-shadow:
+    0 0 12px rgba(34, 211, 238, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transform: none;
+}
+
+.app-nav-phone:hover,
+.app-nav-phone:focus-visible {
+  transform: none;
+  border-color: rgba(103, 232, 249, 0.95);
+  box-shadow:
+    0 0 16px rgba(34, 211, 238, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.app-nav-phone:active {
+  transform: none;
+}
+
+.app-nav-phone__halo,
+.app-nav-phone__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.app-nav-phone__halo {
+  background: radial-gradient(circle at 30% 50%, rgba(103, 232, 249, 0.4), transparent 72%);
+}
+
+.app-nav-phone__shine {
+  background: linear-gradient(
+    105deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.55) 46%,
+    rgba(165, 243, 252, 0.35) 52%,
+    transparent 68%
+  );
+  transform: translateX(-140%) skewX(-14deg);
+}
+
+.app-nav-phone__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 0.28rem;
+  color: #ecfeff;
+  background: rgba(6, 78, 99, 0.55);
+  box-shadow:
+    0 0 8px rgba(34, 211, 238, 0.45),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.app-nav-phone__label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.55rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #ecfeff;
+  text-shadow: 0 0 8px rgba(34, 211, 238, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.app-nav-phone__label--short {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .app-nav-phone__label--full {
+    display: none;
+  }
+
+  .app-nav-phone__label--short {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-nav-phone__shine {
+    animation: app-nav-phone-shine 3.4s ease-in-out infinite;
+  }
+
+  .app-nav-phone__halo {
+    animation: app-nav-phone-halo 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes app-nav-phone-shine {
+  0%,
+  100% {
+    transform: translateX(-140%) skewX(-14deg);
+  }
+
+  45%,
+  55% {
+    transform: translateX(140%) skewX(-14deg);
+  }
+}
+
+@keyframes app-nav-phone-halo {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-nav-phone__halo,
+  .app-nav-phone__shine {
+    animation: none;
+  }
+}
+
 /* Instagram — header chip, gradient glow */
 .app-nav-instagram {
   position: relative;
@@ -1446,6 +1581,21 @@
   color: rgba(148, 163, 184, 0.78);
 }
 
+.usjet-footer__address {
+  margin: 0;
+  max-width: 12rem;
+  font-style: normal;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  color: rgba(148, 163, 184, 0.62);
+}
+
+.usjet-footer__address-line {
+  display: block;
+}
+
 .usjet-footer__heading {
   margin: 0 0 0.1rem;
   font-size: 0.5rem;
@@ -1831,6 +1981,12 @@
 
   .usjet-footer__tagline {
     display: none;
+  }
+
+  .usjet-footer__address {
+    max-width: none;
+    font-size: 0.46rem;
+    letter-spacing: 0.03em;
   }
 
   .usjet-footer__link {
@@ -25640,7 +25796,8 @@ html.intelligence-page-root #usjet-app-shell {
 /* Header chip height lock — final pass after per-chip styles */
 .app-nav-shell .btn-glass,
 .app-nav-shell .app-nav-cashapp,
-.app-nav-shell .app-nav-instagram {
+.app-nav-shell .app-nav-instagram,
+.app-nav-shell .app-nav-phone {
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;

@@ -2,6 +2,7 @@ import { NavLink, Link } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
 import AppNavInstagramBadge from "./AppNavInstagramBadge";
+import AppNavPhoneBadge from "./AppNavPhoneBadge";
 import { useMemberAuth } from "../../context/MemberAuthContext";
 import OriginGateLink from "../origin/OriginGateLink";
 import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
@@ -60,6 +61,7 @@ const AppNav = () => {
             </nav>
 
             <div className="app-nav-zone app-nav-zone--social">
+              <AppNavPhoneBadge />
               <AppNavInstagramBadge />
             </div>
           </div>

@@ -146,59 +146,63 @@ async function completeFreeInference(messages: ApiChatMessage[]): Promise<string
 }
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
-  const { messages } = parseBody(req.body);
-  if (!Array.isArray(messages) || messages.length === 0) {
-    return res.status(400).json({ error: "messages array required" });
-  }
-
-  const hasSystem = messages.some((message) => message.role === "system");
-  if (!hasSystem) {
-    return res.status(400).json({ error: "system message required" });
-  }
-
-  // 1) Gemini API key
-  if (resolveGeminiApiKey()) {
-    try {
-      const reply = await completeGeminiApiKey(messages);
-      return res.status(200).json({ reply, source: "gemini-api-key" });
-    } catch (error) {
-      /* continue to fallbacks */
-    }
-  }
-
-  // 2) Vertex AI
-  if (resolveVertexConfig()) {
-    try {
-      const reply = await completeVertexGemini(messages);
-      return res.status(200).json({ reply, source: "vertex" });
-    } catch (error) {
-      /* continue to fallbacks */
-    }
-  }
-
-  // 3) OpenRouter Key (if set)
-  const apiKey = resolveOpenRouterKey();
-  if (apiKey) {
-    try {
-      const reply = await completeOpenRouter(apiKey, messages);
-      return res.status(200).json({ reply, source: "openrouter" });
-    } catch (error) {
-      /* continue to free inference */
-    }
-  }
-
-  // 4) Live Zero-Cost Free AI Inference (Instant live AI responses for $0)
   try {
-    const reply = await completeFreeInference(messages);
-    return res.status(200).json({ reply, source: "free-inference" });
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    const { messages } = parseBody(req.body);
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return res.status(400).json({ error: "messages array required" });
+    }
+
+    // 1) Gemini API key
+    try {
+      if (resolveGeminiApiKey()) {
+        const reply = await completeGeminiApiKey(messages);
+        return res.status(200).json({ reply, source: "gemini-api-key" });
+      }
+    } catch {
+      /* continue */
+    }
+
+    // 2) Vertex AI
+    try {
+      if (resolveVertexConfig()) {
+        const reply = await completeVertexGemini(messages);
+        return res.status(200).json({ reply, source: "vertex" });
+      }
+    } catch {
+      /* continue */
+    }
+
+    // 3) OpenRouter Key
+    try {
+      const apiKey = resolveOpenRouterKey();
+      if (apiKey) {
+        const reply = await completeOpenRouter(apiKey, messages);
+        return res.status(200).json({ reply, source: "openrouter" });
+      }
+    } catch {
+      /* continue */
+    }
+
+    // 4) Live Free AI Inference
+    try {
+      const reply = await completeFreeInference(messages);
+      return res.status(200).json({ reply, source: "free-inference" });
+    } catch {
+      return res.status(200).json({
+        reply: onboardFallback(lastUserText(messages)),
+        source: "onboard-fallback",
+      });
+    }
   } catch (error) {
+    const message = error instanceof Error ? error.message : "Origin chat server error";
     return res.status(200).json({
-      reply: onboardFallback(lastUserText(messages)),
-      source: "onboard-fallback",
+      reply: onboardFallback(""),
+      source: "onboard-fallback-error",
+      error: message,
     });
   }
 }

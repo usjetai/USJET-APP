@@ -3344,6 +3344,15 @@
   pointer-events: none;
 }
 
+.fleet-card__aircraft-sortie-anchor {
+  display: grid;
+  place-items: center;
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
 /* Fixed sortie craft — nose-up art flies free of tile overflow clipping.
    Final pass scales past the viewport so the jet blanks the whole page before launch. */
 .fleet-card__aircraft-flight {

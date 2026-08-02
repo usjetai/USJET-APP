@@ -1,6 +1,16 @@
-import { FormEvent, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  FormEvent,
+  KeyboardEvent,
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Mic, MicOff, Send, Settings2 } from "lucide-react";
+import { LoaderCircle, Mic, MicOff, Send, Settings2 } from "lucide-react";
 import type { OriginAvatarHandle } from "../components/origin/OriginAvatarStage";
 import OriginMemberStrip from "../components/origin/OriginMemberStrip";
 import {
@@ -32,9 +42,8 @@ import {
 const OriginAvatarStage = lazy(() => import("../components/origin/OriginAvatarStage"));
 
 /**
- * Origin command android — official white/gold pilot + HeadAudio lip-sync.
- * Prefer custom S2S WebSocket (PCM16 append) or OpenAI Realtime WebRTC when armed;
- * otherwise Web Speech STT → /api/origin-chat → TTS.
+ * Origin command android — text chat box is primary (history + composer + Enter).
+ * Voice remains optional: S2S / Realtime when armed, else Web Speech → /api/origin-chat → TTS.
  */
 export default function Origin() {
   const [searchParams] = useSearchParams();
@@ -67,10 +76,12 @@ export default function Origin() {
   const [showSubtitles, setShowSubtitles] = useState(true);
   const [subtitles, setSubtitles] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [composerOpen, setComposerOpen] = useState(!isSpeechRecognitionSupported());
+  /** Text channel is the primary UX — always open like a normal chat box. */
+  const [composerOpen, setComposerOpen] = useState(true);
   const [turns, setTurns] = useState<OriginChatTurn[]>([ORIGIN_WELCOME_ASSISTANT]);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const chatLogRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -105,6 +116,12 @@ export default function Origin() {
   }, [muted]);
 
   useEffect(() => {
+    const node = chatLogRef.current;
+    if (!node) return;
+    node.scrollTop = node.scrollHeight;
+  }, [turns, status]);
+
+  useEffect(() => {
     const prevTitle = document.title;
     document.title = "Origin · Face to face · USJet.ai";
     return () => {
@@ -137,9 +154,15 @@ export default function Origin() {
       setSubtitles("");
       avatarRef.current?.stopSpeaking();
 
+      // Show the user line immediately — normal chat-box feel while Origin thinks.
+      const priorTurns = turnsRef.current;
+      const optimisticTurns: OriginChatTurn[] = [...priorTurns, { role: "user", content: text }];
+      setTurns(optimisticTurns);
+      turnsRef.current = optimisticTurns;
+
       const result = await sendOriginTurn({
         text,
-        turns: turnsRef.current,
+        turns: priorTurns,
         session: session?.active ? session : null,
         isCustomerServiceEntry,
       });
@@ -365,7 +388,16 @@ export default function Origin() {
   const onComposerSubmit = (event: FormEvent) => {
     event.preventDefault();
     const text = draft.trim();
-    if (!text) return;
+    if (!text || status === "processing") return;
+    setDraft("");
+    void runTurn(text);
+  };
+
+  const onComposerKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== "Enter" || event.shiftKey) return;
+    event.preventDefault();
+    if (!draft.trim() || status === "processing") return;
+    const text = draft.trim();
     setDraft("");
     void runTurn(text);
   };
@@ -426,6 +458,71 @@ export default function Origin() {
       </header>
 
       <footer className="origin-avatar-app__controls">
+        {composerOpen ? (
+          <div
+            ref={chatLogRef}
+            className="origin-avatar-app__chat-log liquid-glass-background glass-effect glass-effect--rounded-rect"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+            aria-label="Origin conversation"
+          >
+            {turns.map((turn, index) => (
+              <article
+                key={`origin-turn-${index}-${turn.role}`}
+                className={[
+                  "origin-avatar-app__chat-line",
+                  turn.role === "user"
+                    ? "origin-avatar-app__chat-line--user"
+                    : "origin-avatar-app__chat-line--assistant",
+                ].join(" ")}
+              >
+                <span className="origin-avatar-app__chat-speaker">
+                  {turn.role === "user" ? "You" : "Origin"}
+                </span>
+                <p className="origin-avatar-app__chat-text">{turn.content}</p>
+              </article>
+            ))}
+            {status === "processing" ? (
+              <div className="origin-avatar-app__chat-line origin-avatar-app__chat-line--assistant origin-avatar-app__chat-line--pending">
+                <span className="origin-avatar-app__chat-speaker">Origin</span>
+                <p className="origin-avatar-app__chat-text">
+                  <LoaderCircle size={14} aria-hidden className="origin-avatar-app__chat-spinner" />
+                  Thinking…
+                </p>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+
+        {composerOpen ? (
+          <form className="origin-avatar-app__composer" onSubmit={onComposerSubmit}>
+            <label className="sr-only" htmlFor="origin-avatar-input">
+              Message Origin
+            </label>
+            <textarea
+              id="origin-avatar-input"
+              className="origin-avatar-app__input"
+              rows={2}
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              onKeyDown={onComposerKeyDown}
+              placeholder="Message Origin… (Enter to send)"
+              disabled={status === "processing"}
+              autoComplete="off"
+            />
+            <button
+              type="submit"
+              className="origin-avatar-app__send btn-glass-prominent glass-effect-interactive"
+              disabled={!draft.trim() || status === "processing"}
+              aria-label="Send message"
+            >
+              <Send size={16} aria-hidden />
+              Send
+            </button>
+          </form>
+        ) : null}
+
         <div
           className={[
             "origin-avatar-app__subtitles",
@@ -494,40 +591,13 @@ export default function Origin() {
           className="origin-avatar-app__composer-toggle glass-effect-interactive"
           onClick={() => setComposerOpen((v) => !v)}
         >
-          {composerOpen ? "Hide text channel" : "Type instead"}
+          {composerOpen ? "Hide chat" : "Show chat"}
         </button>
 
         {session?.active ? (
           <div className="origin-avatar-app__member-bar">
             <OriginMemberStrip session={session} />
           </div>
-        ) : null}
-
-        {composerOpen ? (
-          <form className="origin-avatar-app__composer" onSubmit={onComposerSubmit}>
-            <label className="sr-only" htmlFor="origin-avatar-input">
-              Message Origin
-            </label>
-            <textarea
-              id="origin-avatar-input"
-              className="origin-avatar-app__input"
-              rows={2}
-              value={draft}
-              onChange={(event) => setDraft(event.target.value)}
-              placeholder="Ask about Hangar, Fleet, tiers, or a partner bay…"
-              disabled={busyRef.current && status === "processing"}
-              autoComplete="off"
-            />
-            <button
-              type="submit"
-              className="origin-avatar-app__send btn-glass-prominent glass-effect-interactive"
-              disabled={!draft.trim() || status === "processing"}
-              aria-label="Send message"
-            >
-              <Send size={16} aria-hidden />
-              Send
-            </button>
-          </form>
         ) : null}
       </footer>
 

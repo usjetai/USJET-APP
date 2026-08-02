@@ -11350,18 +11350,98 @@ html.code-kit-page-root #usjet-app-shell {
   color: var(--origin-avatar-live);
 }
 
+.origin-avatar-app__chat-log {
+  width: min(36rem, 100%);
+  max-height: min(38vh, 18rem);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--origin-avatar-border);
+  background: rgba(10, 11, 16, 0.78);
+  scroll-behavior: smooth;
+}
+
+.origin-avatar-app__chat-line {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 92%;
+}
+
+.origin-avatar-app__chat-line--user {
+  align-self: flex-end;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.origin-avatar-app__chat-line--assistant {
+  align-self: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.origin-avatar-app__chat-speaker {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--origin-avatar-faint);
+}
+
+.origin-avatar-app__chat-text {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.7rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.origin-avatar-app__chat-line--user .origin-avatar-app__chat-text {
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: var(--origin-avatar-text);
+}
+
+.origin-avatar-app__chat-line--assistant .origin-avatar-app__chat-text {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--origin-avatar-border);
+  color: var(--origin-avatar-text);
+}
+
+.origin-avatar-app__chat-line--pending .origin-avatar-app__chat-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--origin-avatar-faint);
+}
+
+.origin-avatar-app__chat-spinner {
+  animation: origin-avatar-spin 0.9s linear infinite;
+}
+
+@keyframes origin-avatar-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .origin-avatar-app__composer {
   width: min(36rem, 100%);
   display: flex;
   gap: 0.55rem;
   align-items: flex-end;
-  margin-top: 0.25rem;
+  margin-top: 0.1rem;
 }
 
 .origin-avatar-app__input {
   flex: 1;
   min-height: 2.75rem;
-  resize: vertical;
+  resize: none;
   padding: 0.65rem 0.8rem;
   border-radius: 0.65rem;
   border: 1px solid var(--origin-avatar-border);
@@ -11465,6 +11545,10 @@ html.code-kit-page-root #usjet-app-shell {
   .origin-avatar-app__subtitles {
     bottom: 8.5rem;
     font-size: 0.875rem;
+  }
+
+  .origin-avatar-app__chat-log {
+    max-height: min(32vh, 14rem);
   }
 
   .origin-avatar-app {

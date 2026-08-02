@@ -1,6 +1,7 @@
 /**
- * Chat helpers. Origin Aura prefers live OpenRouter (server `/api/origin-chat`),
- * then a client key if present, then the onboard knowledge brain.
+ * Chat helpers. Origin Aura prefers live server `/api/origin-chat`
+ * (Vertex Gemini on GCP first, then OpenRouter), then a client OpenRouter key,
+ * then the onboard knowledge brain.
  * Hired HUD bay chat may still use OpenRouter when configured.
  */
 
@@ -71,7 +72,29 @@ type OriginChatApiPayload = {
   source?: string;
 };
 
-/** Origin Aura — live model via server proxy, then client key, then onboard brain. */
+async function completeClientFreeInference(messages: ApiChatMessage[]): Promise<string> {
+  const response = await fetch("https://text.pollinations.ai/openai/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages, model: "openai" }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Free AI endpoint failed (${response.status})`);
+  }
+
+  const data = (await response.json()) as {
+    choices?: Array<{ message?: { content?: string | null } }>;
+  };
+
+  const text = data.choices?.[0]?.message?.content;
+  if (typeof text !== "string" || !text.trim()) {
+    throw new Error("No reply text");
+  }
+  return text.trim();
+}
+
+/** Origin Aura — live model via server proxy, then client key, then free live AI, then onboard brain. */
 export async function completeOriginChat(messages: ApiChatMessage[]): Promise<string> {
   try {
     const response = await fetch("/api/origin-chat", {
@@ -88,39 +111,27 @@ export async function completeOriginChat(messages: ApiChatMessage[]): Promise<st
     }
 
     if (response.ok && typeof payload.reply === "string" && payload.reply.trim()) {
-      // Prefer live OpenRouter; ignore thin onboard-fallback when a client key exists.
       if (payload.source !== "onboard-fallback" || !OPENROUTER_API_KEY) {
         return payload.reply.trim();
       }
     }
-
-    if (response.status !== 503 && response.status !== 404 && response.status !== 502) {
-      if (payload.error) {
-        throw new Error(payload.error);
-      }
-    }
-  } catch (error) {
-    if (OPENROUTER_API_KEY) {
-      try {
-        return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_MODEL);
-      } catch {
-        /* fall through to knowledge brain */
-      }
-    }
-    if (error instanceof Error && !OPENROUTER_API_KEY) {
-      /* continue to brain */
-    }
+  } catch {
+    /* continue to fallbacks */
   }
 
   if (OPENROUTER_API_KEY) {
     try {
       return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_MODEL);
     } catch {
-      /* knowledge brain last resort */
+      /* fall through to free live inference */
     }
   }
 
-  return answerOriginFromKnowledge(messages, originBrainOptionsFromMessages(messages));
+  try {
+    return await completeClientFreeInference(messages);
+  } catch {
+    return answerOriginFromKnowledge(messages, originBrainOptionsFromMessages(messages));
+  }
 }
 
 export async function completeChat(

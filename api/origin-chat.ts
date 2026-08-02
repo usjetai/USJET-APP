@@ -1,7 +1,14 @@
 /**
- * Origin Aura chat — OpenRouter when keyed, else short onboard fallback.
- * Keeps the API key on the server (same pattern as Hired HUD bay chat).
+ * Origin Aura chat — Gemini API key or Vertex (GCP) first, then OpenRouter, then onboard.
+ * Keys stay server-side. /origin page is unchanged.
  */
+
+import {
+  completeGeminiApiKey,
+  completeVertexGemini,
+  resolveGeminiApiKey,
+  resolveVertexConfig,
+} from "./vertexGemini";
 
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 const OPENROUTER_MODEL = "google/gemini-2.5-flash";
@@ -55,7 +62,7 @@ function lastUserText(messages: ApiChatMessage[]): string {
   return "";
 }
 
-/** Last-resort when no OpenRouter key — keep the ship answering. */
+/** Last-resort when no live model key — keep the ship answering. */
 function onboardFallback(userText: string): string {
   const q = userText.toLowerCase();
   if (!q.trim()) {
@@ -111,6 +118,33 @@ async function completeOpenRouter(apiKey: string, messages: ApiChatMessage[]): P
   return text.trim();
 }
 
+async function completeFreeInference(messages: ApiChatMessage[]): Promise<string> {
+  const response = await fetch("https://text.pollinations.ai/openai/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      messages,
+      model: "openai",
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Free AI endpoint failed (${response.status})`);
+  }
+
+  const data = (await response.json()) as {
+    choices?: Array<{ message?: { content?: string | null } }>;
+  };
+
+  const text = data.choices?.[0]?.message?.content;
+  if (typeof text !== "string" || !text.trim()) {
+    throw new Error("No reply text from free AI model.");
+  }
+  return text.trim();
+}
+
 export default async function handler(req: ApiRequest, res: ApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -126,19 +160,45 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     return res.status(400).json({ error: "system message required" });
   }
 
+  // 1) Gemini API key
+  if (resolveGeminiApiKey()) {
+    try {
+      const reply = await completeGeminiApiKey(messages);
+      return res.status(200).json({ reply, source: "gemini-api-key" });
+    } catch (error) {
+      /* continue to fallbacks */
+    }
+  }
+
+  // 2) Vertex AI
+  if (resolveVertexConfig()) {
+    try {
+      const reply = await completeVertexGemini(messages);
+      return res.status(200).json({ reply, source: "vertex" });
+    } catch (error) {
+      /* continue to fallbacks */
+    }
+  }
+
+  // 3) OpenRouter Key (if set)
   const apiKey = resolveOpenRouterKey();
-  if (!apiKey) {
+  if (apiKey) {
+    try {
+      const reply = await completeOpenRouter(apiKey, messages);
+      return res.status(200).json({ reply, source: "openrouter" });
+    } catch (error) {
+      /* continue to free inference */
+    }
+  }
+
+  // 4) Live Zero-Cost Free AI Inference (Instant live AI responses for $0)
+  try {
+    const reply = await completeFreeInference(messages);
+    return res.status(200).json({ reply, source: "free-inference" });
+  } catch (error) {
     return res.status(200).json({
       reply: onboardFallback(lastUserText(messages)),
       source: "onboard-fallback",
     });
-  }
-
-  try {
-    const reply = await completeOpenRouter(apiKey, messages);
-    return res.status(200).json({ reply, source: "openrouter" });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Origin chat failed";
-    return res.status(502).json({ error: message });
   }
 }

@@ -41,8 +41,12 @@ function normalize(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9\s./$-]/g, " ").replace(/\s+/g, " ").trim();
 }
 
-function flightPlan(body: string): string {
-  return `Welcome to U. S. Jet.\n\nFlight Plan\n${body}`;
+function flightPlan(body: string, opts?: { greet?: boolean }): string {
+  // Only greet on true first-contact — never stamp Welcome on every answer.
+  if (opts?.greet) {
+    return `Welcome to U. S. Jet.\n\n${body}`;
+  }
+  return body;
 }
 
 function findFleetHits(query: string) {
@@ -123,6 +127,7 @@ export function answerOriginFromKnowledge(
       cs
         ? "Customer Service channel open. What's your project, and how can I help?"
         : "I'm Origin — onboard command for U. S. Jet. Ask about the fleet, Hangar, tiers, login, or which bay to open.",
+      { greet: true },
     );
   }
 
@@ -134,6 +139,7 @@ export function answerOriginFromKnowledge(
       cs
         ? "Customer Service here. I can help with Hangar, Fleet, login, tiers, and which AI bay to open. What's your project?"
         : "I'm Origin, your guide to the twenty-nine partner tools and this ship. Ask what a bay does, how tiers work, or where to open Hangar.",
+      { greet: true },
     );
   }
 

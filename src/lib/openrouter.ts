@@ -72,29 +72,7 @@ type OriginChatApiPayload = {
   source?: string;
 };
 
-async function completeClientFreeInference(messages: ApiChatMessage[]): Promise<string> {
-  const response = await fetch("https://text.pollinations.ai/openai/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages, model: "openai" }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Free AI endpoint failed (${response.status})`);
-  }
-
-  const data = (await response.json()) as {
-    choices?: Array<{ message?: { content?: string | null } }>;
-  };
-
-  const text = data.choices?.[0]?.message?.content;
-  if (typeof text !== "string" || !text.trim()) {
-    throw new Error("No reply text");
-  }
-  return text.trim();
-}
-
-/** Origin Aura — live model via server proxy, then client key, then free live AI, then onboard brain. */
+/** Origin Aura — live model via server proxy, then client OpenRouter key, then onboard brain. */
 export async function completeOriginChat(messages: ApiChatMessage[]): Promise<string> {
   try {
     const response = await fetch("/api/origin-chat", {
@@ -110,8 +88,14 @@ export async function completeOriginChat(messages: ApiChatMessage[]): Promise<st
       /* non-JSON */
     }
 
+    // Prefer any live server source (openai / gemini / openrouter). Onboard is OK when no keys.
     if (response.ok && typeof payload.reply === "string" && payload.reply.trim()) {
-      if (payload.source !== "onboard-fallback" || !OPENROUTER_API_KEY) {
+      const live =
+        payload.source === "openai" ||
+        payload.source === "gemini-api-key" ||
+        payload.source === "vertex" ||
+        payload.source === "openrouter";
+      if (live || !OPENROUTER_API_KEY) {
         return payload.reply.trim();
       }
     }
@@ -123,15 +107,11 @@ export async function completeOriginChat(messages: ApiChatMessage[]): Promise<st
     try {
       return await completeChat(OPENROUTER_API_KEY, messages, OPENROUTER_MODEL);
     } catch {
-      /* fall through to free live inference */
+      /* fall through to onboard brain */
     }
   }
 
-  try {
-    return await completeClientFreeInference(messages);
-  } catch {
-    return answerOriginFromKnowledge(messages, originBrainOptionsFromMessages(messages));
-  }
+  return answerOriginFromKnowledge(messages, originBrainOptionsFromMessages(messages));
 }
 
 export async function completeChat(

@@ -174,14 +174,19 @@ export default function Origin() {
         setError(result.error);
       }
 
-      setStatus("speaking");
-      setSubtitles(showSubtitles ? result.reply : "");
-      try {
-        await avatarRef.current?.speakText(result.reply, (chunk) => {
-          if (showSubtitles) setSubtitles(chunk);
-        });
-      } catch {
-        setError(ORIGIN_CHAT_ERROR);
+      // Text chat is primary — only speak aloud when a voice session is live.
+      if (sessionActiveRef.current) {
+        setStatus("speaking");
+        setSubtitles(showSubtitles ? result.reply : "");
+        try {
+          await avatarRef.current?.speakText(result.reply, (chunk) => {
+            if (showSubtitles) setSubtitles(chunk);
+          });
+        } catch {
+          setError(ORIGIN_CHAT_ERROR);
+        }
+      } else {
+        setSubtitles("");
       }
 
       busyRef.current = false;

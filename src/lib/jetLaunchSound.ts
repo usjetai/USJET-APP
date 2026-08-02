@@ -1,15 +1,19 @@
 /**
- * Hangar / Fleet tile takeoff click — random jet-launch whoosh from a sortie pool.
+ * Hangar / Fleet tile takeoff click — random real jet takeoff hits from a sortie pool.
+ * Sources: Mixkit Free Sound Effects (airplane), trimmed for UI. See public/sounds/CREDITS-jet-launch.txt.
  * User-gesture UI SFX (not background audio); plays even when ambient site audio is off.
  */
 
+/** Cache-bust when replacing SFX assets so browsers don't keep old synthetic noise. */
+const JET_LAUNCH_ASSET_VER = "real2";
+
 export const JET_LAUNCH_SOUND_POOL = [
-  "/sounds/jet-launch-01.mp3",
-  "/sounds/jet-launch-02.mp3",
-  "/sounds/jet-launch-03.mp3",
-  "/sounds/jet-launch-04.mp3",
-  "/sounds/jet-launch-05.mp3",
-  "/sounds/jet-launch-06.mp3",
+  `/sounds/jet-launch-01.mp3?v=${JET_LAUNCH_ASSET_VER}`,
+  `/sounds/jet-launch-02.mp3?v=${JET_LAUNCH_ASSET_VER}`,
+  `/sounds/jet-launch-03.mp3?v=${JET_LAUNCH_ASSET_VER}`,
+  `/sounds/jet-launch-04.mp3?v=${JET_LAUNCH_ASSET_VER}`,
+  `/sounds/jet-launch-05.mp3?v=${JET_LAUNCH_ASSET_VER}`,
+  `/sounds/jet-launch-06.mp3?v=${JET_LAUNCH_ASSET_VER}`,
 ] as const;
 
 /** @deprecated Prefer pool — kept so old caches still resolve. */
@@ -70,14 +74,14 @@ type PlayJetLaunchOptions = {
 };
 
 /** Play a random airplane launch SFX on tile click / keyboard activate. */
-export function playJetLaunchSound(volumeOrOptions: number | PlayJetLaunchOptions = 0.55): void {
+export function playJetLaunchSound(volumeOrOptions: number | PlayJetLaunchOptions = 0.72): void {
   if (typeof window === "undefined") {
     return;
   }
 
   const options: PlayJetLaunchOptions =
     typeof volumeOrOptions === "number" ? { volume: volumeOrOptions } : volumeOrOptions;
-  const volume = Math.min(1, Math.max(0, options.volume ?? 0.55));
+  const volume = Math.min(1, Math.max(0, options.volume ?? 0.72));
 
   try {
     const src = pickLaunchSrc(options.slot);

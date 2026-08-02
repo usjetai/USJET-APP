@@ -138,7 +138,7 @@ export default function FleetCard({
     if (launchBlocked || launchSpinPendingRef.current) {
       return;
     }
-    playJetLaunchSound();
+    playJetLaunchSound({ slot });
     logFleetUsageIfMember(callsign, name);
     syncProtocolToClipboard();
     launchSpinPendingRef.current = true;

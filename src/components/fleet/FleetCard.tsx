@@ -21,6 +21,7 @@ import {
 } from "../../lib/fleetRunwayFlight";
 import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
 import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
+import { playJetLaunchSound } from "../../lib/jetLaunchSound";
 import type { FleetAircraftType } from "../../types/fleet";
 
 /** Hangar bay open — yaw left, yaw right, straighten, then slow climb off the tile. */
@@ -137,6 +138,7 @@ export default function FleetCard({
     if (launchBlocked || launchSpinPendingRef.current) {
       return;
     }
+    playJetLaunchSound();
     logFleetUsageIfMember(callsign, name);
     syncProtocolToClipboard();
     launchSpinPendingRef.current = true;

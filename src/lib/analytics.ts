@@ -28,7 +28,7 @@ declare global {
  * client bundle), so we default to the live USJET.AI property and allow an
  * env override for staging / alternate properties.
  */
-const DEFAULT_GA_MEASUREMENT_ID = "G-51EPL3M1QN";
+const DEFAULT_GA_MEASUREMENT_ID = "G-ZTRGGZ4R0P";
 const GA_MEASUREMENT_ID =
   (import.meta.env.VITE_GA4_MEASUREMENT_ID as string | undefined)?.trim() || DEFAULT_GA_MEASUREMENT_ID;
 

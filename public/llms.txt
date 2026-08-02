@@ -14,6 +14,10 @@
 - ChatGPT alternative: https://www.usjet.ai/compare/chatgpt-alternative
 - AI tool sprawl: https://www.usjet.ai/compare/ai-tool-sprawl
 - Custom AI build alternative: https://www.usjet.ai/compare/custom-ai-build
+- ChatGPT vs Claude vs Gemini side-by-side: https://www.usjet.ai/compare/chatgpt-vs-claude-vs-gemini-one-screen
+- Best AI tools for contractors & trades: https://www.usjet.ai/compare/best-ai-tools-for-contractors
+- Blue collar AI platform: https://www.usjet.ai/compare/blue-collar-ai-tools
+- All-in-one AI dashboard: https://www.usjet.ai/compare/all-in-one-ai-dashboard
 - AI 101: https://www.usjet.ai/ai-101
 - B2B enterprise: https://www.usjet.ai/b2b
 - Member login (Stripe-only): https://www.usjet.ai/member/login

@@ -1,4 +1,3 @@
-USJET tile takeoff SFX sourced from Mixkit Free Sound Effects (airplane category).
-https://mixkit.co/free-sound-effects/airplane/
-License: Mixkit Free Sound Effects License — free for commercial & non-commercial use.
-Clips trimmed/normalized for Hangar & Fleet tile launch UI.
+USJET tile takeoff SFX — original procedural Web Audio whoosh (src/lib/jetLaunchSound.ts).
+Inspired by the short airplane “send” UI feel of Apple Mail Sent, but does NOT include
+or redistribute Apple’s copyrighted Mail Sent.aiff (or any Apple system sound).

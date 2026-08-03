@@ -1,96 +1,187 @@
 /**
- * Hangar / Fleet tile takeoff click — random real jet takeoff hits from a sortie pool.
- * Sources: Mixkit Free Sound Effects (airplane), trimmed for UI. See public/sounds/CREDITS-jet-launch.txt.
- * User-gesture UI SFX (not background audio); plays even when ambient site audio is off.
+ * Hangar / Fleet tile takeoff click — Apple Mail "sent" style airplane whoosh.
+ * Procedural Web Audio (original USJET synthesis). We cannot ship Apple's
+ * copyrighted Mail Sent.aiff; this matches that short flyby UI feel.
  */
 
-/** Cache-bust when replacing SFX assets so browsers don't keep old synthetic noise. */
-const JET_LAUNCH_ASSET_VER = "real2";
+let sharedCtx: AudioContext | null = null;
+let lastVariant = -1;
 
-export const JET_LAUNCH_SOUND_POOL = [
-  `/sounds/jet-launch-01.mp3?v=${JET_LAUNCH_ASSET_VER}`,
-  `/sounds/jet-launch-02.mp3?v=${JET_LAUNCH_ASSET_VER}`,
-  `/sounds/jet-launch-03.mp3?v=${JET_LAUNCH_ASSET_VER}`,
-  `/sounds/jet-launch-04.mp3?v=${JET_LAUNCH_ASSET_VER}`,
-  `/sounds/jet-launch-05.mp3?v=${JET_LAUNCH_ASSET_VER}`,
-  `/sounds/jet-launch-06.mp3?v=${JET_LAUNCH_ASSET_VER}`,
-] as const;
-
-/** @deprecated Prefer pool — kept so old caches still resolve. */
-export const JET_LAUNCH_SOUND_SRC = JET_LAUNCH_SOUND_POOL[0];
-
-const audioCache = new Map<string, HTMLAudioElement>();
-let lastSrc: string | null = null;
-
-function getClip(src: string): HTMLAudioElement {
-  let clip = audioCache.get(src);
-  if (!clip) {
-    clip = new Audio(src);
-    clip.preload = "auto";
-    audioCache.set(src, clip);
+function getAudioContext(): AudioContext | null {
+  if (typeof window === "undefined") {
+    return null;
   }
-  return clip;
+  const Ctx =
+    window.AudioContext ||
+    (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!Ctx) {
+    return null;
+  }
+  if (!sharedCtx || sharedCtx.state === "closed") {
+    sharedCtx = new Ctx();
+  }
+  return sharedCtx;
 }
 
-/** Pick a random launch clip; avoids repeating the previous sortie when possible. */
-function pickLaunchSrc(slot?: number): string {
-  const pool = JET_LAUNCH_SOUND_POOL;
-  if (pool.length === 1) {
-    return pool[0];
+function pickVariant(slot?: number): number {
+  // 6 micro-variants so bays don't feel identical.
+  let idx = Math.floor(Math.random() * 6);
+  if (typeof slot === "number" && Number.isFinite(slot) && Math.random() < 0.35) {
+    idx = Math.abs(Math.trunc(slot)) % 6;
   }
+  if (idx === lastVariant) {
+    idx = (idx + 1) % 6;
+  }
+  lastVariant = idx;
+  return idx;
+}
 
-  // Prefer a fresh random pick; lightly bias with slot so bays don't always feel identical.
-  let idx = Math.floor(Math.random() * pool.length);
-  if (typeof slot === "number" && Number.isFinite(slot)) {
-    const roll = Math.random();
-    if (roll < 0.35) {
-      idx = Math.abs(Math.trunc(slot)) % pool.length;
+/** Soft pink-ish buffer for air rush. */
+function makeNoiseBuffer(ctx: AudioContext, seconds: number): AudioBuffer {
+  const length = Math.max(1, Math.floor(ctx.sampleRate * seconds));
+  const buffer = ctx.createBuffer(2, length, ctx.sampleRate);
+  for (let ch = 0; ch < 2; ch += 1) {
+    const data = buffer.getChannelData(ch);
+    let b0 = 0;
+    let b1 = 0;
+    let b2 = 0;
+    let b3 = 0;
+    let b4 = 0;
+    let b5 = 0;
+    let b6 = 0;
+    for (let i = 0; i < length; i += 1) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.969 * b2 + white * 0.153852;
+      b3 = 0.8665 * b3 + white * 0.3104856;
+      b4 = 0.55 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.016898;
+      const pink = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+      b6 = white * 0.115926;
+      data[i] = pink * 0.11;
     }
   }
-
-  let src = pool[idx] ?? pool[0];
-  if (src === lastSrc) {
-    idx = (idx + 1 + Math.floor(Math.random() * (pool.length - 1))) % pool.length;
-    src = pool[idx] ?? pool[0];
-  }
-  lastSrc = src;
-  return src;
+  return buffer;
 }
 
-/** Preload the sortie library so the first click is not cold. */
-export function preloadJetLaunchSounds(): void {
-  if (typeof window === "undefined") {
-    return;
-  }
-  for (const src of JET_LAUNCH_SOUND_POOL) {
-    getClip(src);
-  }
+/**
+ * Build one Mail-Sent-style whoosh: fast attack, soft decay, L→R flyby,
+ * descending pitch (takeoff / send).
+ */
+function playMailSentStyleWhoosh(ctx: AudioContext, volume: number, variant: number): void {
+  const now = ctx.currentTime;
+  const duration = 1.35;
+  const pitchStart = 420 + variant * 18;
+  const pitchEnd = 155 + (variant % 3) * 12;
+
+  const master = ctx.createGain();
+  master.gain.setValueAtTime(0.0001, now);
+  master.gain.exponentialRampToValueAtTime(Math.max(0.0001, volume * 0.9), now + 0.045);
+  master.gain.exponentialRampToValueAtTime(Math.max(0.0001, volume * 0.35), now + 0.35);
+  master.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  // Stereo flyby pan (Mail Sent character).
+  const panner = ctx.createStereoPanner();
+  panner.pan.setValueAtTime(-0.75, now);
+  panner.pan.linearRampToValueAtTime(0.85, now + duration * 0.85);
+  panner.connect(master);
+  master.connect(ctx.destination);
+
+  // Tonal whoosh body.
+  const osc = ctx.createOscillator();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(pitchStart, now);
+  osc.frequency.exponentialRampToValueAtTime(pitchEnd, now + duration);
+
+  const oscGain = ctx.createGain();
+  oscGain.gain.setValueAtTime(0.0001, now);
+  oscGain.gain.exponentialRampToValueAtTime(0.22, now + 0.05);
+  oscGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  const oscFilter = ctx.createBiquadFilter();
+  oscFilter.type = "bandpass";
+  oscFilter.Q.value = 0.9;
+  oscFilter.frequency.setValueAtTime(1400 + variant * 40, now);
+  oscFilter.frequency.exponentialRampToValueAtTime(500, now + duration);
+
+  osc.connect(oscFilter);
+  oscFilter.connect(oscGain);
+  oscGain.connect(panner);
+
+  // Air rush layer.
+  const noise = ctx.createBufferSource();
+  noise.buffer = makeNoiseBuffer(ctx, duration + 0.05);
+
+  const noiseFilter = ctx.createBiquadFilter();
+  noiseFilter.type = "bandpass";
+  noiseFilter.Q.value = 0.7;
+  noiseFilter.frequency.setValueAtTime(2200, now);
+  noiseFilter.frequency.exponentialRampToValueAtTime(700, now + duration);
+
+  const noiseGain = ctx.createGain();
+  noiseGain.gain.setValueAtTime(0.0001, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.55, now + 0.04);
+  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(panner);
+
+  osc.start(now);
+  noise.start(now);
+  osc.stop(now + duration + 0.02);
+  noise.stop(now + duration + 0.02);
 }
 
 type PlayJetLaunchOptions = {
   volume?: number;
-  /** Fleet / Hangar bay slot — optional flavor bias for which sortie plays. */
+  /** Fleet / Hangar bay slot — optional flavor bias for which variant plays. */
   slot?: number;
 };
 
-/** Play a random airplane launch SFX on tile click / keyboard activate. */
-export function playJetLaunchSound(volumeOrOptions: number | PlayJetLaunchOptions = 0.72): void {
+/** Preload / warm AudioContext on first user gesture if needed. */
+export function preloadJetLaunchSounds(): void {
+  const ctx = getAudioContext();
+  if (!ctx) {
+    return;
+  }
+  if (ctx.state === "suspended") {
+    void ctx.resume().catch(() => {
+      /* wait for click */
+    });
+  }
+}
+
+/** Play Mail-Sent-style airplane whoosh on tile click / keyboard activate. */
+export function playJetLaunchSound(volumeOrOptions: number | PlayJetLaunchOptions = 0.78): void {
   if (typeof window === "undefined") {
     return;
   }
 
   const options: PlayJetLaunchOptions =
     typeof volumeOrOptions === "number" ? { volume: volumeOrOptions } : volumeOrOptions;
-  const volume = Math.min(1, Math.max(0, options.volume ?? 0.72));
+  const volume = Math.min(1, Math.max(0, options.volume ?? 0.78));
+  const variant = pickVariant(options.slot);
 
   try {
-    const src = pickLaunchSrc(options.slot);
-    const node = getClip(src).cloneNode(true) as HTMLAudioElement;
-    node.volume = volume;
-    void node.play().catch(() => {
-      /* autoplay policy / missing asset — silent */
-    });
+    const ctx = getAudioContext();
+    if (!ctx) {
+      return;
+    }
+    const start = () => playMailSentStyleWhoosh(ctx, volume, variant);
+    if (ctx.state === "suspended") {
+      void ctx.resume().then(start).catch(() => {
+        /* autoplay policy */
+      });
+      return;
+    }
+    start();
   } catch {
     /* ignore */
   }
 }
+
+/** @deprecated Kept for any lingering imports — procedural path has no URL. */
+export const JET_LAUNCH_SOUND_SRC = "";
+export const JET_LAUNCH_SOUND_POOL: readonly string[] = [];

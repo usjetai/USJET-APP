@@ -1,3 +1,8 @@
-USJET tile takeoff SFX — original procedural Web Audio whoosh (src/lib/jetLaunchSound.ts).
-Inspired by the short airplane “send” UI feel of Apple Mail Sent, but does NOT include
-or redistribute Apple’s copyrighted Mail Sent.aiff (or any Apple system sound).
+USJET tile takeoff SFX trimmed from:
+https://www.youtube.com/watch?v=OUNwFrt5IEQ
+Title: Jet Take Off and Fly By Sound Effect
+Uploader: SoundEffectsFactory
+
+Master clip + pitched variants in public/sounds/jet-launch*.mp3.
+Per-tile pitch / bandpass / pan applied at runtime in src/lib/jetLaunchSound.ts
+so each Hangar and Fleet bay sounds distinct.

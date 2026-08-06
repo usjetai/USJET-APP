@@ -45,6 +45,7 @@ const FleetProductPage = lazy(() => import("./pages/FleetProductPage"));
 const IntelligenceAssets = lazy(() => import("./pages/IntelligenceAssets"));
 const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
 const Sovereignty = lazy(() => import("./pages/Sovereignty"));
+const Store = lazy(() => import("./pages/Store"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const CompareHub = lazy(() => import("./pages/CompareHub"));
@@ -113,6 +114,10 @@ function AnimatedRoutes() {
             <Route path="/intelligence" element={<IntelligenceAssets />} />
             <Route path="/strategic-assets" element={<StrategicAssets />} />
             <Route path="/sovereignty" element={<Sovereignty />} />
+            <Route path="/store" element={<Store />} />
+            <Route path="/shop" element={<Navigate to="/store" replace />} />
+            <Route path="/books" element={<Navigate to="/store" replace />} />
+            <Route path="/merch" element={<Navigate to="/store" replace />} />
             <Route path="/founders-fuel" element={<FoundersFuel />} />
             <Route path="/cash" element={<DirectFuel />} />
             <Route path="/zelle" element={<DirectFuelZelle />} />

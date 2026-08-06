@@ -64,6 +64,9 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/special" className={footerLinkClass}>
               Pricing
             </NavLink>
+            <NavLink to="/store" className={footerLinkClass}>
+              Store
+            </NavLink>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Business">

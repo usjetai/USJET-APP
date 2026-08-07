@@ -297,5 +297,11 @@ export const SOVEREIGN_MASTER_LOG = {
   securityStripeOnlyMay2026: SECURITY_STRIPE_ONLY_MAY_2026,
   directLandingProtocol: DIRECT_LANDING_PROTOCOL,
   competitivePositioningJul2026: COMPETITIVE_POSITIONING_JUL_2026,
+  engineeringSeriesExpansion: {
+    logTitle: "Command Log · Aug 7, 2026 — Engineering Series Expansion",
+    status: "Active",
+    directive: "The full USJET.AI Engineering Series (Books 1-6) is now live in the Store and linked across all Fleet Product pages. Kindle and Paperback editions merged for maximum revenue extraction.",
+    fleetMessage: "Listen up, Crew: The manuals are on the shelf. Kindle and Paperback — one cockpit, multiple ports. Buy the guide, fly the fleet.",
+  },
   priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

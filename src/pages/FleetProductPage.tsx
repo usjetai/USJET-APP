@@ -17,6 +17,9 @@ import {
   resolveJ36ProductPaymentLink,
   resolveSr71BlackbirdProductPaymentLink,
 } from "../lib/stripePaymentLink";
+import { USJET_STORE_BOOKS, STORE_ROUTE, amazonKindleUrl } from "../data/usjetStore";
+import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
+import { BookOpen, ExternalLink } from "lucide-react";
 
 /**
  * Optional product lede copy, keyed by aircraft slug.
@@ -371,6 +374,64 @@ export default function FleetProductPage() {
           </div>
         </section>
       ) : null}
+
+      <section className="product-page__books mt-20" aria-label="Founder Engineering Series">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+          <div>
+            <p className="product-page__label">Master Log Guidance</p>
+            <h2 className="product-page__lineup-title text-3xl">USJET.AI Engineering Series</h2>
+          </div>
+          <Link 
+            to={STORE_ROUTE} 
+            className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive"
+          >
+            Visit USJET Store
+          </Link>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {USJET_STORE_BOOKS.map((book) => {
+            const amazonUrl = wrapExternalInCockpit(amazonKindleUrl(book.asin), {
+              returnTo: `/product/${callsign}`,
+              label: book.title,
+              callName: "Kindle",
+              directHandoff: true,
+            });
+
+            return (
+              <GlassEffectContainer
+                key={book.id}
+                className="product-page__book-card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan p-6 flex flex-col"
+              >
+                <div className="flex gap-4 mb-4">
+                  <div className="w-20 shrink-0 aspect-[2/3] bg-white/5 rounded overflow-hidden">
+                    <img 
+                      src={book.coverSrc} 
+                      alt={book.coverAlt} 
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[0.6rem] uppercase tracking-wider text-cyan-400/80 mb-1">{book.seriesLabel}</p>
+                    <h3 className="text-sm font-bold text-white leading-tight mb-2">{book.title}</h3>
+                    <p className="text-[0.7rem] text-white/60 line-clamp-2">{book.subtitle}</p>
+                  </div>
+                </div>
+                <div className="mt-auto">
+                  <Link
+                    to={amazonUrl}
+                    className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
+                  >
+                    View on Amazon
+                    <BookOpen size={12} className="ml-2" />
+                  </Link>
+                </div>
+              </GlassEffectContainer>
+            );
+          })}
+        </div>
+      </section>
     </div>
   );
 }

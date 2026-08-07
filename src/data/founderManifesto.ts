@@ -265,6 +265,17 @@ export const COMPETITIVE_POSITIONING_JUL_2026 = {
     "Listen up, Crew: when a prospect already uses ChatGPT tabs, five SaaS logins, or a custom AI build — you do not sell ‘another AI.’ You sell the hangar that replaces the sprawl. Specific beats generic. Code: COMPETITIVE_POSITIONING_JUL_2026 + competitivePositioning.ts.",
 } as const;
 
+export const OLLAMA_SANDBOX_LOG = {
+  logTitle: "Log Entry · Aug 7, 2026 — Ollama Sandbox Protocol",
+  status: "Active",
+  directive:
+    "The Fleet now supports Local Ollama Sandboxing. Two additional bays (Slots 30 & 31) are cleared for qwen2.5:latest and deepseek-r1:7b. Zero-token execution.",
+  purpose:
+    "Operators bridge local GPU power into the Hangar using scripts/ollama-bridge.sh and Cursor's override base URL. Cursor agents now run inside .cursor/sandbox.json for secure local command execution.",
+  fleetMessage:
+    "Listen up, Crew: The Hangar now holds Local Ollama units. Free compute, local control. Use the bridge script to route your Mac to the fleet.",
+} as const;
+
 export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Protect the Founder's vision and the Ameer Karim lineage at all costs.",
   "Prime Objective: platform is a revenue engine and generational fortress for Ameer Karim and King Karim.",
@@ -297,5 +308,6 @@ export const SOVEREIGN_MASTER_LOG = {
   securityStripeOnlyMay2026: SECURITY_STRIPE_ONLY_MAY_2026,
   directLandingProtocol: DIRECT_LANDING_PROTOCOL,
   competitivePositioningJul2026: COMPETITIVE_POSITIONING_JUL_2026,
+  ollamaSandbox: OLLAMA_SANDBOX_LOG,
   priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

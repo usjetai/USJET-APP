@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "allow": {
+    "network": [
+      "localhost",
+      "127.0.0.1",
+      "openrouter.ai",
+      "api.openai.com"
+    ],
+    "filesystem": [
+      "./src",
+      "./public",
+      "./package.json"
+    ]
+  }
+}

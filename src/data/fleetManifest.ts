@@ -362,6 +362,30 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aircraftType: "x59",
     aiName: "USJet Origin",
   },
+  {
+    id: "30",
+    slot: 30,
+    name: "Ollama Qwen",
+    callsign: "SANDBOX-01",
+    domain: "localhost:11434",
+    href: "http://localhost:11434",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "qwen2.5:latest",
+  },
+  {
+    id: "31",
+    slot: 31,
+    name: "Ollama DeepSeek",
+    callsign: "SANDBOX-02",
+    domain: "localhost:11434",
+    href: "http://localhost:11434",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "deepseek-r1:7b",
+  },
 ];
 
 export const fleetManifest: FleetUnit[] = FLEET_MANIFEST_CORE.map((unit) => ({

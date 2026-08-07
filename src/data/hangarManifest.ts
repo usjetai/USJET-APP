@@ -387,6 +387,32 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aiName: "USJet Origin",
     fleetRole: "USJET Origin text chat — AI and fleet questions inside the Hangar.",
   },
+  {
+    id: "30",
+    slot: 30,
+    name: "Ollama Qwen",
+    callsign: "SANDBOX-01",
+    domain: "localhost:11434",
+    href: "http://localhost:11434",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "qwen2.5:latest",
+    fleetRole: "Ollama Qwen — connected via local port 11434 (qwen2.5:latest).",
+  },
+  {
+    id: "31",
+    slot: 31,
+    name: "Ollama DeepSeek",
+    callsign: "SANDBOX-02",
+    domain: "localhost:11434",
+    href: "http://localhost:11434",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "deepseek-r1:7b",
+    fleetRole: "Ollama DeepSeek — connected via local port 11434 (deepseek-r1:7b).",
+  },
 ];
 
 export const hangarManifest: FleetUnit[] = HANGAR_MANIFEST_CORE.map((unit) => ({

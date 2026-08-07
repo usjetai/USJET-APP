@@ -71,4 +71,4 @@ export type FleetUnit = {
 
 export const HANGAR_COLUMNS = 6;
 export const HANGAR_ROWS = 5;
-export const FLEET_UNIT_COUNT = HANGAR_COLUMNS * HANGAR_ROWS;
+export const FLEET_UNIT_COUNT = 32;

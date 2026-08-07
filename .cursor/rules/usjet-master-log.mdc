@@ -63,6 +63,10 @@ Hard-wired in `src/lib/stripePaymentLink.ts`. High-pressure funnels / quick-entr
 
 **Status: Absolute Lock.** Position USJET vs **fragmented stacks**, **generic AI**, and **custom builds**. Bundle: command & control + training + intelligence + managed support. Offer buy-reasons: Flight Pass exit fragmented tabs; Hangar Pro fleet+Intel; Enterprise Origin vs inventing a custom command layer. Paste brief: `COMPETITIVE_POSITIONING_SDR_BRIEF` in `competitivePositioning.ts`. Code: `COMPETITIVE_POSITIONING_JUL_2026`.
 
+## Command Log · Aug 7, 2026 — Ollama Sandbox Protocol
+
+**Status: Active.** The Fleet now supports **Local Ollama Sandboxing**. Two new bays (Slots 30 & 31) are reserved for `qwen2.5:latest` and `deepseek-r1:7b`. Zero-token local execution. `scripts/ollama-bridge.sh` for bridge setup.
+
 ## Do not deviate
 
 - No bookmark-collection UX; captain-in-cockpit immersion.

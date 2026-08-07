@@ -391,12 +391,21 @@ export default function FleetProductPage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {USJET_STORE_BOOKS.map((book) => {
-            const amazonUrl = wrapExternalInCockpit(amazonKindleUrl(book.asin), {
+            const kindleUrl = wrapExternalInCockpit(amazonKindleUrl(book.asin), {
               returnTo: `/product/${callsign}`,
-              label: book.title,
+              label: `${book.title} (Kindle)`,
               callName: "Kindle",
               directHandoff: true,
             });
+
+            const paperbackUrl = book.paperbackAsin 
+              ? wrapExternalInCockpit(amazonPaperbackUrl(book.paperbackAsin), {
+                  returnTo: `/product/${callsign}`,
+                  label: `${book.title} (Paperback)`,
+                  callName: "Paperback",
+                  directHandoff: true,
+                })
+              : undefined;
 
             return (
               <GlassEffectContainer
@@ -418,14 +427,23 @@ export default function FleetProductPage() {
                     <p className="text-[0.7rem] text-white/60 line-clamp-2">{book.subtitle}</p>
                   </div>
                 </div>
-                <div className="mt-auto">
+                <div className="mt-auto flex flex-col gap-2">
                   <Link
-                    to={amazonUrl}
+                    to={kindleUrl}
                     className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
                   >
-                    View on Amazon
-                    <BookOpen size={12} className="ml-2" />
+                    Kindle Edition
+                    <ExternalLink size={12} className="ml-2" />
                   </Link>
+                  {paperbackUrl && (
+                    <Link
+                      to={paperbackUrl}
+                      className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
+                    >
+                      Paperback
+                      <ExternalLink size={12} className="ml-2" />
+                    </Link>
+                  )}
                 </div>
               </GlassEffectContainer>
             );

@@ -241,12 +241,10 @@ const ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG: Record<string, FleetProductLineupIte
 };
 
 export function resolveFleetProductLineup(aircraftSlug: string): FleetProductLineupItem[] {
-  const teeEntry = FLEET_TEE_BY_SLUG[aircraftSlug];
   const capEntry = FLEET_CAP_BY_SLUG[aircraftSlug];
-  const tee = teeEntry ? [buildFleetTeeLineupItem(teeEntry)] : [];
   const cap = capEntry ? [buildFleetCapLineupItem(capEntry)] : [];
   const extras = ADDITIONAL_PRODUCTS_BY_AIRCRAFT_SLUG[aircraftSlug] ?? [];
-  return [...tee, ...cap, ...extras];
+  return [...cap, ...extras];
 }
 
 /** Aircraft slugs with live merchandise on the product runway (model kits, apparel, etc.). */

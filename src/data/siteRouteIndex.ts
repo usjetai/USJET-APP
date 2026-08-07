@@ -61,7 +61,7 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
       { path: "/intelligence", label: "Intelligence Assets" },
       { path: "/strategic-assets", label: "Strategic Assets" },
       { path: "/sovereignty", label: "Sovereignty" },
-      { path: "/store", label: "Store", hint: "Books · merch" },
+      { path: "/store", label: "Store", hint: "Books" },
     ],
   },
   {

@@ -11,15 +11,30 @@ import {
   STORE_ROUTE,
   USJET_STORE_BOOKS,
   amazonKindleUrl,
+  amazonPaperbackUrl,
+  amazonSeriesUrl,
   type UsjetStoreBook,
 } from "../data/usjetStore";
 import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
 
-function bookAmazonHref(book: UsjetStoreBook): string {
-  return wrapExternalInCockpit(amazonKindleUrl(book.asin), {
+function bookAmazonHref(book: UsjetStoreBook, binding: "kindle" | "paperback" = "kindle"): string {
+  const url = binding === "kindle" 
+    ? amazonKindleUrl(book.asin) 
+    : amazonPaperbackUrl(book.paperbackAsin || book.asin);
+    
+  return wrapExternalInCockpit(url, {
     returnTo: STORE_ROUTE,
-    label: book.title,
-    callName: "Kindle",
+    label: `${book.title} (${binding})`,
+    callName: binding === "kindle" ? "Kindle" : "Paperback",
+    directHandoff: true,
+  });
+}
+
+function seriesAmazonHref(binding: "kindle" | "paperback" = "kindle"): string {
+  return wrapExternalInCockpit(amazonSeriesUrl(binding), {
+    returnTo: STORE_ROUTE,
+    label: `USJET.AI Engineering Series (${binding})`,
+    callName: "Amazon Series",
     directHandoff: true,
   });
 }
@@ -67,11 +82,30 @@ export default function Store() {
       <section className="usjet-store__section" aria-labelledby="usjet-store-books-heading">
         <div className="usjet-store__section-head">
           <BookOpen size={18} aria-hidden />
-          <h2 id="usjet-store-books-heading">Engineering Series · Kindle</h2>
+          <h2 id="usjet-store-books-heading">Engineering Series · Amazon</h2>
         </div>
-        <p className="usjet-store__section-lede">
-          Written by Founder Ameer Karim. Tap a cover to buy on Amazon Kindle — same window, cockpit return.
-        </p>
+        <div className="usjet-store__section-intro flex flex-wrap items-end justify-between gap-4">
+          <p className="usjet-store__section-lede max-w-2xl">
+            Written by Founder Ameer Karim. Available on Kindle and Paperback. 
+            Tap a cover to view on Amazon — same window, cockpit return.
+          </p>
+          <div className="flex gap-3 mb-2">
+            <Link 
+              to={seriesAmazonHref("kindle")} 
+              className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive"
+            >
+              Kindle Series
+              <ExternalLink size={12} className="ml-2" aria-hidden />
+            </Link>
+            <Link 
+              to={seriesAmazonHref("paperback")} 
+              className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive"
+            >
+              Paperback Series
+              <ExternalLink size={12} className="ml-2" aria-hidden />
+            </Link>
+          </div>
+        </div>
 
         <div className="usjet-store__book-grid">
           {USJET_STORE_BOOKS.map((book) => (
@@ -83,7 +117,7 @@ export default function Store() {
               <div className="usjet-store__book-body">
                 <p className="usjet-store__book-series">{book.seriesLabel}</p>
                 <h3 className="usjet-store__book-title">
-                  <Link to={bookAmazonHref(book)} className="glass-effect-interactive">
+                  <Link to={bookAmazonHref(book, "kindle")} className="glass-effect-interactive">
                     {book.title}
                   </Link>
                 </h3>
@@ -93,13 +127,24 @@ export default function Store() {
                   <span>{book.author}</span>
                   <span>{book.priceDisplay}</span>
                 </div>
-                <Link
-                  to={bookAmazonHref(book)}
-                  className="usjet-store__cta btn-glass-prominent glass-effect-interactive"
-                >
-                  Get on Kindle
-                  <ExternalLink size={14} aria-hidden />
-                </Link>
+                <div className="usjet-store__book-actions mt-auto flex flex-col gap-2">
+                  <Link
+                    to={bookAmazonHref(book, "kindle")}
+                    className="usjet-store__cta btn-glass-prominent glass-effect-interactive w-full justify-center"
+                  >
+                    Kindle Edition
+                    <ExternalLink size={14} className="ml-2" aria-hidden />
+                  </Link>
+                  {book.paperbackAsin && (
+                    <Link
+                      to={bookAmazonHref(book, "paperback")}
+                      className="usjet-store__cta btn-glass glass-effect-interactive w-full justify-center"
+                    >
+                      Paperback
+                      <ExternalLink size={14} className="ml-2" aria-hidden />
+                    </Link>
+                  )}
+                </div>
               </div>
             </GlassEffectContainer>
           ))}

@@ -137,6 +137,7 @@ export function amazonPaperbackUrl(asin: string): string {
   return `https://www.amazon.com/dp/${asin}?binding=paperback`;
 }
 
-export function amazonSeriesUrl(): string {
-  return `https://www.amazon.com/dp/${AMAZON_SERIES_ASIN}`;
+export function amazonSeriesUrl(binding: "kindle" | "paperback" = "kindle"): string {
+  const suffix = binding === "paperback" ? "?binding=paperback&ref_=saga_sdp_cft_dsk" : "";
+  return `https://www.amazon.com/dp/${AMAZON_SERIES_ASIN}${suffix}`;
 }

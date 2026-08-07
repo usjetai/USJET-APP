@@ -30,10 +30,10 @@ function bookAmazonHref(book: UsjetStoreBook, binding: "kindle" | "paperback" = 
   });
 }
 
-function seriesAmazonHref(): string {
-  return wrapExternalInCockpit(amazonSeriesUrl(), {
+function seriesAmazonHref(binding: "kindle" | "paperback" = "kindle"): string {
+  return wrapExternalInCockpit(amazonSeriesUrl(binding), {
     returnTo: STORE_ROUTE,
-    label: "USJET.AI Engineering Series",
+    label: `USJET.AI Engineering Series (${binding})`,
     callName: "Amazon Series",
     directHandoff: true,
   });
@@ -89,13 +89,22 @@ export default function Store() {
             Written by Founder Ameer Karim. Available on Kindle and Paperback. 
             Tap a cover to view on Amazon — same window, cockpit return.
           </p>
-          <Link 
-            to={seriesAmazonHref()} 
-            className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive mb-2"
-          >
-            View full series on Amazon
-            <ExternalLink size={12} className="ml-2" aria-hidden />
-          </Link>
+          <div className="flex gap-3 mb-2">
+            <Link 
+              to={seriesAmazonHref("kindle")} 
+              className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive"
+            >
+              Kindle Series
+              <ExternalLink size={12} className="ml-2" aria-hidden />
+            </Link>
+            <Link 
+              to={seriesAmazonHref("paperback")} 
+              className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive"
+            >
+              Paperback Series
+              <ExternalLink size={12} className="ml-2" aria-hidden />
+            </Link>
+          </div>
         </div>
 
         <div className="usjet-store__book-grid">

@@ -1,18 +1,18 @@
 /**
- * USJET Store — Founder books (Amazon Kindle) + fleet merchandise runway.
- * Amazon opens through /cockpit (One Ship, One Cockpit). Merch stays on-site /product pages.
+ * USJET Store — Founder books (Amazon Kindle).
+ * Amazon opens through /cockpit (One Ship, One Cockpit).
  */
 
 export const STORE_ROUTE = "/store" as const;
 
 export const STORE_PAGE_TITLE = "Store" as const;
 export const STORE_META_DESCRIPTION =
-  "USJET.AI Engineering Series Kindle books by Ameer Karim, plus fleet apparel and hangar merch." as const;
+  "USJET.AI Engineering Series Kindle books by Ameer Karim." as const;
 
-export const STORE_HERO_KICKER = "Books · Merch · Hangar gear" as const;
+export const STORE_HERO_KICKER = "Books · Engineering Series" as const;
 export const STORE_HERO_TITLE = "USJET Store" as const;
 export const STORE_HERO_LEDE =
-  "Operator manuals from the Founder, and fleet merch from the hangar runway. Kindle on Amazon. Apparel and gear on USJET product bays." as const;
+  "Operator manuals from the Founder. Kindle on Amazon." as const;
 
 export type UsjetStoreBook = {
   id: string;
@@ -114,62 +114,6 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
       "GitHub → Vercel → domain — the Founder’s deploy path from commit to live cockpit, without leaking out of the ship.",
     coverSrc: "/store/covers/B0GZJZ9TGJ.jpg",
     coverAlt: "The Deployment Pipeline — Amazon Kindle cover",
-  },
-];
-
-export type UsjetStoreMerchItem = {
-  id: string;
-  title: string;
-  kind: string;
-  priceDisplay: string;
-  blurb: string;
-  /** On-site product runway path. */
-  href: string;
-  imageSrc?: string;
-  imageAlt?: string;
-};
-
-/** Featured hangar merch — full lineup lives on each /product/:callsign runway. */
-export const USJET_STORE_MERCH: readonly UsjetStoreMerchItem[] = [
-  {
-    id: "sr71-tee",
-    title: "SR-71 Blackbird Tee",
-    kind: "Apparel",
-    priceDisplay: "$25",
-    blurb: "White crew neck with SR-71 designation and hangar branding.",
-    href: "/product/sr-71-blackbird",
-    imageSrc: "/fleet/sr-71-blackbird-tee-product.webp",
-    imageAlt: "USJET.AI SR-71 Blackbird tee",
-  },
-  {
-    id: "f35-tee",
-    title: "F-35 Lightning II Tee",
-    kind: "Apparel",
-    priceDisplay: "$25",
-    blurb: "Lightning II jet designation on sovereign fleet cotton.",
-    href: "/product/f-35-lightning-ii",
-    imageSrc: "/fleet/f-35-lightning-ii-tee-product.webp",
-    imageAlt: "USJET.AI F-35 Lightning II tee",
-  },
-  {
-    id: "f22-tee",
-    title: "F-22 Raptor Tee",
-    kind: "Apparel",
-    priceDisplay: "$25",
-    blurb: "Raptor airframe mark for the hangar floor.",
-    href: "/product/f-22-raptor",
-    imageSrc: "/fleet/f-22-raptor-tee-product.webp",
-    imageAlt: "USJET.AI F-22 Raptor tee",
-  },
-  {
-    id: "a12-tee",
-    title: "A-12 Avenger II Tee",
-    kind: "Apparel",
-    priceDisplay: "$25",
-    blurb: "Avenger II silhouette — museum-of-grit cotton.",
-    href: "/product/a-12-avenger-ii",
-    imageSrc: "/fleet/a-12-avenger-ii-tee-product.webp",
-    imageAlt: "USJET.AI A-12 Avenger II tee",
   },
 ];
 

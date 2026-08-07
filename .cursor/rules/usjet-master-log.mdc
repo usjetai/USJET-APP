@@ -63,6 +63,10 @@ Hard-wired in `src/lib/stripePaymentLink.ts`. High-pressure funnels / quick-entr
 
 **Status: Absolute Lock.** Position USJET vs **fragmented stacks**, **generic AI**, and **custom builds**. Bundle: command & control + training + intelligence + managed support. Offer buy-reasons: Flight Pass exit fragmented tabs; Hangar Pro fleet+Intel; Enterprise Origin vs inventing a custom command layer. Paste brief: `COMPETITIVE_POSITIONING_SDR_BRIEF` in `competitivePositioning.ts`. Code: `COMPETITIVE_POSITIONING_JUL_2026`.
 
+## Command Log · Aug 7, 2026 — Local Sandbox Protocol
+
+**Status: Active.** The Fleet now supports **Local AI Sandboxing**. Two new bays (Slots 30 & 31) are reserved for local Mac compute (Ollama/LM Studio). Zero-token execution. Sovereign local development. `scripts/local-ai-sandbox.sh` for bridge setup.
+
 ## Do not deviate
 
 - No bookmark-collection UX; captain-in-cockpit immersion.

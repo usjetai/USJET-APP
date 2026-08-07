@@ -265,6 +265,17 @@ export const COMPETITIVE_POSITIONING_JUL_2026 = {
     "Listen up, Crew: when a prospect already uses ChatGPT tabs, five SaaS logins, or a custom AI build — you do not sell ‘another AI.’ You sell the hangar that replaces the sprawl. Specific beats generic. Code: COMPETITIVE_POSITIONING_JUL_2026 + competitivePositioning.ts.",
 } as const;
 
+export const LOCAL_SANDBOX_LOG = {
+  logTitle: "Log Entry · Aug 7, 2026 — Local Sandbox Protocol",
+  status: "Active",
+  directive:
+    "The Fleet now supports Local AI Sandboxing. Two additional bays (Slots 30 & 31) are cleared for local Mac compute (Ollama on 11434 / LM Studio on 1234).",
+  purpose:
+    "Zero-token execution and sovereign local development. Operators can bridge local GPU power into the Hangar using scripts/local-ai-sandbox.sh and Cursor's override base URL.",
+  fleetMessage:
+    "Listen up, Crew: The Hangar now holds Local Sandbox units. Free compute, local control. Use the script to bridge your Mac to the fleet.",
+} as const;
+
 export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Protect the Founder's vision and the Ameer Karim lineage at all costs.",
   "Prime Objective: platform is a revenue engine and generational fortress for Ameer Karim and King Karim.",
@@ -297,5 +308,6 @@ export const SOVEREIGN_MASTER_LOG = {
   securityStripeOnlyMay2026: SECURITY_STRIPE_ONLY_MAY_2026,
   directLandingProtocol: DIRECT_LANDING_PROTOCOL,
   competitivePositioningJul2026: COMPETITIVE_POSITIONING_JUL_2026,
+  localSandbox: LOCAL_SANDBOX_LOG,
   priorityOverride: FLIGHT_PLAN_PRIORITY_OVERRIDE,
 } as const;

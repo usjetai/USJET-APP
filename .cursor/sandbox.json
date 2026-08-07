@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "allow": {
+    "network": [
+      "localhost",
+      "127.0.0.1",
+      "openrouter.ai",
+      "api.openai.com",
+      "*.hf.space"
+    ],
+    "filesystem": [
+      "./src",
+      "./public",
+      "./package.json",
+      "./tsconfig.json",
+      "./vite.config.ts"
+    ]
+  },
+  "deny": {
+    "filesystem": [
+      "~/.ssh",
+      "~/.aws",
+      "~/.config"
+    ]
+  }
+}

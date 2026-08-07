@@ -387,6 +387,32 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aiName: "USJet Origin",
     fleetRole: "USJET Origin text chat — AI and fleet questions inside the Hangar.",
   },
+  {
+    id: "30",
+    slot: 30,
+    name: "Local AI 1",
+    callsign: "SANDBOX-01",
+    domain: "localhost:11434",
+    href: "http://localhost:11434",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "Local LLM (Ollama)",
+    fleetRole: "Local AI 1 — connected via Ollama (localhost:11434).",
+  },
+  {
+    id: "31",
+    slot: 31,
+    name: "Local AI 2",
+    callsign: "SANDBOX-02",
+    domain: "localhost:1234",
+    href: "http://localhost:1234",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "Local LLM (LM Studio)",
+    fleetRole: "Local AI 2 — connected via LM Studio (localhost:1234).",
+  },
 ];
 
 export const hangarManifest: FleetUnit[] = HANGAR_MANIFEST_CORE.map((unit) => ({

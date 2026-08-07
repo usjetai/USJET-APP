@@ -362,6 +362,30 @@ const FLEET_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aircraftType: "x59",
     aiName: "USJet Origin",
   },
+  {
+    id: "30",
+    slot: 30,
+    name: "Local AI 1",
+    callsign: "SANDBOX-01",
+    domain: "localhost:11434",
+    href: "http://localhost:11434",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "Local LLM (Ollama)",
+  },
+  {
+    id: "31",
+    slot: 31,
+    name: "Local AI 2",
+    callsign: "SANDBOX-02",
+    domain: "localhost:1234",
+    href: "http://localhost:1234",
+    status: "active",
+    aura: "idle",
+    aircraftType: "x59",
+    aiName: "Local LLM (LM Studio)",
+  },
 ];
 
 export const fleetManifest: FleetUnit[] = FLEET_MANIFEST_CORE.map((unit) => ({

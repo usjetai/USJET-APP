@@ -110,6 +110,8 @@ const HANGAR_IFRAME_AUTO_EMBED_HOSTS = new Set(
     "black-forest-labs-flux-1-schnell.hf.space",
     "huggingface-projects-llama-3-2-3b-instruct.hf.space",
     "instantx-instantid.hf.space",
+    "localhost",
+    "127.0.0.1",
   ].map((host) => host.toLowerCase()),
 );
 

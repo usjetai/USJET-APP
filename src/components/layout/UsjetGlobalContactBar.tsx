@@ -78,7 +78,7 @@ export default function UsjetGlobalContactBar() {
               Pricing
             </NavLink>
             <NavLink to="/store" className={footerLinkClass}>
-              Store
+              Cursor
             </NavLink>
           </nav>
 

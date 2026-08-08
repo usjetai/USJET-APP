@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { to: "/", label: "Hangar" },
   { to: "/fleet", label: "Fleet" },
   { to: "/jet-browser", label: "Jet Browser" },
-  { to: "/store", label: "Products" },
+  { to: "/store", label: "Cursor" },
   { to: "/intel", label: "Intel" },
   { to: "/origin", label: "Origin" },
   { to: "/member", label: "Member" },

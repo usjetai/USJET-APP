@@ -5,14 +5,14 @@
 
 export const STORE_ROUTE = "/store" as const;
 
-export const STORE_PAGE_TITLE = "Store" as const;
+export const STORE_PAGE_TITLE = "Cursor" as const;
 export const STORE_META_DESCRIPTION =
-  "USJET.AI Engineering Series Kindle books by Ameer Karim." as const;
+  "USJET.AI Engineering Series by Ameer Karim. Mastering Cursor and modern AI-first engineering." as const;
 
-export const STORE_HERO_KICKER = "Books · Engineering Series" as const;
-export const STORE_HERO_TITLE = "USJET Store" as const;
+export const STORE_HERO_KICKER = "Product · Engineering Series" as const;
+export const STORE_HERO_TITLE = "Cursor" as const;
 export const STORE_HERO_LEDE =
-  "Operator manuals from the Founder. Kindle on Amazon." as const;
+  "Operator manuals from the Founder. Engineering Series on Amazon." as const;
 
 export type UsjetStoreBook = {
   id: string;

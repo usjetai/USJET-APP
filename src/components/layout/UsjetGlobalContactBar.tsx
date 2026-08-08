@@ -39,6 +39,19 @@ export default function UsjetGlobalContactBar() {
               </span>
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
+            
+            <Link 
+              to="/store" 
+              className="usjet-footer__series-promo mt-8 block overflow-hidden rounded-lg border border-white/10 transition-transform hover:scale-[1.02] active:scale-[0.98] glass-effect-interactive"
+              aria-label="View Engineering Series in USJET Store"
+            >
+              <img 
+                src="/store/engineering-series-footer-mockup.webp" 
+                alt="USJET.AI Engineering Series Books" 
+                className="w-full h-auto object-cover opacity-80 hover:opacity-100 transition-opacity"
+                loading="lazy"
+              />
+            </Link>
           </div>
 
           <nav className="usjet-footer__col" aria-label="Platform">

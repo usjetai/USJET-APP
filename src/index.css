@@ -31593,3 +31593,19 @@ html.blog-page-root #usjet-app-shell {
   color: rgba(165, 243, 252, 0.88);
   text-decoration: none;
 }
+
+/* ─── Footer Series Promo ─── */
+.usjet-footer__series-promo {
+  position: relative;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.usjet-footer__series-promo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  pointer-events: none;
+}
+

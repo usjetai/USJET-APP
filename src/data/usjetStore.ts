@@ -44,7 +44,7 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     subtitle: "From prompt to production — building, deploying, and scaling with AI-first tools.",
     seriesLabel: "USJET.AI Engineering Series · Book One",
     author: "Ameer Karim",
-    priceDisplay: "$9.99 Kindle · $19.90 Paperback",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Build and ship websites with AI in the loop — from structure and copy to deploy, the Founder’s operator path.",
     asin: "B0HD5GF54X",
@@ -59,7 +59,7 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     subtitle: "Building and Scaling Autonomous Platforms",
     seriesLabel: "USJET.AI Engineering Series · Book Two",
     author: "Ameer Karim",
-    priceDisplay: "$9.99 Kindle · $19.90 Paperback",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "How to build and scale autonomous platforms — AI-first architecture for founders who want a revenue engine, not a slide deck.",
     asin: "B0HD658R8K",
@@ -74,7 +74,7 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     subtitle: "Local Models, Custom Runtimes, and Agentic Workflows",
     seriesLabel: "USJET.AI Engineering Series · Book Three",
     author: "Ameer Karim",
-    priceDisplay: "$9.99 Kindle · $19.90 Paperback",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Turn Apple Silicon into a private AI hangar — Ollama, llama.cpp, MLX, agentic workflows, and keeping proprietary data local.",
     asin: "B0HCX896RZ",
@@ -89,7 +89,7 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     subtitle: "The Operator’s Field Guide to Modern Models, Runtimes, and Capabilities",
     seriesLabel: "USJET.AI Engineering Series · Book Four",
     author: "Ameer Karim",
-    priceDisplay: "$9.99 Kindle · $19.90 Paperback",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Six pillars of modern AI — capability, token efficiency, context, and cost. Which bay to open for reasoning, local Apple Silicon, codebases, and agent loops.",
     asin: "B0HCXQDBM3",
@@ -104,7 +104,7 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     subtitle: "The AI-First Editor and Autonomous Coding Companion",
     seriesLabel: "USJET.AI Engineering Series · Book Five",
     author: "Ameer Karim",
-    priceDisplay: "$9.99 Kindle · $19.90 Paperback",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Cursor as the hangar workbench — agentic coding, fleet workflows, and how the Founder ships sovereign software with an AI co-pilot.",
     asin: "B0HD53PM9W",
@@ -119,7 +119,7 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     subtitle: "Mastering GitHub, Vercel, and Domain Management",
     seriesLabel: "USJET.AI Engineering Series · Book Six",
     author: "Ameer Karim",
-    priceDisplay: "$9.99 Kindle · $19.90 Paperback",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "GitHub → Vercel → domain — the Founder’s deploy path from commit to live cockpit, without leaking out of the ship.",
     asin: "B0GZJZ9TGJ",

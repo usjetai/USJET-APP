@@ -97,7 +97,7 @@ export default function Hangar() {
           />
         ) : (
           <HangarBayTile key={`hangar-bay-${unit.slot}`} unit={unit} onOpenBay={() => tryExpand(unit)} />
-        ),
+        )
       ),
     [tryExpand, handleCloseExpansion, handleToggleFocus, expandedSlots, focusedSlot],
   );

@@ -12,11 +12,13 @@ import {
   USJET_STORE_BOOKS,
   USJET_STORE_MERCH,
   amazonKindleUrl,
+  amazonPaperbackSeriesUrl,
+  amazonPaperbackUrl,
   type UsjetStoreBook,
 } from "../data/usjetStore";
 import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
 
-function bookAmazonHref(book: UsjetStoreBook): string {
+function bookKindleHref(book: UsjetStoreBook): string {
   return wrapExternalInCockpit(amazonKindleUrl(book.asin), {
     returnTo: STORE_ROUTE,
     label: book.title,
@@ -25,13 +27,32 @@ function bookAmazonHref(book: UsjetStoreBook): string {
   });
 }
 
+function bookPaperbackHref(book: UsjetStoreBook): string | null {
+  if (!book.paperbackAsin) return null;
+  return wrapExternalInCockpit(amazonPaperbackUrl(book.paperbackAsin), {
+    returnTo: STORE_ROUTE,
+    label: `${book.title} Paperback`,
+    callName: "Paperback",
+    directHandoff: true,
+  });
+}
+
+function paperbackSeriesHref(): string {
+  return wrapExternalInCockpit(amazonPaperbackSeriesUrl(), {
+    returnTo: STORE_ROUTE,
+    label: "USJET.AI Engineering Series · Paperback",
+    callName: "Paperback Series",
+    directHandoff: true,
+  });
+}
+
 function BookCoverLink({ book }: { book: UsjetStoreBook }) {
-  const href = bookAmazonHref(book);
+  const href = bookKindleHref(book);
   return (
     <Link
       to={href}
       className="usjet-store__book-cover-link glass-effect-interactive"
-      aria-label={`Open ${book.title} on Amazon Kindle`}
+      aria-label={`Open ${book.title} on Amazon`}
     >
       <img
         className="usjet-store__book-cover-img"
@@ -68,42 +89,63 @@ export default function Store() {
       <section className="usjet-store__section" aria-labelledby="usjet-store-books-heading">
         <div className="usjet-store__section-head">
           <BookOpen size={18} aria-hidden />
-          <h2 id="usjet-store-books-heading">Engineering Series · Kindle</h2>
+          <h2 id="usjet-store-books-heading">Engineering Series · Kindle & Paperback</h2>
         </div>
         <p className="usjet-store__section-lede">
-          Written by Founder Ameer Karim. Tap a cover to buy on Amazon Kindle — same window, cockpit return.
+          Written by Founder Ameer Karim. Buy Kindle or paperback on Amazon — same window, cockpit return.{" "}
+          <Link to={paperbackSeriesHref()} className="glass-effect-interactive">
+            Browse the paperback series →
+          </Link>
         </p>
 
         <div className="usjet-store__book-grid">
-          {USJET_STORE_BOOKS.map((book) => (
-            <GlassEffectContainer
-              key={book.id}
-              className="usjet-store__book-card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-            >
-              <BookCoverLink book={book} />
-              <div className="usjet-store__book-body">
-                <p className="usjet-store__book-series">{book.seriesLabel}</p>
-                <h3 className="usjet-store__book-title">
-                  <Link to={bookAmazonHref(book)} className="glass-effect-interactive">
-                    {book.title}
-                  </Link>
-                </h3>
-                <p className="usjet-store__book-subtitle">{book.subtitle}</p>
-                <p className="usjet-store__book-blurb">{book.blurb}</p>
-                <div className="usjet-store__book-meta">
-                  <span>{book.author}</span>
-                  <span>{book.priceDisplay}</span>
+          {USJET_STORE_BOOKS.map((book) => {
+            const kindleHref = bookKindleHref(book);
+            const paperbackHref = bookPaperbackHref(book);
+            return (
+              <GlassEffectContainer
+                key={book.id}
+                className="usjet-store__book-card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+              >
+                <BookCoverLink book={book} />
+                <div className="usjet-store__book-body">
+                  <p className="usjet-store__book-series">{book.seriesLabel}</p>
+                  <h3 className="usjet-store__book-title">
+                    <Link to={kindleHref} className="glass-effect-interactive">
+                      {book.title}
+                    </Link>
+                  </h3>
+                  <p className="usjet-store__book-subtitle">{book.subtitle}</p>
+                  <p className="usjet-store__book-blurb">{book.blurb}</p>
+                  <div className="usjet-store__book-meta">
+                    <span>{book.author}</span>
+                    <span>
+                      {book.priceDisplay}
+                      {book.paperbackPriceDisplay ? ` · ${book.paperbackPriceDisplay}` : ""}
+                    </span>
+                  </div>
+                  <div className="usjet-store__cta-row">
+                    <Link
+                      to={kindleHref}
+                      className="usjet-store__cta btn-glass-prominent glass-effect-interactive"
+                    >
+                      Get on Kindle
+                      <ExternalLink size={14} aria-hidden />
+                    </Link>
+                    {paperbackHref ? (
+                      <Link
+                        to={paperbackHref}
+                        className="usjet-store__cta btn-glass glass-effect-interactive"
+                      >
+                        Get Paperback
+                        <ExternalLink size={14} aria-hidden />
+                      </Link>
+                    ) : null}
+                  </div>
                 </div>
-                <Link
-                  to={bookAmazonHref(book)}
-                  className="usjet-store__cta btn-glass-prominent glass-effect-interactive"
-                >
-                  Get on Kindle
-                  <ExternalLink size={14} aria-hidden />
-                </Link>
-              </div>
-            </GlassEffectContainer>
-          ))}
+              </GlassEffectContainer>
+            );
+          })}
         </div>
       </section>
 

@@ -21513,12 +21513,19 @@ html.gaming-page-root .global-video-bg__yt {
   color: rgba(148, 163, 184, 0.75);
 }
 
+.usjet-store__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+}
+
 .usjet-store__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  margin-top: 0.55rem;
+  margin-top: 0;
   min-height: 2.5rem;
   padding: 0 1rem;
   font-size: 0.68rem;
@@ -21526,6 +21533,10 @@ html.gaming-page-root .global-video-bg__yt {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
+}
+
+.usjet-store__merch-body .usjet-store__cta {
+  margin-top: 0.55rem;
 }
 
 .usjet-store__merch-grid {

@@ -167,6 +167,7 @@ function AnimatedRoutes() {
 function AppChrome() {
   const location = useLocation();
   const cockpitMode = location.pathname === "/cockpit";
+  const originMode = location.pathname === "/origin";
   const atmosphereLive = useAtmosphereLive();
 
   if (cockpitMode) {
@@ -190,8 +191,8 @@ function AppChrome() {
           {GLOBAL_BACKGROUND_BEAT_ENABLED ? <SiteAudioPrime /> : null}
         </>
       ) : null}
-      <SiteLatchMenu />
-      <AppNav />
+      {originMode ? null : <SiteLatchMenu />}
+      {originMode ? null : <AppNav />}
       <main className="relative z-10 flex-1">
         <AnimatedRoutes />
       </main>
@@ -204,6 +205,7 @@ function AppShell() {
   const hangarEmbed =
     location.pathname === "/cockpit" &&
     new URLSearchParams(location.search).get("embed") === "hangar";
+  const originMode = location.pathname === "/origin";
 
   return (
     <div
@@ -211,15 +213,16 @@ function AppShell() {
       className={[
         "relative flex min-h-screen flex-col overflow-x-hidden bg-transparent text-white",
         hangarEmbed ? "usjet-app-shell--hangar-embed" : "",
+        originMode ? "usjet-app-shell--origin" : "",
       ]
         .filter(Boolean)
         .join(" ")}
     >
       <AppChrome />
-      {hangarEmbed ? null : <UsjetGlobalContactBar />}
+      {hangarEmbed || originMode ? null : <UsjetGlobalContactBar />}
       <UsjetAtmosphereBoot />
-      {hangarEmbed ? null : <UsjetProtocolBootOverlay />}
-      {hangarEmbed ? null : <UsjetReturnFab />}
+      {hangarEmbed || originMode ? null : <UsjetProtocolBootOverlay />}
+      {hangarEmbed || originMode ? null : <UsjetReturnFab />}
     </div>
   );
 }

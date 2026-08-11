@@ -11565,6 +11565,179 @@ html.code-kit-page-root #usjet-app-shell {
   }
 }
 
+/* Origin Jarvis tile — clean /origin shell mini-chat */
+.origin-command-page {
+  background: transparent;
+}
+
+.origin-jarvis-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 1.1rem 1rem 1rem;
+  border: 1px solid rgba(125, 211, 252, 0.22);
+}
+
+.origin-jarvis-tile__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.origin-jarvis-tile__kicker {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.78);
+}
+
+.origin-jarvis-tile__title {
+  margin: 0;
+  font-family: Audiowide, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+}
+
+.origin-jarvis-tile__lede {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.origin-jarvis-tile__log {
+  max-height: min(42vh, 18rem);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(10, 11, 16, 0.72);
+  scroll-behavior: smooth;
+}
+
+.origin-jarvis-tile__line {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 94%;
+}
+
+.origin-jarvis-tile__line--user {
+  align-self: flex-end;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.origin-jarvis-tile__line--assistant {
+  align-self: flex-start;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.origin-jarvis-tile__speaker {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.origin-jarvis-tile__text {
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.7rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e2e8f0;
+}
+
+.origin-jarvis-tile__line--user .origin-jarvis-tile__text {
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.origin-jarvis-tile__line--assistant .origin-jarvis-tile__text {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.origin-jarvis-tile__line--pending .origin-jarvis-tile__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(148, 163, 184, 0.85);
+}
+
+.origin-jarvis-tile__spinner {
+  animation: origin-avatar-spin 0.9s linear infinite;
+}
+
+.origin-jarvis-tile__error {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #fca5a5;
+}
+
+.origin-jarvis-tile__composer {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-end;
+}
+
+.origin-jarvis-tile__input {
+  flex: 1;
+  min-height: 2.75rem;
+  resize: none;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(15, 23, 42, 0.72);
+  color: #f8fafc;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.origin-jarvis-tile__input:focus-visible {
+  outline: 1px solid rgba(56, 189, 248, 0.75);
+  outline-offset: 1px;
+}
+
+.origin-jarvis-tile__send {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 2.75rem;
+  padding: 0 0.95rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.origin-jarvis-tile__send:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .origin-jarvis-tile__log {
+    max-height: min(36vh, 14rem);
+  }
+}
+
 @media (min-width: 1024px) {
   .hangar-bay-grid-wrap {
     overflow-x: auto;

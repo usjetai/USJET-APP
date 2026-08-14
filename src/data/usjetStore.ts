@@ -5,6 +5,14 @@
 
 export const STORE_ROUTE = "/store" as const;
 
+export function storeBookAnchor(bookId: string): string {
+  return `store-book-${bookId}`;
+}
+
+export function storeBookPath(bookId: string): string {
+  return `${STORE_ROUTE}#${storeBookAnchor(bookId)}`;
+}
+
 export const STORE_PAGE_TITLE = "Store" as const;
 export const STORE_META_DESCRIPTION =
   "USJET.AI Engineering Series Kindle books by Ameer Karim." as const;

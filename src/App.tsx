@@ -17,6 +17,7 @@ import SiteAudioPrime from "./components/layout/SiteAudioPrime";
 import YouTubeAudioBackground from "./components/layout/YouTubeAudioBackground";
 import { GLOBAL_BACKGROUND_BEAT_ENABLED } from "./data/globalBackgroundBeat";
 import SiteLatchMenu from "./components/layout/SiteLatchMenu";
+import GuestBooksGate from "./components/store/GuestBooksGate";
 import TierRouteGate from "./components/member/TierRouteGate";
 import SeoHead from "./components/layout/SeoHead";
 import AnalyticsRouteTracker from "./components/layout/AnalyticsRouteTracker";
@@ -192,6 +193,7 @@ function AppChrome() {
       ) : null}
       <SiteLatchMenu />
       <AppNav />
+      <GuestBooksGate />
       <main className="relative z-10 flex-1">
         <AnimatedRoutes />
       </main>

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { BookOpen, ExternalLink } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import {
@@ -13,6 +13,7 @@ import {
   amazonKindleUrl,
   amazonPaperbackUrl,
   amazonSeriesUrl,
+  storeBookAnchor,
   type UsjetStoreBook,
 } from "../data/usjetStore";
 import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
@@ -59,6 +60,8 @@ function BookCoverLink({ book }: { book: UsjetStoreBook }) {
 }
 
 export default function Store() {
+  const location = useLocation();
+
   useEffect(() => {
     const previous = document.title;
     document.title = `${STORE_PAGE_TITLE} · USJet.ai`;
@@ -70,6 +73,15 @@ export default function Store() {
       meta?.setAttribute("content", previousDescription);
     };
   }, []);
+
+  useEffect(() => {
+    const id = location.hash.replace(/^#/, "");
+    if (!id) {
+      return;
+    }
+    const node = document.getElementById(id);
+    node?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [location.hash]);
 
   return (
     <div className="usjet-store-page page-atmosphere page-nav-offset mx-auto max-w-5xl px-4 pb-32 pt-4 sm:px-6 lg:px-8">
@@ -111,6 +123,7 @@ export default function Store() {
           {USJET_STORE_BOOKS.map((book) => (
             <GlassEffectContainer
               key={book.id}
+              id={storeBookAnchor(book.id)}
               className="usjet-store__book-card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
             >
               <BookCoverLink book={book} />

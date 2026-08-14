@@ -3,6 +3,7 @@ import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
 import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
 import { USJET_BUSINESS_ADDRESS_LINES } from "../../lib/usjetContact";
+import { USJET_STORE_BOOKS, storeBookPath } from "../../data/usjetStore";
 
 const YEAR = new Date().getFullYear();
 
@@ -39,19 +40,24 @@ export default function UsjetGlobalContactBar() {
               </span>
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
-            
-            <Link 
-              to="/store" 
-              className="usjet-footer__series-promo mt-8 block overflow-hidden rounded-lg border border-white/10 transition-transform hover:scale-[1.02] active:scale-[0.98] glass-effect-interactive"
-              aria-label="View Engineering Series in USJET Store"
-            >
-              <img 
-                src="/store/engineering-series-footer-mockup.webp" 
-                alt="USJET.AI Engineering Series Books" 
-                className="w-full h-auto object-cover opacity-80 hover:opacity-100 transition-opacity"
-                loading="lazy"
-              />
-            </Link>
+
+            <div className="usjet-footer__books-grid mt-8 grid grid-cols-6 gap-2">
+              {USJET_STORE_BOOKS.map((book) => (
+                <Link
+                  key={book.id}
+                  to={storeBookPath(book.id)}
+                  className="usjet-footer__book-link overflow-hidden rounded border border-white/10 transition-transform hover:scale-105 glass-effect-interactive"
+                  aria-label={`${book.title} — open Store`}
+                >
+                  <img
+                    src={book.coverSrc}
+                    alt=""
+                    className="usjet-footer__book-cover w-full aspect-[5/8] object-cover opacity-75 hover:opacity-100 transition-opacity"
+                    loading="lazy"
+                  />
+                </Link>
+              ))}
+            </div>
           </div>
 
           <nav className="usjet-footer__col" aria-label="Platform">

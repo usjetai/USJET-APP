@@ -31653,6 +31653,9 @@ html.blog-page-root #usjet-app-shell {
   max-height: min(94vh, 56rem);
   overflow: auto;
   padding: 1.75rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .guest-books-gate__close {
@@ -31688,6 +31691,7 @@ html.blog-page-root #usjet-app-shell {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: rgba(34, 211, 238, 0.92);
+  text-align: center;
 }
 
 .guest-books-gate__title {
@@ -31697,6 +31701,7 @@ html.blog-page-root #usjet-app-shell {
   letter-spacing: -0.02em;
   line-height: 1.15;
   color: rgba(248, 250, 252, 0.98);
+  text-align: center;
 }
 
 .guest-books-gate__lede {
@@ -31704,6 +31709,8 @@ html.blog-page-root #usjet-app-shell {
   font-size: 0.85rem;
   line-height: 1.5;
   color: rgba(203, 213, 225, 0.85);
+  text-align: center;
+  max-width: 48rem;
 }
 
 .guest-books-gate__lede em {

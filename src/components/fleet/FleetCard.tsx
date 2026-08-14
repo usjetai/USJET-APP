@@ -3,8 +3,7 @@ import { getFleetBayAccent, fleetBayAccentStyle } from "../../data/fleetBayAccen
 import { getFleetCapabilities } from "../../data/fleetCapabilities";
 import FleetCapabilityBadges from "./FleetCapabilityBadges";
 import AircraftIcon from "../icons/AircraftIcons";
-import HangarTileRadarVideo from "../hangar/HangarTileRadarVideo";
-import { HeartPulse } from "lucide-react";
+import { getFleetCategory } from "../../data/fleetCategories";
 import { useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,8 +18,6 @@ import {
   buildRandomFleetFlightPlan,
   type FleetFlightPlan,
 } from "../../lib/fleetRunwayFlight";
-import { developerRedBlinkHeartClass } from "../../lib/developerRedBlink";
-import DeveloperRedBlinkName from "../DeveloperRedBlinkName";
 import { playJetLaunchSound } from "../../lib/jetLaunchSound";
 import type { FleetAircraftType } from "../../types/fleet";
 
@@ -76,7 +73,8 @@ export default function FleetCard({
   const bayAccent = typeof slot === "number" ? getFleetBayAccent(slot) : null;
   const expandInteractive = Boolean(onExpandBay);
   const protocolText = systemPrompt ?? buildUnitSystemPrompt({ name, callsign, domain });
-  const capabilities = typeof slot === "number" && surface === "fleet" ? getFleetCapabilities(slot) : undefined;
+  const capabilities = typeof slot === "number" ? getFleetCapabilities(slot) : undefined;
+  const category = typeof slot === "number" ? getFleetCategory(slot) : undefined;
   const showJetFighterFooter = surface === "fleet" && Boolean(jetFighterPagePath) && !isRunway;
   const launchSpinPendingRef = useRef(false);
   const aircraftAnchorRef = useRef<HTMLDivElement>(null);
@@ -139,7 +137,7 @@ export default function FleetCard({
     launchSpinPendingRef.current = true;
     setLaunchSpinning(true);
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!isRunway || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       handleSpinComplete();
       return;
     }
@@ -163,7 +161,7 @@ export default function FleetCard({
   const isHangarSurface = surface === "hangar";
   const aircraftWrapClassName = [
     "fleet-card__aircraft-wrap mb-4 flex items-center justify-center px-3 py-4",
-    isHangarSurface ? "fleet-card__aircraft-wrap--radar-hud" : "",
+    isHangarSurface ? "fleet-card__aircraft-wrap--corporate-mini" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -173,12 +171,9 @@ export default function FleetCard({
       aircraftType={aircraftType}
       slot={slot}
       accentId={accentId}
-      className="fleet-card__aircraft h-32 w-32"
+      className={isHangarSurface ? "fleet-card__aircraft h-9 w-9" : "fleet-card__aircraft h-32 w-32"}
     />
   );
-
-  const renderHangarRadarHud = () =>
-    isHangarSurface ? <HangarTileRadarVideo slot={slot} /> : null;
 
   const renderRunwayFlightPortal = () => {
     if (!flightPlan || typeof document === "undefined") {
@@ -227,14 +222,13 @@ export default function FleetCard({
 
   const renderAircraftWrap = () => {
     const isSortieTakingOff =
-      launchSpinning && launchSpinKey > 0 && Boolean(flightPlan) && (isRunway || expandInteractive);
+      launchSpinning && launchSpinKey > 0 && Boolean(flightPlan) && isRunway;
 
     // Hangar radar HUD stays on the tile; logo flies a random path off the page (same as Fleet).
     if (isSortieTakingOff) {
       return (
         <>
           <div className={`${aircraftWrapClassName} fleet-card__aircraft-wrap--runway-takeoff`}>
-            {renderHangarRadarHud()}
             <div
               ref={aircraftAnchorRef}
               className="fleet-card__aircraft-sortie-anchor"
@@ -251,7 +245,6 @@ export default function FleetCard({
 
     return (
       <div ref={aircraftAnchorRef} className={aircraftWrapClassName}>
-        {renderHangarRadarHud()}
         {renderAircraftIcon()}
       </div>
     );
@@ -360,18 +353,9 @@ export default function FleetCard({
     .filter(Boolean)
     .join(" ");
 
-  const hangarAnimStyle =
-    isHangarSurface && typeof slot === "number"
-      ? ({
-          "--hangar-anim-delay": `${(slot % 12) * 0.35}s`,
-          "--hangar-hud-hue": `${Math.round((slot * 137.508) % 360)}deg`,
-        } as CSSProperties)
-      : undefined;
-
   const cardStyle = {
     ...style,
     ...(typeof slot === "number" ? fleetBayAccentStyle(slot) : null),
-    ...hangarAnimStyle,
   } as CSSProperties | undefined;
 
   const glassContent = (
@@ -400,7 +384,6 @@ export default function FleetCard({
         ) : isAvailableBay ? (
           <p
             className={[
-              isRunway ? null : "developer-available-green-blink",
               "mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70",
             ]
               .filter(Boolean)
@@ -415,7 +398,7 @@ export default function FleetCard({
         ) : isRunway ? (
           <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/55">Partner bay</p>
         ) : (
-          <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-emerald-300/75">Hired developer</p>
+          <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/60">Active bay</p>
         )}
         {typeof slot === "number" && bayAccent && !isRunway ? (
           <p
@@ -424,11 +407,8 @@ export default function FleetCard({
             <span className="fleet-card__personality">{bayAccent.personality}</span>
           </p>
         ) : null}
-        {!isAvailableBay && !isRunway ? (
-          <p className="mt-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">
-            <HeartPulse size={12} aria-hidden className={developerRedBlinkHeartClass(name) || undefined} />
-            <DeveloperRedBlinkName name={name} fleetSlot={slot} />
-          </p>
+        {!isAvailableBay && !isRunway && category ? (
+          <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">{category}</p>
         ) : null}
         {isAvailableBay && !isRunway ? (
           <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.2em] text-amber-200/65">Open position</p>

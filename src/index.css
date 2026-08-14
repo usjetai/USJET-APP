@@ -2684,7 +2684,7 @@
 @layer base {
   html {
     @apply scroll-smooth;
-    background-color: #020617;
+    background-color: #000000;
   }
 
   html.usjet-site-shake {
@@ -9663,20 +9663,41 @@ html.code-kit-page-root #usjet-app-shell {
   background: transparent;
 }
 
-/* Hangar tiles — animated radar HUD + living bay cards */
-.hangar-page--workbench .fleet-card--surface-hangar {
-  animation: hangar-tile-breathe 5.2s ease-in-out infinite;
-  animation-delay: var(--hangar-anim-delay, 0s);
-  will-change: transform;
+/* Corporate hangar tiles — static, no idle motion */
+.hangar-page--workbench .fleet-card--surface-hangar,
+.hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass {
+  animation: none;
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar .fleet-card__glass {
-  animation: hangar-tile-glass-pulse 4.4s ease-in-out infinite;
-  animation-delay: var(--hangar-anim-delay, 0s);
+  padding-top: 3.6rem !important;
+}
+
+.fleet-card__aircraft-wrap--corporate-mini {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  min-height: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid;
+  place-items: center;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.fleet-card__aircraft-wrap--corporate-mini .fleet-card__aircraft {
+  animation: none !important;
+  filter: none !important;
+  transform: none !important;
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar.fleet-card--bay-accent .fleet-card__glass {
-  animation-name: hangar-tile-glass-pulse-accent;
+  animation: none;
 }
 
 .hangar-page--workbench .fleet-card--surface-hangar.fleet-card--launch-spinning,

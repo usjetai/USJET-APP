@@ -17,7 +17,7 @@ import {
   resolveJ36ProductPaymentLink,
   resolveSr71BlackbirdProductPaymentLink,
 } from "../lib/stripePaymentLink";
-import { USJET_STORE_BOOKS, STORE_ROUTE, amazonKindleUrl } from "../data/usjetStore";
+import { USJET_STORE_BOOKS, STORE_ROUTE, amazonKindleUrl, amazonPaperbackUrl } from "../data/usjetStore";
 import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
 import { BookOpen, ExternalLink } from "lucide-react";
 

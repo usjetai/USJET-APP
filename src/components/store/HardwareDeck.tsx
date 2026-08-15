@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, ShoppingCart, XCircle } from "lucide-react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import HardwareCartButton from "./HardwareCartButton";
 import HardwareCartDrawer from "./HardwareCartDrawer";
@@ -17,7 +17,7 @@ import {
   OPERATOR_SETUP_PROMISE,
   OPERATOR_STACK,
   WHY_USJET_HARDWARE,
-  formatUsd,
+  formatUsdParts,
   hardwareProductsByMission,
   type HardwareMission,
   type HardwareProduct,
@@ -28,65 +28,56 @@ const OPS_MAIL = "mailto:ops@usjet.ai?subject=USJET%20Operator%27s%20Rig%20order
 function ProductCard({ product }: { product: HardwareProduct }) {
   const { addToCart } = useHardwareCart();
   const paymentLink = product.stripePaymentLink?.trim() ?? "";
+  const price = formatUsdParts(product.priceUsd);
+  const listingTitle = `${product.brand} ${product.name} ${product.configLabel} — Operator's Rig`;
   return (
-    <GlassEffectContainer
-      id={product.id}
-      className="hw-card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-    >
-      {product.badge && <span className="hw-card__badge">{product.badge}</span>}
+    <article id={product.id} className="hw-card">
       <div className="hw-card__media">
         <img
           src={product.imageSrc}
-          alt={`${product.brand} ${product.name} ${product.configLabel}`}
-          width={1200}
-          height={750}
+          alt={listingTitle}
+          width={640}
+          height={480}
         />
       </div>
       <div className="hw-card__body">
-        <p className="hw-card__brand">{product.brand}</p>
-        <h3 className="hw-card__name">{product.name}</h3>
-        <p className="hw-card__config">{product.configLabel}</p>
-
+        <a
+          className="hw-card__title"
+          href={paymentLink || OPS_MAIL}
+          data-usjet-external-leak={paymentLink ? "true" : undefined}
+        >
+          {product.badge ? <em className="hw-card__condition">{product.badge}</em> : null} {listingTitle}
+        </a>
         <ul className="hw-card__specs">
-          {product.specs.map((spec) => (
+          {product.specs.slice(0, 4).map((spec) => (
             <li key={spec}>{spec}</li>
           ))}
         </ul>
-
-        <p className="hw-card__good-for">
-          <strong>Good for:</strong> {product.goodFor}
-        </p>
-        <p className="hw-card__blurb">{product.blurb}</p>
-
-        <div className="hw-card__footer">
-          <span className="hw-card__price">{formatUsd(product.priceUsd)}</span>
-          {product.contactToOrder ? (
-            <a href={OPS_MAIL} className="hw-card__add btn-glass glass-effect-interactive">
-              Talk to USJET
-            </a>
-          ) : (
-            <div className="hw-card__actions">
-              {paymentLink ? (
-                <a
-                  href={paymentLink}
-                  className="hw-card__add btn-glass-prominent glass-effect-interactive"
-                  data-usjet-external-leak="true"
-                >
-                  Buy now
-                </a>
-              ) : null}
-              <button
-                type="button"
-                className="hw-card__add btn-glass glass-effect-interactive"
-                onClick={() => addToCart(product.id)}
-              >
-                Add to Cart
-              </button>
-            </div>
-          )}
+        <div className="hw-card__price">
+          <span className="hw-card__price-mark">$</span>
+          <strong>{price.dollars}</strong>
+          <sup>.{price.cents}</sup>
         </div>
+        <p className="hw-card__ship">Free Shipping</p>
+        {product.contactToOrder ? (
+          <a href={OPS_MAIL} className="hw-card__cart-btn">
+            Talk to USJET
+          </a>
+        ) : (
+          <div className="hw-card__actions">
+            <button type="button" className="hw-card__cart-btn" onClick={() => addToCart(product.id)}>
+              <ShoppingCart size={16} aria-hidden />
+              Add to Cart
+            </button>
+            {paymentLink ? (
+              <a href={paymentLink} className="hw-card__buy-link" data-usjet-external-leak="true">
+                Buy now
+              </a>
+            ) : null}
+          </div>
+        )}
       </div>
-    </GlassEffectContainer>
+    </article>
   );
 }
 

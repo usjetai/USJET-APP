@@ -200,7 +200,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     goodFor: "AI you can take to the kitchen table or a job walkthrough. Small models on the go. Silent.",
     blurb: "For the operator who will not leave the brain on a desk.",
     amazonSearchTerm: "Apple MacBook Air M4 13-inch 16GB 256GB",
-    imageSrc: "/store/hardware/macbook-air-m4.png",
+    imageSrc: "/store/hardware/macbook-air-m4-13.jpg",
   },
   {
     id: "macbook-air-m4-15-16-256",
@@ -217,7 +217,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     goodFor: "Same portable local AI as the 13\" — bigger screen so the chat and your work sit side by side.",
     blurb: "More glass. Same quiet. Still a home machine you can close and walk away with.",
     amazonSearchTerm: "Apple MacBook Air M4 15-inch 16GB 256GB",
-    imageSrc: "/store/hardware/macbook-air-m4.png",
+    imageSrc: "/store/hardware/macbook-air-m4-15.jpg",
   },
   {
     id: "gmktec-evo-x2",
@@ -251,7 +251,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     goodFor: "Daily-driver office brain. Bigger models, sustained loads, quiet enough to live under a desk.",
     blurb: "This is the Apple box you leave on. Not an experiment. A workstation.",
     amazonSearchTerm: "Apple Mac Studio M4 Max 36GB 512GB",
-    imageSrc: "/store/hardware/mac-studio-m4.png",
+    imageSrc: "/store/hardware/mac-studio-m4.jpg",
   },
   {
     id: "minisforum-ms-a2",
@@ -268,7 +268,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     goodFor: "Fleet value pick — 96GB is how a shop runs 30B–40B class models locally with memory to spare.",
     blurb: "Best price-to-brain ratio we will put on a business desk.",
     amazonSearchTerm: "Minisforum MS-A2 Ryzen AI Max+ 395 96GB",
-    imageSrc: "/store/hardware/minisforum-ms-a2.png",
+    imageSrc: "/store/hardware/minisforum-ms-a2.jpg",
     badge: "Shop pick",
   },
   {
@@ -286,7 +286,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     goodFor: "Top of the compact lineup — 70B-class models at a sane quant, plus fast networking so the office can talk to the box.",
     blurb: "When the computer is the company brain and several people need it at once.",
     amazonSearchTerm: "Beelink GTR9 Pro Ryzen AI Max+ 395 128GB",
-    imageSrc: "/store/hardware/beelink-gtr9-pro.png",
+    imageSrc: "/store/hardware/beelink-gtr9-pro.jpg",
     badge: "Most memory",
   },
   {
@@ -319,7 +319,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     goodFor: "When local AI is the daily driver for a team — bigger models, more context, no laptop thermal ceiling.",
     blurb: "Configured to order. Tell us how many people will talk to it. We spec the memory. Then we buy and ship.",
     amazonSearchTerm: "Apple Mac Studio M4 Max 64GB",
-    imageSrc: "/store/hardware/mac-studio-m4.png",
+    imageSrc: "/store/hardware/mac-studio-m4.jpg",
     badge: "Team server",
     contactToOrder: true,
   },
@@ -339,4 +339,9 @@ export function hardwareProductsByMission(mission: HardwareMission): HardwarePro
 
 export function formatUsd(amount: number): string {
   return `$${amount.toLocaleString("en-US")}`;
+}
+
+export function formatUsdParts(amount: number): { dollars: string; cents: string } {
+  const [dollars, cents] = amount.toFixed(2).split(".");
+  return { dollars: Number(dollars).toLocaleString("en-US"), cents };
 }

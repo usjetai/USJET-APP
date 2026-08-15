@@ -24,7 +24,9 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     routes: [
       { path: "/", label: "Homes", hint: "Home AI computers" },
       { path: "/fleet", label: "Business", hint: "Business computers · servers" },
-      { path: "/store/ai-computers", label: "Full lineup", hint: "All Operator Rigs" },
+      { path: "/store/ai-computers", label: "Full lineup", hint: "Homes + Businesses hub" },
+      { path: "/store/ai-computers/homes", label: "AI Computers — Homes", hint: "Mac Mini, MacBook, mini PCs" },
+      { path: "/store/ai-computers/businesses", label: "AI Computers — Businesses", hint: "Mac Studio, workstations" },
       { path: "/workbench", label: "Workbench", hint: "Legacy tool bays" },
       { path: "/fleet-runway", label: "Fleet runway", hint: "Legacy 30-AI bays" },
       { path: "/jet-browser", label: "Jet Browser", hint: "Captain-loaded tiles" },
@@ -65,7 +67,9 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
       { path: "/strategic-assets", label: "Strategic Assets" },
       { path: "/sovereignty", label: "Sovereignty" },
       { path: "/store", label: "Manuals", hint: "AI Book Series" },
-      { path: "/store/ai-computers", label: "AI Computers", hint: "Mac Mini, mini PCs" },
+      { path: "/store/ai-computers", label: "AI Computers", hint: "Homes + Businesses" },
+      { path: "/store/ai-computers/homes", label: "AI Computers — Homes", hint: "Mac Mini, MacBook, mini PCs" },
+      { path: "/store/ai-computers/businesses", label: "AI Computers — Businesses", hint: "Mac Studio, workstations" },
     ],
   },
   {

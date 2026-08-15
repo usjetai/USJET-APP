@@ -8,6 +8,8 @@ import {
   BUSINESS_DECK,
   FLEET_HARDWARE_ROUTE,
   HANGAR_HARDWARE_ROUTE,
+  HARDWARE_BUSINESSES_ROUTE,
+  HARDWARE_HOMES_ROUTE,
   HARDWARE_HERO_KICKER,
   HARDWARE_HERO_LEDE,
   HARDWARE_HERO_TITLE,
@@ -132,9 +134,12 @@ function CheckoutBanner() {
 
 type HardwareDeckProps = {
   mission: HardwareMission | "all";
+  catalog?: "site" | "store";
+  /** Homes film already carries the pitch — skip the duplicate kicker/title. */
+  omitHero?: boolean;
 };
 
-export default function HardwareDeck({ mission }: HardwareDeckProps) {
+export default function HardwareDeck({ mission, catalog = "site", omitHero = false }: HardwareDeckProps) {
   const deck =
     mission === "business" ? BUSINESS_DECK : mission === "home" ? HOME_DECK : {
       kicker: HARDWARE_HERO_KICKER,
@@ -149,7 +154,14 @@ export default function HardwareDeck({ mission }: HardwareDeckProps) {
     };
   const products =
     mission === "all" ? [...HARDWARE_PRODUCTS] : hardwareProductsByMission(mission);
-  const otherTo = mission === "home" ? FLEET_HARDWARE_ROUTE : HANGAR_HARDWARE_ROUTE;
+  const otherTo =
+    catalog === "store"
+      ? mission === "home"
+        ? HARDWARE_BUSINESSES_ROUTE
+        : HARDWARE_HOMES_ROUTE
+      : mission === "home"
+        ? FLEET_HARDWARE_ROUTE
+        : HANGAR_HARDWARE_ROUTE;
   const otherLabel =
     mission === "all"
       ? null
@@ -176,28 +188,41 @@ export default function HardwareDeck({ mission }: HardwareDeckProps) {
 
   return (
     <div className="usjet-store-page hw-page hw-page--deck page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-32 pt-4 sm:px-6 lg:px-8">
-      <header className="usjet-store__hero hw-hero">
-        <p className="usjet-store__kicker">{deck.kicker}</p>
-        <h1 className="usjet-store__title usjet-logo-stone">{deck.title}</h1>
-        <p className="usjet-store__lede">{deck.lede}</p>
-        <div className="hw-hero__cart">
-          <HardwareCartButton />
-          {otherLabel ? (
-            <Link to={otherTo} className="hw-mission-switch glass-effect-interactive">
-              {otherLabel}
-            </Link>
-          ) : (
-            <>
-              <Link to={HANGAR_HARDWARE_ROUTE} className="hw-mission-switch glass-effect-interactive">
-                Homes
+      {omitHero ? (
+        <div className="hw-hero hw-hero--after-film">
+          <div className="hw-hero__cart">
+            <HardwareCartButton />
+            {otherLabel ? (
+              <Link to={otherTo} className="hw-mission-switch glass-effect-interactive">
+                {otherLabel}
               </Link>
-              <Link to={FLEET_HARDWARE_ROUTE} className="hw-mission-switch glass-effect-interactive">
-                Business
-              </Link>
-            </>
-          )}
+            ) : null}
+          </div>
         </div>
-      </header>
+      ) : (
+        <header className="usjet-store__hero hw-hero">
+          <p className="usjet-store__kicker">{deck.kicker}</p>
+          <h1 className="usjet-store__title usjet-logo-stone">{deck.title}</h1>
+          <p className="usjet-store__lede">{deck.lede}</p>
+          <div className="hw-hero__cart">
+            <HardwareCartButton />
+            {otherLabel ? (
+              <Link to={otherTo} className="hw-mission-switch glass-effect-interactive">
+                {otherLabel}
+              </Link>
+            ) : (
+              <>
+                <Link to={HANGAR_HARDWARE_ROUTE} className="hw-mission-switch glass-effect-interactive">
+                  Homes
+                </Link>
+                <Link to={FLEET_HARDWARE_ROUTE} className="hw-mission-switch glass-effect-interactive">
+                  Business
+                </Link>
+              </>
+            )}
+          </div>
+        </header>
+      )}
 
       <CheckoutBanner />
 
@@ -236,7 +261,7 @@ export default function HardwareDeck({ mission }: HardwareDeckProps) {
         </p>
       </section>
 
-      <section className="usjet-store__section" aria-labelledby="hw-catalog-heading">
+      <section className="usjet-store__section" id="hw-catalog" aria-labelledby="hw-catalog-heading">
         <div className="usjet-store__section-head">
           <h2 id="hw-catalog-heading">
             {mission === "home" ? "Home lineup" : mission === "business" ? "Business lineup" : "Full lineup"}

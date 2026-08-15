@@ -9,7 +9,8 @@ type PageTransitionProps = {
 export default function PageTransition({ children, routeKey }: PageTransitionProps) {
   const reduceMotion = useReducedMotion();
 
-  if (reduceMotion) {
+  // Homes scroll-film needs a transform-free ancestor or position:sticky dies.
+  if (reduceMotion || routeKey === "/") {
     return <div key={routeKey}>{children}</div>;
   }
 

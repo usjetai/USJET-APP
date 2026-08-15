@@ -12,13 +12,38 @@ import { HARDWARE_STRIPE } from "../lib/stripePaymentLink";
  */
 
 export const HARDWARE_ROUTE = "/store/ai-computers" as const;
+export const HARDWARE_HOMES_ROUTE = "/store/ai-computers/homes" as const;
+export const HARDWARE_BUSINESSES_ROUTE = "/store/ai-computers/businesses" as const;
 export const HANGAR_HARDWARE_ROUTE = "/" as const;
 export const FLEET_HARDWARE_ROUTE = "/fleet" as const;
 
 export const HARDWARE_MAX_QUANTITY_PER_LINE = 10 as const;
 
 export type HardwareMission = "home" | "business";
-export type HardwareCategory = "apple-silicon" | "mini-pc";
+export type HardwareAudience = HardwareMission;
+export type HardwareCategory = "apple-silicon" | "mini-pc" | "workstation";
+
+export const HARDWARE_AUDIENCE_META: Record<
+  HardwareAudience,
+  { route: string; label: string; kicker: string; title: string; lede: string }
+> = {
+  home: {
+    route: HARDWARE_HOMES_ROUTE,
+    label: "Homes",
+    kicker: "AI Computers for Homes",
+    title: "AI Computers for Your Home",
+    lede:
+      "Single-user machines. We buy the box, put a personal Jarvis on it, and ship it. Private. No ChatGPT bill.",
+  },
+  business: {
+    route: HARDWARE_BUSINESSES_ROUTE,
+    label: "Businesses",
+    kicker: "AI Computers for Businesses",
+    title: "AI Computers for Your Business",
+    lede:
+      "Higher-memory machines for a shop or office. We put a Jarvis on it that stays on so the team talks to YOUR box, not a cloud tab.",
+  },
+};
 
 export type HardwareProduct = {
   id: string;
@@ -142,6 +167,7 @@ export const HARDWARE_HERO_LEDE =
 export const HARDWARE_CATEGORY_LABELS: Record<HardwareCategory, string> = {
   "apple-silicon": "Apple Silicon",
   "mini-pc": "Local-AI Mini PCs",
+  workstation: "AI Workstations",
 };
 
 export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
@@ -181,7 +207,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
   },
   {
     id: "mac-mini-m4-24-512",
-    missions: ["home", "business"],
+    missions: ["home"],
     category: "apple-silicon",
     name: "Mac Mini",
     configLabel: "M4 · 24GB / 512GB",
@@ -232,8 +258,59 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     imageSrc: "/store/hardware/macbook-air-m4-15.jpg",
   },
   {
+    id: "macbook-pro-14-m4-16-512",
+    missions: ["home"],
+    category: "apple-silicon",
+    name: "MacBook Pro 14\"",
+    configLabel: "M4 · 16GB / 512GB",
+    brand: "Apple",
+    priceUsd: 2399,
+    stripeEnvKey: "STRIPE_PRICE_MACBOOK_PRO_14_M4_16_512",
+    specs: ["Apple M4 chip", "16GB unified memory", "512GB SSD", "Active cooling"],
+    goodFor: "Sustained local inference in a laptop — cooling holds longer than the fanless Air.",
+    blurb: "For the home operator who runs the Jarvis for hours, not just a quick question.",
+    amazonSearchTerm: "Apple MacBook Pro 14-inch M4 16GB 512GB",
+    imageSrc: "/store/hardware/macbook-air-m4-13.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
+  },
+  {
+    id: "beelink-ser9-pro",
+    missions: ["home"],
+    category: "mini-pc",
+    name: "Beelink SER9 Pro",
+    configLabel: "Ryzen 7 H255 · 32GB / 1TB",
+    brand: "Beelink",
+    priceUsd: 1099,
+    stripeEnvKey: "STRIPE_PRICE_BEELINK_SER9_PRO",
+    specs: ["AMD Ryzen 7 H255", "32GB LPDDR5X", "1TB NVMe", "Compact mini-PC"],
+    goodFor: "Budget home door onto local AI — 7B–8B models via Ollama.",
+    blurb: "A starter Jarvis box for the house. Not a lab. Not Apple money.",
+    amazonSearchTerm: "Beelink SER9 Pro Ryzen 7 H255 32GB",
+    imageSrc: "/store/hardware/beelink-gtr9-pro.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
+  },
+  {
+    id: "minisforum-um890-pro",
+    missions: ["home"],
+    category: "mini-pc",
+    name: "Minisforum UM890 Pro",
+    configLabel: "Ryzen 9 8945HS · 32GB / 1TB",
+    brand: "Minisforum",
+    priceUsd: 1299,
+    stripeEnvKey: "STRIPE_PRICE_MINISFORUM_UM890_PRO",
+    specs: ["AMD Ryzen 9 8945HS", "32GB DDR5", "1TB PCIe 4.0", "Windows or Linux"],
+    goodFor: "A step up from entry mini PCs — 7B–8B models plus room to use the machine as a daily driver.",
+    blurb: "Home daily driver with more CPU muscle than the SER9 Pro.",
+    amazonSearchTerm: "Minisforum UM890 Pro Ryzen 9 8945HS 32GB",
+    imageSrc: "/store/hardware/minisforum-ms-a2.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
+  },
+  {
     id: "gmktec-evo-x2",
-    missions: ["home", "business"],
+    missions: ["business"],
     category: "mini-pc",
     name: "GMKtec EVO-X2",
     configLabel: "Ryzen AI Max 385 · 64GB",
@@ -247,6 +324,23 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     blurb: "When you want 64GB of brain-room without buying a Studio.",
     amazonSearchTerm: "GMKtec EVO-X2 Ryzen AI Max 385 64GB",
     imageSrc: "/store/hardware/gmktec-evo-x2.jpg",
+  },
+  {
+    id: "minisforum-ai-x1-pro-470",
+    missions: ["business"],
+    category: "mini-pc",
+    name: "Minisforum AI X1 Pro",
+    configLabel: "Ryzen AI 9 HX 470 · 32GB",
+    brand: "Minisforum",
+    priceUsd: 1999,
+    stripeEnvKey: "STRIPE_PRICE_MINISFORUM_AI_X1_PRO_470",
+    specs: ["AMD Ryzen AI 9 HX 470", "32GB unified memory", "1TB NVMe", "Dedicated NPU"],
+    goodFor: "13B–20B models with a dedicated NPU — a compact second box for a small office.",
+    blurb: "Affordable team unit without stepping up to the 96GB-class machines.",
+    amazonSearchTerm: "Minisforum AI X1 Pro-470 Ryzen AI 9 HX 470",
+    imageSrc: "/store/hardware/minisforum-ms-a2.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
   },
   {
     id: "mac-studio-m4-max",
@@ -264,6 +358,57 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     blurb: "This is the Apple box you leave on. Not an experiment. A workstation.",
     amazonSearchTerm: "Apple Mac Studio M4 Max 36GB 512GB",
     imageSrc: "/store/hardware/mac-studio-m4.jpg",
+  },
+  {
+    id: "mac-studio-m3-ultra",
+    missions: ["business"],
+    category: "apple-silicon",
+    name: "Mac Studio",
+    configLabel: "M3 Ultra · 96GB / 1TB",
+    brand: "Apple",
+    priceUsd: 5999,
+    stripeEnvKey: "STRIPE_PRICE_MAC_STUDIO_M3_ULTRA",
+    specs: ["Apple M3 Ultra", "96GB unified memory", "1TB SSD", "Studio cooling"],
+    goodFor: "70B-class models on Apple Silicon — flagship Apple box for a business that stays in that ecosystem.",
+    blurb: "When the M4 Max is not enough memory and you still want a quiet Apple workstation.",
+    amazonSearchTerm: "Apple Mac Studio M3 Ultra 96GB 1TB",
+    imageSrc: "/store/hardware/mac-studio-m4.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
+  },
+  {
+    id: "rtx5090-ai-workstation",
+    missions: ["business"],
+    category: "workstation",
+    name: "RTX 5090 AI Workstation",
+    configLabel: "RTX 5090 32GB VRAM · 64GB DDR5",
+    brand: "Custom Build",
+    priceUsd: 6799,
+    stripeEnvKey: "STRIPE_PRICE_RTX5090_AI_WORKSTATION",
+    specs: ["NVIDIA RTX 5090 32GB", "64GB DDR5", "NVMe SSD", "CUDA / vLLM"],
+    goodFor: "Teams standardized on NVIDIA tooling (vLLM, TensorRT) instead of Ollama on AMD.",
+    blurb: "Full-tower workstation. Talk to ops — we spec the exact build, then buy and ship.",
+    amazonSearchTerm: "RTX 5090 AI workstation prebuilt 64GB",
+    imageSrc: "/store/hardware/beelink-gtr9-pro.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
+  },
+  {
+    id: "ai-max-395-workstation-server",
+    missions: ["business"],
+    category: "workstation",
+    name: "AI Workstation Server",
+    configLabel: "Ryzen AI Max+ 395 · 128GB / 1TB",
+    brand: "AI Server",
+    priceUsd: 13999,
+    stripeEnvKey: "STRIPE_PRICE_AI_MAX_395_WORKSTATION_SERVER",
+    specs: ["Ryzen AI Max+ 395", "128GB unified memory", "1TB NVMe", "Dual 10GbE · office server"],
+    goodFor: "One machine serving 70B-class models to the whole office over the network.",
+    blurb: "Built as a server, not a desktop. Talk to ops to lock the chassis and ship it talking.",
+    amazonSearchTerm: "AI Server Workstation Ryzen AI Max+ 395 128GB",
+    imageSrc: "/store/hardware/beelink-gtr9-pro.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
   },
   {
     id: "minisforum-ms-a2",
@@ -347,6 +492,22 @@ export function hardwareProductsByCategory(category: HardwareCategory): Hardware
 
 export function hardwareProductsByMission(mission: HardwareMission): HardwareProduct[] {
   return HARDWARE_PRODUCTS.filter((product) => product.missions.includes(mission));
+}
+
+export function hardwareProductsByAudience(audience: HardwareAudience): HardwareProduct[] {
+  return hardwareProductsByMission(audience);
+}
+
+export function hardwareCategoriesForAudience(audience: HardwareAudience): HardwareCategory[] {
+  const seen = new Set<HardwareCategory>();
+  const ordered: HardwareCategory[] = [];
+  for (const product of HARDWARE_PRODUCTS) {
+    if (product.missions.includes(audience) && !seen.has(product.category)) {
+      seen.add(product.category);
+      ordered.push(product.category);
+    }
+  }
+  return ordered;
 }
 
 export function formatUsd(amount: number): string {

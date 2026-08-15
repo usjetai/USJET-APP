@@ -5,7 +5,7 @@ import {
   SEO_MONEY_HUB_SEO,
   SEO_MONEY_PAGES,
 } from "./seoMoneyPages";
-import { HARDWARE_PRODUCTS, HARDWARE_ROUTE, type HardwareProduct } from "./aiHardware";
+import { HARDWARE_PRODUCTS, HARDWARE_ROUTE, HARDWARE_BUSINESSES_ROUTE, HARDWARE_HOMES_ROUTE, HARDWARE_AUDIENCE_META, hardwareProductsByAudience, type HardwareAudience, type HardwareProduct } from "./aiHardware";
 
 /** Canonical hostname for hreflang, OG, canonical, JSON-LD (apex redirects to www in production). */
 
@@ -110,13 +110,31 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     ogType: "product",
   },
   [HARDWARE_ROUTE]: {
-    title: "Buy AI Computers for Local AI & LLMs — Mac Mini, Mini PC | USJET.AI",
+    title: "Buy AI Computers for Local AI & LLMs — Homes & Businesses | USJET.AI",
     description:
-      "Order a computer configured to run AI models locally. Mac Mini M4, MacBook Air M4, Mac Studio, Minisforum MS-A2, Beelink GTR9 Pro, and GMKtec EVO-X2 — Operator's Rig, sourced and shipped by USJET.",
+      "Order a computer configured to run AI models locally. Separate Homes and Businesses lineups — Operator's Rig, sourced and shipped by USJET.",
     keywords:
-      "buy AI computer, mini PC for local AI, best mini PC for Ollama, local LLM computer, Mac Mini for local AI, Ryzen AI Max+ 395 mini PC, AI ready computer, local AI hardware store, buy Mac Mini for AI, Minisforum MS-A2, Beelink GTR9 Pro, GMKtec EVO-X2",
+      "buy AI computer, mini PC for local AI, AI computer for home, AI computer for business, Mac Mini for local AI, Ryzen AI Max+ 395 mini PC",
     ogType: "product",
-    jsonLd: buildHardwareCatalogJsonLd(),
+    jsonLd: buildHardwareHubJsonLd(),
+  },
+  [HARDWARE_HOMES_ROUTE]: {
+    title: "AI Computers for Homes — Mac Mini, MacBook, Mini PC | USJET.AI",
+    description:
+      "Home AI computers with a personal Jarvis already on the machine. Mac Mini M4, MacBook Air, MacBook Pro, Beelink SER9 Pro, Minisforum UM890 Pro.",
+    keywords:
+      "AI computer for home, Mac Mini for local AI, MacBook Air M4 local AI, Beelink SER9 Pro, Minisforum UM890 Pro",
+    ogType: "product",
+    jsonLd: buildHardwareCatalogJsonLd("home"),
+  },
+  [HARDWARE_BUSINESSES_ROUTE]: {
+    title: "AI Computers for Businesses — Mac Studio, Mini PCs, Workstations | USJET.AI",
+    description:
+      "Business AI computers and servers. Minisforum MS-A2, Beelink GTR9 Pro, Mac Studio, RTX 5090 and 128GB workstation servers — Operator's Rig, shipped by USJET.",
+    keywords:
+      "AI computer for business, Mac Studio, Beelink GTR9 Pro, Minisforum MS-A2, RTX 5090 AI workstation, local LLM server",
+    ogType: "product",
+    jsonLd: buildHardwareCatalogJsonLd("business"),
   },
   "/founders-fuel": {
     title: "Founder's Fuel — Fuel the Fleet | USJET.AI",
@@ -343,7 +361,9 @@ export function buildProductJsonLd(input: {
 
 /** Product + Offer JSON-LD for a single AI Computers SKU. */
 export function buildHardwareProductJsonLd(product: HardwareProduct): Record<string, unknown> {
-  const url = `${SITE_ORIGIN}${HARDWARE_ROUTE}#${product.id}`;
+  const audience = product.missions[0];
+  const audienceRoute = HARDWARE_AUDIENCE_META[audience].route;
+  const url = `${SITE_ORIGIN}${audienceRoute}#${product.id}`;
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -368,13 +388,34 @@ export function buildHardwareProductJsonLd(product: HardwareProduct): Record<str
 }
 
 /** CollectionPage + ItemList JSON-LD for the /store/ai-computers catalog. */
-export function buildHardwareCatalogJsonLd(): Record<string, unknown> {
+export function buildHardwareCatalogJsonLd(audience?: HardwareAudience): Record<string, unknown> {
+  const products = audience ? hardwareProductsByAudience(audience) : [...HARDWARE_PRODUCTS];
+  const meta = audience ? HARDWARE_AUDIENCE_META[audience] : null;
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "AI Computers — Order Local AI Hardware | USJET.AI",
+    name: meta ? `${meta.title} | USJET.AI` : "AI Computers — Order Local AI Hardware | USJET.AI",
+    description: meta?.lede ??
+      "Order computers configured to run AI models locally. Every unit ships as a USJET Operator's Rig.",
+    url: `${SITE_ORIGIN}${meta?.route ?? HARDWARE_ROUTE}`,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: products.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: buildHardwareProductJsonLd(product),
+      })),
+    },
+  };
+}
+
+export function buildHardwareHubJsonLd(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "AI Computers — Homes & Businesses | USJET.AI",
     description:
-      "Order computers configured to run AI models locally: Mac Mini, MacBook Air, Mac Studio, and Ryzen AI Max+ 395 mini PCs. Every unit ships as a USJET Operator's Rig.",
+      "Order computers configured to run AI models locally: separate Homes and Businesses lineups. Every unit ships as a USJET Operator's Rig.",
     url: `${SITE_ORIGIN}${HARDWARE_ROUTE}`,
     mainEntity: {
       "@type": "ItemList",

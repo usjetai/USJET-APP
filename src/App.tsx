@@ -44,6 +44,8 @@ const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
 const Sovereignty = lazy(() => import("./pages/Sovereignty"));
 const Store = lazy(() => import("./pages/Store"));
 const AiComputers = lazy(() => import("./pages/AiComputers"));
+const AiComputersHomes = lazy(() => import("./pages/AiComputersHomes"));
+const AiComputersBusinesses = lazy(() => import("./pages/AiComputersBusinesses"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const CompareHub = lazy(() => import("./pages/CompareHub"));
@@ -116,7 +118,11 @@ function AnimatedRoutes() {
             <Route path="/sovereignty" element={<Sovereignty />} />
             <Route path="/store" element={<Store />} />
             <Route path="/store/ai-computers" element={<AiComputers />} />
+            <Route path="/store/ai-computers/homes" element={<AiComputersHomes />} />
+            <Route path="/store/ai-computers/businesses" element={<AiComputersBusinesses />} />
             <Route path="/ai-computers" element={<Navigate to="/store/ai-computers" replace />} />
+            <Route path="/ai-computers/homes" element={<Navigate to="/store/ai-computers/homes" replace />} />
+            <Route path="/ai-computers/businesses" element={<Navigate to="/store/ai-computers/businesses" replace />} />
             <Route path="/shop" element={<Navigate to="/store" replace />} />
             <Route path="/books" element={<Navigate to="/store" replace />} />
             <Route path="/merch" element={<Navigate to="/store" replace />} />
@@ -202,7 +208,7 @@ function AppShell() {
     <div
       id="usjet-app-shell"
       className={[
-        "relative flex min-h-screen flex-col overflow-x-hidden bg-black text-white",
+        "relative flex min-h-screen flex-col overflow-x-clip bg-black text-white",
         hangarEmbed ? "usjet-app-shell--hangar-embed" : "",
       ]
         .filter(Boolean)

@@ -40,34 +40,15 @@ export default function UsjetGlobalContactBar() {
               </span>
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
-
-            <div className="usjet-footer__books-grid mt-8 flex flex-wrap justify-center gap-5">
-              {USJET_STORE_BOOKS.map((book) => (
-                <Link
-                  key={book.id}
-                  to={storeBookPath(book.id)}
-                  className="usjet-footer__book-link overflow-hidden rounded-lg border border-white/10 transition-transform hover:scale-110 glass-effect-interactive"
-                  aria-label={`${book.title} — open Store`}
-                  style={{ width: '100px', flexShrink: 0 }}
-                >
-                  <img
-                    src={book.coverSrc}
-                    alt=""
-                    className="usjet-footer__book-cover w-full aspect-[5/8] object-cover opacity-80 hover:opacity-100 transition-opacity shadow-lg"
-                    loading="lazy"
-                  />
-                </Link>
-              ))}
-            </div>
           </div>
 
           <nav className="usjet-footer__col" aria-label="Platform">
             <h2 className="usjet-footer__heading">Rigs</h2>
             <NavLink to="/" end className={footerLinkClass}>
-              Hangar · Home
+              Homes
             </NavLink>
             <NavLink to="/fleet" className={footerLinkClass}>
-              Fleet · Business
+              Business
             </NavLink>
             <NavLink to="/store/ai-computers" className={footerLinkClass}>
               Full lineup
@@ -91,16 +72,6 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/zelle" className={footerLinkClass}>
               Zelle
             </NavLink>
-            <NavLink
-              to="/hired-hud"
-              className={({ isActive }) =>
-                ["usjet-footer__link", "usjet-footer__link--house", isActive ? "usjet-footer__link--active" : ""]
-                  .filter(Boolean)
-                  .join(" ")
-              }
-            >
-              USJET House
-            </NavLink>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Support">
@@ -121,6 +92,24 @@ export default function UsjetGlobalContactBar() {
               Member
             </NavLink>
           </nav>
+        </div>
+
+        <div className="usjet-footer__books-grid" aria-label="AI Book Series">
+          {USJET_STORE_BOOKS.map((book) => (
+            <Link
+              key={book.id}
+              to={storeBookPath(book.id)}
+              className="usjet-footer__book-link glass-effect-interactive"
+              aria-label={`${book.title} — open Manuals`}
+            >
+              <img
+                src={book.coverSrc}
+                alt=""
+                className="usjet-footer__book-cover"
+                loading="lazy"
+              />
+            </Link>
+          ))}
         </div>
 
         <div className="usjet-footer__legal">

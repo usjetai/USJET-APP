@@ -106,11 +106,11 @@ export default function Store() {
           </div>
           <div className="hw-store-cta__actions">
             <Link to="/" className="btn-glass-prominent glass-effect-interactive hw-store-cta__button">
-              Hangar · Home
+              Homes
               <ArrowRight size={14} className="ml-2" aria-hidden />
             </Link>
             <Link to="/fleet" className="btn-glass glass-effect-interactive hw-store-cta__button">
-              Fleet · Business
+              Business
               <ArrowRight size={14} className="ml-2" aria-hidden />
             </Link>
           </div>

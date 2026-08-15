@@ -111,7 +111,7 @@ export const WHY_USJET_HARDWARE = {
 } as const;
 
 export const HOME_DECK = {
-  kicker: "Hangar · Home AI computers",
+  kicker: "Homes · AI computers",
   title: "We give the computer a personal Jarvis",
   lede: "You are not buying a mute Mac. We buy the machine, put a personal assistant on it, and ship it. You talk to YOUR computer — kitchen counter, office nook, quiet closet. Private. No ChatGPT bill.",
   primerTitle: "What we do to these computers",
@@ -123,7 +123,7 @@ export const HOME_DECK = {
 } as const;
 
 export const BUSINESS_DECK = {
-  kicker: "Fleet · Business AI computers",
+  kicker: "Business · AI computers",
   title: "A Jarvis for the shop that never goes to sleep",
   lede: "Same gift as Hangar — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
   primerTitle: "What we do to these computers",

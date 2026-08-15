@@ -33,7 +33,7 @@ export type PageSeo = {
 
 /** Hangar home — primary commercial + crawl target. */
 export const DEFAULT_PAGE_SEO: PageSeo = {
-  title: "USJET.AI | Hangar — Home AI Computers",
+  title: "USJET.AI | Homes — AI Computers",
   description:
     "USJET Hangar: computers that already have AI in them for the house. Private local models, Operator's Rig stack, shipped to your door. Founded by Ameer Karim.",
   keywords:
@@ -47,7 +47,7 @@ export const DEFAULT_PAGE_SEO: PageSeo = {
 export const ROUTE_SEO: Record<string, PageSeo> = {
   "/": DEFAULT_PAGE_SEO,
   "/fleet": {
-    title: "Fleet — Business AI Computers & Servers | USJET.AI",
+    title: "Business — AI Computers & Servers | USJET.AI",
     description:
       "USJET Fleet: business computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
     keywords:
@@ -102,7 +102,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
       "USJET Sovereignty archive: Day Zero founder ledger, empire reboot posture, and institutional grit.",
   },
   "/store": {
-    title: "USJET Store — AI Computers & Engineering Books | USJET.AI",
+    title: "Manuals — AI Book Series | USJET.AI",
     description:
       "Order AI computers built for local models — Mac Mini, MacBook Air, Mac Studio, and Ryzen AI Max+ 395 mini PCs — plus the USJET Engineering Series on Kindle.",
     keywords:

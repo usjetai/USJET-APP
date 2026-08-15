@@ -1641,6 +1641,46 @@
   color: rgba(249, 168, 212, 1);
 }
 
+.usjet-footer__books-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  margin: 0.35rem 0 0.15rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+}
+
+.usjet-footer__book-link {
+  flex: 0 0 auto;
+  width: 5.5rem;
+  overflow: hidden;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.15s ease;
+}
+
+.usjet-footer__book-link:hover,
+.usjet-footer__book-link:focus-visible {
+  transform: scale(1.06);
+}
+
+.usjet-footer__book-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 8;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.usjet-footer__book-link:hover .usjet-footer__book-cover,
+.usjet-footer__book-link:focus-visible .usjet-footer__book-cover {
+  opacity: 1;
+}
+
 .usjet-footer__legal {
   display: flex;
   flex-wrap: wrap;

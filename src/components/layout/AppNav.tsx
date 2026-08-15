@@ -7,9 +7,9 @@ import { useMemberAuth } from "../../context/MemberAuthContext";
 import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
 
 const NAV_LINKS = [
-  { to: "/", label: "Hangar" },
-  { to: "/fleet", label: "Fleet" },
-  { to: "/store", label: "Store" },
+  { to: "/", label: "Homes" },
+  { to: "/fleet", label: "Business" },
+  { to: "/store", label: "Manuals" },
   { to: "/member", label: "Member" },
 ] as const;
 

@@ -154,16 +154,16 @@ export default function HardwareDeck({ mission }: HardwareDeckProps) {
     mission === "all"
       ? null
       : mission === "home"
-        ? "Shop business computers →"
-        : "Shop home computers →";
+        ? "Shop Business →"
+        : "Shop Homes →";
 
   useEffect(() => {
     const previous = document.title;
     document.title =
       mission === "home"
-        ? "Hangar · Home AI Computers · USJet.ai"
+        ? "Homes · AI Computers · USJet.ai"
         : mission === "business"
-          ? "Fleet · Business AI Computers · USJet.ai"
+          ? "Business · AI Computers · USJet.ai"
           : "Operator's Rig · USJet.ai";
     const meta = document.querySelector('meta[name="description"]');
     const previousDescription = meta?.getAttribute("content") ?? "";
@@ -189,10 +189,10 @@ export default function HardwareDeck({ mission }: HardwareDeckProps) {
           ) : (
             <>
               <Link to={HANGAR_HARDWARE_ROUTE} className="hw-mission-switch glass-effect-interactive">
-                Hangar · Home
+                Homes
               </Link>
               <Link to={FLEET_HARDWARE_ROUTE} className="hw-mission-switch glass-effect-interactive">
-                Fleet · Business
+                Business
               </Link>
             </>
           )}

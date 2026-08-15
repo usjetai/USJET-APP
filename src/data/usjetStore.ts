@@ -13,7 +13,7 @@ export function storeBookPath(bookId: string): string {
   return `${STORE_ROUTE}#${storeBookAnchor(bookId)}`;
 }
 
-export const STORE_PAGE_TITLE = "Store" as const;
+export const STORE_PAGE_TITLE = "Manuals" as const;
 export const STORE_META_DESCRIPTION =
   "USJET Operator manuals — AI Book Series by Ameer Karim. The books that ship with computers that already have AI in them." as const;
 

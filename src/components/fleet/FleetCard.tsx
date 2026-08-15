@@ -18,7 +18,6 @@ import {
   buildRandomFleetFlightPlan,
   type FleetFlightPlan,
 } from "../../lib/fleetRunwayFlight";
-import { playJetLaunchSound } from "../../lib/jetLaunchSound";
 import type { FleetAircraftType } from "../../types/fleet";
 
 type FleetCardProps = {
@@ -134,7 +133,6 @@ export default function FleetCard({
     if (launchBlocked || launchSpinPendingRef.current) {
       return;
     }
-    playJetLaunchSound({ slot });
     logFleetUsageIfMember(callsign, name);
     syncProtocolToClipboard();
     launchSpinPendingRef.current = true;

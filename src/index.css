@@ -13691,6 +13691,16 @@ button.fleet-card {
   filter: var(--aircraft-logo-solid) brightness(0.62) saturate(0.85);
 }
 
+/* Corporate hangar — every bay reads as equally real/professional; drop the dim "available" look. */
+.hangar-page--workbench .fleet-card--available .fleet-card__glass {
+  border-color: inherit;
+  opacity: 1;
+}
+
+.hangar-page--workbench .fleet-card--available .fleet-card__aircraft {
+  filter: var(--aircraft-logo-solid);
+}
+
 .fleet-card--locked .fleet-card__glass {
   border-color: rgba(251, 191, 36, 0.38);
   background:

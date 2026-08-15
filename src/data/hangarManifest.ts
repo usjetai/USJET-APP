@@ -151,6 +151,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "b2",
     aiName: "MindStudio",
+    fleetRole: "MindStudio — no-code builder for custom AI agents and workflows.",
   },
   {
     id: "11",
@@ -177,6 +178,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "a12",
     aiName: "Fini",
+    fleetRole: "Fini — AI customer support agent that resolves tickets automatically.",
   },
   {
     id: "13",
@@ -203,6 +205,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "fb22",
     aiName: "Z Image Turbo",
+    fleetRole: "Z Image Turbo — fast AI text-to-image generation.",
   },
   {
     id: "15",
@@ -215,6 +218,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "f15ex",
     aiName: "Wan 2.1",
+    fleetRole: "Wan 2.1 — open AI text-to-video and image-to-video generation.",
   },
   {
     id: "16",
@@ -227,6 +231,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "f16v",
     aiName: "LTX Video",
+    fleetRole: "Lightricks LTX Video — fast AI video generation model.",
   },
   {
     id: "17",
@@ -239,6 +244,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "fa18",
     aiName: "FLUX Kontext",
+    fleetRole: "Black Forest Labs FLUX.1 Kontext — AI image generation and editing.",
   },
   {
     id: "18",
@@ -251,6 +257,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "a10",
     aiName: "Omni Image Editor",
+    fleetRole: "Omni Image Editor — AI-powered photo editing and retouching.",
   },
   {
     id: "19",
@@ -263,6 +270,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "f117",
     aiName: "Qwen Image Edit",
+    fleetRole: "Qwen Image Edit — AI image editing from plain-text instructions.",
   },
   {
     id: "20",
@@ -275,6 +283,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "mq25",
     aiName: "Krea 2",
+    fleetRole: "Krea 2 — real-time AI image and design generation.",
   },
   {
     id: "21",
@@ -300,6 +309,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "xq58",
     aiName: "Qwen3 TTS",
+    fleetRole: "Qwen3 TTS — AI text-to-speech voice generation.",
   },
   {
     id: "23",
@@ -312,6 +322,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "darkstar",
     aiName: "Runway",
+    fleetRole: "Runway — AI video generation and editing tools for creators.",
   },
   {
     id: "24",
@@ -337,6 +348,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "f14",
     aiName: "Florence-2",
+    fleetRole: "Microsoft Florence-2 — AI vision model for captioning and detection.",
   },
   {
     id: "26",
@@ -349,6 +361,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "f4",
     aiName: "Unlimited OCR",
+    fleetRole: "Unlimited OCR — AI text extraction from images and documents.",
   },
   {
     id: "27",
@@ -361,6 +374,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "f104",
     aiName: "LocateAnything",
+    fleetRole: "NVIDIA LocateAnything — AI object detection and localization.",
   },
   {
     id: "28",
@@ -373,6 +387,7 @@ const HANGAR_MANIFEST_CORE: Omit<FleetUnit, "systemPrompt" | "callName">[] = [
     aura: "idle",
     aircraftType: "f86",
     aiName: "Pro Realism Edit",
+    fleetRole: "Pro Realism Edit — AI photo editing for realistic touch-ups.",
   },
   {
     id: "29",

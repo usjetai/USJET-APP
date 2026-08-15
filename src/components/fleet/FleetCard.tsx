@@ -28,6 +28,8 @@ type FleetCardProps = {
   name: string;
   callsign: string;
   isAvailableBay?: boolean;
+  /** Short, factual one-line description of what the AI actually does (hangar tiles). */
+  description?: string;
   jetFighterPagePath?: string;
   href?: string;
   slot?: number;
@@ -53,6 +55,7 @@ export default function FleetCard({
   isCommandBay = false,
   isFleetLocked = false,
   isAvailableBay = false,
+  description,
   jetFighterPagePath,
   onExpandBay,
   surface = "fleet",
@@ -381,16 +384,8 @@ export default function FleetCard({
           <p className="fleet-card__locked-label mt-1 text-[8px] font-black uppercase tracking-[0.24em] text-amber-200/85">
             Flight Pass required · $19.90
           </p>
-        ) : isAvailableBay ? (
-          <p
-            className={[
-              "mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-          >
-            {isRunway ? "Open bay" : "Available position"}
-          </p>
+        ) : isAvailableBay && isRunway ? (
+          <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-200/70">Open bay</p>
         ) : isCommandBay ? (
           <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-amber-300/80">Command node</p>
         ) : expandInteractive ? (
@@ -400,22 +395,17 @@ export default function FleetCard({
         ) : (
           <p className="mt-1 text-[8px] font-black uppercase tracking-[0.28em] text-cyan-300/60">Active bay</p>
         )}
-        {typeof slot === "number" && bayAccent && !isRunway ? (
-          <p
-            className={`fleet-card__bay-label mt-1 text-[9px] font-black uppercase tracking-[0.35em] text-white/35 ${expandInteractive ? "mt-1.5" : ""}`}
-          >
-            <span className="fleet-card__personality">{bayAccent.personality}</span>
-          </p>
-        ) : null}
-        {!isAvailableBay && !isRunway && category ? (
+        {!isRunway && category ? (
           <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">{category}</p>
-        ) : null}
-        {isAvailableBay && !isRunway ? (
-          <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.2em] text-amber-200/65">Open position</p>
         ) : null}
         {aircraftOfficialName ? (
           <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-200/85">
             {aircraftOfficialName}
+          </p>
+        ) : null}
+        {!isRunway && description ? (
+          <p className="fleet-card__description mt-2 text-[11px] font-medium normal-case leading-snug text-white/65">
+            {description}
           </p>
         ) : null}
         {isFleetLocked ? (
@@ -425,11 +415,7 @@ export default function FleetCard({
         ) : null}
         {capabilities ? <FleetCapabilityBadges capabilities={capabilities} /> : null}
         {!isRunway ? (
-          !isAvailableBay ? (
-            <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
-          ) : (
-            <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/35">Recruiting clearance</p>
-          )
+          <p className="mt-3 text-[10px] font-bold uppercase tracking-widest text-white/40">{domain}</p>
         ) : null}
       </div>
     </div>

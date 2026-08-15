@@ -24,6 +24,7 @@ export default function HangarBayTile({ unit, onOpenBay }: HangarBayTileProps) {
       aircraftOfficialName={getFleetDisplayAircraftName(unit.slot, unit.aircraftType)}
       name={unit.name}
       callsign={unit.callsign}
+      description={unit.fleetRole}
       href={resolveHangarUnitHref(unit)}
       slot={unit.slot}
       systemPrompt={unit.systemPrompt}

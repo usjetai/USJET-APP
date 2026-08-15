@@ -46,86 +46,98 @@ export type HardwareProduct = {
 export const OPERATOR_STACK = [
   {
     id: "engine",
-    layer: "The engine",
+    layer: "Engine",
     name: "Ollama",
-    plain:
-      "This is the motor. It runs the AI models on YOUR computer — not in a cloud tab. Other apps plug into it. You do not have to understand it. We leave it running.",
+    plain: "The motor. Runs the AI on THIS computer — not in a cloud tab.",
   },
   {
     id: "face",
-    layer: "The face",
+    layer: "Jarvis screen",
     name: "Open WebUI",
-    plain:
-      "This is the screen that feels like ChatGPT — except it lives in a browser on your machine. Looks like a product. Not a terminal window.",
+    plain: "Looks like ChatGPT. Lives in a browser on your machine. Not a terminal.",
   },
   {
     id: "vault",
-    layer: "The vault",
+    layer: "Memory vault",
     name: "AnythingLLM",
-    plain:
-      "Drop your PDFs, notes, invoices, and job folders in. The computer becomes an expert on YOUR stuff. That is called RAG. Translation: it reads your files and answers from them. Nothing leaves the box.",
+    plain: "Drop PDFs, notes, invoices. It answers from YOUR files. Nothing has to leave the box.",
   },
   {
     id: "manual",
-    layer: "The manual",
+    layer: "Manual",
     name: "AI Book Series",
-    plain:
-      "Every rig ships with the USJET AI Book Series — the Founder's engineering books, not a generic PDF from Apple. Same series as the Store. That is the manual for the machine.",
+    plain: "The Founder's books in the box — how to run the rig, not a generic Apple PDF.",
   },
 ] as const;
 
 export const OPERATOR_SETUP_PROMISE = {
-  title: "Out of the box — not out of a forum",
-  body: "A one-click installer sits on the desktop. It starts the local AI engine, opens the dashboard, and points the vault at your documents folder. You should be talking to your computer the same day it arrives — not three weekends later.",
+  title: "Plug it in. Talk to it.",
+  body: "A one-click start sits on the desktop. It wakes the Jarvis, opens the screen, and points the vault at your documents. Same day it arrives — not three weekends in a forum.",
 } as const;
 
+/** What USJET does to the hardware before it leaves — left-to-right spec rows. */
+export const WHAT_WE_DO_TO_THE_COMPUTER = [
+  {
+    label: "We buy it",
+    body: "Exact SKU on the tile. Amazon-sourced. No bait-and-switch, no leftover box from a different year.",
+  },
+  {
+    label: "We give it a Jarvis",
+    body: "People spend weekends building a personal assistant onto a laptop. We do that work. The brain lives on YOUR desk.",
+  },
+  {
+    label: "We ship it talking",
+    body: "One-click start. Private files stay on the machine. AI Book Series in the box. You paid for the result, not the homework.",
+  },
+] as const;
+
 export const WHY_USJET_HARDWARE = {
-  kicker: "Why this is not Best Buy",
-  title: "Everybody can sell a Mac. We sell the Operator's Rig.",
+  kicker: "Not a Best Buy Mac",
+  title: "Everybody can sell a computer. We give it a Jarvis and send it home.",
   points: [
     {
-      title: "The result, not the homework",
-      body: "Most people want local AI — private, no monthly token bill — and they do not want Docker, model weights, or API proxies. We sell the result: a machine that already knows how to think at home or at work.",
+      title: "The assistant, not the homework",
+      body: "That viral build — a personal Jarvis on a real computer — is the product. We install it. You talk to it.",
     },
     {
-      title: "Memory is the number that matters",
-      body: "Chip names sell. Unified memory decides what the AI can hold. 16GB runs small models. 24GB is the home sweet spot. 64GB+ is how a shop or office keeps a serious model (or several) in RAM all day.",
+      title: "Memory is the number",
+      body: "16GB runs small models. 24GB is the home sweet spot. 64GB+ is a shop or office brain that stays loaded all day.",
     },
     {
-      title: "Hardened means your files stay yours",
-      body: "Cloud chat trains on the internet. A USJET rig talks on your desk. We configure it so work docs, family files, and job photos do not get pasted into someone else's server. That privacy is the premium.",
+      title: "Your files stay yours",
+      body: "Cloud chat trains on the internet. This Jarvis talks on your desk. Family photos and work docs do not get pasted into someone else's server.",
     },
   ],
 } as const;
 
 export const HOME_DECK = {
   kicker: "Hangar · Home AI computers",
-  title: "AI for the house",
-  lede: "These are computers with AI already in them — for the kitchen counter, the office nook, the quiet closet that stays on. Private. No ChatGPT bill. We buy the exact unit, set it up as an Operator's Rig, and ship it to your door.",
-  primerTitle: "What you are actually buying",
+  title: "We give the computer a personal Jarvis",
+  lede: "You are not buying a mute Mac. We buy the machine, put a personal assistant on it, and ship it. You talk to YOUR computer — kitchen counter, office nook, quiet closet. Private. No ChatGPT bill.",
+  primerTitle: "What we do to these computers",
   primer: [
-    "Local AI means the brain lives in the box. Your questions and files do not have to go to the internet.",
-    "Start with a Mac Mini if it can sit on a desk. Pick a MacBook Air if you need to carry it. 24GB memory is the home recommendation — enough room for a real model plus the rest of the computer.",
-    "You are not learning Linux. You are getting a machine that opens like a product and a book that tells you which button to press.",
+    "We buy the exact unit.",
+    "We put a personal Jarvis on it — local AI that lives in the box.",
+    "We ship it ready to talk the day it hits your door.",
   ],
 } as const;
 
 export const BUSINESS_DECK = {
   kicker: "Fleet · Business AI computers",
-  title: "AI for the shop, the office, the server closet",
-  lede: "These are the bigger boxes — always-on brains for a team, a job site office, or a company that cannot leak its files into a chatbot. More memory. More cooling. Servers that stay on so people walk up and ask the machine, not the cloud.",
-  primerTitle: "Business in plain language",
+  title: "A Jarvis for the shop that never goes to sleep",
+  lede: "Same gift as Hangar — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
+  primerTitle: "What we do to these computers",
   primer: [
-    "A server, here, is just a computer that stays on. The team talks to it. It does not go to sleep in a backpack.",
-    "Memory is how many people and how big a model you can run at once. 64GB and 96GB and 128GB are how you keep the company brain loaded instead of swapping it out.",
-    "Mac Studio is the quiet Apple workhorse. The mini-PCs (Minisforum, Beelink) pack huge unified memory for less money — good when you want the biggest local models without a full rack.",
+    "We buy the bigger box — Studio, 64GB–128GB mini-PCs, always-on closets.",
+    "We give it a company Jarvis that stays loaded for the shop.",
+    "We ship it. A server here just means a computer that does not go home in a bag.",
   ],
 } as const;
 
-export const HARDWARE_HERO_KICKER = "Operator's Rig · Local AI computers" as const;
-export const HARDWARE_HERO_TITLE = "Computers that already have AI in them" as const;
+export const HARDWARE_HERO_KICKER = "Operator's Rig · Personal Jarvis on real hardware" as const;
+export const HARDWARE_HERO_TITLE = "We buy the computer. We give it a Jarvis. We ship it." as const;
 export const HARDWARE_HERO_LEDE =
-  "Hangar is home. Fleet is business. Every unit ships as a USJET Operator's Rig — engine, dashboard, private document vault, and the AI Book Series. We buy the exact machine and send it to you." as const;
+  "Hangar is home. Fleet is business. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
 
 export const HARDWARE_CATEGORY_LABELS: Record<HardwareCategory, string> = {
   "apple-silicon": "Apple Silicon",

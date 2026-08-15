@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, ShoppingCart, XCircle } from "lucide-react";
-import GlassEffectContainer from "../layout/GlassEffectContainer";
 import HardwareCartButton from "./HardwareCartButton";
 import HardwareCartDrawer from "./HardwareCartDrawer";
 import { useHardwareCart } from "../../context/HardwareCartContext";
@@ -16,6 +15,7 @@ import {
   HOME_DECK,
   OPERATOR_SETUP_PROMISE,
   OPERATOR_STACK,
+  WHAT_WE_DO_TO_THE_COMPUTER,
   WHY_USJET_HARDWARE,
   formatUsdParts,
   hardwareProductsByMission,
@@ -48,11 +48,11 @@ function ProductCard({ product }: { product: HardwareProduct }) {
         >
           {product.badge ? <em className="hw-card__condition">{product.badge}</em> : null} {listingTitle}
         </a>
-        <ul className="hw-card__specs">
+        <p className="hw-card__specs">
           {product.specs.slice(0, 4).map((spec) => (
-            <li key={spec}>{spec}</li>
+            <span key={spec}>{spec}</span>
           ))}
-        </ul>
+        </p>
         <div className="hw-card__price">
           <span className="hw-card__price-mark">$</span>
           <strong>{price.dollars}</strong>
@@ -140,7 +140,7 @@ export default function HardwareDeck({ mission }: HardwareDeckProps) {
       kicker: HARDWARE_HERO_KICKER,
       title: HARDWARE_HERO_TITLE,
       lede: HARDWARE_HERO_LEDE,
-      primerTitle: "Hangar is home. Fleet is business.",
+      primerTitle: "What we do to these computers",
       primer: [
         ...HOME_DECK.primer.slice(0, 1),
         "Hangar = computers for the house. Fleet = computers and servers for the shop and the office.",
@@ -201,51 +201,37 @@ export default function HardwareDeck({ mission }: HardwareDeckProps) {
 
       <CheckoutBanner />
 
-      <section className="hw-primer" aria-labelledby="hw-primer-heading">
-        <h2 id="hw-primer-heading">{deck.primerTitle}</h2>
-        <ol>
-          {deck.primer.map((line) => (
-            <li key={line}>{line}</li>
+      <section className="hw-about" aria-labelledby="hw-about-heading">
+        <p className="hw-about__kicker">{WHY_USJET_HARDWARE.kicker}</p>
+        <h2 id="hw-about-heading">{deck.primerTitle}</h2>
+        <dl className="hw-about__table">
+          {WHAT_WE_DO_TO_THE_COMPUTER.map((row) => (
+            <div className="hw-about__row" key={row.label}>
+              <dt>{row.label}</dt>
+              <dd>{row.body}</dd>
+            </div>
           ))}
-        </ol>
+        </dl>
       </section>
 
-      <section className="hw-why" aria-labelledby="hw-why-heading">
-        <p className="usjet-store__kicker">{WHY_USJET_HARDWARE.kicker}</p>
-        <h2 id="hw-why-heading">{WHY_USJET_HARDWARE.title}</h2>
-        <div className="hw-why__grid">
-          {WHY_USJET_HARDWARE.points.map((point) => (
-            <GlassEffectContainer
-              key={point.title}
-              className="hw-why__card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-            >
-              <h3>{point.title}</h3>
-              <p>{point.body}</p>
-            </GlassEffectContainer>
-          ))}
-        </div>
-      </section>
-
-      <section className="hw-stack" aria-labelledby="hw-stack-heading">
-        <h2 id="hw-stack-heading">What is already on the machine</h2>
-        <p className="hw-stack__lede">
-          Other sellers ship a computer and a shrug. We ship a stack. You paid for the hours someone else would have
-          spent in the terminal.
+      <section className="hw-about" aria-labelledby="hw-stack-heading">
+        <h2 id="hw-stack-heading">What we put on it</h2>
+        <p className="hw-about__lede">
+          Other sellers ship a mute computer. We ship a personal Jarvis already living on the box.
         </p>
-        <div className="hw-stack__grid">
+        <dl className="hw-about__table">
           {OPERATOR_STACK.map((layer) => (
-            <GlassEffectContainer
-              key={layer.id}
-              className="hw-stack__card glass-effect glass-effect--rounded-rect liquid-glass-background"
-            >
-              <p className="hw-stack__layer">{layer.layer}</p>
-              <h3>{layer.name}</h3>
-              <p>{layer.plain}</p>
-            </GlassEffectContainer>
+            <div className="hw-about__row" key={layer.id}>
+              <dt>
+                <span className="hw-about__layer">{layer.layer}</span>
+                {layer.name}
+              </dt>
+              <dd>{layer.plain}</dd>
+            </div>
           ))}
-        </div>
+        </dl>
         <p className="hw-page__fulfillment-note">
-          <strong>{OPERATOR_SETUP_PROMISE.title}.</strong> {OPERATOR_SETUP_PROMISE.body} Every order is purchased by
+          <strong>{OPERATOR_SETUP_PROMISE.title}</strong> {OPERATOR_SETUP_PROMISE.body} Every order is purchased by
           USJET — exact SKU, Amazon-sourced, boxed, and sent to your address. No dropship substitutions.
         </p>
       </section>

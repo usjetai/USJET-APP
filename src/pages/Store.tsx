@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BookOpen, ExternalLink } from "lucide-react";
+import { ArrowRight, BookOpen, ExternalLink } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import {
   STORE_HERO_KICKER,
@@ -90,6 +90,32 @@ export default function Store() {
         <h1 className="usjet-store__title usjet-logo-stone">{STORE_HERO_TITLE}</h1>
         <p className="usjet-store__lede">{STORE_HERO_LEDE}</p>
       </header>
+
+      <section className="usjet-store__section hw-store-cta" aria-labelledby="usjet-store-hardware-heading">
+        <GlassEffectContainer className="hw-store-cta__card glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
+          <div className="hw-store-cta__body">
+            <p className="usjet-store__kicker">The actual product</p>
+            <h2 id="usjet-store-hardware-heading" className="hw-store-cta__title">
+              Computers that already have AI in them
+            </h2>
+            <p className="hw-store-cta__lede">
+              Hangar is the house. Fleet is the shop and the office. Every unit ships as an Operator&apos;s Rig —
+              local engine, dashboard, private document vault, AI Book Series. We buy the exact machine and send
+              it to you.
+            </p>
+          </div>
+          <div className="hw-store-cta__actions">
+            <Link to="/" className="btn-glass-prominent glass-effect-interactive hw-store-cta__button">
+              Hangar · Home
+              <ArrowRight size={14} className="ml-2" aria-hidden />
+            </Link>
+            <Link to="/fleet" className="btn-glass glass-effect-interactive hw-store-cta__button">
+              Fleet · Business
+              <ArrowRight size={14} className="ml-2" aria-hidden />
+            </Link>
+          </div>
+        </GlassEffectContainer>
+      </section>
 
       <section className="usjet-store__section" aria-labelledby="usjet-store-books-heading">
         <div className="usjet-store__section-head">

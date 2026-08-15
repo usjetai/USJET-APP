@@ -4,16 +4,12 @@ import GlassEffectContainer from "./GlassEffectContainer";
 import AppNavInstagramBadge from "./AppNavInstagramBadge";
 import AppNavPhoneBadge from "./AppNavPhoneBadge";
 import { useMemberAuth } from "../../context/MemberAuthContext";
-import OriginGateLink from "../origin/OriginGateLink";
 import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
 
 const NAV_LINKS = [
   { to: "/", label: "Hangar" },
   { to: "/fleet", label: "Fleet" },
-  { to: "/jet-browser", label: "Jet Browser" },
-  { to: "/store", label: "Products" },
-  { to: "/intel", label: "Intel" },
-  { to: "/origin", label: "Origin" },
+  { to: "/store", label: "Store" },
   { to: "/member", label: "Member" },
 ] as const;
 
@@ -47,18 +43,16 @@ const AppNav = () => {
             <span className="app-nav-divider" aria-hidden />
 
             <nav className="app-nav-zone app-nav-zone--routes" aria-label="Fleet routes">
-              {visibleLinks.map((link) =>
-                link.to === "/origin" ? (
-                  <OriginGateLink
-                    key={link.to}
-                    className="app-nav-pill btn-glass glass-effect-interactive shrink-0 text-white/45 hover:text-white"
-                  />
-                ) : (
-                  <NavLink key={link.to} to={link.to} className={({ isActive }) => navPillClass(isActive)}>
-                    {link.label}
-                  </NavLink>
-                ),
-              )}
+              {visibleLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.to === "/"}
+                  className={({ isActive }) => navPillClass(isActive)}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
             </nav>
 
             <div className="app-nav-zone app-nav-zone--social">

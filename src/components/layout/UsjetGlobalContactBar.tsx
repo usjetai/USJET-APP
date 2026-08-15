@@ -22,7 +22,7 @@ export default function UsjetGlobalContactBar() {
               <UsjetWordmark size="nav" glow />
             </Link>
             <p className="usjet-footer__tagline">
-              Sovereign workbench for America&apos;s labor force — grit into gold.
+              AI computers for homes and businesses — the Operator&apos;s Rig, not a chatbot tab.
             </p>
             <address className="usjet-footer__address">
               {USJET_BUSINESS_ADDRESS_LINES.map((line) => (
@@ -62,35 +62,29 @@ export default function UsjetGlobalContactBar() {
           </div>
 
           <nav className="usjet-footer__col" aria-label="Platform">
-            <h2 className="usjet-footer__heading">Platform</h2>
+            <h2 className="usjet-footer__heading">Rigs</h2>
             <NavLink to="/" end className={footerLinkClass}>
-              Hangar
+              Hangar · Home
             </NavLink>
             <NavLink to="/fleet" className={footerLinkClass}>
-              Fleet
+              Fleet · Business
             </NavLink>
-            <NavLink to="/intelligence" className={footerLinkClass}>
-              Intel
+            <NavLink to="/store/ai-computers" className={footerLinkClass}>
+              Full lineup
             </NavLink>
-            <NavLink to="/jet-browser" className={footerLinkClass}>
-              Jet Browser
+            <NavLink to="/store" className={footerLinkClass}>
+              Manuals
             </NavLink>
-            <NavLink to="/blog" className={footerLinkClass}>
-              Blog
-            </NavLink>
-            <NavLink to="/compare" className={footerLinkClass}>
-              Compare
+            <NavLink to="/ai-101" className={footerLinkClass}>
+              How local AI works
             </NavLink>
             <NavLink to="/special" className={footerLinkClass}>
               Pricing
             </NavLink>
-            <NavLink to="/store" className={footerLinkClass}>
-              Store
-            </NavLink>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Business">
-            <h2 className="usjet-footer__heading">Business</h2>
+            <h2 className="usjet-footer__heading">Ship</h2>
             <NavLink to="/founders-fuel" className={footerLinkClass}>
               Fuel
             </NavLink>

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "r
 import { OriginLimitedOfferProvider } from "./context/OriginLimitedOfferContext";
 import { SilentHangarProvider } from "./context/SilentHangarContext";
 import { UsjetExternalNavigationProvider } from "./context/UsjetExternalNavigationContext";
+import { HardwareCartProvider } from "./context/HardwareCartContext";
 import AppNav from "./components/layout/AppNav";
 import UsjetReturnFab from "./components/layout/UsjetReturnFab";
 import PageTransition from "./components/layout/PageTransition";
@@ -16,8 +17,10 @@ import TierRouteGate from "./components/member/TierRouteGate";
 import SeoHead from "./components/layout/SeoHead";
 import AnalyticsRouteTracker from "./components/layout/AnalyticsRouteTracker";
 
-const Fleet = lazy(() => import("./pages/Fleet"));
 const Hangar = lazy(() => import("./pages/Hangar"));
+const HangarWorkbench = lazy(() => import("./pages/HangarWorkbench"));
+const Fleet = lazy(() => import("./pages/Fleet"));
+const FleetRunway = lazy(() => import("./pages/FleetRunway"));
 const Intel = lazy(() => import("./pages/Intel"));
 const Origin = lazy(() => import("./pages/Origin"));
 const Special = lazy(() => import("./pages/Special"));
@@ -40,6 +43,7 @@ const IntelligenceAssets = lazy(() => import("./pages/IntelligenceAssets"));
 const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
 const Sovereignty = lazy(() => import("./pages/Sovereignty"));
 const Store = lazy(() => import("./pages/Store"));
+const AiComputers = lazy(() => import("./pages/AiComputers"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const CompareHub = lazy(() => import("./pages/CompareHub"));
@@ -82,6 +86,8 @@ function AnimatedRoutes() {
               }
             />
             <Route path="/fleet" element={<Fleet />} />
+            <Route path="/fleet-runway" element={<FleetRunway />} />
+            <Route path="/workbench" element={<HangarWorkbench />} />
             <Route path="/hangar" element={<Navigate to="/" replace />} />
             <Route path="/login" element={<MemberLogin />} />
             <Route
@@ -109,6 +115,8 @@ function AnimatedRoutes() {
             <Route path="/strategic-assets" element={<StrategicAssets />} />
             <Route path="/sovereignty" element={<Sovereignty />} />
             <Route path="/store" element={<Store />} />
+            <Route path="/store/ai-computers" element={<AiComputers />} />
+            <Route path="/ai-computers" element={<Navigate to="/store/ai-computers" replace />} />
             <Route path="/shop" element={<Navigate to="/store" replace />} />
             <Route path="/books" element={<Navigate to="/store" replace />} />
             <Route path="/merch" element={<Navigate to="/store" replace />} />
@@ -217,7 +225,9 @@ export default function App() {
       <OriginLimitedOfferProvider>
         <SilentHangarProvider>
           <UsjetExternalNavigationProvider>
-            <AppShell />
+            <HardwareCartProvider>
+              <AppShell />
+            </HardwareCartProvider>
           </UsjetExternalNavigationProvider>
         </SilentHangarProvider>
       </OriginLimitedOfferProvider>

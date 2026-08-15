@@ -6,7 +6,7 @@
 
 /** One-line frame for every outbound email and discovery call. */
 export const COMPETITIVE_POSITIONING_THESIS =
-  "USJET is the alternative to fragmented aviation/ops software stacks, generic AI chat tools, and custom internal builds. It combines command and control, training, intelligence assets, and managed support in one aerospace-specific sovereign platform — cutting integration burden and operational complexity." as const;
+  "USJET sells computers that already have AI in them. Hangar is home. Fleet is business and servers. The product is the Operator's Rig — hardware plus a local stack (engine, dashboard, private document vault, operator manual) — not a Mac from a box store and not another ChatGPT tab." as const;
 
 /** What prospects already use — and why those fail at fleet scale. */
 export const COMPETITIVE_ALTERNATIVES = [
@@ -14,31 +14,31 @@ export const COMPETITIVE_ALTERNATIVES = [
     id: "fragmented-stack",
     label: "Fragmented fleet / aviation software stacks",
     prospectUses:
-      "Separate tabs for chatbots, docs, dispatch notes, training LMS, and market/intel dashboards — each with its own login, UI, and support queue.",
+      "Amazon Mac Mini + three weekends of Docker, Ollama flags, model weights, and forum threads — or five cloud logins that do not talk to each other.",
     usjetAdvantage:
-      "One Ship, One Cockpit: Hangar workbench + 30-unit Fleet runway + Member mission tracking open in-window. No tab sprawl, no brand leak.",
+      "One Operator's Rig: engine, ChatGPT-like face, private vault, AI Book Series, one-click desktop start. Hangar for the house. Fleet for the shop.",
     objectionHandle:
-      "You are not buying another SaaS tile. You are collapsing five browser habits into one sovereign flight deck.",
+      "You are not buying another tab. You are buying a machine that already thinks, with a book that talks like a wrench.",
   },
   {
     id: "generic-ai",
     label: "Generic AI platforms (ChatGPT, Claude, Midjourney alone)",
     prospectUses:
-      "One general model for every job — copy-paste prompts, lost context, no fleet specialization, no institutional hangar.",
+      "ChatGPT / Claude in the browser — $20 a month, files pasted into someone else's server, nothing that belongs to the house.",
     usjetAdvantage:
-      "Thirty specialized partner AIs under one roof, plus Origin (Aura) as command node on Enterprise. Mission routing beats clone-everything chat.",
+      "Local models on your hardware. AnythingLLM reads YOUR PDFs. Nothing has to leave the box. That is the premium.",
     objectionHandle:
-      "Generic AI is a wrench drawer with one wrench. USJET is the hangar: right bay, right tool, same cockpit.",
+      "Generic AI is a rented brain. A USJET rig is a brain you own — sitting on the desk, drawing 30 watts, not a subscription.",
   },
   {
     id: "custom-build",
     label: "Custom internal AI / ops builds",
     prospectUses:
-      "Internal engineering or agency projects to stitch agents, auth, and dashboards — months of burn, brittle integrations, founder time as glue.",
+      "Hire a shop to stand up a local LLM workstation — Docker, RAG, dashboards, weeks of burn, brittle when the kid who set it up leaves.",
     usjetAdvantage:
-      "Ship-ready cockpit now: Stripe clearance, Liquid Glass hangar, Integrated Navigation, tiered Intel/Origin — revenue architecture without a custom runway project.",
+      "We buy the exact SKU, load the stack, ship the manual. You paid for the setup hours. You did not invent a hangar.",
     objectionHandle:
-      "Custom builds spend runway inventing the hangar. USJET already cleared it — you buy clearance, not a six-month build ticket.",
+      "Custom builds spend runway inventing the installer. USJET already cleared it — you buy the Rig, not a six-month ticket.",
   },
 ] as const;
 

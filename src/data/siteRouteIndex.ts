@@ -22,8 +22,11 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     id: "command",
     title: "Command deck",
     routes: [
-      { path: "/", label: "Hangar", hint: "Home · workbench" },
-      { path: "/fleet", label: "Fleet", hint: "Runway" },
+      { path: "/", label: "Hangar", hint: "Home AI computers" },
+      { path: "/fleet", label: "Fleet", hint: "Business computers · servers" },
+      { path: "/store/ai-computers", label: "Full lineup", hint: "All Operator Rigs" },
+      { path: "/workbench", label: "Workbench", hint: "Legacy tool bays" },
+      { path: "/fleet-runway", label: "Fleet runway", hint: "Legacy 30-AI bays" },
       { path: "/jet-browser", label: "Jet Browser", hint: "Captain-loaded tiles" },
       { path: "/hired-hud", label: "USJET House", hint: "Live roster monitor" },
       { path: "/intel", label: "Intel", hint: "Pulse board" },
@@ -61,7 +64,8 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
       { path: "/intelligence", label: "Intelligence Assets" },
       { path: "/strategic-assets", label: "Strategic Assets" },
       { path: "/sovereignty", label: "Sovereignty" },
-      { path: "/store", label: "Store", hint: "Books" },
+      { path: "/store", label: "Store", hint: "Books + hardware" },
+      { path: "/store/ai-computers", label: "AI Computers", hint: "Mac Mini, mini PCs" },
     ],
   },
   {

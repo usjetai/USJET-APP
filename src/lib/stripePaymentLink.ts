@@ -1,3 +1,59 @@
+/** Operator's Rig — live Stripe Price IDs + Payment Links (Direct Landing Protocol · Aug 2026). */
+export const HARDWARE_STRIPE = {
+  "mac-mini-m4-16-256": {
+    priceId: "price_1U4XoVIhpTm6FnAvfoxYgFrJ",
+    paymentLink: "https://buy.stripe.com/dRm5kDeSG5VN105fWndwc0w",
+  },
+  "mac-mini-m4-16-512": {
+    priceId: "price_1U4XoWIhpTm6FnAvSI6W7QtA",
+    paymentLink: "https://buy.stripe.com/eVqdR9h0O5VN5gl8tVdwc0x",
+  },
+  "mac-mini-m4-24-512": {
+    priceId: "price_1U4XoXIhpTm6FnAvGyl2NUrD",
+    paymentLink: "https://buy.stripe.com/bJedR9aCq83VcIN25xdwc0y",
+  },
+  "macbook-air-m4-13-16-256": {
+    priceId: "price_1U4XoZIhpTm6FnAvTSUS6vCf",
+    paymentLink: "https://buy.stripe.com/4gMaEX6magAr9wBbG7dwc0z",
+  },
+  "macbook-air-m4-15-16-256": {
+    priceId: "price_1U4XoaIhpTm6FnAv6H7KV4nX",
+    paymentLink: "https://buy.stripe.com/cNi8wPeSG0BtfUZbG7dwc0A",
+  },
+  "gmktec-evo-x2": {
+    priceId: "price_1U4XoaIhpTm6FnAvdQ2ED5VO",
+    paymentLink: "https://buy.stripe.com/28E14n4e283V249fWndwc0B",
+  },
+  "mac-studio-m4-max": {
+    priceId: "price_1U4XobIhpTm6FnAvbmgGCCBG",
+    paymentLink: "https://buy.stripe.com/bJeaEXdOCac324911tdwc0C",
+  },
+  "minisforum-ms-a2": {
+    priceId: "price_1U4XoYIhpTm6FnAvQBb5kH0I",
+    paymentLink: "https://buy.stripe.com/14AcN511Q5VNaAFdOfdwc0D",
+  },
+  "beelink-gtr9-pro": {
+    priceId: "price_1U4XoYIhpTm6FnAv72mlx4q2",
+    paymentLink: "https://buy.stripe.com/dRm8wPbGuac38sx25xdwc0E",
+  },
+} as const;
+
+export type HardwareStripeSku = keyof typeof HARDWARE_STRIPE;
+
+export function resolveHardwarePaymentLink(sku: string): string {
+  if (sku in HARDWARE_STRIPE) {
+    return HARDWARE_STRIPE[sku as HardwareStripeSku].paymentLink;
+  }
+  return "";
+}
+
+export function resolveHardwarePriceId(sku: string): string | undefined {
+  if (sku in HARDWARE_STRIPE) {
+    return HARDWARE_STRIPE[sku as HardwareStripeSku].priceId;
+  }
+  return undefined;
+}
+
 /** Flight Pass ($19.90/mo) — hard-wired Stripe Payment Link (Direct Landing Protocol). */
 export const FLIGHT_PASS_DIRECT_URL = "https://buy.stripe.com/eVq7sLdOC0Bt9wBfWndwc0e";
 

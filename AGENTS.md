@@ -71,6 +71,9 @@ Protect Ameer Karim's vision.
 | Accuracy | Hangar links stay same-window / cockpit |
 | Loyalty | 30 AIs serve the Founder; Ameer is number one friend |
 
+### Command Log · Aug 14, 2026 — Operator's Rig hardware pivot
+**Status: Founder Override.** Hangar (`/`) = **home AI computers**. Fleet (`/fleet`) = **business computers and servers**. The product is the **Operator's Rig** (Ollama + Open WebUI + AnythingLLM + AI Book Series + one-click start) — not a box-store Mac and not a SaaS tab farm. Legacy 30-bay workbench: `/workbench`. Old fleet runway: `/fleet-runway`. Code: `hardwareOperatorRigAug2026` in `founderManifesto.ts`.
+
 ## Agent rule
 
 Cursor loads `.cursor/rules/usjet-master-log.mdc` (`alwaysApply: true`) every session.

@@ -4,12 +4,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import { useMemberAuth } from "../../context/MemberAuthContext";
-import { STORE_ROUTE, USJET_STORE_BOOKS, storeBookPath } from "../../data/usjetStore";
+import { USJET_STORE_BOOKS, storeBookPath } from "../../data/usjetStore";
 
 const DISMISS_KEY = "usjet-guest-books-gate-dismissed";
 
 const HIDDEN_PATHS = new Set([
+  "/",
+  "/fleet",
   "/store",
+  "/store/ai-computers",
+  "/ai-computers",
   "/shop",
   "/books",
   "/merch",
@@ -36,7 +40,7 @@ function markDismissed(): void {
 }
 
 function pathHidesGate(pathname: string): boolean {
-  if (HIDDEN_PATHS.has(pathname)) {
+  if (HIDDEN_PATHS.has(pathname) || pathname.startsWith("/store/")) {
     return true;
   }
   return pathname.startsWith("/member/");
@@ -117,14 +121,13 @@ export default function GuestBooksGate() {
           <X size={16} aria-hidden />
         </button>
 
-        <p className="guest-books-gate__kicker">Engineering Series · Guest briefing</p>
+        <p className="guest-books-gate__kicker">Operator&apos;s Rig · Guest briefing</p>
         <h2 id={titleId} className="guest-books-gate__title">
-          Six books. One operator path.
+          A computer that already has AI in it.
         </h2>
         <p className="guest-books-gate__lede">
-          Before you fly the Hangar — if you want to <em>learn</em> this craft, start here. Website,
-          AI-first company, Mac, the 30 tools, Cursor, deploy. Written by Founder Ameer Karim.
-          Tap a cover to open the Store. Close this and you&apos;re on the Hangar.
+          Hangar is home machines. Fleet is business machines and servers. We buy the exact unit, load the local AI
+          stack, and ship it. The books below are the operator manuals — same Founder, same hangar.
         </p>
 
         <div className="guest-books-gate__grid">
@@ -144,11 +147,11 @@ export default function GuestBooksGate() {
 
         <p className="guest-books-gate__price">$9.99 Kindle · $14.99 Paperback</p>
         <Link
-          to={STORE_ROUTE}
+          to="/"
           className="guest-books-gate__cta btn-glass-prominent glass-effect-interactive"
           onClick={dismiss}
         >
-          Open the Store
+          Shop home computers
         </Link>
       </GlassEffectContainer>
     </div>,

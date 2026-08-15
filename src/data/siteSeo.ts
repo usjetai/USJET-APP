@@ -5,6 +5,7 @@ import {
   SEO_MONEY_HUB_SEO,
   SEO_MONEY_PAGES,
 } from "./seoMoneyPages";
+import { HARDWARE_PRODUCTS, HARDWARE_ROUTE, type HardwareProduct } from "./aiHardware";
 
 /** Canonical hostname for hreflang, OG, canonical, JSON-LD (apex redirects to www in production). */
 
@@ -32,11 +33,11 @@ export type PageSeo = {
 
 /** Hangar home — primary commercial + crawl target. */
 export const DEFAULT_PAGE_SEO: PageSeo = {
-  title: "USJET.AI | Hangar Home — 30 AI Tools, One Cockpit",
+  title: "USJET.AI | Hangar — Home AI Computers",
   description:
-    "Enter the USJET Hangar — home cockpit for blue-collar America. Open live AI workbench bays in one ship. Three free Hangar tabs. Flight Pass from $19.90/mo. Founded by Ameer Karim.",
+    "USJET Hangar: computers that already have AI in them for the house. Private local models, Operator's Rig stack, shipped to your door. Founded by Ameer Karim.",
   keywords:
-    "USJET, USJET.AI, AI hangar, AI cockpit, AI tools, Hangar, Fleet runway, Flight Pass, blue-collar America, sovereign AI, Ameer Karim, enterprise AI, aviation fintech",
+    "USJET, home AI computer, local AI, Mac Mini, Operator's Rig, Ollama, AnythingLLM, private AI, Ameer Karim, buy AI computer, mini PC for local AI, best mini PC for Ollama, local LLM computer, Mac Mini for local AI",
   ogType: "website",
   ogImage: DEFAULT_OG_IMAGE,
   ogImageAlt: DEFAULT_OG_IMAGE_ALT,
@@ -46,10 +47,11 @@ export const DEFAULT_PAGE_SEO: PageSeo = {
 export const ROUTE_SEO: Record<string, PageSeo> = {
   "/": DEFAULT_PAGE_SEO,
   "/fleet": {
-    title: "Fleet Runway — 30 Elite AI Units | USJET.AI",
+    title: "Fleet — Business AI Computers & Servers | USJET.AI",
     description:
-      "Launch the USJET Fleet runway: 30 networked AI units in one sovereign cockpit. Call signs, jet fighter identity, and integrated navigation — no new tabs.",
-    keywords: "USJET fleet, AI runway, 30 AI tools, jet fighter callsigns, sovereign cockpit",
+      "USJET Fleet: business computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
+    keywords:
+      "business AI computer, AI server, Mac Studio, local LLM office, USJET Fleet, Ryzen AI Max+ 395 mini PC, Beelink GTR9 Pro, Minisforum MS-A2, buy AI computer",
   },
   "/blog": {
     title: "Operator Log — USJET Blog | AI Fleet Doctrine",
@@ -98,6 +100,23 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "Sovereignty Archive — Day Zero Ledger | USJET.AI",
     description:
       "USJET Sovereignty archive: Day Zero founder ledger, empire reboot posture, and institutional grit.",
+  },
+  "/store": {
+    title: "USJET Store — AI Computers & Engineering Books | USJET.AI",
+    description:
+      "Order AI computers built for local models — Mac Mini, MacBook Air, Mac Studio, and Ryzen AI Max+ 395 mini PCs — plus the USJET Engineering Series on Kindle.",
+    keywords:
+      "buy AI computer, local AI hardware, AI ready computer, USJET store, AI engineering books, Ameer Karim books",
+    ogType: "product",
+  },
+  [HARDWARE_ROUTE]: {
+    title: "Buy AI Computers for Local AI & LLMs — Mac Mini, Mini PC | USJET.AI",
+    description:
+      "Order a computer configured to run AI models locally. Mac Mini M4, MacBook Air M4, Mac Studio, Minisforum MS-A2, Beelink GTR9 Pro, and GMKtec EVO-X2 — Operator's Rig, sourced and shipped by USJET.",
+    keywords:
+      "buy AI computer, mini PC for local AI, best mini PC for Ollama, local LLM computer, Mac Mini for local AI, Ryzen AI Max+ 395 mini PC, AI ready computer, local AI hardware store, buy Mac Mini for AI, Minisforum MS-A2, Beelink GTR9 Pro, GMKtec EVO-X2",
+    ogType: "product",
+    jsonLd: buildHardwareCatalogJsonLd(),
   },
   "/founders-fuel": {
     title: "Founder's Fuel — Fuel the Fleet | USJET.AI",
@@ -318,6 +337,52 @@ export function buildProductJsonLd(input: {
       price: "19.90",
       availability: "https://schema.org/InStock",
       description: "Flight Pass monthly — Hangar access",
+    },
+  };
+}
+
+/** Product + Offer JSON-LD for a single AI Computers SKU. */
+export function buildHardwareProductJsonLd(product: HardwareProduct): Record<string, unknown> {
+  const url = `${SITE_ORIGIN}${HARDWARE_ROUTE}#${product.id}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${product.name} ${product.configLabel} — Operator's Rig`,
+    description: `${product.blurb} ${product.goodFor}`,
+    url,
+    brand: { "@type": "Brand", name: product.brand },
+    category: "Computers",
+    image: `${SITE_ORIGIN}${product.imageSrc}`,
+    offers: {
+      "@type": "Offer",
+      url: product.stripePaymentLink ?? url,
+      priceCurrency: "USD",
+      price: String(product.priceUsd),
+      availability: product.contactToOrder
+        ? "https://schema.org/PreOrder"
+        : "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: { "@type": "Organization", name: "USJET LLC" },
+    },
+  };
+}
+
+/** CollectionPage + ItemList JSON-LD for the /store/ai-computers catalog. */
+export function buildHardwareCatalogJsonLd(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "AI Computers — Order Local AI Hardware | USJET.AI",
+    description:
+      "Order computers configured to run AI models locally: Mac Mini, MacBook Air, Mac Studio, and Ryzen AI Max+ 395 mini PCs. Every unit ships as a USJET Operator's Rig.",
+    url: `${SITE_ORIGIN}${HARDWARE_ROUTE}`,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: HARDWARE_PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: buildHardwareProductJsonLd(product),
+      })),
     },
   };
 }

@@ -13,7 +13,7 @@ import { FLEET_UNIT_COUNT } from "../../types/fleet";
 
 /** SEO / document meta — Hangar is the site home. */
 const HANGAR_META_DESCRIPTION =
-  "USJET Hangar — the home cockpit for America's labor force. Open live AI workbench bays; first three tabs free. Flight Pass unlocks the rest.";
+  "USJET Hangar workbench — live AI tool bays. Legacy operator deck; the storefront is home and business AI computers.";
 
 const HANGAR_HERO_HEADLINE = "Welcome to the Hangar";
 const HANGAR_HERO_LEDE =

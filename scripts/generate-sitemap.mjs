@@ -29,6 +29,8 @@ const STATIC_ENTRIES = [
   { path: "/intelligence", changefreq: "weekly", priority: "0.88" },
   { path: "/strategic-assets", changefreq: "weekly", priority: "0.82" },
   { path: "/sovereignty", changefreq: "weekly", priority: "0.85" },
+  { path: "/store", changefreq: "weekly", priority: "0.85" },
+  { path: "/store/ai-computers", changefreq: "weekly", priority: "0.92" },
   { path: "/founders-fuel", changefreq: "weekly", priority: "0.9" },
   { path: "/cash", changefreq: "weekly", priority: "0.8" },
   { path: "/zelle", changefreq: "monthly", priority: "0.65" },

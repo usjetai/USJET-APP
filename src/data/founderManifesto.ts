@@ -238,7 +238,7 @@ export const COMPETITIVE_POSITIONING_JUL_2026 = {
   logTitle: "Command Log · Jul 2026 — Competitive Positioning (SDR Memory)",
   status: "Absolute Lock — use on every outbound and objection",
   thesis:
-    "USJET is the alternative to fragmented aviation/ops software stacks, generic AI chat tools, and custom internal builds. It combines command and control, training, intelligence assets, and managed support in one aerospace-specific sovereign platform — cutting integration burden and operational complexity.",
+    "USJET sells computers that already have AI in them. Hangar is home. Fleet is business and servers. The Operator's Rig is hardware plus a local stack — not a box-store Mac and not another ChatGPT tab.",
   versus: {
     fragmentedStacks:
       "Replaces tab-hopping across chatbots, docs, LMS, and dashboards. One Ship, One Cockpit — Hangar + Fleet + Member in one flight deck.",
@@ -279,6 +279,7 @@ export const FLIGHT_PLAN_PRIORITY_OVERRIDE = [
   "Intel Partnership Revenue: live Coinbase + NYSE TradingView boards ON (Founder Jul 26, 2026); Titan partner logins still unpaid inventory.",
   "Security Stripe Only May 2026: NO OAuth ever; Member ID + Stripe verification only; Stripe-only payments.",
   "Competitive Positioning Jul 2026: vs fragmented stacks, generic AI, custom builds — one hangar bundle; use offer buy-reasons on outbound.",
+  "Command Log Aug 14, 2026: Hardware pivot. Hangar = home AI computers. Fleet = business computers and servers. Product = Operator's Rig (local stack), not a SaaS tab farm.",
 ] as const;
 
 export const ONE_SHIP_DIRECTIVE = INTEGRATED_NAVIGATION.rule;
@@ -297,6 +298,14 @@ export const SOVEREIGN_MASTER_LOG = {
   securityStripeOnlyMay2026: SECURITY_STRIPE_ONLY_MAY_2026,
   directLandingProtocol: DIRECT_LANDING_PROTOCOL,
   competitivePositioningJul2026: COMPETITIVE_POSITIONING_JUL_2026,
+  hardwareOperatorRigAug2026: {
+    logTitle: "Command Log · Aug 14, 2026 — Operator's Rig hardware pivot",
+    status: "Founder Override · Absolute Lock",
+    directive:
+      "USJET sells hardware that has AI in it. Hangar (/) is home computers. Fleet (/fleet) is business computers and servers. The SKU is the Operator's Rig: Ollama engine, Open WebUI face, AnythingLLM vault, AI Book Series, one-click desktop start. Fulfillment stays manual Amazon buy-and-ship. Legacy 30-bay workbench lives at /workbench; old fleet runway at /fleet-runway.",
+    fleetMessage:
+      "Listen up, Crew: we are not a bookmark page. We sell the box. Teach the Founder and the buyer in the same copy — memory is the number, local means the files stay home, a server is a computer that stays on.",
+  },
   engineeringSeriesExpansion: {
     logTitle: "Command Log · Aug 7, 2026 — Engineering Series Expansion",
     status: "Active",

@@ -15,12 +15,12 @@ export function storeBookPath(bookId: string): string {
 
 export const STORE_PAGE_TITLE = "Store" as const;
 export const STORE_META_DESCRIPTION =
-  "USJET.AI Engineering Series Kindle books by Ameer Karim." as const;
+  "USJET Operator manuals — AI Book Series by Ameer Karim. The books that ship with computers that already have AI in them." as const;
 
-export const STORE_HERO_KICKER = "Books · Engineering Series" as const;
-export const STORE_HERO_TITLE = "USJET Store" as const;
+export const STORE_HERO_KICKER = "Manuals · AI Book Series" as const;
+export const STORE_HERO_TITLE = "How to run the Rig" as const;
 export const STORE_HERO_LEDE =
-  "Operator manuals from the Founder. Kindle on Amazon." as const;
+  "Every Operator's Rig ships with the AI Book Series. These are the Founder's engineering books — Kindle and paperback — for the humans who just bought a computer that thinks." as const;
 
 export type UsjetStoreBook = {
   id: string;

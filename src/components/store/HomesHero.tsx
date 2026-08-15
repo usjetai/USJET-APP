@@ -31,20 +31,21 @@ export default function HomesHero() {
 
   useEffect(() => {
     const spacer = spacerRef.current;
-    if (!spacer) return;
+    const stage = stageRef.current;
+    if (!spacer || !stage) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const touch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const coarse =
+      window.matchMedia("(pointer: coarse)").matches && window.matchMedia("(hover: none)").matches;
 
     const SLAB_GAP = 64;
     const slabCount = OPERATOR_STACK.length;
     const SLAB_TOP = -(slabCount - 1) * SLAB_GAP;
 
     function render(p: number) {
-      const b0 = seg(p, 0, 0.2);
-      const b1 = seg(p, 0.2, 0.6);
+      const b0 = seg(p, 0, 0.12);
+      const b1 = seg(p, 0.12, 0.48);
       const b1e = ease(b1);
-      const b2 = seg(p, 0.6, 0.85);
+      const b2 = seg(p, 0.48, 0.82);
       const b2e = ease(b2);
 
       const computer = computerRef.current;
@@ -82,7 +83,7 @@ export default function HomesHero() {
         hudRef.current.style.opacity = String(clamp(1 - b1 * 1.15, 0, 1));
         hudRef.current.style.transform = `translateY(${(1 - b0) * -20}px)`;
       }
-      const ctaT = seg(p, 0.86, 0.95);
+      const ctaT = seg(p, 0.84, 0.94);
       if (ctaRef.current) {
         ctaRef.current.style.opacity = String(ctaT);
         ctaRef.current.style.transform = `translateY(${(1 - ctaT) * 24}px)`;
@@ -96,16 +97,34 @@ export default function HomesHero() {
       }
     }
 
-    if (reduced) {
-      spacer.classList.add("homes-hero--static");
-      render(1);
-      return;
+    function pinStage() {
+      const vh = window.innerHeight;
+      const max = Math.max(1, spacer.offsetHeight - vh);
+      const rect = spacer.getBoundingClientRect();
+      const p = clamp(-rect.top / max, 0, 1);
+      stage.style.left = "0";
+      stage.style.right = "0";
+      stage.style.width = "100%";
+      if (rect.top > 0) {
+        stage.style.position = "absolute";
+        stage.style.top = "0";
+        stage.style.bottom = "auto";
+      } else if (rect.bottom > vh) {
+        stage.style.position = "fixed";
+        stage.style.top = "0";
+        stage.style.bottom = "auto";
+      } else {
+        stage.style.position = "absolute";
+        stage.style.top = "auto";
+        stage.style.bottom = "0";
+      }
+      render(p);
     }
 
-    if (touch) {
+    if (coarse) {
       spacer.classList.add("homes-hero--static");
       let start: number | null = null;
-      const DUR = 7600;
+      const DUR = 6400;
       let raf = 0;
       const autoplay = (ts: number) => {
         if (start == null) start = ts;
@@ -126,44 +145,17 @@ export default function HomesHero() {
       };
     }
 
-    const stage = stageRef.current;
-    let ticking = false;
-    const drive = () => {
-      const vh = window.innerHeight;
-      const max = Math.max(1, spacer.offsetHeight - vh);
-      const rect = spacer.getBoundingClientRect();
-      const p = clamp(-rect.top / max, 0, 1);
-      if (stage) {
-        if (rect.top > 0) {
-          stage.style.position = "absolute";
-          stage.style.top = "0";
-          stage.style.bottom = "auto";
-        } else if (rect.bottom > vh) {
-          stage.style.position = "fixed";
-          stage.style.top = "0";
-          stage.style.bottom = "auto";
-        } else {
-          stage.style.position = "absolute";
-          stage.style.top = "auto";
-          stage.style.bottom = "0";
-        }
-      }
-      render(p);
+    let alive = true;
+    const loop = () => {
+      if (!alive) return;
+      pinStage();
+      requestAnimationFrame(loop);
     };
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        drive();
-        ticking = false;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
-    window.addEventListener("resize", onScroll);
-    drive();
+    requestAnimationFrame(loop);
+    window.addEventListener("resize", pinStage);
     return () => {
-      window.removeEventListener("scroll", onScroll, { capture: true });
-      window.removeEventListener("resize", onScroll);
+      alive = false;
+      window.removeEventListener("resize", pinStage);
     };
   }, []);
 

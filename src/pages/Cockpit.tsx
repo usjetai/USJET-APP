@@ -5,6 +5,7 @@ import { verifyFleetCallName } from "../data/fleetManifest";
 import { isHangarIframeBlocked } from "../lib/hangarEmbedPolicy";
 import { markFleetBayTrusted, sanitizeCockpitSrc } from "../lib/fleetLaunchUrl";
 import { logFleetLaunchHandoff } from "../lib/fleetUsageHistory";
+import NativeBayChat from "../components/cockpit/NativeBayChat";
 
 /** Full-page cockpit handoffs; Hangar tiles use `embed=hangar` for in-tile partner frames. */
 export default function Cockpit() {
@@ -17,6 +18,7 @@ export default function Cockpit() {
   const callName = params.get("callName")?.trim() ?? "";
   const isHangarEmbed = params.get("embed") === "hangar";
   const directHandoff = params.get("handoff") === "direct";
+  const nativeProvider = params.get("native");
   const baySlot = useMemo(() => slotFromBayId(bay), [bay]);
   const bayAccentStyle = useMemo(
     () => (baySlot !== null ? fleetBayAccentStyle(baySlot) : undefined),
@@ -64,6 +66,14 @@ export default function Cockpit() {
   }
 
   const displayName = partnerLabel ?? "partner module";
+
+  if (nativeProvider) {
+    return (
+      <div className="cockpit-shell cockpit-shell--native-chat" style={bayAccentStyle}>
+        <NativeBayChat provider={nativeProvider} displayName={displayName} fallbackSrc={src ?? undefined} />
+      </div>
+    );
+  }
 
   if (isHangarEmbed) {
     if (iframeBlocked) {

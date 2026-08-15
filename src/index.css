@@ -17417,6 +17417,174 @@ button.fleet-card {
   background: #030a16;
 }
 
+.cockpit-shell--native-chat {
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  padding: 1.5rem;
+}
+
+.native-bay-chat {
+  display: flex;
+  flex-direction: column;
+  width: min(720px, 100%);
+  height: min(720px, 92vh);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.06) 0%, rgba(0, 0, 0, 0.5) 60%);
+  overflow: hidden;
+}
+
+.native-bay-chat--gate {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 2.5rem 1.75rem;
+}
+
+.native-bay-chat__gate-kicker {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.75);
+}
+
+.native-bay-chat__gate-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.native-bay-chat__gate-copy {
+  max-width: 32rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.native-bay-chat__gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.native-bay-chat__gate-cta {
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgb(34 211 238);
+  color: #001018;
+}
+
+.native-bay-chat__gate-secondary {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: underline;
+}
+
+.native-bay-chat__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.native-bay-chat__empty {
+  margin: auto;
+  max-width: 22rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.native-bay-chat__bubble {
+  max-width: 80%;
+  border-radius: 1rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.native-bay-chat__bubble--user {
+  align-self: flex-end;
+  background: rgb(34 211 238);
+  color: #001018;
+  font-weight: 600;
+}
+
+.native-bay-chat__bubble--assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.native-bay-chat__bubble--pending {
+  opacity: 0.5;
+}
+
+.native-bay-chat__error {
+  margin: 0 1.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgb(252 165 165);
+}
+
+.native-bay-chat__form {
+  display: flex;
+  gap: 0.6rem;
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.native-bay-chat__input {
+  flex: 1;
+  min-width: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.65rem 1.1rem;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.native-bay-chat__input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.native-bay-chat__input:focus {
+  outline: none;
+  border-color: rgba(34, 211, 238, 0.6);
+}
+
+.native-bay-chat__send {
+  border-radius: 999px;
+  padding: 0 1.4rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: rgb(34 211 238);
+  color: #001018;
+}
+
+.native-bay-chat__send:disabled {
+  opacity: 0.4;
+}
+
 .cockpit-shell--hangar-embed .cockpit-shell__frame {
   flex: 1;
   width: 100%;

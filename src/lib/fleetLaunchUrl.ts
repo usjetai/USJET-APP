@@ -83,7 +83,29 @@ export function markFleetBayTrusted(bayId: string): void {
   }
 }
 
+/**
+ * Fleet bays wired to real, billed native chat (USJET pays the model API,
+ * members pay USJET). These open in /cockpit as an in-app chat instead of
+ * bouncing the whole browser tab to the partner's own site.
+ */
+const NATIVE_CHAT_SLOTS: Record<number, { provider: string; label: string; src: string }> = {
+  0: { provider: "gemini", label: "Gemini", src: "https://gemini.google.com" },
+};
+
 export function fleetLaunchUrl(domain: string, href?: string, slot?: number): string {
+  if (typeof slot === "number" && NATIVE_CHAT_SLOTS[slot]) {
+    const native = NATIVE_CHAT_SLOTS[slot];
+    const bayId = fleetBayIdFromSlot(slot) ?? "";
+    const params = new URLSearchParams({
+      native: native.provider,
+      bay: bayId,
+      label: native.label,
+      callName: native.label,
+      src: native.src,
+    });
+    return `/cockpit?${params.toString()}`;
+  }
+
   const trimmed = href?.trim();
 
   if (trimmed?.startsWith("/")) {

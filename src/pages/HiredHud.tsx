@@ -6,9 +6,6 @@ import HiredHudDeveloperAvatar from "../components/hiredHud/HiredHudDeveloperAva
 import HiredHudDeveloperLogo from "../components/hiredHud/HiredHudDeveloperLogo";
 import HiredHudJetRadar from "../components/hiredHud/HiredHudJetRadar";
 import HiredHudSceneTile from "../components/hiredHud/HiredHudSceneTile";
-import HiredHudHubBackgroundBeat, {
-  type HiredHudHubBackgroundBeatHandle,
-} from "../components/hiredHud/HiredHudHubBackgroundBeat";
 import HiredHudHubVideo from "../components/hiredHud/HiredHudHubVideo";
 import HiredHudHubYouTube from "../components/hiredHud/HiredHudHubYouTube";
 import HiredHudFleetScope from "../components/hiredHud/HiredHudFleetScope";
@@ -253,11 +250,6 @@ export default function HiredHud() {
   const [tileFavorites, setTileFavorites] = useState<Record<number, boolean>>(() =>
     loadHiredHudTileFavorites(getHiredDeveloperUnits(fleetManifest).map((unit) => unit.slot)),
   );
-  const hubBeatRef = useRef<HiredHudHubBackgroundBeatHandle>(null);
-
-  const primeHubAudio = useCallback(() => {
-    hubBeatRef.current?.armWithSound();
-  }, []);
 
   const toggleTileFavorite = (slot: number) => {
     setTileFavorites((current) => {
@@ -370,9 +362,7 @@ export default function HiredHud() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="hired-hud-page relative"
-      onPointerDownCapture={primeHubAudio}
     >
-      <HiredHudHubBackgroundBeat ref={hubBeatRef} />
       <div className="hired-hud__basketball-alert glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-amber relative z-[2] mx-auto mb-4 max-w-[94rem] px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center gap-3">
           <Activity size={16} className="text-amber-300" aria-hidden />

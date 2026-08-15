@@ -41,14 +41,14 @@ export default function UsjetGlobalContactBar() {
               <span className="usjet-global-contact-bar__ping" aria-hidden />
             </div>
 
-            <div className="usjet-footer__books-grid mt-8 flex flex-wrap justify-center gap-4">
+            <div className="usjet-footer__books-grid mt-8 flex flex-wrap justify-center gap-5">
               {USJET_STORE_BOOKS.map((book) => (
                 <Link
                   key={book.id}
                   to={storeBookPath(book.id)}
                   className="usjet-footer__book-link overflow-hidden rounded-lg border border-white/10 transition-transform hover:scale-110 glass-effect-interactive"
                   aria-label={`${book.title} — open Store`}
-                  style={{ width: '80px', flexShrink: 0 }}
+                  style={{ width: '100px', flexShrink: 0 }}
                 >
                   <img
                     src={book.coverSrc}

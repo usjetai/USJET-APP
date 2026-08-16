@@ -13,6 +13,11 @@ export type UsjetBlogPostCta = {
   links: readonly { label: string; to: string; external?: boolean }[];
 };
 
+export type UsjetBlogPostFaq = {
+  question: string;
+  answer: string;
+};
+
 export type UsjetBlogPost = {
   slug: string;
   title: string;
@@ -22,6 +27,12 @@ export type UsjetBlogPost = {
   excerpt: string;
   body: readonly string[];
   tags: readonly string[];
+  /** Keyword-targeted overrides for search — falls back to title/excerpt when omitted. */
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string;
+  /** Rendered as FAQPage JSON-LD + on-page Q&A when present. */
+  faqs?: readonly UsjetBlogPostFaq[];
   /** Manifesto layout — aggressive typography, callout, featured visual. */
   variant?: "manifesto" | "institutional";
   manifestoSections?: readonly UsjetBlogManifestoSection[];
@@ -212,6 +223,59 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
     ],
     footerCta: {
       intro: "Pick the catalog that matches the job. Same Operator's Rig. Different machines.",
+      links: [
+        { label: "Shop Homes", to: "/" },
+        { label: "Shop Business", to: "/fleet" },
+        { label: "Full lineup", to: "/store/ai-computers" },
+      ],
+    },
+  },
+  {
+    slug: "jarvis-trend-needs-a-body",
+    title: "371,000 People Commented “Jarvis” for a Waitlist. Here's What They're Missing.",
+    subtitle: "The DIY AI assistant trend has a hardware-shaped hole in it",
+    publishedAt: "2026-08-16",
+    cadenceDay: 94,
+    excerpt:
+      "Everyone on Instagram is racing to build their own Jarvis. Almost none of them are asking where it actually runs. That's the whole business.",
+    tags: ["Jarvis", "Local AI", "Trend", "AI Computers"],
+    seoTitle: "Build Your Own Jarvis AI Assistant — What Computer You Actually Need | USJET.AI",
+    seoDescription:
+      "Everyone wants to build a personal Jarvis AI assistant. Here's the part the tutorials skip: the computer it runs on. Local-AI hardware picks for a private, always-on Jarvis — no subscription, no cloud.",
+    seoKeywords:
+      "build your own jarvis, jarvis ai assistant, how to build a jarvis ai, personal ai assistant computer, local ai assistant hardware, run jarvis locally, jarvis ai computer, private ai assistant, OpenClaw, local LLM assistant, offline AI assistant, Ollama personal assistant",
+    faqs: [
+      {
+        question: "What computer do I need to build my own Jarvis AI assistant?",
+        answer:
+          "Enough unified memory to hold the model plus your OS. For a single-user voice assistant running a 7B–8B model (Llama 3.1 8B, Mistral 7B) through Ollama, 16GB is comfortable — a Mac Mini M4 or a 32GB Ryzen AI Max mini PC both work. Push to 24GB–32GB and you can run a sharper 13B–14B model for a noticeably smarter assistant.",
+      },
+      {
+        question: "Can I run a Jarvis-style assistant fully offline, without a cloud API?",
+        answer:
+          "Yes. Running the language model locally through Ollama or LM Studio means your voice commands and responses never leave the machine — no per-token API bill, no rate limit, no subscription. Wake-word detection and text-to-speech can run locally too, though many builders still use a cloud voice API (ElevenLabs, Deepgram) for the most natural-sounding voice while keeping the model itself local.",
+      },
+      {
+        question: "Is a Mac Mini or a Ryzen AI Max mini PC better for a personal Jarvis?",
+        answer:
+          "Both use unified memory, which is what makes them viable for local AI at all. Mac Mini M4 tends to win on efficiency and quiet, always-on operation. A 64GB–128GB Ryzen AI Max+ mini PC (Beelink GTR9 Pro, Minisforum MS-A2) wins on raw memory per dollar if you want to run larger 30B–70B models. Pick based on the model size you want, not the brand.",
+      },
+      {
+        question: "Do I need a dedicated machine, or can my Jarvis run on my everyday laptop?",
+        answer:
+          "It can run on a laptop, but a true always-on Jarvis — one that stays listening and available around the clock — wants a dedicated, always-on machine rather than a laptop you close and carry away. That's the difference between the Homes lineup (single-user, portable-friendly) and a machine sized to stay powered on as a standing assistant.",
+      },
+    ],
+    body: [
+      "Search “Jarvis AI” on Instagram right now and you fall into a genre. Creators walking through how to wire up a voice-controlled personal assistant — wake word, speech-to-text, an LLM in the loop, a text-to-speech voice reading it back. One post from lukebuildsai simply asked people to comment “Jarvis” for a waitlist. 371,500 likes. 116,300 comments. Most of them just the word “Jarvis.” Another, from kevinfremon, walks through building your own in under three minutes and pulled 8,700 likes and a comment section full of people asking about API keys, ElevenLabs voice IDs, and Deepgram — the plumbing of a cloud-dependent assistant.",
+      "This is not a fringe interest. It is a demand signal, and it is a large one. “I want a Jarvis” has become the polite way of saying “I want the future” — the talking, ever-present assistant from Iron Man, except real. The tooling caught up fast: OpenClaw, a self-hosted personal AI agent, went from nothing to a genuine phenomenon in a matter of months. Stanford put out OpenJarvis as the academic, local-first flagship. Independent builders are turning coding agents like Claude Code into a personal operating system — memory, skills, and tools bolted on until it behaves like a chief of staff.",
+      "Here is the part almost nobody in the comments is asking about: where does it run? Read through those threads and the questions are all about the brain — which model, which voice API, which wake-word library. Almost nobody asks about the body. And the body is the part with real, recurring cost. An assistant wired to a cloud API is an assistant with a meter running — a per-token bill, a rate limit that throttles you mid-task, and every conversation leaving your house before it comes back as an answer. That is not a personal Jarvis. That is a rental with a personality.",
+      "The local-first camp in that same research is explicit about the alternative: the hardware in a home lab is finally strong enough in 2026 to run a system that rivals GPT-4-class models entirely offline — Llama 4, Mistral, Qwen 3.5, running through Ollama on a machine you own. No subscription clock. No prompt leaving the building. An assistant that is actually yours in the way a rented API key never can be.",
+      "That is the hardware-shaped hole in the trend, and it is exactly what we sized the two catalogs on this site around. A single builder wiring up a personal Jarvis for themselves is the Homes lineup — a Mac Mini or a 32GB Ryzen mini PC is enough headroom for a 7B–8B model doing wake-word, voice, and tool-calling duty around the clock. A team or a shop trying to give every desk its own assistant, or run one shared model serving several people at once, is the Business lineup — more memory, wired networking, built to stay on.",
+      "The reel gets you excited about the idea. It does not get you the machine. That part still has to be sourced, configured for the memory tier the model actually needs, and shipped — which is the part of this business that has nothing to do with going viral.",
+    ],
+    footerCta: {
+      intro: "Building your own Jarvis? Start with the machine it lives on.",
       links: [
         { label: "Shop Homes", to: "/" },
         { label: "Shop Business", to: "/fleet" },

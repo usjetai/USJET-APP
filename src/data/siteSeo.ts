@@ -123,7 +123,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     description:
       "Home AI computers with a personal Jarvis already on the machine. Mac Mini M4, MacBook Air, MacBook Pro, Beelink SER9 Pro, Minisforum UM890 Pro.",
     keywords:
-      "AI computer for home, Mac Mini for local AI, MacBook Air M4 local AI, Beelink SER9 Pro, Minisforum UM890 Pro",
+      "AI computer for home, Mac Mini for local AI, MacBook Air M4 local AI, Beelink SER9 Pro, Minisforum UM890 Pro, build your own jarvis, jarvis ai assistant computer, personal ai assistant hardware",
     ogType: "product",
     jsonLd: buildHardwareCatalogJsonLd("home"),
   },
@@ -175,6 +175,10 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   "/privacy": {
     title: "Privacy Policy | USJET.AI",
     description: "USJET.AI privacy policy — how we handle member and hangar data.",
+  },
+  "/terms": {
+    title: "Terms of Service | USJET.AI",
+    description: "USJET.AI Terms of Service — subscriptions, AI Computers hardware orders, shipping and returns, AI-output disclaimers.",
   },
   "/sos": {
     title: "Help Center | USJET.AI",
@@ -302,6 +306,21 @@ export function buildWebsiteJsonLd(): Record<string, unknown> {
       },
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+export function buildFaqJsonLd(faqs: readonly { question: string; answer: string }[]): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 }
 

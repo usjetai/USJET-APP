@@ -22,10 +22,10 @@ export default function BlogPost() {
       return;
     }
     const prev = document.title;
-    document.title = `${post.title} · USJET Blog`;
+    document.title = post.seoTitle ?? `${post.title} · USJET Blog`;
     const meta = document.querySelector('meta[name="description"]');
     const prevDesc = meta?.getAttribute("content") ?? "";
-    meta?.setAttribute("content", post.excerpt);
+    meta?.setAttribute("content", post.seoDescription ?? post.excerpt);
     document.documentElement.classList.add("blog-page-root");
     return () => {
       document.title = prev;
@@ -97,6 +97,20 @@ export default function BlogPost() {
           </div>
         </GlassEffectContainer>
       )}
+
+      {post.faqs?.length ? (
+        <section className="blog-post__faq" aria-label="Frequently asked questions">
+          <h2 className="blog-post__faq-heading">Frequently asked</h2>
+          <div className="blog-post__faq-list">
+            {post.faqs.map((faq) => (
+              <div key={faq.question} className="blog-post__faq-item">
+                <h3 className="blog-post__faq-question">{faq.question}</h3>
+                <p className="blog-post__faq-answer">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {post.variant !== "manifesto" && post.footerCta ? (
         <footer className="blog-manifesto__cta">

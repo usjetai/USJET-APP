@@ -46,6 +46,7 @@ const STATIC_ENTRIES = [
   { path: "/hoops", changefreq: "monthly", priority: "0.55" },
   { path: "/sos", changefreq: "monthly", priority: "0.55" },
   { path: "/privacy", changefreq: "yearly", priority: "0.45" },
+  { path: "/terms", changefreq: "yearly", priority: "0.45" },
   { path: "/login", changefreq: "monthly", priority: "0.5" },
   { path: "/member/login", changefreq: "monthly", priority: "0.55" },
   { path: "/llms.txt", changefreq: "monthly", priority: "0.7" },

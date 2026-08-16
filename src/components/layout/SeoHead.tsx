@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { getBlogPostBySlug } from "../../data/usjetBlog";
 import {
   buildArticleJsonLd,
+  buildFaqJsonLd,
   buildProductJsonLd,
   buildWebsiteJsonLd,
   canonicalHref,
@@ -71,17 +72,18 @@ function resolveDynamicSeo(pathname: string): PageSeo | null {
       };
     }
     const url = canonicalHref(path);
+    const articleJsonLd = buildArticleJsonLd({
+      title: post.seoTitle ?? post.title,
+      description: post.seoDescription ?? post.excerpt,
+      url,
+      datePublished: post.publishedAt,
+    });
     return {
-      title: `${post.title} · USJET Blog`,
-      description: post.excerpt,
-      keywords: `USJET blog, ${post.title}, Ameer Karim, operator log`,
+      title: post.seoTitle ?? `${post.title} · USJET Blog`,
+      description: post.seoDescription ?? post.excerpt,
+      keywords: post.seoKeywords ?? `USJET blog, ${post.title}, Ameer Karim, operator log`,
       ogType: "article",
-      jsonLd: buildArticleJsonLd({
-        title: post.title,
-        description: post.excerpt,
-        url,
-        datePublished: post.publishedAt,
-      }),
+      jsonLd: post.faqs?.length ? [articleJsonLd, buildFaqJsonLd(post.faqs)] : articleJsonLd,
     };
   }
 

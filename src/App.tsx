@@ -28,6 +28,7 @@ const MemberPortal = lazy(() => import("./pages/MemberPortal"));
 const MemberLogin = lazy(() => import("./pages/MemberLogin"));
 const Sos = lazy(() => import("./pages/Sos"));
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 const Ai101 = lazy(() => import("./pages/Ai101"));
 const CodeKit = lazy(() => import("./pages/CodeKit"));
 const DirectFuel = lazy(() => import("./pages/DirectFuel"));
@@ -106,6 +107,7 @@ function AnimatedRoutes() {
             <Route path="/x" element={<X />} />
             <Route path="/sos" element={<Sos />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="/ai-101" element={<Ai101 />} />
             <Route path="/code-kit" element={<CodeKit />} />
             <Route path="/blog" element={<Blog />} />

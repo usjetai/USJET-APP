@@ -11,7 +11,7 @@ export const PRIVACY_PAGE_TITLE = "Privacy Policy · USJET.AI" as const;
 export const PRIVACY_META_DESCRIPTION =
   "How USJET LLC collects, uses, and protects information on USJET.AI — Stripe-only payments, Member ID verification, integrated cockpit navigation, and no OAuth sign-in.";
 
-export const PRIVACY_EFFECTIVE_DATE = "June 18, 2026" as const;
+export const PRIVACY_EFFECTIVE_DATE = "August 16, 2026" as const;
 
 export const PRIVACY_ENTITY = "USJET LLC" as const;
 
@@ -39,8 +39,10 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
       "Member verification inputs you submit on Member Login — billing email and Stripe Member ID (cus_…).",
       "Browser-local session data after successful verification (stored in localStorage on your device, not on a separate social identity provider).",
       "Technical signals your browser sends automatically — IP address, user agent, referrer, and basic request logs needed for security and uptime.",
+      "Analytics on how the site is used — page views and in-product events — collected via Google Analytics 4. See \"Cookies & analytics\" below for how to opt out.",
       "Voluntary correspondence when you email ops@usjet.ai or submit support forms.",
       "Usage within gated surfaces (Hangar, Intel, Origin, Member Portal) needed to honor your subscription tier and in-product features.",
+      "Messages you type into Origin, Fleet bay assistants, or other in-product AI chat surfaces — sent to the third-party AI provider handling that conversation so it can generate a response. See \"AI chat providers\" below.",
     ],
   },
   {
@@ -66,10 +68,19 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
   },
   {
     id: "storage",
-    title: "Cookies & local storage",
+    title: "Cookies & analytics",
     paragraphs: [
       "USJET.AI uses browser storage (including localStorage) to remember a verified member session for up to twenty-four hours and to persist cockpit preferences such as Silent Hangar audio state.",
-      "We do not use third-party advertising cookies. Clearing site data for the USJET hostname will sign you out and reset local preferences — see /sos for practical steps.",
+      "We use Google Analytics 4 (GA4) to understand site usage, which sets its own cookies and sends usage data to Google. We do not use separate third-party advertising/retargeting cookies beyond what GA4 itself sets. Google's use of this data is governed by Google's own privacy policy.",
+      "To opt out of GA4 tracking on this site, use your browser's tracking-protection settings, a browser extension such as Google's Analytics Opt-out Add-on, or contact ops@usjet.ai. Clearing site data for the USJET hostname will sign you out and reset local preferences — see /sos for practical steps.",
+    ],
+  },
+  {
+    id: "ai-chat-providers",
+    title: "AI chat providers",
+    paragraphs: [
+      "Origin, Fleet bay assistants, and other in-product chat surfaces are powered by third-party AI models. Depending on the surface, your messages may be sent to OpenAI, Google Vertex AI, and/or models routed through OpenRouter to generate a response.",
+      "These providers process the conversation text needed to answer you; USJET does not control how each provider retains or further processes that data beyond its own published terms. Do not share information in these chats that you would not want processed by a third-party AI provider.",
     ],
   },
   {
@@ -78,7 +89,7 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     paragraphs: [
       "Fleet and Hangar modules may load partner sites inside /cockpit in the same browser window. Those partners operate under their own privacy policies once you enter their module.",
       "USJET does not open partner revenue lanes in a separate tab by default — One Ship, One Cockpit. When a partner cannot embed, the cockpit may continue the module in this same window; use the return control to come back to USJET.",
-      "We may use infrastructure providers (hosting, CDN, email routing) that process technical logs on our behalf under contractual safeguards.",
+      "We may use infrastructure providers (hosting, CDN, email routing, payments) that process technical logs or order data on our behalf under contractual safeguards. See /terms for the full agreement governing your use of the Service.",
     ],
   },
   {
@@ -100,6 +111,14 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
       "Do not submit verification data you are not authorized to use.",
     ],
     paragraphs: [],
+  },
+  {
+    id: "your-rights",
+    title: "Your privacy rights",
+    paragraphs: [
+      "Depending on where you live, you may have rights to know what personal information we hold about you, request its deletion, correct it, or opt out of certain processing (including analytics tracking, described above). We honor these requests to the extent required by applicable law.",
+      "To exercise a rights request, email ops@usjet.ai from the address associated with your account. We may need to verify your identity before acting on the request.",
+    ],
   },
   {
     id: "children",

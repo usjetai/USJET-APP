@@ -42,8 +42,8 @@ export default function UsjetGlobalContactBar() {
             </div>
           </div>
 
-          <nav className="usjet-footer__col" aria-label="Platform">
-            <h2 className="usjet-footer__heading">Rigs</h2>
+          <nav className="usjet-footer__col" aria-label="Shop">
+            <h2 className="usjet-footer__heading">Shop</h2>
             <NavLink to="/" end className={footerLinkClass}>
               Homes
             </NavLink>
@@ -56,43 +56,43 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/store" className={footerLinkClass}>
               Manuals
             </NavLink>
-            <NavLink to="/ai-101" className={footerLinkClass}>
-              How local AI works
-            </NavLink>
-            <NavLink to="/blog" className={footerLinkClass}>
-              Operator Log
+            <NavLink to="/compare" className={footerLinkClass}>
+              Compare
             </NavLink>
             <NavLink to="/special" className={footerLinkClass}>
               Pricing
             </NavLink>
           </nav>
 
-          <nav className="usjet-footer__col" aria-label="Business">
-            <h2 className="usjet-footer__heading">Ship</h2>
-            <NavLink to="/founders-fuel" className={footerLinkClass}>
-              Fuel
+          <nav className="usjet-footer__col" aria-label="Company">
+            <h2 className="usjet-footer__heading">Company</h2>
+            <NavLink to="/sovereignty" className={footerLinkClass}>
+              Founder
             </NavLink>
-            <NavLink to="/zelle" className={footerLinkClass}>
-              Zelle
-            </NavLink>
-          </nav>
-
-          <nav className="usjet-footer__col" aria-label="Support">
-            <h2 className="usjet-footer__heading">Support</h2>
-            <NavLink to="/sos" className={footerLinkClass}>
-              Help
-            </NavLink>
-            <NavLink to="/privacy" className={footerLinkClass}>
-              Privacy
-            </NavLink>
-            <NavLink to={ORIGIN_CS_ROUTE} className={footerLinkClass}>
-              Customer Service
+            <NavLink to="/blog" className={footerLinkClass}>
+              Operator Log
             </NavLink>
             <NavLink to="/ai-101" className={footerLinkClass}>
               AI 101
             </NavLink>
+            <NavLink to="/sos" className={footerLinkClass}>
+              Help
+            </NavLink>
+            <NavLink to={ORIGIN_CS_ROUTE} className={footerLinkClass}>
+              Customer Service
+            </NavLink>
             <NavLink to="/member" className={footerLinkClass}>
               Member
+            </NavLink>
+          </nav>
+
+          <nav className="usjet-footer__col" aria-label="Legal">
+            <h2 className="usjet-footer__heading">Legal</h2>
+            <NavLink to="/privacy" className={footerLinkClass}>
+              Privacy
+            </NavLink>
+            <NavLink to="/terms" className={footerLinkClass}>
+              Terms
             </NavLink>
           </nav>
         </div>

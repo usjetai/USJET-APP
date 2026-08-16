@@ -24,6 +24,7 @@ const STATIC_ENTRIES = [
   { path: "/compare/blue-collar-ai-tools", changefreq: "weekly", priority: "0.95" },
   { path: "/compare/all-in-one-ai-dashboard", changefreq: "weekly", priority: "0.95" },
   { path: "/ai-101", changefreq: "weekly", priority: "0.86" },
+  { path: "/store", changefreq: "weekly", priority: "0.88" },
   { path: "/store/ai-computers", changefreq: "weekly", priority: "0.9" },
   { path: "/store/ai-computers/homes", changefreq: "weekly", priority: "0.93" },
   { path: "/store/ai-computers/businesses", changefreq: "weekly", priority: "0.93" },

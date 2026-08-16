@@ -29,6 +29,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const CompareHub = lazy(() => import("./pages/CompareHub"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
+const Store = lazy(() => import("./pages/Store"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
 
 function RouteFallback() {
@@ -63,6 +64,9 @@ function AnimatedRoutes() {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/compare" element={<CompareHub />} />
             <Route path="/compare/:slug" element={<ComparePage />} />
+            <Route path="/store" element={<Store />} />
+            <Route path="/books" element={<Navigate to="/store" replace />} />
+            <Route path="/merch" element={<Navigate to="/store" replace />} />
             <Route path="/store/ai-computers" element={<AiComputers />} />
             <Route path="/store/ai-computers/homes" element={<AiComputersHomes />} />
             <Route path="/store/ai-computers/businesses" element={<AiComputersBusinesses />} />
@@ -70,7 +74,6 @@ function AnimatedRoutes() {
             <Route path="/ai-computers/homes" element={<Navigate to="/store/ai-computers/homes" replace />} />
             <Route path="/ai-computers/businesses" element={<Navigate to="/store/ai-computers/businesses" replace />} />
             <Route path="/shop" element={<Navigate to="/store/ai-computers" replace />} />
-            <Route path="/store" element={<Navigate to="/store/ai-computers" replace />} />
             <Route path="/landscape" element={<MobileLandscapeGuide />} />
             <Route path="/protocol-proof" element={<ProtocolSessionProof />} />
             {/* Retired: subscriptions, member portal, collectibles, gaming, donation pages — computers-only pivot. */}

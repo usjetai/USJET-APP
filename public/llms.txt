@@ -10,6 +10,7 @@
 - Operator blog (Operator Log): https://www.usjet.ai/blog
 - Best computer for local AI (2026 buyer's guide): https://www.usjet.ai/blog/best-computer-for-local-ai-2026
 - Build your own Jarvis AI assistant — hardware guide: https://www.usjet.ai/blog/jarvis-trend-needs-a-body
+- Store (AI computers + engineering books): https://www.usjet.ai/store
 - AI Computers (hub): https://www.usjet.ai/store/ai-computers
 - AI Computers for Homes: https://www.usjet.ai/store/ai-computers/homes
 - AI Computers for Businesses: https://www.usjet.ai/store/ai-computers/businesses

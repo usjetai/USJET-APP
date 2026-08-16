@@ -6,7 +6,7 @@ import AppNavPhoneBadge from "./AppNavPhoneBadge";
 const NAV_LINKS = [
   { to: "/", label: "Homes" },
   { to: "/fleet", label: "Business" },
-  { to: "/compare", label: "Compare" },
+  { to: "/store", label: "Manuals" },
   { to: "/blog", label: "Log" },
 ] as const;
 

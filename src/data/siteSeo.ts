@@ -75,6 +75,14 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "AI 101 — One-on-One Lesson | USJET.AI",
     description: "Learn how local AI computers work, in plain English — one lesson before you buy.",
   },
+  "/store": {
+    title: "Manuals — AI Book Series | USJET.AI",
+    description:
+      "USJET Engineering Series on Kindle and paperback — the operator manuals for a computer that already has AI in it.",
+    keywords:
+      "USJET store, AI engineering books, Ameer Karim books, local AI manuals, Operator's Rig books",
+    ogType: "product",
+  },
   [HARDWARE_ROUTE]: {
     title: "Buy AI Computers for Local AI & LLMs — Homes & Businesses | USJET.AI",
     description:

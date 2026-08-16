@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
 import { USJET_BUSINESS_ADDRESS_LINES, mailtoUsjetOps } from "../../lib/usjetContact";
+import { USJET_STORE_BOOKS, storeBookPath } from "../../data/usjetStore";
 
 const YEAR = new Date().getFullYear();
 
@@ -51,6 +52,9 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/store/ai-computers" className={footerLinkClass}>
               Full lineup
             </NavLink>
+            <NavLink to="/store" className={footerLinkClass}>
+              Manuals
+            </NavLink>
             <NavLink to="/compare" className={footerLinkClass}>
               Compare
             </NavLink>
@@ -81,6 +85,24 @@ export default function UsjetGlobalContactBar() {
               Terms
             </NavLink>
           </nav>
+        </div>
+
+        <div className="usjet-footer__books-grid" aria-label="AI Book Series">
+          {USJET_STORE_BOOKS.map((book) => (
+            <Link
+              key={book.id}
+              to={storeBookPath(book.id)}
+              className="usjet-footer__book-link glass-effect-interactive"
+              aria-label={`${book.title} — open Manuals`}
+            >
+              <img
+                src={book.coverSrc}
+                alt=""
+                className="usjet-footer__book-cover"
+                loading="lazy"
+              />
+            </Link>
+          ))}
         </div>
 
         <div className="usjet-footer__legal">

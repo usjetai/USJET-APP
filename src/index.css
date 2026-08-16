@@ -33115,6 +33115,16 @@ html.blog-page-root #usjet-app-shell {
   mask-image: radial-gradient(ellipse 54% 72% at 50% 48%, #000 38%, transparent 70%);
 }
 
+.homes-hero__orb-video::-webkit-media-controls,
+.homes-hero__orb-video::-webkit-media-controls-start-playback-button,
+.homes-hero__orb-video::-webkit-media-controls-overlay-play-button,
+.homes-hero__orb-video::-webkit-media-controls-enclosure {
+  display: none !important;
+  -webkit-appearance: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .homes-hero__orb-core {
   position: absolute;
   inset: 0;
@@ -33410,6 +33420,11 @@ html.blog-page-root #usjet-app-shell {
     width: min(34rem, 100%);
     height: min(19rem, 58%);
     margin: 0;
+  }
+
+  .homes-hero__orb-video {
+    mix-blend-mode: normal;
+    filter: none;
   }
 
   .homes-hero--static .homes-hero__stage {

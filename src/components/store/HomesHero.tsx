@@ -35,6 +35,34 @@ export default function HomesHero() {
   const jarvisRef = useRef<HTMLDivElement>(null);
   const screensRef = useRef<(HTMLElement | null)[]>([]);
   const sceneRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "true");
+    video.setAttribute("webkit-playsinline", "true");
+    const kick = () => {
+      video.muted = true;
+      const play = video.play();
+      if (play) play.catch(() => undefined);
+    };
+    kick();
+    video.addEventListener("canplay", kick);
+    video.addEventListener("loadeddata", kick);
+    document.addEventListener("touchstart", kick, { passive: true });
+    document.addEventListener("scroll", kick, { passive: true });
+    return () => {
+      video.removeEventListener("canplay", kick);
+      video.removeEventListener("loadeddata", kick);
+      document.removeEventListener("touchstart", kick);
+      document.removeEventListener("scroll", kick);
+    };
+  }, []);
 
   useEffect(() => {
     const spacerNode = spacerRef.current;
@@ -72,6 +100,13 @@ export default function HomesHero() {
       if (jarvisRef.current) {
         jarvisRef.current.style.opacity = String(orbIn);
         jarvisRef.current.style.transform = `translate(-50%, -50%) scale(${lerp(0.86, 1, orbIn)})`;
+      }
+      if (orbIn > 0.2) {
+        const video = videoRef.current;
+        if (video && video.paused) {
+          video.muted = true;
+          video.play().catch(() => undefined);
+        }
       }
 
       screensRef.current.forEach((screen, i) => {
@@ -181,6 +216,7 @@ export default function HomesHero() {
               <div className="homes-hero__mesh" />
               <div className="homes-hero__orb">
                 <video
+                  ref={videoRef}
                   className="homes-hero__orb-video"
                   src="/store/hardware/jarvis-bot.mp4"
                   autoPlay
@@ -188,6 +224,10 @@ export default function HomesHero() {
                   loop
                   playsInline
                   preload="auto"
+                  controls={false}
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  aria-hidden
                 />
               </div>
               {JARVIS_SCREENS.map((screen, i) => (

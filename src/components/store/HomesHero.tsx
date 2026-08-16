@@ -1,8 +1,15 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { FLEET_HARDWARE_ROUTE, OPERATOR_STACK } from "../../data/aiHardware";
-
+import { FLEET_HARDWARE_ROUTE } from "../../data/aiHardware";
 const COMPUTER_SRC = "/store/hardware/operator-rig-computer.png";
+
+const JARVIS_SCREENS = [
+  { slot: "s1", layer: "Engine", chip: "Ollama", lines: ["w80", "w60", "w40"] },
+  { slot: "s2", layer: "Jarvis screen", chip: "Open WebUI", lines: ["w80", "w40"] },
+  { slot: "s3", layer: "Memory vault", chip: "AnythingLLM", lines: ["w60", "w80", "w40"] },
+  { slot: "s4", layer: "Vision", chip: "Vision", lines: ["w80", "w60"] },
+  { slot: "s5", layer: "Manual", chip: "AI Book Series", lines: ["w60", "w80", "w40"] },
+] as const;
 
 function clamp(v: number, a: number, b: number) {
   return Math.max(a, Math.min(b, v));
@@ -25,9 +32,9 @@ export default function HomesHero() {
   const hudRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
-  const orbRef = useRef<HTMLDivElement>(null);
+  const jarvisRef = useRef<HTMLDivElement>(null);
+  const screensRef = useRef<(HTMLElement | null)[]>([]);
   const sceneRef = useRef<HTMLDivElement>(null);
-  const slabRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const spacerNode = spacerRef.current;
@@ -38,10 +45,6 @@ export default function HomesHero() {
 
     const coarse =
       window.matchMedia("(pointer: coarse)").matches && window.matchMedia("(hover: none)").matches;
-
-    const SLAB_GAP = 64;
-    const slabCount = OPERATOR_STACK.length;
-    const SLAB_TOP = -(slabCount - 1) * SLAB_GAP;
 
     function render(p: number) {
       const b0 = seg(p, 0, 0.12);
@@ -54,10 +57,10 @@ export default function HomesHero() {
       if (computer) {
         const inT = b1e;
         const park = b2e;
-        const x = lerp(0, -118, park);
-        const y = lerp(lerp(90, 0, inT), -36, park);
-        const s = lerp(lerp(0.72, 1, inT), 0.78, park);
-        computer.style.opacity = String(inT);
+        const x = lerp(0, -210, park);
+        const y = lerp(lerp(90, 0, inT), 48, park);
+        const s = lerp(lerp(0.72, 1, inT), 0.52, park);
+        computer.style.opacity = String(lerp(inT, 0.38, park));
         computer.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${y}px, 0) scale(${s})`;
       }
 
@@ -65,21 +68,19 @@ export default function HomesHero() {
         glowRef.current.style.opacity = String(seg(b1e, 0.55, 1) * 0.9);
       }
 
-      slabRefs.current.forEach((sl, si) => {
-        if (!sl) return;
-        const stride = 1 / (slabCount + 0.5);
-        const t = ease(seg(b2, si * stride, si * stride + stride));
-        const restY = SLAB_TOP + si * SLAB_GAP;
-        sl.style.opacity = String(t);
-        sl.style.transform = `translate(-50%, -50%) translate3d(72px, ${lerp(restY + 120, restY, t)}px, ${lerp(-30, 0, t)}px) rotateX(${lerp(-55, 0, t)}deg)`;
-      });
-
-      const orbT = ease(seg(b2, 0.72, 1));
-      const orbRestY = SLAB_TOP - 58;
-      if (orbRef.current) {
-        orbRef.current.style.opacity = String(orbT);
-        orbRef.current.style.transform = `translate(-50%, -50%) translate(72px, ${lerp(orbRestY + 130, orbRestY, orbT)}px) scale(${lerp(0.4, 1, orbT)})`;
+      const orbIn = ease(seg(p, 0.46, 0.56));
+      if (jarvisRef.current) {
+        jarvisRef.current.style.opacity = String(orbIn);
+        jarvisRef.current.style.transform = `translate(-50%, -50%) scale(${lerp(0.86, 1, orbIn)})`;
       }
+
+      screensRef.current.forEach((screen, i) => {
+        if (!screen) return;
+        const start = 0.52 + i * 0.055;
+        const out = ease(seg(p, start, start + 0.09));
+        screen.style.setProperty("--out", String(out));
+        screen.style.opacity = String(out);
+      });
 
       if (hudRef.current) {
         hudRef.current.style.opacity = String(clamp(1 - b1 * 1.15, 0, 1));
@@ -176,31 +177,41 @@ export default function HomesHero() {
               height={168}
               decoding="async"
             />
-            <div className="homes-hero__stack" aria-hidden>
-              {OPERATOR_STACK.map((layer, i) => (
+            <div className="homes-hero__jarvis" ref={jarvisRef} aria-hidden>
+              <div className="homes-hero__mesh" />
+              <div className="homes-hero__orb">
+                <video
+                  className="homes-hero__orb-video"
+                  src="/store/hardware/jarvis-bot.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                />
+              </div>
+              {JARVIS_SCREENS.map((screen, i) => (
                 <div
-                  key={layer.id}
-                  className="homes-hero__slab"
-                  ref={(el) => {
-                    slabRefs.current[i] = el;
+                  key={screen.slot}
+                  className={`homes-hero__screen homes-hero__screen--${screen.slot}`}
+                  ref={(node) => {
+                    screensRef.current[i] = node;
                   }}
                 >
-                  <span className="homes-hero__slab-lab">{layer.layer}</span>
-                  <span className="homes-hero__slab-sub">{layer.name}</span>
-                  <span className="homes-hero__slab-dot" />
+                  <article className="homes-hero__screen-card">
+                    <header className="homes-hero__screen-hd">
+                      <i />
+                      <span>{screen.layer}</span>
+                    </header>
+                    <div className="homes-hero__screen-bd">
+                      {screen.lines.map((w, line) => (
+                        <span key={`${w}-${line}`} className={`homes-hero__screen-ln homes-hero__screen-ln--${w}`} />
+                      ))}
+                      <span className="homes-hero__screen-chip">{screen.chip}</span>
+                    </div>
+                  </article>
                 </div>
               ))}
-            </div>
-            <div className="homes-hero__orb" ref={orbRef} aria-hidden>
-              <span className="homes-hero__orb-ring homes-hero__orb-ring--outer" />
-              <span className="homes-hero__orb-ring homes-hero__orb-ring--inner" />
-              <span className="homes-hero__orb-core">
-                <span className="homes-hero__orb-wave" aria-hidden>
-                  {Array.from({ length: 7 }, (_, i) => (
-                    <span key={i} className="homes-hero__orb-wave-bar" />
-                  ))}
-                </span>
-              </span>
             </div>
           </div>
 

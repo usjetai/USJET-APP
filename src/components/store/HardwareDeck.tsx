@@ -60,7 +60,7 @@ function ProductCard({ product }: { product: HardwareProduct }) {
           <strong>{price.dollars}</strong>
           <sup>.{price.cents}</sup>
         </div>
-        <p className="hw-card__ship">Free Shipping</p>
+        <p className="hw-card__ship">Ships talking · free</p>
         {product.contactToOrder ? (
           <a href={OPS_MAIL} className="hw-card__cart-btn">
             Talk to USJET
@@ -69,7 +69,7 @@ function ProductCard({ product }: { product: HardwareProduct }) {
           <div className="hw-card__actions">
             <button type="button" className="hw-card__cart-btn" onClick={() => addToCart(product.id)}>
               <ShoppingCart size={16} aria-hidden />
-              Add to Cart
+              Get this rig
             </button>
             {paymentLink ? (
               <a href={paymentLink} className="hw-card__buy-link" data-usjet-external-leak="true">
@@ -220,14 +220,14 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
       <section className="hw-about" aria-labelledby="hw-about-heading">
         <p className="hw-about__kicker">{WHY_USJET_HARDWARE.kicker}</p>
         <h2 id="hw-about-heading">{deck.primerTitle}</h2>
-        <dl className="hw-about__table">
+        <div className="hw-info-tiles">
           {WHAT_WE_DO_TO_THE_COMPUTER.map((row) => (
-            <div className="hw-about__row" key={row.label}>
-              <dt>{row.label}</dt>
-              <dd>{row.body}</dd>
-            </div>
+            <article className="hw-info-tile" key={row.label}>
+              <h3>{row.label}</h3>
+              <p>{row.body}</p>
+            </article>
           ))}
-        </dl>
+        </div>
       </section>
 
       <section className="hw-about" aria-labelledby="hw-stack-heading">

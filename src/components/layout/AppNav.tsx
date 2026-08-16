@@ -2,15 +2,12 @@ import { NavLink, Link } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import AppNavInstagramBadge from "./AppNavInstagramBadge";
 import AppNavPhoneBadge from "./AppNavPhoneBadge";
-import { useMemberAuth } from "../../context/MemberAuthContext";
-import { canMemberAccessRoute, showMemberNavLink } from "../../lib/memberAccessLevel";
 
 const NAV_LINKS = [
   { to: "/", label: "Homes" },
   { to: "/fleet", label: "Business" },
-  { to: "/store", label: "Manuals" },
+  { to: "/compare", label: "Compare" },
   { to: "/blog", label: "Log" },
-  { to: "/member", label: "Member" },
 ] as const;
 
 const navPillClass = (isActive: boolean) =>
@@ -22,10 +19,6 @@ const navPillClass = (isActive: boolean) =>
     .join(" ");
 
 const AppNav = () => {
-  const { session } = useMemberAuth();
-  const visibleLinks = NAV_LINKS.filter((link) =>
-    link.to === "/member" ? showMemberNavLink(session) : canMemberAccessRoute(link.to, session),
-  );
   return (
     <header className="liquid-glass-nav sticky top-0 z-50 mx-auto w-full max-w-[min(100vw-1.25rem,72rem)] px-2 sm:max-w-none sm:px-4">
       <div className="app-nav-shell" aria-label="USJET primary navigation">
@@ -40,7 +33,7 @@ const AppNav = () => {
             <span className="app-nav-divider" aria-hidden />
 
             <nav className="app-nav-zone app-nav-zone--routes" aria-label="Fleet routes">
-              {visibleLinks.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <NavLink
                   key={link.to}
                   to={link.to}

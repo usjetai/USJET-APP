@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { OriginLimitedOfferProvider } from "./context/OriginLimitedOfferContext";
 import { SilentHangarProvider } from "./context/SilentHangarContext";
 import { UsjetExternalNavigationProvider } from "./context/UsjetExternalNavigationContext";
 import { HardwareCartProvider } from "./context/HardwareCartContext";
@@ -12,38 +11,17 @@ import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
 import UsjetProtocolBootOverlay from "./components/layout/UsjetProtocolBootOverlay";
 import SiteLatchMenu from "./components/layout/SiteLatchMenu";
-import GuestBooksGate from "./components/store/GuestBooksGate";
-import TierRouteGate from "./components/member/TierRouteGate";
 import SeoHead from "./components/layout/SeoHead";
 import AnalyticsRouteTracker from "./components/layout/AnalyticsRouteTracker";
 
 const Hangar = lazy(() => import("./pages/Hangar"));
-const HangarWorkbench = lazy(() => import("./pages/HangarWorkbench"));
 const Fleet = lazy(() => import("./pages/Fleet"));
-const FleetRunway = lazy(() => import("./pages/FleetRunway"));
-const Intel = lazy(() => import("./pages/Intel"));
-const Origin = lazy(() => import("./pages/Origin"));
-const Special = lazy(() => import("./pages/Special"));
-const MemberPortal = lazy(() => import("./pages/MemberPortal"));
-const MemberLogin = lazy(() => import("./pages/MemberLogin"));
 const Sos = lazy(() => import("./pages/Sos"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Ai101 = lazy(() => import("./pages/Ai101"));
-const CodeKit = lazy(() => import("./pages/CodeKit"));
-const DirectFuel = lazy(() => import("./pages/DirectFuel"));
-const DirectFuelZelle = lazy(() => import("./pages/DirectFuelZelle"));
 const MobileLandscapeGuide = lazy(() => import("./pages/MobileLandscapeGuide"));
 const ProtocolSessionProof = lazy(() => import("./pages/ProtocolSessionProof"));
-const SupportFleet = lazy(() => import("./pages/SupportFleet"));
-const FoundersFuel = lazy(() => import("./pages/FoundersFuel"));
-const FleetDirectory = lazy(() => import("./pages/FleetDirectory"));
-const FleetCallsignPage = lazy(() => import("./pages/FleetCallsignPage"));
-const FleetProductPage = lazy(() => import("./pages/FleetProductPage"));
-const IntelligenceAssets = lazy(() => import("./pages/IntelligenceAssets"));
-const StrategicAssets = lazy(() => import("./pages/StrategicAssets"));
-const Sovereignty = lazy(() => import("./pages/Sovereignty"));
-const Store = lazy(() => import("./pages/Store"));
 const AiComputers = lazy(() => import("./pages/AiComputers"));
 const AiComputersHomes = lazy(() => import("./pages/AiComputersHomes"));
 const AiComputersBusinesses = lazy(() => import("./pages/AiComputersBusinesses"));
@@ -52,12 +30,6 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const CompareHub = lazy(() => import("./pages/CompareHub"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
-const Gamers = lazy(() => import("./pages/Gamers"));
-const Gaming = lazy(() => import("./pages/Gaming"));
-const HiredHud = lazy(() => import("./pages/HiredHud"));
-const Hoops = lazy(() => import("./pages/Hoops"));
-const JetBrowser = lazy(() => import("./pages/JetBrowser"));
-const X = lazy(() => import("./pages/X"));
 
 function RouteFallback() {
   return (
@@ -80,93 +52,29 @@ function AnimatedRoutes() {
       <PageTransition key={location.pathname} routeKey={location.pathname}>
         <Suspense fallback={<RouteFallback />}>
           <Routes location={location}>
-            <Route
-              path="/"
-              element={
-                <TierRouteGate path="/" pageLabel="Hangar">
-                  <Hangar />
-                </TierRouteGate>
-              }
-            />
+            <Route path="/" element={<Hangar />} />
             <Route path="/fleet" element={<Fleet />} />
-            <Route path="/fleet-runway" element={<FleetRunway />} />
-            <Route path="/workbench" element={<HangarWorkbench />} />
             <Route path="/hangar" element={<Navigate to="/" replace />} />
-            <Route path="/login" element={<MemberLogin />} />
-            <Route
-              path="/intel"
-              element={
-                <TierRouteGate path="/intel" pageLabel="Intel">
-                  <Intel />
-                </TierRouteGate>
-              }
-            />
-            <Route path="/gaming" element={<Gaming />} />
-            <Route path="/vr" element={<Gaming />} />
-            <Route path="/gamers" element={<Gamers />} />
-            <Route path="/x" element={<X />} />
             <Route path="/sos" element={<Sos />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/ai-101" element={<Ai101 />} />
-            <Route path="/code-kit" element={<CodeKit />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/compare" element={<CompareHub />} />
             <Route path="/compare/:slug" element={<ComparePage />} />
-            <Route path="/support-fleet" element={<SupportFleet />} />
-            <Route path="/intelligence" element={<IntelligenceAssets />} />
-            <Route path="/strategic-assets" element={<StrategicAssets />} />
-            <Route path="/sovereignty" element={<Sovereignty />} />
-            <Route path="/store" element={<Store />} />
             <Route path="/store/ai-computers" element={<AiComputers />} />
             <Route path="/store/ai-computers/homes" element={<AiComputersHomes />} />
             <Route path="/store/ai-computers/businesses" element={<AiComputersBusinesses />} />
             <Route path="/ai-computers" element={<Navigate to="/store/ai-computers" replace />} />
             <Route path="/ai-computers/homes" element={<Navigate to="/store/ai-computers/homes" replace />} />
             <Route path="/ai-computers/businesses" element={<Navigate to="/store/ai-computers/businesses" replace />} />
-            <Route path="/shop" element={<Navigate to="/store" replace />} />
-            <Route path="/books" element={<Navigate to="/store" replace />} />
-            <Route path="/merch" element={<Navigate to="/store" replace />} />
-            <Route path="/founders-fuel" element={<FoundersFuel />} />
-            <Route path="/cash" element={<DirectFuel />} />
-            <Route path="/zelle" element={<DirectFuelZelle />} />
+            <Route path="/shop" element={<Navigate to="/store/ai-computers" replace />} />
+            <Route path="/store" element={<Navigate to="/store/ai-computers" replace />} />
             <Route path="/landscape" element={<MobileLandscapeGuide />} />
             <Route path="/protocol-proof" element={<ProtocolSessionProof />} />
-            <Route path="/fleet-manual" element={<Navigate to="/special" replace />} />
-            <Route path="/pricing" element={<Navigate to="/special" replace />} />
-            <Route path="/fleet-directory" element={<FleetDirectory />} />
-            <Route path="/fleet-directory/:callsign" element={<FleetCallsignPage />} />
-            <Route path="/product/:callsign" element={<FleetProductPage />} />
-            <Route path="/hired-hud" element={<HiredHud />} />
-            <Route path="/hoops" element={<Hoops />} />
-            <Route path="/app/hoops" element={<Hoops />} />
-            <Route
-              path="/jet-browser"
-              element={
-                <TierRouteGate path="/jet-browser" pageLabel="Jet Browser">
-                  <JetBrowser />
-                </TierRouteGate>
-              }
-            />
-            <Route
-              path="/origin"
-              element={
-                <TierRouteGate path="/origin" pageLabel="Origin">
-                  <Origin />
-                </TierRouteGate>
-              }
-            />
-            <Route path="/special" element={<Special />} />
-            <Route path="/member/login" element={<MemberLogin />} />
-            <Route
-              path="/member"
-              element={
-                <TierRouteGate path="/member" pageLabel="Member Portal">
-                  <MemberPortal />
-                </TierRouteGate>
-              }
-            />
+            {/* Retired: subscriptions, member portal, collectibles, gaming, donation pages — computers-only pivot. */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
       </PageTransition>
@@ -192,7 +100,6 @@ function AppChrome() {
     <>
       <SiteLatchMenu />
       <AppNav />
-      <GuestBooksGate />
       <main className="relative z-10 flex-1">
         <AnimatedRoutes />
       </main>
@@ -230,15 +137,13 @@ export default function App() {
     <Router>
       <SeoHead />
       <AnalyticsRouteTracker />
-      <OriginLimitedOfferProvider>
-        <SilentHangarProvider>
-          <UsjetExternalNavigationProvider>
-            <HardwareCartProvider>
-              <AppShell />
-            </HardwareCartProvider>
-          </UsjetExternalNavigationProvider>
-        </SilentHangarProvider>
-      </OriginLimitedOfferProvider>
+      <SilentHangarProvider>
+        <UsjetExternalNavigationProvider>
+          <HardwareCartProvider>
+            <AppShell />
+          </HardwareCartProvider>
+        </UsjetExternalNavigationProvider>
+      </SilentHangarProvider>
     </Router>
   );
 }

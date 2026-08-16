@@ -1,7 +1,7 @@
 import type { MemberSession } from "../types/member";
 import { FLEET_UNIT_COUNT } from "../types/fleet";
 import { isSitePreviewPromoActive } from "./sitePreviewPromo";
-import { FOUNDER_TEST_CUSTOMER_ID, FOUNDER_TEST_EMAIL } from "./memberMasterKey";
+import { FOUNDER_TEST_EMAIL } from "./memberMasterKey";
 
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
@@ -122,15 +122,17 @@ export function isGuestPublicRoute(path: string): boolean {
   return routeMinClearanceRank(path) === 0;
 }
 
+/**
+ * True only for a session that already passed real Stripe verification
+ * (see api/verify-member.ts) AND carries the founder's own billing email.
+ * There is no way to set this without a genuine, server-verified Stripe lookup.
+ */
 export function isFounderGodMode(session: MemberSession | null | undefined): boolean {
   if (!session?.active) {
     return false;
   }
-  if (session.founderGodMode) {
-    return true;
-  }
   const email = session.email?.trim().toLowerCase();
-  return session.customerId === FOUNDER_TEST_CUSTOMER_ID || email === FOUNDER_TEST_EMAIL;
+  return email === FOUNDER_TEST_EMAIL;
 }
 
 export function canAccessRoute(path: string, clearanceRank: number, founderGodMode = false): boolean {

@@ -1,9 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
 import GlassEffectContainer from "./GlassEffectContainer";
-import { ORIGIN_CS_ROUTE } from "../../lib/memberAccessLevel";
-import { USJET_BUSINESS_ADDRESS_LINES } from "../../lib/usjetContact";
-import { USJET_STORE_BOOKS, storeBookPath } from "../../data/usjetStore";
+import { USJET_BUSINESS_ADDRESS_LINES, mailtoUsjetOps } from "../../lib/usjetContact";
 
 const YEAR = new Date().getFullYear();
 
@@ -53,22 +51,13 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/store/ai-computers" className={footerLinkClass}>
               Full lineup
             </NavLink>
-            <NavLink to="/store" className={footerLinkClass}>
-              Manuals
-            </NavLink>
             <NavLink to="/compare" className={footerLinkClass}>
               Compare
-            </NavLink>
-            <NavLink to="/special" className={footerLinkClass}>
-              Pricing
             </NavLink>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Company">
             <h2 className="usjet-footer__heading">Company</h2>
-            <NavLink to="/sovereignty" className={footerLinkClass}>
-              Founder
-            </NavLink>
             <NavLink to="/blog" className={footerLinkClass}>
               Operator Log
             </NavLink>
@@ -78,12 +67,9 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/sos" className={footerLinkClass}>
               Help
             </NavLink>
-            <NavLink to={ORIGIN_CS_ROUTE} className={footerLinkClass}>
+            <a href={mailtoUsjetOps()} className="usjet-footer__link">
               Customer Service
-            </NavLink>
-            <NavLink to="/member" className={footerLinkClass}>
-              Member
-            </NavLink>
+            </a>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Legal">
@@ -97,27 +83,9 @@ export default function UsjetGlobalContactBar() {
           </nav>
         </div>
 
-        <div className="usjet-footer__books-grid" aria-label="AI Book Series">
-          {USJET_STORE_BOOKS.map((book) => (
-            <Link
-              key={book.id}
-              to={storeBookPath(book.id)}
-              className="usjet-footer__book-link glass-effect-interactive"
-              aria-label={`${book.title} — open Manuals`}
-            >
-              <img
-                src={book.coverSrc}
-                alt=""
-                className="usjet-footer__book-cover"
-                loading="lazy"
-              />
-            </Link>
-          ))}
-        </div>
-
         <div className="usjet-footer__legal">
           <p className="usjet-footer__copy">© {YEAR} USJET.AI · All rights reserved</p>
-          <p className="usjet-footer__legal-note">One Ship · One Cockpit · Stripe-cleared members only</p>
+          <p className="usjet-footer__legal-note">AI computers for homes and businesses — one-time purchase, Stripe checkout.</p>
         </div>
       </GlassEffectContainer>
     </footer>

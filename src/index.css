@@ -7519,6 +7519,182 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   color: rgba(255, 255, 255, 0.62);
 }
 
+/* Welcome Aboard (/welcome — post-checkout Member ID reveal) */
+.welcome-aboard-page__header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.welcome-aboard-page__kicker-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+  color: rgba(74, 222, 128, 0.85);
+}
+
+.welcome-aboard-page__kicker {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(74, 222, 128, 0.85);
+}
+
+.welcome-aboard-page__title {
+  margin: 0;
+  font-family: var(--font-aviation, inherit);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.welcome-aboard-page__title-accent {
+  color: rgba(34, 211, 238, 0.95);
+}
+
+.welcome-aboard-page__subtitle {
+  margin: 0.85rem auto 0;
+  max-width: 34rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.welcome-aboard-panel__card {
+  padding: 1.5rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .welcome-aboard-panel__card {
+    padding: 1.85rem 1.9rem;
+  }
+}
+
+.welcome-aboard-panel__status {
+  margin: 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.welcome-aboard-panel__error {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.welcome-aboard-panel__error-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: #fca5a5;
+}
+
+.welcome-aboard-panel__error-row p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.welcome-aboard-panel__section-kicker {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.72);
+}
+
+.welcome-aboard-panel__id-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.welcome-aboard-panel__id {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: rgba(2, 8, 23, 0.55);
+  padding: 0.65rem 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.welcome-aboard-panel__copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.55rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+
+.welcome-aboard-panel__copy-btn:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+  color: #fff;
+}
+
+.welcome-aboard-panel__email {
+  margin: 0;
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.welcome-aboard-panel__email strong {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.welcome-aboard-panel__note {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.welcome-aboard-panel__cta,
+.welcome-aboard-panel__link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.welcome-aboard-panel__link-btn {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.6rem 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.welcome-aboard-panel__footnote {
+  margin: 0.35rem 0 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.42);
+}
+
 /* Help center (/sos) */
 .sos-page__header {
   margin-bottom: 1.75rem;

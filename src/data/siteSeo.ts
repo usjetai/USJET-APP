@@ -73,41 +73,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   ),
   "/ai-101": {
     title: "AI 101 — One-on-One Lesson | USJET.AI",
-    description:
-      "Learn Hangar, Fleet, Jet Browser, Intel, Origin, and Member. Pass the ten-question quiz for your Member Portal badge.",
-  },
-  "/fleet-directory": {
-    title: "Jet Fighter Directory — 30 Call Signs | USJET.AI",
-    description:
-      "Browse all 30 USJET Jet Fighter call signs. Hired developers and open recruiting bays on the sovereign fleet runway.",
-    keywords: "USJET jet fighter, fleet directory, AI callsigns, hangar recruiting",
-  },
-  "/fleet-manual": {
-    title: "Pricing — Clearance Tiers | USJET.AI",
-    description:
-      "USJET clearance tiers — Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo.",
-  },
-  "/intelligence": {
-    title: "Intelligence Assets — Revenue Architecture | USJET.AI",
-    description:
-      "USJET Intelligence Assets: revenue architecture and partnership real estate for Titans who need America's labor audience.",
-  },
-  "/strategic-assets": {
-    title: "Strategic Assets Ledger | USJET.AI",
-    description: "Strategic assets of USJET.AI — brand, fleet architecture, and sovereign platform inventory.",
-  },
-  "/sovereignty": {
-    title: "Sovereignty Archive — Day Zero Ledger | USJET.AI",
-    description:
-      "USJET Sovereignty archive: Day Zero founder ledger, empire reboot posture, and institutional grit.",
-  },
-  "/store": {
-    title: "Manuals — AI Book Series | USJET.AI",
-    description:
-      "Order AI computers built for local models — Mac Mini, MacBook Air, Mac Studio, and Ryzen AI Max+ 395 mini PCs — plus the USJET Engineering Series on Kindle.",
-    keywords:
-      "buy AI computer, local AI hardware, AI ready computer, USJET store, AI engineering books, Ameer Karim books",
-    ogType: "product",
+    description: "Learn how local AI computers work, in plain English — one lesson before you buy.",
   },
   [HARDWARE_ROUTE]: {
     title: "Buy AI Computers for Local AI & LLMs — Homes & Businesses | USJET.AI",
@@ -136,42 +102,6 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     ogType: "product",
     jsonLd: buildHardwareCatalogJsonLd("business"),
   },
-  "/founders-fuel": {
-    title: "Founder's Fuel — Fuel the Fleet | USJET.AI",
-    description: "Fuel the USJET fleet. Founder's Fuel channels direct support into hangar and runway growth.",
-  },
-  "/cash": {
-    title: "Direct Fuel · Cash App $USJET | USJET.AI",
-    description: "Send direct fuel via Cash App $USJET. Support the founder runway and fleet build.",
-  },
-  "/zelle": {
-    title: "Direct Fuel · Zelle | USJET.AI",
-    description: "Send direct fuel via Zelle to support USJET hangar growth.",
-  },
-  "/gaming": {
-    title: "USJET Gaming — AAA Portal | USJET.AI",
-    description: "USJET Gaming portal — AAA and VR surfaces from the sovereign hangar.",
-  },
-  "/vr": {
-    title: "USJET VR Portal | USJET.AI",
-    description: "USJET VR portal — immersive hangar experiences from the sovereign fleet.",
-  },
-  "/gamers": {
-    title: "Gamers Deck | USJET.AI",
-    description: "USJET Gamers deck — entry to gaming and VR surfaces in the hangar.",
-  },
-  "/x": {
-    title: "X Signal Deck · @usajet | USJET.AI",
-    description: "USJET X signal deck — live brand signal and fleet broadcasts.",
-  },
-  "/code-kit": {
-    title: "Code Kit — USJET Engine Kit | USJET.AI",
-    description: "USJET Code Kit: engine kit and developer tooling from the hangar.",
-  },
-  "/support-fleet": {
-    title: "Support the Fleet | USJET.AI",
-    description: "Support the USJET fleet — fuel hangar growth and sovereign runway expansion.",
-  },
   "/privacy": {
     title: "Privacy Policy | USJET.AI",
     description: "USJET.AI privacy policy — how we handle member and hangar data.",
@@ -182,51 +112,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   },
   "/sos": {
     title: "Help Center | USJET.AI",
-    description:
-      "USJET Help — login, Hangar tiles, plans, and Origin. Full curriculum lives on AI 101.",
-  },
-  "/hired-hud": {
-    title: "Hired HUD — Developer Roster | USJET.AI",
-    description: "Hired HUD: USJET developer roster and hangar assignment board.",
-  },
-  "/jet-browser": {
-    title: "Jet Browser | USJET.AI",
-    description:
-      "USJET Jet Browser — load any domain into Hangar-style tiles. Enlarge, work, shrink. One ship, one cockpit.",
-  },
-  "/hoops": {
-    title: "Jet Hoops | USJET.AI",
-    description: "Jet Hoops — USJET hangar sports surface.",
-  },
-  "/login": {
-    title: "Member Login — Stripe Clearance | USJET.AI",
-    description:
-      "Log in to USJET Member Portal with billing email and Member ID. Stripe-only — no Google or Apple OAuth.",
-  },
-  "/member/login": {
-    title: "Member Login — Stripe Clearance | USJET.AI",
-    description:
-      "Pay first, then verify. USJET Member Login with Stripe billing email and Member ID.",
-  },
-  "/member": {
-    title: "Member Portal | USJET.AI",
-    description: "USJET Member Portal — mission projects, AI data, Hangar and Fleet launch boards.",
-    noindex: true,
-  },
-  "/intel": {
-    title: "Intel Board — Live Coinbase + NYSE | USJET.AI",
-    description:
-      "USJET Intel board — live Coinbase spot and NYSE TradingView boards across the fleet monitor grid. Open any tile for prices.",
-  },
-  "/origin": {
-    title: "Origin Command | USJET.AI",
-    description: "USJET Origin — sovereign command bay for Enterprise Commander clearance.",
-    noindex: true,
-  },
-  "/special": {
-    title: "Pricing — Flight Pass · Hangar Pro · Enterprise | USJET.AI",
-    description:
-      "USJET clearance pricing: Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo — features and Stripe checkout.",
+    description: "USJET Help — orders, shipping, and setup for your AI computer.",
   },
   "/cockpit": {
     title: "Cockpit | USJET.AI",

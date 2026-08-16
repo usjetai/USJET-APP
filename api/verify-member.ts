@@ -36,40 +36,44 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   const customerId = req.body?.customerId?.trim();
   const email = req.body?.email?.trim().toLowerCase();
 
-  if (!customerId && !email) {
-    return res.status(400).json({ error: "Member ID or billing email required." });
+  // Both fields are required together — this is the actual fix. The old code
+  // accepted email alone (or a bare customer ID alone) as sufficient proof of
+  // identity. Stripe customer IDs are not secret (they show up in receipts,
+  // webhook payloads, browser history) and billing emails are often guessable,
+  // so either one alone let anyone with a target's email log in as them. Now
+  // both must be supplied, AND the email must match what Stripe has on file
+  // for that exact customer ID — two real facts about the same account, not one.
+  if (!customerId || !email) {
+    return res.status(400).json({ error: "Both Member ID and billing email are required." });
+  }
+  if (!customerId.startsWith("cus_")) {
+    return res.status(400).json({ error: "Invalid Member ID format. Use cus_..." });
   }
 
   const stripe = new Stripe(secret);
 
   try {
-    let resolvedCustomerId = customerId;
-
-    if (customerId?.startsWith("cus_")) {
-      const customer = await stripe.customers.retrieve(customerId);
-      if (customer.deleted) {
-        return res.status(401).json({ active: false, error: "Customer not found." });
-      }
-      resolvedCustomerId = customer.id;
-    } else if (email) {
-      const customers = await stripe.customers.list({ email, limit: 1 });
-      if (!customers.data.length) {
-        return res.status(401).json({ active: false, error: "No Stripe customer for this email." });
-      }
-      resolvedCustomerId = customers.data[0].id;
-    } else {
-      return res.status(400).json({ error: "Invalid Member ID format. Use cus_..." });
+    const customer = await stripe.customers.retrieve(customerId);
+    if (customer.deleted) {
+      return res.status(401).json({ active: false, error: "Customer not found." });
     }
+
+    const onFileEmail = ("email" in customer ? customer.email : undefined)?.trim().toLowerCase();
+    if (!onFileEmail || onFileEmail !== email) {
+      return res.status(401).json({ active: false, error: "Member ID and billing email do not match." });
+    }
+
+    const resolvedCustomerId = customer.id;
 
     const [activeSubs, trialingSubs] = await Promise.all([
       stripe.subscriptions.list({
-        customer: resolvedCustomerId!,
+        customer: resolvedCustomerId,
         status: "active",
         limit: 1,
         expand: ["data.items.data.price.product"],
       }),
       stripe.subscriptions.list({
-        customer: resolvedCustomerId!,
+        customer: resolvedCustomerId,
         status: "trialing",
         limit: 1,
         expand: ["data.items.data.price.product"],
@@ -95,8 +99,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       ? memberAccessFromStripeMetadata(stripeMetadata)
       : { tier: "INACTIVE" as const };
 
-    const customer = await stripe.customers.retrieve(resolvedCustomerId!);
-    const customerName = customer && typeof customer === "object" && "name" in customer ? (customer as { name?: string }).name : undefined;
+    const customerName = "name" in customer ? customer.name : undefined;
 
     return res.status(200).json({
       active,

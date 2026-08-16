@@ -1,3 +1,14 @@
+/**
+ * IMPORTANT — /welcome page setup: for a customer to land on /welcome (and see/copy
+ * their Member ID) after paying, every Payment Link below needs its "After payment"
+ * confirmation page set to a redirect, in the Stripe Dashboard, pointing to:
+ *   https://usjet.ai/welcome?session_id={CHECKOUT_SESSION_ID}
+ * This is a per-Payment-Link setting in Stripe (Payment Links → link → Confirmation
+ * page → Redirect), not something set in this file. Until every active link has this
+ * configured, customers who pay via that link land on Stripe's default confirmation
+ * screen and have no way to learn their cus_... Member ID except their email receipt.
+ */
+
 /** Operator's Rig — live Stripe Price IDs + Payment Links (Direct Landing Protocol · Aug 2026). */
 export const HARDWARE_STRIPE = {
   "mac-mini-m4-16-256": {

@@ -1,7 +1,5 @@
 /** Full-site flight deck index — side latch menu source of truth. */
 
-import { ORIGIN_CS_ROUTE } from "../lib/memberAccessLevel";
-import { CODE_KIT_ROUTE } from "./codeKit499";
 import { MOBILE_LANDSCAPE_ROUTE } from "./mobileLandscapeGuide";
 import { PROTOCOL_SESSION_PROOF_ROUTE } from "./protocolSessionProof";
 
@@ -19,93 +17,34 @@ export type SiteRouteGroup = {
 
 export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
   {
-    id: "command",
-    title: "Command deck",
+    id: "shop",
+    title: "Shop",
     routes: [
       { path: "/", label: "Homes", hint: "Home AI computers" },
       { path: "/fleet", label: "Business", hint: "Business computers · servers" },
       { path: "/store/ai-computers", label: "Full lineup", hint: "Homes + Businesses hub" },
       { path: "/store/ai-computers/homes", label: "AI Computers — Homes", hint: "Mac Mini, MacBook, mini PCs" },
       { path: "/store/ai-computers/businesses", label: "AI Computers — Businesses", hint: "Mac Studio, workstations" },
-      { path: "/workbench", label: "Workbench", hint: "Legacy tool bays" },
-      { path: "/fleet-runway", label: "Fleet runway", hint: "Legacy 30-AI bays" },
-      { path: "/jet-browser", label: "Jet Browser", hint: "Captain-loaded tiles" },
-      { path: "/hired-hud", label: "USJET House", hint: "Live roster monitor" },
-      { path: "/intel", label: "Intel", hint: "Pulse board" },
-      { path: "/origin", label: "Origin", hint: "Aura command" },
+      { path: "/compare", label: "Compare", hint: "Why this machine" },
     ],
   },
   {
-    id: "founder-member",
-    title: "Founder & member",
-    routes: [
-      { path: "/special", label: "Founder Special", hint: "Tier checkout" },
-      { path: "/member/login", label: "Member Login" },
-      { path: "/member", label: "Member Portal" },
-    ],
-  },
-  {
-    id: "jetfighter",
-    title: "Jet fighter",
-    routes: [{ path: "/fleet-directory", label: "Jet Fighter Directory", hint: "30 call signs" }],
-  },
-  {
-    id: "revenue",
-    title: "Revenue ladder",
-    routes: [
-      { path: "/special", label: "Clearance Tiers", hint: "$19.90 · $49.95 · $199.99" },
-      { path: "/founders-fuel", label: "Founder's Fuel", hint: "Support" },
-      { path: CODE_KIT_ROUTE, label: "Code Kit" },
-    ],
-  },
-  {
-    id: "partners",
-    title: "Partners & growth",
-    routes: [
-      { path: "/support-fleet", label: "Support the Fleet" },
-      { path: "/intelligence", label: "Intelligence Assets" },
-      { path: "/strategic-assets", label: "Strategic Assets" },
-      { path: "/sovereignty", label: "Sovereignty" },
-      { path: "/store", label: "Manuals", hint: "AI Book Series" },
-      { path: "/store/ai-computers", label: "AI Computers", hint: "Homes + Businesses" },
-      { path: "/store/ai-computers/homes", label: "AI Computers — Homes", hint: "Mac Mini, MacBook, mini PCs" },
-      { path: "/store/ai-computers/businesses", label: "AI Computers — Businesses", hint: "Mac Studio, workstations" },
-    ],
-  },
-  {
-    id: "ops",
-    title: "Ops & flight school",
-    routes: [
-      { path: "/ai-101", label: "AI 101", hint: "Flight school" },
-      { path: "/sos", label: "Help", hint: "SOS help center" },
-      { path: "/privacy", label: "Privacy" },
-      { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
-      { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },
-    ],
-  },
-  {
-    id: "gaming",
-    title: "Gaming",
-    routes: [
-      { path: "/gaming", label: "VR Gaming" },
-      { path: "/hoops", label: "Jet Hoops", hint: "Basketball arcade" },
-      { path: "/gamers", label: "Gamers Hub" },
-    ],
-  },
-  {
-    id: "fuel",
-    title: "Direct fuel",
-    routes: [
-      { path: "/cash", label: "Cash App Fuel" },
-      { path: "/zelle", label: "Zelle Fuel" },
-    ],
-  },
-  {
-    id: "blog-support",
-    title: "Blog & support",
+    id: "company",
+    title: "Company",
     routes: [
       { path: "/blog", label: "Operator Log", hint: "Blog" },
-      { path: ORIGIN_CS_ROUTE, label: "Customer Service", hint: "Origin CS" },
+      { path: "/ai-101", label: "AI 101", hint: "How local AI works" },
+      { path: "/sos", label: "Help", hint: "SOS help center" },
+    ],
+  },
+  {
+    id: "legal",
+    title: "Legal",
+    routes: [
+      { path: "/privacy", label: "Privacy" },
+      { path: "/terms", label: "Terms" },
+      { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
+      { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },
     ],
   },
 ] as const;

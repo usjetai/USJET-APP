@@ -1,11 +1,4 @@
 import type { MemberSession, VerifyMemberResponse } from "../types/member";
-import {
-  sessionFromFounderTestAccess,
-  sessionFromMasterKey,
-  sessionFromOperatorTestAccess,
-  sessionFromStoredCustomerId,
-  sessionFromKingKarimKey,
-} from "./memberMasterKey";
 
 const VERIFY_URL = import.meta.env.VITE_MEMBER_VERIFY_URL ?? "/api/verify-member";
 
@@ -22,17 +15,8 @@ export async function verifyMemberAccess(input: VerifyInput): Promise<MemberSess
     throw new Error("Enter your Member ID.");
   }
 
-  const masterSession =
-    sessionFromFounderTestAccess(memberId) ??
-    sessionFromFounderTestAccess(email) ??
-    sessionFromOperatorTestAccess(memberId) ??
-    sessionFromMasterKey(memberId) ??
-    sessionFromKingKarimKey(memberId) ??
-    sessionFromStoredCustomerId(memberId);
-  if (masterSession) {
-    return masterSession;
-  }
-
+  // Local dev convenience only — Vite strips this block from production builds
+  // entirely (import.meta.env.DEV is compiled to false), so it never ships.
   if (import.meta.env.DEV) {
     const demoId = import.meta.env.VITE_MEMBER_DEMO_ID ?? "cus_usjet_demo";
     if (memberId === demoId || email === "founder@usjet.ai") {
@@ -46,6 +30,8 @@ export async function verifyMemberAccess(input: VerifyInput): Promise<MemberSess
     }
   }
 
+  // Every real session comes from here — a live, server-side Stripe lookup that
+  // requires the Member ID and billing email to both match the same customer.
   const response = await fetch(VERIFY_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

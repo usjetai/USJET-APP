@@ -1,6 +1,5 @@
 import { NavLink, Link } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
-import GlassEffectContainer from "./GlassEffectContainer";
 import AppNavInstagramBadge from "./AppNavInstagramBadge";
 import AppNavPhoneBadge from "./AppNavPhoneBadge";
 import { useMemberAuth } from "../../context/MemberAuthContext";
@@ -28,11 +27,8 @@ const AppNav = () => {
     link.to === "/member" ? showMemberNavLink(session) : canMemberAccessRoute(link.to, session),
   );
   return (
-    <header className="liquid-glass-nav sticky top-0 z-50 mx-auto w-full max-w-[min(100vw-1.25rem,72rem)] px-2 backdrop-blur-md sm:max-w-none sm:px-4">
-      <GlassEffectContainer
-        aria-label="USJET primary navigation"
-        className="app-nav-shell glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-      >
+    <header className="liquid-glass-nav sticky top-0 z-50 mx-auto w-full max-w-[min(100vw-1.25rem,72rem)] px-2 sm:max-w-none sm:px-4">
+      <div className="app-nav-shell" aria-label="USJET primary navigation">
         <div className="app-nav-body">
           <div className="app-nav-row app-nav-row--primary">
             <div className="app-nav-zone app-nav-zone--brand">
@@ -62,7 +58,7 @@ const AppNav = () => {
             </div>
           </div>
         </div>
-      </GlassEffectContainer>
+      </div>
     </header>
   );
 };

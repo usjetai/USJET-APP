@@ -194,7 +194,13 @@ export default function HomesHero() {
             <div className="homes-hero__orb" ref={orbRef} aria-hidden>
               <span className="homes-hero__orb-ring homes-hero__orb-ring--outer" />
               <span className="homes-hero__orb-ring homes-hero__orb-ring--inner" />
-              <span className="homes-hero__orb-core" />
+              <span className="homes-hero__orb-core">
+                <span className="homes-hero__orb-wave" aria-hidden>
+                  {Array.from({ length: 7 }, (_, i) => (
+                    <span key={i} className="homes-hero__orb-wave-bar" />
+                  ))}
+                </span>
+              </span>
             </div>
           </div>
 

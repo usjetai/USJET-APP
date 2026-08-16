@@ -738,8 +738,12 @@
   align-items: center;
   gap: 0.45rem 0.55rem;
   max-width: 100%;
-  padding: 0.55rem 0.85rem;
+  padding: 0.35rem 0.15rem;
   pointer-events: auto;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  backdrop-filter: none;
 }
 
 .app-nav-shell--two-row {
@@ -770,7 +774,7 @@
 @media (min-width: 640px) {
   .app-nav-shell {
     gap: 0.5rem 0.7rem;
-    padding: 0.65rem 1rem;
+    padding: 0.4rem 0.2rem;
   }
 }
 
@@ -778,7 +782,7 @@
   .app-nav-shell {
     flex-wrap: nowrap;
     gap: 0.55rem 0.75rem;
-    padding: 0.7rem 1.25rem;
+    padding: 0.45rem 0.25rem;
   }
 
   .app-nav-shell--two-row {
@@ -1492,12 +1496,10 @@
   pointer-events: auto;
   flex-wrap: wrap;
   row-gap: 0.65rem;
-  background: rgba(2, 8, 23, 0.78);
-  backdrop-filter: blur(12px) saturate(1.25);
-  -webkit-backdrop-filter: blur(12px) saturate(1.25);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
 }
 
 .liquid-glass-nav .app-nav-shell--two-row {
@@ -27483,6 +27485,46 @@ html.blog-page-root #usjet-app-shell {
   color: rgba(255, 255, 255, 0.78);
 }
 
+.blog-post__faq {
+  margin-top: 1.5rem;
+}
+
+.blog-post__faq-heading {
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(103, 232, 249, 0.85);
+}
+
+.blog-post__faq-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.blog-post__faq-item {
+  padding: 0.9rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(103, 232, 249, 0.14);
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.blog-post__faq-question {
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1.4;
+  color: rgba(248, 250, 252, 0.95);
+}
+
+.blog-post__faq-answer {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .blog-post__nav {
   display: grid;
   gap: 0.75rem;
@@ -32873,12 +32915,85 @@ html.blog-page-root #usjet-app-shell {
   position: absolute;
   inset: 0;
   border-radius: 50%;
+  overflow: hidden;
   background: radial-gradient(circle at 38% 32%, #dffaff, #22d3ee 40%, #0a6a86 74%, #06384a);
   box-shadow:
     0 0 70px rgba(34, 211, 238, 0.55),
     0 0 150px rgba(34, 211, 238, 0.28),
     inset 0 0 40px rgba(255, 255, 255, 0.35);
   animation: homes-hero-orb-breathe 4.2s ease-in-out infinite;
+}
+
+.homes-hero__orb-wave {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  height: 2.6rem;
+  transform: translate(-50%, -50%);
+}
+
+.homes-hero__orb-wave-bar {
+  display: block;
+  width: 0.22rem;
+  height: 100%;
+  border-radius: 99px;
+  background: #eafaff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.85), 0 0 14px rgba(34, 211, 238, 0.9);
+  transform-origin: center;
+  animation: homes-hero-orb-voice 1.05s ease-in-out infinite;
+}
+
+.homes-hero__orb-wave-bar:nth-child(1) {
+  animation-duration: 0.92s;
+  animation-delay: -0.35s;
+}
+.homes-hero__orb-wave-bar:nth-child(2) {
+  animation-duration: 1.18s;
+  animation-delay: -0.12s;
+}
+.homes-hero__orb-wave-bar:nth-child(3) {
+  animation-duration: 0.78s;
+  animation-delay: -0.48s;
+}
+.homes-hero__orb-wave-bar:nth-child(4) {
+  animation-duration: 1.02s;
+  animation-delay: 0s;
+}
+.homes-hero__orb-wave-bar:nth-child(5) {
+  animation-duration: 0.86s;
+  animation-delay: -0.22s;
+}
+.homes-hero__orb-wave-bar:nth-child(6) {
+  animation-duration: 1.24s;
+  animation-delay: -0.55s;
+}
+.homes-hero__orb-wave-bar:nth-child(7) {
+  animation-duration: 0.94s;
+  animation-delay: -0.08s;
+}
+
+@keyframes homes-hero-orb-voice {
+  0%,
+  100% {
+    transform: scaleY(0.22);
+    opacity: 0.55;
+  }
+  35% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  62% {
+    transform: scaleY(0.42);
+    opacity: 0.75;
+  }
+  82% {
+    transform: scaleY(0.78);
+    opacity: 0.95;
+  }
 }
 
 .homes-hero__orb-ring {
@@ -33099,8 +33214,14 @@ html.blog-page-root #usjet-app-shell {
   .homes-hero__orb-core,
   .homes-hero__orb-ring--inner,
   .homes-hero__orb-ring--outer,
+  .homes-hero__orb-wave-bar,
   .homes-hero__mouse::after {
     animation: none;
+  }
+
+  .homes-hero__orb-wave-bar {
+    transform: scaleY(0.55);
+    opacity: 0.8;
   }
 }
 

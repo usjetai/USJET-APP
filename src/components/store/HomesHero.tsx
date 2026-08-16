@@ -192,9 +192,9 @@ export default function HomesHero() {
               ))}
             </div>
             <div className="homes-hero__orb" ref={orbRef} aria-hidden>
+              <span className="homes-hero__orb-ring homes-hero__orb-ring--outer" />
+              <span className="homes-hero__orb-ring homes-hero__orb-ring--inner" />
               <span className="homes-hero__orb-core" />
-              <span className="homes-hero__orb-ring" />
-              <span className="homes-hero__orb-ring homes-hero__orb-ring--spin" />
             </div>
           </div>
 

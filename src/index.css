@@ -32861,38 +32861,70 @@ html.blog-page-root #usjet-app-shell {
   position: absolute;
   left: 50%;
   top: 62%;
-  width: 5.5rem;
-  height: 5.5rem;
-  margin: -2.75rem 0 0 -2.75rem;
+  width: 8.5rem;
+  height: 8.5rem;
+  margin: -4.25rem 0 0 -4.25rem;
   opacity: 0;
   pointer-events: none;
+  z-index: 3;
 }
 
 .homes-hero__orb-core {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #c9f6ff, #22d3ee 45%, #0b6b7c 80%);
-  box-shadow: 0 0 50px rgba(34, 211, 238, 0.55), 0 0 120px rgba(34, 211, 238, 0.3);
+  background: radial-gradient(circle at 38% 32%, #dffaff, #22d3ee 40%, #0a6a86 74%, #06384a);
+  box-shadow:
+    0 0 70px rgba(34, 211, 238, 0.55),
+    0 0 150px rgba(34, 211, 238, 0.28),
+    inset 0 0 40px rgba(255, 255, 255, 0.35);
+  animation: homes-hero-orb-breathe 4.2s ease-in-out infinite;
 }
 
 .homes-hero__orb-ring {
   position: absolute;
-  inset: -0.65rem;
+  left: 50%;
+  top: 50%;
   border-radius: 50%;
-  border: 1px solid rgba(34, 211, 238, 0.35);
-  transform: rotateX(70deg);
+  pointer-events: none;
 }
 
-.homes-hero__orb-ring--spin {
-  inset: -0.25rem;
-  border-style: dashed;
-  animation: homes-hero-spin 14s linear infinite;
+.homes-hero__orb-ring--inner {
+  width: 12.5rem;
+  height: 12.5rem;
+  margin: -6.25rem 0 0 -6.25rem;
+  border: 2px solid rgba(34, 211, 238, 0.35);
+  box-shadow: inset 0 0 30px rgba(34, 211, 238, 0.16), 0 0 30px rgba(34, 211, 238, 0.14);
+  animation: homes-hero-spin 26s linear infinite;
+}
+
+.homes-hero__orb-ring--outer {
+  width: 16.5rem;
+  height: 16.5rem;
+  margin: -8.25rem 0 0 -8.25rem;
+  border: 2px dashed rgba(34, 211, 238, 0.25);
+  animation: homes-hero-spin-rev 34s linear infinite;
+}
+
+@keyframes homes-hero-orb-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 @keyframes homes-hero-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes homes-hero-spin-rev {
+  to {
+    transform: rotate(-360deg);
   }
 }
 
@@ -33038,6 +33070,24 @@ html.blog-page-root #usjet-app-shell {
     margin-left: -8.75rem;
   }
 
+  .homes-hero__orb {
+    width: 6.5rem;
+    height: 6.5rem;
+    margin: -3.25rem 0 0 -3.25rem;
+  }
+
+  .homes-hero__orb-ring--inner {
+    width: 9.5rem;
+    height: 9.5rem;
+    margin: -4.75rem 0 0 -4.75rem;
+  }
+
+  .homes-hero__orb-ring--outer {
+    width: 12.5rem;
+    height: 12.5rem;
+    margin: -6.25rem 0 0 -6.25rem;
+  }
+
   .homes-hero--static .homes-hero__stage {
     position: relative;
     height: min(100dvh, 46rem);
@@ -33046,7 +33096,9 @@ html.blog-page-root #usjet-app-shell {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .homes-hero__orb-ring--spin,
+  .homes-hero__orb-core,
+  .homes-hero__orb-ring--inner,
+  .homes-hero__orb-ring--outer,
   .homes-hero__mouse::after {
     animation: none;
   }

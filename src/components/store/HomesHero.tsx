@@ -30,9 +30,11 @@ export default function HomesHero() {
   const slabRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const spacer = spacerRef.current;
-    const stage = stageRef.current;
-    if (!spacer || !stage) return;
+    const spacerNode = spacerRef.current;
+    const stageNode = stageRef.current;
+    if (!spacerNode || !stageNode) return;
+    const spacer = spacerNode;
+    const stage = stageNode;
 
     const coarse =
       window.matchMedia("(pointer: coarse)").matches && window.matchMedia("(hover: none)").matches;

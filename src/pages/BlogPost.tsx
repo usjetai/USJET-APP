@@ -10,6 +10,7 @@ import {
   getBlogPostBySlug,
   getBlogPostsNewestFirst,
 } from "../data/usjetBlog";
+import { BLOG_CADENCE_TOTAL_DAYS } from "../lib/usa250BlogCadence";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -70,7 +71,7 @@ export default function BlogPost() {
       <header className="blog-post__hero">
         <div className="blog-post__meta">
           <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
-          <span>Day {post.cadenceDay} of 50</span>
+          {post.cadenceDay <= BLOG_CADENCE_TOTAL_DAYS ? <span>Day {post.cadenceDay} of 50</span> : null}
         </div>
         <h1 className="blog-post__title">{post.title}</h1>
         <p className="blog-post__subtitle">{post.subtitle}</p>
@@ -96,6 +97,19 @@ export default function BlogPost() {
           </div>
         </GlassEffectContainer>
       )}
+
+      {post.variant !== "manifesto" && post.footerCta ? (
+        <footer className="blog-manifesto__cta">
+          <p className="blog-manifesto__cta-intro">{post.footerCta.intro}</p>
+          <div className="blog-manifesto__cta-links">
+            {post.footerCta.links.map((link) => (
+              <Link key={link.to} to={link.to} className="blog-manifesto__cta-btn glass-effect-interactive">
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </footer>
+      ) : null}
 
       <nav className="blog-post__nav" aria-label="Adjacent dispatches">
         {older ? (

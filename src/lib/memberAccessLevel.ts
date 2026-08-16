@@ -104,7 +104,16 @@ export function normalizeRoutePath(path: string): string {
 }
 
 export function routeMinClearanceRank(path: string): number {
-  return ROUTE_MIN_CLEARANCE[normalizeRoutePath(path)] ?? 1;
+  const normalized = normalizeRoutePath(path);
+  if (normalized in ROUTE_MIN_CLEARANCE) {
+    return ROUTE_MIN_CLEARANCE[normalized];
+  }
+  if (normalized.startsWith("/blog/")) return 0;
+  if (normalized.startsWith("/store/ai-computers/")) return 0;
+  if (normalized.startsWith("/compare/")) return 0;
+  if (normalized.startsWith("/fleet-directory/")) return 0;
+  if (normalized.startsWith("/product/")) return 0;
+  return 1;
 }
 
 export function isGuestPublicRoute(path: string): boolean {

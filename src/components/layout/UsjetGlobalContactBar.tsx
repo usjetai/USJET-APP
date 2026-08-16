@@ -59,6 +59,9 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/ai-101" className={footerLinkClass}>
               How local AI works
             </NavLink>
+            <NavLink to="/blog" className={footerLinkClass}>
+              Operator Log
+            </NavLink>
             <NavLink to="/special" className={footerLinkClass}>
               Pricing
             </NavLink>

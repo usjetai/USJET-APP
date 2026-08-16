@@ -4,6 +4,7 @@ import { Newspaper } from "lucide-react";
 import UsjetBlogCadenceBanner from "../components/blog/UsjetBlogCadenceBanner";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import { BLOG_ROUTE, formatBlogDate, getBlogPostsNewestFirst } from "../data/usjetBlog";
+import { BLOG_CADENCE_TOTAL_DAYS } from "../lib/usa250BlogCadence";
 
 export default function Blog() {
   const posts = getBlogPostsNewestFirst();
@@ -48,7 +49,9 @@ export default function Blog() {
               <article className="blog-card__inner">
                 <div className="blog-card__meta">
                   <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
-                  <span className="blog-card__day">Day {post.cadenceDay}</span>
+                  {post.cadenceDay <= BLOG_CADENCE_TOTAL_DAYS ? (
+                    <span className="blog-card__day">Day {post.cadenceDay}</span>
+                  ) : null}
                 </div>
                 <h2 className="blog-card__title">
                   <Link to={`${BLOG_ROUTE}/${post.slug}`}>{post.title}</Link>

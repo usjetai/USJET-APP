@@ -191,6 +191,34 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
       ],
     },
   },
+  {
+    slug: "best-computer-for-local-ai-2026",
+    title: "Best Computer for Local AI in 2026: A Real Buyer's Guide",
+    subtitle: "Home or business — what actually matters when you buy",
+    publishedAt: "2026-08-15",
+    cadenceDay: 93,
+    excerpt:
+      "Memory is the wall you hit first, not the chip. Here's how to actually pick a computer for running AI models locally in 2026 — Apple Silicon vs Ryzen AI Max, budget tiers, and home vs business picks.",
+    tags: ["AI Computers", "Buyer's Guide", "Local AI", "Ollama"],
+    body: [
+      "Analysts at IDC and Canalys both expect roughly half of all PCs shipped in 2026 to ship as \u201cAI PCs\u201d \u2014 machines built with a dedicated neural processing unit for on-device inference. That is not a marketing category. It is a real, fast shift away from renting AI by the month toward owning the box it runs on. Local AI means your prompts never leave your machine, there is no subscription clock, and no rate limit throttling you mid-task. The tradeoff is that you have to pick the right hardware, and most buying guides get the priority order backwards.",
+      "Here is the order that actually matters: memory first, chip second, brand a distant third. Every local AI model has to fit in memory before it will run at all. A faster chip on an 8GB machine still cannot load a model that needs 24GB \u2014 it just fails, or swaps to disk and crawls. Memory is the wall you hit first, and it is the first spec to check on anything you are considering.",
+      "On a Mac, this is simpler than it sounds because Apple Silicon uses unified memory \u2014 system RAM and the chip's graphics memory are the same pool, so a 24GB Mac Mini has a genuine 24GB available for a model, not a small dedicated slice. That is why Apple Silicon has become the default recommendation for local AI despite not being built as an \u201cAI chip\u201d in the marketing sense: the architecture happens to fit the workload. A 16GB Mac Mini or MacBook Air runs 7B\u20138B parameter models (Llama 3.1 8B, Mistral 7B) comfortably through Ollama. Step up to 24GB and 13B\u201314B models fit with room for the OS. A Mac Studio with 36GB or more moves into 30B\u201340B territory and stays there as a daily driver, not an experiment.",
+      "On the PC side, the equivalent architecture is AMD's Ryzen AI Max line \u2014 sold as \u201cStrix Halo\u201d in some marketing \u2014 which also uses a unified memory pool shared between CPU and GPU. This is what put mini PCs with 64GB, 96GB, and 128GB of unified memory on the map in 2026, running local models Ollama-style at a fraction of what a discrete-GPU workstation costs. A 32GB Ryzen mini PC (Beelink SER9 Pro, Minisforum UM890 Pro) is a fine 7B\u20138B home starter box, often for less than half the price of the equivalent Mac. A 64GB\u201396GB Ryzen AI Max+ machine (GMKtec EVO-X2, Minisforum MS-A2) comfortably runs 30B\u201340B models. The 128GB tier (Beelink GTR9 Pro and similar) is where 70B-class models become realistic locally, at roughly a third of the cost of the Apple equivalent \u2014 the real reason this chip generation is getting so much attention right now.",
+      "If your tooling specifically expects NVIDIA \u2014 vLLM, TensorRT-LLM, or anything built around CUDA rather than Ollama's AMD/Apple-friendly runtime \u2014 that is the one case where a discrete-GPU workstation (RTX 4090/5090 class) is worth the premium over a unified-memory box. For most people running Ollama or LM Studio day to day, it is not necessary.",
+      "The other question worth asking honestly is whether you are buying for a person or for a team. A single laptop or Mac Mini is a personal tool — one user, one context, portable if it is a laptop. The moment more than one person needs to talk to the same model, or the machine is expected to stay on and serve a shop or an office over the network, the calculus changes: you want more memory headroom, wired networking, and a machine built to run 24/7 rather than get closed and carried home in a bag.",
+      "That is the actual dividing line we use for the two catalogs on this site. The Homes lineup is single-user gear — Mac Mini, MacBook Air and Pro, and budget Ryzen mini PCs — sized for one person running local AI privately at home, no subscription. The Business lineup is higher-memory, multi-user gear — Mac Studio, the 96GB and 128GB Ryzen AI Max+ machines, and workstation-class options — sized for a shop or office where the computer is shared infrastructure, not a personal device.",
+      "Either way, the buying process is the same headache: figuring out the right memory tier, sourcing the exact configuration, and not overpaying for headroom you will never use. We do that sourcing and shipping directly — pick the tier that matches how many people are actually going to use it, and we handle the rest.",
+    ],
+    footerCta: {
+      intro: "Pick the catalog that matches the job. Same Operator's Rig. Different machines.",
+      links: [
+        { label: "Shop Homes", to: "/" },
+        { label: "Shop Business", to: "/fleet" },
+        { label: "Full lineup", to: "/store/ai-computers" },
+      ],
+    },
+  },
 ] as const;
 
 export function getBlogPostBySlug(slug: string): UsjetBlogPost | undefined {

@@ -56,8 +56,8 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   "/blog": {
     title: "Operator Log — USJET Blog | AI Fleet Doctrine",
     description:
-      "USJET Operator Log: founding dispatches, partnership doctrine, and runway intelligence for captains building with AI — not cloning it.",
-    keywords: "USJET blog, operator log, AI doctrine, founder startup log",
+      "USJET Operator Log: founding dispatches, local-AI buyer's guides, partnership doctrine, and runway intelligence — not a news feed.",
+    keywords: "USJET blog, operator log, AI doctrine, founder startup log, best computer for local AI, Ollama buyer's guide",
   },
   [SEO_MONEY_HUB_PATH]: {
     ...SEO_MONEY_HUB_SEO,

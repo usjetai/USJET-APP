@@ -9,7 +9,8 @@
 - Fleet (business AI computers & servers): https://www.usjet.ai/fleet
 - Founder story: https://www.usjet.ai/founder
 - Jet Fighter directory: https://www.usjet.ai/fleet-directory
-- Operator blog: https://www.usjet.ai/blog
+- Operator blog (Operator Log): https://www.usjet.ai/blog
+- Best computer for local AI (2026 buyer's guide): https://www.usjet.ai/blog/best-computer-for-local-ai-2026
 - Store (AI computers + engineering books): https://www.usjet.ai/store
 - AI Computers (hub): https://www.usjet.ai/store/ai-computers
 - AI Computers for Homes: https://www.usjet.ai/store/ai-computers/homes

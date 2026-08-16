@@ -169,22 +169,13 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
         ? "Shop Business →"
         : "Shop Homes →";
 
-  useEffect(() => {
-    const previous = document.title;
-    document.title =
-      mission === "home"
-        ? "Homes · AI Computers · USJet.ai"
-        : mission === "business"
-          ? "Business · AI Computers · USJet.ai"
-          : "Operator's Rig · USJet.ai";
-    const meta = document.querySelector('meta[name="description"]');
-    const previousDescription = meta?.getAttribute("content") ?? "";
-    meta?.setAttribute("content", deck.lede);
-    return () => {
-      document.title = previous;
-      meta?.setAttribute("content", previousDescription);
-    };
-  }, [deck.lede, mission]);
+  // Title, meta description, canonical, OG tags, and JSON-LD for this route are all
+  // owned centrally by <SeoHead> (src/components/layout/SeoHead.tsx) via ROUTE_SEO in
+  // src/data/siteSeo.ts. This component used to also set document.title + meta
+  // description locally, which raced with SeoHead and usually won, overwriting the
+  // longer keyword-targeted title ("AI Computers for Homes — Mac Mini, MacBook, Mini
+  // PC | USJET.AI") with a shorter one that dropped the product keywords from the
+  // actual <title> tag search engines read. Removed to avoid the two fighting.
 
   return (
     <div className="usjet-store-page hw-page hw-page--deck page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-32 pt-4 sm:px-6 lg:px-8">

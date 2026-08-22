@@ -483,7 +483,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     stripeEnvKey: "STRIPE_PRICE_MAC_MINI_M4_PRO_64",
     specs: ["Apple M4 Pro", "64GB unified memory", "Always-on · ~30W", "Silent closet server"],
     goodFor: "The classic small-business AI server: leave it on, sip power, serve the shop. 64GB is the line where 70B-class models start to fit.",
-    blurb: "A server, in this hangar, means a computer that does not go home in a bag. Talk to ops to lock the exact config.",
+    blurb: "A server here means a computer that does not go home in a bag. Talk to ops to lock the exact config.",
     amazonSearchTerm: "Apple Mac Mini M4 Pro 64GB",
     imageSrc: "/store/hardware/mac-mini-m4.jpg",
     badge: "Always-on",

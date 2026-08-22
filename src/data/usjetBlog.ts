@@ -95,7 +95,7 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
     cadenceDay: 7,
     excerpt:
       "Stop cologneing your AI. Hire partners, not mirrors. The Anti-Clone protocol is how founders scale without inheriting their own blind spots.",
-    tags: ["AI 101", "Partnership", "Fleet doctrine"],
+    tags: ["AI 101", "Partnership", "Doctrine"],
     body: [
       "The most expensive mistake in AI operations is cologneing—forcing the model to smell exactly like you. You get politeness. You lose the check-and-balance that saves capital.",
       "A true leader does not hire clones. They hire partners who are sharper in specific lanes. Your logistics agent should not think like your creative agent. Your AI should carry mission, not your personality.",
@@ -158,7 +158,7 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
     publishedAt: "2026-05-27",
     cadenceDay: 13,
     excerpt:
-      "USJET.AI is finalizing Form C for a regulated community round. Five percent carved out—last window before live investment. First $50,000 in reservations opens the hangar.",
+      "USJET.AI is finalizing Form C for a regulated community round. Five percent carved out—last window before live investment. First $50,000 in reservations opens the round.",
     tags: ["Form C", "Wefunder", "SEC"],
     variant: "institutional",
     body: [],
@@ -181,18 +181,18 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
     institutional: {
       preSecLabel: "Community round · Relaunch live",
       equityCarveout: "5% community equity · Live on Wefunder",
-      hangarTitle: "The Hangar Relaunch Is Live",
+      hangarTitle: "The community round is live",
       hangarCopy:
         "The community round is back on Wefunder. Help us hit the $50,000 goal—a vote for the American worker and the 5% Covenant.",
       goalMeterLabel: "Relaunch in progress · $50,000 goal",
       useOfFunds: [
         { label: "App development", amount: "$10,000" },
-        { label: "AI API & fleet compute", amount: "$20,000" },
+        { label: "AI API & compute", amount: "$20,000" },
         { label: "Legal & Form C filing", amount: "$10,000" },
         { label: "Marketing & launch", amount: "$10,000" },
       ],
       appStoreLine: "Coming soon to the App Store.",
-      appStoreSub: "Powered by the Fleet. Owned by You.",
+      appStoreSub: "Owned by You.",
     },
     footerCta: {
       intro: "Infrastructure is live. The filing is real. Choose your lane:",
@@ -224,7 +224,7 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
       intro: "Pick the catalog that matches the job. Same Operator's Rig. Different machines.",
       links: [
         { label: "Shop Homes", to: "/" },
-        { label: "Shop Business", to: "/fleet" },
+        { label: "Shop Business", to: "/business" },
         { label: "Full lineup", to: "/store/ai-computers" },
       ],
     },
@@ -277,7 +277,7 @@ export const USJET_BLOG_POSTS: readonly UsjetBlogPost[] = [
       intro: "Building your own Jarvis? Start with the machine it lives on.",
       links: [
         { label: "Shop Homes", to: "/" },
-        { label: "Shop Business", to: "/fleet" },
+        { label: "Shop Business", to: "/business" },
         { label: "Full lineup", to: "/store/ai-computers" },
       ],
     },

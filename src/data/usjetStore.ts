@@ -1,6 +1,7 @@
 /**
- * USJET Store — Founder books (Amazon Kindle).
- * Amazon opens through /cockpit (One Ship, One Cockpit).
+ * USJET Store — live KDP titles by Ameer Karim.
+ * Amazon opens through /cockpit (same window).
+ * Do not add unpublished titles (Sixth Sky is not live).
  */
 
 export const STORE_ROUTE = "/store" as const;
@@ -15,15 +16,18 @@ export function storeBookPath(bookId: string): string {
 
 export const STORE_PAGE_TITLE = "Manuals" as const;
 export const STORE_META_DESCRIPTION =
-  "USJET Operator manuals — AI Book Series by Ameer Karim. The books that ship with computers that already have AI in them." as const;
+  "Books by Ameer Karim — USJET.AI Engineering Series, Enemy Skies, and Jet Fighter coloring books. Kindle and paperback on Amazon." as const;
 
-export const STORE_HERO_KICKER = "Manuals · AI Book Series" as const;
-export const STORE_HERO_TITLE = "How to run the Rig" as const;
+export const STORE_HERO_KICKER = "Manuals · books by Ameer Karim" as const;
+export const STORE_HERO_TITLE = "How to run the Rig — and more" as const;
 export const STORE_HERO_LEDE =
-  "Every Operator's Rig ships with the AI Book Series. These are the Founder's engineering books — Kindle and paperback — for the humans who just bought a computer that thinks." as const;
+  "Three live lines. The Engineering Series ships with the Operator's Rig. Enemy Skies is military-aviation romance. Jet Fighter coloring books are paperback-only, 8.5×11. All by Ameer Karim." as const;
+
+export type StoreBookLineId = "engineering" | "enemy-skies" | "jet-fighter-coloring";
 
 export type UsjetStoreBook = {
   id: string;
+  lineId: StoreBookLineId;
   seriesOrder: number;
   title: string;
   subtitle: string;
@@ -31,22 +35,54 @@ export type UsjetStoreBook = {
   author: string;
   priceDisplay: string;
   blurb: string;
-  /** Kindle ASIN (default buy link). */
-  asin: string;
-  /** Optional Paperback ASIN for the print edition. */
+  /** Kindle ASIN when a Kindle edition is live. */
+  kindleAsin?: string;
+  /** Paperback ASIN when a print edition is live. */
   paperbackAsin?: string;
-  /** Local Amazon product-page cover (public/store/covers). */
+  /** Cover ASIN file in public/store/covers. */
   coverSrc: string;
   coverAlt: string;
 };
 
+export type UsjetStoreBookLine = {
+  id: StoreBookLineId;
+  title: string;
+  kicker: string;
+  lede: string;
+  /** Amazon series page — Engineering Series only. */
+  amazonSeries?: boolean;
+};
+
+export const STORE_BOOK_LINES: readonly UsjetStoreBookLine[] = [
+  {
+    id: "engineering",
+    title: "USJET.AI Engineering Series",
+    kicker: "Operator manuals",
+    lede: "The books that ship with a computer that already has AI in it. Kindle $9.99 · paperback as listed.",
+    amazonSeries: true,
+  },
+  {
+    id: "enemy-skies",
+    title: "Enemy Skies",
+    kicker: "Military-aviation romance",
+    lede: "Kindle $9.99 · paperback $14.99.",
+  },
+  {
+    id: "jet-fighter-coloring",
+    title: "Jet Fighter Coloring Book Series",
+    kicker: "Paperback only · 8.5×11",
+    lede: "Paperback $9.99. No Kindle edition.",
+  },
+] as const;
+
 /** USJET.AI Engineering Series ASIN (Amazon series page). */
 export const AMAZON_SERIES_ASIN = "B0HCZ9141C" as const;
 
-/** Live Kindle titles — USJET.AI Engineering Series by Ameer Karim. */
+/** All live KDP titles — never include unpublished work. */
 export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
   {
     id: "website-building-ai",
+    lineId: "engineering",
     seriesOrder: 1,
     title: "Website Building with AI",
     subtitle: "From prompt to production — building, deploying, and scaling with AI-first tools.",
@@ -55,13 +91,14 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Build and ship websites with AI in the loop — from structure and copy to deploy, the Founder’s operator path.",
-    asin: "B0HD5GF54X",
+    kindleAsin: "B0HD5GF54X",
     paperbackAsin: "B0HD1H7BLB",
     coverSrc: "/store/covers/B0HD5GF54X.jpg",
     coverAlt: "Website Building with AI — Amazon Kindle cover",
   },
   {
     id: "ai-first-startup",
+    lineId: "engineering",
     seriesOrder: 2,
     title: "The AI-First Startup",
     subtitle: "Building and Scaling Autonomous Platforms",
@@ -70,13 +107,14 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "How to build and scale autonomous platforms — AI-first architecture for founders who want a revenue engine, not a slide deck.",
-    asin: "B0HD658R8K",
+    kindleAsin: "B0HD658R8K",
     paperbackAsin: "B0HD1NHWFN",
     coverSrc: "/store/covers/B0HD658R8K.jpg",
     coverAlt: "The AI-First Startup — Amazon Kindle cover",
   },
   {
     id: "build-ai-mac",
+    lineId: "engineering",
     seriesOrder: 3,
     title: "Building an AI on Your Mac Computer",
     subtitle: "Local Models, Custom Runtimes, and Agentic Workflows",
@@ -84,14 +122,15 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     author: "Ameer Karim",
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
-      "Turn Apple Silicon into a private AI hangar — Ollama, llama.cpp, MLX, agentic workflows, and keeping proprietary data local.",
-    asin: "B0HCX896RZ",
+      "Turn Apple Silicon into a private local AI box — Ollama, llama.cpp, MLX, agentic workflows, and keeping proprietary data on the machine.",
+    kindleAsin: "B0HCX896RZ",
     paperbackAsin: "B0HD5JLYWR",
     coverSrc: "/store/covers/B0HCX896RZ.jpg",
     coverAlt: "Building an AI on Your Mac Computer — Amazon Kindle cover",
   },
   {
     id: "top-30-ais",
+    lineId: "engineering",
     seriesOrder: 4,
     title: "Top 30 AIs and What They Can Do for You",
     subtitle: "The Operator’s Field Guide to Modern Models, Runtimes, and Capabilities",
@@ -99,50 +138,124 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     author: "Ameer Karim",
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
-      "Six pillars of modern AI — capability, token efficiency, context, and cost. Which bay to open for reasoning, local Apple Silicon, codebases, and agent loops.",
-    asin: "B0HCXQDBM3",
+      "A field guide to local models — capability, context, and cost. One Operator's Rig can run up to 30 local AI models on the machine. Not a SaaS of 30 web AIs.",
+    kindleAsin: "B0HCXQDBM3",
     paperbackAsin: "B0HCZFW626",
     coverSrc: "/store/covers/B0HCXQDBM3.jpg",
     coverAlt: "Top 30 AIs and What They Can Do for You — Amazon Kindle cover",
   },
   {
-    id: "mastering-cursor",
+    id: "deployment-pipeline",
+    lineId: "engineering",
     seriesOrder: 5,
-    title: "Mastering Cursor",
-    subtitle: "The AI-First Editor and Autonomous Coding Companion",
+    title: "The Deployment Pipeline",
+    subtitle: "Mastering GitHub, Vercel, and Domain Management",
     seriesLabel: "USJET.AI Engineering Series · Book Five",
     author: "Ameer Karim",
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
-      "Cursor as the hangar workbench — agentic coding, fleet workflows, and how the Founder ships sovereign software with an AI co-pilot.",
-    asin: "B0HD53PM9W",
+      "GitHub → Vercel → domain — the Founder’s deploy path from commit to live site.",
+    kindleAsin: "B0GZJZ9TGJ",
+    paperbackAsin: "B0HD641SJ8",
+    coverSrc: "/store/covers/B0GZJZ9TGJ.jpg",
+    coverAlt: "The Deployment Pipeline — Amazon Kindle cover",
+  },
+  {
+    id: "mastering-cursor",
+    lineId: "engineering",
+    seriesOrder: 6,
+    title: "Mastering Cursor",
+    subtitle: "The AI-First Editor and Autonomous Coding Companion",
+    seriesLabel: "USJET.AI Engineering Series · Book Six",
+    author: "Ameer Karim",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
+    blurb:
+      "Cursor as the workbench — agentic coding, local workflows, and how the Founder ships software with an AI co-pilot.",
+    kindleAsin: "B0HD53PM9W",
     paperbackAsin: "B0HD4NDBGQ",
     coverSrc: "/store/covers/B0HD53PM9W.jpg",
     coverAlt: "Mastering Cursor — Amazon Kindle cover",
   },
   {
-    id: "deployment-pipeline",
-    seriesOrder: 6,
-    title: "The Deployment Pipeline",
-    subtitle: "Mastering GitHub, Vercel, and Domain Management",
-    seriesLabel: "USJET.AI Engineering Series · Book Six",
+    id: "enemys-kiss",
+    lineId: "enemy-skies",
+    seriesOrder: 1,
+    title: "The Enemy's Kiss",
+    subtitle: "Enemy Skies · Book One",
+    seriesLabel: "Enemy Skies · Book One",
     author: "Ameer Karim",
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
-    blurb:
-      "GitHub → Vercel → domain — the Founder’s deploy path from commit to live cockpit, without leaking out of the ship.",
-    asin: "B0GZJZ9TGJ",
-    paperbackAsin: "B0HD641SJ8",
-    coverSrc: "/store/covers/B0GZJZ9TGJ.jpg",
-    coverAlt: "The Deployment Pipeline — Amazon Kindle cover",
+    blurb: "Military-aviation romance by Ameer Karim. Kindle and paperback.",
+    kindleAsin: "B0HFXLM27H",
+    paperbackAsin: "B0HFYWSQC1",
+    coverSrc: "/store/covers/B0HFXLM27H.jpg",
+    coverAlt: "The Enemy's Kiss — Amazon Kindle cover",
+  },
+  {
+    id: "wings-of-betrayal",
+    lineId: "enemy-skies",
+    seriesOrder: 2,
+    title: "Wings of Betrayal",
+    subtitle: "Enemy Skies · Book Two",
+    seriesLabel: "Enemy Skies · Book Two",
+    author: "Ameer Karim",
+    priceDisplay: "$9.99 Kindle · $14.99 Paperback",
+    blurb: "Military-aviation romance by Ameer Karim. Kindle and paperback.",
+    kindleAsin: "B0HFYZX72C",
+    paperbackAsin: "B0HG1SF44F",
+    coverSrc: "/store/covers/B0HFYZX72C.jpg",
+    coverAlt: "Wings of Betrayal — Amazon Kindle cover",
+  },
+  {
+    id: "jet-fighters-coloring",
+    lineId: "jet-fighter-coloring",
+    seriesOrder: 1,
+    title: "Jet Fighters: A Coloring Book",
+    subtitle: "8.5×11 paperback",
+    seriesLabel: "Jet Fighter Coloring Book Series · Book One",
+    author: "Ameer Karim",
+    priceDisplay: "$9.99 Paperback",
+    blurb: "Paperback coloring book. 8.5×11. No Kindle edition.",
+    paperbackAsin: "B0HFSNZR3Z",
+    coverSrc: "/store/covers/B0HFSNZR3Z.jpg",
+    coverAlt: "Jet Fighters: A Coloring Book — Amazon paperback cover",
+  },
+  {
+    id: "generation-6-coloring",
+    lineId: "jet-fighter-coloring",
+    seriesOrder: 2,
+    title: "Generation 6: The Next Fighter Jets",
+    subtitle: "8.5×11 paperback",
+    seriesLabel: "Jet Fighter Coloring Book Series · Book Two",
+    author: "Ameer Karim",
+    priceDisplay: "$9.99 Paperback",
+    blurb: "Paperback coloring book. 8.5×11. No Kindle edition.",
+    paperbackAsin: "B0HFH9LC14",
+    coverSrc: "/store/covers/B0HFH9LC14.jpg",
+    coverAlt: "Generation 6: The Next Fighter Jets — Amazon paperback cover",
   },
 ];
+
+export function booksInLine(lineId: StoreBookLineId): UsjetStoreBook[] {
+  return USJET_STORE_BOOKS.filter((book) => book.lineId === lineId).sort(
+    (a, b) => a.seriesOrder - b.seriesOrder,
+  );
+}
+
+export function bookHasKindle(book: UsjetStoreBook): boolean {
+  return Boolean(book.kindleAsin);
+}
+
+export function bookPrimaryAsin(book: UsjetStoreBook): string {
+  return book.kindleAsin ?? book.paperbackAsin ?? "";
+}
 
 export function amazonKindleUrl(asin: string): string {
   return `https://www.amazon.com/dp/${asin}`;
 }
 
 export function amazonPaperbackUrl(asin: string): string {
-  return `https://www.amazon.com/dp/${asin}?binding=paperback`;
+  return `https://www.amazon.com/dp/${asin}`;
 }
 
 export function amazonSeriesUrl(binding: "kindle" | "paperback" = "kindle"): string {

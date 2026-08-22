@@ -12,7 +12,7 @@ export type Ai101LessonSection = {
 export const AI101_LESSON_INTRO = {
   title: "AI 101 — the computer and the books",
   lede:
-    "USJET sells computers that already have a local assistant on them (the Operator's Rig) and the USJET.AI Engineering Series manuals. Homes is the house shop. Business is the shop-and-office shop. That is the product.",
+    "USJET sells computers that already have a local assistant on them (the Operator's Rig) and books by Ameer Karim. One Rig can run up to 30 local AI models on the machine. Homes is the house shop. Business is the shop-and-office shop. That is the product.",
 } as const;
 
 export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
@@ -28,7 +28,7 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     bullets: [
       "Homes (/) — computers for the house.",
       "Business (/business) — computers and always-on boxes for a shop or office.",
-      "Manuals (/store) — the Engineering Series.",
+      "Manuals (/store) — Engineering Series, Enemy Skies, and Jet Fighter coloring books.",
       "Deck — the left-edge tab. That is the site menu.",
     ],
   },
@@ -57,7 +57,8 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     title: "What we put on it",
     kicker: "Local stack",
     paragraphs: [
-      "Ollama is the engine — the model runs on THIS computer. Open WebUI is the screen that looks like ChatGPT. AnythingLLM is the vault for YOUR PDFs. The AI Book Series is the manual in the box.",
+      "Ollama is the engine — the model runs on THIS computer. Open WebUI is the screen that looks like ChatGPT. AnythingLLM is the vault for YOUR PDFs. The books are in the box.",
+      "One Operator's Rig can run up to 30 local AI models on the machine. That is hardware capacity, not a monthly cockpit of 30 web AIs.",
       "A one-click start sits on the desktop. Same day it arrives — not three weekends in a forum.",
     ],
   },

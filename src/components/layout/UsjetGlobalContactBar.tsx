@@ -93,7 +93,7 @@ export default function UsjetGlobalContactBar() {
           </nav>
         </div>
 
-        <div className="usjet-footer__books-grid" aria-label="AI Book Series">
+        <div className="usjet-footer__books-grid" aria-label="Books by Ameer Karim">
           {USJET_STORE_BOOKS.map((book) => (
             <Link
               key={book.id}

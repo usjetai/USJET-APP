@@ -131,6 +131,10 @@ export const WHY_USJET_HARDWARE = {
       body: "16GB runs small models. 24GB is the home sweet spot. 64GB+ is a shop or office brain that stays loaded all day.",
     },
     {
+      title: "Up to 30 local models",
+      body: "One Operator's Rig can run up to 30 local AI models on the machine. That is on-box capacity — not Hangar Pro, not a SaaS of 30 partner web AIs.",
+    },
+    {
       title: "Your files stay yours",
       body: "Cloud chat trains on the internet. This Jarvis talks on your desk. Family photos and work docs do not get pasted into someone else's server.",
     },
@@ -164,7 +168,7 @@ export const BUSINESS_DECK = {
 export const HARDWARE_HERO_KICKER = "Operator's Rig · Personal Jarvis on real hardware" as const;
 export const HARDWARE_HERO_TITLE = "We buy the computer. We give it a Jarvis. We ship it." as const;
 export const HARDWARE_HERO_LEDE =
-  "Homes is the house shop. Business is the shop-and-office shop. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
+  "Homes is the house shop. Business is the shop-and-office shop. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware that can run up to 30 local AI models on the machine, not a cloud tab of 30 web AIs." as const;
 
 /** First-run names. Aviation chrome stays; the buyer gets a translation. */
 export const CUSTOMER_GLOSSARY = [
@@ -186,7 +190,7 @@ export const CUSTOMER_GLOSSARY = [
   {
     term: "Operator's Rig",
     also: "the product",
-    meaning: "The computer plus the local assistant we install before it ships. Manuals ship in the box.",
+    meaning: "The computer plus the local assistant we install before it ships. One Rig can run up to 30 local AI models on the machine — not a SaaS of 30 web AIs. Manuals ship in the box.",
   },
 ] as const;
 

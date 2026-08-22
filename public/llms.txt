@@ -1,6 +1,6 @@
 # USJET.AI
 
-> Computers that already have AI in them — for homes and businesses. Local models, Operator's Rig, plus the Engineering Series books.
+> Computers that already have AI in them — for homes and businesses. Local models on the Operator's Rig (up to 30 local AI models on the machine), plus books by Ameer Karim.
 > Founded by Ameer Karim.
 
 ## Site
@@ -12,7 +12,7 @@
 - Operator blog: https://www.usjet.ai/blog
 - Best computer for local AI (2026 buyer's guide): https://www.usjet.ai/blog/best-computer-for-local-ai-2026
 - Build your own Jarvis AI assistant — hardware guide: https://www.usjet.ai/blog/jarvis-trend-needs-a-body
-- Store (engineering books): https://www.usjet.ai/store
+- Store (books): https://www.usjet.ai/store
 - AI Computers (hub): https://www.usjet.ai/store/ai-computers
 - AI Computers for Homes: https://www.usjet.ai/store/ai-computers/homes
 - AI Computers for Businesses: https://www.usjet.ai/store/ai-computers/businesses
@@ -24,7 +24,7 @@
 
 ## Product
 
-USJET.AI sells computers pre-configured to run AI models locally — one-time purchase, Operator's Rig stack, plus the USJET.AI Engineering Series manuals.
+USJET.AI sells computers pre-configured to run AI models locally — one-time purchase, Operator's Rig stack (up to 30 local AI models on the machine), plus live books by Ameer Karim (Engineering Series, Enemy Skies, Jet Fighter coloring books). Sixth Sky is not published and is not listed.
 
 ## AI Computers (hardware store)
 

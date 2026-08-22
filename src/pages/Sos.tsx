@@ -34,7 +34,7 @@ const HELP_TOPICS: HelpTopic[] = [
           shop or office.
         </li>
         <li>
-          <strong>Manuals</strong> (<Link to="/store">/store</Link>) — the Engineering Series books.
+          <strong>Manuals</strong> (<Link to="/store">/store</Link>) — Engineering Series, Enemy Skies, and Jet Fighter coloring books.
         </li>
         <li>
           <strong>About</strong> / <strong>Returns</strong> —{" "}

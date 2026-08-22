@@ -391,12 +391,14 @@ export default function FleetProductPage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {USJET_STORE_BOOKS.map((book) => {
-            const kindleUrl = wrapExternalInCockpit(amazonKindleUrl(book.asin), {
-              returnTo: `/product/${callsign}`,
-              label: `${book.title} (Kindle)`,
-              callName: "Kindle",
-              directHandoff: true,
-            });
+            const kindleUrl = book.kindleAsin
+              ? wrapExternalInCockpit(amazonKindleUrl(book.kindleAsin), {
+                  returnTo: `/product/${callsign}`,
+                  label: `${book.title} (Kindle)`,
+                  callName: "Kindle",
+                  directHandoff: true,
+                })
+              : undefined;
 
             const paperbackUrl = book.paperbackAsin 
               ? wrapExternalInCockpit(amazonPaperbackUrl(book.paperbackAsin), {
@@ -428,14 +430,16 @@ export default function FleetProductPage() {
                   </div>
                 </div>
                 <div className="mt-auto flex flex-col gap-2">
-                  <Link
-                    to={kindleUrl}
-                    className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
-                  >
-                    Kindle Edition
-                    <ExternalLink size={12} className="ml-2" />
-                  </Link>
-                  {paperbackUrl && (
+                  {kindleUrl ? (
+                    <Link
+                      to={kindleUrl}
+                      className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
+                    >
+                      Kindle Edition
+                      <ExternalLink size={12} className="ml-2" />
+                    </Link>
+                  ) : null}
+                  {paperbackUrl ? (
                     <Link
                       to={paperbackUrl}
                       className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
@@ -443,7 +447,7 @@ export default function FleetProductPage() {
                       Paperback
                       <ExternalLink size={12} className="ml-2" />
                     </Link>
-                  )}
+                  ) : null}
                 </div>
               </GlassEffectContainer>
             );

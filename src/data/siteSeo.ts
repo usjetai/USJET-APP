@@ -85,7 +85,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   "/store": {
     title: "Manuals — AI Book Series | USJET.AI",
     description:
-      "USJET Engineering Series on Kindle and paperback — the operator manuals for a computer that already has AI in it.",
+      "Books by Ameer Karim — USJET.AI Engineering Series, Enemy Skies, and Jet Fighter coloring books.",
     keywords:
       "USJET store, AI engineering books, Ameer Karim books, local AI manuals, Operator's Rig books",
     ogType: "product",

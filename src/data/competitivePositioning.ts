@@ -6,7 +6,7 @@
 
 /** One-line frame for every outbound email and discovery call. */
 export const COMPETITIVE_POSITIONING_THESIS =
-  "USJET sells computers that already have AI in them. Homes is the house shop. Business is the shop and office shop. The product is the Operator's Rig — hardware plus a local stack (engine, screen, private document vault, operator manuals) — not a Mac from a box store and not another ChatGPT tab." as const;
+  "USJET sells computers that already have AI in them. Homes is the house shop. Business is the shop and office shop. The product is the Operator's Rig — hardware plus a local stack that can run up to 30 local AI models on the machine — not a Mac from a box store, not another ChatGPT tab, and not a SaaS of 30 web AIs." as const;
 
 /** What prospects already use — and why those fail at fleet scale. */
 export const COMPETITIVE_ALTERNATIVES = [
@@ -60,7 +60,7 @@ export const USJET_UNIQUE_BUNDLE = [
   {
     id: "manuals",
     title: "The books",
-    body: "USJET.AI Engineering Series in the box and on Manuals — Kindle and paperback by Ameer Karim.",
+    body: "USJET.AI Engineering Series, Enemy Skies, and Jet Fighter coloring books on Manuals — Kindle and paperback by Ameer Karim where those editions are live.",
   },
   {
     id: "privacy",

@@ -17,8 +17,13 @@ import {
   resolveJ36ProductPaymentLink,
   resolveSr71BlackbirdProductPaymentLink,
 } from "../lib/stripePaymentLink";
-import { USJET_STORE_BOOKS, STORE_ROUTE, amazonKindleUrl, amazonPaperbackUrl } from "../data/usjetStore";
-import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
+import {
+  AMAZON_BOOK_LINK_PROPS,
+  USJET_STORE_BOOKS,
+  STORE_ROUTE,
+  amazonKindleUrl,
+  amazonPaperbackUrl,
+} from "../data/usjetStore";
 import { BookOpen, ExternalLink } from "lucide-react";
 
 /**
@@ -391,23 +396,8 @@ export default function FleetProductPage() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {USJET_STORE_BOOKS.map((book) => {
-            const kindleUrl = book.kindleAsin
-              ? wrapExternalInCockpit(amazonKindleUrl(book.kindleAsin), {
-                  returnTo: `/product/${callsign}`,
-                  label: `${book.title} (Kindle)`,
-                  callName: "Kindle",
-                  directHandoff: true,
-                })
-              : undefined;
-
-            const paperbackUrl = book.paperbackAsin 
-              ? wrapExternalInCockpit(amazonPaperbackUrl(book.paperbackAsin), {
-                  returnTo: `/product/${callsign}`,
-                  label: `${book.title} (Paperback)`,
-                  callName: "Paperback",
-                  directHandoff: true,
-                })
-              : undefined;
+            const kindleUrl = book.kindleAsin ? amazonKindleUrl(book.kindleAsin) : undefined;
+            const paperbackUrl = book.paperbackAsin ? amazonPaperbackUrl(book.paperbackAsin) : undefined;
 
             return (
               <GlassEffectContainer
@@ -431,22 +421,24 @@ export default function FleetProductPage() {
                 </div>
                 <div className="mt-auto flex flex-col gap-2">
                   {kindleUrl ? (
-                    <Link
-                      to={kindleUrl}
+                    <a
+                      href={kindleUrl}
                       className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
+                      {...AMAZON_BOOK_LINK_PROPS}
                     >
                       Kindle Edition
                       <ExternalLink size={12} className="ml-2" />
-                    </Link>
+                    </a>
                   ) : null}
                   {paperbackUrl ? (
-                    <Link
-                      to={paperbackUrl}
+                    <a
+                      href={paperbackUrl}
                       className="btn-glass text-[0.65rem] w-full justify-center glass-effect-interactive py-2"
+                      {...AMAZON_BOOK_LINK_PROPS}
                     >
                       Paperback
                       <ExternalLink size={12} className="ml-2" />
-                    </Link>
+                    </a>
                   ) : null}
                 </div>
               </GlassEffectContainer>

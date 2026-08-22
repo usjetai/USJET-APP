@@ -1,6 +1,6 @@
 /**
  * USJET Store — live KDP titles by Ameer Karim.
- * Amazon opens through /cockpit (same window).
+ * Amazon book links open amazon.com in a new tab (not a /cockpit handoff).
  * Do not add unpublished titles (Sixth Sky is not live).
  */
 
@@ -262,3 +262,10 @@ export function amazonSeriesUrl(binding: "kindle" | "paperback" = "kindle"): str
   const suffix = binding === "paperback" ? "?binding=paperback&ref_=saga_sdp_cft_dsk" : "";
   return `https://www.amazon.com/dp/${AMAZON_SERIES_ASIN}${suffix}`;
 }
+
+/** Native Amazon tab — bypasses the same-window /cockpit intercept. */
+export const AMAZON_BOOK_LINK_PROPS = {
+  target: "_blank",
+  rel: "noopener noreferrer",
+  "data-usjet-external-leak": "true",
+} as const;

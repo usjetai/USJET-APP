@@ -9,7 +9,7 @@ import {
   STORE_HERO_TITLE,
   STORE_META_DESCRIPTION,
   STORE_PAGE_TITLE,
-  STORE_ROUTE,
+  AMAZON_BOOK_LINK_PROPS,
   amazonKindleUrl,
   amazonSeriesUrl,
   bookHasKindle,
@@ -18,40 +18,28 @@ import {
   storeBookAnchor,
   type UsjetStoreBook,
 } from "../data/usjetStore";
-import { wrapExternalInCockpit } from "../lib/fleetLaunchUrl";
 
 function bookAmazonHref(book: UsjetStoreBook, binding: "kindle" | "paperback" = "kindle"): string {
   const asin =
     binding === "kindle"
       ? book.kindleAsin ?? bookPrimaryAsin(book)
       : book.paperbackAsin ?? bookPrimaryAsin(book);
-  const url = amazonKindleUrl(asin);
-
-  return wrapExternalInCockpit(url, {
-    returnTo: STORE_ROUTE,
-    label: `${book.title} (${binding})`,
-    callName: binding === "kindle" ? "Kindle" : "Paperback",
-    directHandoff: true,
-  });
+  return amazonKindleUrl(asin);
 }
 
 function seriesAmazonHref(binding: "kindle" | "paperback" = "kindle"): string {
-  return wrapExternalInCockpit(amazonSeriesUrl(binding), {
-    returnTo: STORE_ROUTE,
-    label: `USJET.AI Engineering Series (${binding})`,
-    callName: "Amazon Series",
-    directHandoff: true,
-  });
+  return amazonSeriesUrl(binding);
 }
 
 function BookCoverLink({ book }: { book: UsjetStoreBook }) {
   const binding = bookHasKindle(book) ? "kindle" : "paperback";
   const href = bookAmazonHref(book, binding);
   return (
-    <Link
-      to={href}
+    <a
+      href={href}
       className="usjet-store__book-cover-link glass-effect-interactive"
       aria-label={`Open ${book.title} on Amazon`}
+      {...AMAZON_BOOK_LINK_PROPS}
     >
       <img
         className="usjet-store__book-cover-img"
@@ -60,7 +48,7 @@ function BookCoverLink({ book }: { book: UsjetStoreBook }) {
         loading="lazy"
         decoding="async"
       />
-    </Link>
+    </a>
   );
 }
 
@@ -74,12 +62,13 @@ function BookCard({ book }: { book: UsjetStoreBook }) {
       <div className="usjet-store__book-body">
         <p className="usjet-store__book-series">{book.seriesLabel}</p>
         <h3 className="usjet-store__book-title">
-          <Link
-            to={bookAmazonHref(book, bookHasKindle(book) ? "kindle" : "paperback")}
+          <a
+            href={bookAmazonHref(book, bookHasKindle(book) ? "kindle" : "paperback")}
             className="glass-effect-interactive"
+            {...AMAZON_BOOK_LINK_PROPS}
           >
             {book.title}
-          </Link>
+          </a>
         </h3>
         <p className="usjet-store__book-subtitle">{book.subtitle}</p>
         <p className="usjet-store__book-blurb">{book.blurb}</p>
@@ -89,26 +78,28 @@ function BookCard({ book }: { book: UsjetStoreBook }) {
         </div>
         <div className="usjet-store__book-actions mt-auto flex flex-col gap-2">
           {bookHasKindle(book) ? (
-            <Link
-              to={bookAmazonHref(book, "kindle")}
+            <a
+              href={bookAmazonHref(book, "kindle")}
               className="usjet-store__cta btn-glass-prominent glass-effect-interactive w-full justify-center"
+              {...AMAZON_BOOK_LINK_PROPS}
             >
               Kindle Edition
               <ExternalLink size={14} className="ml-2" aria-hidden />
-            </Link>
+            </a>
           ) : null}
           {book.paperbackAsin ? (
-            <Link
-              to={bookAmazonHref(book, "paperback")}
+            <a
+              href={bookAmazonHref(book, "paperback")}
               className={
                 bookHasKindle(book)
                   ? "usjet-store__cta btn-glass glass-effect-interactive w-full justify-center"
                   : "usjet-store__cta btn-glass-prominent glass-effect-interactive w-full justify-center"
               }
+              {...AMAZON_BOOK_LINK_PROPS}
             >
               Paperback
               <ExternalLink size={14} className="ml-2" aria-hidden />
-            </Link>
+            </a>
           ) : null}
         </div>
       </div>
@@ -187,24 +178,26 @@ export default function Store() {
               <p className="usjet-store__section-lede max-w-2xl">
                 <span className="usjet-store__book-series">{line.kicker}</span>
                 <br />
-                {line.lede} Written by Ameer Karim. Tap a cover to view on Amazon — same window, then back to Manuals.
+                {line.lede} Written by Ameer Karim. Tap a cover to open Amazon in a new tab.
               </p>
               {line.amazonSeries ? (
                 <div className="flex gap-3 mb-2">
-                  <Link
-                    to={seriesAmazonHref("kindle")}
+                  <a
+                    href={seriesAmazonHref("kindle")}
                     className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive"
+                    {...AMAZON_BOOK_LINK_PROPS}
                   >
                     Kindle Series
                     <ExternalLink size={12} className="ml-2" aria-hidden />
-                  </Link>
-                  <Link
-                    to={seriesAmazonHref("paperback")}
+                  </a>
+                  <a
+                    href={seriesAmazonHref("paperback")}
                     className="btn-glass text-xs uppercase tracking-widest glass-effect-interactive"
+                    {...AMAZON_BOOK_LINK_PROPS}
                   >
                     Paperback Series
                     <ExternalLink size={12} className="ml-2" aria-hidden />
-                  </Link>
+                  </a>
                 </div>
               ) : null}
             </div>

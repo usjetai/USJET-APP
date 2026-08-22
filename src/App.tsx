@@ -9,7 +9,6 @@ import UsjetReturnFab from "./components/layout/UsjetReturnFab";
 import PageTransition from "./components/layout/PageTransition";
 import UsjetGlobalContactBar from "./components/layout/UsjetGlobalContactBar";
 import UsjetAtmosphereBoot from "./components/layout/UsjetAtmosphereBoot";
-import UsjetProtocolBootOverlay from "./components/layout/UsjetProtocolBootOverlay";
 import SiteLatchMenu from "./components/layout/SiteLatchMenu";
 import SeoHead from "./components/layout/SeoHead";
 import AnalyticsRouteTracker from "./components/layout/AnalyticsRouteTracker";
@@ -57,7 +56,8 @@ function AnimatedRoutes() {
         <Suspense fallback={<RouteFallback />}>
           <Routes location={location}>
             <Route path="/" element={<Hangar />} />
-            <Route path="/fleet" element={<Fleet />} />
+            <Route path="/business" element={<Fleet />} />
+            <Route path="/fleet" element={<Navigate to="/business" replace />} />
             <Route path="/hangar" element={<Navigate to="/" replace />} />
             <Route path="/sos" element={<Sos />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -80,6 +80,7 @@ function AnimatedRoutes() {
             <Route path="/ai-computers/businesses" element={<Navigate to="/store/ai-computers/businesses" replace />} />
             <Route path="/shop" element={<Navigate to="/store/ai-computers" replace />} />
             <Route path="/landscape" element={<MobileLandscapeGuide />} />
+            {/* Retired cockpit leftover — keep the URL, hide it from the shop. */}
             <Route path="/protocol-proof" element={<ProtocolSessionProof />} />
             {/* Retired: subscriptions, member portal, collectibles, gaming, donation pages — computers-only pivot. */}
             <Route path="*" element={<Navigate to="/" replace />} />
@@ -134,7 +135,6 @@ function AppShell() {
       <AppChrome />
       {hangarEmbed ? null : <UsjetGlobalContactBar />}
       <UsjetAtmosphereBoot />
-      {hangarEmbed ? null : <UsjetProtocolBootOverlay />}
       {hangarEmbed ? null : <UsjetReturnFab />}
     </div>
   );

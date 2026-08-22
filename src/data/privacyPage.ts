@@ -9,7 +9,7 @@ export const PRIVACY_CANONICAL_URL = `${SITE_ORIGIN}${PRIVACY_ROUTE}` as const;
 export const PRIVACY_PAGE_TITLE = "Privacy Policy · USJET.AI" as const;
 
 export const PRIVACY_META_DESCRIPTION =
-  "How USJET LLC collects, uses, and protects information on USJET.AI — Stripe-only payments, Member ID verification, integrated cockpit navigation, and no OAuth sign-in.";
+  "How USJET LLC collects, uses, and protects information on USJET.AI — Stripe hardware checkout, site analytics, and no OAuth sign-in.";
 
 export const PRIVACY_EFFECTIVE_DATE = "August 16, 2026" as const;
 
@@ -27,22 +27,22 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     id: "overview",
     title: "Overview",
     paragraphs: [
-      "This Privacy Policy describes how USJET LLC (\"USJET,\" \"we,\" \"us\") handles information when you use USJET.AI — the sovereign AI fleet cockpit, member surfaces, and integrated partner handoffs.",
+      "This Privacy Policy describes how USJET LLC (\"USJET,\" \"we,\" \"us\") handles information when you use USJET.AI — the Operator's Rig hardware shop, manuals, and associated pages.",
       "By using the site, you acknowledge this policy. If you do not agree, do not use USJET.AI.",
     ],
   },
   {
     id: "collect",
     title: "Information we collect",
-    paragraphs: ["We collect only what the product needs to operate clearance, billing alignment, and cockpit routing:"],
+    paragraphs: ["We collect only what the shop needs to take orders, ship hardware, and keep the site up:"],
     bullets: [
-      "Member verification inputs you submit on Member Login — billing email and Stripe Member ID (cus_…).",
+      "Member verification inputs you submit if you still use a leftover Stripe subscription login — billing email and Stripe Member ID (cus_…).",
       "Browser-local session data after successful verification (stored in localStorage on your device, not on a separate social identity provider).",
       "Technical signals your browser sends automatically — IP address, user agent, referrer, and basic request logs needed for security and uptime.",
       "Analytics on how the site is used — page views and in-product events — collected via Google Analytics 4. See \"Cookies & analytics\" below for how to opt out.",
       "Voluntary correspondence when you email ops@usjet.ai or submit support forms.",
-      "Usage within gated surfaces (Hangar, Intel, Origin, Member Portal) needed to honor your subscription tier and in-product features.",
-      "Messages you type into Origin, Fleet bay assistants, or other in-product AI chat surfaces — sent to the third-party AI provider handling that conversation so it can generate a response. See \"AI chat providers\" below.",
+      "Usage within leftover gated surfaces (if you still hold a leftover Stripe subscription) needed to honor that subscription.",
+      "Messages you type into in-product AI chat surfaces, if those leftover pages are still reachable — sent to the third-party AI provider handling that conversation so it can generate a response. See \"AI chat providers\" below.",
     ],
   },
   {
@@ -50,8 +50,8 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     title: "How we use information",
     paragraphs: ["We use collected information to:"],
     bullets: [
-      "Verify Stripe-backed membership and open the correct clearance tier.",
-      "Operate the fleet cockpit, Hangar bays, and integrated same-window partner handoffs.",
+      "Verify Stripe-backed leftover membership if you still use those links, and open the correct leftover clearance.",
+      "Operate the hardware shop, manuals, and same-window Amazon handoffs.",
       "Respond to support requests and institutional partnership inquiries.",
       "Maintain site security, diagnose outages, and improve reliability.",
       "Meet legal, accounting, and fraud-prevention obligations tied to paid subscriptions.",
@@ -63,14 +63,14 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     paragraphs: [
       "USJET does not offer Google, Apple, or other OAuth sign-in. Clearance is Stripe-only: you pay through Stripe Payment Links, then verify with billing email plus your Member ID.",
       "Stripe processes card and subscription data on its own hosted checkout and customer portal. USJET does not store full payment card numbers on this site. Stripe's privacy policy governs payment data they collect.",
-      "Tier pricing shown on Member Login: Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo — all routed through Stripe.",
+      "Leftover subscription pricing that may still appear on Stripe: Flight Pass $19.90/mo, Hangar Pro $49.95/mo, Enterprise Commander $199.99/mo — all routed through Stripe. These are not the current shop.",
     ],
   },
   {
     id: "storage",
     title: "Cookies & analytics",
     paragraphs: [
-      "USJET.AI uses browser storage (including localStorage) to remember a verified member session for up to twenty-four hours and to persist cockpit preferences such as Silent Hangar audio state.",
+      "USJET.AI uses browser storage (including localStorage) to remember a verified leftover member session for up to twenty-four hours and to persist site preferences such as audio mute state.",
       "We use Google Analytics 4 (GA4) to understand site usage, which sets its own cookies and sends usage data to Google. We do not use separate third-party advertising/retargeting cookies beyond what GA4 itself sets. Google's use of this data is governed by Google's own privacy policy.",
       "To opt out of GA4 tracking on this site, use your browser's tracking-protection settings, a browser extension such as Google's Analytics Opt-out Add-on, or contact ops@usjet.ai. Clearing site data for the USJET hostname will sign you out and reset local preferences — see /sos for practical steps.",
     ],
@@ -105,7 +105,7 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
     id: "choices",
     title: "Your choices",
     bullets: [
-      "Sign out of the Member Portal to clear the local session immediately.",
+      "Sign out of any leftover member session to clear local storage immediately.",
       "Clear site data in your browser to remove stored preferences and cached state.",
       "Manage or cancel subscriptions through Stripe's customer tools or by contacting ops@usjet.ai.",
       "Do not submit verification data you are not authorized to use.",

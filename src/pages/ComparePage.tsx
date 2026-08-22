@@ -4,8 +4,8 @@ import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import {
   getCompetitiveAlternative,
   getSeoMoneyPageBySlug,
+  LEFTOVER_FLIGHT_PASS,
   SEO_MONEY_HUB_PATH,
-  SEO_MONEY_OFFERS,
   SEO_MONEY_PAGES,
 } from "../data/seoMoneyPages";
 
@@ -18,7 +18,6 @@ export default function ComparePage() {
   }
 
   const alternative = getCompetitiveAlternative(page);
-  const primary = SEO_MONEY_OFFERS[page.primaryOfferId];
   const siblings = SEO_MONEY_PAGES.filter((p) => p.slug !== page.slug);
 
   return (
@@ -32,17 +31,11 @@ export default function ComparePage() {
           <Link to="/" className="compare-page__cta btn-glass-prominent glass-effect-interactive glass-tint-cyan">
             Shop the Operator&apos;s Rig
           </Link>
-          <a
-            href={primary.href}
-            className="compare-page__cta-secondary btn-glass glass-effect-interactive"
-            data-usjet-external-leak="true"
-          >
-            Optional · {primary.ctaLabel}
-          </a>
+          <Link to="/store" className="compare-page__cta-secondary btn-glass glass-effect-interactive">
+            Shop Manuals
+          </Link>
         </div>
-        <p className="compare-page__secure">
-          Primary offer is a one-time computer. {primary.name} is the optional monthly cockpit — Stripe, no OAuth.
-        </p>
+        <p className="compare-page__secure">One-time computer and books. Stripe on the tile. No monthly subscription required.</p>
       </header>
 
       <section className="compare-page__split" aria-labelledby="compare-problem-heading">
@@ -74,33 +67,13 @@ export default function ComparePage() {
 
       <section className="compare-page__proof" aria-labelledby="compare-proof-heading">
         <h2 id="compare-proof-heading" className="compare-page__section-title">
-          Why captains clear here
+          Why this machine
         </h2>
         <ul className="compare-page__list">
           {page.proofPoints.map((point) => (
             <li key={point}>{point}</li>
           ))}
         </ul>
-      </section>
-
-      <section className="compare-page__offer-band" aria-labelledby="compare-offer-heading">
-        <GlassEffectContainer className="compare-offer glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
-          <div className="compare-offer__inner">
-            <p className="compare-offer__kicker">Optional monthly cockpit</p>
-            <h2 id="compare-offer-heading" className="compare-offer__title">
-              {primary.name} · {primary.priceDisplay}
-            </h2>
-            <p className="compare-offer__copy">
-              This is not the Operator&apos;s Rig. The rig is the computer on Homes and Business. {primary.buyBecause}
-            </p>
-            <a
-              href={primary.href}
-              className="compare-page__cta btn-glass-prominent glass-effect-interactive glass-tint-cyan"
-            >
-              {primary.ctaLabel}
-            </a>
-          </div>
-        </GlassEffectContainer>
       </section>
 
       <section className="compare-page__faq" aria-labelledby="compare-faq-heading">
@@ -134,6 +107,13 @@ export default function ComparePage() {
           </li>
         </ul>
       </nav>
+
+      <p className="compare-page__secure mt-12 text-center text-xs text-white/40">
+        {LEFTOVER_FLIGHT_PASS.body}{" "}
+        <a href={LEFTOVER_FLIGHT_PASS.href} className="underline-offset-4 hover:underline" data-usjet-external-leak="true">
+          {LEFTOVER_FLIGHT_PASS.ctaLabel}
+        </a>
+      </p>
     </div>
   );
 }

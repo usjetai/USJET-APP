@@ -2,36 +2,30 @@ import { Link } from "react-router-dom";
 import UsjetWordmark from "../components/brand/UsjetWordmark";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import {
+  LEFTOVER_FLIGHT_PASS,
   SEO_MONEY_BUNDLE,
   SEO_MONEY_HUB_THESIS,
-  SEO_MONEY_OFFERS,
   SEO_MONEY_PAGES,
   SEO_MONEY_REPLACES,
 } from "../data/seoMoneyPages";
 
 export default function CompareHub() {
-  const flight = SEO_MONEY_OFFERS["flight-pass"];
-
   return (
     <div className="compare-page page-atmosphere page-nav-offset mx-auto max-w-4xl px-4 pb-36 pt-4 sm:px-6 lg:px-8">
       <header className="compare-page__hero">
         <UsjetWordmark size="hero" glow className="compare-page__wordmark" />
-        <p className="compare-page__eyebrow">Compare · hardware first</p>
+        <p className="compare-page__eyebrow">Compare · computers and books</p>
         <h1 className="compare-page__title">
           A computer with a Jarvis vs ChatGPT, tool sprawl, and a custom build
         </h1>
         <p className="compare-page__lede">{SEO_MONEY_HUB_THESIS}</p>
         <div className="compare-page__cta-row">
           <Link to="/" className="compare-page__cta btn-glass-prominent glass-effect-interactive glass-tint-cyan">
-            Shop the Operator&apos;s Rig
+            Shop Homes
           </Link>
-          <a
-            href={flight.href}
-            className="compare-page__cta-secondary btn-glass glass-effect-interactive"
-            data-usjet-external-leak="true"
-          >
-            Optional cockpit · {flight.priceDisplay}
-          </a>
+          <Link to="/business" className="compare-page__cta-secondary btn-glass glass-effect-interactive">
+            Shop Business
+          </Link>
         </div>
       </header>
 
@@ -40,30 +34,21 @@ export default function CompareHub() {
           Choose your fight
         </h2>
         <div className="compare-page__lane-grid">
-          {SEO_MONEY_PAGES.map((page) => {
-            const offer = SEO_MONEY_OFFERS[page.primaryOfferId];
-            return (
-              <GlassEffectContainer
-                key={page.slug}
-                className="compare-lane glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
-              >
-                <div className="compare-lane__inner">
-                  <p className="compare-lane__eyebrow">{page.eyebrow}</p>
-                  <h3 className="compare-lane__title">{page.h1}</h3>
-                  <p className="compare-lane__lede">{page.lede}</p>
-                  <p className="compare-lane__offer">
-                    Hardware first. Optional cockpit: {offer.name} · {offer.priceDisplay}
-                  </p>
-                  <Link
-                    to={page.path}
-                    className="compare-lane__link glass-effect-interactive"
-                  >
-                    Read the comparison →
-                  </Link>
-                </div>
-              </GlassEffectContainer>
-            );
-          })}
+          {SEO_MONEY_PAGES.map((page) => (
+            <GlassEffectContainer
+              key={page.slug}
+              className="compare-lane glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan"
+            >
+              <div className="compare-lane__inner">
+                <p className="compare-lane__eyebrow">{page.eyebrow}</p>
+                <h3 className="compare-lane__title">{page.h1}</h3>
+                <p className="compare-lane__lede">{page.lede}</p>
+                <Link to={page.path} className="compare-lane__link glass-effect-interactive">
+                  Read the comparison →
+                </Link>
+              </div>
+            </GlassEffectContainer>
+          ))}
         </div>
       </section>
 
@@ -84,7 +69,7 @@ export default function CompareHub() {
 
       <section className="compare-page__bundle" aria-labelledby="compare-bundle-heading">
         <h2 id="compare-bundle-heading" className="compare-page__section-title">
-          Optional cockpit bundle
+          What you actually get
         </h2>
         <ul className="compare-page__bundle-grid">
           {SEO_MONEY_BUNDLE.map((item) => (
@@ -95,6 +80,13 @@ export default function CompareHub() {
           ))}
         </ul>
       </section>
+
+      <p className="compare-page__secure mt-12 text-center text-xs text-white/40">
+        {LEFTOVER_FLIGHT_PASS.body}{" "}
+        <a href={LEFTOVER_FLIGHT_PASS.href} className="underline-offset-4 hover:underline" data-usjet-external-leak="true">
+          {LEFTOVER_FLIGHT_PASS.ctaLabel}
+        </a>
+      </p>
     </div>
   );
 }

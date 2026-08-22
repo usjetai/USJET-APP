@@ -27,10 +27,10 @@ export const RETURNS_SECTIONS = [
     ],
   },
   {
-    id: "cockpit",
-    title: "Optional monthly cockpit (Flight Pass and up)",
+    id: "leftover",
+    title: "Leftover monthly Stripe subscriptions",
     paragraphs: [
-      "Flight Pass ($19.90/mo), Hangar Pro ($49.95/mo), and Enterprise Commander ($199.99/mo) are recurring Stripe subscriptions. Cancel any time through Stripe or by emailing ops@usjet.ai.",
+      "A leftover Flight Pass ($19.90/mo) Stripe subscription still exists from an earlier version of this site. It is not required to buy a computer. Cancel any leftover subscription through Stripe or by emailing ops@usjet.ai.",
       "Cancellation stops future renewals. The current billing period is not refunded unless the law requires it. That is the published Terms line — not a new promise.",
     ],
   },

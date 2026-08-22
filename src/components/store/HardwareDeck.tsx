@@ -25,7 +25,6 @@ import {
   type HardwareMission,
   type HardwareProduct,
 } from "../../data/aiHardware";
-import { FLIGHT_PASS_DIRECT_URL } from "../../lib/stripePaymentLink";
 
 const OPS_MAIL = "mailto:ops@usjet.ai?subject=USJET%20Operator%27s%20Rig%20order";
 
@@ -158,27 +157,6 @@ function TrustStrip() {
   );
 }
 
-function CockpitSecondaryDoor() {
-  return (
-    <section className="hw-secondary" aria-labelledby="hw-secondary-heading">
-      <p className="hw-about__kicker">Optional — not the computer</p>
-      <h2 id="hw-secondary-heading">Already own a machine?</h2>
-      <p className="hw-about__lede">
-        The Operator&apos;s Rig above is the primary offer: a one-time hardware purchase. The $19.90/mo Flight Pass is
-        a separate software cockpit for people who want the monthly hangar, not a substitute for the box.
-      </p>
-      <div className="hw-secondary__actions">
-        <Link to="/compare" className="hw-secondary__link glass-effect-interactive">
-          Compare the cockpit
-        </Link>
-        <a href={FLIGHT_PASS_DIRECT_URL} className="hw-secondary__link glass-effect-interactive" data-usjet-external-leak="true">
-          Flight Pass · $19.90/mo
-        </a>
-      </div>
-    </section>
-  );
-}
-
 export default function HardwareDeck({
   mission,
   catalog = "site",
@@ -193,7 +171,7 @@ export default function HardwareDeck({
       primerTitle: "What we do to these computers",
       primer: [
         ...HOME_DECK.primer.slice(0, 1),
-        "Homes = computers for the house. Business (Fleet) = computers and servers for the shop and the office.",
+        "Homes = computers for the house. Business = computers and servers for the shop and the office.",
         ...BUSINESS_DECK.primer.slice(0, 1),
       ],
     };
@@ -331,7 +309,6 @@ export default function HardwareDeck({
       </section>
 
       <TrustStrip />
-      {omitHero ? <CockpitSecondaryDoor /> : null}
 
       <HardwareCartDrawer />
     </div>

@@ -1,14 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import GlassEffectContainer from "./GlassEffectContainer";
-import { useMemberAuth } from "../../context/MemberAuthContext";
 import { SITE_ROUTE_COUNT, SITE_ROUTE_GROUPS } from "../../data/siteRouteIndex";
-import {
-  canMemberAccessRoute,
-  clearanceTierLabel,
-  normalizeRoutePath,
-  routeMinClearanceRank,
-} from "../../lib/memberAccessLevel";
+import { normalizeRoutePath } from "../../lib/memberAccessLevel";
 
 function isRouteActive(path: string, pathname: string, search: string): boolean {
   const normalized = normalizeRoutePath(path);
@@ -26,28 +20,11 @@ function isRouteActive(path: string, pathname: string, search: string): boolean 
     }
     return true;
   }
-  if (normalized === "/gaming" && (pathname === "/gaming" || pathname === "/vr")) {
-    return true;
-  }
   return normalized === normalizeRoutePath(pathname);
-}
-
-function clearanceChipLabel(minRank: number): string | null {
-  if (minRank <= 0) {
-    return null;
-  }
-  if (minRank >= 3) {
-    return "CMD";
-  }
-  if (minRank >= 2) {
-    return "PRO";
-  }
-  return "PASS";
 }
 
 export default function SiteLatchMenu() {
   const location = useLocation();
-  const { session } = useMemberAuth();
   const [open, setOpen] = useState(false);
 
   const close = useCallback(() => setOpen(false), []);
@@ -75,31 +52,17 @@ export default function SiteLatchMenu() {
     };
   }, [open, close]);
 
-  const routeAccess = useMemo(() => {
-    const map = new Map<string, boolean>();
-    for (const group of SITE_ROUTE_GROUPS) {
-      for (const route of group.routes) {
-        const base = route.path.split("?")[0] ?? route.path;
-        map.set(route.path, canMemberAccessRoute(base, session));
-      }
-    }
-    return map;
-  }, [session]);
-
   if (location.pathname === "/cockpit") {
     return null;
   }
 
   return (
-    <div
-      className={["site-latch-menu", open ? "site-latch-menu--open" : ""].filter(Boolean).join(" ")}
-      data-open={open ? "true" : "false"}
-    >
+    <div className={["site-latch-menu", open ? "site-latch-menu--open" : ""].filter(Boolean).join(" ")}>
       {open ? (
         <button
           type="button"
           className="site-latch-menu__backdrop"
-          aria-label="Close flight deck menu"
+          aria-label="Close site menu"
           onClick={close}
         />
       ) : null}
@@ -141,10 +104,6 @@ export default function SiteLatchMenu() {
               </h3>
               <ul className="site-latch-menu__list">
                 {group.routes.map((route) => {
-                  const base = route.path.split("?")[0] ?? route.path;
-                  const minRank = routeMinClearanceRank(base);
-                  const chip = clearanceChipLabel(minRank);
-                  const allowed = routeAccess.get(route.path) ?? true;
                   const active = isRouteActive(route.path, location.pathname, location.search);
 
                   return (
@@ -155,37 +114,16 @@ export default function SiteLatchMenu() {
                           "site-latch-menu__link",
                           "glass-effect-interactive",
                           active ? "site-latch-menu__link--active" : "",
-                          allowed ? "" : "site-latch-menu__link--locked",
                         ]
                           .filter(Boolean)
                           .join(" ")}
                         onClick={close}
-                        title={
-                          allowed
-                            ? route.hint
-                              ? `${route.label} — ${route.hint}`
-                              : route.label
-                            : `${clearanceTierLabel(minRank)} clearance required`
-                        }
+                        title={route.hint ? `${route.label} — ${route.hint}` : route.label}
                       >
                         <span className="site-latch-menu__link-copy">
                           <span className="site-latch-menu__link-label">{route.label}</span>
                           {route.hint ? <span className="site-latch-menu__link-hint">{route.hint}</span> : null}
                         </span>
-                        {chip ? (
-                          <span
-                            className={[
-                              "site-latch-menu__chip",
-                              allowed ? "site-latch-menu__chip--cleared" : "site-latch-menu__chip--locked",
-                            ]
-                              .filter(Boolean)
-                              .join(" ")}
-                          >
-                            {chip}
-                          </span>
-                        ) : (
-                          <span className="site-latch-menu__chip site-latch-menu__chip--public">OPEN</span>
-                        )}
                       </Link>
                     </li>
                   );

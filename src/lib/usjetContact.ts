@@ -29,10 +29,10 @@ export const USJET_BUSINESS_ADDRESS_LINES = [
   USJET_BUSINESS_ADDRESS.country,
 ] as const;
 
-/** Support routing — Origin first; email is async (founder not on-call). */
+/** Support routing — human inbox. Email is async (founder not on-call). */
 export const SUPPORT_POLICY = {
-  primary: "Instant help: Origin (voice AI)",
-  email: `Email ${USJET_OPS_EMAIL}: responses within 1–3 business days`,
+  primary: `Email ${USJET_OPS_EMAIL} for orders, shipping, and hardware questions`,
+  email: `Responses within 1–3 business days`,
 } as const;
 
 /** Founder inbox — member gate demo + internal; configure after MX records. */

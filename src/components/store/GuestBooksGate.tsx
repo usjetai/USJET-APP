@@ -10,6 +10,7 @@ const DISMISS_KEY = "usjet-guest-books-gate-dismissed";
 
 const HIDDEN_PATHS = new Set([
   "/",
+  "/business",
   "/fleet",
   "/store",
   "/store/ai-computers",
@@ -103,7 +104,7 @@ export default function GuestBooksGate() {
       <button
         type="button"
         className="guest-books-gate__backdrop"
-        aria-label="Close and go to Hangar"
+        aria-label="Close and go to Homes"
         onClick={closeToHangar}
       />
       <GlassEffectContainer
@@ -115,7 +116,7 @@ export default function GuestBooksGate() {
         <button
           type="button"
           className="guest-books-gate__close glass-effect-interactive"
-          aria-label="Close and go to Hangar"
+          aria-label="Close and go to Homes"
           onClick={closeToHangar}
         >
           <X size={16} aria-hidden />
@@ -126,8 +127,8 @@ export default function GuestBooksGate() {
           A computer that already has AI in it.
         </h2>
         <p className="guest-books-gate__lede">
-          Hangar is home machines. Fleet is business machines and servers. We buy the exact unit, load the local AI
-          stack, and ship it. The books below are the operator manuals — same Founder, same hangar.
+          Homes is house machines. Business is shop and office machines. We buy the exact unit, load the local AI
+          stack, and ship it. The books below are the operator manuals — same Founder, same shop.
         </p>
 
         <div className="guest-books-gate__grid">

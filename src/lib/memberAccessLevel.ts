@@ -6,9 +6,12 @@ import { FOUNDER_TEST_EMAIL } from "./memberMasterKey";
 /** Intel Top 10 — Hangar Pro (LVL_02) or Enterprise (LVL_03) clearance required. */
 export const INTEL_TOP10_MIN_ACCESS_LEVEL = 2;
 
-/** Guest-only surface — Hangar home (3 free tabs), Fleet (10 free bays), Stripe login, fleet cockpit handoff. */
+/** Guest-only surface — shop pages stay public. */
 export const GUEST_PUBLIC_ROUTES = [
   "/",
+  "/business",
+  "/about",
+  "/returns",
   "/hired-hud",
   "/hangar",
   "/fleet",
@@ -55,6 +58,9 @@ export const GUEST_PUBLIC_ROUTES = [
  */
 export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/": 0,
+  "/business": 0,
+  "/about": 0,
+  "/returns": 0,
   "/fleet": 0,
   "/hired-hud": 0,
   "/sos": 0,

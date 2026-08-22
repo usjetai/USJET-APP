@@ -3,7 +3,7 @@ import { HARDWARE_STRIPE } from "../lib/stripePaymentLink";
 /**
  * USJET Operator's Rig — computers that already have AI in them.
  *
- * Hangar = home. Fleet = business / servers.
+ * Homes = home. Business = shop / servers.
  * Fulfillment: USJET buys the exact SKU (Amazon) and ships it. Stripe collects
  * payment + address. No dropship API.
  *
@@ -15,7 +15,9 @@ export const HARDWARE_ROUTE = "/store/ai-computers" as const;
 export const HARDWARE_HOMES_ROUTE = "/store/ai-computers/homes" as const;
 export const HARDWARE_BUSINESSES_ROUTE = "/store/ai-computers/businesses" as const;
 export const HANGAR_HARDWARE_ROUTE = "/" as const;
-export const FLEET_HARDWARE_ROUTE = "/fleet" as const;
+/** Business computers shop. `/fleet` redirects here (old runway URL). */
+export const FLEET_HARDWARE_ROUTE = "/business" as const;
+export const FLEET_HARDWARE_LEGACY_ROUTE = "/fleet" as const;
 
 export const HARDWARE_MAX_QUANTITY_PER_LINE = 10 as const;
 
@@ -162,19 +164,19 @@ export const BUSINESS_DECK = {
 export const HARDWARE_HERO_KICKER = "Operator's Rig · Personal Jarvis on real hardware" as const;
 export const HARDWARE_HERO_TITLE = "We buy the computer. We give it a Jarvis. We ship it." as const;
 export const HARDWARE_HERO_LEDE =
-  "Homes is the house shop. Business (this site also calls it Fleet) is the shop-and-office shop. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
+  "Homes is the house shop. Business is the shop-and-office shop. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
 
 /** First-run names. Aviation chrome stays; the buyer gets a translation. */
 export const CUSTOMER_GLOSSARY = [
   {
     term: "Homes",
-    also: "Hangar",
+    also: "house shop",
     meaning: "AI computers for the house. This is the home page.",
   },
   {
     term: "Business",
-    also: "Fleet",
-    meaning: "AI computers and always-on boxes for a shop or office. That is the /fleet page — same word as the Business button in the header.",
+    also: "shop & office",
+    meaning: "AI computers and always-on boxes for a shop or office. That is the /business page.",
   },
   {
     term: "Deck",
@@ -184,7 +186,7 @@ export const CUSTOMER_GLOSSARY = [
   {
     term: "Operator's Rig",
     also: "the product",
-    meaning: "The computer plus the local assistant we install before it ships. One-time hardware purchase — not the $19.90/mo cockpit.",
+    meaning: "The computer plus the local assistant we install before it ships. Manuals ship in the box.",
   },
 ] as const;
 
@@ -241,7 +243,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     stripePriceId: HARDWARE_STRIPE["mac-mini-m4-24-512"].priceId,
     stripePaymentLink: HARDWARE_STRIPE["mac-mini-m4-24-512"].paymentLink,
     specs: ["Apple M4 chip", "24GB unified memory", "512GB SSD", "Home sweet spot · small office"],
-    goodFor: "The default Hangar pick. 24GB runs mid-size models with room for the operating system. Also a one-person office brain.",
+    goodFor: "The default home pick. 24GB runs mid-size models with room for the operating system. Also a one-person office brain.",
     blurb: "If you only want one number to remember: 24GB is where home AI stops feeling like a toy.",
     amazonSearchTerm: "Apple Mac Mini M4 24GB 512GB",
     imageSrc: "/store/hardware/mac-mini-m4.jpg",
@@ -446,7 +448,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     stripePriceId: HARDWARE_STRIPE["minisforum-ms-a2"].priceId,
     stripePaymentLink: HARDWARE_STRIPE["minisforum-ms-a2"].paymentLink,
     specs: ["AMD Ryzen AI Max+ 395", "96GB unified memory", "1TB NVMe", "Windows or Linux"],
-    goodFor: "Fleet value pick — 96GB is how a shop runs 30B–40B class models locally with memory to spare.",
+    goodFor: "Business value pick — 96GB is how a shop runs 30B–40B class models locally with memory to spare.",
     blurb: "Best price-to-brain ratio we will put on a business desk.",
     amazonSearchTerm: "Minisforum MS-A2 Ryzen AI Max+ 395 96GB",
     imageSrc: "/store/hardware/minisforum-ms-a2.jpg",

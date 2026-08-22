@@ -99,7 +99,7 @@ export default function Store() {
               Computers that already have AI in them
             </h2>
             <p className="hw-store-cta__lede">
-              Hangar is the house. Fleet is the shop and the office. Every unit ships as an Operator&apos;s Rig —
+              Homes is the house shop. Business is the shop and the office. Every unit ships as an Operator&apos;s Rig —
               local engine, dashboard, private document vault, AI Book Series. We buy the exact machine and send
               it to you.
             </p>
@@ -109,7 +109,7 @@ export default function Store() {
               Homes
               <ArrowRight size={14} className="ml-2" aria-hidden />
             </Link>
-            <Link to="/fleet" className="btn-glass glass-effect-interactive hw-store-cta__button">
+            <Link to="/business" className="btn-glass glass-effect-interactive hw-store-cta__button">
               Business
               <ArrowRight size={14} className="ml-2" aria-hidden />
             </Link>
@@ -125,7 +125,7 @@ export default function Store() {
         <div className="usjet-store__section-intro flex flex-wrap items-end justify-between gap-4">
           <p className="usjet-store__section-lede max-w-2xl">
             Written by Founder Ameer Karim. Available on Kindle and Paperback. 
-            Tap a cover to view on Amazon — same window, cockpit return.
+            Tap a cover to view on Amazon — same window, then back to Manuals.
           </p>
           <div className="flex gap-3 mb-2">
             <Link 
@@ -192,7 +192,7 @@ export default function Store() {
 
       <p className="usjet-store__return">
         <Link to="/" className="glass-effect-interactive">
-          Hangar home
+          Homes
         </Link>
       </p>
     </div>

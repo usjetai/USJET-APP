@@ -1,25 +1,23 @@
-# USJET.AI — crawl public hangar + fleet surfaces
-# Gated Member / Intel / Origin / Cockpit URLs send noindex via SeoHead
-# and are omitted from sitemap.xml.
+# USJET.AI — crawl the computer-and-books shop
+# Leftover gated URLs send noindex via SeoHead and are omitted from sitemap.xml.
 
 User-agent: *
 Allow: /
 
+Allow: /business
 Allow: /fleet
 Allow: /blog
 Allow: /compare
-Allow: /fleet-directory
+Allow: /store
 Allow: /ai-101
-Allow: /member/login
-Allow: /special
+Allow: /about
+Allow: /returns
 Allow: /llms.txt
 
-# Soft-block gated SPA shells (prefix). Keep /member/login crawlable for branded login queries.
 Disallow: /cockpit
 Disallow: /intel
 Disallow: /origin
 
-# AI crawlers — full allow on public hangar surfaces
 User-agent: GPTBot
 Allow: /
 

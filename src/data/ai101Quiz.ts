@@ -1,4 +1,4 @@
-/** AI 101 graduation quiz — hardware-first, cockpit secondary. */
+/** AI 101 graduation quiz — hardware and books. */
 
 export type Ai101QuizQuestion = {
   id: string;
@@ -18,7 +18,7 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
     choices: [
       "A $19.90/mo ChatGPT wrapper",
       "A computer with a local assistant already installed (the Operator's Rig)",
-      "A bookmark directory of 30 AI tabs",
+      "A bookmark directory of AI tabs",
       "A landscape-only mobile app",
     ],
     correctIndex: 1,
@@ -27,8 +27,8 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
     id: "q2",
     prompt: "What is Homes?",
     choices: [
-      "The monthly Flight Pass checkout",
-      "AI computers for the house — the home page, also called Hangar",
+      "A monthly subscription checkout",
+      "AI computers for the house — the home page",
       "Only the blog",
       "A rotate-to-landscape gate",
     ],
@@ -39,7 +39,7 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
     prompt: "The header says Business. What page is that?",
     choices: [
       "/special",
-      "/fleet — shop-and-office computers and always-on boxes",
+      "/business — shop-and-office computers and always-on boxes",
       "A different company",
       "Member Login",
     ],
@@ -52,7 +52,7 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
       "You must rotate your phone",
       "The left-edge tab that opens the site menu",
       "A Stripe product",
-      "The Intel board",
+      "A live market board you have to buy",
     ],
     correctIndex: 1,
   },
@@ -69,10 +69,10 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
   },
   {
     id: "q6",
-    prompt: "What is Flight Pass $19.90/mo?",
+    prompt: "What are Manuals on this site?",
     choices: [
       "The price of a Mac Mini",
-      "An optional monthly cockpit — not the hardware hero",
+      "The USJET.AI Engineering Series books",
       "Required to see Homes",
       "A warranty",
     ],
@@ -80,7 +80,7 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
   },
   {
     id: "q7",
-    prompt: "How do you pay?",
+    prompt: "How do you pay for a computer?",
     choices: [
       "Google or Apple sign-in",
       "Stripe only",
@@ -107,7 +107,7 @@ export const AI101_QUIZ_QUESTIONS: readonly Ai101QuizQuestion[] = [
       "Yes — portrait is blocked",
       "No — portrait is the main path; landscape is extra width",
       "Only on Business",
-      "Only after Flight Pass",
+      "Only after a monthly subscription",
     ],
     correctIndex: 1,
   },

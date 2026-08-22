@@ -46,7 +46,7 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/" end className={footerLinkClass}>
               Homes
             </NavLink>
-            <NavLink to="/fleet" className={footerLinkClass}>
+            <NavLink to="/business" className={footerLinkClass}>
               Business
             </NavLink>
             <NavLink to="/store/ai-computers" className={footerLinkClass}>
@@ -66,7 +66,7 @@ export default function UsjetGlobalContactBar() {
               About
             </NavLink>
             <NavLink to="/blog" className={footerLinkClass}>
-              Operator Log
+              Blog
             </NavLink>
             <NavLink to="/ai-101" className={footerLinkClass}>
               AI 101

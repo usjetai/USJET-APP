@@ -30,7 +30,7 @@ export const ABOUT_SECTIONS = [
     title: "Who this is",
     paragraphs: [
       `${FOUNDER_PUBLIC_NAME} is the founder of USJET.AI. The company on the invoice is USJET LLC, established in 2018.`,
-      "We sell computers that already have a local assistant on them — the Operator's Rig. Homes is the house shop. Business (the /fleet page) is the shop and office shop. That is the product.",
+      "We sell computers that already have a local assistant on them — the Operator's Rig. Homes is the house shop. Business is the shop and office shop. Manuals are the books. That is the product.",
     ],
   },
   {

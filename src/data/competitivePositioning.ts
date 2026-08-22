@@ -6,7 +6,7 @@
 
 /** One-line frame for every outbound email and discovery call. */
 export const COMPETITIVE_POSITIONING_THESIS =
-  "USJET sells computers that already have AI in them. Hangar is home. Fleet is business and servers. The product is the Operator's Rig — hardware plus a local stack (engine, dashboard, private document vault, operator manual) — not a Mac from a box store and not another ChatGPT tab." as const;
+  "USJET sells computers that already have AI in them. Homes is the house shop. Business is the shop and office shop. The product is the Operator's Rig — hardware plus a local stack (engine, screen, private document vault, operator manuals) — not a Mac from a box store and not another ChatGPT tab." as const;
 
 /** What prospects already use — and why those fail at fleet scale. */
 export const COMPETITIVE_ALTERNATIVES = [
@@ -16,7 +16,7 @@ export const COMPETITIVE_ALTERNATIVES = [
     prospectUses:
       "Amazon Mac Mini + three weekends of Docker, Ollama flags, model weights, and forum threads — or five cloud logins that do not talk to each other.",
     usjetAdvantage:
-      "One Operator's Rig: engine, ChatGPT-like face, private vault, AI Book Series, one-click desktop start. Hangar for the house. Fleet for the shop.",
+      "One Operator's Rig: engine, ChatGPT-like face, private vault, AI Book Series, one-click desktop start. Homes for the house. Business for the shop.",
     objectionHandle:
       "You are not buying another tab. You are buying a machine that already thinks, with a book that talks like a wrench.",
   },
@@ -36,7 +36,7 @@ export const COMPETITIVE_ALTERNATIVES = [
     prospectUses:
       "Hire a shop to stand up a local LLM workstation — Docker, RAG, dashboards, weeks of burn, brittle when the kid who set it up leaves.",
     usjetAdvantage:
-      "We buy the exact SKU, load the stack, ship the manual. You paid for the setup hours. You did not invent a hangar.",
+      "We buy the exact SKU, load the stack, ship the manual. You paid for the setup hours. You did not invent an installer.",
     objectionHandle:
       "Custom builds spend runway inventing the installer. USJET already cleared it — you buy the Rig, not a six-month ticket.",
   },
@@ -44,70 +44,69 @@ export const COMPETITIVE_ALTERNATIVES = [
 
 /** Concrete replacements — use in “what does this replace?” replies. */
 export const USJET_REPLACES = [
-  "Tab-hopping across ChatGPT / Claude / Midjourney / docs / LMS / ad-hoc dashboards",
-  "Bookmark collections and ‘AI tool directories’ with no command layer",
-  "Homegrown agent glue (auth sprawl, iframe graves, target=_blank partner leaks)",
-  "Generic SaaS onboarding that ignores labor / fleet / hangar workflow",
+  "A mute Mac from a box store plus three weekends of Docker and forum threads",
+  "Renting ChatGPT / Claude in a browser and pasting family or shop files into someone else's server",
+  "Hiring a shop to stand up a local LLM workstation that dies when the kid who set it up leaves",
+  "Bookmark collections of AI tools with no computer that actually belongs to you",
 ] as const;
 
-/** Unique bundle — what only USJET packages together. */
+/** Unique bundle — hardware + books. */
 export const USJET_UNIQUE_BUNDLE = [
   {
-    id: "command-control",
-    title: "Command & control",
-    body: "Sovereign Hangar + Fleet runway + Cockpit handoff — one brand, same-window launches, Member Portal mission projects.",
+    id: "hardware",
+    title: "The computer",
+    body: "We buy the listed machine and ship it as an Operator's Rig — local engine, screen, private vault, one-click start.",
   },
   {
-    id: "training",
-    title: "Training",
-    body: "AI-101 flight school, Origin command coaching (Enterprise), and Wrenches-Not-Slides operator culture — not slide decks.",
+    id: "manuals",
+    title: "The books",
+    body: "USJET.AI Engineering Series in the box and on Manuals — Kindle and paperback by Ameer Karim.",
   },
   {
-    id: "intelligence",
-    title: "Intelligence assets",
-    body: "Intel board as institutional real estate (Hangar Pro+); reserved partnership bays for Titans — distribution power, not rented ticker tape.",
+    id: "privacy",
+    title: "Your files stay home",
+    body: "Models run on THIS computer. Documents do not have to leave the box for a cloud chat bill.",
   },
   {
-    id: "managed-support",
-    title: "Managed support",
-    body: "Origin Customer Service for instant ship help; ops@usjet.ai for human follow-up; Stripe-only Member ID clearance — no OAuth side doors.",
+    id: "support",
+    title: "A human on email",
+    body: "ops@usjet.ai for orders, shipping, and a box that landed wrong. Responses in 1–3 business days.",
   },
 ] as const;
 
-/** Buying reason per Stripe offer — outbound specificity + objection handling. */
+/**
+ * Leftover Stripe subscriptions from the prior site. Kept so products are not deleted.
+ * Not the shop. Hardware + books are the offer.
+ */
 export const OFFER_BUYING_REASONS = [
   {
     id: "flight-pass",
-    offer: "USJet Flight Pass",
+    offer: "Flight Pass (leftover)",
     priceDisplay: "$19.90/mo",
-    replaces: "Paying separately for a dozen AI tabs while still losing the workbench.",
-    bundles: "Full Hangar tabs, all 30 Fleet bays, Member Portal, Special — entry into the sovereign hangar.",
+    replaces: "Nothing the Operator's Rig already covers — leftover monthly Stripe link.",
+    bundles: "A leftover subscription from an earlier version of this site. Not required to buy a computer.",
     buyBecause:
-      "Cheapest path off fragmented free tools: one clearance, full runway, institutional Member ID — built for operators who fix things, not pitch decks.",
+      "Only if someone already paid this leftover Stripe product and needs the existing link. The shop is hardware and books.",
     objectionHandle:
-      "If they already ‘have ChatGPT’: Flight Pass is the hangar those chats never become — formation, not another browser bookmark.",
+      "If they already have ChatGPT: sell the computer. Do not pitch this leftover monthly link as the product.",
   },
   {
     id: "hangar-pro",
-    offer: "Hangar Pro",
+    offer: "Hangar Pro (leftover)",
     priceDisplay: "$49.95/mo",
-    replaces: "Bolting a separate markets/intel dashboard onto generic AI and hoping the team remembers the URL.",
-    bundles: "Everything in Flight Pass + Intel Pulse board — high-velocity operator sync.",
-    buyBecause:
-      "Operators who need fleet networking and live institutional intel in the same cockpit — not a second product login.",
-    objectionHandle:
-      "If they say ‘we just need the AIs’: Hangar Pro is for crews who run the board and the bay together.",
+    replaces: "Nothing in the current shop — leftover Stripe product, not sold on the storefront.",
+    bundles: "Leftover Stripe product. Do not present as a customer-facing offer.",
+    buyBecause: "Do not sell this on the shop. Hardware and books are the offer.",
+    objectionHandle: "Redirect to Homes / Business computers.",
   },
   {
     id: "enterprise",
-    offer: "Enterprise Fleet Commander",
+    offer: "Enterprise Commander (leftover)",
     priceDisplay: "$199.99/mo",
-    replaces: "Hiring an agency or internal team to build a multi-agent command layer and training program from scratch.",
-    bundles: "Everything in Hangar Pro + Origin (Aura) command node — teach, route, and orchestrate partner AIs from one seat.",
-    buyBecause:
-      "Full sovereign command: one node that owns the fleet and the training voice — before custom-build burn or USA 250 price climb.",
-    objectionHandle:
-      "If they threaten a custom build: Enterprise is the command layer they would otherwise invent — already flying, Stripe-cleared, Origin-seated.",
+    replaces: "Nothing in the current shop — leftover Stripe product, not sold on the storefront.",
+    bundles: "Leftover Stripe product. Do not present as a customer-facing offer.",
+    buyBecause: "Do not sell this on the shop. Hardware and books are the offer.",
+    objectionHandle: "Redirect to Homes / Business computers.",
   },
 ] as const;
 

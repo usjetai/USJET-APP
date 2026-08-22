@@ -5,7 +5,7 @@ import AppNavPhoneBadge from "./AppNavPhoneBadge";
 
 const NAV_LINKS = [
   { to: "/", label: "Homes", title: "Home AI computers" },
-  { to: "/fleet", label: "Business", title: "Business computers — the /fleet shop" },
+  { to: "/business", label: "Business", title: "Business AI computers" },
   { to: "/store", label: "Manuals", title: "AI Book Series" },
   { to: "/blog", label: "Log", title: "Operator Log" },
   { to: "/about", label: "About", title: "Ameer Karim · USJET LLC" },
@@ -33,7 +33,7 @@ const AppNav = () => {
 
             <span className="app-nav-divider" aria-hidden />
 
-            <nav className="app-nav-zone app-nav-zone--routes" aria-label="Fleet routes">
+            <nav className="app-nav-zone app-nav-zone--routes" aria-label="Shop">
               {NAV_LINKS.map((link) => (
                 <NavLink
                   key={link.to}

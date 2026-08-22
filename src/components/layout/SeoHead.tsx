@@ -66,7 +66,7 @@ function resolveDynamicSeo(pathname: string): PageSeo | null {
     const post = getBlogPostBySlug(blogMatch[1]);
     if (!post) {
       return {
-        title: "Dispatch not found · USJET Blog",
+        title: "Post not found · USJET Blog",
         description: DEFAULT_PAGE_SEO.description,
         noindex: true,
       };
@@ -81,7 +81,7 @@ function resolveDynamicSeo(pathname: string): PageSeo | null {
     return {
       title: post.seoTitle ?? `${post.title} · USJET Blog`,
       description: post.seoDescription ?? post.excerpt,
-      keywords: post.seoKeywords ?? `USJET blog, ${post.title}, Ameer Karim, operator log`,
+      keywords: post.seoKeywords ?? `USJET blog, ${post.title}, Ameer Karim, Operator's Rig`,
       ogType: "article",
       jsonLd: post.faqs?.length ? [articleJsonLd, buildFaqJsonLd(post.faqs)] : articleJsonLd,
     };

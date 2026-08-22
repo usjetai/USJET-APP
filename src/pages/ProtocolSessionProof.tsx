@@ -72,7 +72,7 @@ export default function ProtocolSessionProof() {
 
       <p className="protocol-proof-page__back">
         <Link to="/" className="protocol-proof-page__link">
-          ← Back to Fleet
+          ← Back to Homes
         </Link>
       </p>
     </div>

@@ -10,9 +10,9 @@ export type Ai101LessonSection = {
 };
 
 export const AI101_LESSON_INTRO = {
-  title: "AI 101 — the computer, then the cockpit",
+  title: "AI 101 — the computer and the books",
   lede:
-    "USJET sells one primary product: a computer with a local assistant already on it (the Operator's Rig). Homes is the house shop. Business — the header button, the /fleet page — is the shop-and-office shop. The $19.90/mo Flight Pass is a separate optional cockpit, not the same hero.",
+    "USJET sells computers that already have a local assistant on them (the Operator's Rig) and the USJET.AI Engineering Series manuals. Homes is the house shop. Business is the shop-and-office shop. That is the product.",
 } as const;
 
 export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
@@ -27,7 +27,8 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     ],
     bullets: [
       "Homes (/) — computers for the house.",
-      "Business (/fleet) — computers and always-on boxes for a shop or office.",
+      "Business (/business) — computers and always-on boxes for a shop or office.",
+      "Manuals (/store) — the Engineering Series.",
       "Deck — the left-edge tab. That is the site menu.",
     ],
   },
@@ -35,19 +36,19 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     id: "homes",
     title: "Homes — house computers",
     route: "/",
-    kicker: "Also called Hangar",
+    kicker: "House shop",
     paragraphs: [
-      "The home page is the house shop. Aviation chrome still says Hangar. For a first-time buyer it means: Mac Mini, MacBook, mini PC — a Jarvis on YOUR desk, files stay on the box.",
-      "Scroll past the film to the lineup. Order yours is the hardware catalog, not a $19.90 gate.",
+      "The home page is the house shop: Mac Mini, MacBook, mini PC — a Jarvis on YOUR desk, files stay on the box.",
+      "Scroll past the film to the lineup. Order yours is the hardware catalog.",
     ],
   },
   {
     id: "business",
     title: "Business — shop and office computers",
-    route: "/fleet",
-    kicker: "Also called Fleet",
+    route: "/business",
+    kicker: "Shop & office",
     paragraphs: [
-      "The header says Business. The URL is /fleet. Same shop: bigger memory, machines that stay on. A server here just means a computer that does not go home in a bag.",
+      "The header says Business. The URL is /business. Same shop: bigger memory, machines that stay on. A server here just means a computer that does not go home in a bag.",
       "Same install as Homes. Different size of box.",
     ],
   },
@@ -58,21 +59,6 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     paragraphs: [
       "Ollama is the engine — the model runs on THIS computer. Open WebUI is the screen that looks like ChatGPT. AnythingLLM is the vault for YOUR PDFs. The AI Book Series is the manual in the box.",
       "A one-click start sits on the desktop. Same day it arrives — not three weekends in a forum.",
-    ],
-  },
-  {
-    id: "cockpit",
-    title: "Optional monthly cockpit",
-    route: "/compare",
-    kicker: "Secondary door",
-    paragraphs: [
-      "Flight Pass $19.90/mo, Hangar Pro $49.95/mo, and Enterprise Commander $199.99/mo still exist as Stripe subscriptions. They are not the Operator's Rig.",
-      "If you already own a computer and want the monthly hangar, that door is on Compare. If you came here to buy a machine, stay on Homes or Business.",
-    ],
-    bullets: [
-      "Hardware = one-time purchase on the tiles.",
-      "Cockpit = optional monthly Stripe link.",
-      "No Google or Apple login. Stripe only.",
     ],
   },
   {
@@ -91,7 +77,17 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     route: "/sos",
     kicker: "Short answers",
     paragraphs: [
-      "Help is the practical desk: orders, shipping, setup, and the optional cockpit prices. This AI 101 page is the lesson. Portrait works on a phone — you do not have to rotate to shop.",
+      "Help is the practical desk: orders, shipping, and setup. This AI 101 page is the lesson. Portrait works on a phone — you do not have to rotate to shop.",
+    ],
+  },
+  {
+    id: "leftover",
+    title: "A leftover monthly Stripe link",
+    route: "/compare",
+    kicker: "Not the shop",
+    paragraphs: [
+      "Flight Pass $19.90/mo still exists as a leftover Stripe subscription from an earlier version of this site. It is not the Operator's Rig. You do not need it to buy a computer or a book.",
+      "If you already paid that leftover link, email ops@usjet.ai. If you came here to buy a machine, stay on Homes or Business.",
     ],
   },
 ];

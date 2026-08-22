@@ -45,7 +45,7 @@ export default function Ai101() {
             href="#ai101-quiz"
             className="btn-glass glass-effect-interactive rounded-full border border-amber-400/40 px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-amber-100/90 hover:text-amber-50"
           >
-            Quiz · badge
+            Quiz
           </a>
         </nav>
       </GlassEffectContainer>
@@ -64,7 +64,11 @@ export default function Ai101() {
                 <p className="ai101-lesson__route">
                   Open:{" "}
                   <Link to={section.route} className="ai101-lesson__link">
-                    {section.route === "/" ? "Homes /" : section.route === "/fleet" ? "Business /fleet" : section.route}
+                    {section.route === "/"
+                      ? "Homes /"
+                      : section.route === "/business"
+                        ? "Business /business"
+                        : section.route}
                   </Link>
                 </p>
               ) : null}

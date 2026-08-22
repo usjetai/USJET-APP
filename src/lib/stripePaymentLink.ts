@@ -12,40 +12,40 @@
 /** Operator's Rig — live Stripe Price IDs + Payment Links (Direct Landing Protocol · Aug 2026). */
 export const HARDWARE_STRIPE = {
   "mac-mini-m4-16-256": {
-    priceId: "price_1U4XoVIhpTm6FnAvfoxYgFrJ",
-    paymentLink: "https://buy.stripe.com/dRm5kDeSG5VN105fWndwc0w",
+    priceId: "price_1U7OR5IhpTm6FnAvDq3UEF8J",
+    paymentLink: "https://buy.stripe.com/6oU3cv7qedof8sxbG7dwc0F",
   },
   "mac-mini-m4-16-512": {
-    priceId: "price_1U4XoWIhpTm6FnAvSI6W7QtA",
-    paymentLink: "https://buy.stripe.com/eVqdR9h0O5VN5gl8tVdwc0x",
+    priceId: "price_1U7OR6IhpTm6FnAvcCfU9IGS",
+    paymentLink: "https://buy.stripe.com/dRm28r25Ubg76kp4dFdwc0G",
   },
   "mac-mini-m4-24-512": {
-    priceId: "price_1U4XoXIhpTm6FnAvGyl2NUrD",
-    paymentLink: "https://buy.stripe.com/bJedR9aCq83VcIN25xdwc0y",
+    priceId: "price_1U7OR7IhpTm6FnAvb0in3Kl5",
+    paymentLink: "https://buy.stripe.com/eVq4gzaCqfwn2496lNdwc0H",
   },
   "macbook-air-m4-13-16-256": {
-    priceId: "price_1U4XoZIhpTm6FnAvTSUS6vCf",
-    paymentLink: "https://buy.stripe.com/4gMaEX6magAr9wBbG7dwc0z",
+    priceId: "price_1U7OR9IhpTm6FnAvB5xO7ywD",
+    paymentLink: "https://buy.stripe.com/00w9ATh0OesjfUZdOfdwc0I",
   },
   "macbook-air-m4-15-16-256": {
-    priceId: "price_1U4XoaIhpTm6FnAv6H7KV4nX",
-    paymentLink: "https://buy.stripe.com/cNi8wPeSG0BtfUZbG7dwc0A",
+    priceId: "price_1U7OR9IhpTm6FnAvlUQYyj3e",
+    paymentLink: "https://buy.stripe.com/bJe3cvfWKgArgZ3aC3dwc0J",
   },
   "gmktec-evo-x2": {
-    priceId: "price_1U4XoaIhpTm6FnAvdQ2ED5VO",
-    paymentLink: "https://buy.stripe.com/28E14n4e283V249fWndwc0B",
+    priceId: "price_1U7ORAIhpTm6FnAvsf04O4aZ",
+    paymentLink: "https://buy.stripe.com/00w14nbGu4RJ38d25xdwc0K",
   },
   "mac-studio-m4-max": {
-    priceId: "price_1U4XobIhpTm6FnAvbmgGCCBG",
-    paymentLink: "https://buy.stripe.com/bJeaEXdOCac324911tdwc0C",
+    priceId: "price_1U7ORBIhpTm6FnAvEmE39EC8",
+    paymentLink: "https://buy.stripe.com/00w00j8uibg76kpdOfdwc0L",
   },
   "minisforum-ms-a2": {
-    priceId: "price_1U4XoYIhpTm6FnAvQBb5kH0I",
-    paymentLink: "https://buy.stripe.com/14AcN511Q5VNaAFdOfdwc0D",
+    priceId: "price_1U7ORCIhpTm6FnAvPnAV5MvW",
+    paymentLink: "https://buy.stripe.com/14AfZh25UgArgZ3aC3dwc0N",
   },
   "beelink-gtr9-pro": {
-    priceId: "price_1U4XoYIhpTm6FnAv72mlx4q2",
-    paymentLink: "https://buy.stripe.com/dRm8wPbGuac38sx25xdwc0E",
+    priceId: "price_1U7ORCIhpTm6FnAvbrKZ2foE",
+    paymentLink: "https://buy.stripe.com/eVqeVd39Yfwn105eSjdwc0M",
   },
 } as const;
 

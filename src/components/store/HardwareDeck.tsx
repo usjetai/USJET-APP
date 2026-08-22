@@ -6,6 +6,7 @@ import HardwareCartDrawer from "./HardwareCartDrawer";
 import { useHardwareCart } from "../../context/HardwareCartContext";
 import {
   BUSINESS_DECK,
+  CUSTOMER_GLOSSARY,
   FLEET_HARDWARE_ROUTE,
   HANGAR_HARDWARE_ROUTE,
   HARDWARE_BUSINESSES_ROUTE,
@@ -24,6 +25,7 @@ import {
   type HardwareMission,
   type HardwareProduct,
 } from "../../data/aiHardware";
+import { FLIGHT_PASS_DIRECT_URL } from "../../lib/stripePaymentLink";
 
 const OPS_MAIL = "mailto:ops@usjet.ai?subject=USJET%20Operator%27s%20Rig%20order";
 
@@ -137,9 +139,52 @@ type HardwareDeckProps = {
   catalog?: "site" | "store";
   /** Homes film already carries the pitch — skip the duplicate kicker/title. */
   omitHero?: boolean;
+  /** Skip the shared “what we do / what we put on it” block — homepage keeps it. */
+  omitPrimer?: boolean;
 };
 
-export default function HardwareDeck({ mission, catalog = "site", omitHero = false }: HardwareDeckProps) {
+function TrustStrip() {
+  return (
+    <p className="hw-trust">
+      Sold by{" "}
+      <Link to="/about" className="hw-trust__link">
+        USJET LLC · Ameer Karim
+      </Link>
+      {" · "}
+      <Link to="/returns" className="hw-trust__link">
+        Returns &amp; warranty
+      </Link>
+    </p>
+  );
+}
+
+function CockpitSecondaryDoor() {
+  return (
+    <section className="hw-secondary" aria-labelledby="hw-secondary-heading">
+      <p className="hw-about__kicker">Optional — not the computer</p>
+      <h2 id="hw-secondary-heading">Already own a machine?</h2>
+      <p className="hw-about__lede">
+        The Operator&apos;s Rig above is the primary offer: a one-time hardware purchase. The $19.90/mo Flight Pass is
+        a separate software cockpit for people who want the monthly hangar, not a substitute for the box.
+      </p>
+      <div className="hw-secondary__actions">
+        <Link to="/compare" className="hw-secondary__link glass-effect-interactive">
+          Compare the cockpit
+        </Link>
+        <a href={FLIGHT_PASS_DIRECT_URL} className="hw-secondary__link glass-effect-interactive" data-usjet-external-leak="true">
+          Flight Pass · $19.90/mo
+        </a>
+      </div>
+    </section>
+  );
+}
+
+export default function HardwareDeck({
+  mission,
+  catalog = "site",
+  omitHero = false,
+  omitPrimer = false,
+}: HardwareDeckProps) {
   const deck =
     mission === "business" ? BUSINESS_DECK : mission === "home" ? HOME_DECK : {
       kicker: HARDWARE_HERO_KICKER,
@@ -148,7 +193,7 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
       primerTitle: "What we do to these computers",
       primer: [
         ...HOME_DECK.primer.slice(0, 1),
-        "Hangar = computers for the house. Fleet = computers and servers for the shop and the office.",
+        "Homes = computers for the house. Business (Fleet) = computers and servers for the shop and the office.",
         ...BUSINESS_DECK.primer.slice(0, 1),
       ],
     };
@@ -217,40 +262,60 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
 
       <CheckoutBanner />
 
-      <section className="hw-about" aria-labelledby="hw-about-heading">
-        <p className="hw-about__kicker">{WHY_USJET_HARDWARE.kicker}</p>
-        <h2 id="hw-about-heading">{deck.primerTitle}</h2>
-        <div className="hw-info-tiles">
-          {WHAT_WE_DO_TO_THE_COMPUTER.map((row) => (
-            <article className="hw-info-tile" key={row.label}>
-              <h3>{row.label}</h3>
-              <p>{row.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      {omitPrimer ? null : (
+        <>
+          <section className="hw-about" aria-labelledby="hw-glossary-heading">
+            <p className="hw-about__kicker">Names on this ship</p>
+            <h2 id="hw-glossary-heading">What the words mean</h2>
+            <dl className="hw-about__table">
+              {CUSTOMER_GLOSSARY.map((row) => (
+                <div className="hw-about__row" key={row.term}>
+                  <dt>
+                    <span className="hw-about__layer">{row.also}</span>
+                    {row.term}
+                  </dt>
+                  <dd>{row.meaning}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
 
-      <section className="hw-about" aria-labelledby="hw-stack-heading">
-        <h2 id="hw-stack-heading">What we put on it</h2>
-        <p className="hw-about__lede">
-          Other sellers ship a mute computer. We ship a personal Jarvis already living on the box.
-        </p>
-        <dl className="hw-about__table">
-          {OPERATOR_STACK.map((layer) => (
-            <div className="hw-about__row" key={layer.id}>
-              <dt>
-                <span className="hw-about__layer">{layer.layer}</span>
-                {layer.name}
-              </dt>
-              <dd>{layer.plain}</dd>
+          <section className="hw-about" aria-labelledby="hw-about-heading">
+            <p className="hw-about__kicker">{WHY_USJET_HARDWARE.kicker}</p>
+            <h2 id="hw-about-heading">{deck.primerTitle}</h2>
+            <div className="hw-info-tiles">
+              {WHAT_WE_DO_TO_THE_COMPUTER.map((row) => (
+                <article className="hw-info-tile" key={row.label}>
+                  <h3>{row.label}</h3>
+                  <p>{row.body}</p>
+                </article>
+              ))}
             </div>
-          ))}
-        </dl>
-        <p className="hw-page__fulfillment-note">
-          <strong>{OPERATOR_SETUP_PROMISE.title}</strong> {OPERATOR_SETUP_PROMISE.body} Every order is purchased by
-          USJET — exact SKU, Amazon-sourced, boxed, and sent to your address. No dropship substitutions.
-        </p>
-      </section>
+          </section>
+
+          <section className="hw-about" aria-labelledby="hw-stack-heading">
+            <h2 id="hw-stack-heading">What we put on it</h2>
+            <p className="hw-about__lede">
+              Other sellers ship a mute computer. We ship a personal Jarvis already living on the box.
+            </p>
+            <dl className="hw-about__table">
+              {OPERATOR_STACK.map((layer) => (
+                <div className="hw-about__row" key={layer.id}>
+                  <dt>
+                    <span className="hw-about__layer">{layer.layer}</span>
+                    {layer.name}
+                  </dt>
+                  <dd>{layer.plain}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="hw-page__fulfillment-note">
+              <strong>{OPERATOR_SETUP_PROMISE.title}</strong> {OPERATOR_SETUP_PROMISE.body} Every order is purchased by
+              USJET — exact SKU, Amazon-sourced, boxed, and sent to your address. No dropship substitutions.
+            </p>
+          </section>
+        </>
+      )}
 
       <section className="usjet-store__section" id="hw-catalog" aria-labelledby="hw-catalog-heading">
         <div className="usjet-store__section-head">
@@ -264,6 +329,9 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
           ))}
         </div>
       </section>
+
+      <TrustStrip />
+      {omitHero ? <CockpitSecondaryDoor /> : null}
 
       <HardwareCartDrawer />
     </div>

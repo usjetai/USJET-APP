@@ -110,8 +110,8 @@ export default function SiteLatchMenu() {
           className="site-latch-menu__latch"
           aria-expanded={open}
           aria-controls="site-latch-menu-panel"
-          aria-label={open ? "Close full flight deck menu" : "Open full flight deck menu"}
-          title="Full flight deck — every page"
+          aria-label={open ? "Close site menu" : "Open site menu — Deck"}
+          title="Deck — full site menu"
           onClick={toggle}
         >
           <span className="site-latch-menu__latch-label" aria-hidden>
@@ -128,9 +128,9 @@ export default function SiteLatchMenu() {
           aria-label="USJET full site menu"
         >
         <header className="site-latch-menu__head">
-          <p className="site-latch-menu__eyebrow">Latch clearance · full index</p>
-          <h2 className="site-latch-menu__title">Flight Deck</h2>
-          <p className="site-latch-menu__meta">{SITE_ROUTE_COUNT} sovereign routes</p>
+          <p className="site-latch-menu__eyebrow">Deck · site menu</p>
+          <h2 className="site-latch-menu__title">Every page</h2>
+          <p className="site-latch-menu__meta">{SITE_ROUTE_COUNT} pages</p>
         </header>
 
         <div className="site-latch-menu__scroll">

@@ -30,19 +30,20 @@ const HELP_TOPICS: HelpTopic[] = [
     body: (
       <ul className="sos-page__list">
         <li>
-          <strong>Hangar</strong> (<Link to="/">/</Link>) — home workbench. First 3 tabs are free; open a bay to work
-          in-tile.
+          <strong>Homes</strong> (<Link to="/">/</Link>) — AI computers for the house. That is the primary shop.
         </li>
         <li>
-          <strong>Fleet</strong> (<Link to="/fleet">/fleet</Link>) — runway of partner AIs. Guests get 10 free bays.
+          <strong>Business</strong> (<Link to="/fleet">/fleet</Link>) — AI computers and always-on boxes for a shop or
+          office. Same word as the Business button in the header.
         </li>
         <li>
-          <strong>Jet Browser</strong> (<Link to="/jet-browser">/jet-browser</Link>) — paste any domain into tiles;
-          enlarge to work, shrink to formation.
+          <strong>About</strong> / <strong>Returns</strong> —{" "}
+          <Link to="/about">who sells this</Link> and{" "}
+          <Link to="/returns">warranty language from the Terms</Link>.
         </li>
         <li>
-          <strong>Learn the ship</strong> — full glossary and lessons live on{" "}
-          <Link to="/ai-101">AI 101</Link>, not here.
+          <strong>Learn the shop</strong> — full lesson on{" "}
+          <Link to="/ai-101">AI 101</Link>. Portrait works; you do not have to rotate.
         </li>
       </ul>
     ),
@@ -83,7 +84,7 @@ const HELP_TOPICS: HelpTopic[] = [
     body: (
       <ul className="sos-page__list">
         <li>
-          <strong>Flight Pass — $19.90/mo</strong> — full Hangar tabs + Member Portal.
+          <strong>Flight Pass — $19.90/mo</strong> — optional monthly cockpit. Not required to buy a computer.
         </li>
         <li>
           <strong>Hangar Pro — $49.95/mo</strong> — adds Intel.
@@ -100,20 +101,18 @@ const HELP_TOPICS: HelpTopic[] = [
   },
   {
     id: "hangar",
-    title: "Hangar & tiles",
+    title: "Orders & setup",
     icon: Wrench,
     body: (
       <ul className="sos-page__list">
         <li>
-          <strong>Open a bay</strong> — click a Hangar tile to load the workbench in place.
+          <strong>What you bought</strong> — the listed computer plus the local assistant we install. Confirmation
+          follows the Stripe email.
         </li>
         <li>
-          <strong>Enlarge / shrink</strong> — use the maximize control on an open tile for a tall work surface; Escape or
-          shrink returns to formation.
-        </li>
-        <li>
-          <strong>Blank or blocked partner</strong> — some sites refuse iframes. Use the in-tile Open handoff (same
-          window / cockpit). Never expect a new browser tab from USJET.
+          <strong>If it arrives wrong</strong> — write{" "}
+          <Link to="/returns">Returns &amp; warranty</Link> / Ops with the receipt. Manufacturer warranties apply; we
+          do not advertise a 30-day no-questions return as settled policy.
         </li>
         <li>
           <strong>Page looks stale</strong> — hard reload:{" "}
@@ -184,8 +183,8 @@ export default function Sos() {
         </div>
         <h1 className="sos-page__title">How can we help?</h1>
         <p className="sos-page__subtitle">
-          Short answers for login, Hangar tiles, plans, and Origin. For the full flight school — glossary, lessons, and
-          how the ship works — go to <Link to="/ai-101">AI 101</Link>.
+          Short answers for orders, Homes vs Business, and the optional monthly cockpit. For the full lesson — go to{" "}
+          <Link to="/ai-101">AI 101</Link>.
         </p>
       </header>
 

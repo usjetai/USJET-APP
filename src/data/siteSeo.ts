@@ -72,8 +72,8 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     ]),
   ),
   "/ai-101": {
-    title: "AI 101 — One-on-One Lesson | USJET.AI",
-    description: "Learn how local AI computers work, in plain English — one lesson before you buy.",
+    title: "AI 101 — How the Operator's Rig Works | USJET.AI",
+    description: "Plain-English lesson: Homes vs Business, what we install on the computer, and the optional $19.90/mo cockpit.",
   },
   "/store": {
     title: "Manuals — AI Book Series | USJET.AI",
@@ -118,6 +118,16 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "Terms of Service | USJET.AI",
     description: "USJET.AI Terms of Service — subscriptions, AI Computers hardware orders, shipping and returns, AI-output disclaimers.",
   },
+  "/about": {
+    title: "About — Ameer Karim & USJET LLC | USJET.AI",
+    description:
+      "USJET.AI is operated by USJET LLC. Founder Ameer Karim. We sell the Operator's Rig — a computer with a local assistant already on it.",
+  },
+  "/returns": {
+    title: "Returns & Warranty | USJET.AI",
+    description:
+      "USJET.AI returns and warranty: manufacturer coverage on the hardware, how to reach ops@usjet.ai, and what the published Terms actually say.",
+  },
   "/sos": {
     title: "Help Center | USJET.AI",
     description: "USJET Help — orders, shipping, and setup for your AI computer.",
@@ -128,8 +138,8 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     noindex: true,
   },
   "/landscape": {
-    title: "Landscape View Guide | USJET.AI",
-    description: "Rotate to landscape for the best USJET hangar cockpit experience on mobile.",
+    title: "Phone view | USJET.AI — portrait works",
+    description: "USJET shops in portrait. Landscape is extra width, not a gate.",
     noindex: true,
   },
   "/protocol-proof": {

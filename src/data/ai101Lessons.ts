@@ -1,4 +1,4 @@
-/** AI 101 one-on-one curriculum — how to use the USJET ship (no fleet bay cards). */
+/** AI 101 — how the Operator's Rig shop works (plain English, first-run). */
 
 export type Ai101LessonSection = {
   id: string;
@@ -10,126 +10,79 @@ export type Ai101LessonSection = {
 };
 
 export const AI101_LESSON_INTRO = {
-  title: "AI 101 — One-on-one with the ship",
+  title: "AI 101 — the computer, then the cockpit",
   lede:
-    "This lesson teaches you how U.S. Jet actually works: Hangar, Fleet, Jet Browser, Intel, Origin, Member, and the rest of the deck. Read each section. At the bottom, answer ten questions. Pass to earn the AI 101 badge on your Member Portal.",
+    "USJET sells one primary product: a computer with a local assistant already on it (the Operator's Rig). Homes is the house shop. Business — the header button, the /fleet page — is the shop-and-office shop. The $19.90/mo Flight Pass is a separate optional cockpit, not the same hero.",
 } as const;
 
 export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
   {
-    id: "ship",
-    title: "The ship: One cockpit",
-    kicker: "Core rule",
-    paragraphs: [
-      "U.S. Jet is not a pile of bookmark links. It is one ship. You stay in the same browser window. Partner tools open through the Hangar workbench or the /cockpit handoff — never as a leaky new tab from our chrome.",
-      "Guests can explore Hangar (first three free tabs), Fleet (ten free bays), Founder, Help, AI 101, and Jet Browser. Paid tiers unlock more Hangar tabs, Intel, Origin, and Member tools. Payments are Stripe only — no Google or Apple login.",
-    ],
-    bullets: [
-      "Integrated navigation: same window, Cockpit return when you leave a partner.",
-      "Wrenches, not slides: the product is a workbench for labor and builders.",
-      "Help (/sos) is short troubleshooting. This page is the full lesson.",
-    ],
-  },
-  {
-    id: "hangar",
-    title: "Hangar — home workbench",
+    id: "product",
+    title: "The product: Operator's Rig",
     route: "/",
-    kicker: "Primary surface",
+    kicker: "Primary offer",
     paragraphs: [
-      "Hangar is the home page. It is a floor of AI workbench tiles. Click a tile to open that bay in place — the partner loads inside the tile so you can work without leaving the ship.",
-      "On an open tile you can enlarge for a tall focus surface, then shrink back to formation. Close the bay when you are done. Guests get the first three simultaneous tabs free; Flight Pass unlocks the full floor.",
-      "Use the layout control (columns) to change how dense the grid feels. Some partners block iframes — those bays show an Open handoff that still keeps you in-window through cockpit rules.",
+      "We buy the listed machine, install a local assistant (engine, screen, document vault, manuals), and ship it talking. You are not buying a mute Mac from a box store, and you are not renting ChatGPT by the month as the main purchase.",
+      "One-time hardware. Stripe checkout on the tile. USJET LLC on the invoice. Founder: Ameer Karim.",
     ],
     bullets: [
-      "Open → work → enlarge/shrink → close.",
-      "First 3 tabs free for guests; Flight Pass for the rest.",
-      "Blank frame? Use the in-tile Open control — do not hunt for a new browser tab.",
+      "Homes (/) — computers for the house.",
+      "Business (/fleet) — computers and always-on boxes for a shop or office.",
+      "Deck — the left-edge tab. That is the site menu.",
     ],
   },
   {
-    id: "fleet",
-    title: "Fleet — the runway",
+    id: "homes",
+    title: "Homes — house computers",
+    route: "/",
+    kicker: "Also called Hangar",
+    paragraphs: [
+      "The home page is the house shop. Aviation chrome still says Hangar. For a first-time buyer it means: Mac Mini, MacBook, mini PC — a Jarvis on YOUR desk, files stay on the box.",
+      "Scroll past the film to the lineup. Order yours is the hardware catalog, not a $19.90 gate.",
+    ],
+  },
+  {
+    id: "business",
+    title: "Business — shop and office computers",
     route: "/fleet",
-    kicker: "Partner roster",
+    kicker: "Also called Fleet",
     paragraphs: [
-      "Fleet is the runway of partner AIs — thirty units with call signs, domains, and capabilities. Guests can launch ten free bays; Flight Pass clears the full runway.",
-      "Fleet is for choosing and launching. Hangar is for working several bays open at once. Same partners, different job: browse and launch on Fleet; stay and work on Hangar.",
-      "When you launch, the ship owns the handoff. Trusted return visits skip broken waits. You always get a path back to U.S. Jet.",
-    ],
-    bullets: [
-      "Fleet = choose & launch. Hangar = multi-bay workbench.",
-      "10 free guest bays; Flight Pass for all 30.",
-      "Call signs and domains help you pick the right tool for the job.",
+      "The header says Business. The URL is /fleet. Same shop: bigger memory, machines that stay on. A server here just means a computer that does not go home in a bag.",
+      "Same install as Homes. Different size of box.",
     ],
   },
   {
-    id: "jet-browser",
-    title: "Jet Browser — your own tiles",
-    route: "/jet-browser",
-    kicker: "Captain-loaded bays",
+    id: "stack",
+    title: "What we put on it",
+    kicker: "Local stack",
     paragraphs: [
-      "Jet Browser lets you type any domain or page link and open it in a Hangar-style tile. Enter another link — another tile. Layout offers 2, 3, or 4 rows across.",
-      "Enlarge and shrink work the same way as Hangar. Sites that refuse embedding get an in-ship Open path. This is your custom workbench when the fixed fleet roster is not enough.",
-    ],
-    bullets: [
-      "Paste example.com or a full https URL → Open tile.",
-      "Up to eight tiles; close one to free a slot.",
-      "Zero new-tab leaks from the ship chrome.",
+      "Ollama is the engine — the model runs on THIS computer. Open WebUI is the screen that looks like ChatGPT. AnythingLLM is the vault for YOUR PDFs. The AI Book Series is the manual in the box.",
+      "A one-click start sits on the desktop. Same day it arrives — not three weekends in a forum.",
     ],
   },
   {
-    id: "intel",
-    title: "Intel — partnership board",
-    route: "/intel",
-    kicker: "Hangar Pro+",
+    id: "cockpit",
+    title: "Optional monthly cockpit",
+    route: "/compare",
+    kicker: "Secondary door",
     paragraphs: [
-      "Intel is the institutional pulse board. Side partnership bays (for example reserved Titan slots) are revenue real estate — held open until the right partners pay. U.S. Jet does not pay Wall Street for feeds; markets that want this audience sponsor the hangar.",
-      "Hangar Pro (or higher) clears Intel. Guests and Flight Pass members see the gate until they upgrade.",
+      "Flight Pass $19.90/mo, Hangar Pro $49.95/mo, and Enterprise Commander $199.99/mo still exist as Stripe subscriptions. They are not the Operator's Rig.",
+      "If you already own a computer and want the monthly hangar, that door is on Compare. If you came here to buy a machine, stay on Homes or Business.",
     ],
     bullets: [
-      "Requires Hangar Pro or Enterprise.",
-      "Reserved bays are intentional — not empty bugs.",
-      "No live NYSE dependency in this build.",
+      "Hardware = one-time purchase on the tiles.",
+      "Cockpit = optional monthly Stripe link.",
+      "No Google or Apple login. Stripe only.",
     ],
   },
   {
-    id: "origin",
-    title: "Origin — command help",
-    route: "/origin",
-    kicker: "Bay 30",
+    id: "trust",
+    title: "Who sells this, and if a box lands wrong",
+    route: "/about",
+    kicker: "Trust",
     paragraphs: [
-      "Origin is the text command node. Ask about Hangar, Fleet, tiers, login, and which bay to open. It runs on onboard ship knowledge at zero cloud cost — not a metered general chatbot.",
-      "Customer Service links can land you on Origin in CS mode. Enterprise clearance unlocks the full Origin route. For human follow-up, email ops@usjet.ai.",
-    ],
-    bullets: [
-      "Ask plain questions: login, prices, which tool for writing or video.",
-      "Enterprise for full Origin; CS entry for support framing.",
-      "Ops email for billing disputes and lockouts.",
-    ],
-  },
-  {
-    id: "member",
-    title: "Member Login & Portal",
-    route: "/member",
-    kicker: "Stripe clearance",
-    paragraphs: [
-      "Member Login: pay on Stripe first, then verify with billing email plus your Stripe Member ID (cus_…). No OAuth. Email alone never unlocks the portal.",
-      "Member Portal holds Mission Projects, AI data telemetry, shipping, and Hangar/Fleet launch boards. After you pass this AI 101 quiz, your AI 101 badge appears here as proof.",
-    ],
-    bullets: [
-      "Flight Pass $19.90/mo · Hangar Pro $49.95/mo · Enterprise $199.99/mo.",
-      "Session lasts about 24 hours in the browser; Sign out clears it.",
-      "Manage billing in Stripe; email Ops for human routing.",
-    ],
-  },
-  {
-    id: "special",
-    title: "Founder Special — tiers",
-    route: "/special",
-    kicker: "Checkout",
-    paragraphs: [
-      "Founder Special is the tier checkout surface — Flight Pass, Hangar Pro, Enterprise Commander — wired to Stripe Payment Links. High-pressure funnels land direct on those ports.",
-      "Pick the clearance that matches what you need: Hangar depth, Intel, or Origin.",
+      "About states the facts we already publish: Ameer Karim, USJET LLC, established 2018, New York mail, ops@usjet.ai. No invented biography.",
+      "Returns & warranty restates the Terms: manufacturer warranties apply; a numbered USJET return window is still a placeholder in the Terms, so we do not advertise a 30-day no-questions return. Damaged or dead-on-arrival — write Ops with the Stripe receipt.",
     ],
   },
   {
@@ -138,36 +91,7 @@ export const AI101_LESSON_SECTIONS: readonly Ai101LessonSection[] = [
     route: "/sos",
     kicker: "Short answers",
     paragraphs: [
-      "Help is the practical desk: login steps, Hangar enlarge/shrink, plan prices, Origin chat, and Ops email. It is not the full curriculum — that is this AI 101 lesson.",
-      "If something is broken after an update, hard-reload the page. If checkout fails, confirm you returned to Member Login with the same billing email.",
-    ],
-  },
-  {
-    id: "more",
-    title: "Other decks worth knowing",
-    kicker: "Map",
-    paragraphs: [
-      "Hired HUD / USJET House watches live roster energy. Fleet Directory lists jet-fighter call signs. Gaming and Jet Hoops are entertainment surfaces inside the same ship rules.",
-      "Revenue and partner pages (Founder’s Fuel, Code Kit, Sovereignty, and related) support growth and institutional story — explore them when you are ready to deepen the business side.",
-      "Privacy and protocol pages document policy. Landscape guide helps mobile operators. Always prefer same-window navigation from the header, footer Help link, or side latch menu.",
-    ],
-    bullets: [
-      "Header: Hangar · Fleet · Jet Browser · Intel · Founder · Origin · Member",
-      "Footer Help → /sos · AI 101 → /ai-101",
-      "Latch menu lists the full deck when you need a rare route.",
-    ],
-  },
-  {
-    id: "howto",
-    title: "How to practice after this lesson",
-    kicker: "Flight plan",
-    paragraphs: [
-      "1) Open Hangar. Launch one free bay. Enlarge it. Shrink it. Close it.",
-      "2) Open Fleet. Read three call signs. Launch one free runway bay.",
-      "3) Open Jet Browser. Load a domain you use for work. Try 2-row vs 3-row layout.",
-      "4) Skim Founder. Open Help if anything felt stuck.",
-      "5) When ready to clear more of the ship, pay on Stripe and verify at Member Login.",
-      "Then take the ten-question check below. Pass to stamp the AI 101 badge on your Member Portal.",
+      "Help is the practical desk: orders, shipping, setup, and the optional cockpit prices. This AI 101 page is the lesson. Portrait works on a phone — you do not have to rotate to shop.",
     ],
   },
 ];

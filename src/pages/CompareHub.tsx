@@ -16,21 +16,22 @@ export default function CompareHub() {
     <div className="compare-page page-atmosphere page-nav-offset mx-auto max-w-4xl px-4 pb-36 pt-4 sm:px-6 lg:px-8">
       <header className="compare-page__hero">
         <UsjetWordmark size="hero" glow className="compare-page__wordmark" />
-        <p className="compare-page__eyebrow">Compare · money pages</p>
+        <p className="compare-page__eyebrow">Compare · hardware first</p>
         <h1 className="compare-page__title">
-          USJET vs ChatGPT, tool sprawl, and custom AI builds
+          A computer with a Jarvis vs ChatGPT, tool sprawl, and a custom build
         </h1>
         <p className="compare-page__lede">{SEO_MONEY_HUB_THESIS}</p>
         <div className="compare-page__cta-row">
+          <Link to="/" className="compare-page__cta btn-glass-prominent glass-effect-interactive glass-tint-cyan">
+            Shop the Operator&apos;s Rig
+          </Link>
           <a
             href={flight.href}
-            className="compare-page__cta btn-glass-prominent glass-effect-interactive glass-tint-cyan"
+            className="compare-page__cta-secondary btn-glass glass-effect-interactive"
+            data-usjet-external-leak="true"
           >
-            {flight.ctaLabel}
+            Optional cockpit · {flight.priceDisplay}
           </a>
-          <Link to="/" className="compare-page__cta-secondary btn-glass glass-effect-interactive">
-            Enter Hangar
-          </Link>
         </div>
       </header>
 
@@ -51,7 +52,7 @@ export default function CompareHub() {
                   <h3 className="compare-lane__title">{page.h1}</h3>
                   <p className="compare-lane__lede">{page.lede}</p>
                   <p className="compare-lane__offer">
-                    Primary clearance: {offer.name} · {offer.priceDisplay}
+                    Hardware first. Optional cockpit: {offer.name} · {offer.priceDisplay}
                   </p>
                   <Link
                     to={page.path}
@@ -83,7 +84,7 @@ export default function CompareHub() {
 
       <section className="compare-page__bundle" aria-labelledby="compare-bundle-heading">
         <h2 id="compare-bundle-heading" className="compare-page__section-title">
-          Unique bundle
+          Optional cockpit bundle
         </h2>
         <ul className="compare-page__bundle-grid">
           {SEO_MONEY_BUNDLE.map((item) => (

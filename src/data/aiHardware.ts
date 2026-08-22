@@ -150,7 +150,7 @@ export const HOME_DECK = {
 export const BUSINESS_DECK = {
   kicker: "Business · AI computers",
   title: "A Jarvis for the shop that never goes to sleep",
-  lede: "Same gift as Hangar — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
+  lede: "Same install as the home machines — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
   primerTitle: "What we do to these computers",
   primer: [
     "We buy the bigger box — Studio, 64GB–128GB mini-PCs, always-on closets.",
@@ -162,7 +162,31 @@ export const BUSINESS_DECK = {
 export const HARDWARE_HERO_KICKER = "Operator's Rig · Personal Jarvis on real hardware" as const;
 export const HARDWARE_HERO_TITLE = "We buy the computer. We give it a Jarvis. We ship it." as const;
 export const HARDWARE_HERO_LEDE =
-  "Hangar is home. Fleet is business. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
+  "Homes is the house shop. Business (this site also calls it Fleet) is the shop-and-office shop. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
+
+/** First-run names. Aviation chrome stays; the buyer gets a translation. */
+export const CUSTOMER_GLOSSARY = [
+  {
+    term: "Homes",
+    also: "Hangar",
+    meaning: "AI computers for the house. This is the home page.",
+  },
+  {
+    term: "Business",
+    also: "Fleet",
+    meaning: "AI computers and always-on boxes for a shop or office. That is the /fleet page — same word as the Business button in the header.",
+  },
+  {
+    term: "Deck",
+    also: "site menu",
+    meaning: "The glowing tab on the left edge. It opens every page on this site.",
+  },
+  {
+    term: "Operator's Rig",
+    also: "the product",
+    meaning: "The computer plus the local assistant we install before it ships. One-time hardware purchase — not the $19.90/mo cockpit.",
+  },
+] as const;
 
 export const HARDWARE_CATEGORY_LABELS: Record<HardwareCategory, string> = {
   "apple-silicon": "Apple Silicon",

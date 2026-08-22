@@ -34,7 +34,8 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     title: "Company",
     routes: [
       { path: "/blog", label: "Operator Log", hint: "Blog" },
-      { path: "/ai-101", label: "AI 101", hint: "How local AI works" },
+      { path: "/about", label: "About", hint: "Ameer Karim · USJET LLC" },
+      { path: "/ai-101", label: "AI 101", hint: "How the Operator's Rig works" },
       { path: "/sos", label: "Help", hint: "SOS help center" },
     ],
   },
@@ -44,8 +45,9 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     routes: [
       { path: "/privacy", label: "Privacy" },
       { path: "/terms", label: "Terms" },
+      { path: "/returns", label: "Returns & warranty" },
       { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
-      { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },
+      { path: MOBILE_LANDSCAPE_ROUTE, label: "Phone view" },
     ],
   },
 ] as const;

@@ -29,6 +29,8 @@ const STATIC_ENTRIES = [
   { path: "/store/ai-computers/homes", changefreq: "weekly", priority: "0.93" },
   { path: "/store/ai-computers/businesses", changefreq: "weekly", priority: "0.93" },
   { path: "/sos", changefreq: "monthly", priority: "0.55" },
+  { path: "/about", changefreq: "monthly", priority: "0.7" },
+  { path: "/returns", changefreq: "yearly", priority: "0.6" },
   { path: "/privacy", changefreq: "yearly", priority: "0.45" },
   { path: "/terms", changefreq: "yearly", priority: "0.45" },
   { path: "/llms.txt", changefreq: "monthly", priority: "0.7" },

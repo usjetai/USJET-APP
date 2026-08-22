@@ -16,12 +16,12 @@ import {
 export default function MobileLandscapeGuide() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "Landscape view · USJet.ai";
+    document.title = "Phone view · USJet.ai";
     const meta = document.querySelector('meta[name="description"]');
     const prevDesc = meta?.getAttribute("content") ?? "";
     meta?.setAttribute(
       "content",
-      "USJET.AI works best in landscape on mobile—full fleet tiles, nav, and ops toolbar. How to rotate your device.",
+      "USJET shops in portrait. Landscape is extra width, not a gate.",
     );
     return () => {
       document.title = prev;
@@ -46,7 +46,7 @@ export default function MobileLandscapeGuide() {
       <GlassEffectContainer className="mobile-landscape-page__panel glass-effect glass-effect--rounded-rect liquid-glass-background glass-tint-cyan">
         <div className="mobile-landscape-page__inner">
           <section className="mobile-landscape-page__section">
-            <h2 className="mobile-landscape-page__section-title">Why landscape</h2>
+            <h2 className="mobile-landscape-page__section-title">Portrait first</h2>
             <ul className="mobile-landscape-page__list">
               {MOBILE_LANDSCAPE_WHY.map((item) => (
                 <li key={item.heading} className="mobile-landscape-page__item">
@@ -81,7 +81,7 @@ export default function MobileLandscapeGuide() {
 
       <p className="mobile-landscape-page__back">
         <Link to="/" className="mobile-landscape-page__link">
-          ← Back to Fleet
+          ← Back to Homes
         </Link>
       </p>
     </div>

@@ -85,11 +85,11 @@ export const SEO_MONEY_OFFERS = {
 export const SEO_MONEY_HUB_PATH = "/compare" as const;
 
 export const SEO_MONEY_HUB_SEO: SeoMoneyPageSeo = {
-  title: "USJET vs ChatGPT, AI Tool Sprawl & Custom Builds | Compare",
+  title: "USJET Operator's Rig vs ChatGPT Cloud | Compare",
   description:
-    "Stop tab-hopping ChatGPT, Claude, Midjourney, and homemade agent glue. USJET is the sovereign AI hangar — 30 tools, one cockpit. Compare Flight Pass, Hangar Pro, and Enterprise.",
+    "USJET sells computers with a local assistant already installed. Compare the Operator's Rig to ChatGPT tabs, tool sprawl, and custom builds. Optional Flight Pass $19.90/mo is a separate cockpit door.",
   keywords:
-    "ChatGPT alternative, AI tool stack, AI hangar, custom AI platform alternative, USJET vs ChatGPT, AI cockpit for teams, Flight Pass",
+    "ChatGPT alternative, local AI computer, Operator's Rig, AI hangar, USJET vs ChatGPT, buy AI computer, Flight Pass",
   ogType: "website",
 };
 

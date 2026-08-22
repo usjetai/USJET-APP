@@ -14,11 +14,14 @@ import SiteLatchMenu from "./components/layout/SiteLatchMenu";
 import SeoHead from "./components/layout/SeoHead";
 import AnalyticsRouteTracker from "./components/layout/AnalyticsRouteTracker";
 
-const Hangar = lazy(() => import("./pages/Hangar"));
-const Fleet = lazy(() => import("./pages/Fleet"));
+import Hangar from "./pages/Hangar";
+import Fleet from "./pages/Fleet";
+
 const Sos = lazy(() => import("./pages/Sos"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const About = lazy(() => import("./pages/About"));
+const Returns = lazy(() => import("./pages/Returns"));
 const Ai101 = lazy(() => import("./pages/Ai101"));
 const MobileLandscapeGuide = lazy(() => import("./pages/MobileLandscapeGuide"));
 const ProtocolSessionProof = lazy(() => import("./pages/ProtocolSessionProof"));
@@ -39,7 +42,7 @@ function RouteFallback() {
       aria-live="polite"
     >
       <span className="text-[0.65rem] font-extrabold uppercase tracking-[0.22em] text-sky-300/55">
-        Loading flight deck…
+        Loading…
       </span>
     </div>
   );
@@ -59,6 +62,8 @@ function AnimatedRoutes() {
             <Route path="/sos" element={<Sos />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/returns" element={<Returns />} />
             <Route path="/ai-101" element={<Ai101 />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />

@@ -1,22 +1,20 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Newspaper } from "lucide-react";
-import UsjetBlogCadenceBanner from "../components/blog/UsjetBlogCadenceBanner";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import { BLOG_ROUTE, formatBlogDate, getBlogPostsNewestFirst } from "../data/usjetBlog";
-import { BLOG_CADENCE_TOTAL_DAYS } from "../lib/usa250BlogCadence";
 
 export default function Blog() {
   const posts = getBlogPostsNewestFirst();
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "Operator Log · USJET Blog";
+    document.title = "USJET Blog — Operator's Rig & Manuals";
     const meta = document.querySelector('meta[name="description"]');
     const prevDesc = meta?.getAttribute("content") ?? "";
     meta?.setAttribute(
       "content",
-      "USJET daily operator log — founding startup, platform brief, and partnership doctrine. Fifty-day cadence to USA 250.",
+      "USJET blog: Operator's Rig hardware notes, local-AI buyer's guides, and the Engineering Series.",
     );
     document.documentElement.classList.add("blog-page-root");
     return () => {
@@ -31,16 +29,14 @@ export default function Blog() {
       <header className="blog-page__hero">
         <p className="blog-page__eyebrow">
           <Newspaper size={16} aria-hidden />
-          Operator log
+          Operator notes
         </p>
         <h1 className="blog-page__title">USJET Blog</h1>
         <p className="blog-page__lede">
-          Founding dispatches, platform intelligence, and fleet doctrine—dated three days apart at launch, then daily
-          through the fifty-day march to the 250th anniversary.
+          Hardware notes, local-AI buyer's guides, and the Engineering Series — dated posts from the Founder, not a
+          launch countdown.
         </p>
       </header>
-
-      <UsjetBlogCadenceBanner />
 
       <ul className="blog-page__list">
         {posts.map((post) => (
@@ -49,9 +45,6 @@ export default function Blog() {
               <article className="blog-card__inner">
                 <div className="blog-card__meta">
                   <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
-                  {post.cadenceDay <= BLOG_CADENCE_TOTAL_DAYS ? (
-                    <span className="blog-card__day">Day {post.cadenceDay}</span>
-                  ) : null}
                 </div>
                 <h2 className="blog-card__title">
                   <Link to={`${BLOG_ROUTE}/${post.slug}`}>{post.title}</Link>
@@ -66,7 +59,7 @@ export default function Blog() {
                   ))}
                 </div>
                 <Link to={`${BLOG_ROUTE}/${post.slug}`} className="blog-card__read glass-effect-interactive">
-                  Read dispatch →
+                  Read →
                 </Link>
               </article>
             </GlassEffectContainer>

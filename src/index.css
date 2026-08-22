@@ -33565,6 +33565,63 @@ html.blog-page-root #usjet-app-shell {
   margin-bottom: 0.5rem;
 }
 
+.hw-trust {
+  margin: 1.5rem 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: rgba(226, 232, 240, 0.62);
+}
+
+.hw-trust__link {
+  color: rgba(165, 243, 252, 0.9);
+  text-decoration: none;
+}
+
+.hw-trust__link:hover,
+.hw-trust__link:focus-visible {
+  text-decoration: underline;
+}
+
+.hw-secondary {
+  margin: 2rem auto 0;
+  max-width: 42rem;
+  text-align: center;
+}
+
+.hw-secondary h2 {
+  margin: 0 0 0.65rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.hw-secondary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.hw-secondary__link {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(165, 243, 252, 0.85);
+  text-decoration: none;
+}
+
+@media (orientation: portrait) and (max-width: 720px) {
+  .homes-hero--static .homes-hero__stage {
+    height: auto;
+    min-height: 28rem;
+    max-height: none;
+  }
+}
+
 @media (max-width: 720px) {
   .homes-hero__hint {
     display: none;

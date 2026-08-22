@@ -8,11 +8,11 @@ type CockpitReturnBarProps = {
 };
 
 const RETURN_LABELS: Record<string, string> = {
-  "/": "RETURN TO HANGAR",
-  "/hangar": "RETURN TO HANGAR",
-  "/fleet": "RETURN TO FLEET",
-  "/intel": "RETURN TO INTEL",
-  "/origin": "RETURN TO ORIGIN",
+  "/": "RETURN TO HOMES",
+  "/hangar": "RETURN TO HOMES",
+  "/business": "RETURN TO BUSINESS",
+  "/fleet": "RETURN TO BUSINESS",
+  "/store": "RETURN TO MANUALS",
 };
 
 export default function CockpitReturnBar({
@@ -22,13 +22,13 @@ export default function CockpitReturnBar({
 }: CockpitReturnBarProps) {
   const { session } = useMemberAuth();
   const primeActive = session?.active && session.tier === "USJET-PRIME-ACTIVE";
-  const returnLabel = RETURN_LABELS[returnTo] ?? "RETURN TO HANGAR";
+  const returnLabel = RETURN_LABELS[returnTo] ?? "RETURN TO SHOP";
 
   return (
     <header className="cockpit-return-bar" role="banner">
       <div className="cockpit-return-bar__glow" aria-hidden />
       <div className="cockpit-return-bar__inner">
-        <Link to={returnTo} className="cockpit-return-bar__brand" aria-label="Return to USJET Hangar">
+        <Link to={returnTo} className="cockpit-return-bar__brand" aria-label="Return to USJET shop">
           <span className="cockpit-return-bar__pulse" aria-hidden />
           <span className="cockpit-return-bar__text">
             USJET.AI

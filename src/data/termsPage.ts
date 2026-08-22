@@ -36,7 +36,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
     id: "acceptance",
     title: "Acceptance of these terms",
     paragraphs: [
-      "These Terms of Service (\"Terms\") govern your use of USJET.AI — the sovereign AI fleet cockpit, Member Portal, AI Computers hardware store, and all associated pages (the \"Service\") — operated by USJET LLC (\"USJET,\" \"we,\" \"us\").",
+      "These Terms of Service (\"Terms\") govern your use of USJET.AI — the Operator's Rig hardware shop, manuals, leftover Stripe subscriptions that still exist, and all associated pages (the \"Service\") — operated by USJET LLC (\"USJET,\" \"we,\" \"us\").",
       "By using the Service, placing an order, or clearing a subscription tier, you agree to these Terms and to our Privacy Policy. If you do not agree, do not use the Service.",
       "You must be at least 18 years old, or the age of majority in your jurisdiction, and able to form a binding contract to use the Service.",
     ],
@@ -53,9 +53,9 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
     id: "subscriptions",
     title: "Subscription tiers & billing",
     paragraphs: [
-      "Flight Pass ($19.90/mo), Hangar Pro ($49.95/mo), and Enterprise Commander ($199.99/mo) are recurring subscriptions billed through Stripe and renew automatically each period until cancelled.",
+      "Leftover Stripe subscriptions from an earlier version of this site still bill through Stripe: Flight Pass ($19.90/mo), Hangar Pro ($49.95/mo), and Enterprise Commander ($199.99/mo). They renew automatically each period until cancelled. They are not required to buy a computer.",
       "Cancel any time through Stripe's customer portal or by emailing ops@usjet.ai. Cancellation stops future renewals; it does not refund the current billing period unless required by law.",
-      "We may change subscription pricing or included features prospectively. Material changes will be reflected on /special before they take effect for new billing periods.",
+      "We may change leftover subscription pricing or included leftover features prospectively. Material changes will be reflected on the site before they take effect for new billing periods.",
     ],
   },
   {
@@ -72,16 +72,16 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
     id: "ai-content",
     title: "AI-generated content",
     paragraphs: [
-      "Origin, the Fleet bay assistants, and other in-product chat surfaces are AI-generated using third-party models (including OpenAI, Google Vertex AI, and OpenRouter-routed models). Responses can be incomplete, outdated, or wrong.",
+      "Origin, leftover Fleet bay assistants, and other in-product chat surfaces (if still reachable) are AI-generated using third-party models (including OpenAI, Google Vertex AI, and OpenRouter-routed models). Responses can be incomplete, outdated, or wrong.",
       "Nothing produced by these AI surfaces is professional legal, medical, financial, or safety advice. You are responsible for independently verifying anything you rely on before acting on it.",
-      "Do not use the Service to generate content that is illegal, infringing, or intended to impersonate a real person or another AI partner — see the Anti-Clone doctrine on the Operator Log for why cloning is against the spirit of the product, not just the rule.",
+      "Do not use the Service to generate content that is illegal, infringing, or intended to impersonate a real person.",
     ],
   },
   {
     id: "acceptable-use",
     title: "Acceptable use",
     bullets: [
-      "No reverse-engineering, scraping, or reselling access to gated surfaces (Hangar, Fleet, Intel, Origin, Member Portal).",
+      "No reverse-engineering, scraping, or reselling access to leftover gated surfaces if they remain reachable.",
       "No attempting to bypass Stripe-based verification or access another member's account or data.",
       "No automated abuse of chat or API surfaces beyond normal interactive use.",
       "No unlawful, harassing, or infringing use of the Service.",

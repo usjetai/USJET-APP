@@ -1,5 +1,4 @@
 import { useMemo, useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
 import { Award, CheckCircle2 } from "lucide-react";
 import GlassEffectContainer from "../layout/GlassEffectContainer";
 import {
@@ -62,8 +61,8 @@ export default function Ai101Quiz() {
             Ten questions — pass for your badge
           </h2>
           <p className="ai101-quiz__lede">
-            Score at least {AI101_QUIZ_PASS_SCORE}/{AI101_QUIZ_TOTAL} to earn the AI 101 badge. It shows on your{" "}
-            <Link to="/member">Member Portal</Link> as proof you completed this one-on-one.
+            Score at least {AI101_QUIZ_PASS_SCORE}/{AI101_QUIZ_TOTAL} to earn the AI 101 badge. Hardware checkout does not
+            require it.
           </p>
         </header>
 
@@ -79,17 +78,7 @@ export default function Ai101Quiz() {
                   month: "short",
                   day: "numeric",
                 })}
-                {session?.active ? (
-                  <>
-                    {" "}
-                    · View on <Link to="/member">Member Portal</Link>
-                  </>
-                ) : (
-                  <>
-                    {" "}
-                    · <Link to="/member/login">Sign in</Link> to pin it on your membership page
-                  </>
-                )}
+                . Saved in this browser.
               </p>
             </div>
           </div>
@@ -170,17 +159,7 @@ export default function Ai101Quiz() {
               <>
                 <CheckCircle2 size={20} aria-hidden />
                 <p>
-                  Passed — {score}/{AI101_QUIZ_TOTAL}. Your AI 101 badge is saved
-                  {session?.active ? (
-                    <>
-                      {" "}
-                      on <Link to="/member">Member Portal</Link>.
-                    </>
-                  ) : (
-                    <>
-                      . <Link to="/member/login">Sign in</Link> so it shows on your membership page.
-                    </>
-                  )}
+                  Passed — {score}/{AI101_QUIZ_TOTAL}. Your AI 101 badge is saved in this browser.
                 </p>
               </>
             ) : (

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { bootstrapAtmosphere } from "../../lib/usjetAtmosphere";
+import { restoreAtmosphereLive } from "../../lib/usjetAtmosphere";
 
-/** Reinforce void sky on mount — warp mounts only after Protocol completes. */
+/** Keep warp live — do not drop the shop into the Protocol void. */
 export default function UsjetAtmosphereBoot() {
   useEffect(() => {
-    bootstrapAtmosphere();
+    restoreAtmosphereLive();
   }, []);
 
   return null;

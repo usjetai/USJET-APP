@@ -4,10 +4,11 @@ import AppNavInstagramBadge from "./AppNavInstagramBadge";
 import AppNavPhoneBadge from "./AppNavPhoneBadge";
 
 const NAV_LINKS = [
-  { to: "/", label: "Homes" },
-  { to: "/fleet", label: "Business" },
-  { to: "/store", label: "Manuals" },
-  { to: "/blog", label: "Log" },
+  { to: "/", label: "Homes", title: "Home AI computers" },
+  { to: "/business", label: "Business", title: "Business AI computers" },
+  { to: "/store", label: "Manuals", title: "AI Book Series" },
+  { to: "/blog", label: "Log", title: "Operator Log" },
+  { to: "/about", label: "About", title: "Ameer Karim · USJET LLC" },
 ] as const;
 
 const navPillClass = (isActive: boolean) =>
@@ -32,12 +33,13 @@ const AppNav = () => {
 
             <span className="app-nav-divider" aria-hidden />
 
-            <nav className="app-nav-zone app-nav-zone--routes" aria-label="Fleet routes">
+            <nav className="app-nav-zone app-nav-zone--routes" aria-label="Shop">
               {NAV_LINKS.map((link) => (
                 <NavLink
                   key={link.to}
                   to={link.to}
                   end={link.to === "/"}
+                  title={link.title}
                   className={({ isActive }) => navPillClass(isActive)}
                 >
                   {link.label}

@@ -1,6 +1,6 @@
 /**
- * SEO money pages — capture AI buyers who need a hangar, not another chatbot.
- * Aligns with COMPETITIVE_POSITIONING_JUL_2026 + Direct Landing Protocol.
+ * Compare pages — Operator's Rig hardware vs ChatGPT, tool sprawl, and custom installs.
+ * Leftover Stripe subscriptions stay as a quiet door; they are not the product.
  */
 
 import {
@@ -35,10 +35,7 @@ export type SeoMoneyPageSeo = {
 export type SeoMoneyPage = {
   slug: string;
   path: string;
-  /** Competitive alternative id from competitivePositioning.ts */
   alternativeId: (typeof COMPETITIVE_ALTERNATIVES)[number]["id"];
-  /** Primary Stripe extraction offer for this intent */
-  primaryOfferId: SeoMoneyOfferId;
   eyebrow: string;
   h1: string;
   lede: string;
@@ -55,13 +52,14 @@ const FLIGHT = OFFER_BUYING_REASONS.find((o) => o.id === "flight-pass")!;
 const HANGAR = OFFER_BUYING_REASONS.find((o) => o.id === "hangar-pro")!;
 const ENTERPRISE = OFFER_BUYING_REASONS.find((o) => o.id === "enterprise")!;
 
+/** Leftover Stripe products — kept so the Payment Links are not deleted. Not shop CTAs. */
 export const SEO_MONEY_OFFERS = {
   "flight-pass": {
     id: "flight-pass" as const,
     name: FLIGHT.offer,
     priceDisplay: FLIGHT.priceDisplay,
     buyBecause: FLIGHT.buyBecause,
-    ctaLabel: `Clear Flight Pass — ${FLIGHT.priceDisplay}`,
+    ctaLabel: `Leftover monthly link — ${FLIGHT.priceDisplay}`,
     href: FLIGHT_PASS_DIRECT_URL,
   },
   "hangar-pro": {
@@ -69,7 +67,7 @@ export const SEO_MONEY_OFFERS = {
     name: HANGAR.offer,
     priceDisplay: HANGAR.priceDisplay,
     buyBecause: HANGAR.buyBecause,
-    ctaLabel: `Clear Hangar Pro — ${HANGAR.priceDisplay}`,
+    ctaLabel: `Leftover monthly link — ${HANGAR.priceDisplay}`,
     href: HANGAR_PRO_DIRECT_URL,
   },
   enterprise: {
@@ -77,19 +75,27 @@ export const SEO_MONEY_OFFERS = {
     name: ENTERPRISE.offer,
     priceDisplay: ENTERPRISE.priceDisplay,
     buyBecause: ENTERPRISE.buyBecause,
-    ctaLabel: `Clear Enterprise — ${ENTERPRISE.priceDisplay}`,
+    ctaLabel: `Leftover monthly link — ${ENTERPRISE.priceDisplay}`,
     href: ENTERPRISE_DIRECT_URL,
   },
+} as const;
+
+export const LEFTOVER_FLIGHT_PASS = {
+  kicker: "Leftover Stripe link",
+  title: `Flight Pass · ${FLIGHT.priceDisplay}`,
+  body: "This is a leftover monthly subscription from an earlier version of this site. It is not the Operator's Rig. You do not need it to buy a computer or a book.",
+  href: FLIGHT_PASS_DIRECT_URL,
+  ctaLabel: `Optional leftover link · ${FLIGHT.priceDisplay}`,
 } as const;
 
 export const SEO_MONEY_HUB_PATH = "/compare" as const;
 
 export const SEO_MONEY_HUB_SEO: SeoMoneyPageSeo = {
-  title: "USJET vs ChatGPT, AI Tool Sprawl & Custom Builds | Compare",
+  title: "USJET Operator's Rig vs ChatGPT Cloud | Compare",
   description:
-    "Stop tab-hopping ChatGPT, Claude, Midjourney, and homemade agent glue. USJET is the sovereign AI hangar — 30 tools, one cockpit. Compare Flight Pass, Hangar Pro, and Enterprise.",
+    "USJET sells computers with a local assistant already installed. Compare the Operator's Rig to ChatGPT tabs, tool sprawl, and custom local-AI installs.",
   keywords:
-    "ChatGPT alternative, AI tool stack, AI hangar, custom AI platform alternative, USJET vs ChatGPT, AI cockpit for teams, Flight Pass",
+    "ChatGPT alternative, local AI computer, Operator's Rig, USJET vs ChatGPT, buy AI computer, private local LLM",
   ogType: "website",
 };
 
@@ -98,46 +104,45 @@ export const SEO_MONEY_PAGES: readonly SeoMoneyPage[] = [
     slug: "chatgpt-alternative",
     path: "/compare/chatgpt-alternative",
     alternativeId: "generic-ai",
-    primaryOfferId: "flight-pass",
     eyebrow: "vs generic AI chat",
-    h1: "ChatGPT alternative for operators who need a hangar — not another tab",
+    h1: "A computer with a Jarvis vs another ChatGPT tab",
     lede:
-      "Generic AI is one wrench in a drawer. USJET is the hangar: thirty specialized partner AIs, same cockpit, Member ID clearance — built for people who fix things.",
-    problemTitle: "What ChatGPT alone never becomes",
+      "ChatGPT is a rented brain in a browser. The Operator's Rig is a computer that already has a local assistant on it — your files stay on the box.",
+    problemTitle: "What a cloud chat never becomes",
     problemBody:
-      "One general model for every job means copy-paste prompts, lost context, no fleet specialization, and no institutional hangar. You keep paying for chat while the workbench stays fragmented.",
-    solutionTitle: "What USJET replaces",
+      "A monthly chat tab is fine until you paste family or shop files into someone else's server, lose the thread, and still do not own a machine that thinks when the internet is ugly.",
+    solutionTitle: "What USJET sells instead",
     solutionBody:
-      "Flight Pass puts you on the runway: Hangar workbench, all 30 Fleet bays, Member Portal — formation instead of another browser bookmark.",
+      "We buy the listed computer, install the local stack (engine, screen, private document vault, manuals), and ship it talking. One-time hardware. Not another $20 chat bill as the product.",
     proofPoints: [
-      "Thirty specialized AIs under one roof — mission routing beats clone-everything chat",
-      "One Ship, One Cockpit — partners launch in-window, no brand leak",
-      "Stripe-only Member ID — no Google/Apple OAuth side doors",
-      "Wrenches, Not Slides — institutional hangar for labor, not pitch decks",
+      "Models run on THIS computer — Ollama is the engine",
+      "The screen looks like ChatGPT; the files stay home",
+      "USJET.AI Engineering Series ships in the box",
+      "Stripe checkout on the tile — USJET LLC on the invoice",
     ],
     faqs: [
       {
         question: "Is USJET a ChatGPT alternative?",
         answer:
-          "USJET is the hangar those chats never become. You still use elite AI partners — but inside one sovereign cockpit with Hangar, Fleet, and Member clearance instead of tab sprawl.",
+          "USJET is a computer with a local assistant already installed. You can still use cloud chats if you want. The product is the machine, not a wrapper around ChatGPT.",
       },
       {
         question: "Why not just keep using ChatGPT?",
         answer:
-          "ChatGPT is a strong wrench. Operators lose time hopping ChatGPT, Claude, Midjourney, docs, and dashboards. Flight Pass collapses that habit into one ship for $19.90/mo.",
+          "ChatGPT is a strong wrench. It is also a rented brain. An Operator's Rig keeps the model and your documents on hardware you own.",
       },
       {
-        question: "How fast can I clear Flight Pass?",
+        question: "Do I need a monthly subscription to buy the computer?",
         answer:
-          "One Stripe click lands on the hard-wired Flight Pass Payment Link. After clearance, verify with billing email + Member ID — no OAuth.",
+          "No. Homes and Business are one-time hardware. A leftover $19.90/mo Stripe link still exists from an earlier version of this site. You do not need it to buy a rig.",
       },
     ],
     seo: {
-      title: "ChatGPT Alternative for Teams & Operators | USJET Hangar",
+      title: "ChatGPT Alternative — Local AI Computer | USJET",
       description:
-        "Looking for a ChatGPT alternative that is actually a hangar? USJET puts 30 AI tools in one cockpit. Flight Pass from $19.90/mo — exit fragmented free tabs.",
+        "Looking for a ChatGPT alternative you actually own? USJET sells the Operator's Rig — a computer with a local assistant already on it.",
       keywords:
-        "ChatGPT alternative, ChatGPT for teams, AI hangar, AI cockpit, Claude alternative stack, Midjourney workflow, Flight Pass, USJET.AI",
+        "ChatGPT alternative, local AI computer, private LLM, Operator's Rig, buy AI computer, USJET.AI",
       ogType: "website",
     },
   },
@@ -145,46 +150,45 @@ export const SEO_MONEY_PAGES: readonly SeoMoneyPage[] = [
     slug: "ai-tool-sprawl",
     path: "/compare/ai-tool-sprawl",
     alternativeId: "fragmented-stack",
-    primaryOfferId: "hangar-pro",
     eyebrow: "vs fragmented AI stacks",
-    h1: "End AI tool sprawl — one cockpit for fleet, hangar, and intel",
+    h1: "Stop stacking mute boxes and cloud logins — buy one rig that already thinks",
     lede:
-      "Separate tabs for chatbots, docs, dispatch notes, training, and intel dashboards each bring their own login and support queue. USJET collapses five browser habits into one sovereign flight deck.",
+      "Amazon Mac Mini plus three weekends of Docker, plus five cloud logins, is not a product. The Operator's Rig is the machine with the stack already on it.",
     problemTitle: "The hidden tax of AI tool sprawl",
     problemBody:
-      "Fragmented aviation/ops and AI software stacks feel cheap until you count tab-hopping, lost context, and the second product login for markets/intel. Crews do not need another SaaS tile — they need formation.",
-    solutionTitle: "Hangar Pro: fleet + board together",
+      "Separate tabs for chat, docs, and dashboards each bring their own login. A mute computer from a box store still leaves you in terminal-hell. That is the tax.",
+    solutionTitle: "One computer. One stack. The books in the box.",
     solutionBody:
-      "Hangar Pro keeps the full Flight Pass runway and adds the Intel Pulse board — high-velocity operator sync without bolting on a separate dashboard.",
+      "Engine, ChatGPT-like screen, private vault, AI Book Series, one-click desktop start. Homes for the house. Business for the shop. That is the shop.",
     proofPoints: [
-      "Hangar workbench + 30-unit Fleet runway + Member missions in one brand",
-      "Integrated Navigation — same-window launches, Cockpit return bar",
-      "Intel board as institutional real estate for crews who run the board and the bay",
-      "Managed support via Origin CS and ops@usjet.ai when you need a human",
+      "We buy the exact SKU and load it — no dropship substitution",
+      "AnythingLLM reads YOUR PDFs on the box",
+      "Manuals are the Engineering Series, not a PDF dump",
+      "ops@usjet.ai for orders and a box that landed wrong",
     ],
     faqs: [
       {
         question: "What is AI tool sprawl?",
         answer:
-          "AI tool sprawl is paying for and hopping across ChatGPT, Claude, Midjourney, docs, LMS, and ad-hoc dashboards with no command layer. USJET is the command layer.",
+          "Paying for and hopping across ChatGPT, Claude, docs, and dashboards with no computer that actually belongs to you. USJET sells the computer.",
       },
       {
-        question: "Why Hangar Pro instead of Flight Pass?",
+        question: "Does this replace a bookmark collection of AI tools?",
         answer:
-          "If you only need the hangar and fleet, start with Flight Pass. Hangar Pro is for crews who need fleet networking and institutional intel in the same cockpit.",
+          "Yes — that is the point. Bookmarks are not a machine. The Operator's Rig is.",
       },
       {
-        question: "Does USJET replace my bookmark collection?",
+        question: "Is there a monthly plan I have to buy?",
         answer:
-          "Yes — that is the point. Bookmark directories and AI tool roundups are not a command layer. USJET is One Ship, One Cockpit.",
+          "No. The shop is computers and books. A leftover monthly Stripe link exists; it is not required.",
       },
     ],
     seo: {
-      title: "Stop AI Tool Sprawl — One Cockpit for 30 AIs | USJET",
+      title: "Stop AI Tool Sprawl — Buy a Local AI Computer | USJET",
       description:
-        "Tired of AI tool sprawl? USJET Hangar Pro unifies fleet AIs and Intel in one cockpit — $49.95/mo. No more tab-hopping chatbots, docs, and dashboards.",
+        "Tired of AI tool sprawl? USJET ships an Operator's Rig — local engine, screen, private vault, and manuals on real hardware.",
       keywords:
-        "AI tool sprawl, AI tool stack, AI workspace for teams, replace ChatGPT tabs, AI hangar, Hangar Pro, USJET.AI",
+        "AI tool sprawl, local AI computer, replace ChatGPT tabs, Operator's Rig, buy AI computer, USJET.AI",
       ogType: "website",
     },
   },
@@ -192,46 +196,45 @@ export const SEO_MONEY_PAGES: readonly SeoMoneyPage[] = [
     slug: "custom-ai-build",
     path: "/compare/custom-ai-build",
     alternativeId: "custom-build",
-    primaryOfferId: "enterprise",
-    eyebrow: "vs custom internal builds",
-    h1: "Skip the custom AI build — buy the command layer already flying",
+    eyebrow: "vs custom local-AI installs",
+    h1: "Skip the custom local-AI build — buy a rig that already runs",
     lede:
-      "Internal engineering and agency projects to stitch agents, auth, and dashboards burn months of runway. Enterprise Fleet Commander is the sovereign command layer you would otherwise invent.",
-    problemTitle: "Custom builds spend runway inventing the hangar",
+      "Hiring a shop to stand up Docker, RAG, and dashboards burns weeks. USJET already cleared the installer. You buy the computer.",
+    problemTitle: "Custom builds spend runway inventing the installer",
     problemBody:
-      "Homegrown agent glue creates auth sprawl, iframe graves, and founder time as glue. You pay twice: once to build, again to maintain — while competitors clear Stripe and fly.",
-    solutionTitle: "Enterprise: Origin-seated command",
+      "Homegrown local-LLM glue dies when the kid who set it up leaves. You pay twice: once to build, again to keep it alive.",
+    solutionTitle: "We buy it. We load it. We ship it.",
     solutionBody:
-      "Enterprise includes Hangar Pro plus Origin (Aura) as the command node — teach, route, and orchestrate partner AIs from one seat. Ship-ready: Stripe clearance, Liquid Glass hangar, Integrated Navigation.",
+      "Listed SKU, Operator's Rig stack, manuals in the box. Stripe checkout. USJET LLC on the invoice. You did not invent an installer.",
     proofPoints: [
-      "Ship-ready cockpit now — revenue architecture without a six-month build ticket",
-      "Origin command coaching + AI-101 flight school — training in the same brand",
-      "Tiered Intel and Origin without inventing your own access model",
-      "Competitive alternative to fragmented stacks, generic AI, and custom builds in one bundle",
+      "Same-day talking box — not three weekends in a forum",
+      "Homes and Business lineups with live Stripe buy links",
+      "Manufacturer warranties on the machine; ops@usjet.ai for the order",
+      "No invented reviews, no fake 30-day slogan",
     ],
     faqs: [
       {
-        question: "Should we build our own multi-agent command layer?",
+        question: "Should we build our own local LLM workstation?",
         answer:
-          "Only if you want to spend runway inventing the hangar. Enterprise is the command layer already cleared — Stripe Member ID, fleet orchestration, Origin seated.",
+          "Only if you want to spend runway inventing the installer. The Operator's Rig is the machine already loaded.",
       },
       {
-        question: "What does Enterprise replace?",
+        question: "What does this replace?",
         answer:
-          "Hiring an agency or internal team to build multi-agent auth, dashboards, and training from scratch — plus the ops burden of keeping that glue alive.",
+          "A mute Mac from a box store plus forum threads — or hiring someone to stand up Ollama, a chat UI, and a document vault from scratch.",
       },
       {
-        question: "Is Enterprise only for aviation?",
+        question: "Is this only for aviation shops?",
         answer:
-          "USJET is aerospace-specific in culture and cockpit metaphor, built for blue-collar and fleet operators. The product is a sovereign AI hangar — command, training, intelligence, managed support.",
+          "The voice is aviation. The product is a computer with a local assistant, plus the books. Homes and Business.",
       },
     ],
     seo: {
-      title: "Custom AI Build Alternative — Enterprise Command Layer | USJET",
+      title: "Custom Local AI Build Alternative — Operator's Rig | USJET",
       description:
-        "About to build a custom AI command platform? USJET Enterprise ($199.99/mo) is the Origin-seated fleet command layer — already flying, Stripe-cleared.",
+        "About to hire a shop to stand up a local LLM? USJET sells the Operator's Rig — we buy the computer, load the stack, and ship it.",
       keywords:
-        "custom AI platform alternative, multi-agent command layer, build vs buy AI, enterprise AI cockpit, Origin Aura, USJET Enterprise",
+        "custom AI workstation, local LLM computer, build vs buy local AI, Operator's Rig, USJET",
       ogType: "website",
     },
   },

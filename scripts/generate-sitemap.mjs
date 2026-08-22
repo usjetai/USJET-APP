@@ -13,7 +13,8 @@ const SITE = "https://www.usjet.ai";
  */
 const STATIC_ENTRIES = [
   { path: "/", changefreq: "daily", priority: "1.0" },
-  { path: "/fleet", changefreq: "weekly", priority: "0.98" },
+  { path: "/business", changefreq: "weekly", priority: "0.98" },
+  { path: "/fleet", changefreq: "monthly", priority: "0.3" },
   { path: "/blog", changefreq: "daily", priority: "0.95" },
   { path: "/compare", changefreq: "weekly", priority: "0.96" },
   { path: "/compare/chatgpt-alternative", changefreq: "weekly", priority: "0.95" },
@@ -29,6 +30,8 @@ const STATIC_ENTRIES = [
   { path: "/store/ai-computers/homes", changefreq: "weekly", priority: "0.93" },
   { path: "/store/ai-computers/businesses", changefreq: "weekly", priority: "0.93" },
   { path: "/sos", changefreq: "monthly", priority: "0.55" },
+  { path: "/about", changefreq: "monthly", priority: "0.7" },
+  { path: "/returns", changefreq: "yearly", priority: "0.6" },
   { path: "/privacy", changefreq: "yearly", priority: "0.45" },
   { path: "/terms", changefreq: "yearly", priority: "0.45" },
   { path: "/llms.txt", changefreq: "monthly", priority: "0.7" },

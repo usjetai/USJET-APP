@@ -31,11 +31,11 @@ export type PageSeo = {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 };
 
-/** Hangar home — primary commercial + crawl target. */
+/** Homes — primary commercial + crawl target. */
 export const DEFAULT_PAGE_SEO: PageSeo = {
   title: "USJET.AI | Homes — AI Computers",
   description:
-    "USJET Hangar: computers that already have AI in them for the house. Private local models, Operator's Rig stack, shipped to your door. Founded by Ameer Karim.",
+    "USJET: computers that already have AI in them for the house. Private local models, Operator's Rig stack, shipped to your door. Founded by Ameer Karim.",
   keywords:
     "USJET, home AI computer, local AI, Mac Mini, Operator's Rig, Ollama, AnythingLLM, private AI, Ameer Karim, buy AI computer, mini PC for local AI, best mini PC for Ollama, local LLM computer, Mac Mini for local AI",
   ogType: "website",
@@ -46,18 +46,25 @@ export const DEFAULT_PAGE_SEO: PageSeo = {
 /** Exact-path SEO catalog for public marketing surfaces. */
 export const ROUTE_SEO: Record<string, PageSeo> = {
   "/": DEFAULT_PAGE_SEO,
+  "/business": {
+    title: "Business — AI Computers & Servers | USJET.AI",
+    description:
+      "USJET Business: computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
+    keywords:
+      "business AI computer, AI server, Mac Studio, local LLM office, Ryzen AI Max+ 395 mini PC, Beelink GTR9 Pro, Minisforum MS-A2, buy AI computer",
+  },
   "/fleet": {
     title: "Business — AI Computers & Servers | USJET.AI",
     description:
-      "USJET Fleet: business computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
+      "USJET Business: computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
     keywords:
-      "business AI computer, AI server, Mac Studio, local LLM office, USJET Fleet, Ryzen AI Max+ 395 mini PC, Beelink GTR9 Pro, Minisforum MS-A2, buy AI computer",
+      "business AI computer, AI server, Mac Studio, local LLM office, Ryzen AI Max+ 395 mini PC, Beelink GTR9 Pro, Minisforum MS-A2, buy AI computer",
   },
   "/blog": {
-    title: "Operator Log — USJET Blog | AI Fleet Doctrine",
+    title: "USJET Blog — Operator's Rig & Manuals",
     description:
-      "USJET Operator Log: founding dispatches, local-AI buyer's guides, partnership doctrine, and runway intelligence — not a news feed.",
-    keywords: "USJET blog, operator log, AI doctrine, founder startup log, best computer for local AI, Ollama buyer's guide",
+      "USJET blog: Operator's Rig hardware notes, local-AI buyer's guides, and the Engineering Series — not a news feed.",
+    keywords: "USJET blog, Operator's Rig, local AI, best computer for local AI, Ollama buyer's guide, Ameer Karim",
   },
   [SEO_MONEY_HUB_PATH]: {
     ...SEO_MONEY_HUB_SEO,
@@ -72,13 +79,13 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     ]),
   ),
   "/ai-101": {
-    title: "AI 101 — One-on-One Lesson | USJET.AI",
-    description: "Learn how local AI computers work, in plain English — one lesson before you buy.",
+    title: "AI 101 — How the Operator's Rig Works | USJET.AI",
+    description: "Plain-English lesson: Homes vs Business, what we install on the computer, and the books.",
   },
   "/store": {
     title: "Manuals — AI Book Series | USJET.AI",
     description:
-      "USJET Engineering Series on Kindle and paperback — the operator manuals for a computer that already has AI in it.",
+      "Books by Ameer Karim — USJET.AI Engineering Series, Enemy Skies, and Jet Fighter coloring books.",
     keywords:
       "USJET store, AI engineering books, Ameer Karim books, local AI manuals, Operator's Rig books",
     ogType: "product",
@@ -112,11 +119,21 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   },
   "/privacy": {
     title: "Privacy Policy | USJET.AI",
-    description: "USJET.AI privacy policy — how we handle member and hangar data.",
+    description: "USJET.AI privacy policy — how we handle order and site data.",
   },
   "/terms": {
     title: "Terms of Service | USJET.AI",
     description: "USJET.AI Terms of Service — subscriptions, AI Computers hardware orders, shipping and returns, AI-output disclaimers.",
+  },
+  "/about": {
+    title: "About — Ameer Karim & USJET LLC | USJET.AI",
+    description:
+      "USJET.AI is operated by USJET LLC. Founder Ameer Karim. We sell the Operator's Rig — a computer with a local assistant already on it.",
+  },
+  "/returns": {
+    title: "Returns & Warranty | USJET.AI",
+    description:
+      "USJET.AI returns and warranty: manufacturer coverage on the hardware, how to reach ops@usjet.ai, and what the published Terms actually say.",
   },
   "/sos": {
     title: "Help Center | USJET.AI",
@@ -128,8 +145,8 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     noindex: true,
   },
   "/landscape": {
-    title: "Landscape View Guide | USJET.AI",
-    description: "Rotate to landscape for the best USJET hangar cockpit experience on mobile.",
+    title: "Phone view | USJET.AI — portrait works",
+    description: "USJET shops in portrait. Landscape is extra width, not a gate.",
     noindex: true,
   },
   "/protocol-proof": {
@@ -196,7 +213,7 @@ export function buildWebsiteJsonLd(): Record<string, unknown> {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: `${SITE_ORIGIN}/fleet-directory`,
+        urlTemplate: `${SITE_ORIGIN}/store/ai-computers`,
       },
       "query-input": "required name=search_term_string",
     },
@@ -265,9 +282,9 @@ export function buildProductJsonLd(input: {
       "@type": "Offer",
       url: `${SITE_ORIGIN}/`,
       priceCurrency: "USD",
-      price: "19.90",
+      price: "899.00",
       availability: "https://schema.org/InStock",
-      description: "Flight Pass monthly — Hangar access",
+      description: "Operator's Rig hardware — computer with a local assistant",
     },
   };
 }

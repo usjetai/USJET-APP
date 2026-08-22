@@ -1,7 +1,6 @@
-/** Full-site flight deck index — side latch menu source of truth. */
+/** Full-site shop menu — side latch source of truth. */
 
 import { MOBILE_LANDSCAPE_ROUTE } from "./mobileLandscapeGuide";
-import { PROTOCOL_SESSION_PROOF_ROUTE } from "./protocolSessionProof";
 
 export type SiteRouteEntry = {
   path: string;
@@ -21,7 +20,7 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     title: "Shop",
     routes: [
       { path: "/", label: "Homes", hint: "Home AI computers" },
-      { path: "/fleet", label: "Business", hint: "Business computers · servers" },
+      { path: "/business", label: "Business", hint: "Business computers · servers" },
       { path: "/store", label: "Manuals", hint: "AI Book Series" },
       { path: "/store/ai-computers", label: "Full lineup", hint: "Homes + Businesses hub" },
       { path: "/store/ai-computers/homes", label: "AI Computers — Homes", hint: "Mac Mini, MacBook, mini PCs" },
@@ -33,9 +32,10 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     id: "company",
     title: "Company",
     routes: [
-      { path: "/blog", label: "Operator Log", hint: "Blog" },
-      { path: "/ai-101", label: "AI 101", hint: "How local AI works" },
-      { path: "/sos", label: "Help", hint: "SOS help center" },
+      { path: "/blog", label: "Blog", hint: "Operator's Rig notes" },
+      { path: "/about", label: "About", hint: "Ameer Karim · USJET LLC" },
+      { path: "/ai-101", label: "AI 101", hint: "How the Operator's Rig works" },
+      { path: "/sos", label: "Help", hint: "Orders and setup" },
     ],
   },
   {
@@ -44,8 +44,8 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     routes: [
       { path: "/privacy", label: "Privacy" },
       { path: "/terms", label: "Terms" },
-      { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
-      { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },
+      { path: "/returns", label: "Returns & warranty" },
+      { path: MOBILE_LANDSCAPE_ROUTE, label: "Phone view" },
     ],
   },
 ] as const;

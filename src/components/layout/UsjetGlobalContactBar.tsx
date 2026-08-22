@@ -46,7 +46,7 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/" end className={footerLinkClass}>
               Homes
             </NavLink>
-            <NavLink to="/fleet" className={footerLinkClass}>
+            <NavLink to="/business" className={footerLinkClass}>
               Business
             </NavLink>
             <NavLink to="/store/ai-computers" className={footerLinkClass}>
@@ -62,8 +62,11 @@ export default function UsjetGlobalContactBar() {
 
           <nav className="usjet-footer__col" aria-label="Company">
             <h2 className="usjet-footer__heading">Company</h2>
+            <NavLink to="/about" className={footerLinkClass}>
+              About
+            </NavLink>
             <NavLink to="/blog" className={footerLinkClass}>
-              Operator Log
+              Blog
             </NavLink>
             <NavLink to="/ai-101" className={footerLinkClass}>
               AI 101
@@ -78,6 +81,9 @@ export default function UsjetGlobalContactBar() {
 
           <nav className="usjet-footer__col" aria-label="Legal">
             <h2 className="usjet-footer__heading">Legal</h2>
+            <NavLink to="/returns" className={footerLinkClass}>
+              Returns &amp; warranty
+            </NavLink>
             <NavLink to="/privacy" className={footerLinkClass}>
               Privacy
             </NavLink>
@@ -87,7 +93,7 @@ export default function UsjetGlobalContactBar() {
           </nav>
         </div>
 
-        <div className="usjet-footer__books-grid" aria-label="AI Book Series">
+        <div className="usjet-footer__books-grid" aria-label="Books by Ameer Karim">
           {USJET_STORE_BOOKS.map((book) => (
             <Link
               key={book.id}

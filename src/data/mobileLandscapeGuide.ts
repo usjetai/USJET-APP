@@ -1,43 +1,43 @@
-/** Mobile landscape guide — developer / fleet tool layout (/landscape). */
+/** Phone view — portrait is the main path. Landscape is extra width, not a gate. */
 
 export const MOBILE_LANDSCAPE_ROUTE = "/landscape" as const;
 
-export const MOBILE_LANDSCAPE_TITLE = "Rotate for the full command deck" as const;
+export const MOBILE_LANDSCAPE_TITLE = "Portrait works. Landscape is extra width." as const;
 
-export const MOBILE_LANDSCAPE_TAGLINE = "Landscape · developer tool view" as const;
+export const MOBILE_LANDSCAPE_TAGLINE = "Phone view · not a rotate gate" as const;
 
 export const MOBILE_LANDSCAPE_INTRO =
-  "USJET.AI is built as a wide command deck—not a narrow feed. The fleet tiles, hangar bays, live terminal strip, and bottom ops toolbar are designed to spread out in landscape so you see every control at once." as const;
+  "Shop Homes and Business in portrait. You do not have to turn the phone sideways to buy a computer. Landscape is optional extra width if you want the film and the lineup on one long horizon." as const;
 
 export const MOBILE_LANDSCAPE_WHY = [
   {
-    heading: "Tiles show in full",
-    body: "Fleet and hangar cards are landscape bays. In portrait they stack and clip; sideways you get the full runway grid the founder designed—names, handoff, and status visible without scrolling every row.",
+    heading: "Portrait is the main path",
+    body: "The Operator's Rig shop, About, Returns, and Help are all readable standing up. If a page asked you to rotate, that was leftover cockpit chrome — not the product.",
   },
   {
-    heading: "Toolbars stay on one line",
-    body: "The top nav (Protocol, Fleet online, Blog) and the bottom contact strip pack dozens of chips. Landscape gives them room so nothing hides behind overflow or feels crushed.",
+    heading: "Landscape is optional",
+    body: "Sideways gives the Homes film and the Business lineup more elbow room. Use it if you like it. It is not required to check out.",
   },
   {
-    heading: "This is a developer / operator console",
-    body: "You are not browsing a blog—you are running a 30-unit AI fleet. The layout assumes phone-wide or desktop width, like a cockpit HUD rather than a single-column app.",
+    heading: "This is a hardware shop",
+    body: "You are buying a computer with a local assistant on it. The page should work the way a phone shop works — one column, thumb reach, no command-deck exam.",
   },
 ] as const;
 
 export const MOBILE_LANDSCAPE_HOW_IOS = [
-  "Turn off Rotation Lock: swipe down → tap the lock icon with a circle arrow (or Settings → Control Center).",
-  "Hold the phone with the long edge on the bottom.",
-  "Rotate 90° until the site reflows; Safari/Chrome will use the wider viewport.",
+  "Leave the phone in portrait and shop. No setting required.",
+  "If you want landscape: turn off Rotation Lock (Control Center → lock with a circular arrow), then turn the phone.",
+  "Safari will reflow to the wider viewport. Rotate back any time.",
 ] as const;
 
 export const MOBILE_LANDSCAPE_HOW_ANDROID = [
-  "Turn off screen rotation lock in Quick Settings (icon may say Auto-rotate).",
-  "Rotate the device to landscape (long edge horizontal).",
-  "If the page stays narrow, tap the browser menu → Desktop site or reload once.",
+  "Leave Auto-rotate off if you want to stay in portrait. The shop still works.",
+  "If you want landscape: turn Auto-rotate on and turn the phone.",
+  "If a page stays narrow after rotating, reload once.",
 ] as const;
 
 export const MOBILE_LANDSCAPE_NOTE =
-  "Portrait still works for quick checks—but for fueling the fleet, reading intel, and using Protocol + terminal together, landscape is the intended experience." as const;
+  "Portrait is first-class. Landscape is extra width. Neither path is a test." as const;
 
 export const MOBILE_LANDSCAPE_CHIP_HOVER =
-  "Open the landscape guide — USJET works best sideways on mobile" as const;
+  "Phone view — portrait works; landscape is optional extra width" as const;

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import BlogInstitutionalPost from "../components/blog/BlogInstitutionalPost";
 import BlogManifestoPost from "../components/blog/BlogManifestoPost";
-import UsjetBlogCadenceBanner from "../components/blog/UsjetBlogCadenceBanner";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
 import {
   BLOG_ROUTE,
@@ -10,7 +9,6 @@ import {
   getBlogPostBySlug,
   getBlogPostsNewestFirst,
 } from "../data/usjetBlog";
-import { BLOG_CADENCE_TOTAL_DAYS } from "../lib/usa250BlogCadence";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -37,9 +35,9 @@ export default function BlogPost() {
   if (!post) {
     return (
       <div className="blog-page page-atmosphere page-nav-offset mx-auto max-w-3xl px-4 py-16 text-center">
-        <h1 className="text-xl font-black uppercase text-white">Dispatch not found</h1>
+        <h1 className="text-xl font-black uppercase text-white">Post not found</h1>
         <Link to={BLOG_ROUTE} className="mt-4 inline-block text-cyan-300 underline-offset-4 hover:underline">
-          ← Back to operator log
+          ← Back to the blog
         </Link>
       </div>
     );
@@ -63,15 +61,12 @@ export default function BlogPost() {
         .join(" ")}
     >
       <p className="blog-post__back">
-        <Link to={BLOG_ROUTE}>← Operator log</Link>
+        <Link to={BLOG_ROUTE}>← Blog</Link>
       </p>
-
-      <UsjetBlogCadenceBanner />
 
       <header className="blog-post__hero">
         <div className="blog-post__meta">
           <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
-          {post.cadenceDay <= BLOG_CADENCE_TOTAL_DAYS ? <span>Day {post.cadenceDay} of 50</span> : null}
         </div>
         <h1 className="blog-post__title">{post.title}</h1>
         <p className="blog-post__subtitle">{post.subtitle}</p>
@@ -125,7 +120,7 @@ export default function BlogPost() {
         </footer>
       ) : null}
 
-      <nav className="blog-post__nav" aria-label="Adjacent dispatches">
+      <nav className="blog-post__nav" aria-label="Adjacent posts">
         {older ? (
           <Link to={`${BLOG_ROUTE}/${older.slug}`} className="blog-post__nav-link blog-post__nav-link--older">
             ← {older.title}

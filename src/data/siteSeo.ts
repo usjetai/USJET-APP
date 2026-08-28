@@ -83,6 +83,14 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
       "USJET store, AI engineering books, Ameer Karim books, local AI manuals, Operator's Rig books",
     ogType: "product",
   },
+  "/aviation-books": {
+    title: "Aviation Books — Coloring + Enemy Skies | USJET.AI",
+    description:
+      "Aviation books by Ameer Karim: Jet Fighters and Generation 6 coloring books, plus Enemy Skies novels Wings of Betrayal and The Enemy's Kiss. Buy on Amazon.",
+    keywords:
+      "aviation coloring book, jet fighter coloring book, Generation 6 coloring book, Wings of Betrayal, The Enemy's Kiss, Ameer Karim books, USJET books",
+    ogType: "product",
+  },
   [HARDWARE_ROUTE]: {
     title: "Buy AI Computers for Local AI & LLMs — Homes & Businesses | USJET.AI",
     description:

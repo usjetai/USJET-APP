@@ -23,6 +23,7 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
       { path: "/", label: "Homes", hint: "Home AI computers" },
       { path: "/fleet", label: "Business", hint: "Business computers · servers" },
       { path: "/store", label: "Manuals", hint: "AI Book Series" },
+      { path: "/aviation-books", label: "Aviation Books", hint: "Coloring + Enemy Skies" },
       { path: "/store/ai-computers", label: "Full lineup", hint: "Homes + Businesses hub" },
       { path: "/store/ai-computers/homes", label: "AI Computers — Homes", hint: "Mac Mini, MacBook, mini PCs" },
       { path: "/store/ai-computers/businesses", label: "AI Computers — Businesses", hint: "Mac Studio, workstations" },

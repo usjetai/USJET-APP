@@ -30,6 +30,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const CompareHub = lazy(() => import("./pages/CompareHub"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const Store = lazy(() => import("./pages/Store"));
+const AviationBooks = lazy(() => import("./pages/AviationBooks"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
 
 function RouteFallback() {
@@ -65,6 +66,7 @@ function AnimatedRoutes() {
             <Route path="/compare" element={<CompareHub />} />
             <Route path="/compare/:slug" element={<ComparePage />} />
             <Route path="/store" element={<Store />} />
+            <Route path="/aviation-books" element={<AviationBooks />} />
             <Route path="/books" element={<Navigate to="/store" replace />} />
             <Route path="/merch" element={<Navigate to="/store" replace />} />
             <Route path="/store/ai-computers" element={<AiComputers />} />

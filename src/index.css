@@ -21870,6 +21870,55 @@ html.gaming-page-root .global-video-bg__yt {
     0 0 0 1px rgba(56, 189, 248, 0.35);
 }
 
+.usjet-store__book-cover-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  aspect-ratio: 5 / 8;
+  padding: 1.15rem;
+  border-radius: 0.55rem;
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(8, 15, 28, 0.96));
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(148, 163, 184, 0.2);
+  text-align: center;
+}
+
+.usjet-store__book-cover-placeholder-kicker {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.7);
+}
+
+.usjet-store__book-cover-placeholder-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.usjet-store__cta--pending {
+  margin-top: 0.55rem;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.78);
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+}
+
 .usjet-store__book-title a {
   color: inherit;
   text-decoration: none;
@@ -21944,6 +21993,19 @@ html.gaming-page-root .global-video-bg__yt {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
+}
+
+.usjet-store__book-actions--split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.usjet-store__book-actions--split .usjet-store__cta {
+  flex: 1 1 8.25rem;
+  margin-top: 0.55rem;
+  padding: 0 0.7rem;
+  letter-spacing: 0.1em;
 }
 
 .usjet-store__merch-grid {

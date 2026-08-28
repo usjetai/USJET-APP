@@ -17,12 +17,12 @@ export function aviationBookAnchor(bookId: string): string {
 
 export const AVIATION_BOOKS_PAGE_TITLE = "Aviation Books" as const;
 export const AVIATION_BOOKS_META_DESCRIPTION =
-  "Aviation books by Ameer Karim — Jet Fighters and Generation 6 coloring books, plus the Enemy Skies novels Wings of Betrayal and The Enemy's Kiss. Buy on Amazon." as const;
+  "Aviation books by Ameer Karim — Jet Fighters and Generation 6 coloring books, the Enemy Skies novels Wings of Betrayal and The Enemy's Kiss, plus the standalone novel Wings Out of Queens. Buy on Amazon." as const;
 
 export const AVIATION_BOOKS_HERO_KICKER = "Aviation Books · Ameer Karim" as const;
 export const AVIATION_BOOKS_HERO_TITLE = "Color the fleet. Fly the story." as const;
 export const AVIATION_BOOKS_HERO_LEDE =
-  "Two coloring books for the jets. Two Enemy Skies novels for the people who fly them. Amazon — same window, cockpit return." as const;
+  "Two coloring books for the jets. Three novels for the people who fly and fight for the sky. Amazon — same window, cockpit return." as const;
 
 export type AviationBook = {
   id: string;
@@ -39,6 +39,10 @@ export type AviationBook = {
   /** Local cover under public/aviation-books/covers. Omit for a labeled placeholder. */
   coverSrc?: string;
   coverAlt: string;
+  /** Buy-button label override, e.g. "$4.99". Falls back to the series default when omitted. */
+  kindlePriceDisplay?: string;
+  /** Buy-button label override, e.g. "$14.99". Falls back to the series default when omitted. */
+  paperbackPriceDisplay?: string;
 };
 
 export const AVIATION_BOOKS: readonly AviationBook[] = [
@@ -95,6 +99,20 @@ export const AVIATION_BOOKS: readonly AviationBook[] = [
     paperbackAsin: "B0HFYWSQC1",
     coverSrc: "/aviation-books/covers/enemys-kiss.jpg",
     coverAlt: "The Enemy's Kiss by Ameer Karim — Kindle cover",
+  },
+  {
+    id: "wings-out-of-queens",
+    title: "Wings Out of Queens",
+    subtitle: "No Money. No Connections. Only the Will to Fly.",
+    seriesLabel: "Aviation Fiction · Standalone Novel",
+    author: "Ameer Karim",
+    priceDisplay: "$12.99 Paperback",
+    blurb:
+      "From a Queens rooftop to the flight deck of a major airline, Simone Bailey never had the money, the connections, or the room for error — only the will.",
+    paperbackAsin: "B0HG6M747C",
+    paperbackPriceDisplay: "$12.99",
+    coverSrc: "/aviation-books/covers/wings-out-of-queens.jpg",
+    coverAlt: "Wings Out of Queens by Ameer Karim — paperback cover",
   },
 ];
 

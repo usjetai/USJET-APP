@@ -73,20 +73,22 @@ function BookBuyActions({ book }: { book: AviationBook }) {
   const hasBothFormats = Boolean(kindleUrl && paperbackUrl);
 
   if (hasBothFormats && kindleUrl && paperbackUrl) {
+    const kindlePrice = book.kindlePriceDisplay ?? "$4.99";
+    const paperbackPrice = book.paperbackPriceDisplay ?? "$14.99";
     return (
       <div className="usjet-store__book-actions usjet-store__book-actions--split mt-auto">
         <Link
           to={cockpitAmazonHref(kindleUrl, `${book.title} (Kindle)`, "Kindle")}
           className="usjet-store__cta btn-glass-prominent glass-effect-interactive"
         >
-          Kindle · $4.99
+          Kindle · {kindlePrice}
           <ExternalLink size={14} aria-hidden />
         </Link>
         <Link
           to={cockpitAmazonHref(paperbackUrl, `${book.title} (Paperback)`, "Paperback")}
           className="usjet-store__cta btn-glass glass-effect-interactive"
         >
-          Paperback · $14.99
+          Paperback · {paperbackPrice}
           <ExternalLink size={14} aria-hidden />
         </Link>
       </div>

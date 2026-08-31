@@ -21968,6 +21968,18 @@ html.gaming-page-root .global-video-bg__yt {
   color: rgba(203, 213, 225, 0.72);
 }
 
+.usjet-store__book-hardware-cta {
+  margin: 0.6rem 0 0;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  background: rgba(103, 232, 249, 0.06);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  font-style: italic;
+  color: rgba(165, 243, 252, 0.82);
+}
+
 .usjet-store__book-meta {
   display: flex;
   justify-content: space-between;

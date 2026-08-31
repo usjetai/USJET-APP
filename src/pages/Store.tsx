@@ -162,6 +162,7 @@ export default function Store() {
                 </h3>
                 <p className="usjet-store__book-subtitle">{book.subtitle}</p>
                 <p className="usjet-store__book-blurb">{book.blurb}</p>
+                <p className="usjet-store__book-hardware-cta">{book.hardwareCta}</p>
                 <div className="usjet-store__book-meta">
                   <span>{book.author}</span>
                   <span>{book.priceDisplay}</span>

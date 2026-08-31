@@ -11,37 +11,17 @@
 
 /** Operator's Rig — live Stripe Price IDs + Payment Links (Direct Landing Protocol · Aug 2026). */
 export const HARDWARE_STRIPE = {
-  "mac-mini-m4-16-256": {
-    priceId: "price_1U7OR5IhpTm6FnAvDq3UEF8J",
-    paymentLink: "https://buy.stripe.com/6oU3cv7qedof8sxbG7dwc0F",
-  },
   "mac-mini-m4-16-512": {
-    priceId: "price_1U7OR6IhpTm6FnAvcCfU9IGS",
-    paymentLink: "https://buy.stripe.com/dRm28r25Ubg76kp4dFdwc0G",
+    priceId: "price_1UAUigIhpTm6FnAvbPDExZiL",
+    paymentLink: "https://buy.stripe.com/3cI7sL5i6bg7dMR25xdwc0O",
   },
   "mac-mini-m4-24-512": {
-    priceId: "price_1U7OR7IhpTm6FnAvb0in3Kl5",
-    paymentLink: "https://buy.stripe.com/eVq4gzaCqfwn2496lNdwc0H",
-  },
-  "macbook-air-m4-13-16-256": {
-    priceId: "price_1U7OR9IhpTm6FnAvB5xO7ywD",
-    paymentLink: "https://buy.stripe.com/00w9ATh0OesjfUZdOfdwc0I",
-  },
-  "macbook-air-m4-15-16-256": {
-    priceId: "price_1U7OR9IhpTm6FnAvlUQYyj3e",
-    paymentLink: "https://buy.stripe.com/bJe3cvfWKgArgZ3aC3dwc0J",
+    priceId: "price_1UAUkuIhpTm6FnAvOKTc02C9",
+    paymentLink: "https://buy.stripe.com/aFa28r11Q3NFbEJeSjdwc0P",
   },
   "gmktec-evo-x2": {
-    priceId: "price_1U7ORAIhpTm6FnAvsf04O4aZ",
-    paymentLink: "https://buy.stripe.com/00w14nbGu4RJ38d25xdwc0K",
-  },
-  "mac-studio-m4-max": {
-    priceId: "price_1U7ORBIhpTm6FnAvEmE39EC8",
-    paymentLink: "https://buy.stripe.com/00w00j8uibg76kpdOfdwc0L",
-  },
-  "minisforum-ms-a2": {
-    priceId: "price_1U7ORCIhpTm6FnAvPnAV5MvW",
-    paymentLink: "https://buy.stripe.com/14AfZh25UgArgZ3aC3dwc0N",
+    priceId: "price_1UAUmdIhpTm6FnAvQYxUwv88",
+    paymentLink: "https://buy.stripe.com/3cIeVd9ymesj6kpaC3dwc0Q",
   },
   "beelink-gtr9-pro": {
     priceId: "price_1U7ORCIhpTm6FnAvbrKZ2foE",

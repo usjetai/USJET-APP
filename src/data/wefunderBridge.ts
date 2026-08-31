@@ -5,9 +5,9 @@ export const WEFUNDER_COVENANT_BUTTON_LABEL = "Join the 5% Covenant Relaunch" as
 export const WEFUNDER_COVENANT_FOOTER_LABEL = "5% Covenant" as const;
 
 export const WEFUNDER_FLEET_TICKER =
-  "Community round relaunch live on Wefunder. Join the 31-member Fleet." as const;
+  "Community round relaunch live on Wefunder. Join the 31-member community." as const;
 
-export const WEFUNDER_RELAUNCH_MODAL_KICKER = "Hangar · Relaunch Live" as const;
+export const WEFUNDER_RELAUNCH_MODAL_KICKER = "USJET · Relaunch Live" as const;
 
 export const WEFUNDER_RELAUNCH_MODAL_TITLE = "5% Covenant — campaign open" as const;
 

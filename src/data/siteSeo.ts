@@ -1,10 +1,3 @@
-import {
-  buildSeoMoneyFaqJsonLd,
-  buildSeoMoneyWebPageJsonLd,
-  SEO_MONEY_HUB_PATH,
-  SEO_MONEY_HUB_SEO,
-  SEO_MONEY_PAGES,
-} from "./seoMoneyPages";
 import { HARDWARE_PRODUCTS, HARDWARE_ROUTE, HARDWARE_BUSINESSES_ROUTE, HARDWARE_HOMES_ROUTE, HARDWARE_AUDIENCE_META, hardwareProductsByAudience, type HardwareAudience, type HardwareProduct } from "./aiHardware";
 
 /** Canonical hostname for hreflang, OG, canonical, JSON-LD (apex redirects to www in production). */
@@ -58,22 +51,6 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     description:
       "USJET Operator Log: founding dispatches, local-AI buyer's guides, partnership doctrine, and runway intelligence — not a news feed.",
     keywords: "USJET blog, operator log, AI doctrine, founder startup log, best computer for local AI, Ollama buyer's guide",
-  },
-  [SEO_MONEY_HUB_PATH]: {
-    ...SEO_MONEY_HUB_SEO,
-  },
-  ...Object.fromEntries(
-    SEO_MONEY_PAGES.map((page) => [
-      page.path,
-      {
-        ...page.seo,
-        jsonLd: [buildSeoMoneyWebPageJsonLd(page), buildSeoMoneyFaqJsonLd(page)],
-      } satisfies PageSeo,
-    ]),
-  ),
-  "/ai-101": {
-    title: "AI 101 — One-on-One Lesson | USJET.AI",
-    description: "Learn how local AI computers work, in plain English — one lesson before you buy.",
   },
   "/store": {
     title: "Manuals — AI Book Series | USJET.AI",

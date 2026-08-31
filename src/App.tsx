@@ -19,7 +19,6 @@ const Fleet = lazy(() => import("./pages/Fleet"));
 const Sos = lazy(() => import("./pages/Sos"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
-const Ai101 = lazy(() => import("./pages/Ai101"));
 const MobileLandscapeGuide = lazy(() => import("./pages/MobileLandscapeGuide"));
 const ProtocolSessionProof = lazy(() => import("./pages/ProtocolSessionProof"));
 const AiComputers = lazy(() => import("./pages/AiComputers"));
@@ -27,8 +26,6 @@ const AiComputersHomes = lazy(() => import("./pages/AiComputersHomes"));
 const AiComputersBusinesses = lazy(() => import("./pages/AiComputersBusinesses"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
-const CompareHub = lazy(() => import("./pages/CompareHub"));
-const ComparePage = lazy(() => import("./pages/ComparePage"));
 const Store = lazy(() => import("./pages/Store"));
 const AviationBooks = lazy(() => import("./pages/AviationBooks"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
@@ -60,11 +57,11 @@ function AnimatedRoutes() {
             <Route path="/sos" element={<Sos />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
-            <Route path="/ai-101" element={<Ai101 />} />
+            <Route path="/ai-101" element={<Navigate to="/" replace />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/compare" element={<CompareHub />} />
-            <Route path="/compare/:slug" element={<ComparePage />} />
+            <Route path="/compare" element={<Navigate to="/" replace />} />
+            <Route path="/compare/:slug" element={<Navigate to="/" replace />} />
             <Route path="/store" element={<Store />} />
             <Route path="/aviation-books" element={<AviationBooks />} />
             <Route path="/books" element={<Navigate to="/store" replace />} />

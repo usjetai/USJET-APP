@@ -35,7 +35,7 @@ export type PageSeo = {
 export const DEFAULT_PAGE_SEO: PageSeo = {
   title: "USJET.AI | Homes — AI Computers",
   description:
-    "USJET Hangar: computers that already have AI in them for the house. Private local models, Operator's Rig stack, shipped to your door. Founded by Ameer Karim.",
+    "USJET: computers that already have AI in them for the house. Private local models, Operator's Rig stack, shipped to your door. Founded by Ameer Karim.",
   keywords:
     "USJET, home AI computer, local AI, Mac Mini, Operator's Rig, Ollama, AnythingLLM, private AI, Ameer Karim, buy AI computer, mini PC for local AI, best mini PC for Ollama, local LLM computer, Mac Mini for local AI",
   ogType: "website",
@@ -46,7 +46,7 @@ export const DEFAULT_PAGE_SEO: PageSeo = {
 /** Exact-path SEO catalog for public marketing surfaces. */
 export const ROUTE_SEO: Record<string, PageSeo> = {
   "/": DEFAULT_PAGE_SEO,
-  "/store/ai-computers/businesses": {
+  "/fleet": {
     title: "Business — AI Computers & Servers | USJET.AI",
     description:
       "USJET Fleet: business computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
@@ -120,7 +120,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   },
   "/privacy": {
     title: "Privacy Policy | USJET.AI",
-    description: "USJET.AI privacy policy — how we handle member and hangar data.",
+    description: "USJET.AI privacy policy — how we handle member and account data.",
   },
   "/terms": {
     title: "Terms of Service | USJET.AI",
@@ -137,7 +137,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   },
   "/landscape": {
     title: "Landscape View Guide | USJET.AI",
-    description: "Rotate to landscape for the best USJET hangar cockpit experience on mobile.",
+    description: "Rotate to landscape for the best USJET AI computers experience on mobile.",
     noindex: true,
   },
   "/protocol-proof": {

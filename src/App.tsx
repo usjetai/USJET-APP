@@ -14,6 +14,8 @@ import SiteLatchMenu from "./components/layout/SiteLatchMenu";
 import SeoHead from "./components/layout/SeoHead";
 import AnalyticsRouteTracker from "./components/layout/AnalyticsRouteTracker";
 
+const Hangar = lazy(() => import("./pages/Hangar"));
+const Fleet = lazy(() => import("./pages/Fleet"));
 const Sos = lazy(() => import("./pages/Sos"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -29,6 +31,7 @@ const CompareHub = lazy(() => import("./pages/CompareHub"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
 const Store = lazy(() => import("./pages/Store"));
 const AviationBooks = lazy(() => import("./pages/AviationBooks"));
+const Cockpit = lazy(() => import("./pages/Cockpit"));
 
 function RouteFallback() {
   return (
@@ -51,8 +54,8 @@ function AnimatedRoutes() {
       <PageTransition key={location.pathname} routeKey={location.pathname}>
         <Suspense fallback={<RouteFallback />}>
           <Routes location={location}>
-            <Route path="/" element={<AiComputersHomes />} />
-            <Route path="/fleet" element={<Navigate to="/store/ai-computers/businesses" replace />} />
+            <Route path="/" element={<Hangar />} />
+            <Route path="/fleet" element={<Fleet />} />
             <Route path="/hangar" element={<Navigate to="/" replace />} />
             <Route path="/sos" element={<Sos />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -85,6 +88,19 @@ function AnimatedRoutes() {
 }
 
 function AppChrome() {
+  const location = useLocation();
+  const cockpitMode = location.pathname === "/cockpit";
+
+  if (cockpitMode) {
+    return (
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/cockpit" element={<Cockpit />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+
   return (
     <>
       <SiteLatchMenu />
@@ -97,16 +113,26 @@ function AppChrome() {
 }
 
 function AppShell() {
+  const location = useLocation();
+  const hangarEmbed =
+    location.pathname === "/cockpit" &&
+    new URLSearchParams(location.search).get("embed") === "hangar";
+
   return (
     <div
       id="usjet-app-shell"
-      className="relative flex min-h-screen flex-col overflow-x-clip bg-black text-white"
+      className={[
+        "relative flex min-h-screen flex-col overflow-x-clip bg-black text-white",
+        hangarEmbed ? "usjet-app-shell--hangar-embed" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <AppChrome />
-      <UsjetGlobalContactBar />
+      {hangarEmbed ? null : <UsjetGlobalContactBar />}
       <UsjetAtmosphereBoot />
-      <UsjetProtocolBootOverlay />
-      <UsjetReturnFab />
+      {hangarEmbed ? null : <UsjetProtocolBootOverlay />}
+      {hangarEmbed ? null : <UsjetReturnFab />}
     </div>
   );
 }

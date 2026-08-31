@@ -5,7 +5,7 @@ import AppNavPhoneBadge from "./AppNavPhoneBadge";
 
 const NAV_LINKS = [
   { to: "/", label: "Homes" },
-  { to: "/store/ai-computers/businesses", label: "Business" },
+  { to: "/fleet", label: "Business" },
   { to: "/store", label: "Manuals" },
   { to: "/aviation-books", label: "Aviation Books" },
   { to: "/blog", label: "Log" },

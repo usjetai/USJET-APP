@@ -99,7 +99,7 @@ export default function Store() {
               Computers that already have AI in them
             </h2>
             <p className="hw-store-cta__lede">
-              Hangar is the house. Fleet is the shop and the office. Every unit ships as an Operator&apos;s Rig —
+              Homes is the personal rig. Business is the shop and the office setup. Every unit ships as an Operator&apos;s Rig —
               local engine, dashboard, private document vault, AI Book Series. We buy the exact machine and send
               it to you.
             </p>
@@ -192,7 +192,7 @@ export default function Store() {
 
       <p className="usjet-store__return">
         <Link to="/" className="glass-effect-interactive">
-          Hangar home
+          Back to Home
         </Link>
       </p>
     </div>

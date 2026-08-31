@@ -46,7 +46,7 @@ export const DEFAULT_PAGE_SEO: PageSeo = {
 /** Exact-path SEO catalog for public marketing surfaces. */
 export const ROUTE_SEO: Record<string, PageSeo> = {
   "/": DEFAULT_PAGE_SEO,
-  "/fleet": {
+  "/store/ai-computers/businesses": {
     title: "Business — AI Computers & Servers | USJET.AI",
     description:
       "USJET Fleet: business computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
@@ -199,14 +199,6 @@ export function buildWebsiteJsonLd(): Record<string, unknown> {
       url: SITE_ORIGIN,
       logo: `${SITE_ORIGIN}/brand/usjet-logo.png`,
       founder: { "@type": "Person", name: "Ameer Karim" },
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_ORIGIN}/fleet-directory`,
-      },
-      "query-input": "required name=search_term_string",
     },
   };
 }

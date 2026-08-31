@@ -150,7 +150,7 @@ export const HOME_DECK = {
 export const BUSINESS_DECK = {
   kicker: "Business · AI computers",
   title: "A Jarvis for the shop that never goes to sleep",
-  lede: "Same gift as Hangar — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
+  lede: "Same gift as Homes — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
   primerTitle: "What we do to these computers",
   primer: [
     "We buy the bigger box — Studio, 64GB–128GB mini-PCs, always-on closets.",

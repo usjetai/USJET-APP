@@ -257,11 +257,11 @@ export default function HomesHero() {
 
           <div className="homes-hero__hud" ref={hudRef}>
             <h1 className="homes-hero__title usjet-logo-stone">
-              We give the computer a
+              ChatGPT for your files.
               <br />
-              <span className="homes-hero__accent">personal Jarvis.</span>
+              <span className="homes-hero__accent">Nothing leaves this computer.</span>
             </h1>
-            <p className="homes-hero__sub">We buy the Mac, put the assistant on it, ship it talking.</p>
+            <p className="homes-hero__sub">We buy the machine, install the local AI stack, and ship it talking.</p>
           </div>
 
           <div className="homes-hero__cta" ref={ctaRef}>

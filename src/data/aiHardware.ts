@@ -132,13 +132,17 @@ export const WHY_USJET_HARDWARE = {
       title: "Your files stay yours",
       body: "Cloud chat trains on the internet. This Jarvis talks on your desk. Family photos and work docs do not get pasted into someone else's server.",
     },
+    {
+      title: "Yes, you could build this yourself",
+      body: "It is a weekend and three GitHub threads. We already did that weekend — you get the finished machine, not the homework.",
+    },
   ],
 } as const;
 
 export const HOME_DECK = {
   kicker: "Homes · AI computers",
-  title: "We give the computer a personal Jarvis",
-  lede: "You are not buying a mute Mac. We buy the machine, put a personal assistant on it, and ship it. You talk to YOUR computer — kitchen counter, office nook, quiet closet. Private. No ChatGPT bill.",
+  title: "ChatGPT for your files. Nothing leaves this computer.",
+  lede: "We buy the machine, install the local AI stack, and ship it talking. Open the lid. Drop in your documents. Ask. Private — no cloud bill, no files pasted into someone else's server.",
   primerTitle: "What we do to these computers",
   primer: [
     "We buy the exact unit.",
@@ -162,7 +166,7 @@ export const BUSINESS_DECK = {
 export const HARDWARE_HERO_KICKER = "Operator's Rig · Personal Jarvis on real hardware" as const;
 export const HARDWARE_HERO_TITLE = "We buy the computer. We give it a Jarvis. We ship it." as const;
 export const HARDWARE_HERO_LEDE =
-  "Hangar is home. Fleet is business. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
+  "We buy the machine, install the local AI stack, and ship it talking. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
 
 export const HARDWARE_CATEGORY_LABELS: Record<HardwareCategory, string> = {
   "apple-silicon": "Apple Silicon",

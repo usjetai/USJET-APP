@@ -1,4 +1,4 @@
-import { HARDWARE_STRIPE } from "../lib/stripePaymentLink";
+import { HARDWARE_STRIPE } from "../lib/stripePaymentLink.js";
 
 /**
  * USJET Operator's Rig — computers that already have AI in them.

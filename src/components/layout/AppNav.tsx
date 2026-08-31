@@ -7,7 +7,6 @@ const NAV_LINKS = [
   { to: "/", label: "Homes" },
   { to: "/fleet", label: "Business" },
   { to: "/store", label: "Manuals" },
-  { to: "/aviation-books", label: "Aviation Books" },
   { to: "/blog", label: "Log" },
 ] as const;
 

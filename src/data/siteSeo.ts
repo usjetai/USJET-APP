@@ -91,6 +91,12 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
       "aviation coloring book, jet fighter coloring book, Generation 6 coloring book, Wings of Betrayal, The Enemy's Kiss, Ameer Karim books, USJET books",
     ogType: "product",
   },
+  "/press": {
+    title: "Press — The Complete Shelf | USJET.AI",
+    description:
+      "Aviation books and operator manuals on one hardcover stack. Click a volume, buy on Amazon, same window.",
+    ogType: "product",
+  },
   [HARDWARE_ROUTE]: {
     title: "Buy AI Computers for Local AI & LLMs — Homes & Businesses | USJET.AI",
     description:

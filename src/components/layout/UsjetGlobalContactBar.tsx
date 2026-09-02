@@ -58,6 +58,9 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/aviation-books" className={footerLinkClass}>
               Aviation Books
             </NavLink>
+            <NavLink to="/press" className={footerLinkClass}>
+              Press
+            </NavLink>
             <NavLink to="/compare" className={footerLinkClass}>
               Compare
             </NavLink>

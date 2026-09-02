@@ -6,3 +6,9 @@ dist
 .vercel
 .playwright-browsers
 .env*
+tmp/
+.agents/
+.cursor/
+.mcp.json
+skills-lock.json
+mint-assets.json

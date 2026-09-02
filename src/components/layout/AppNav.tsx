@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { to: "/fleet", label: "Business" },
   { to: "/store", label: "Manuals" },
   { to: "/aviation-books", label: "Aviation Books" },
+  { to: "/press", label: "Press" },
   { to: "/blog", label: "Log" },
 ] as const;
 

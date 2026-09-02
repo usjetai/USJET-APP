@@ -33982,3 +33982,141 @@ html.blog-page-root #usjet-app-shell {
   text-transform: uppercase;
   color: rgba(148, 163, 184, 0.55);
 }
+
+/* ─── Press home — WebGL hardcover stack ─── */
+.press-page {
+  min-height: 100vh;
+}
+
+.press-home {
+  position: relative;
+  padding: 0 1rem 3rem;
+}
+
+.press-home__mast {
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding-top: 0.35rem;
+}
+
+.press-home__kicker {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.press-home__heading {
+  margin: 0.2rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.press-home__stage {
+  position: relative;
+  width: min(72rem, 100%);
+  height: min(86vh, 64rem);
+  min-height: 36rem;
+  margin: 0 auto;
+}
+
+.press-home__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.press-home__fail,
+.press-home__hint {
+  margin: 0.75rem auto 0;
+  max-width: 40rem;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  color: rgba(226, 232, 240, 0.48);
+}
+
+.press-home__dossier {
+  position: relative;
+  z-index: 3;
+  width: min(40rem, 100%);
+  margin: -4.5rem auto 0;
+  padding: 1.1rem 1.25rem 1.2rem;
+}
+
+.press-home__series,
+.press-home__price {
+  margin: 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.45);
+}
+
+.press-home__title {
+  margin: 0.35rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.press-home__sub,
+.press-home__blurb {
+  margin: 0.5rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.press-home__author {
+  margin: 0.35rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: rgba(226, 232, 240, 0.7);
+}
+
+.press-home__price {
+  margin-top: 0.85rem;
+}
+
+.press-home__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 0.9rem;
+}
+
+.press-home__buy,
+.press-home__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.55rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.28);
+  background: transparent;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  color: #f8fafc;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.press-home__buy + .press-home__buy,
+.press-home__back {
+  border-left: 0;
+}
+
+.press-home__catalog-link {
+  color: rgba(226, 232, 240, 0.7);
+  text-underline-offset: 0.2em;
+}
+

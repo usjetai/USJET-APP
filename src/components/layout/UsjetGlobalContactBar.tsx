@@ -90,6 +90,12 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/terms" className={footerLinkClass}>
               Terms
             </NavLink>
+            <NavLink to="/returns" className={footerLinkClass}>
+              Returns &amp; shipping
+            </NavLink>
+            <NavLink to="/warranty" className={footerLinkClass}>
+              Warranty
+            </NavLink>
           </nav>
         </div>
 

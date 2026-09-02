@@ -61,6 +61,15 @@ function ProductCard({ product }: { product: HardwareProduct }) {
           <sup>.{price.cents}</sup>
         </div>
         <p className="hw-card__ship">Ships talking · free</p>
+        {/* NY GBL 218-a: the refund policy must be displayed or linked near the
+            item itself, or before billing information is requested. This line
+            sits above the buy control on every card for that reason. Do not
+            move it into the footer. */}
+        <p className="hw-card__ship hw-card__policy">
+          <Link to="/returns">14-day returns</Link>
+          {" · "}
+          <Link to="/warranty">90-day warranty</Link>
+        </p>
         {product.contactToOrder ? (
           <a href={OPS_MAIL} className="hw-card__cart-btn">
             Talk to USJET
@@ -249,6 +258,13 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
         <p className="hw-page__fulfillment-note">
           <strong>{OPERATOR_SETUP_PROMISE.title}</strong> {OPERATOR_SETUP_PROMISE.body} Every order is purchased by
           USJET — exact SKU, Amazon-sourced, boxed, and sent to your address. No dropship substitutions.
+        </p>
+        <p className="hw-page__fulfillment-note">
+          <strong>Before you buy.</strong> Rigs ship within 10 business days of cleared payment. Returns are accepted
+          within 14 days in original condition, buyer pays return shipping, and opened units carry a 10% restocking
+          fee — full terms at <Link to="/returns">/returns</Link>. The configuration carries a 90-day USJET{" "}
+          <Link to="/warranty">Limited Warranty</Link>; the Apple hardware carries Apple's own one-year warranty,
+          which began on USJET's purchase date rather than your delivery date.
         </p>
       </section>
 

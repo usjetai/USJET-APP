@@ -46,6 +46,8 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     routes: [
       { path: "/privacy", label: "Privacy" },
       { path: "/terms", label: "Terms" },
+      { path: "/returns", label: "Returns", hint: "Returns, refunds & shipping" },
+      { path: "/warranty", label: "Warranty", hint: "USJET Limited Warranty" },
       { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
       { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },
     ],

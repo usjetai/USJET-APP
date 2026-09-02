@@ -132,6 +132,16 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "Terms of Service | USJET.AI",
     description: "USJET.AI Terms of Service — subscriptions, AI Computers hardware orders, shipping and returns, AI-output disclaimers.",
   },
+  "/returns": {
+    title: "Returns, Refunds & Shipping | USJET.AI",
+    description:
+      "14-day returns, 10% restocking on opened units, refunds to the original payment method within 7 business days, rigs shipped within 10 business days of cleared payment.",
+  },
+  "/warranty": {
+    title: "USJET Limited Warranty | USJET.AI",
+    description:
+      "90 days on the configuration and software setup of every Operator's Rig, how to get service, and how Apple's own hardware warranty applies alongside it.",
+  },
   "/sos": {
     title: "Help Center | USJET.AI",
     description: "USJET Help — orders, shipping, and setup for your AI computer.",

@@ -33,6 +33,8 @@ const STATIC_ENTRIES = [
   { path: "/sos", changefreq: "monthly", priority: "0.55" },
   { path: "/privacy", changefreq: "yearly", priority: "0.45" },
   { path: "/terms", changefreq: "yearly", priority: "0.45" },
+  { path: "/returns", changefreq: "yearly", priority: "0.55" },
+  { path: "/warranty", changefreq: "yearly", priority: "0.55" },
   { path: "/llms.txt", changefreq: "monthly", priority: "0.7" },
 ];
 

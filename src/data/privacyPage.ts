@@ -41,7 +41,7 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
       "Technical signals your browser sends automatically — IP address, user agent, referrer, and basic request logs needed for security and uptime.",
       "Analytics on how the site is used — page views and in-product events — collected via Google Analytics 4. See \"Cookies & analytics\" below for how to opt out.",
       "Hardware order details when you buy an Operator's Rig — your name, email address, phone number if you give it, and the shipping address the machine goes to.",
-      "Voluntary correspondence when you email ops@usjet.ai or submit support forms.",
+      "Voluntary correspondence when you email ops@usjet.ai or submit support forms. Mail to that address is held by Porkbun LLC, our domain registrar and email host.",
       "Usage within gated surfaces (Hangar, Intel, Origin, Member Portal) needed to honor your subscription tier and in-product features.",
       "Messages you type into Origin, Fleet bay assistants, or other in-product AI chat surfaces — sent to the third-party AI provider handling that conversation so it can generate a response. See \"AI chat providers\" below.",
     ],
@@ -114,6 +114,23 @@ export const PRIVACY_SECTIONS: readonly PrivacySection[] = [
       "Do not submit verification data you are not authorized to use.",
     ],
     paragraphs: [],
+  },
+  {
+    id: "processors",
+    title: "Who processes data for us",
+    paragraphs: [
+      "We name these rather than describing them by category, because Rhode Island law requires it and because you should be able to see the whole list:",
+    ],
+    bullets: [
+      "Vercel Inc. — website hosting and server logs.",
+      "GitHub, Inc. — source code hosting. No customer data.",
+      "Porkbun LLC — domain registration and the ops@usjet.ai mailbox.",
+      "Novo Platform Inc. and its partner bank — invoicing and payment.",
+      "Stripe, Inc. — card payments where a subscription is paid by card.",
+      "Google LLC — Google Analytics 4, aggregate site usage only.",
+      "The AI providers named under \"AI chat providers\" above, for in-product chat only.",
+      "A shipping carrier — USPS, UPS or FedEx — receives the delivery address for a hardware order.",
+    ],
   },
   {
     id: "the-machine",

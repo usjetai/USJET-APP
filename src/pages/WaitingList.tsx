@@ -234,7 +234,9 @@ export default function WaitingList() {
                 </div>
 
                 <label className={LABEL_CLASS} htmlFor="wl-location">
-                  City and state <span className="text-white/40">(optional)</span>
+                  <span>
+                    City and state <span className="font-normal text-white/40">(optional)</span>
+                  </span>
                   <input
                     id="wl-location"
                     name="location"
@@ -246,7 +248,9 @@ export default function WaitingList() {
                 </label>
 
                 <label className={LABEL_CLASS} htmlFor="wl-notes">
-                  What would you use it for <span className="text-white/40">(optional)</span>
+                  <span>
+                    What would you use it for <span className="font-normal text-white/40">(optional)</span>
+                  </span>
                   <textarea
                     id="wl-notes"
                     name="notes"

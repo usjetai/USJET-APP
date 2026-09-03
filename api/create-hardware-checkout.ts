@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { HARDWARE_MAX_QUANTITY_PER_LINE, HARDWARE_PRODUCTS } from "../src/data/aiHardware";
+import { HARDWARE_MAX_QUANTITY_PER_LINE, HARDWARE_PRODUCTS } from "../src/data/aiHardware.js";
 
 type CartLineInput = {
   productId?: string;

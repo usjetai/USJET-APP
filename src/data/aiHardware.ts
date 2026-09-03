@@ -1,4 +1,4 @@
-import { HARDWARE_STRIPE } from "../lib/stripePaymentLink";
+import { HARDWARE_STRIPE } from "../lib/stripePaymentLink.js";
 
 /**
  * USJET Operator's Rig — computers that already have AI in them.
@@ -152,13 +152,17 @@ export const WHY_USJET_HARDWARE = {
       title: "Your files stay yours",
       body: "Cloud chat trains on the internet. This Jarvis talks on your desk. Family photos and work docs do not get pasted into someone else's server.",
     },
+    {
+      title: "Yes, you could build this yourself",
+      body: "It is a weekend and three GitHub threads. We already did that weekend — you get the finished machine, not the homework.",
+    },
   ],
 } as const;
 
 export const HOME_DECK = {
   kicker: "Homes · AI computers",
-  title: "We give the computer a personal Jarvis",
-  lede: "You are not buying a mute Mac. We buy the machine, put a personal assistant on it, and ship it. You talk to YOUR computer — kitchen counter, office nook, quiet closet. Private. No ChatGPT bill.",
+  title: "Which files would you never paste into AI?",
+  lede: "Those are the ones this machine is for. We buy the computer, install the local AI stack, and ship it talking. Drop in your documents and ask — the model runs on your desk, so nothing you feed it is sent to a model provider.",
   primerTitle: "What we do to these computers",
   primer: [
     "We buy the exact unit.",
@@ -170,7 +174,7 @@ export const HOME_DECK = {
 export const BUSINESS_DECK = {
   kicker: "Business · AI computers",
   title: "A Jarvis for the shop that never goes to sleep",
-  lede: "Same gift as Hangar — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
+  lede: "Same gift as Homes — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
   primerTitle: "What we do to these computers",
   primer: [
     "We buy the bigger box — Studio, 64GB–128GB mini-PCs, always-on closets.",
@@ -182,7 +186,7 @@ export const BUSINESS_DECK = {
 export const HARDWARE_HERO_KICKER = "Operator's Rig · Personal Jarvis on real hardware" as const;
 export const HARDWARE_HERO_TITLE = "We buy the computer. We give it a Jarvis. We ship it." as const;
 export const HARDWARE_HERO_LEDE =
-  "Hangar is home. Fleet is business. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
+  "We buy the machine, install the local AI stack, and ship it talking. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
 
 export const HARDWARE_CATEGORY_LABELS: Record<HardwareCategory, string> = {
   "apple-silicon": "Apple Silicon",
@@ -198,15 +202,15 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     name: "Mac Mini",
     configLabel: "M4 · 16GB / 256GB",
     brand: "Apple",
-    priceUsd: 1899,
+    priceUsd: 999,
     stripeEnvKey: "STRIPE_PRICE_MAC_MINI_M4_16_256",
-    stripePriceId: HARDWARE_STRIPE["mac-mini-m4-16-256"].priceId,
-    stripePaymentLink: HARDWARE_STRIPE["mac-mini-m4-16-256"].paymentLink,
     specs: ["Apple M4 chip", "16GB unified memory", "256GB SSD", "Silent home box"],
     goodFor: "First home AI computer — small models (think 7B–8B), homework, recipes, family questions. Quiet enough for a living room.",
     blurb: "The cheapest real door onto Apple Silicon. Sit it next to the router. Leave it on.",
     amazonSearchTerm: "Apple Mac Mini M4 16GB 256GB",
     imageSrc: "/store/hardware/mac-mini-m4.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
   },
   {
     id: "mac-mini-m4-16-512",
@@ -215,7 +219,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     name: "Mac Mini",
     configLabel: "M4 · 16GB / 512GB",
     brand: "Apple",
-    priceUsd: 2099,
+    priceUsd: 1149,
     stripeEnvKey: "STRIPE_PRICE_MAC_MINI_M4_16_512",
     stripePriceId: HARDWARE_STRIPE["mac-mini-m4-16-512"].priceId,
     stripePaymentLink: HARDWARE_STRIPE["mac-mini-m4-16-512"].paymentLink,
@@ -224,6 +228,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     blurb: "Buy this when you know you will collect models like tools in a drawer.",
     amazonSearchTerm: "Apple Mac Mini M4 16GB 512GB",
     imageSrc: "/store/hardware/mac-mini-m4.jpg",
+    badge: "Starter pick",
   },
   {
     id: "mac-mini-m4-24-512",
@@ -232,7 +237,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     name: "Mac Mini",
     configLabel: "M4 · 24GB / 512GB",
     brand: "Apple",
-    priceUsd: 2349,
+    priceUsd: 1399,
     stripeEnvKey: "STRIPE_PRICE_MAC_MINI_M4_24_512",
     stripePriceId: HARDWARE_STRIPE["mac-mini-m4-24-512"].priceId,
     stripePaymentLink: HARDWARE_STRIPE["mac-mini-m4-24-512"].paymentLink,
@@ -241,7 +246,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     blurb: "If you only want one number to remember: 24GB is where home AI stops feeling like a toy.",
     amazonSearchTerm: "Apple Mac Mini M4 24GB 512GB",
     imageSrc: "/store/hardware/mac-mini-m4.jpg",
-    badge: "Home pick",
+    badge: "Daily pick",
   },
   {
     id: "macbook-air-m4-13-16-256",
@@ -250,15 +255,15 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     name: "MacBook Air 13\"",
     configLabel: "M4 · 16GB / 256GB",
     brand: "Apple",
-    priceUsd: 2349,
+    priceUsd: 1149,
     stripeEnvKey: "STRIPE_PRICE_MACBOOK_AIR_M4_13_16_256",
-    stripePriceId: HARDWARE_STRIPE["macbook-air-m4-13-16-256"].priceId,
-    stripePaymentLink: HARDWARE_STRIPE["macbook-air-m4-13-16-256"].paymentLink,
     specs: ["Apple M4 chip", "16GB unified memory", "13.6\" display", "Fanless · up to 18 hrs"],
     goodFor: "AI you can take to the kitchen table or a job walkthrough. Small models on the go. Silent.",
     blurb: "For the operator who will not leave the brain on a desk.",
     amazonSearchTerm: "Apple MacBook Air M4 13-inch 16GB 256GB",
     imageSrc: "/store/hardware/macbook-air-m4-13.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
   },
   {
     id: "macbook-air-m4-15-16-256",
@@ -267,15 +272,15 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     name: "MacBook Air 15\"",
     configLabel: "M4 · 16GB / 256GB",
     brand: "Apple",
-    priceUsd: 2499,
+    priceUsd: 1349,
     stripeEnvKey: "STRIPE_PRICE_MACBOOK_AIR_M4_15_16_256",
-    stripePriceId: HARDWARE_STRIPE["macbook-air-m4-15-16-256"].priceId,
-    stripePaymentLink: HARDWARE_STRIPE["macbook-air-m4-15-16-256"].paymentLink,
     specs: ["Apple M4 chip", "16GB unified memory", "15.3\" display", "Fanless · up to 18 hrs"],
     goodFor: "Same portable local AI as the 13\" — bigger screen so the chat and your work sit side by side.",
     blurb: "More glass. Same quiet. Still a home machine you can close and walk away with.",
     amazonSearchTerm: "Apple MacBook Air M4 15-inch 16GB 256GB",
     imageSrc: "/store/hardware/macbook-air-m4-15.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
   },
   {
     id: "macbook-pro-14-m4-16-512",
@@ -333,17 +338,18 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     missions: ["business"],
     category: "mini-pc",
     name: "GMKtec EVO-X2",
-    configLabel: "Ryzen AI Max 385 · 64GB",
+    configLabel: "Ryzen AI Max+ 395 · 64GB",
     brand: "GMKtec",
-    priceUsd: 2799,
+    priceUsd: 2199,
     stripeEnvKey: "STRIPE_PRICE_GMKTEC_EVO_X2",
     stripePriceId: HARDWARE_STRIPE["gmktec-evo-x2"].priceId,
     stripePaymentLink: HARDWARE_STRIPE["gmktec-evo-x2"].paymentLink,
-    specs: ["AMD Ryzen AI Max 385", "64GB unified memory", "Compact mini-PC", "Windows or Linux"],
+    specs: ["AMD Ryzen AI Max+ 395", "64GB unified memory", "Compact mini-PC", "Windows or Linux"],
     goodFor: "A lot of memory in a small box — serious local models without Apple money. Home lab or small shop.",
     blurb: "When you want 64GB of brain-room without buying a Studio.",
-    amazonSearchTerm: "GMKtec EVO-X2 Ryzen AI Max 385 64GB",
+    amazonSearchTerm: "GMKtec EVO-X2 Ryzen AI Max+ 395 64GB",
     imageSrc: "/store/hardware/gmktec-evo-x2.jpg",
+    badge: "Serious pick",
   },
   {
     id: "minisforum-ai-x1-pro-470",
@@ -369,15 +375,15 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     name: "Mac Studio",
     configLabel: "M4 Max · 36GB / 512GB",
     brand: "Apple",
-    priceUsd: 4799,
+    priceUsd: 2249,
     stripeEnvKey: "STRIPE_PRICE_MAC_STUDIO_M4_MAX",
-    stripePriceId: HARDWARE_STRIPE["mac-studio-m4-max"].priceId,
-    stripePaymentLink: HARDWARE_STRIPE["mac-studio-m4-max"].paymentLink,
     specs: ["Apple M4 Max", "36GB unified memory", "Studio cooling", "All-day inference"],
     goodFor: "Daily-driver office brain. Bigger models, sustained loads, quiet enough to live under a desk.",
     blurb: "This is the Apple box you leave on. Not an experiment. A workstation.",
     amazonSearchTerm: "Apple Mac Studio M4 Max 36GB 512GB",
     imageSrc: "/store/hardware/mac-studio-m4.jpg",
+    badge: "Talk to order",
+    contactToOrder: true,
   },
   {
     id: "mac-studio-m3-ultra",
@@ -435,18 +441,17 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     missions: ["business"],
     category: "mini-pc",
     name: "Minisforum MS-A2",
-    configLabel: "Ryzen AI Max+ 395 · 96GB / 1TB",
+    configLabel: "Ryzen 9 9955HX · 96GB / 1TB",
     brand: "Minisforum",
-    priceUsd: 3399,
+    priceUsd: 1599,
     stripeEnvKey: "STRIPE_PRICE_MINISFORUM_MS_A2",
-    stripePriceId: HARDWARE_STRIPE["minisforum-ms-a2"].priceId,
-    stripePaymentLink: HARDWARE_STRIPE["minisforum-ms-a2"].paymentLink,
-    specs: ["AMD Ryzen AI Max+ 395", "96GB unified memory", "1TB NVMe", "Windows or Linux"],
-    goodFor: "Fleet value pick — 96GB is how a shop runs 30B–40B class models locally with memory to spare.",
-    blurb: "Best price-to-brain ratio we will put on a business desk.",
-    amazonSearchTerm: "Minisforum MS-A2 Ryzen AI Max+ 395 96GB",
+    specs: ["AMD Ryzen 9 9955HX", "96GB DDR5", "1TB NVMe", "Dual 10GbE networking"],
+    goodFor: "AM5 workstation box for a shop that wants raw CPU cores and fast networking — a different animal than the AI-SoC minis.",
+    blurb: "Real spec: a 16-core desktop workstation chip, not the AI Max+ 395 the old listing implied — still a capable Fleet box.",
+    amazonSearchTerm: "Minisforum MS-A2 Ryzen 9 9955HX 96GB",
     imageSrc: "/store/hardware/minisforum-ms-a2.jpg",
-    badge: "Shop pick",
+    badge: "Talk to order",
+    contactToOrder: true,
   },
   {
     id: "beelink-gtr9-pro",
@@ -464,7 +469,7 @@ export const HARDWARE_PRODUCTS: readonly HardwareProduct[] = [
     blurb: "When the computer is the company brain and several people need it at once.",
     amazonSearchTerm: "Beelink GTR9 Pro Ryzen AI Max+ 395 128GB",
     imageSrc: "/store/hardware/beelink-gtr9-pro.jpg",
-    badge: "Most memory",
+    badge: "Max pick",
   },
   {
     id: "mac-mini-m4-pro-64",

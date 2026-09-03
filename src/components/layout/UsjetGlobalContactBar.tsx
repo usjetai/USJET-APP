@@ -61,18 +61,12 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/press" className={footerLinkClass}>
               Press
             </NavLink>
-            <NavLink to="/compare" className={footerLinkClass}>
-              Compare
-            </NavLink>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Company">
             <h2 className="usjet-footer__heading">Company</h2>
             <NavLink to="/blog" className={footerLinkClass}>
               Operator Log
-            </NavLink>
-            <NavLink to="/ai-101" className={footerLinkClass}>
-              AI 101
             </NavLink>
             <NavLink to="/sos" className={footerLinkClass}>
               Help

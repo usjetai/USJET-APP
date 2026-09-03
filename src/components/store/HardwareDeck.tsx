@@ -175,7 +175,7 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
       primerTitle: "What we do to these computers",
       primer: [
         ...HOME_DECK.primer.slice(0, 1),
-        "Hangar = computers for the house. Fleet = computers and servers for the shop and the office.",
+        "Homes = computers for the house. Business = computers and servers for the shop and the office.",
         ...BUSINESS_DECK.primer.slice(0, 1),
       ],
     };

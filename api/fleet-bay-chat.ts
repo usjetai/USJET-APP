@@ -6,7 +6,7 @@
  * Self-contained (no imports from src/), matching this folder's convention.
  */
 import Stripe from "stripe";
-import { completeGeminiApiKey, resolveGeminiApiKey, type VertexChatMessage } from "./vertexGemini";
+import { completeGeminiApiKey, resolveGeminiApiKey, type VertexChatMessage } from "./vertexGemini.js";
 
 type ChatMessage = { role: "user" | "assistant" | "system"; content: string };
 

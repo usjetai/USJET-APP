@@ -31,6 +31,8 @@ export type UsjetStoreBook = {
   author: string;
   priceDisplay: string;
   blurb: string;
+  /** Cross-promotion line tying this book back to the Operator's Rig hardware. */
+  hardwareCta: string;
   /** Kindle ASIN (default buy link). */
   asin: string;
   /** Optional Paperback ASIN for the print edition. */
@@ -55,6 +57,8 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Build and ship websites with AI in the loop — from structure and copy to deploy, the Founder’s operator path.",
+    hardwareCta:
+      "This book ships free inside every USJET Operator's Rig — a computer we buy, configure with a working local AI stack, and send to your door already talking. If you'd rather skip the DIY setup this book teaches and just get the finished machine, the current lineup starts at $1,149 at usjet.ai.",
     asin: "B0HD5GF54X",
     paperbackAsin: "B0HD1H7BLB",
     coverSrc: "/store/covers/B0HD5GF54X.jpg",
@@ -70,6 +74,8 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "How to build and scale autonomous platforms — AI-first architecture for founders who want a revenue engine, not a slide deck.",
+    hardwareCta:
+      "This book ships free inside every USJET Operator's Rig — a computer we buy, configure with a working local AI stack, and send to your door already talking. If you'd rather skip the DIY setup this book teaches and just get the finished machine, the current lineup starts at $1,149 at usjet.ai.",
     asin: "B0HD658R8K",
     paperbackAsin: "B0HD1NHWFN",
     coverSrc: "/store/covers/B0HD658R8K.jpg",
@@ -85,6 +91,8 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Turn Apple Silicon into a private AI hangar — Ollama, llama.cpp, MLX, agentic workflows, and keeping proprietary data local.",
+    hardwareCta:
+      "Everything in this book — Ollama, llama.cpp, MLX, the local AI stack — comes pre-installed and configured on every Mac Mini we sell at usjet.ai, starting at $1,149. If you'd rather receive the finished setup than build it yourself, that's the Operator's Rig.",
     asin: "B0HCX896RZ",
     paperbackAsin: "B0HD5JLYWR",
     coverSrc: "/store/covers/B0HCX896RZ.jpg",
@@ -100,6 +108,8 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Six pillars of modern AI — capability, token efficiency, context, and cost. Which bay to open for reasoning, local Apple Silicon, codebases, and agent loops.",
+    hardwareCta:
+      "This book ships free inside every USJET Operator's Rig — a computer we buy, configure with a working local AI stack, and send to your door already talking. If you'd rather skip the DIY setup this book teaches and just get the finished machine, the current lineup starts at $1,149 at usjet.ai.",
     asin: "B0HCXQDBM3",
     paperbackAsin: "B0HCZFW626",
     coverSrc: "/store/covers/B0HCXQDBM3.jpg",
@@ -115,6 +125,8 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "Cursor as the hangar workbench — agentic coding, fleet workflows, and how the Founder ships sovereign software with an AI co-pilot.",
+    hardwareCta:
+      "This book ships free inside every USJET Operator's Rig — a computer we buy, configure with a working local AI stack, and send to your door already talking. If you'd rather skip the DIY setup this book teaches and just get the finished machine, the current lineup starts at $1,149 at usjet.ai.",
     asin: "B0HD53PM9W",
     paperbackAsin: "B0HD4NDBGQ",
     coverSrc: "/store/covers/B0HD53PM9W.jpg",
@@ -130,6 +142,8 @@ export const USJET_STORE_BOOKS: readonly UsjetStoreBook[] = [
     priceDisplay: "$9.99 Kindle · $14.99 Paperback",
     blurb:
       "GitHub → Vercel → domain — the Founder’s deploy path from commit to live cockpit, without leaking out of the ship.",
+    hardwareCta:
+      "This book ships free inside every USJET Operator's Rig — a computer we buy, configure with a working local AI stack, and send to your door already talking. If you'd rather skip the DIY setup this book teaches and just get the finished machine, the current lineup starts at $1,149 at usjet.ai.",
     asin: "B0GZJZ9TGJ",
     paperbackAsin: "B0HD641SJ8",
     coverSrc: "/store/covers/B0GZJZ9TGJ.jpg",

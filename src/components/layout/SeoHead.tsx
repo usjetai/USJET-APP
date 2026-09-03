@@ -12,7 +12,6 @@ import {
   resolveStaticRouteSeo,
   type PageSeo,
 } from "../../data/siteSeo";
-import { getFleetDirectoryEntryBySlug } from "../../data/fleetDirectorySeo";
 
 const PAGE_JSON_LD_ID = "usjet-page-jsonld";
 const WEBSITE_JSON_LD_ID = "usjet-website-jsonld";
@@ -84,54 +83,6 @@ function resolveDynamicSeo(pathname: string): PageSeo | null {
       keywords: post.seoKeywords ?? `USJET blog, ${post.title}, Ameer Karim, operator log`,
       ogType: "article",
       jsonLd: post.faqs?.length ? [articleJsonLd, buildFaqJsonLd(post.faqs)] : articleJsonLd,
-    };
-  }
-
-  const jetMatch = path.match(/^\/fleet-directory\/([^/]+)$/);
-  if (jetMatch) {
-    const entry = getFleetDirectoryEntryBySlug(jetMatch[1]);
-    if (!entry) {
-      return {
-        title: "Jet Fighter call sign not found | USJET",
-        description: DEFAULT_PAGE_SEO.description,
-        noindex: true,
-      };
-    }
-    const url = canonicalHref(path);
-    return {
-      title: entry.seoTitle.replace(" | USJET Jet Fighter", " | USJET"),
-      description: entry.seoDescription,
-      keywords: entry.keywords.join(", "),
-      ogType: "website",
-      jsonLd: buildProductJsonLd({
-        name: `${entry.callsign} · ${entry.name}`,
-        description: entry.seoDescription,
-        url,
-      }),
-    };
-  }
-
-  const productMatch = path.match(/^\/product\/([^/]+)$/);
-  if (productMatch) {
-    const entry = getFleetDirectoryEntryBySlug(productMatch[1]);
-    if (!entry) {
-      return {
-        title: "Product page not found | USJET",
-        description: DEFAULT_PAGE_SEO.description,
-        noindex: true,
-      };
-    }
-    const url = canonicalHref(path);
-    return {
-      title: `${entry.name} Product · ${entry.aircraftOfficialName} | USJET`,
-      description: entry.seoDescription,
-      keywords: entry.keywords.join(", "),
-      ogType: "product",
-      jsonLd: buildProductJsonLd({
-        name: `${entry.name} · ${entry.aircraftOfficialName}`,
-        description: entry.seoDescription,
-        url,
-      }),
     };
   }
 

@@ -81,6 +81,65 @@ export type HardwareProduct = {
  */
 export const HARDWARE_RESERVATIONS_ONLY = true;
 
+/**
+ * What the store shows while HARDWARE_RESERVATIONS_ONLY is on: the two rigs we
+ * will actually build on the Mac mini Apple ships 22 September 2026. No price
+ * and no memory figure appears here on purpose — neither is confirmed until a
+ * machine is on the bench, and a number written today would be wrong.
+ */
+export type NextGenRig = {
+  id: string;
+  mission: HardwareMission;
+  name: string;
+  tagline: string;
+  specs: readonly string[];
+  goodFor: string;
+  blurb: string;
+  imageSrc: string;
+  badge: string;
+};
+
+export const NEXT_GEN_RIGS: readonly NextGenRig[] = [
+  {
+    id: "operators-rig-home",
+    mission: "home",
+    name: "Operator's Rig",
+    tagline: "For the desk",
+    specs: [
+      "Mac mini, Apple's September 2026 generation",
+      "Local AI stack installed and configured",
+      "Memory sized to your documents, not a spec sheet",
+      "Six-volume manual set in the box",
+    ],
+    goodFor:
+      "One person and their files. Contracts, returns, session notes, the folder you would never upload. Drop them in and ask; nothing you feed it is sent to a model provider.",
+    blurb: "Arrives talking. Plug in the power and the screen, and it is already running.",
+    imageSrc: "/store/hardware/mac-mini-m4.jpg",
+    badge: "Home",
+  },
+  {
+    id: "operators-rig-office",
+    mission: "business",
+    name: "Operator's Rig",
+    tagline: "For the office",
+    specs: [
+      "Mac mini, Apple's September 2026 generation",
+      "Always on — the office asks it, not a chatbot tab",
+      "More memory, configured for several people's work",
+      "Six-volume manual set in the box",
+    ],
+    goodFor:
+      "A small practice or shop that handles other people's information. Intake, transcripts, summaries, the questions staff would otherwise paste into ChatGPT. Stays on, stays in the building.",
+    blurb: "Set up at your desk in New York, or shipped ready to run.",
+    imageSrc: "/store/hardware/mac-mini-m4.jpg",
+    badge: "Office",
+  },
+] as const;
+
+export function nextGenRigsByMission(mission: HardwareMission | "all"): NextGenRig[] {
+  return mission === "all" ? [...NEXT_GEN_RIGS] : NEXT_GEN_RIGS.filter((rig) => rig.mission === mission);
+}
+
 export const HARDWARE_RESERVATIONS_NOTICE = {
   title: "Between generations",
   body: "These builds are the last-generation Mac lineup and are no longer available to order. The next Operator's Rigs are built on the Mac mini Apple ships on 22 September 2026. Reserve a place in line and you will get the exact configuration and the exact price, in writing, before anyone asks you for money.",
@@ -163,23 +222,23 @@ export const HOME_DECK = {
   kicker: "Homes · AI computers",
   title: "Which files would you never paste into AI?",
   lede: "Those are the ones this machine is for. We buy the computer, install the local AI stack, and ship it talking. Drop in your documents and ask — the model runs on your desk, so nothing you feed it is sent to a model provider.",
-  primerTitle: "What we do to these computers",
+  primerTitle: "What we do to the computer",
   primer: [
-    "We buy the exact unit.",
-    "We put a personal Jarvis on it — local AI that lives in the box.",
-    "We ship it ready to talk the day it hits your door.",
+    "We buy the exact machine.",
+    "We install the local AI stack and configure it for your work.",
+    "We ship it already talking, with the manuals in the box.",
   ],
 } as const;
 
 export const BUSINESS_DECK = {
   kicker: "Business · AI computers",
-  title: "A Jarvis for the shop that never goes to sleep",
-  lede: "Same gift as Homes — we put an assistant on the computer — built for a team. More memory. More cooling. A box that stays on so the office talks to the machine, not a chatbot tab that leaks the job.",
-  primerTitle: "What we do to these computers",
+  title: "Which client files would your staff never paste into AI?",
+  lede: "Those are the ones this machine is for. A Mac that stays on in the office, with the model running in the building — so intake notes, transcripts and summaries never leave for a model provider.",
+  primerTitle: "What we do to the computer",
   primer: [
-    "We buy the bigger box — Studio, 64GB–128GB mini-PCs, always-on closets.",
-    "We give it a company Jarvis that stays loaded for the shop.",
-    "We ship it. A server here just means a computer that does not go home in a bag.",
+    "We buy the machine and size the memory for several people's work.",
+    "We install the local AI stack and configure it to stay on.",
+    "We set it up at your desk in New York, or ship it ready to run.",
   ],
 } as const;
 

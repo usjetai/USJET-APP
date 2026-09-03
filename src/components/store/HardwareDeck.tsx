@@ -15,7 +15,6 @@ import {
   HARDWARE_HERO_LEDE,
   HARDWARE_HERO_TITLE,
   HARDWARE_PRODUCTS,
-  HARDWARE_RESERVATIONS_NOTICE,
   HARDWARE_RESERVATIONS_ONLY,
   HOME_DECK,
   OPERATOR_SETUP_PROMISE,
@@ -24,8 +23,10 @@ import {
   WHY_USJET_HARDWARE,
   formatUsdParts,
   hardwareProductsByMission,
+  nextGenRigsByMission,
   type HardwareMission,
   type HardwareProduct,
+  type NextGenRig,
 } from "../../data/aiHardware";
 
 const OPS_MAIL = "mailto:ops@usjet.ai?subject=USJET%20Operator%27s%20Rig%20order";
@@ -110,6 +111,51 @@ function ProductCard({ product }: { product: HardwareProduct }) {
             ) : null}
           </div>
         )}
+      </div>
+    </article>
+  );
+}
+
+/**
+ * The card shown while nothing is orderable: one of the two rigs we will build
+ * on the next Mac mini. Deliberately carries no price and no memory figure —
+ * both are confirmed in writing to the buyer before any money changes hands.
+ */
+function NextGenCard({ rig }: { rig: NextGenRig }) {
+  const title = `${rig.name} — ${rig.tagline}`;
+  return (
+    <article id={rig.id} className="hw-card">
+      <div className="hw-card__media">
+        <img src={rig.imageSrc} alt={title} width={640} height={480} />
+      </div>
+      <div className="hw-card__body">
+        <Link className="hw-card__title" to="/waiting-list">
+          <em className="hw-card__condition">{rig.badge}</em> {title}
+        </Link>
+        <p className="hw-card__specs">
+          {rig.specs.map((spec) => (
+            <span key={spec}>{spec}</span>
+          ))}
+        </p>
+        <p className="hw-card__ship">{rig.goodFor}</p>
+        <p className="hw-card__ship">{rig.blurb}</p>
+        <p className="hw-card__ship">
+          Built after Apple ships the new Mac mini on 22 September 2026. Your exact configuration and price, in
+          writing, before you pay anything.
+        </p>
+        {/* NY GBL 218-a: refund policy linked near the item. Keep above the CTA. */}
+        <p className="hw-card__ship hw-card__policy">
+          <Link to="/returns">14-day returns</Link>
+          {" · "}
+          <Link to="/warranty">90-day warranty</Link>
+        </p>
+        <Link
+          to="/waiting-list"
+          className="hw-card__cart-btn"
+          onClick={() => trackEvent("reserve_click", { placement: "card", rig: rig.id })}
+        >
+          Reserve a rig
+        </Link>
       </div>
     </article>
   );
@@ -211,23 +257,6 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
 
   return (
     <div className="usjet-store-page hw-page hw-page--deck page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-32 pt-4 sm:px-6 lg:px-8">
-      {/* Nothing on this deck is orderable right now. Say so at the top, before
-          anyone reads a spec sheet and forms an intention we cannot fulfil. */}
-      {HARDWARE_RESERVATIONS_ONLY ? (
-        <aside className="mb-8 rounded-lg border border-amber-300/35 bg-amber-300/10 px-5 py-4">
-          <p className="text-sm font-semibold text-amber-100">{HARDWARE_RESERVATIONS_NOTICE.title}</p>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
-            {HARDWARE_RESERVATIONS_NOTICE.body}
-          </p>
-          <Link
-            to={HARDWARE_RESERVATIONS_NOTICE.href}
-            className="mt-3 inline-block rounded-md bg-amber-300/90 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-200"
-            onClick={() => trackEvent("reserve_click", { placement: "deck_notice" })}
-          >
-            {HARDWARE_RESERVATIONS_NOTICE.cta}
-          </Link>
-        </aside>
-      ) : null}
       {omitHero ? (
         <div className="hw-hero hw-hero--after-film">
           <div className="hw-hero__cart">
@@ -311,13 +340,15 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
       <section className="usjet-store__section" id="hw-catalog" aria-labelledby="hw-catalog-heading">
         <div className="usjet-store__section-head">
           <h2 id="hw-catalog-heading">
-            {mission === "home" ? "Home lineup" : mission === "business" ? "Business lineup" : "Full lineup"}
+            {HARDWARE_RESERVATIONS_ONLY
+              ? "The next Operator's Rig"
+              : mission === "home" ? "Home lineup" : mission === "business" ? "Business lineup" : "Full lineup"}
           </h2>
         </div>
         <div className="hw-grid">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {HARDWARE_RESERVATIONS_ONLY
+            ? nextGenRigsByMission(mission).map((rig) => <NextGenCard key={rig.id} rig={rig} />)
+            : products.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       </section>
 

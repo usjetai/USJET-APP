@@ -13,6 +13,7 @@ import {
   WAITING_LIST_WHAT_HAPPENS,
 } from "../data/waitingListPage";
 import { mailtoUsjetOps, USJET_OPS_EMAIL } from "../lib/usjetContact";
+import { getAttribution, trackEvent } from "../lib/analytics";
 
 type Status = "idle" | "sending" | "done" | "error";
 
@@ -20,6 +21,16 @@ const FIELD_CLASS =
   "w-full rounded-md border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder-white/35 outline-none focus:border-cyan-300/60 focus:ring-1 focus:ring-cyan-300/40";
 
 const LABEL_CLASS = "flex flex-col gap-1.5 text-sm text-white/70";
+
+/**
+ * The channel that actually delivered this visitor. First-touch attribution
+ * (UTM if the link carried one, else an inferred referrer channel) so we can
+ * tell an Instagram signup from a Reddit one instead of guessing.
+ */
+function acquisitionChannel(): string {
+  const attribution = getAttribution();
+  return attribution?.source ?? attribution?.medium ?? "direct";
+}
 
 export default function WaitingList() {
   const [status, setStatus] = useState<Status>("idle");
@@ -29,6 +40,8 @@ export default function WaitingList() {
     const prevTitle = document.title;
     const prevDescription =
       document.querySelector('meta[name="description"]')?.getAttribute("content") ?? null;
+
+    trackEvent("waitlist_view", { channel: acquisitionChannel() });
 
     document.title = WAITING_LIST_PAGE_TITLE;
     let description = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
@@ -79,14 +92,26 @@ export default function WaitingList() {
         const body = (await res.json().catch(() => null)) as { error?: string } | null;
         setError(body?.error ?? "That did not go through. Email works too, link below.");
         setStatus("error");
+        trackEvent("waitlist_error", {
+          channel: acquisitionChannel(),
+          reason: "rejected",
+          http_status: res.status,
+        });
         return;
       }
+
+      trackEvent("waitlist_signup", {
+        channel: acquisitionChannel(),
+        signup_role: payload.role || "(unspecified)",
+        signup_quantity: payload.quantity || "(unspecified)",
+      });
 
       form.reset();
       setStatus("done");
     } catch {
       setError("That did not go through. Email works too, link below.");
       setStatus("error");
+      trackEvent("waitlist_error", { channel: acquisitionChannel(), reason: "network" });
     }
   }
 

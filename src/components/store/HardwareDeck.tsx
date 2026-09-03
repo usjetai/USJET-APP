@@ -4,6 +4,7 @@ import { CheckCircle2, ShoppingCart, XCircle } from "lucide-react";
 import HardwareCartButton from "./HardwareCartButton";
 import HardwareCartDrawer from "./HardwareCartDrawer";
 import { useHardwareCart } from "../../context/HardwareCartContext";
+import { trackEvent } from "../../lib/analytics";
 import {
   BUSINESS_DECK,
   FLEET_HARDWARE_ROUTE,
@@ -85,7 +86,11 @@ function ProductCard({ product }: { product: HardwareProduct }) {
           <Link to="/warranty">90-day warranty</Link>
         </p>
         {HARDWARE_RESERVATIONS_ONLY ? (
-          <Link to="/waiting-list" className="hw-card__cart-btn">
+          <Link
+            to="/waiting-list"
+            className="hw-card__cart-btn"
+            onClick={() => trackEvent("reserve_click", { placement: "card", rig: product.name })}
+          >
             Reserve a rig
           </Link>
         ) : product.contactToOrder ? (
@@ -217,6 +222,7 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
           <Link
             to={HARDWARE_RESERVATIONS_NOTICE.href}
             className="mt-3 inline-block rounded-md bg-amber-300/90 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-200"
+            onClick={() => trackEvent("reserve_click", { placement: "deck_notice" })}
           >
             {HARDWARE_RESERVATIONS_NOTICE.cta}
           </Link>

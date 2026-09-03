@@ -22583,6 +22583,15 @@ html.gaming-page-root .global-video-bg__yt {
   color: #67e8f9;
 }
 
+/* Sentence-case description on the next-generation rig cards. The __ship
+   style above is a one-line shouting label; this is for reading. */
+.hw-card__prose {
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(226, 240, 243, 0.82);
+}
+
 .hw-card__actions {
   display: flex;
   flex-direction: column;

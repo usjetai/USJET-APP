@@ -105,12 +105,7 @@ export const NEXT_GEN_RIGS: readonly NextGenRig[] = [
     mission: "home",
     name: "Operator's Rig",
     tagline: "For the desk",
-    specs: [
-      "Mac mini, Apple's September 2026 generation",
-      "Local AI stack installed and configured",
-      "Memory sized to your documents, not a spec sheet",
-      "Six-volume manual set in the box",
-    ],
+    specs: ["Mac mini · Sept 2026 generation", "Local AI installed", "Memory sized to your work", "Manual set included"],
     goodFor:
       "One person and their files. Contracts, returns, session notes, the folder you would never upload. Drop them in and ask; nothing you feed it is sent to a model provider.",
     blurb: "Arrives talking. Plug in the power and the screen, and it is already running.",
@@ -122,12 +117,7 @@ export const NEXT_GEN_RIGS: readonly NextGenRig[] = [
     mission: "business",
     name: "Operator's Rig",
     tagline: "For the office",
-    specs: [
-      "Mac mini, Apple's September 2026 generation",
-      "Always on — the office asks it, not a chatbot tab",
-      "More memory, configured for several people's work",
-      "Six-volume manual set in the box",
-    ],
+    specs: ["Mac mini · Sept 2026 generation", "Always on", "Memory for several people", "Manual set included"],
     goodFor:
       "A small practice or shop that handles other people's information. Intake, transcripts, summaries, the questions staff would otherwise paste into ChatGPT. Stays on, stays in the building.",
     blurb: "Set up at your desk in New York, or shipped ready to run.",

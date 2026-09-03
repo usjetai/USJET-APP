@@ -86,7 +86,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   [HARDWARE_HOMES_ROUTE]: {
     title: "AI Computers for Homes — Mac Mini, MacBook, Mini PC | USJET.AI",
     description:
-      "Home AI computers with a personal Jarvis already on the machine. Mac Mini M4, MacBook Air, MacBook Pro, Beelink SER9 Pro, Minisforum UM890 Pro.",
+      "A Mac mini that arrives with local AI installed and configured, for the files you would never paste into a chatbot. Built in New York; reserve the next generation.",
     keywords:
       "AI computer for home, Mac Mini for local AI, MacBook Air M4 local AI, Beelink SER9 Pro, Minisforum UM890 Pro, build your own jarvis, jarvis ai assistant computer, personal ai assistant hardware",
     ogType: "product",

@@ -137,12 +137,9 @@ function NextGenCard({ rig }: { rig: NextGenRig }) {
             <span key={spec}>{spec}</span>
           ))}
         </p>
-        <p className="hw-card__ship">{rig.goodFor}</p>
-        <p className="hw-card__ship">{rig.blurb}</p>
-        <p className="hw-card__ship">
-          Built after Apple ships the new Mac mini on 22 September 2026. Your exact configuration and price, in
-          writing, before you pay anything.
-        </p>
+        <p className="hw-card__prose">{rig.goodFor}</p>
+        <p className="hw-card__prose">{rig.blurb}</p>
+        <p className="hw-card__ship">Built after 22 September · price in writing before you pay</p>
         {/* NY GBL 218-a: refund policy linked near the item. Keep above the CTA. */}
         <p className="hw-card__ship hw-card__policy">
           <Link to="/returns">14-day returns</Link>
@@ -311,7 +308,7 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
       <section className="hw-about" aria-labelledby="hw-stack-heading">
         <h2 id="hw-stack-heading">What we put on it</h2>
         <p className="hw-about__lede">
-          Other sellers ship a mute computer. We ship a personal Jarvis already living on the box.
+          Other sellers ship a mute computer. We ship one that is already talking.
         </p>
         <dl className="hw-about__table">
           {OPERATOR_STACK.map((layer) => (

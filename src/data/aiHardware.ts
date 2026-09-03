@@ -126,8 +126,12 @@ export const NEXT_GEN_RIGS: readonly NextGenRig[] = [
   },
 ] as const;
 
+/** Both rigs, with the page's own mission first. Two feature cards fill the
+ *  section at any viewport; one card in a twelve-card grid looked abandoned. */
 export function nextGenRigsByMission(mission: HardwareMission | "all"): NextGenRig[] {
-  return mission === "all" ? [...NEXT_GEN_RIGS] : NEXT_GEN_RIGS.filter((rig) => rig.mission === mission);
+  const rigs = [...NEXT_GEN_RIGS];
+  if (mission === "all") return rigs;
+  return rigs.sort((a, b) => Number(b.mission === mission) - Number(a.mission === mission));
 }
 
 export const HARDWARE_RESERVATIONS_NOTICE = {

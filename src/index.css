@@ -22592,6 +22592,156 @@ html.gaming-page-root .global-video-bg__yt {
   color: rgba(226, 240, 243, 0.82);
 }
 
+/* Next-generation rig cards: one wide feature per rig, image beside copy.
+   Fills the section whether there is one rig or two. */
+.hw-feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.hw-feature {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(12, 28, 44, 0.96), rgba(5, 12, 22, 0.98));
+  border: 1px solid rgba(34, 211, 238, 0.55);
+  border-radius: 18px;
+  color: #e8f6f8;
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.16), 0 20px 44px rgba(0, 0, 0, 0.38);
+}
+.hw-feature--primary {
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.3), 0 0 36px rgba(34, 211, 238, 0.14), 0 20px 44px rgba(0, 0, 0, 0.38);
+}
+.hw-feature__media {
+  background: #eef4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  min-height: 220px;
+}
+.hw-feature__media img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  object-fit: contain;
+}
+.hw-feature__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.35rem 1.4rem 1.5rem;
+}
+.hw-feature__eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #22d3ee;
+}
+.hw-feature__pill {
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, 0.45);
+  color: #a5f3fc;
+  letter-spacing: 0.1em;
+}
+.hw-feature__title {
+  margin: 0;
+  font-size: 1.45rem;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.hw-feature__title a {
+  color: #f4fbff;
+  text-decoration: none;
+}
+.hw-feature__title a:hover {
+  color: #a5f3fc;
+}
+.hw-feature__specs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.hw-feature__specs li {
+  font-size: 0.74rem;
+  line-height: 1.3;
+  color: #bfe7ee;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  white-space: nowrap;
+}
+.hw-feature__prose {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(232, 246, 248, 0.92);
+}
+.hw-feature__prose--muted {
+  color: rgba(226, 240, 243, 0.68);
+}
+.hw-feature__foot {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(34, 211, 238, 0.18);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem 1.25rem;
+}
+.hw-feature__promise {
+  flex: 1 1 260px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(226, 240, 243, 0.8);
+}
+.hw-feature__promise strong {
+  color: #67e8f9;
+}
+.hw-feature__policy {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #67e8f9;
+}
+.hw-feature__policy a {
+  color: inherit;
+}
+.hw-feature__cta {
+  flex: 0 0 auto;
+  min-width: 11rem;
+}
+@media (min-width: 760px) {
+  .hw-feature {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .hw-feature__media {
+    min-height: 100%;
+  }
+  .hw-feature__body {
+    padding: 1.6rem 1.75rem 1.75rem;
+  }
+  .hw-feature__title {
+    font-size: 1.7rem;
+  }
+}
+
 .hw-card__actions {
   display: flex;
   flex-direction: column;

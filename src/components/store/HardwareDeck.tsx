@@ -121,38 +121,47 @@ function ProductCard({ product }: { product: HardwareProduct }) {
  * on the next Mac mini. Deliberately carries no price and no memory figure —
  * both are confirmed in writing to the buyer before any money changes hands.
  */
-function NextGenCard({ rig }: { rig: NextGenRig }) {
+function NextGenCard({ rig, featured }: { rig: NextGenRig; featured: boolean }) {
   const title = `${rig.name} — ${rig.tagline}`;
   return (
-    <article id={rig.id} className="hw-card">
-      <div className="hw-card__media">
+    <article id={rig.id} className={featured ? "hw-feature hw-feature--primary" : "hw-feature"}>
+      <div className="hw-feature__media">
         <img src={rig.imageSrc} alt={title} width={640} height={480} />
       </div>
-      <div className="hw-card__body">
-        <Link className="hw-card__title" to="/waiting-list">
-          <em className="hw-card__condition">{rig.badge}</em> {title}
-        </Link>
-        <p className="hw-card__specs">
+      <div className="hw-feature__body">
+        <p className="hw-feature__eyebrow">
+          <span>{rig.badge}</span>
+          {featured ? <span className="hw-feature__pill">This page</span> : null}
+        </p>
+        <h3 className="hw-feature__title">
+          <Link to="/waiting-list">{title}</Link>
+        </h3>
+        <ul className="hw-feature__specs">
           {rig.specs.map((spec) => (
-            <span key={spec}>{spec}</span>
+            <li key={spec}>{spec}</li>
           ))}
-        </p>
-        <p className="hw-card__prose">{rig.goodFor}</p>
-        <p className="hw-card__prose">{rig.blurb}</p>
-        <p className="hw-card__ship">Built after 22 September · price in writing before you pay</p>
-        {/* NY GBL 218-a: refund policy linked near the item. Keep above the CTA. */}
-        <p className="hw-card__ship hw-card__policy">
-          <Link to="/returns">14-day returns</Link>
-          {" · "}
-          <Link to="/warranty">90-day warranty</Link>
-        </p>
-        <Link
-          to="/waiting-list"
-          className="hw-card__cart-btn"
-          onClick={() => trackEvent("reserve_click", { placement: "card", rig: rig.id })}
-        >
-          Reserve a rig
-        </Link>
+        </ul>
+        <p className="hw-feature__prose">{rig.goodFor}</p>
+        <p className="hw-feature__prose hw-feature__prose--muted">{rig.blurb}</p>
+        <div className="hw-feature__foot">
+          <div className="hw-feature__promise">
+            <strong>Built after 22 September.</strong> Your exact configuration and price, in writing, before you pay
+            anything.
+            {/* NY GBL 218-a: refund policy linked near the item, before any commitment. */}
+            <span className="hw-feature__policy">
+              <Link to="/returns">14-day returns</Link>
+              {" · "}
+              <Link to="/warranty">90-day warranty</Link>
+            </span>
+          </div>
+          <Link
+            to="/waiting-list"
+            className="hw-card__cart-btn hw-feature__cta"
+            onClick={() => trackEvent("reserve_click", { placement: "card", rig: rig.id })}
+          >
+            Reserve a rig
+          </Link>
+        </div>
       </div>
     </article>
   );
@@ -342,11 +351,19 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
               : mission === "home" ? "Home lineup" : mission === "business" ? "Business lineup" : "Full lineup"}
           </h2>
         </div>
-        <div className="hw-grid">
-          {HARDWARE_RESERVATIONS_ONLY
-            ? nextGenRigsByMission(mission).map((rig) => <NextGenCard key={rig.id} rig={rig} />)
-            : products.map((product) => <ProductCard key={product.id} product={product} />)}
-        </div>
+        {HARDWARE_RESERVATIONS_ONLY ? (
+          <div className="hw-feature-list">
+            {nextGenRigsByMission(mission).map((rig, index) => (
+              <NextGenCard key={rig.id} rig={rig} featured={mission === "all" ? index === 0 : rig.mission === mission} />
+            ))}
+          </div>
+        ) : (
+          <div className="hw-grid">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </section>
 
       <HardwareCartDrawer />

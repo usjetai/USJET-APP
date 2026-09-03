@@ -18,9 +18,9 @@ import { getAttribution, trackEvent } from "../lib/analytics";
 type Status = "idle" | "sending" | "done" | "error";
 
 const FIELD_CLASS =
-  "w-full rounded-md border border-white/15 bg-black/30 px-3 py-2 text-sm text-white placeholder-white/35 outline-none focus:border-cyan-300/60 focus:ring-1 focus:ring-cyan-300/40";
+  "w-full rounded-lg border border-white/15 bg-black/30 px-3.5 py-2.5 text-sm text-white placeholder-white/35 outline-none focus:border-cyan-300/60 focus:ring-1 focus:ring-cyan-300/40";
 
-const LABEL_CLASS = "flex flex-col gap-1.5 text-sm text-white/70";
+const LABEL_CLASS = "flex flex-col gap-1.5 text-sm font-medium text-white/80";
 
 /**
  * The channel that actually delivered this visitor. First-touch attribution
@@ -120,13 +120,12 @@ export default function WaitingList() {
       <header className="sos-page__header">
         <div className="sos-page__kicker-row">
           <ClipboardList size={14} aria-hidden />
-          <p className="sos-page__kicker">Operator&rsquo;s Rig</p>
+          <p className="sos-page__kicker">Operator&rsquo;s Rig &middot; Waiting list</p>
         </div>
-        <h1 className="sos-page__title">
-          <span className="sos-page__title-route">/waiting-list</span>
-        </h1>
+        <h1 className="sos-page__title">Reserve the next Operator&rsquo;s Rig</h1>
         <p className="sos-page__subtitle">
-          Reserve a place in line. No payment is taken on this page and nothing is owed.
+          A place in line for a Mac that arrives with the AI already on it. No payment is taken on
+          this page and nothing is owed.
         </p>
       </header>
 
@@ -138,31 +137,44 @@ export default function WaitingList() {
                 {paragraph}
               </p>
             ))}
+            <p className="wl-note">
+              <strong>From the bench:</strong> I build these one at a time in New York, after the
+              shop closes. Every rig ships with the six-volume manual set, and you will see your
+              exact configuration and price in writing before anyone asks you for a dollar.
+              &mdash;&nbsp;Ameer, USJET
+            </p>
           </section>
 
           <section className="sos-page__section">
             <h2 className="sos-page__section-title">What happens after you send this</h2>
-            <ul className="mt-3 flex flex-col gap-4">
-              {WAITING_LIST_WHAT_HAPPENS.map((item) => (
-                <li key={item.id} className="flex flex-col gap-1">
-                  <span className="text-sm font-semibold text-white/90">{item.title}</span>
-                  <span className="text-sm leading-relaxed text-white/60">{item.body}</span>
+            <ol className="wl-steps">
+              {WAITING_LIST_WHAT_HAPPENS.map((item, index) => (
+                <li key={item.id} className="wl-step">
+                  <span className="wl-step__n" aria-hidden>
+                    {item.id === "no-obligation" ? "ANY TIME" : `STEP ${index + 1}`}
+                  </span>
+                  <h3 className="wl-step__title">{item.title}</h3>
+                  <p className="wl-step__body">{item.body}</p>
                 </li>
               ))}
-            </ul>
+            </ol>
           </section>
 
           <section className="sos-page__section" id="form">
             <h2 className="sos-page__section-title">Reserve a rig</h2>
+            <p className="sos-page__body">
+              Six questions, two of them optional. The more you tell us about the work, the better
+              we can size the machine.
+            </p>
 
             {status === "done" ? (
               <div
                 role="status"
-                className="mt-4 rounded-lg border border-cyan-300/40 bg-cyan-300/10 p-5"
+                className="mt-2 rounded-xl border border-cyan-300/40 bg-cyan-300/10 p-5"
               >
                 <p className="text-base font-semibold text-white">You are on the list.</p>
                 <p className="mt-2 text-sm leading-relaxed text-white/70">
-                  You will get a reply from {USJET_OPS_EMAIL} — usually a day or two, sometimes
+                  You will get a reply from {USJET_OPS_EMAIL} &mdash; usually a day or two, sometimes
                   the same evening. Nothing is owed and you can ask to come off the list any time.
                 </p>
                 <Link to="/returns" className="sos-page__inline-link mt-3 inline-block text-sm">
@@ -170,8 +182,8 @@ export default function WaitingList() {
                 </Link>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="mt-4 flex flex-col gap-4" noValidate={false}>
-                <div className="grid gap-4 sm:grid-cols-2">
+              <form onSubmit={onSubmit} className="wl-form" noValidate={false}>
+                <div className="wl-form__grid">
                   <label className={LABEL_CLASS} htmlFor="wl-name">
                     Name
                     <input
@@ -222,7 +234,7 @@ export default function WaitingList() {
                 </div>
 
                 <label className={LABEL_CLASS} htmlFor="wl-location">
-                  City and state
+                  City and state <span className="text-white/40">(optional)</span>
                   <input
                     id="wl-location"
                     name="location"
@@ -234,7 +246,7 @@ export default function WaitingList() {
                 </label>
 
                 <label className={LABEL_CLASS} htmlFor="wl-notes">
-                  What would you use it for
+                  What would you use it for <span className="text-white/40">(optional)</span>
                   <textarea
                     id="wl-notes"
                     name="notes"
@@ -262,11 +274,7 @@ export default function WaitingList() {
                 ) : null}
 
                 <div className="flex flex-wrap items-center gap-4">
-                  <button
-                    type="submit"
-                    disabled={status === "sending"}
-                    className="rounded-md bg-cyan-300/90 px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-60"
-                  >
+                  <button type="submit" disabled={status === "sending"} className="wl-submit">
                     {status === "sending" ? "Sending…" : "Join the waiting list"}
                   </button>
                   <a
@@ -279,7 +287,7 @@ export default function WaitingList() {
               </form>
             )}
 
-            <p className="mt-5 text-xs leading-relaxed text-white/45">{WAITING_LIST_PRIVACY_NOTE}</p>
+            <p className="mt-2 text-xs leading-relaxed text-white/45">{WAITING_LIST_PRIVACY_NOTE}</p>
           </section>
 
           <section className="sos-page__section">

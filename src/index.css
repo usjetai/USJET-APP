@@ -7790,6 +7790,139 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   color: rgba(248, 250, 252, 0.95);
 }
 
+/* The shell/panel/section/body classes below are used by the waiting list,
+   returns, warranty, terms and privacy pages but were never defined, so all
+   five rendered their text flush against the glass border. This is the
+   foundation those pages were written against. */
+.sos-page__shell {
+  display: block;
+  overflow: hidden;
+}
+.sos-page__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.6rem 1.35rem 1.9rem;
+}
+@media (min-width: 640px) {
+  .sos-page__panel {
+    padding: 2.25rem 2.5rem 2.6rem;
+  }
+}
+.sos-page__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.sos-page__section + .sos-page__section {
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(103, 232, 249, 0.14);
+}
+.sos-page__body {
+  margin: 0;
+  max-width: 64ch;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: rgba(226, 240, 243, 0.86);
+}
+.sos-page__body + .sos-page__body {
+  margin-top: 0.25rem;
+}
+
+/* Waiting list: the four "what happens next" points as a 2x2 of cards, and
+   a short line from the person who builds the machines. */
+.wl-steps {
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+@media (min-width: 640px) {
+  .wl-steps {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.wl-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  background: rgba(8, 24, 43, 0.55);
+}
+.wl-step__n {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #67e8f9;
+}
+.wl-step__title {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #f4fbff;
+}
+.wl-step__body {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(226, 240, 243, 0.72);
+}
+.wl-note {
+  margin: 0;
+  padding: 1rem 1.15rem;
+  border-left: 3px solid #e9a13b;
+  background: rgba(233, 161, 59, 0.07);
+  border-radius: 0 10px 10px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(232, 246, 248, 0.9);
+}
+.wl-note strong {
+  color: #fbd38d;
+}
+.wl-form {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+.wl-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.15rem;
+}
+@media (min-width: 640px) {
+  .wl-form__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.wl-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 1.5rem;
+  border: 0;
+  border-radius: 12px;
+  background: #22d3ee;
+  color: #04232a;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.35);
+}
+.wl-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.wl-submit:hover:not(:disabled) {
+  background: #67e8f9;
+}
+
 .sos-page__lead {
   margin: 0 0 0.85rem;
   font-size: 0.86rem;

@@ -33,7 +33,7 @@ export const HARDWARE_AUDIENCE_META: Record<
     kicker: "AI Computers for Homes",
     title: "AI Computers for Your Home",
     lede:
-      "Single-user machines. We buy the box, put a personal Jarvis on it, and ship it. Private. No ChatGPT bill.",
+      "Single-user machines. We buy the box, install the local AI stack, and ship it talking. Private. No ChatGPT bill.",
   },
   business: {
     route: HARDWARE_BUSINESSES_ROUTE,
@@ -41,7 +41,7 @@ export const HARDWARE_AUDIENCE_META: Record<
     kicker: "AI Computers for Businesses",
     title: "AI Computers for Your Business",
     lede:
-      "Higher-memory machines for a shop or office. We put a Jarvis on it that stays on so the team talks to YOUR box, not a cloud tab.",
+      "Higher-memory machines for a shop or office. Configured to stay on, so the team talks to YOUR box, not a cloud tab.",
   },
 };
 
@@ -156,7 +156,7 @@ export const OPERATOR_STACK = [
   },
   {
     id: "face",
-    layer: "Jarvis screen",
+    layer: "The screen you talk to",
     name: "Open WebUI",
     plain: "Looks like ChatGPT. Lives in a browser on your machine. Not a terminal.",
   },
@@ -176,7 +176,7 @@ export const OPERATOR_STACK = [
 
 export const OPERATOR_SETUP_PROMISE = {
   title: "Plug it in. Talk to it.",
-  body: "A one-click start sits on the desktop. It wakes the Jarvis, opens the screen, and points the vault at your documents. Same day it arrives — not three weekends in a forum.",
+  body: "A one-click start sits on the desktop. It starts the model, opens the screen, and points it at your documents. Same day it arrives — not three weekends in a forum.",
 } as const;
 
 /** What USJET does to the hardware before it leaves — left-to-right spec rows. */
@@ -186,7 +186,7 @@ export const WHAT_WE_DO_TO_THE_COMPUTER = [
     body: "Exact SKU on the tile. Amazon-sourced. No bait-and-switch, no leftover box from a different year.",
   },
   {
-    label: "We give it a Jarvis",
+    label: "We install the assistant",
     body: "People spend weekends building a personal assistant onto a laptop. We do that work. The brain lives on YOUR desk.",
   },
   {
@@ -197,11 +197,11 @@ export const WHAT_WE_DO_TO_THE_COMPUTER = [
 
 export const WHY_USJET_HARDWARE = {
   kicker: "Not a Best Buy Mac",
-  title: "Everybody can sell a computer. We give it a Jarvis and send it home.",
+  title: "Everybody can sell a computer. We send it home already working.",
   points: [
     {
       title: "The assistant, not the homework",
-      body: "That viral build — a personal Jarvis on a real computer — is the product. We install it. You talk to it.",
+      body: "A private assistant on a real computer is the product. We install it. You talk to it.",
     },
     {
       title: "Memory is the number",
@@ -209,7 +209,7 @@ export const WHY_USJET_HARDWARE = {
     },
     {
       title: "Your files stay yours",
-      body: "Cloud chat trains on the internet. This Jarvis talks on your desk. Family photos and work docs do not get pasted into someone else's server.",
+      body: "Cloud chat lives on someone else's server. This one talks on your desk. Family photos and work docs never get pasted anywhere.",
     },
     {
       title: "Yes, you could build this yourself",
@@ -242,8 +242,8 @@ export const BUSINESS_DECK = {
   ],
 } as const;
 
-export const HARDWARE_HERO_KICKER = "Operator's Rig · Personal Jarvis on real hardware" as const;
-export const HARDWARE_HERO_TITLE = "We buy the computer. We give it a Jarvis. We ship it." as const;
+export const HARDWARE_HERO_KICKER = "Operator's Rig · Private AI on real hardware" as const;
+export const HARDWARE_HERO_TITLE = "We buy the computer. We install the AI. We ship it talking." as const;
 export const HARDWARE_HERO_LEDE =
   "We buy the machine, install the local AI stack, and ship it talking. Every unit leaves as a USJET Operator's Rig — a personal assistant on YOUR hardware, not a cloud tab." as const;
 

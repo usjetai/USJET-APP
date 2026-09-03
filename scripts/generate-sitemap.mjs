@@ -26,12 +26,16 @@ const STATIC_ENTRIES = [
   { path: "/ai-101", changefreq: "weekly", priority: "0.86" },
   { path: "/store", changefreq: "weekly", priority: "0.88" },
   { path: "/aviation-books", changefreq: "weekly", priority: "0.88" },
+  { path: "/press", changefreq: "weekly", priority: "0.9" },
   { path: "/store/ai-computers", changefreq: "weekly", priority: "0.9" },
   { path: "/store/ai-computers/homes", changefreq: "weekly", priority: "0.93" },
   { path: "/store/ai-computers/businesses", changefreq: "weekly", priority: "0.93" },
   { path: "/sos", changefreq: "monthly", priority: "0.55" },
   { path: "/privacy", changefreq: "yearly", priority: "0.45" },
   { path: "/terms", changefreq: "yearly", priority: "0.45" },
+  { path: "/waiting-list", changefreq: "weekly", priority: "0.90" },
+  { path: "/returns", changefreq: "yearly", priority: "0.55" },
+  { path: "/warranty", changefreq: "yearly", priority: "0.55" },
   { path: "/llms.txt", changefreq: "monthly", priority: "0.7" },
 ];
 

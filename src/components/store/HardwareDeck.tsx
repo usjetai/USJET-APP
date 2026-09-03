@@ -14,6 +14,8 @@ import {
   HARDWARE_HERO_LEDE,
   HARDWARE_HERO_TITLE,
   HARDWARE_PRODUCTS,
+  HARDWARE_RESERVATIONS_NOTICE,
+  HARDWARE_RESERVATIONS_ONLY,
   HOME_DECK,
   OPERATOR_SETUP_PROMISE,
   OPERATOR_STACK,
@@ -43,25 +45,50 @@ function ProductCard({ product }: { product: HardwareProduct }) {
         />
       </div>
       <div className="hw-card__body">
-        <a
-          className="hw-card__title"
-          href={paymentLink || OPS_MAIL}
-          data-usjet-external-leak={paymentLink ? "true" : undefined}
-        >
-          {product.badge ? <em className="hw-card__condition">{product.badge}</em> : null} {listingTitle}
-        </a>
+        {HARDWARE_RESERVATIONS_ONLY ? (
+          <Link className="hw-card__title" to="/waiting-list">
+            {product.badge ? <em className="hw-card__condition">{product.badge}</em> : null} {listingTitle}
+          </Link>
+        ) : (
+          <a
+            className="hw-card__title"
+            href={paymentLink || OPS_MAIL}
+            data-usjet-external-leak={paymentLink ? "true" : undefined}
+          >
+            {product.badge ? <em className="hw-card__condition">{product.badge}</em> : null} {listingTitle}
+          </a>
+        )}
         <p className="hw-card__specs">
           {product.specs.slice(0, 4).map((spec) => (
             <span key={spec}>{spec}</span>
           ))}
         </p>
-        <div className="hw-card__price">
-          <span className="hw-card__price-mark">$</span>
-          <strong>{price.dollars}</strong>
-          <sup>.{price.cents}</sup>
-        </div>
-        <p className="hw-card__ship">Ships talking · free</p>
-        {product.contactToOrder ? (
+        {HARDWARE_RESERVATIONS_ONLY ? (
+          <p className="hw-card__ship">Next generation · price on reservation</p>
+        ) : (
+          <>
+            <div className="hw-card__price">
+              <span className="hw-card__price-mark">$</span>
+              <strong>{price.dollars}</strong>
+              <sup>.{price.cents}</sup>
+            </div>
+            <p className="hw-card__ship">Ships talking · free</p>
+          </>
+        )}
+        {/* NY GBL 218-a: the refund policy must be displayed or linked near the
+            item itself, or before billing information is requested. This line
+            sits above the buy control on every card for that reason. Do not
+            move it into the footer. */}
+        <p className="hw-card__ship hw-card__policy">
+          <Link to="/returns">14-day returns</Link>
+          {" · "}
+          <Link to="/warranty">90-day warranty</Link>
+        </p>
+        {HARDWARE_RESERVATIONS_ONLY ? (
+          <Link to="/waiting-list" className="hw-card__cart-btn">
+            Reserve a rig
+          </Link>
+        ) : product.contactToOrder ? (
           <a href={OPS_MAIL} className="hw-card__cart-btn">
             Talk to USJET
           </a>
@@ -179,6 +206,22 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
 
   return (
     <div className="usjet-store-page hw-page hw-page--deck page-atmosphere page-nav-offset mx-auto max-w-6xl px-4 pb-32 pt-4 sm:px-6 lg:px-8">
+      {/* Nothing on this deck is orderable right now. Say so at the top, before
+          anyone reads a spec sheet and forms an intention we cannot fulfil. */}
+      {HARDWARE_RESERVATIONS_ONLY ? (
+        <aside className="mb-8 rounded-lg border border-amber-300/35 bg-amber-300/10 px-5 py-4">
+          <p className="text-sm font-semibold text-amber-100">{HARDWARE_RESERVATIONS_NOTICE.title}</p>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/70">
+            {HARDWARE_RESERVATIONS_NOTICE.body}
+          </p>
+          <Link
+            to={HARDWARE_RESERVATIONS_NOTICE.href}
+            className="mt-3 inline-block rounded-md bg-amber-300/90 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-200"
+          >
+            {HARDWARE_RESERVATIONS_NOTICE.cta}
+          </Link>
+        </aside>
+      ) : null}
       {omitHero ? (
         <div className="hw-hero hw-hero--after-film">
           <div className="hw-hero__cart">
@@ -249,6 +292,13 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
         <p className="hw-page__fulfillment-note">
           <strong>{OPERATOR_SETUP_PROMISE.title}</strong> {OPERATOR_SETUP_PROMISE.body} Every order is purchased by
           USJET — exact SKU, Amazon-sourced, boxed, and sent to your address. No dropship substitutions.
+        </p>
+        <p className="hw-page__fulfillment-note">
+          <strong>Before you buy.</strong> Rigs ship within 10 business days of cleared payment. Returns are accepted
+          within 14 days in original condition, buyer pays return shipping, and opened units carry a 10% restocking
+          fee — full terms at <Link to="/returns">/returns</Link>. The configuration carries a 90-day USJET{" "}
+          <Link to="/warranty">Limited Warranty</Link>; the Apple hardware carries Apple's own one-year warranty,
+          which began on USJET's purchase date rather than your delivery date.
         </p>
       </section>
 

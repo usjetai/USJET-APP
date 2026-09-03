@@ -257,11 +257,14 @@ export default function HomesHero() {
 
           <div className="homes-hero__hud" ref={hudRef}>
             <h1 className="homes-hero__title usjet-logo-stone">
-              ChatGPT for your files.
+              Which files would you
               <br />
-              <span className="homes-hero__accent">Nothing leaves this computer.</span>
+              <span className="homes-hero__accent">never paste into AI?</span>
             </h1>
-            <p className="homes-hero__sub">We buy the machine, install the local AI stack, and ship it talking.</p>
+            <p className="homes-hero__sub">
+              Those are the ones this machine is for. The model runs on your desk — your documents are never sent to a
+              model provider.
+            </p>
           </div>
 
           <div className="homes-hero__cta" ref={ctaRef}>

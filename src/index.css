@@ -21968,18 +21968,6 @@ html.gaming-page-root .global-video-bg__yt {
   color: rgba(203, 213, 225, 0.72);
 }
 
-.usjet-store__book-hardware-cta {
-  margin: 0.6rem 0 0;
-  padding: 0.55rem 0.65rem;
-  border-radius: 0.6rem;
-  border: 1px solid rgba(103, 232, 249, 0.18);
-  background: rgba(103, 232, 249, 0.06);
-  font-size: 0.72rem;
-  line-height: 1.45;
-  font-style: italic;
-  color: rgba(165, 243, 252, 0.82);
-}
-
 .usjet-store__book-meta {
   display: flex;
   justify-content: space-between;
@@ -33698,5 +33686,437 @@ html.blog-page-root #usjet-app-shell {
     transform: scaleY(0.55);
     opacity: 0.8;
   }
+}
+
+
+/* ─── Aviation Books — interactive shelf (Complete-Shelf-inspired preview) ─── */
+.usjet-shelf {
+  margin: 0 0 2.75rem;
+}
+
+.usjet-shelf__frame {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.15rem;
+}
+
+@media (min-width: 900px) {
+  .usjet-shelf__frame {
+    grid-template-columns: 20rem 1fr;
+    align-items: stretch;
+  }
+}
+
+.usjet-shelf__panel {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.5rem 1.65rem;
+  min-height: 0;
+}
+
+.usjet-shelf__kicker {
+  margin: 0 0 0.85rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.72);
+}
+
+.usjet-shelf__counter {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.1rem;
+}
+
+.usjet-shelf__counter-text {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.usjet-shelf__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: rgba(15, 23, 42, 0.45);
+  color: rgba(226, 232, 240, 0.85);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.usjet-shelf__arrow:hover {
+  border-color: rgba(56, 189, 248, 0.6);
+  transform: translateY(-1px);
+}
+
+.usjet-shelf__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.usjet-shelf__series {
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(125, 211, 252, 0.65);
+}
+
+.usjet-shelf__title {
+  margin: 0.1rem 0 0;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.2;
+  color: rgba(248, 250, 252, 0.97);
+}
+
+.usjet-shelf__subtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: rgba(186, 230, 253, 0.72);
+}
+
+.usjet-shelf__blurb {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(203, 213, 225, 0.72);
+}
+
+.usjet-shelf__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.usjet-shelf__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.usjet-shelf__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  flex: 1 1 8rem;
+  min-height: 2.5rem;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.usjet-shelf__cta--primary {
+  border-color: rgba(56, 189, 248, 0.55);
+  background: rgba(56, 189, 248, 0.14);
+  color: rgba(224, 249, 255, 0.98);
+}
+
+.usjet-shelf__cta--pending {
+  margin-top: 0.75rem;
+  font-size: 0.66rem;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.usjet-shelf__jump {
+  margin-top: 0.85rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(165, 243, 252, 0.7);
+}
+
+.usjet-shelf__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 22rem;
+  padding: 1.75rem 1.25rem 1.25rem;
+  border-radius: 1.1rem;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(56, 189, 248, 0.08), transparent 60%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(6, 11, 22, 0.98));
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.16), 0 20px 45px rgba(0, 0, 0, 0.4);
+  touch-action: pan-y;
+}
+
+.usjet-shelf__featured {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 1.5rem;
+  pointer-events: none;
+}
+
+.usjet-shelf__featured-img {
+  width: 11rem;
+  max-width: 40vw;
+  height: auto;
+  aspect-ratio: 5 / 8;
+  object-fit: cover;
+  border-radius: 0.6rem;
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(148, 163, 184, 0.25);
+}
+
+.usjet-shelf__featured-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 11rem;
+  aspect-ratio: 5 / 8;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.25);
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.usjet-shelf__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.usjet-shelf__row:active {
+  cursor: grabbing;
+}
+
+.usjet-shelf__spine {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  aspect-ratio: 5 / 8;
+  border: none;
+  border-radius: 0.35rem;
+  padding: 0;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(148, 163, 184, 0.18);
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+}
+
+.usjet-shelf__spine img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.usjet-shelf__spine-label {
+  display: block;
+  padding: 0.3rem;
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+.usjet-shelf__spine--active {
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(56, 189, 248, 0.55);
+}
+
+.usjet-shelf__ticks {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 1.35rem;
+}
+
+.usjet-shelf__tick {
+  width: 1.1rem;
+  height: 3px;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  background: rgba(148, 163, 184, 0.3);
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.usjet-shelf__tick--active {
+  width: 1.75rem;
+  background: rgba(56, 189, 248, 0.85);
+}
+
+.usjet-shelf__hint {
+  margin: 0.65rem 0 0;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.55);
+}
+
+/* ─── Press home — WebGL hardcover stack ─── */
+.press-page {
+  min-height: 100vh;
+}
+
+.press-home {
+  position: relative;
+  padding: 0 1rem 3rem;
+}
+
+.press-home__mast {
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding-top: 0.35rem;
+}
+
+.press-home__kicker {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.press-home__heading {
+  margin: 0.2rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(226, 232, 240, 0.72);
+}
+
+.press-home__stage {
+  position: relative;
+  width: min(72rem, 100%);
+  height: min(86vh, 64rem);
+  min-height: 36rem;
+  margin: 0 auto;
+}
+
+.press-home__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.press-home__fail,
+.press-home__hint {
+  margin: 0.75rem auto 0;
+  max-width: 40rem;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  color: rgba(226, 232, 240, 0.48);
+}
+
+.press-home__dossier {
+  position: relative;
+  z-index: 3;
+  width: min(40rem, 100%);
+  margin: -4.5rem auto 0;
+  padding: 1.1rem 1.25rem 1.2rem;
+}
+
+.press-home__series,
+.press-home__price {
+  margin: 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.45);
+}
+
+.press-home__title {
+  margin: 0.35rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.press-home__sub,
+.press-home__blurb {
+  margin: 0.5rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(226, 232, 240, 0.78);
+}
+
+.press-home__author {
+  margin: 0.35rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: rgba(226, 232, 240, 0.7);
+}
+
+.press-home__price {
+  margin-top: 0.85rem;
+}
+
+.press-home__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 0.9rem;
+}
+
+.press-home__buy,
+.press-home__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.55rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.28);
+  background: transparent;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  color: #f8fafc;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.press-home__buy + .press-home__buy,
+.press-home__back {
+  border-left: 0;
+}
+
+.press-home__catalog-link {
+  color: rgba(226, 232, 240, 0.7);
+  text-underline-offset: 0.2em;
 }
 

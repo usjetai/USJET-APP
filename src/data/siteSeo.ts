@@ -68,6 +68,12 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
       "aviation coloring book, jet fighter coloring book, Generation 6 coloring book, Wings of Betrayal, The Enemy's Kiss, Ameer Karim books, USJET books",
     ogType: "product",
   },
+  "/press": {
+    title: "Press — The Complete Shelf | USJET.AI",
+    description:
+      "Aviation books and operator manuals on one hardcover stack. Click a volume, buy on Amazon, same window.",
+    ogType: "product",
+  },
   [HARDWARE_ROUTE]: {
     title: "Buy AI Computers for Local AI & LLMs — Homes & Businesses | USJET.AI",
     description:
@@ -102,6 +108,21 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
   "/terms": {
     title: "Terms of Service | USJET.AI",
     description: "USJET.AI Terms of Service — subscriptions, AI Computers hardware orders, shipping and returns, AI-output disclaimers.",
+  },
+  "/waiting-list": {
+    title: "Reserve an Operator's Rig — USJET",
+    description:
+      "Join the list for the next Operator's Rig: a Mac that arrives with a local AI stack already installed and configured. No payment taken, nothing owed.",
+  },
+  "/returns": {
+    title: "Returns, Refunds & Shipping | USJET.AI",
+    description:
+      "14-day returns, 10% restocking on opened units, refunds to the original payment method within 7 business days, rigs shipped within 10 business days of cleared payment.",
+  },
+  "/warranty": {
+    title: "USJET Limited Warranty | USJET.AI",
+    description:
+      "90 days on the configuration and software setup of every Operator's Rig, how to get service, and how Apple's own hardware warranty applies alongside it.",
   },
   "/sos": {
     title: "Help Center | USJET.AI",

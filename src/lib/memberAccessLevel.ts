@@ -18,6 +18,8 @@ export const GUEST_PUBLIC_ROUTES = [
   "/sos",
   "/privacy",
   "/terms",
+  "/returns",
+  "/warranty",
   "/ai-101",
   "/code-kit",
   "/blog",
@@ -30,6 +32,7 @@ export const GUEST_PUBLIC_ROUTES = [
   "/founders-fuel",
   "/store",
   "/aviation-books",
+  "/press",
   "/store/ai-computers",
   "/ai-computers",
   "/workbench",
@@ -61,6 +64,8 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/sos": 0,
   "/privacy": 0,
   "/terms": 0,
+  "/returns": 0,
+  "/warranty": 0,
   "/ai-101": 0,
   "/code-kit": 0,
   "/blog": 0,
@@ -76,6 +81,7 @@ export const ROUTE_MIN_CLEARANCE: Record<string, number> = {
   "/founders-fuel": 0,
   "/store": 0,
   "/aviation-books": 0,
+  "/press": 0,
   "/store/ai-computers": 0,
   "/ai-computers": 0,
   "/workbench": 0,
@@ -114,6 +120,7 @@ export function routeMinClearanceRank(path: string): number {
   }
   if (normalized.startsWith("/blog/")) return 0;
   if (normalized.startsWith("/store/ai-computers/")) return 0;
+  if (normalized.startsWith("/press")) return 0;
   if (normalized.startsWith("/compare/")) return 0;
   if (normalized.startsWith("/fleet-directory/")) return 0;
   if (normalized.startsWith("/product/")) return 0;

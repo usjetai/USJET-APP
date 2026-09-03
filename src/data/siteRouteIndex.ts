@@ -24,10 +24,18 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
       { path: "/fleet", label: "Business", hint: "Business computers · servers" },
       { path: "/store", label: "Manuals", hint: "AI Book Series" },
       { path: "/aviation-books", label: "Aviation Books", hint: "Coloring + Enemy Skies" },
+      { path: "/press", label: "Press", hint: "Aviation + manuals stack" },
       { path: "/store/ai-computers", label: "Full lineup", hint: "Homes + Businesses hub" },
       { path: "/store/ai-computers/homes", label: "AI Computers — Homes", hint: "Mac Mini, MacBook, mini PCs" },
       { path: "/store/ai-computers/businesses", label: "AI Computers — Businesses", hint: "Mac Studio, workstations" },
       { path: "/compare", label: "Compare", hint: "Why this machine" },
+    ],
+  },
+  {
+    id: "reserve",
+    title: "Reserve",
+    routes: [
+      { path: "/waiting-list", label: "Waiting list", hint: "Reserve an Operator's Rig" },
     ],
   },
   {
@@ -45,6 +53,8 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     routes: [
       { path: "/privacy", label: "Privacy" },
       { path: "/terms", label: "Terms" },
+      { path: "/returns", label: "Returns", hint: "Returns, refunds & shipping" },
+      { path: "/warranty", label: "Warranty", hint: "USJET Limited Warranty" },
       { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
       { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },
     ],

@@ -9,7 +9,7 @@ export const TERMS_CANONICAL_URL = `${SITE_ORIGIN}${TERMS_ROUTE}` as const;
 export const TERMS_PAGE_TITLE = "Terms of Service · USJET.AI" as const;
 
 export const TERMS_META_DESCRIPTION =
-  "USJET.AI Terms of Service — AI Computers hardware orders, AI Book Series, shipping and returns, AI-output disclaimers, and account terms." as const;
+  "USJET.AI Terms of Service — Operator's Rig hardware orders, shipping, returns and warranty, AI-output disclaimers, and account terms." as const;
 
 /**
  * NOTE for Ameer / counsel: this is a first-pass draft covering the mechanics
@@ -49,7 +49,8 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       "AI Computers listings (Homes and Businesses lineups) are sold by USJET, not drop-shipped: we purchase the listed unit and configure it as an Operator's Rig (Ollama, Open WebUI, AnythingLLM, AI Book Series) before shipping. Each order is a one-time purchase — there is no subscription or recurring charge.",
       "Prices, specs, and availability shown on the site can change without notice until you complete Stripe checkout. Orders ship to US addresses only. Risk of loss passes to you on delivery to the shipping carrier.",
       "Items marked \"Talk to order\" are configured to your specification after you contact ops@usjet.ai; price and availability for those units are confirmed directly with you before any charge.",
-      "[Placeholder — confirm and publish your actual policy] Defective-on-arrival units may be returned within 30 days of delivery for repair, replacement, or refund at USJET's discretion. Change-of-mind returns, if offered, may carry a restocking fee and require the unit in original condition. Original manufacturer warranties (Apple, AMD OEM, etc.) apply in addition to, not in place of, any policy stated here.",
+      "Returns are accepted within 14 days of delivery, in original condition with all accessories. Buyer pays return shipping, opened units carry a 10% restocking fee, and refunds are issued to the original payment method within 7 business days of our receiving the return. Cancelling before the rig ships is free. The full policy, including shipping times and damaged-in-transit handling, is at /returns and controls if anything here conflicts with it.",
+      "The USJET Limited Warranty covers the configuration and software setup we performed, for 90 days from delivery — see /warranty. Original manufacturer warranties (Apple in particular) apply in addition to, not in place of, it, and Apple's one-year term begins on USJET's purchase date rather than your delivery date.",
     ],
   },
   {
@@ -129,7 +130,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
     id: "governing-law",
     title: "Governing law & disputes",
     paragraphs: [
-      "[Placeholder — confirm with counsel] These Terms are governed by the laws of the state in which USJET LLC is organized, without regard to conflict-of-laws principles. Disputes will be resolved in the state or federal courts located in that state, and you consent to jurisdiction there.",
+      "These Terms are governed by the laws of the State of New York, without regard to conflict-of-laws principles. Disputes will be resolved in the state or federal courts located in New York, and you consent to jurisdiction there.",
     ],
   },
   {

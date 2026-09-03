@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { BookOpen, ExternalLink } from "lucide-react";
 import GlassEffectContainer from "../components/layout/GlassEffectContainer";
+import AviationShelf from "../components/store/AviationShelf";
 import {
   AVIATION_BOOKS,
   AVIATION_BOOKS_HERO_KICKER,
@@ -149,10 +150,12 @@ export default function AviationBooks() {
         <p className="usjet-store__lede">{AVIATION_BOOKS_HERO_LEDE}</p>
       </header>
 
+      <AviationShelf />
+
       <section className="usjet-store__section" aria-labelledby="aviation-books-heading">
         <div className="usjet-store__section-head">
           <BookOpen size={18} aria-hidden />
-          <h2 id="aviation-books-heading">Aviation Coloring · Enemy Skies</h2>
+          <h2 id="aviation-books-heading">Full Catalog</h2>
         </div>
         <p className="usjet-store__section-lede max-w-2xl">
           Written by Founder Ameer Karim. Coloring titles are paperback. Novels ship Kindle and paperback. Tap a

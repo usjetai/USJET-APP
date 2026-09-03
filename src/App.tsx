@@ -19,6 +19,9 @@ const Fleet = lazy(() => import("./pages/Fleet"));
 const Sos = lazy(() => import("./pages/Sos"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const Returns = lazy(() => import("./pages/Returns"));
+const Warranty = lazy(() => import("./pages/Warranty"));
+const WaitingList = lazy(() => import("./pages/WaitingList"));
 const MobileLandscapeGuide = lazy(() => import("./pages/MobileLandscapeGuide"));
 const ProtocolSessionProof = lazy(() => import("./pages/ProtocolSessionProof"));
 const AiComputers = lazy(() => import("./pages/AiComputers"));
@@ -28,6 +31,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Store = lazy(() => import("./pages/Store"));
 const AviationBooks = lazy(() => import("./pages/AviationBooks"));
+const PressLibrary = lazy(() => import("./pages/PressLibrary"));
 const Cockpit = lazy(() => import("./pages/Cockpit"));
 
 function RouteFallback() {
@@ -57,6 +61,11 @@ function AnimatedRoutes() {
             <Route path="/sos" element={<Sos />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/returns" element={<Returns />} />
+            <Route path="/refunds" element={<Navigate to="/returns" replace />} />
+            <Route path="/shipping" element={<Navigate to="/returns" replace />} />
+            <Route path="/warranty" element={<Warranty />} />
+            <Route path="/waiting-list" element={<WaitingList />} />
             <Route path="/ai-101" element={<Navigate to="/" replace />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
@@ -64,6 +73,9 @@ function AnimatedRoutes() {
             <Route path="/compare/:slug" element={<Navigate to="/" replace />} />
             <Route path="/store" element={<Store />} />
             <Route path="/aviation-books" element={<AviationBooks />} />
+            <Route path="/press" element={<PressLibrary />} />
+            <Route path="/press/aviation" element={<Navigate to="/press" replace />} />
+            <Route path="/press/manuals" element={<Navigate to="/press" replace />} />
             <Route path="/books" element={<Navigate to="/store" replace />} />
             <Route path="/merch" element={<Navigate to="/store" replace />} />
             <Route path="/store/ai-computers" element={<AiComputers />} />

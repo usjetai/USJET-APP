@@ -68,6 +68,26 @@ export type HardwareProduct = {
   contactToOrder?: boolean;
 };
 
+/**
+ * The deck below is the M4 generation. Apple has moved on and those exact
+ * configurations are no longer orderable at retail, so nothing here can be
+ * sold today and none of these prices apply to the machines we will actually
+ * build next.
+ *
+ * While this is true: no price and no checkout is shown anywhere on the deck,
+ * and every buy control routes to /waiting-list instead. Flip it back to false
+ * only when a current-generation machine is genuinely in hand with a confirmed
+ * price. The tiles stay so the specs and the comparison work survive.
+ */
+export const HARDWARE_RESERVATIONS_ONLY = true;
+
+export const HARDWARE_RESERVATIONS_NOTICE = {
+  title: "Between generations",
+  body: "These builds are the last-generation Mac lineup and are no longer available to order. The next Operator's Rigs are built on the Mac mini Apple ships on 22 September 2026. Reserve a place in line and you will get the exact configuration and the exact price, in writing, before anyone asks you for money.",
+  cta: "Reserve a rig",
+  href: "/waiting-list",
+} as const;
+
 export const OPERATOR_STACK = [
   {
     id: "engine",
@@ -141,8 +161,8 @@ export const WHY_USJET_HARDWARE = {
 
 export const HOME_DECK = {
   kicker: "Homes · AI computers",
-  title: "ChatGPT for your files. Nothing leaves this computer.",
-  lede: "We buy the machine, install the local AI stack, and ship it talking. Open the lid. Drop in your documents. Ask. Private — no cloud bill, no files pasted into someone else's server.",
+  title: "Which files would you never paste into AI?",
+  lede: "Those are the ones this machine is for. We buy the computer, install the local AI stack, and ship it talking. Drop in your documents and ask — the model runs on your desk, so nothing you feed it is sent to a model provider.",
   primerTitle: "What we do to these computers",
   primer: [
     "We buy the exact unit.",

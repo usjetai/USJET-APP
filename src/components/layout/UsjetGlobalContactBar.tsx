@@ -58,6 +58,9 @@ export default function UsjetGlobalContactBar() {
             <NavLink to="/aviation-books" className={footerLinkClass}>
               Aviation Books
             </NavLink>
+            <NavLink to="/press" className={footerLinkClass}>
+              Press
+            </NavLink>
           </nav>
 
           <nav className="usjet-footer__col" aria-label="Company">
@@ -80,6 +83,12 @@ export default function UsjetGlobalContactBar() {
             </NavLink>
             <NavLink to="/terms" className={footerLinkClass}>
               Terms
+            </NavLink>
+            <NavLink to="/returns" className={footerLinkClass}>
+              Returns &amp; shipping
+            </NavLink>
+            <NavLink to="/warranty" className={footerLinkClass}>
+              Warranty
             </NavLink>
           </nav>
         </div>

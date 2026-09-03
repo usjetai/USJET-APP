@@ -132,6 +132,11 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     title: "Terms of Service | USJET.AI",
     description: "USJET.AI Terms of Service — subscriptions, AI Computers hardware orders, shipping and returns, AI-output disclaimers.",
   },
+  "/waiting-list": {
+    title: "Reserve an Operator's Rig — USJET",
+    description:
+      "Join the list for the next Operator's Rig: a Mac that arrives with a local AI stack already installed and configured. No payment taken, nothing owed.",
+  },
   "/returns": {
     title: "Returns, Refunds & Shipping | USJET.AI",
     description:

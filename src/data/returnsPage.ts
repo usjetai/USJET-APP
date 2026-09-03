@@ -53,7 +53,7 @@ export const RETURNS_SECTIONS: readonly ReturnsSection[] = [
     bullets: [
       "The machine must be in original condition with all accessories and packaging.",
       "You pay return shipping. We recommend insuring it.",
-      "Opened units carry a 10% restocking fee — $114.90 on a $1,149 rig.",
+      "Opened units carry a 10% restocking fee — $10 back for every $100 of the rig's price.",
       "Unopened units are refunded in full, less original shipping.",
     ],
   },

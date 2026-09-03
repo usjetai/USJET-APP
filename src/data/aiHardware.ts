@@ -68,6 +68,26 @@ export type HardwareProduct = {
   contactToOrder?: boolean;
 };
 
+/**
+ * The deck below is the M4 generation. Apple has moved on and those exact
+ * configurations are no longer orderable at retail, so nothing here can be
+ * sold today and none of these prices apply to the machines we will actually
+ * build next.
+ *
+ * While this is true: no price and no checkout is shown anywhere on the deck,
+ * and every buy control routes to /waiting-list instead. Flip it back to false
+ * only when a current-generation machine is genuinely in hand with a confirmed
+ * price. The tiles stay so the specs and the comparison work survive.
+ */
+export const HARDWARE_RESERVATIONS_ONLY = true;
+
+export const HARDWARE_RESERVATIONS_NOTICE = {
+  title: "Between generations",
+  body: "These builds are the last-generation Mac lineup and are no longer available to order. The next Operator's Rigs are built on the Mac mini Apple ships on 22 September 2026. Reserve a place in line and you will get the exact configuration and the exact price, in writing, before anyone asks you for money.",
+  cta: "Reserve a rig",
+  href: "/waiting-list",
+} as const;
+
 export const OPERATOR_STACK = [
   {
     id: "engine",

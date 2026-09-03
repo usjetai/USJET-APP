@@ -32,6 +32,13 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
     ],
   },
   {
+    id: "reserve",
+    title: "Reserve",
+    routes: [
+      { path: "/waiting-list", label: "Waiting list", hint: "Reserve an Operator's Rig" },
+    ],
+  },
+  {
     id: "company",
     title: "Company",
     routes: [

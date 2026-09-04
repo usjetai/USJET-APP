@@ -26,9 +26,9 @@ export type PageSeo = {
 
 /** Hangar home — primary commercial + crawl target. */
 export const DEFAULT_PAGE_SEO: PageSeo = {
-  title: "USJET.AI | Homes — AI Computers",
+  title: "USJET.AI | Operator's Rig — Solo · Local AI on a Mac mini",
   description:
-    "USJET: computers that already have AI in them for the house. Private local models, Operator's Rig stack, shipped to your door. Founded by Ameer Karim.",
+    "A Mac mini that arrives with a local AI model already installed, configured and talking — for the files you'd never paste into a chatbot. Nothing you feed it leaves the room. Built in New York by USJET.",
   keywords:
     "USJET, home AI computer, local AI, Mac Mini, Operator's Rig, Ollama, AnythingLLM, private AI, Ameer Karim, buy AI computer, mini PC for local AI, best mini PC for Ollama, local LLM computer, Mac Mini for local AI",
   ogType: "website",
@@ -40,11 +40,11 @@ export const DEFAULT_PAGE_SEO: PageSeo = {
 export const ROUTE_SEO: Record<string, PageSeo> = {
   "/": DEFAULT_PAGE_SEO,
   "/fleet": {
-    title: "Business — AI Computers & Servers | USJET.AI",
+    title: "USJET.AI | Operator's Rig — Crew · Local AI for the office",
     description:
-      "USJET Fleet: business computers and always-on AI servers. Mac Studio, 64GB–128GB mini PCs, office brains that stay on. Operator's Rig — not a cloud chatbot.",
+      "A Mac that stays on in the office with the model running in the building, so intake notes, transcripts and summaries never leave for a model provider. For the small practice or shop that handles other people's information.",
     keywords:
-      "business AI computer, AI server, Mac Studio, local LLM office, USJET Fleet, Ryzen AI Max+ 395 mini PC, Beelink GTR9 Pro, Minisforum MS-A2, buy AI computer",
+      "business AI computer, local AI for law firms, AI for accountants, AI for therapists, private AI office, offline AI, client data privacy, Operator's Rig Crew, USJET",
   },
   "/blog": {
     title: "Operator Log — USJET Blog | AI Fleet Doctrine",
@@ -84,7 +84,7 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     jsonLd: buildHardwareHubJsonLd(),
   },
   [HARDWARE_HOMES_ROUTE]: {
-    title: "AI Computers for Homes — Mac Mini, MacBook, Mini PC | USJET.AI",
+    title: "Operator's Rig — Solo · Local AI on a Mac mini | USJET.AI",
     description:
       "A Mac mini that arrives with local AI installed and configured, for the files you would never paste into a chatbot. Built in New York; reserve the next generation.",
     keywords:
@@ -93,11 +93,11 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     jsonLd: buildHardwareCatalogJsonLd("home"),
   },
   [HARDWARE_BUSINESSES_ROUTE]: {
-    title: "AI Computers for Businesses — Mac Studio, Mini PCs, Workstations | USJET.AI",
+    title: "Operator's Rig — Crew · Local AI for the office | USJET.AI",
     description:
-      "Business AI computers and servers. Minisforum MS-A2, Beelink GTR9 Pro, Mac Studio, RTX 5090 and 128GB workstation servers — Operator's Rig, shipped by USJET.",
+      "A Mac that stays on in the office with the model running in the building, so intake notes, transcripts and summaries never leave for a model provider. Set up at your desk in New York, or shipped ready to run.",
     keywords:
-      "AI computer for business, Mac Studio, Beelink GTR9 Pro, Minisforum MS-A2, RTX 5090 AI workstation, local LLM server",
+      "AI computer for business, local AI for law firms, AI for accountants, AI for therapists, private AI office, offline AI, client data privacy, Operator's Rig Crew, USJET",
     ogType: "product",
     jsonLd: buildHardwareCatalogJsonLd("business"),
   },

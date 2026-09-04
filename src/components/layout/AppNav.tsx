@@ -1,7 +1,10 @@
 import { NavLink, Link } from "react-router-dom";
 import UsjetWordmark from "../brand/UsjetWordmark";
-import AppNavInstagramBadge from "./AppNavInstagramBadge";
 import AppNavPhoneBadge from "./AppNavPhoneBadge";
+
+/** Instagram header badge was retired from the nav (not linked anywhere
+ * else on the site) — AppNavInstagramBadge.tsx is left in place, unused,
+ * in case it's wanted again (e.g. in a footer). */
 
 const NAV_LINKS = [
   { to: "/", label: "Homes" },
@@ -47,7 +50,6 @@ const AppNav = () => {
 
             <div className="app-nav-zone app-nav-zone--social">
               <AppNavPhoneBadge />
-              <AppNavInstagramBadge />
             </div>
           </div>
         </div>

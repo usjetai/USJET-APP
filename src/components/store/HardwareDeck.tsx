@@ -121,17 +121,16 @@ function ProductCard({ product }: { product: HardwareProduct }) {
  * on the next Mac mini. Deliberately carries no price and no memory figure —
  * both are confirmed in writing to the buyer before any money changes hands.
  */
-function NextGenCard({ rig, featured }: { rig: NextGenRig; featured: boolean }) {
+function NextGenCard({ rig }: { rig: NextGenRig }) {
   const title = `${rig.name} — ${rig.tagline}`;
   return (
-    <article id={rig.id} className={featured ? "hw-feature hw-feature--primary" : "hw-feature"}>
+    <article id={rig.id} className="hw-feature hw-feature--primary">
       <div className="hw-feature__media">
         <img src={rig.imageSrc} alt={title} width={640} height={480} />
       </div>
       <div className="hw-feature__body">
         <p className="hw-feature__eyebrow">
           <span>{rig.badge}</span>
-          {featured ? <span className="hw-feature__pill">This page</span> : null}
         </p>
         <h3 className="hw-feature__title">
           <Link to="/waiting-list">{title}</Link>
@@ -353,8 +352,8 @@ export default function HardwareDeck({ mission, catalog = "site", omitHero = fal
         </div>
         {HARDWARE_RESERVATIONS_ONLY ? (
           <div className="hw-feature-list">
-            {nextGenRigsByMission(mission).map((rig, index) => (
-              <NextGenCard key={rig.id} rig={rig} featured={mission === "all" ? index === 0 : rig.mission === mission} />
+            {nextGenRigsByMission(mission).map((rig) => (
+              <NextGenCard key={rig.id} rig={rig} />
             ))}
           </div>
         ) : (

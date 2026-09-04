@@ -126,12 +126,13 @@ export const NEXT_GEN_RIGS: readonly NextGenRig[] = [
   },
 ] as const;
 
-/** Both rigs, with the page's own mission first. Two feature cards fill the
- *  section at any viewport; one card in a twelve-card grid looked abandoned. */
+/** Only the rig built for this page's mission — the home page sells the
+ *  desk rig, the business page sells the office rig. Showing both on both
+ *  pages made a visitor pick between two cards before they'd read either. */
 export function nextGenRigsByMission(mission: HardwareMission | "all"): NextGenRig[] {
   const rigs = [...NEXT_GEN_RIGS];
   if (mission === "all") return rigs;
-  return rigs.sort((a, b) => Number(b.mission === mission) - Number(a.mission === mission));
+  return rigs.filter((rig) => rig.mission === mission);
 }
 
 export const HARDWARE_RESERVATIONS_NOTICE = {

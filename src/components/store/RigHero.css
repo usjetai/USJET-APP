@@ -1,0 +1,92 @@
+/* RigHero — instrument-panel hero for the Operator's Rig homepage.
+   Scoped to this component; does not touch .homes-hero (kept in place, unused). */
+
+.rig-hero {
+  background: #08182b;
+  color: #e4eaef;
+}
+
+.rig-hero .eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.rig-hero .display {
+  font-family: "Saira Condensed", "Arial Narrow", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+.rig-hero .cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #195385;
+  color: #f2f5f7;
+  font-family: "Saira Condensed", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.rig-hero .cta:hover {
+  background: #1e6299;
+}
+
+.rig-hero .chat-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 13px;
+  background: #e9a13b;
+  margin-left: 2px;
+  vertical-align: -2px;
+  animation: rigChatCursor 1s steps(1) infinite;
+}
+@keyframes rigChatCursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.rig-hero .think-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: rigThinkPulse 7s ease-in-out infinite;
+}
+.rig-hero .think-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #6fb2e4;
+  animation: rigThinkBounce 1s ease-in-out infinite;
+}
+.rig-hero .think-dot:nth-child(2) { animation-delay: 0.15s; }
+.rig-hero .think-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes rigThinkPulse {
+  0%, 9% { opacity: 0; }
+  14%, 27% { opacity: 1; }
+  34%, 100% { opacity: 0; }
+}
+@keyframes rigThinkBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-3px); opacity: 1; }
+}
+
+.rig-hero .answer-ln {
+  height: 9px;
+  border-radius: 2px;
+  background: #2a4a6b;
+  opacity: 0;
+  transform: translateY(4px);
+  animation: rigAnswerLine 7s ease-in-out infinite;
+}
+.rig-hero .answer-ln:nth-child(1) { width: 92%; animation-delay: 0s; }
+.rig-hero .answer-ln:nth-child(2) { width: 78%; animation-delay: 0.25s; }
+.rig-hero .answer-ln:nth-child(3) { width: 55%; animation-delay: 0.5s; }
+@keyframes rigAnswerLine {
+  0%, 30% { opacity: 0; transform: translateY(4px); }
+  38%, 88% { opacity: 1; transform: translateY(0); }
+  96%, 100% { opacity: 0; transform: translateY(4px); }
+}

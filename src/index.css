@@ -899,22 +899,22 @@
   isolation: isolate;
   padding: 0 0.55rem 0 0.42rem;
   text-decoration: none;
-  border: 1px solid rgba(34, 211, 238, 0.55);
+  border: 1px solid rgba(25, 83, 133, 0.65);
   border-radius: 999px;
-  background: linear-gradient(145deg, rgba(8, 145, 178, 0.72), rgba(14, 60, 90, 0.88));
+  background: linear-gradient(145deg, rgba(25, 83, 133, 0.75), rgba(8, 24, 43, 0.9));
   box-shadow:
-    0 0 12px rgba(34, 211, 238, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    0 0 12px rgba(25, 83, 133, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
   transform: none;
 }
 
 .app-nav-phone:hover,
 .app-nav-phone:focus-visible {
   transform: none;
-  border-color: rgba(103, 232, 249, 0.95);
+  border-color: rgba(111, 178, 228, 0.95);
   box-shadow:
-    0 0 16px rgba(34, 211, 238, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    0 0 16px rgba(25, 83, 133, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .app-nav-phone:active {
@@ -929,15 +929,15 @@
 }
 
 .app-nav-phone__halo {
-  background: radial-gradient(circle at 30% 50%, rgba(103, 232, 249, 0.4), transparent 72%);
+  background: radial-gradient(circle at 30% 50%, rgba(111, 178, 228, 0.4), transparent 72%);
 }
 
 .app-nav-phone__shine {
   background: linear-gradient(
     105deg,
     transparent 28%,
-    rgba(255, 255, 255, 0.55) 46%,
-    rgba(165, 243, 252, 0.35) 52%,
+    rgba(255, 255, 255, 0.5) 46%,
+    rgba(111, 178, 228, 0.35) 52%,
     transparent 68%
   );
   transform: translateX(-140%) skewX(-14deg);
@@ -952,10 +952,10 @@
   width: 1.05rem;
   height: 1.05rem;
   border-radius: 0.28rem;
-  color: #ecfeff;
-  background: rgba(6, 78, 99, 0.55);
+  color: #f2f5f7;
+  background: rgba(12, 37, 64, 0.6);
   box-shadow:
-    0 0 8px rgba(34, 211, 238, 0.45),
+    0 0 8px rgba(25, 83, 133, 0.5),
     inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -965,8 +965,8 @@
   font-size: 0.55rem;
   font-weight: 900;
   letter-spacing: 0.04em;
-  color: #ecfeff;
-  text-shadow: 0 0 8px rgba(34, 211, 238, 0.45);
+  color: #f2f5f7;
+  text-shadow: 0 0 8px rgba(25, 83, 133, 0.45);
   font-variant-numeric: tabular-nums;
 }
 

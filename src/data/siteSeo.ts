@@ -6,9 +6,12 @@ export const SITE_ORIGIN = "https://www.usjet.ai" as const;
 
 export const SITE_NAME = "USJET.AI" as const;
 
-export const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/brand/usjet-logo.png` as const;
+/** 1200×627 rig creative — a shared link previews as the product, not a letterhead.
+ *  The JSON-LD Organization/WebSite `image` still uses the logo, on purpose. */
+export const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/brand/usjet-og.jpg` as const;
+export const LOGO_IMAGE = `${SITE_ORIGIN}/brand/usjet-logo.png` as const;
 
-export const DEFAULT_OG_IMAGE_ALT = "USJET — official logo" as const;
+export const DEFAULT_OG_IMAGE_ALT = "USJET Operator's Rig — a Mac mini with local AI already installed. Your files never leave the room." as const;
 
 export type PageSeo = {
   title: string;
@@ -241,7 +244,7 @@ export function buildArticleJsonLd(input: {
       },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": input.url },
-    image: DEFAULT_OG_IMAGE,
+    image: LOGO_IMAGE,
   };
 }
 
@@ -258,7 +261,7 @@ export function buildProductJsonLd(input: {
     description: input.description,
     url: input.url,
     brand: { "@type": "Brand", name: input.brand ?? SITE_NAME },
-    image: DEFAULT_OG_IMAGE,
+    image: LOGO_IMAGE,
     offers: {
       "@type": "Offer",
       url: `${SITE_ORIGIN}/`,

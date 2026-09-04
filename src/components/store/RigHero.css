@@ -90,14 +90,3 @@
   38%, 88% { opacity: 1; transform: translateY(0); }
   96%, 100% { opacity: 0; transform: translateY(4px); }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .rig-hero .chat-cursor,
-  .rig-hero .think-row,
-  .rig-hero .think-dot,
-  .rig-hero .answer-ln {
-    animation: none !important;
-  }
-  .rig-hero .think-row { opacity: 0; }
-  .rig-hero .answer-ln { opacity: 1; transform: none; }
-}

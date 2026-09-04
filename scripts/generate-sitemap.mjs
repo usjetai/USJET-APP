@@ -36,6 +36,7 @@ const STATIC_ENTRIES = [
   { path: "/waiting-list", changefreq: "weekly", priority: "0.90" },
   { path: "/returns", changefreq: "yearly", priority: "0.55" },
   { path: "/warranty", changefreq: "yearly", priority: "0.55" },
+  { path: "/support", changefreq: "monthly", priority: "0.6" },
   { path: "/llms.txt", changefreq: "monthly", priority: "0.7" },
 ];
 

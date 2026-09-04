@@ -21,6 +21,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Returns = lazy(() => import("./pages/Returns"));
 const Warranty = lazy(() => import("./pages/Warranty"));
+const Support = lazy(() => import("./pages/Support"));
 const WaitingList = lazy(() => import("./pages/WaitingList"));
 const MobileLandscapeGuide = lazy(() => import("./pages/MobileLandscapeGuide"));
 const ProtocolSessionProof = lazy(() => import("./pages/ProtocolSessionProof"));
@@ -65,6 +66,7 @@ function AnimatedRoutes() {
             <Route path="/refunds" element={<Navigate to="/returns" replace />} />
             <Route path="/shipping" element={<Navigate to="/returns" replace />} />
             <Route path="/warranty" element={<Warranty />} />
+            <Route path="/support" element={<Support />} />
             <Route path="/waiting-list" element={<WaitingList />} />
             <Route path="/ai-101" element={<Navigate to="/" replace />} />
             <Route path="/blog" element={<Blog />} />

@@ -122,6 +122,11 @@ export const ROUTE_SEO: Record<string, PageSeo> = {
     description:
       "14-day returns, 10% restocking on opened units, refunds to the original payment method within 7 business days, rigs shipped within 10 business days of cleared payment.",
   },
+  "/support": {
+    title: "Support Plans — USJET Operator's Rig | USJET.AI",
+    description:
+      "What comes with every Operator's Rig, and the two support plans that extend it: Standing Support (email, scheduled calls, remote sessions on your Mac) and On-Site Support in the New York area. No plan is priced until the rig is.",
+  },
   "/warranty": {
     title: "USJET Limited Warranty | USJET.AI",
     description:

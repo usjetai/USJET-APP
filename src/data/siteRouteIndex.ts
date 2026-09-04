@@ -55,6 +55,7 @@ export const SITE_ROUTE_GROUPS: readonly SiteRouteGroup[] = [
       { path: "/terms", label: "Terms" },
       { path: "/returns", label: "Returns", hint: "Returns, refunds & shipping" },
       { path: "/warranty", label: "Warranty", hint: "USJET Limited Warranty" },
+      { path: "/support", label: "Support plans", hint: "What comes with every rig, and the plans that extend it" },
       { path: PROTOCOL_SESSION_PROOF_ROUTE, label: "Protocol Proof" },
       { path: MOBILE_LANDSCAPE_ROUTE, label: "Landscape Guide" },
     ],

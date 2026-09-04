@@ -7959,6 +7959,43 @@ html.hangar-bay-isolated .usjet-protocol-boot {
   text-underline-offset: 0.12em;
 }
 
+/* /support — plan sections. Header row: name + audience on the left, the
+   price line ("Included" / "Priced with your rig") as a pill on the right.
+   Never a number in that pill; see src/data/supportPage.ts. */
+.support-plan__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.support-plan__audience {
+  margin: 0.35rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+}
+.support-plan__price {
+  flex-shrink: 0;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(233, 161, 59, 0.55);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(233, 161, 59, 0.95);
+  white-space: nowrap;
+}
+.support-plan__price--included {
+  border-color: rgba(103, 232, 249, 0.45);
+  color: rgba(125, 235, 255, 0.95);
+}
+.support-plan__cta {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
 .sos-page__inline-link:hover {
   color: #fff;
 }

@@ -85,6 +85,8 @@ function ProductCard({ product }: { product: HardwareProduct }) {
           <Link to="/returns">14-day returns</Link>
           {" · "}
           <Link to="/warranty">90-day warranty</Link>
+          {" · "}
+          <Link to="/support">support plans</Link>
         </p>
         {HARDWARE_RESERVATIONS_ONLY ? (
           <Link
@@ -151,6 +153,8 @@ function NextGenCard({ rig }: { rig: NextGenRig }) {
               <Link to="/returns">14-day returns</Link>
               {" · "}
               <Link to="/warranty">90-day warranty</Link>
+              {" · "}
+              <Link to="/support">support plans</Link>
             </span>
           </div>
           <Link

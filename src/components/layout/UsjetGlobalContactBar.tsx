@@ -44,10 +44,10 @@ export default function UsjetGlobalContactBar() {
           <nav className="usjet-footer__col" aria-label="Shop">
             <h2 className="usjet-footer__heading">Shop</h2>
             <NavLink to="/" end className={footerLinkClass}>
-              Homes
+              Solo
             </NavLink>
             <NavLink to="/fleet" className={footerLinkClass}>
-              Business
+              Crew
             </NavLink>
             <NavLink to="/store/ai-computers" className={footerLinkClass}>
               Full lineup
@@ -70,6 +70,9 @@ export default function UsjetGlobalContactBar() {
             </NavLink>
             <NavLink to="/sos" className={footerLinkClass}>
               Help
+            </NavLink>
+            <NavLink to="/support" className={footerLinkClass}>
+              Support plans
             </NavLink>
             <a href={mailtoUsjetOps()} className="usjet-footer__link">
               Customer Service

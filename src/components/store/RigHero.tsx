@@ -22,35 +22,6 @@ const TRUST_POINTS = [
 export default function RigHero() {
   return (
     <section className="rig-hero">
-      {/* NAV */}
-      <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-6 py-8 md:px-16">
-        <Link to="/" className="flex items-center gap-3">
-          <img
-            src="/brand/usjet-logo-mark.png"
-            alt="USJET"
-            className="h-8 w-8"
-          />
-          <span className="display text-[22px] leading-none text-[#F2F5F7]">
-            USJET
-          </span>
-        </Link>
-        <div className="hidden items-center gap-8 md:flex">
-          <a href="#hw-catalog" className="eyebrow text-[12px] text-[#8CA0B4] hover:text-[#C3CAD1]">
-            PRODUCT
-          </a>
-          <Link to="/aviation-books" className="eyebrow text-[12px] text-[#8CA0B4] hover:text-[#C3CAD1]">
-            MANUALS
-          </Link>
-        </div>
-        <Link
-          to="/waiting-list"
-          onClick={() => handleReserveClick("nav")}
-          className="cta rounded-sm px-5 py-2.5 text-[13px]"
-        >
-          JOIN THE WAITING LIST
-        </Link>
-      </div>
-
       {/* HERO */}
       <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-14 px-6 py-16 md:grid-cols-2 md:gap-10 md:px-16 md:py-24">
         {/* Left column */}

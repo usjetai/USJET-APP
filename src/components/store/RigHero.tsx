@@ -56,20 +56,20 @@ export default function RigHero() {
 
         {/* Right column — the rig, harnessed into the "watch it answer" demo panel */}
         <div className="flex flex-col justify-center">
-          <div className="flex items-center gap-3 pl-1">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm border border-[#1E4670] bg-[#0C2540]">
+          <div className="flex items-center gap-4 pl-1">
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-sm border border-[#1E4670] bg-[#0C2540]">
               <img
                 src="/store/hardware/operator-rig-computer.png"
                 alt="Operator's Rig"
-                className="h-7 w-7"
+                className="h-12 w-12"
               />
             </div>
-            <span className="eyebrow text-[10.5px] text-[#5C7691]">
+            <span className="eyebrow text-[13px] text-[#8CA0B4]">
               WHAT&rsquo;S HAPPENING INSIDE IT
             </span>
           </div>
-          <svg width="2" height="22" className="ml-[23px]" aria-hidden="true">
-            <line x1="1" y1="0" x2="1" y2="22" stroke="#E9A13B" strokeWidth="1.5" strokeDasharray="3 4" />
+          <svg width="2" height="26" className="ml-[39px]" aria-hidden="true">
+            <line x1="1" y1="0" x2="1" y2="26" stroke="#E9A13B" strokeWidth="1.5" strokeDasharray="3 4" />
           </svg>
 
           <div className="w-full rounded-sm border border-[#1E4670] bg-[#0C2540] p-7 md:p-8">
@@ -77,9 +77,9 @@ export default function RigHero() {
               <div className="eyebrow text-[11.5px] text-[#6FB2E4]">
                 WATCH IT ANSWER
               </div>
-              <div className="flex items-center gap-1.5 text-[#E9A13B]">
-                <WifiOff size={13} strokeWidth={2} />
-                <span className="eyebrow text-[10px]">OFFLINE</span>
+              <div className="flex items-center gap-2 text-[#E9A13B]">
+                <WifiOff size={18} strokeWidth={2} />
+                <span className="eyebrow text-[12.5px]">OFFLINE</span>
               </div>
             </div>
 

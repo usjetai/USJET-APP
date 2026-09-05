@@ -32,6 +32,37 @@ function acquisitionChannel(): string {
   return attribution?.source ?? attribution?.medium ?? "direct";
 }
 
+/**
+ * Where this person came from, for the submission itself.
+ *
+ * Deliberately not just getAttribution(): that is only written when analytics
+ * is switched on and consented to, so a signup could arrive with no origin at
+ * all. This falls back to the tag on the URL they are standing on and then to
+ * the referring site. Nothing is asked of the person and nothing new is
+ * stored — it is read at the moment they press the button.
+ */
+function submissionOrigin() {
+  const stored = getAttribution();
+  let source = stored?.source ?? "";
+  let medium = stored?.medium ?? "";
+  let campaign = stored?.campaign ?? "";
+  let referrer = "";
+
+  if (typeof window !== "undefined") {
+    try {
+      const q = new URLSearchParams(window.location.search);
+      source = q.get("utm_source") || source;
+      medium = q.get("utm_medium") || medium;
+      campaign = q.get("utm_campaign") || campaign;
+      if (document.referrer) referrer = new URL(document.referrer).hostname;
+    } catch {
+      /* a malformed referrer must never stop someone signing up */
+    }
+  }
+  if (!source && referrer) source = referrer;
+  return { source: source || "direct", medium, campaign, referrer };
+}
+
 export default function WaitingList() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
@@ -76,6 +107,7 @@ export default function WaitingList() {
       location: String(data.get("location") ?? ""),
       notes: String(data.get("notes") ?? ""),
       company: String(data.get("company") ?? ""),
+      ...submissionOrigin(),
     };
 
     setStatus("sending");

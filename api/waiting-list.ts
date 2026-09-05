@@ -25,6 +25,14 @@ type WaitingListBody = {
   quantity?: string;
   location?: string;
   notes?: string;
+  /** Where they came from. Sent by the form, never typed by the person:
+   *  the utm tag on the link they clicked, or the site that referred them.
+   *  Without this a signup is anonymous about its own origin and there is no
+   *  way to tell a Reddit reader from an Instagram one except by asking. */
+  source?: string;
+  medium?: string;
+  campaign?: string;
+  referrer?: string;
   /** Honeypot - a real person leaves this empty. */
   company?: string;
 };
@@ -46,6 +54,10 @@ const MAX = {
   quantity: 20,
   location: 120,
   notes: 2000,
+  source: 60,
+  medium: 60,
+  campaign: 80,
+  referrer: 200,
 } as const;
 
 function parseBody(body: WaitingListBody | string | undefined): WaitingListBody {
@@ -125,6 +137,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     quantity: clean(raw.quantity, MAX.quantity),
     location: clean(raw.location, MAX.location),
     notes: clean(raw.notes, MAX.notes),
+    source: clean(raw.source, MAX.source) || "direct",
+    medium: clean(raw.medium, MAX.medium),
+    campaign: clean(raw.campaign, MAX.campaign),
+    referrer: clean(raw.referrer, MAX.referrer),
   };
 
   // Path 1 - always. Recoverable from the function logs with no setup at all.
@@ -140,6 +156,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       entry.quantity ? "**Rigs** " + entry.quantity : "",
       entry.location ? "**Where** " + entry.location : "",
       entry.notes ? "**Notes** " + entry.notes : "",
+      "**Came from** " + entry.source + (entry.campaign ? " / " + entry.campaign : ""),
     ].filter(Boolean),
   );
 

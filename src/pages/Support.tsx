@@ -57,16 +57,15 @@ export default function Support() {
           <LifeBuoy size={14} aria-hidden />
           <p className="sos-page__kicker">Support plans</p>
         </div>
-        <h1 className="sos-page__title">
-          <span className="sos-page__title-route">/support</span>
-        </h1>
+        {/* This is a sales page, not a policy page. The warranty and privacy
+            pages open with their own route because a reader has arrived there
+            to check a document; someone lands here still deciding whether
+            there is a person behind the machine, so they get a sentence.
+            The effective date and canonical URL still exist — at the bottom,
+            where they do their job without greeting the customer. */}
+        <h1 className="sos-page__title">A person, not a ticket queue.</h1>
         <p className="sos-page__subtitle">
-          What comes with every Operator's Rig, and the two plans that extend it. A person, not a ticket queue. Effective{" "}
-          {SUPPORT_EFFECTIVE_DATE}. Canonical URL:{" "}
-          <a href={SUPPORT_CANONICAL_URL} className="sos-page__inline-link">
-            {SUPPORT_CANONICAL_URL}
-          </a>
-          .
+          What comes with every Operator&rsquo;s Rig, and the two plans that extend it.
         </p>
       </header>
 
@@ -120,6 +119,14 @@ export default function Support() {
           ))}
         </div>
       </GlassEffectContainer>
+
+      <p className="sos-page__subtitle mx-auto mt-10 max-w-xl text-center text-balance">
+        Effective {SUPPORT_EFFECTIVE_DATE}. Canonical URL:{" "}
+        <a href={SUPPORT_CANONICAL_URL} className="sos-page__inline-link">
+          {SUPPORT_CANONICAL_URL}
+        </a>
+        .
+      </p>
 
       <section className="sos-page__footer mt-12 text-center" aria-labelledby="support-footer-heading">
         <p id="support-footer-heading" className="sos-page__subtitle mx-auto mb-5 max-w-md text-balance">
